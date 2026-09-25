@@ -1,0 +1,76 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "aliases": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Aliases",
+      "type": "array"
+    },
+    "canonical_factor_id": {
+      "title": "Canonical Factor Id",
+      "type": "string"
+    },
+    "canonical_name": {
+      "title": "Canonical Name",
+      "type": "string"
+    },
+    "category": {
+      "title": "Category",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Description"
+    },
+    "economic_logic": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Economic Logic"
+    },
+    "scope": {
+      "title": "Scope",
+      "type": "string"
+    },
+    "short_id": {
+      "title": "Short Id",
+      "type": "string"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "canonical_factor_id",
+    "canonical_name",
+    "short_id",
+    "aliases",
+    "description",
+    "economic_logic",
+    "category",
+    "scope",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "FactorConcept",
+  "type": "object"
+}

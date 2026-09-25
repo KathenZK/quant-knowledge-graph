@@ -1,0 +1,93 @@
+{
+  "$defs": {
+    "Permission": {
+      "enum": [
+        "ALLOWED",
+        "CONDITIONAL",
+        "PROHIBITED",
+        "REVIEW_REQUIRED"
+      ],
+      "title": "Permission",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "code_url": {
+      "title": "Code Url",
+      "type": "string"
+    },
+    "commercial_use": {
+      "$ref": "#/$defs/Permission"
+    },
+    "executed": {
+      "const": false,
+      "default": false,
+      "title": "Executed",
+      "type": "boolean"
+    },
+    "factor_variant_id": {
+      "title": "Factor Variant Id",
+      "type": "string"
+    },
+    "implementation_id": {
+      "title": "Implementation Id",
+      "type": "string"
+    },
+    "language": {
+      "title": "Language",
+      "type": "string"
+    },
+    "license": {
+      "title": "License",
+      "type": "string"
+    },
+    "revision": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Revision"
+    },
+    "sha256": {
+      "title": "Sha256",
+      "type": "string"
+    },
+    "source_locator": {
+      "title": "Source Locator",
+      "type": "string"
+    },
+    "source_record_id": {
+      "title": "Source Record Id",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "terms_url": {
+      "title": "Terms Url",
+      "type": "string"
+    }
+  },
+  "required": [
+    "implementation_id",
+    "factor_variant_id",
+    "source_record_id",
+    "code_url",
+    "revision",
+    "sha256",
+    "source_locator",
+    "language",
+    "status",
+    "license",
+    "terms_url",
+    "commercial_use"
+  ],
+  "title": "Implementation",
+  "type": "object"
+}

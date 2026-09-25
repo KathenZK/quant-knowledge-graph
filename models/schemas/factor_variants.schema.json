@@ -1,0 +1,417 @@
+{
+  "$defs": {
+    "Permission": {
+      "enum": [
+        "ALLOWED",
+        "CONDITIONAL",
+        "PROHIBITED",
+        "REVIEW_REQUIRED"
+      ],
+      "title": "Permission",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "aliases": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Aliases",
+      "type": "array"
+    },
+    "asset_class": {
+      "title": "Asset Class",
+      "type": "string"
+    },
+    "attribution_required": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Attribution Required"
+    },
+    "authors": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Authors",
+      "type": "array"
+    },
+    "backtest_ready": {
+      "const": false,
+      "default": false,
+      "title": "Backtest Ready",
+      "type": "boolean"
+    },
+    "canonical_factor_id": {
+      "title": "Canonical Factor Id",
+      "type": "string"
+    },
+    "canonical_name": {
+      "title": "Canonical Name",
+      "type": "string"
+    },
+    "category": {
+      "title": "Category",
+      "type": "string"
+    },
+    "code_url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Code Url"
+    },
+    "commercial_use": {
+      "$ref": "#/$defs/Permission"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "derivative_allowed": {
+      "$ref": "#/$defs/Permission"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "dialect": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Dialect"
+    },
+    "economic_logic": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Economic Logic"
+    },
+    "factor_concept": {
+      "title": "Factor Concept",
+      "type": "string"
+    },
+    "factor_variant_id": {
+      "title": "Factor Variant Id",
+      "type": "string"
+    },
+    "formula_ast": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Formula Ast"
+    },
+    "formula_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Formula Id"
+    },
+    "frequency": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Frequency"
+    },
+    "holding_period": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Holding Period"
+    },
+    "issue_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Issue Codes",
+      "type": "array"
+    },
+    "license": {
+      "title": "License",
+      "type": "string"
+    },
+    "license_id": {
+      "title": "License Id",
+      "type": "string"
+    },
+    "lookback": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Lookback"
+    },
+    "normalized_formula": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Normalized Formula"
+    },
+    "paper_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Paper Ids",
+      "type": "array"
+    },
+    "paper_title": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Paper Title"
+    },
+    "paper_year": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Paper Year"
+    },
+    "parameters": {
+      "additionalProperties": true,
+      "title": "Parameters",
+      "type": "object"
+    },
+    "quality_status": {
+      "const": "CURATED_DEFINITION",
+      "title": "Quality Status",
+      "type": "string"
+    },
+    "raw_data_allowed": {
+      "$ref": "#/$defs/Permission",
+      "default": "REVIEW_REQUIRED"
+    },
+    "raw_formula": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Raw Formula"
+    },
+    "rebalance": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Rebalance"
+    },
+    "redistribution_allowed": {
+      "$ref": "#/$defs/Permission"
+    },
+    "required_fields": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Required Fields",
+      "type": "array"
+    },
+    "required_fields_status": {
+      "title": "Required Fields Status",
+      "type": "string"
+    },
+    "rights_scope": {
+      "title": "Rights Scope",
+      "type": "string"
+    },
+    "rights_status": {
+      "title": "Rights Status",
+      "type": "string"
+    },
+    "semantic_status": {
+      "const": "NOT_VERIFIED",
+      "default": "NOT_VERIFIED",
+      "title": "Semantic Status",
+      "type": "string"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_locator": {
+      "title": "Source Locator",
+      "type": "string"
+    },
+    "source_name": {
+      "title": "Source Name",
+      "type": "string"
+    },
+    "source_native_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Native Ids",
+      "type": "array"
+    },
+    "source_record_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Record Ids",
+      "type": "array"
+    },
+    "source_revision": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Source Revision"
+    },
+    "source_sha256": {
+      "title": "Source Sha256",
+      "type": "string"
+    },
+    "source_url": {
+      "title": "Source Url",
+      "type": "string"
+    },
+    "terms_url": {
+      "title": "Terms Url",
+      "type": "string"
+    },
+    "universe": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Universe"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    },
+    "variant_name": {
+      "title": "Variant Name",
+      "type": "string"
+    }
+  },
+  "required": [
+    "license",
+    "license_id",
+    "commercial_use",
+    "redistribution_allowed",
+    "derivative_allowed",
+    "attribution_required",
+    "rights_status",
+    "rights_scope",
+    "terms_url",
+    "canonical_factor_id",
+    "canonical_name",
+    "factor_concept",
+    "factor_variant_id",
+    "variant_name",
+    "aliases",
+    "description",
+    "economic_logic",
+    "category",
+    "raw_formula",
+    "normalized_formula",
+    "formula_ast",
+    "formula_id",
+    "dialect",
+    "parameters",
+    "required_fields",
+    "required_fields_status",
+    "lookback",
+    "frequency",
+    "asset_class",
+    "universe",
+    "holding_period",
+    "rebalance",
+    "source_id",
+    "source_name",
+    "source_url",
+    "source_record_ids",
+    "source_native_ids",
+    "source_sha256",
+    "source_revision",
+    "source_locator",
+    "paper_title",
+    "paper_year",
+    "authors",
+    "paper_ids",
+    "code_url",
+    "quality_status",
+    "issue_codes",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "FactorVariant",
+  "type": "object"
+}

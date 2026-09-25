@@ -1,0 +1,92 @@
+{
+  "$defs": {
+    "Permission": {
+      "enum": [
+        "ALLOWED",
+        "CONDITIONAL",
+        "PROHIBITED",
+        "REVIEW_REQUIRED"
+      ],
+      "title": "Permission",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "attribution_required": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Attribution Required"
+    },
+    "commercial_use": {
+      "$ref": "#/$defs/Permission"
+    },
+    "derivative_allowed": {
+      "$ref": "#/$defs/Permission"
+    },
+    "evidence_urls": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Urls",
+      "type": "array"
+    },
+    "license": {
+      "title": "License",
+      "type": "string"
+    },
+    "license_id": {
+      "title": "License Id",
+      "type": "string"
+    },
+    "notes": {
+      "title": "Notes",
+      "type": "string"
+    },
+    "raw_data_allowed": {
+      "$ref": "#/$defs/Permission",
+      "default": "REVIEW_REQUIRED"
+    },
+    "redistribution_allowed": {
+      "$ref": "#/$defs/Permission"
+    },
+    "reviewed_at": {
+      "title": "Reviewed At",
+      "type": "string"
+    },
+    "rights_scope": {
+      "title": "Rights Scope",
+      "type": "string"
+    },
+    "rights_status": {
+      "title": "Rights Status",
+      "type": "string"
+    },
+    "terms_url": {
+      "title": "Terms Url",
+      "type": "string"
+    }
+  },
+  "required": [
+    "license",
+    "license_id",
+    "commercial_use",
+    "redistribution_allowed",
+    "derivative_allowed",
+    "attribution_required",
+    "rights_status",
+    "rights_scope",
+    "terms_url",
+    "evidence_urls",
+    "reviewed_at",
+    "notes"
+  ],
+  "title": "License",
+  "type": "object"
+}

@@ -1,0 +1,47 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "collected_at": {
+      "title": "Collected At",
+      "type": "string"
+    },
+    "license_id": {
+      "title": "License Id",
+      "type": "string"
+    },
+    "revisions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Revisions",
+      "type": "array"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_name": {
+      "title": "Source Name",
+      "type": "string"
+    },
+    "storage_policy": {
+      "title": "Storage Policy",
+      "type": "string"
+    },
+    "url": {
+      "title": "Url",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_id",
+    "source_name",
+    "url",
+    "license_id",
+    "revisions",
+    "collected_at",
+    "storage_policy"
+  ],
+  "title": "Source",
+  "type": "object"
+}

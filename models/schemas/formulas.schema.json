@@ -1,0 +1,48 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "dialect": {
+      "title": "Dialect",
+      "type": "string"
+    },
+    "formula_ast": {
+      "additionalProperties": true,
+      "title": "Formula Ast",
+      "type": "object"
+    },
+    "formula_id": {
+      "title": "Formula Id",
+      "type": "string"
+    },
+    "normalized_formula": {
+      "title": "Normalized Formula",
+      "type": "string"
+    },
+    "raw_formula": {
+      "title": "Raw Formula",
+      "type": "string"
+    },
+    "semantic_status": {
+      "title": "Semantic Status",
+      "type": "string"
+    },
+    "source_record_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Record Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "formula_id",
+    "raw_formula",
+    "normalized_formula",
+    "formula_ast",
+    "dialect",
+    "semantic_status",
+    "source_record_ids"
+  ],
+  "title": "Formula",
+  "type": "object"
+}

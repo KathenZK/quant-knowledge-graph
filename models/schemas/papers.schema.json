@@ -1,0 +1,90 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "author_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Author Ids",
+      "type": "array"
+    },
+    "authors": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Authors",
+      "type": "array"
+    },
+    "citation_label": {
+      "title": "Citation Label",
+      "type": "string"
+    },
+    "metadata_status": {
+      "enum": [
+        "TITLE_PRESENT",
+        "PARTIAL_CITATION",
+        "COLLECTION_REFERENCE"
+      ],
+      "title": "Metadata Status",
+      "type": "string"
+    },
+    "paper_id": {
+      "title": "Paper Id",
+      "type": "string"
+    },
+    "provenance": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Provenance",
+      "type": "array"
+    },
+    "title": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Title"
+    },
+    "url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Url"
+    },
+    "year": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Year"
+    }
+  },
+  "required": [
+    "paper_id",
+    "title",
+    "year",
+    "authors",
+    "author_ids",
+    "url",
+    "citation_label",
+    "metadata_status",
+    "provenance"
+  ],
+  "title": "Paper",
+  "type": "object"
+}

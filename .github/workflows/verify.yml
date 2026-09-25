@@ -1,0 +1,17 @@
+name: Curated release verification
+on:
+  push:
+  pull_request:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.8.22"
+      - run: uv sync --frozen --extra test --python 3.12
+      - run: uv run ruff check .
+      - run: uv run quantgraph verify-public
+      - run: uv run quantgraph build-public
+      - run: uv run pytest -q

@@ -1,0 +1,57 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "content_type": {
+      "title": "Content Type",
+      "type": "string"
+    },
+    "dataset_id": {
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "license_id": {
+      "title": "License Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "observations_ingested": {
+      "const": false,
+      "default": false,
+      "title": "Observations Ingested",
+      "type": "boolean"
+    },
+    "revision": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Revision"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_url": {
+      "title": "Source Url",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dataset_id",
+    "name",
+    "source_id",
+    "content_type",
+    "revision",
+    "license_id",
+    "source_url"
+  ],
+  "title": "Dataset",
+  "type": "object"
+}

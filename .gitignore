@@ -1,0 +1,26 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+.DS_Store
+datasets/.build-*/
+datasets/.publish.lock/
+*.sqlite-wal
+*.sqlite-shm
+
+# Private research snapshots and machine-specific evidence stay local.
+/datasets/raw/sources/*
+!/datasets/raw/sources/qlib/
+/datasets/normalized/
+/datasets/curated/
+/reports/*
+!/reports/PUBLIC_RELEASE.md
+/models/schemas/legacy/
+/docs/LOCAL_RESEARCH.md
+/docs/openapi.json
+/datasets/public/.build-*/
+/datasets/public/.CURRENT-next

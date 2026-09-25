@@ -1,0 +1,191 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "aliases": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Aliases",
+      "type": "array"
+    },
+    "asset_class": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Asset Class",
+      "type": "array"
+    },
+    "canonical_name": {
+      "title": "Canonical Name",
+      "type": "string"
+    },
+    "code": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Code",
+      "type": "array"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "entry_rules": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Entry Rules",
+      "type": "array"
+    },
+    "exit_rules": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Exit Rules",
+      "type": "array"
+    },
+    "external_id": {
+      "title": "External Id",
+      "type": "string"
+    },
+    "external_namespace": {
+      "title": "External Namespace",
+      "type": "string"
+    },
+    "factor_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Factor Ids",
+      "type": "array"
+    },
+    "frequency": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Frequency"
+    },
+    "original_backtest": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Original Backtest",
+      "type": "array"
+    },
+    "paper": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Paper",
+      "type": "array"
+    },
+    "position_sizing": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Position Sizing"
+    },
+    "rebalance": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rebalance"
+    },
+    "reproduced_backtest": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Reproduced Backtest",
+      "type": "array"
+    },
+    "risk_management": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Risk Management"
+    },
+    "source": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Source",
+      "type": "array"
+    },
+    "spec_sha256": {
+      "title": "Spec Sha256",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "strategy_id": {
+      "title": "Strategy Id",
+      "type": "string"
+    },
+    "universe": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Universe"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "strategy_id",
+    "canonical_name",
+    "description",
+    "source",
+    "external_namespace",
+    "external_id",
+    "spec_sha256",
+    "status",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "Strategy",
+  "type": "object"
+}

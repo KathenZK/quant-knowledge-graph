@@ -1,0 +1,79 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "confidence": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "evidence": {
+      "title": "Evidence",
+      "type": "string"
+    },
+    "from_id": {
+      "title": "From Id",
+      "type": "string"
+    },
+    "from_type": {
+      "title": "From Type",
+      "type": "string"
+    },
+    "relation": {
+      "enum": [
+        "SAME_AS",
+        "ALIAS_OF",
+        "VARIANT_OF",
+        "DERIVED_FROM",
+        "RELATED_TO",
+        "IMPLEMENTATION_OF",
+        "USES_FACTOR",
+        "DESCRIBED_BY",
+        "IMPLEMENTED_BY",
+        "TESTED_ON",
+        "SOURCED_FROM",
+        "AUTHORED_BY"
+      ],
+      "title": "Relation",
+      "type": "string"
+    },
+    "relationship_id": {
+      "title": "Relationship Id",
+      "type": "string"
+    },
+    "source": {
+      "title": "Source",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "CONFIRMED",
+        "REVIEW_REQUIRED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "to_id": {
+      "title": "To Id",
+      "type": "string"
+    },
+    "to_type": {
+      "title": "To Type",
+      "type": "string"
+    }
+  },
+  "required": [
+    "relationship_id",
+    "relation",
+    "from_id",
+    "from_type",
+    "to_id",
+    "to_type",
+    "confidence",
+    "evidence",
+    "source",
+    "status"
+  ],
+  "title": "Relationship",
+  "type": "object"
+}

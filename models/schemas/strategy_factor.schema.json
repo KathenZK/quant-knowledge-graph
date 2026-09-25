@@ -1,0 +1,78 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "attribution_status": {
+      "default": "RULE_LINK_ONLY",
+      "enum": [
+        "RULE_LINK_ONLY",
+        "EMPIRICALLY_TESTED"
+      ],
+      "title": "Attribution Status",
+      "type": "string"
+    },
+    "backtest_result_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Backtest Result Id"
+    },
+    "confidence": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "evidence": {
+      "minLength": 1,
+      "title": "Evidence",
+      "type": "string"
+    },
+    "factor_id": {
+      "title": "Factor Id",
+      "type": "string"
+    },
+    "role": {
+      "enum": [
+        "signal",
+        "entry",
+        "exit",
+        "filter",
+        "weight",
+        "risk",
+        "exposure"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "source": {
+      "minLength": 1,
+      "title": "Source",
+      "type": "string"
+    },
+    "strategy_id": {
+      "title": "Strategy Id",
+      "type": "string"
+    },
+    "variant_id": {
+      "title": "Variant Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "strategy_id",
+    "factor_id",
+    "variant_id",
+    "role",
+    "confidence",
+    "evidence",
+    "source"
+  ],
+  "title": "StrategyFactor",
+  "type": "object"
+}

@@ -1,0 +1,70 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "artifact_sha256": {
+      "title": "Artifact Sha256",
+      "type": "string"
+    },
+    "artifact_uri": {
+      "title": "Artifact Uri",
+      "type": "string"
+    },
+    "backtest_result_id": {
+      "title": "Backtest Result Id",
+      "type": "string"
+    },
+    "contract_uri": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Contract Uri"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "metrics": {
+      "additionalProperties": true,
+      "title": "Metrics",
+      "type": "object"
+    },
+    "research_project": {
+      "title": "Research Project",
+      "type": "string"
+    },
+    "result_kind": {
+      "enum": [
+        "ORIGINAL_REPORTED",
+        "LAB_REPRODUCED"
+      ],
+      "title": "Result Kind",
+      "type": "string"
+    },
+    "strategy_id": {
+      "title": "Strategy Id",
+      "type": "string"
+    },
+    "validation_status": {
+      "title": "Validation Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "backtest_result_id",
+    "strategy_id",
+    "result_kind",
+    "research_project",
+    "artifact_uri",
+    "artifact_sha256",
+    "validation_status",
+    "created_at"
+  ],
+  "title": "BacktestResult",
+  "type": "object"
+}

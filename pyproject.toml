@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quant-knowledge-graph"
+version = "0.2.0"
+description = "Provenance-first factor and strategy knowledge infrastructure"
+license-files = ["LICENSE", "docs/licenses/*.txt"]
+requires-python = ">=3.11"
+dependencies = ["requests>=2.31,<3", "pandas>=2.2,<4", "pyarrow>=16,<26", "openpyxl>=3.1,<4", "lark>=1.2,<2", "jsonschema>=4.22,<5", "pydantic>=2.10,<3", "fastapi>=0.115,<1", "uvicorn>=0.34,<1"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10", "httpx>=0.28,<1", "ruff>=0.14,<1"]
+
+[project.scripts]
+quantgraph = "quantgraph.cli:main"
+
+[tool.setuptools]
+package-dir = {"quantgraph" = "sdk/quantgraph", "quantgraph.collectors" = "collectors", "quantgraph.models" = "models", "quantgraph.normalize" = "normalize", "quantgraph.graph" = "graph", "quantgraph.api" = "api"}
+packages = ["quantgraph", "quantgraph.collectors", "quantgraph.collectors.aqr", "quantgraph.collectors.fama_french", "quantgraph.collectors.github", "quantgraph.collectors.gtja", "quantgraph.collectors.jkp", "quantgraph.collectors.open_asset_pricing", "quantgraph.collectors.papers", "quantgraph.collectors.qlib", "quantgraph.collectors.worldquant", "quantgraph.models", "quantgraph.normalize", "quantgraph.normalize.aliases", "quantgraph.normalize.dedup", "quantgraph.normalize.formula", "quantgraph.normalize.taxonomy", "quantgraph.graph", "quantgraph.graph.ontology", "quantgraph.graph.relationships", "quantgraph.api"]
+
+[tool.pytest.ini_options]
+pythonpath = [".", "sdk"]
+testpaths = ["tests"]
+
+[tool.ruff]
+exclude = ["datasets", ".venv"]
+
+[tool.ruff.lint]
+select = ["F821", "F822", "F823"]
