@@ -1,0 +1,313 @@
+{
+  "$defs": {
+    "Permission": {
+      "enum": [
+        "ALLOWED",
+        "CONDITIONAL",
+        "PROHIBITED",
+        "REVIEW_REQUIRED"
+      ],
+      "title": "Permission",
+      "type": "string"
+    },
+    "StrategyProvenance": {
+      "enum": [
+        "SOURCE_NATIVE",
+        "SOURCE_IMPLEMENTATION",
+        "SOURCE_DERIVED",
+        "BOT_DERIVED",
+        "PARAMETER_VARIANT",
+        "MARKET_VARIANT",
+        "ASSET_VARIANT",
+        "UNKNOWN"
+      ],
+      "title": "StrategyProvenance",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "attribution_required": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Attribution Required"
+    },
+    "commercial_use": {
+      "$ref": "#/$defs/Permission"
+    },
+    "concept_origin_date": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Concept Origin Date"
+    },
+    "date_status": {
+      "const": "UNVERIFIED_REPORTED_DATE",
+      "default": "UNVERIFIED_REPORTED_DATE",
+      "title": "Date Status",
+      "type": "string"
+    },
+    "derivative_allowed": {
+      "$ref": "#/$defs/Permission"
+    },
+    "executable": {
+      "const": false,
+      "default": false,
+      "title": "Executable",
+      "type": "boolean"
+    },
+    "license": {
+      "title": "License",
+      "type": "string"
+    },
+    "license_id": {
+      "title": "License Id",
+      "type": "string"
+    },
+    "market_taxonomy": {
+      "additionalProperties": true,
+      "title": "Market Taxonomy",
+      "type": "object"
+    },
+    "normalized_rule": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Normalized Rule"
+    },
+    "original_rule_text": {
+      "title": "Original Rule Text",
+      "type": "string"
+    },
+    "parse_reason": {
+      "title": "Parse Reason",
+      "type": "string"
+    },
+    "parse_status": {
+      "enum": [
+        "PARSED",
+        "REVIEW"
+      ],
+      "title": "Parse Status",
+      "type": "string"
+    },
+    "parser_version": {
+      "title": "Parser Version",
+      "type": "string"
+    },
+    "provenance_evidence": {
+      "title": "Provenance Evidence",
+      "type": "string"
+    },
+    "provenance_type": {
+      "$ref": "#/$defs/StrategyProvenance"
+    },
+    "raw_data_allowed": {
+      "$ref": "#/$defs/Permission",
+      "default": "REVIEW_REQUIRED"
+    },
+    "raw_market": {
+      "title": "Raw Market",
+      "type": "string"
+    },
+    "raw_proposed_date": {
+      "title": "Raw Proposed Date",
+      "type": "string"
+    },
+    "redistribution_allowed": {
+      "$ref": "#/$defs/Permission"
+    },
+    "rights_scope": {
+      "title": "Rights Scope",
+      "type": "string"
+    },
+    "rights_status": {
+      "title": "Rights Status",
+      "type": "string"
+    },
+    "rule_ast": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Rule Ast"
+    },
+    "semantics_status": {
+      "const": "NOT_VERIFIED",
+      "default": "NOT_VERIFIED",
+      "title": "Semantics Status",
+      "type": "string"
+    },
+    "source_bucket_id": {
+      "title": "Source Bucket Id",
+      "type": "string"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_locator": {
+      "title": "Source Locator",
+      "type": "string"
+    },
+    "source_native_id": {
+      "title": "Source Native Id",
+      "type": "string"
+    },
+    "source_publication_date": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Publication Date"
+    },
+    "source_sha256": {
+      "title": "Source Sha256",
+      "type": "string"
+    },
+    "source_support": {
+      "title": "Source Support",
+      "type": "string"
+    },
+    "source_url": {
+      "title": "Source Url",
+      "type": "string"
+    },
+    "source_url_raw": {
+      "title": "Source Url Raw",
+      "type": "string"
+    },
+    "source_verification": {
+      "const": "NOT_INDEPENDENTLY_VERIFIED",
+      "default": "NOT_INDEPENDENTLY_VERIFIED",
+      "title": "Source Verification",
+      "type": "string"
+    },
+    "spec_sha256": {
+      "title": "Spec Sha256",
+      "type": "string"
+    },
+    "strategy_concept_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Strategy Concept Id"
+    },
+    "strategy_id": {
+      "title": "Strategy Id",
+      "type": "string"
+    },
+    "strategy_template_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Strategy Template Id"
+    },
+    "strategy_variant_id": {
+      "title": "Strategy Variant Id",
+      "type": "string"
+    },
+    "terms_url": {
+      "title": "Terms Url",
+      "type": "string"
+    },
+    "variant_created_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Variant Created At"
+    },
+    "variation_axes": {
+      "items": {
+        "enum": [
+          "PARAMETER_VARIANT",
+          "MARKET_VARIANT",
+          "ASSET_VARIANT"
+        ],
+        "type": "string"
+      },
+      "title": "Variation Axes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "license",
+    "license_id",
+    "commercial_use",
+    "redistribution_allowed",
+    "derivative_allowed",
+    "attribution_required",
+    "rights_status",
+    "rights_scope",
+    "terms_url",
+    "strategy_variant_id",
+    "strategy_id",
+    "strategy_concept_id",
+    "strategy_template_id",
+    "source_id",
+    "source_native_id",
+    "source_sha256",
+    "source_locator",
+    "original_rule_text",
+    "normalized_rule",
+    "rule_ast",
+    "parser_version",
+    "parse_status",
+    "parse_reason",
+    "provenance_type",
+    "provenance_evidence",
+    "source_support",
+    "raw_proposed_date",
+    "raw_market",
+    "market_taxonomy",
+    "source_url",
+    "source_url_raw",
+    "source_bucket_id",
+    "spec_sha256"
+  ],
+  "title": "StrategyVariant",
+  "type": "object"
+}

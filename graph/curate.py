@@ -26,7 +26,7 @@ def curate(root, legacy):
     groups = defaultdict(list)
     for row in admitted:
         groups[row['canonical_factor_id']].append(row)
-    tables = {name: [] for name in ENTITY_MODELS}
+    tables = {name: [] for name in ENTITY_MODELS if name not in {'strategy_concepts', 'strategy_templates', 'strategy_variants'}}
     tables.update(aliases=[], source_records=[], id_map=[])
     entity_maps = {name: {} for name in ('factor_concepts', 'sources', 'licenses', 'datasets', 'formulas', 'papers', 'authors')}
     concepts = entity_maps['factor_concepts']
@@ -160,6 +160,8 @@ def curate(root, legacy):
     tables['relationships']=list(edges.values())
     tables['aliases']=list({x['alias_id']:x for x in tables['aliases']}.values())
     for name, model in ENTITY_MODELS.items():
+        if name not in tables:
+            continue
         tables[name]=[model.model_validate(r).model_dump(mode='json') for r in tables[name]]
     return tables, decisions
 
@@ -185,6 +187,6 @@ def commercial_subset(tables):
     out['datasets']=[d for d in tables['datasets'] if d['dataset_id'] in datasets]
     # No strategy or backtest is commercially cleared implicitly by factor rights.
     from quantgraph.graph.store import PRIMARY_KEYS
-    entity_ids={r[field] for name,field in PRIMARY_KEYS.items() if name not in ('relationships','id_map','strategy_factor') for r in out[name]}
+    entity_ids={r[field] for name,field in PRIMARY_KEYS.items() if name not in ('relationships','id_map','strategy_factor') for r in out.get(name, [])}
     out['relationships']=[r for r in tables['relationships'] if r['from_id'] in entity_ids and r['to_id'] in entity_ids]
     return out

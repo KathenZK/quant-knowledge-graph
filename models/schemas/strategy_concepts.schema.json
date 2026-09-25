@@ -1,0 +1,43 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "canonical_name": {
+      "title": "Canonical Name",
+      "type": "string"
+    },
+    "concept_origin_date": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Concept Origin Date"
+    },
+    "economic_independence": {
+      "const": "NOT_ESTABLISHED",
+      "default": "NOT_ESTABLISHED",
+      "title": "Economic Independence",
+      "type": "string"
+    },
+    "scope": {
+      "const": "RULE_METHOD_FAMILY",
+      "default": "RULE_METHOD_FAMILY",
+      "title": "Scope",
+      "type": "string"
+    },
+    "strategy_concept_id": {
+      "title": "Strategy Concept Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "strategy_concept_id",
+    "canonical_name"
+  ],
+  "title": "StrategyConcept",
+  "type": "object"
+}

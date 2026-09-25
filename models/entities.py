@@ -206,7 +206,7 @@ class StrategyFactor(Model):
 class BacktestResult(Model):
     backtest_result_id: str
     strategy_id: str
-    result_kind: Literal["ORIGINAL_REPORTED", "LAB_REPRODUCED"]
+    result_kind: Literal["ORIGINAL_REPORTED", "LAB_REPRODUCED", "LEGACY_GROKBOT_SCREEN"]
     research_project: str
     artifact_uri: str
     artifact_sha256: str
@@ -229,6 +229,79 @@ class Relationship(Model):
     status: Literal["CONFIRMED", "REVIEW_REQUIRED"]
 
 
+class StrategyProvenance(str, Enum):
+    SOURCE_NATIVE = "SOURCE_NATIVE"
+    SOURCE_IMPLEMENTATION = "SOURCE_IMPLEMENTATION"
+    SOURCE_DERIVED = "SOURCE_DERIVED"
+    BOT_DERIVED = "BOT_DERIVED"
+    PARAMETER_VARIANT = "PARAMETER_VARIANT"
+    MARKET_VARIANT = "MARKET_VARIANT"
+    ASSET_VARIANT = "ASSET_VARIANT"
+    UNKNOWN = "UNKNOWN"
+
+
+class StrategyConcept(Model):
+    strategy_concept_id: str
+    canonical_name: str
+    scope: Literal["RULE_METHOD_FAMILY"] = "RULE_METHOD_FAMILY"
+    economic_independence: Literal["NOT_ESTABLISHED"] = "NOT_ESTABLISHED"
+    concept_origin_date: str | None = None
+
+
+# Family is the minimal compatibility name for a concept-level grouping.
+StrategyFamily = StrategyConcept
+
+
+class StrategyTemplate(Model):
+    strategy_template_id: str
+    strategy_concept_id: str
+    template_ast: dict
+    semantics_status: Literal["NOT_VERIFIED"] = "NOT_VERIFIED"
+
+
+class StrategyVariant(Rights):
+    strategy_variant_id: str
+    strategy_id: str
+    strategy_concept_id: str | None
+    strategy_template_id: str | None
+    source_id: str
+    source_native_id: str
+    source_sha256: str
+    source_locator: str
+    original_rule_text: str
+    normalized_rule: str | None
+    rule_ast: dict | None
+    parser_version: str
+    parse_status: Literal["PARSED", "REVIEW"]
+    parse_reason: str
+    provenance_type: StrategyProvenance
+    provenance_evidence: str
+    source_support: str
+    source_verification: Literal["NOT_INDEPENDENTLY_VERIFIED"] = "NOT_INDEPENDENTLY_VERIFIED"
+    variation_axes: list[Literal["PARAMETER_VARIANT", "MARKET_VARIANT", "ASSET_VARIANT"]] = Field(default_factory=list)
+    concept_origin_date: str | None = None
+    source_publication_date: str | None = None
+    variant_created_at: str | None = None
+    raw_proposed_date: str
+    date_status: Literal["UNVERIFIED_REPORTED_DATE"] = "UNVERIFIED_REPORTED_DATE"
+    raw_market: str
+    market_taxonomy: dict
+    source_url: str
+    source_url_raw: str
+    source_bucket_id: str
+    spec_sha256: str
+    executable: Literal[False] = False
+    semantics_status: Literal["NOT_VERIFIED"] = "NOT_VERIFIED"
+
+    @model_validator(mode="after")
+    def parsed_requires_ast(self):
+        if (self.parse_status == "PARSED") != (self.rule_ast is not None):
+            raise ValueError("Only fully supported syntax may carry an AST")
+        if self.rule_ast is None and self.normalized_rule is not None:
+            raise ValueError("Unparsed rules cannot have invented normalized rules")
+        return self
+
+
 ENTITY_MODELS = {
     "factor_concepts": FactorConcept, "factor_variants": FactorVariant,
     "formulas": Formula, "papers": Paper, "authors": Author,
@@ -236,4 +309,6 @@ ENTITY_MODELS = {
     "implementations": Implementation, "strategies": Strategy,
     "strategy_factor": StrategyFactor, "backtest_results": BacktestResult,
     "relationships": Relationship,
+    "strategy_concepts": StrategyConcept, "strategy_templates": StrategyTemplate,
+    "strategy_variants": StrategyVariant,
 }

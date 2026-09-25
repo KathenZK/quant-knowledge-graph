@@ -12,11 +12,16 @@ PRIMARY_KEYS={
     'strategies':'strategy_id','backtest_results':'backtest_result_id',
     'relationships':'relationship_id','aliases':'alias_id','source_records':'record_id',
     'id_map':'legacy_record_id',
+    'strategy_concepts':'strategy_concept_id', 'strategy_templates':'strategy_template_id',
+    'strategy_variants':'strategy_variant_id',
 }
 TYPES={'factor_concepts':'FactorConcept','factor_variants':'FactorVariant','formulas':'Formula','papers':'Paper',
     'authors':'Author','sources':'Source','licenses':'License','datasets':'Dataset','implementations':'Implementation',
     'strategies':'Strategy','backtest_results':'BacktestResult','aliases':'Alias','source_records':'SourceRecord'}
+TYPES.update(strategy_concepts='StrategyConcept', strategy_templates='StrategyTemplate', strategy_variants='StrategyVariant')
 REFS={
+    'strategy_templates':{'strategy_concept_id':('strategy_concepts','strategy_concept_id')},
+    'strategy_variants':{'strategy_id':('strategies','strategy_id'),'strategy_concept_id':('strategy_concepts','strategy_concept_id'),'strategy_template_id':('strategy_templates','strategy_template_id'),'source_id':('sources','source_id'),'license_id':('licenses','license_id')},
     'factor_variants':{'canonical_factor_id':('factor_concepts','canonical_factor_id'),'source_id':('sources','source_id'),'license_id':('licenses','license_id'),'formula_id':('formulas','formula_id')},
     'sources':{'license_id':('licenses','license_id')},
     'datasets':{'source_id':('sources','source_id'),'license_id':('licenses','license_id')},
@@ -27,6 +32,13 @@ REFS={
     'backtest_results':{'strategy_id':('strategies','strategy_id')},
     'relationships':{'from_id':('entities','entity_id'),'to_id':('entities','entity_id')},
     'id_map':{'factor_variant_id':('factor_variants','factor_variant_id'),'canonical_factor_id':('factor_concepts','canonical_factor_id')},
+}
+
+
+AUXILIARY_FIELDS = {
+    'aliases': ['alias_id', 'alias', 'normalized_alias', 'namespace', 'factor_variant_id', 'canonical_factor_id'],
+    'source_records': ['record_id', 'factor_variant_id', 'source_id', 'source_native_id', 'source_url', 'source_locator', 'sha256', 'dataset_id'],
+    'id_map': ['legacy_record_id', 'legacy_canonical_factor_id', 'canonical_factor_id', 'factor_variant_id', 'short_id'],
 }
 
 
@@ -41,16 +53,18 @@ def write_graph(path, tables):
     con=sqlite3.connect(path/'quantgraph.sqlite')
     con.execute('PRAGMA foreign_keys=ON')
     con.execute('CREATE TABLE entities (entity_id TEXT PRIMARY KEY, entity_type TEXT NOT NULL)')
-    order = ["licenses", "sources", "factor_concepts", "authors", "papers", "formulas", "datasets", "factor_variants", "source_records", "implementations", "strategies", "backtest_results", "strategy_factor", "aliases", "id_map", "relationships"]
+    order = ["licenses", "sources", "factor_concepts", "authors", "papers", "formulas", "datasets", "factor_variants", "source_records", "implementations", "strategies", "strategy_concepts", "strategy_templates", "strategy_variants", "backtest_results", "strategy_factor", "aliases", "id_map", "relationships"]
     for name in order:
+        if name not in tables:
+            continue  # Backward-compatible readers/builders for the original factor release.
         rows = tables[name]
-        columns=list(ENTITY_MODELS[name].model_fields) if name in ENTITY_MODELS else list(rows[0]) if rows else []
+        columns=list(ENTITY_MODELS[name].model_fields) if name in ENTITY_MODELS else list(rows[0]) if rows else AUXILIARY_FIELDS.get(name, [])
         pk=PRIMARY_KEYS.get(name)
         rows.sort(key=lambda r: r[pk] if pk else (r['strategy_id'],r['variant_id'],r['role']))
         fields={k:'TEXT' for k in columns}
         for k in columns:
             if k in {'confidence'}:fields[k]='REAL'
-            if k in {'paper_year','year','attribution_required','executed','observations_ingested','backtest_ready'}:fields[k]='INTEGER'
+            if k in {'paper_year','year','attribution_required','executed','observations_ingested','backtest_ready','executable'}:fields[k]='INTEGER'
         definitions=[f'"{k}" {fields[k]}'+(' PRIMARY KEY' if k==pk else '') for k in columns]
         definitions += ['payload TEXT NOT NULL CHECK(json_valid(payload))']
         if name=='strategy_factor':

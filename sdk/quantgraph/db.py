@@ -124,6 +124,8 @@ class FactorDB:
         if entity_type not in mapping:
             raise KeyError(entity_type)
         table,key=mapping[entity_type]
+        if not self._query("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table,)):
+            raise KeyError(entity_id)
         result=self._objects(f'SELECT payload FROM "{table}" WHERE "{key}"=?',(entity_id,))
         if not result:
             raise KeyError(entity_id)
@@ -136,5 +138,10 @@ class FactorDB:
 
     def stats(self):
         from quantgraph.graph.store import PRIMARY_KEYS
-        return dict(profile=self.profile, dataset_scope=self.dataset_scope, release=self.release_path.name,
-                    counts={table:self._query(f'SELECT count(*) FROM "{table}"')[0][0] for table in [*PRIMARY_KEYS,'strategy_factor']})
+        existing = {r[0] for r in self._query("SELECT name FROM sqlite_master WHERE type='table'")}
+        counts = {
+            table: self._query(f'SELECT count(*) FROM "{table}"')[0][0] if table in existing else 0
+            for table in [*PRIMARY_KEYS, 'strategy_factor']
+        }
+        return dict(profile=self.profile, dataset_scope=self.dataset_scope,
+                    release=self.release_path.name, counts=counts)
