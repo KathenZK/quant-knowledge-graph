@@ -19,7 +19,13 @@ def main():
     s=sp.add_parser('export-commercial');s.add_argument('destination',type=Path)
     s=sp.add_parser('import-grokbot');s.add_argument('archive',type=Path)
     sp.add_parser('verify-grokbot')
-    args=p.parse_args();root=project_root(args.root)
+    s=sp.add_parser('ingest-batch');s.add_argument('file',type=Path);s.add_argument('--url',required=True);s.add_argument('--batch-id');s.add_argument('--collector-version');s.add_argument('--gzip',action='store_true')
+    args=p.parse_args()
+    if args.command=='ingest-batch':
+        from .client import QuantGraphClient, load_batch
+        result=QuantGraphClient(args.url).ingest_batch(load_batch(args.file,batch_id=args.batch_id,collector_version=args.collector_version),compress=args.gzip)
+        print(json.dumps(result,ensure_ascii=False,indent=2));return
+    root=project_root(args.root)
     if args.command in {'import-grokbot','verify-grokbot'}:
         from quantgraph.graph.grokbot import import_grokbot, verify_grokbot
         result=import_grokbot(root,args.archive) if args.command=='import-grokbot' else verify_grokbot(root)
