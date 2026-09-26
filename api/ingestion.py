@@ -122,6 +122,13 @@ class ResearchEvidence(BaseModel):
 
 
 def install_ingestion(app, repository, *, keys=None, max_bytes=None):
+    from quantgraph.graph.ingestion_store import ProjectionUnavailable
+
+    @app.exception_handler(ProjectionUnavailable)
+    async def unavailable(request, exc):
+        return JSONResponse({'detail': str(exc), **exc.status, 'items': [],
+                             'promotion_allowed': False}, status_code=503)
+
     app.state.ingestion = repository
     app.state.ingestion_keys = load_keys() if keys is None else keys
     app.add_middleware(BoundedBodyMiddleware, max_bytes=max_bytes or int(os.getenv('QUANTGRAPH_MAX_BODY_BYTES', 2 * 1024 * 1024)))
@@ -193,7 +200,16 @@ def install_ingestion(app, repository, *, keys=None, max_bytes=None):
     @router.get('/v1/research/candidates', dependencies=[Depends(require('research:read'))])
     def candidates(limit: int = Query(100, ge=1, le=1000), offset: int = Query(0, ge=0)):
         # Triage candidates retain all blocking facts. Lab owns admission decisions.
-        return {'items': repository.variants(limit, offset), 'scope': 'TRIAGE_ONLY', 'promotion_allowed': False}
+        return {'items': repository.variants(limit, offset), 'scope': 'TRIAGE_ONLY',
+                **repository.projection_status(), 'promotion_allowed': False}
+
+    @router.get('/v1/research/projection-status', dependencies=[Depends(require('research:read'))])
+    def projection_status():
+        return repository.projection_status()
+
+    @router.get('/v1/ingest/stats', dependencies=[Depends(require('ingest:read'))])
+    def ingest_stats():
+        return repository.ingest_stats()
 
     @router.post('/v1/research/evidence')
     def evidence(value: ResearchEvidence, key_id=Depends(require('research:write'))):
@@ -201,6 +217,11 @@ def install_ingestion(app, repository, *, keys=None, max_bytes=None):
             return repository.put_evidence(value.model_dump(mode='json'), key_id)
         except ValueError as exc:
             raise HTTPException(409, str(exc))
+
+    @router.get('/v1/research/evidence/{variant_id}', dependencies=[Depends(require('research:read'))])
+    def research_evidence(variant_id: str):
+        return {'items': repository.evidence_for(variant_id), 'promotion_allowed': False,
+                'validation_status': 'SUBMITTED_NOT_INDEPENDENTLY_VERIFIED'}
 
     @router.get('/v1/usage')
     def usage(key_id=Depends(require('ingest:read'))):

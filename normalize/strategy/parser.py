@@ -3,14 +3,14 @@ import json
 import re
 import unicodedata
 
-VERSION = 'grok-rule-v2.0'
+VERSION = 'grok-rule-v3.1'
 SYMBOL = r'[A-Z][A-Z0-9.-]{0,9}'
 NUMBER = r'-?\d+(?:\.\d+)?'
-INDICATORS = r'RSI|CCI|MFI|CMF|ATR|TRIX|ADX|ROC|StochRSI|%R|UI|PVO|UO|STC|CMO|Slow%K|Fast%K|Williams%R|\+VI|-VI'
+INDICATORS = r'RSI|CCI|MFI|CMF|ATR|TRIX|ADX|ROC|StochRSI|%R|UI|PVO|UO|STC|CMO|Slow%K|Fast%K|Williams%R|\+VI|-VI|AroonUp|AroonDown|RVI|PPO|TSI|MACD|BOP|DPO|NATR'
 
 
 def canonical_text(text):
-    text = unicodedata.normalize('NFKC', text).replace('−', '-').replace('**', '')
+    text = unicodedata.normalize('NFKC', text).replace('−', '-').replace('**', '').replace('≥', '>=').replace('≤', '<=')
     return re.sub(r'\s+', '', text)
 
 
@@ -32,7 +32,7 @@ def rule_body(text):
         for part in parts:
             if not part:
                 continue
-            if part.startswith(('不是', '计入', '提出日期')):
+            if part.startswith(('不是', '计入', '提出日期', 'OVERRIDE同URL')):
                 in_metadata = True
                 if re.search(r'止损|止盈|但|然后|次日|执行|加仓|减仓', part):
                     return None
@@ -54,7 +54,7 @@ def operand(text):
     m = re.fullmatch(rf'(Wilder)?({INDICATORS}|SMA|EMA|WMA)\((\d+(?:,\d+)*)\)', text)
     if m:
         params = [int(v) for v in m[3].split(',')]
-        arity = {'UO': 3, 'STC': 3, 'Slow%K': 2, 'Fast%K': 1}.get(m[2], 1)
+        arity = {'UO': 3, 'STC': 3, 'Slow%K': 2, 'Fast%K': 1, 'PPO': 2, 'TSI': 2, 'MACD': 3}.get(m[2], 1)
         if any(p <= 0 for p in params) or len(params) != arity:
             return None
         return {'type': 'indicator', 'name': m[2], 'parameters': params,
@@ -77,13 +77,17 @@ def parse_rule(text):
                'executable': False}
     if not body:
         return failure
-    m = re.fullmatch(r'(日频(?:EOD)?|月末)(?:[:：]|(?=比较|若))(.+)', body)
+    m = re.fullmatch(r'(日频(?:EOD)?|月末)(?:[:：;；]|(?=比较|若))(.+)', body)
     if not m:
         return failure
     schedule = 'daily_eod' if m[1].startswith('日频') else 'month_end'
     expr = m[2]
-    from .patterns import extended_ast
-    ast = extended_ast(expr)
+    from .patterns import extended_ast, switch_ast, monthly_ast
+    ast = monthly_ast(expr) if schedule == 'month_end' else None
+    if ast is None:
+        ast = extended_ast(expr)
+    if ast is None:
+        ast = switch_ast(expr, operand)
     rotation = re.fullmatch(rf'比较({SYMBOL})与({SYMBOL})过去(\d+)个?月总分收益[,，]满仓较高者', expr)
     if rotation and int(rotation[3]) > 0:
         ast = {'type': 'relative_momentum_rotation', 'assets': [rotation[1], rotation[2]],

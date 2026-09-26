@@ -20,7 +20,18 @@ def main():
     s=sp.add_parser('import-grokbot');s.add_argument('archive',type=Path)
     sp.add_parser('verify-grokbot')
     s=sp.add_parser('ingest-batch');s.add_argument('file',type=Path);s.add_argument('--url',required=True);s.add_argument('--batch-id');s.add_argument('--collector-version');s.add_argument('--gzip',action='store_true')
+    for cmd in ('projection-status', 'reproject', 'ingest-stats', 'review-record'):
+        s=sp.add_parser(cmd);s.add_argument('--db',type=Path,default=os.getenv('QUANTGRAPH_INGEST_DB'))
+        if cmd=='review-record':s.add_argument('file',type=Path)
     args=p.parse_args()
+    if args.command in {'projection-status', 'reproject', 'ingest-stats', 'review-record'}:
+        if not args.db or not Path(args.db).is_file():
+            p.error('An existing private journal is required: --db or QUANTGRAPH_INGEST_DB')
+        from quantgraph.graph.ingestion_store import SQLiteIngestionRepository
+        repo=SQLiteIngestionRepository(args.db)
+        method=getattr(repo,args.command.replace('-','_'))
+        result=method(json.loads(args.file.read_text())) if args.command=='review-record' else method()
+        print(json.dumps(result,ensure_ascii=False,indent=2));return
     if args.command=='ingest-batch':
         from .client import QuantGraphClient, load_batch
         result=QuantGraphClient(args.url).ingest_batch(load_batch(args.file,batch_id=args.batch_id,collector_version=args.collector_version),compress=args.gzip)

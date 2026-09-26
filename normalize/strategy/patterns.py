@@ -4,6 +4,61 @@ import re
 SYMBOL = r'[A-Z][A-Z0-9.-]{0,9}'
 
 
+def switch_ast(expr, operand):
+    """Explicit conjunctions and full allocations only; no context inference.
+
+    An unnamed +DI, upper band or signal line remains unsupported because its
+    period/input is not stated in the expression. Cash is an unresolved asset,
+    not a fabricated zero-return ETF.
+    """
+    m = re.fullmatch(rf'(?:若)?(.+?)(?:→|则)(次月|下月)?满仓({SYMBOL})[;；,，]?否则(满仓)?({SYMBOL}|现金(?:\(T-bill\))?)', expr)
+    if not m:
+        return None
+    condition, timing, risk, _, safe = m.groups()
+    conditions = []
+    for clause in re.split('且|∧', condition):
+        comparison = re.fullmatch(r'(.+?)(>=|<=|>|<)(.+)', clause)
+        if not comparison:
+            return None
+        left, right = operand(comparison[1]), operand(comparison[3])
+        if not left or not right or left['type'] == 'number':
+            return None
+        if any(x.get('asset') not in {None, risk} for x in (left, right)):
+            return None
+        conditions.append({'operator': comparison[2], 'left': left, 'right': right})
+    if not 1 <= len(conditions) <= 3:
+        return None
+    cash = safe.startswith('现金')
+    return {'type': 'threshold_switch' if len(conditions) == 1 else 'conjunctive_switch',
+            **({'condition': conditions[0]} if len(conditions) == 1 else {'conditions': conditions, 'operator': 'AND'}),
+            'then': {'asset': risk, 'allocation': 'full'},
+            'else': {'asset': None if cash else safe, 'allocation': 'full' if m[4] or cash else None},
+            'safe_asset_description': safe if cash else None,
+            'reported_execution_period': 'following_month' if timing else None}
+
+
+def monthly_ast(expr):
+    m = re.fullmatch(rf'若({SYMBOL})(?:过去|近)(\d+)个?月总分收益>0(?:→|则)(?:次月|下月)?满仓\1[;；,，]?否则(现金(?:\(T-bill\))?|满仓{SYMBOL})', expr)
+    if m and int(m[2]) > 0:
+        cash = m[3].startswith('现金')
+        return {'type': 'absolute_momentum_zero', 'assets': [m[1], None if cash else m[3][2:]],
+                'lookback': {'value': int(m[2]), 'unit': 'months'}, 'threshold': 0,
+                'return_basis': 'total_return_as_reported', 'allocation': 'full',
+                'safe_asset_description': m[3] if cash else None, 'safe_allocation': 'full'}
+    m = re.fullmatch(rf'若({SYMBOL})(?:月收|月收盘)(?:价)?>(?:近|过去)(\d+)个?月(?:收盘SMA|简单均线)(?:→|则)(?:次月|下月)满仓\1[;；,，]?否则(现金(?:\(T-bill\))?)', expr)
+    if not m:
+        m = re.fullmatch(rf'若({SYMBOL})月收盘价高于其过去(\d+)个月收盘均价则下月满仓\1[,，]否则(现金)', expr)
+    if m and int(m[2]) > 0:
+        return {'type': 'threshold_switch', 'condition': {'operator': '>',
+                'left': {'type': 'price', 'field': 'close', 'asset': m[1]},
+                'right': {'type': 'indicator', 'name': 'SMA', 'parameters': [int(m[2])],
+                          'sampling_unit': 'months', 'asset': m[1], 'smoothing': None}},
+                'then': {'asset': m[1], 'allocation': 'full'},
+                'else': {'asset': None, 'allocation': 'full'}, 'safe_asset_description': m[3],
+                'reported_execution_period': 'following_month'}
+    return None
+
+
 def extended_ast(expr):
     # Exact paired rotation with an explicitly stated tie rule.
     m = re.fullmatch(rf'比较({SYMBOL})与({SYMBOL})(?:过去|近)(\d+)个?月总分收益[,，]满仓较高者[;；]平手偏({SYMBOL})', expr)
