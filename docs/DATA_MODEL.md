@@ -44,4 +44,4 @@ Pydantic 合约在 `models/entities.py`；JSON Schema 在 `models/schemas/`。�
 
 `USES_FACTOR`/strategy_factor 的 `RULE_LINK_ONLY` 只能证明规则使用了某个信号。要回答“收益由什么驱动”，必须由研究项目提供有合约、数据、成本及检验信息的 BacktestResult，并把 attribution_status 标记为 EMPIRICALLY_TESTED。合约要求这种标记必须绑定结果引用。
 
-当前不写自造 Strategy 或 BacktestResult。第二阶段入口先保存标准化描述和 artifact URI/hash，再做关联审核。
+GrokBot V1 使用 StrategyConcept/Family、StrategyTemplate、StrategyVariant 最小层次，并投影到兼容的 Strategy。完整候选留在私有 normalized；支持的规则语法进入独立私有 curated。旧筛选结果标为 LEGACY_GROKBOT_SCREEN，不能用于 EMPIRICALLY_TESTED；不执行或复现上游代码。详见根目录 ARCHITECTURE.md。

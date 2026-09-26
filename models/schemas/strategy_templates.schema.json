@@ -1,0 +1,31 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "semantics_status": {
+      "const": "NOT_VERIFIED",
+      "default": "NOT_VERIFIED",
+      "title": "Semantics Status",
+      "type": "string"
+    },
+    "strategy_concept_id": {
+      "title": "Strategy Concept Id",
+      "type": "string"
+    },
+    "strategy_template_id": {
+      "title": "Strategy Template Id",
+      "type": "string"
+    },
+    "template_ast": {
+      "additionalProperties": true,
+      "title": "Template Ast",
+      "type": "object"
+    }
+  },
+  "required": [
+    "strategy_template_id",
+    "strategy_concept_id",
+    "template_ast"
+  ],
+  "title": "StrategyTemplate",
+  "type": "object"
+}

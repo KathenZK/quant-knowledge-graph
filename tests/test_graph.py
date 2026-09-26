@@ -134,7 +134,7 @@ def test_unknown_rights_are_not_promoted():
 
 
 def test_all_required_entities_have_real_contracts():
-    assert set(ENTITY_MODELS)=={'factor_concepts','factor_variants','formulas','papers','authors','sources','licenses','datasets','implementations','strategies','strategy_factor','backtest_results','relationships'}
+    assert set(ENTITY_MODELS)=={'factor_concepts','factor_variants','formulas','papers','authors','sources','licenses','datasets','implementations','strategies','strategy_factor','backtest_results','relationships','strategy_concepts','strategy_templates','strategy_variants'}
 
 
 def test_concept_aliases_resolve_without_merging_parameters():

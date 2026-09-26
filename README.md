@@ -33,7 +33,7 @@ variant = rows[0]
 factor = db.get_factor(variant["canonical_factor_id"])
 related = db.find_related_factors(variant["factor_variant_id"])
 print(db.stats())
-print(db.find_strategies(factor="momentum"))  # 策略层尚未导入，返回 []
+print(db.find_strategies(factor="momentum"))  # 公开 Qlib 批次不含私有策略，返回 []
 ```
 
 在其他项目使用时安装本包，并设置 `QUANTGRAPH_ROOT` 指向克隆目录，或传入 `FactorDB(root="/path/to/quant-knowledge-graph")`。wheel 不捆绑数据。
@@ -60,7 +60,7 @@ quant-knowledge-graph → quant-research-lab → quant-runner
     知识与来源             研究与验证           交易与风控
 ```
 
-知识库不包含既有研究项目的研究引擎，也没有向 runner 发布策略的接口。策略层和 BacktestResult 已有独立 schema，后续仅接入标准化描述、来源及研究结果引用。
+知识库不包含既有研究项目的研究引擎，也没有向 runner 发布策略的接口。GrokBot 策略候选和旧筛选结果通过独立私有发布接入；研究验证和实盘执行仍分别属于下游两个项目。
 
 ## 仓库结构
 
@@ -98,4 +98,34 @@ OSAP、JKP、French、AQR、WorldQuant/GTJA 的采集逻辑和来源索引可供
 - [研究项目接入契约](docs/RESEARCH_INTEGRATION.md)
 - [长期维护](docs/MAINTENANCE.md)
 
-下一阶段优先补齐论文和公式语义、审核重复候选，再接入策略描述与研究结果引用。
+下一阶段优先审核规则语义、来源与许可，再由研究项目完成独立复现。
+
+
+## GrokBot Strategy Corpus V1
+
+GrokBot 数据按 **raw → normalized → curated** 导入。5,813 行是来源候选记录，不是 5,813 个独立策略。公开仓库不分发这批完整语料；真实导入统计见 [汇总报告](reports/grok_strategy_import_v1.md) 和 [机器可读统计](reports/grok_strategy_import_v1.json)。
+
+```sh
+uv run quantgraph import-grokbot /private/path/quant-handoff-minimal-2026-09-24.tar.gz
+uv run quantgraph verify-grokbot
+```
+
+导入器保留原始压缩包字节、原生 ID、规则全文、市场原文和历史日期字段。来源支持的指标/方法与 GrokBot 生成的阈值、ETF 配置分开标注；RSI 指标定义不会被冒充为原作者发布的 ETF 切换策略。解析失败的规则保留为 REVIEW，不生成猜测的 AST。日期没有独立证据时保持为空。
+
+策略族、模板、变体和引用关系进入独立的私有图谱；现有 `Strategy` 查询保持兼容：
+
+```python
+from pathlib import Path
+from quantgraph import FactorDB
+
+corpus = Path("datasets/curated/grokbot")
+release = (corpus / "CURRENT").read_text().strip()
+db = FactorDB(database=corpus / "releases" / release / "quantgraph.sqlite")
+strategies = db.find_strategies()
+links = db.get_strategy_factors(strategies[0]["strategy_id"])
+# 所有关联均为 RULE_LINK_ONLY；信号定义不代表收益归因。
+```
+
+私有定义准入、可执行性和许可是三个独立检查。所有记录目前均需许可和执行合约复核；`PARSED` 不等于可交易，`executable` 全为 false。已有回测仅作为 `LEGACY_GROKBOT_SCREEN`，不算研究复现或有效性证明。默认公开 API 和商业导出不包含这些私有规则。详见 [ARCHITECTURE](ARCHITECTURE.md)。
+
+新增测试使用人工构造的样例；维护者可用 `GROKBOT_TEST_ARCHIVE=/private/path/input.tar.gz uv run pytest -q` 额外验证真实 5,813 条批次。公开 CI 没有私有语料时会明确跳过这一条测试。

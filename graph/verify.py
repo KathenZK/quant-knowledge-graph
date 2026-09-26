@@ -55,6 +55,8 @@ def verify_graph(path,commercial=False):
             require(set(json.loads(row[0]))<=allowed,table+':'+field+' dangling JSON reference')
     wrong=con.execute('SELECT r.relationship_id FROM relationships r JOIN entities e ON r.from_id=e.entity_id WHERE r.from_type!=e.entity_type UNION SELECT r.relationship_id FROM relationships r JOIN entities e ON r.to_id=e.entity_id WHERE r.to_type!=e.entity_type').fetchall()
     require(not wrong,'Graph endpoint type mismatch')
+    invalid_attribution=con.execute("SELECT sf.strategy_id FROM strategy_factor sf JOIN backtest_results b ON b.backtest_result_id=sf.backtest_result_id WHERE sf.attribution_status='EMPIRICALLY_TESTED' AND (b.result_kind='LEGACY_GROKBOT_SCREEN' OR b.strategy_id!=sf.strategy_id)").fetchall()
+    require(not invalid_attribution,'Legacy screen or different strategy cannot support empirical attribution')
     if commercial:
         require({r[0] for r in con.execute('SELECT source_id FROM sources')} <= {'qlib'},'Restricted source in commercial graph')
         require(con.execute('SELECT count(*) FROM strategies').fetchone()[0]==0,'Unreviewed strategy in commercial graph')

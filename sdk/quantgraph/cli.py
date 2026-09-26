@@ -17,7 +17,13 @@ def main():
     s=sp.add_parser('search');s.add_argument('query');s.add_argument('--profile',choices=['research','commercial'],default='research');s.add_argument('--limit',type=int,default=10)
     s=sp.add_parser('serve');s.add_argument('--profile',choices=['research','commercial'],default='commercial');s.add_argument('--port',type=int,default=8000)
     s=sp.add_parser('export-commercial');s.add_argument('destination',type=Path)
+    s=sp.add_parser('import-grokbot');s.add_argument('archive',type=Path)
+    sp.add_parser('verify-grokbot')
     args=p.parse_args();root=project_root(args.root)
+    if args.command in {'import-grokbot','verify-grokbot'}:
+        from quantgraph.graph.grokbot import import_grokbot, verify_grokbot
+        result=import_grokbot(root,args.archive) if args.command=='import-grokbot' else verify_grokbot(root)
+        print(json.dumps(result,ensure_ascii=False,indent=2));return
     if args.command=='build-public':
         from quantgraph.graph.public import build_public
         result=build_public(root)
