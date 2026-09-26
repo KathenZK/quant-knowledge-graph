@@ -32,7 +32,7 @@
 
 Graph 显式提供本机原始 archive 后，私有语料回归测试也通过；公开 CI 不携带私有数据，因此会跳过相应检查。另使用真实认证 HTTP 从 Lab 读完5813条并复算候选。Lab 跳过项依赖隔离 main 未携带的本地研究数据/历史制品，不能声称这些研究已验收。Python 仓库没有单独静态 typecheck 配置。
 
-Runner 原基线 rustls RUSTSEC-2026-0285 已通过0.23.45解决；chacha20 0.10.1 yanked 为允许警告，尚未消除。首次 push 的 audit 无漏洞但因缺少 checks:write 无法发布状态；仅给 audit job 和对应复用调用补足该权限。Graph 测试还有 Starlette/httpx 弃用警告。GitHub CI 必须以各 PR 最新提交的实际状态为准，本表不是远端 CI 结果。
+Runner 原基线 rustls RUSTSEC-2026-0285 已通过0.23.45解决；chacha20 0.10.1 yanked 已更新至兼容的0.10.2。首次 push 的 audit 无漏洞但因缺少 checks:write 无法发布状态；仅给 audit job 和对应复用调用补足该权限。Graph 测试还有 Starlette/httpx 弃用警告。GitHub CI 必须以各 PR 最新提交的实际状态为准，本表不是远端 CI 结果。
 
 ## 版本与复现
 
