@@ -47,3 +47,12 @@ A family groups a reported method. A template retains signal/operator/schedule w
 Native IDs are checked for uniqueness. Archive members are size-bounded; links, traversal and duplicate members are rejected. The complete original archive is content-addressed, never rewritten and never executed. A separate import lock prevents concurrent publications. Release manifests cover all graph exports; normalized manifests pin the input-to-output projection. `verify-grokbot` replays normalization and curation, checks every record and typed graph row, foreign keys, export agreement, raw checksums and an empty commercial subgraph.
 
 The public-tree check only permits the exact JSON aggregate schema and its generated Markdown projection. Free-form corpus text and source lists cannot be added to these report exceptions. Full private factor `validate-release` and public Qlib rebuild tests remain independent of corpus import.
+
+## Incremental ingestion boundary
+
+`api/ingestion.py` → `IngestionRepository` → private append-only submissions/revisions/observations/projections。
+SQLite 是默认 adapter；normalized projection 复用原严格 parser 与 provenance，
+rights 一律独立待审。HTTP SDK 位于 `sdk/quantgraph/client.py`。
+研究层通过 scope 受控接口读取候选、提交不可变 ResearchEvidence；证据写回不修改
+StrategyFactor 归因状态、不触发晋级。公共 profile 与私有 journal 没有自动合并路径。
+详见 [接口和部署](docs/INGESTION.md)。

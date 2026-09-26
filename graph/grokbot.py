@@ -199,7 +199,8 @@ def curate_corpus(rows, concepts, templates, screens, bundle):
             source_native_id=raw['id'], source_url=source, source_locator=v['source_locator'], sha256=v['source_sha256'], dataset_id=did)
         links = dict(strategy_id=sid, factor_id=cid, variant_id=fid, role='signal', confidence=1.0,
             evidence='Explicit signal reference in parsed uploaded rule; no empirical attribution.', source=source,
-            attribution_status='RULE_LINK_ONLY', backtest_result_id=None)
+            attribution_status='RULE_LINK_ONLY', backtest_result_id=None,
+            link_reason='PARSED_RULE_SIGNAL_REFERENCE', parser_version=v['parser_version'])
         tables['strategy_factor'].append(links)
         related_results = [b['backtest_result_id'] for b in screens if b['strategy_id'] == sid]
         tables['strategies'].append(dict(strategy_id=sid, canonical_name=raw['名称'], description=raw['规则'],

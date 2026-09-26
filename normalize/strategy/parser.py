@@ -3,10 +3,10 @@ import json
 import re
 import unicodedata
 
-VERSION = 'grok-rule-v1.0'
+VERSION = 'grok-rule-v2.0'
 SYMBOL = r'[A-Z][A-Z0-9.-]{0,9}'
 NUMBER = r'-?\d+(?:\.\d+)?'
-INDICATORS = r'RSI|CCI|MFI|CMF|ATR|TRIX|ADX|ROC|StochRSI|%R|UI|PVO'
+INDICATORS = r'RSI|CCI|MFI|CMF|ATR|TRIX|ADX|ROC|StochRSI|%R|UI|PVO|UO|STC|CMO|Slow%K|Fast%K|Williams%R|\+VI|-VI'
 
 
 def canonical_text(text):
@@ -23,6 +23,11 @@ def rule_body(text):
         if re.search(r'止损|止盈|杠杆|仓位|并且|同时', prefix):
             return None
         body = []
+        # Some legacy envelopes put the complete rule after a colon in the
+        # introductory sentence. Preserve that clause instead of discarding it.
+        inline = re.search(r'[:：]((?:日频|月末).+)$', prefix)
+        if inline:
+            body.append(inline[1])
         in_metadata = False
         for part in parts:
             if not part:
@@ -44,15 +49,24 @@ def operand(text):
         return {'type': 'number', 'value': float(text)}
     if text in {'收盘', 'Close', 'close'}:
         return {'type': 'price', 'field': 'close', 'asset': None}
-    if text in {'VIX', 'IBS'}:
+    if text in {'VIX', 'IBS', 'OBV'}:
         return {'type': 'indicator', 'name': text, 'parameters': [], 'asset': None}
     m = re.fullmatch(rf'(Wilder)?({INDICATORS}|SMA|EMA|WMA)\((\d+(?:,\d+)*)\)', text)
     if m:
         params = [int(v) for v in m[3].split(',')]
-        if any(p <= 0 for p in params):
+        arity = {'UO': 3, 'STC': 3, 'Slow%K': 2, 'Fast%K': 1}.get(m[2], 1)
+        if any(p <= 0 for p in params) or len(params) != arity:
             return None
         return {'type': 'indicator', 'name': m[2], 'parameters': params,
                 'smoothing': 'Wilder' if m[1] else None, 'asset': None}
+    m = re.fullmatch(r'([A-Z][A-Z.-]{0,9})(\d+)日实现波动×√252', text)
+    if m and int(m[2]) > 1:
+        return {'type': 'indicator', 'name': 'realized_volatility', 'asset': m[1],
+                'parameters': [int(m[2])], 'annualization': 252, 'return_basis': None, 'ddof': None}
+    m = re.fullmatch(r'(SMA|EMA)\((\d+)ofOBV\)', text)
+    if m and int(m[2]) > 0:
+        return {'type': 'indicator', 'name': m[1], 'parameters': [int(m[2])],
+                'input': {'type': 'indicator', 'name': 'OBV'}, 'asset': None}
     return None
 
 
@@ -63,20 +77,21 @@ def parse_rule(text):
                'executable': False}
     if not body:
         return failure
-    m = re.fullmatch(r'(日频(?:EOD)?|月末)[:：](.+)', body)
+    m = re.fullmatch(r'(日频(?:EOD)?|月末)(?:[:：]|(?=比较|若))(.+)', body)
     if not m:
         return failure
     schedule = 'daily_eod' if m[1].startswith('日频') else 'month_end'
     expr = m[2]
-    ast = None
+    from .patterns import extended_ast
+    ast = extended_ast(expr)
     rotation = re.fullmatch(rf'比较({SYMBOL})与({SYMBOL})过去(\d+)个?月总分收益[,，]满仓较高者', expr)
     if rotation and int(rotation[3]) > 0:
         ast = {'type': 'relative_momentum_rotation', 'assets': [rotation[1], rotation[2]],
                'lookback': {'value': int(rotation[3]), 'unit': 'months'},
                'return_basis': 'total_return_as_reported', 'allocation': 'full', 'tie_policy': None}
-    m = re.fullmatch(rf'(?:若)?(.+?)→(满仓)?({SYMBOL})[,，]?否则({SYMBOL})', expr)
+    m = re.fullmatch(rf'(?:若)?(.+?)→(满仓)?({SYMBOL})[,，]?否则(满仓)?({SYMBOL})', expr)
     if m:
-        condition, risk, safe = m[1], m[3], m[4]
+        condition, risk, safe = m[1], m[3], m[5]
         allocation = 'full' if m[2] else None
         absolute = re.fullmatch(rf'({SYMBOL})过去(\d+)个?月总分收益>([A-Z][A-Z0-9.-]*)同期', condition)
         if absolute and absolute[1] == risk and absolute[3] == safe and int(absolute[2]) > 0:
@@ -87,9 +102,9 @@ def parse_rule(text):
             comparison = re.fullmatch(r'(.+?)(>=|<=|>|<)(.+)', condition)
             if comparison:
                 left, right = operand(comparison[1]), operand(comparison[3])
-                if left and right and left['type'] != 'number':
+                if left and right and left['type'] != 'number' and left.get('asset') in {None, risk}:
                     ast = {'type': 'threshold_switch', 'condition': {'operator': comparison[2], 'left': left, 'right': right},
-                           'then': {'asset': risk, 'allocation': allocation}, 'else': {'asset': safe, 'allocation': None}}
+                           'then': {'asset': risk, 'allocation': allocation}, 'else': {'asset': safe, 'allocation': 'full' if m[4] else None}}
     if ast is None:
         return failure
     ast.update(schedule=schedule, execution_timing=None, price_adjustment=None,

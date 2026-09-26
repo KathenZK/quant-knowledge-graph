@@ -195,6 +195,8 @@ class StrategyFactor(Model):
     source: str = Field(min_length=1)
     attribution_status: Literal["RULE_LINK_ONLY", "EMPIRICALLY_TESTED"] = "RULE_LINK_ONLY"
     backtest_result_id: str | None = None
+    link_reason: str | None = None
+    parser_version: str | None = None
 
     @model_validator(mode="after")
     def attribution_requires_result(self):
@@ -269,6 +271,8 @@ class StrategyVariant(Rights):
     source_sha256: str
     source_locator: str
     original_rule_text: str
+    ingestion_lineage: dict | None = None
+    auditable_metadata: dict = Field(default_factory=dict)
     normalized_rule: str | None
     rule_ast: dict | None
     parser_version: str

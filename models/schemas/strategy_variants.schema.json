@@ -38,6 +38,11 @@
       ],
       "title": "Attribution Required"
     },
+    "auditable_metadata": {
+      "additionalProperties": true,
+      "title": "Auditable Metadata",
+      "type": "object"
+    },
     "commercial_use": {
       "$ref": "#/$defs/Permission"
     },
@@ -67,6 +72,19 @@
       "default": false,
       "title": "Executable",
       "type": "boolean"
+    },
+    "ingestion_lineage": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ingestion Lineage"
     },
     "license": {
       "title": "License",

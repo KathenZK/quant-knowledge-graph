@@ -4,7 +4,7 @@ from fastapi import FastAPI, Query, HTTPException
 from quantgraph import FactorDB, AmbiguousAliasError
 
 
-def create_app(root=None, profile=None):
+def create_app(root=None, profile=None, *, ingestion_repository=None, ingestion_keys=None, max_body_bytes=None):
     selected=profile or os.getenv('QUANTGRAPH_PROFILE','commercial')
     db=FactorDB(root,profile=selected)
     app=FastAPI(title='Quant Knowledge Graph',version='0.2.0',description='Curated definitions and provenance; no backtest or strategy execution endpoints.')
@@ -17,6 +17,11 @@ def create_app(root=None, profile=None):
     @app.get('/v1/stats')
     def stats():
         return db.stats()
+
+    @app.get('/v1/ontology/factor-concepts')
+    def economic_concepts():
+        from quantgraph.graph.ontology.canonical import concepts
+        return {'items': concepts(), 'scope': 'CATEGORY_RELATIONS_NOT_FORMULA_EQUIVALENCE'}
 
     @app.get('/v1/factors')
     def factors(q:str|None=None,category:str|None=None,asset_class:str|None=None,source:str|None=None,
@@ -61,4 +66,10 @@ def create_app(root=None, profile=None):
     def relationships(entity_id:str,limit:int=Query(100,ge=1,le=1000),offset:int=Query(0,ge=0)):
         return {'items':db.relationships(entity_id,limit=limit,offset=offset)}
 
+    # Private journal is opt-in. It is never merged into public/commercial releases.
+    if ingestion_repository is not None or os.getenv('QUANTGRAPH_INGEST_DB'):
+        from quantgraph.api.ingestion import install_ingestion
+        from quantgraph.graph.ingestion_store import SQLiteIngestionRepository
+        repository = ingestion_repository or SQLiteIngestionRepository(os.environ['QUANTGRAPH_INGEST_DB'])
+        install_ingestion(app, repository, keys=ingestion_keys, max_bytes=max_body_bytes)
     return app

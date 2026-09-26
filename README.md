@@ -129,3 +129,9 @@ links = db.get_strategy_factors(strategies[0]["strategy_id"])
 私有定义准入、可执行性和许可是三个独立检查。所有记录目前均需许可和执行合约复核；`PARSED` 不等于可交易，`executable` 全为 false。已有回测仅作为 `LEGACY_GROKBOT_SCREEN`，不算研究复现或有效性证明。默认公开 API 和商业导出不包含这些私有规则。详见 [ARCHITECTURE](ARCHITECTURE.md)。
 
 新增测试使用人工构造的样例；维护者可用 `GROKBOT_TEST_ARCHIVE=/private/path/input.tar.gz uv run pytest -q` 额外验证真实 5,813 条批次。公开 CI 没有私有语料时会明确跳过这一条测试。
+
+## 增量 GrokBot 与研究联通
+
+[Ingestion API / Python SDK / CLI / 部署](docs/INGESTION.md) ·
+[规则和本体进度](docs/ONTOLOGY_PROGRESS.md) · [实际联通验证](docs/ingestion-validation.json)。
+私有原始记录只追加；公开商业接口继续使用许可安全 release。知识层不直接对接 runner。
