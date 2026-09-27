@@ -282,7 +282,8 @@ class StrategyVariant(Rights):
     provenance_evidence: str
     source_support: str
     source_verification: Literal["NOT_INDEPENDENTLY_VERIFIED", "VERIFIED"] = "NOT_INDEPENDENTLY_VERIFIED"
-    variation_axes: list[Literal["PARAMETER_VARIANT", "MARKET_VARIANT", "ASSET_VARIANT"]] = Field(default_factory=list)
+    variation_axes: list[Literal["PARAMETER_VARIANT", "MARKET_VARIANT", "ASSET_VARIANT", "TIMEFRAME_VARIANT", "UNIVERSE_VARIANT", "EXECUTION_VARIANT"]] = Field(default_factory=list)
+    possible_variation_axes: list[str] = Field(default_factory=list)
     concept_origin_date: str | None = None
     source_publication_date: str | None = None
     variant_created_at: str | None = None

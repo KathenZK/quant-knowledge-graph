@@ -13,6 +13,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, ConfigDict, Field
 
 from quantgraph.models.ingestion import IngestBatch
+from quantgraph.models.evidence import MarketResearchEvidence
 
 bearer = HTTPBearer(auto_error=False)
 
@@ -203,6 +204,15 @@ def install_ingestion(app, repository, *, keys=None, max_bytes=None):
         return {'items': repository.variants(limit, offset), 'scope': 'TRIAGE_ONLY',
                 **repository.projection_status(), 'promotion_allowed': False}
 
+    @router.get('/v1/research/assessments', dependencies=[Depends(require('research:read'))])
+    def assessments():
+        from quantgraph.graph.evidence_queue import summarize
+        rows, cursor = [], 0
+        while page := repository.variants(1000, cursor):
+            rows.extend(page)
+            cursor += len(page)
+        return {**summarize(rows), **repository.projection_status(), 'promotion_allowed': False}
+
     @router.get('/v1/research/projection-status', dependencies=[Depends(require('research:read'))])
     def projection_status():
         return repository.projection_status()
@@ -212,7 +222,7 @@ def install_ingestion(app, repository, *, keys=None, max_bytes=None):
         return repository.ingest_stats()
 
     @router.post('/v1/research/evidence')
-    def evidence(value: ResearchEvidence, key_id=Depends(require('research:write'))):
+    def evidence(value: ResearchEvidence | MarketResearchEvidence, key_id=Depends(require('research:write'))):
         try:
             return repository.put_evidence(value.model_dump(mode='json'), key_id)
         except ValueError as exc:

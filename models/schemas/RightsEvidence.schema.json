@@ -1,0 +1,157 @@
+{
+  "$defs": {
+    "EvidenceArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "uri": {
+          "minLength": 1,
+          "title": "Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256"
+      ],
+      "title": "EvidenceArtifact",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifact": {
+      "$ref": "#/$defs/EvidenceArtifact"
+    },
+    "attribution": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Attribution"
+    },
+    "attribution_required": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Attribution Required"
+    },
+    "commercial_use_allowed": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Commercial Use Allowed"
+    },
+    "derivative_allowed": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Derivative Allowed"
+    },
+    "license_checked_at": {
+      "format": "date-time",
+      "title": "License Checked At",
+      "type": "string"
+    },
+    "license_confidence": {
+      "enum": [
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "UNKNOWN"
+      ],
+      "title": "License Confidence",
+      "type": "string"
+    },
+    "license_source": {
+      "minLength": 1,
+      "title": "License Source",
+      "type": "string"
+    },
+    "rationale": {
+      "minLength": 1,
+      "title": "Rationale",
+      "type": "string"
+    },
+    "redistribution_allowed": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Redistribution Allowed"
+    },
+    "research_use_allowed": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Research Use Allowed"
+    },
+    "research_use_scope": {
+      "enum": [
+        "PRIVATE_INTERNAL_RESEARCH",
+        "PERSONAL_NONCOMMERCIAL",
+        "UNKNOWN"
+      ],
+      "title": "Research Use Scope",
+      "type": "string"
+    },
+    "scope": {
+      "enum": [
+        "SOURCE_TEXT",
+        "IMPLEMENTATION_CODE",
+        "MARKET_DATA"
+      ],
+      "title": "Scope",
+      "type": "string"
+    }
+  },
+  "required": [
+    "scope",
+    "research_use_allowed",
+    "research_use_scope",
+    "commercial_use_allowed",
+    "redistribution_allowed",
+    "derivative_allowed",
+    "attribution_required",
+    "attribution",
+    "license_source",
+    "license_checked_at",
+    "license_confidence",
+    "artifact",
+    "rationale"
+  ],
+  "title": "RightsEvidence",
+  "type": "object"
+}

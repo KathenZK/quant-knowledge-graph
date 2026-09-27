@@ -5,13 +5,15 @@ import json
 from quantgraph.graph.grokbot import content_hash, stable_json
 from quantgraph.models.ingestion import IngestRecord
 
-SCHEMA_VERSION = 3
-SEMANTIC_HASH_VERSION = 'strategy-record-semantics-v1'
-IMMUTABLE_TABLES = ('revision_semantics', 'observation_payloads', 'submission_bytes', 'review_decisions')
+SCHEMA_VERSION = 4
+LEGACY_HASH_VERSION = 'strategy-record-semantics-v1'
+SEMANTIC_HASH_VERSION = 'strategy-record-semantics-v2'
+IMMUTABLE_TABLES = ('revision_semantics', 'revision_semantics_v2', 'observation_hash_versions',
+                    'observation_payloads', 'submission_bytes', 'review_decisions')
 
 
-def semantic_hash(raw):
-    return content_hash(IngestRecord.model_validate(raw).semantic_payload())
+def semantic_hash(raw, version=SEMANTIC_HASH_VERSION):
+    return content_hash(IngestRecord.model_validate(raw).semantic_payload(version))
 
 
 def migrate(con):
@@ -37,9 +39,20 @@ def migrate(con):
     con.execute('''CREATE TABLE IF NOT EXISTS review_decisions (
         decision_id TEXT PRIMARY KEY, record_id TEXT NOT NULL, semantic_record_hash TEXT NOT NULL,
         payload TEXT NOT NULL, created_at TEXT NOT NULL)''')
+    con.execute('''CREATE TABLE IF NOT EXISTS revision_semantics_v2 (
+        record_id TEXT NOT NULL, revision INTEGER NOT NULL,
+        semantic_record_hash TEXT NOT NULL, hash_version TEXT NOT NULL,
+        PRIMARY KEY(record_id, revision),
+        FOREIGN KEY(record_id, revision) REFERENCES revisions(record_id, revision))''')
+    con.execute('''CREATE TABLE IF NOT EXISTS observation_hash_versions (
+        job_id TEXT NOT NULL, record_id TEXT NOT NULL, hash_version TEXT NOT NULL,
+        PRIMARY KEY(job_id,record_id),
+        FOREIGN KEY(job_id,record_id) REFERENCES observation_payloads(job_id,record_id))''')
     if version < SCHEMA_VERSION:
         for row in con.execute('SELECT record_id,revision,raw_payload FROM revisions').fetchall():
             con.execute('INSERT OR IGNORE INTO revision_semantics VALUES (?,?,?,?)',
+                        (row['record_id'], row['revision'], semantic_hash(json.loads(row['raw_payload']), LEGACY_HASH_VERSION), LEGACY_HASH_VERSION))
+            con.execute('INSERT OR IGNORE INTO revision_semantics_v2 VALUES (?,?,?,?)',
                         (row['record_id'], row['revision'], semantic_hash(json.loads(row['raw_payload'])), SEMANTIC_HASH_VERSION))
         for row in con.execute('SELECT job_id,payload,raw_bytes FROM submissions').fetchall():
             con.execute('INSERT OR IGNORE INTO submission_bytes VALUES (?,?)',
@@ -52,5 +65,7 @@ def migrate(con):
                 payload = record.audit_payload()
                 con.execute('INSERT OR IGNORE INTO observation_payloads VALUES (?,?,?,?,?)',
                             (row['job_id'], record.record_id, content_hash(payload),
-                             stable_json(payload), content_hash(record.semantic_payload())))
+                             stable_json(payload), content_hash(record.semantic_payload(LEGACY_HASH_VERSION))))
+                con.execute('INSERT OR IGNORE INTO observation_hash_versions VALUES (?,?,?)',
+                            (row['job_id'], record.record_id, LEGACY_HASH_VERSION))
     con.execute(f'PRAGMA user_version={SCHEMA_VERSION}')

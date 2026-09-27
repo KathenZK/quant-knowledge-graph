@@ -1,0 +1,190 @@
+{
+  "$defs": {
+    "EvidenceArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "uri": {
+          "minLength": 1,
+          "title": "Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256"
+      ],
+      "title": "EvidenceArtifact",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "adjustment_method": {
+      "title": "Adjustment Method",
+      "type": "string"
+    },
+    "calendar": {
+      "title": "Calendar",
+      "type": "string"
+    },
+    "data_availability_status": {
+      "enum": [
+        "VERIFIED_AVAILABLE",
+        "PENDING",
+        "UNAVAILABLE"
+      ],
+      "title": "Data Availability Status",
+      "type": "string"
+    },
+    "data_source": {
+      "minLength": 1,
+      "title": "Data Source",
+      "type": "string"
+    },
+    "data_types": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Data Types",
+      "type": "array"
+    },
+    "dataset_hash": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dataset Hash"
+    },
+    "dataset_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Dataset Version"
+    },
+    "downloaded_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Downloaded At"
+    },
+    "end_date": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "End Date"
+    },
+    "evidence": {
+      "$ref": "#/$defs/EvidenceArtifact"
+    },
+    "exchange": {
+      "minLength": 1,
+      "title": "Exchange",
+      "type": "string"
+    },
+    "frequency": {
+      "minLength": 1,
+      "title": "Frequency",
+      "type": "string"
+    },
+    "quality_status": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNVERIFIED"
+      ],
+      "title": "Quality Status",
+      "type": "string"
+    },
+    "raw_data_hashes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Raw Data Hashes",
+      "type": "array"
+    },
+    "real_market_data": {
+      "title": "Real Market Data",
+      "type": "boolean"
+    },
+    "required_fields": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Required Fields",
+      "type": "array"
+    },
+    "start_date": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Start Date"
+    },
+    "symbols": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Symbols",
+      "type": "array"
+    },
+    "timezone": {
+      "title": "Timezone",
+      "type": "string"
+    }
+  },
+  "required": [
+    "data_types",
+    "symbols",
+    "required_fields",
+    "frequency",
+    "data_availability_status",
+    "data_source",
+    "exchange",
+    "dataset_version",
+    "downloaded_at",
+    "adjustment_method",
+    "timezone",
+    "calendar",
+    "start_date",
+    "end_date",
+    "real_market_data",
+    "quality_status",
+    "evidence"
+  ],
+  "title": "DataRequirement",
+  "type": "object"
+}

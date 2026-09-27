@@ -63,6 +63,12 @@ class QuantGraphClient:
     def export_research_candidates(self, **page):
         return self._request('GET', '/v1/research/candidates', params=page)
 
+    def research_assessments(self):
+        return self._request('GET', '/v1/research/assessments')
+
+    def research_evidence(self, variant_id):
+        return self._request('GET', '/v1/research/evidence/' + quote(variant_id, safe=''))
+
     def submit_research_evidence(self, evidence):
         return self._request('POST', '/v1/research/evidence', json=evidence)
 

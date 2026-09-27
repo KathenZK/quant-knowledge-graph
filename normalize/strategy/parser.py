@@ -3,7 +3,7 @@ import json
 import re
 import unicodedata
 
-VERSION = 'grok-rule-v3.1'
+VERSION = 'grok-rule-v4.0'
 SYMBOL = r'[A-Z][A-Z0-9.-]{0,9}'
 NUMBER = r'-?\d+(?:\.\d+)?'
 INDICATORS = r'RSI|CCI|MFI|CMF|ATR|TRIX|ADX|ROC|StochRSI|%R|UI|PVO|UO|STC|CMO|Slow%K|Fast%K|Williams%R|\+VI|-VI|AroonUp|AroonDown|RVI|PPO|TSI|MACD|BOP|DPO|NATR'
@@ -71,6 +71,13 @@ def operand(text):
 
 
 def parse_rule(text):
+    if text.startswith('QG-DSL/1\n'):
+        from .dsl import parse_dsl
+        ast = parse_dsl(text)
+        return {'parse_status':'PARSED' if ast else 'REVIEW','rule_ast':ast,
+                'normalized_rule':json.dumps(ast,ensure_ascii=False,sort_keys=True,separators=(',', ':')) if ast else None,
+                'parser_version':VERSION,'parse_reason':'EXPLICIT_DSL_REQUIRES_SOURCE_REVIEW' if ast else 'INVALID_DSL',
+                'executable':False}
     body = rule_body(text)
     failure = {'parse_status': 'REVIEW', 'rule_ast': None, 'normalized_rule': None,
                'parser_version': VERSION, 'parse_reason': 'UNSUPPORTED_OR_AMBIGUOUS_RULE',
@@ -83,6 +90,7 @@ def parse_rule(text):
     schedule = 'daily_eod' if m[1].startswith('日频') else 'month_end'
     expr = m[2]
     from .patterns import extended_ast, switch_ast, monthly_ast
+    from .patterns_v3 import parse_explicit
     ast = monthly_ast(expr) if schedule == 'month_end' else None
     if ast is None:
         ast = extended_ast(expr)
@@ -110,6 +118,8 @@ def parse_rule(text):
                     ast = {'type': 'threshold_switch', 'condition': {'operator': comparison[2], 'left': left, 'right': right},
                            'then': {'asset': risk, 'allocation': allocation}, 'else': {'asset': safe, 'allocation': 'full' if m[4] else None}}
     if ast is None:
+        ast = parse_explicit(expr, operand, schedule)
+    if ast is None:
         return failure
     ast.update(schedule=schedule, execution_timing=None, price_adjustment=None,
                missing_data_policy=None, costs=None)
@@ -120,12 +130,14 @@ def parse_rule(text):
 
 
 def family_key(ast):
+    if ast['type'] == 'long_only_signal':
+        return 'mean_reversion' if ast['signal']=='ZSCORE_REVERSION' else 'moving_average'
     if ast['type'] != 'threshold_switch':
         return ast['type']
     signal = ast['condition']['left']
     if signal['type'] == 'price' or signal.get('name') in {'SMA', 'EMA', 'WMA'}:
         return 'moving_average'
-    return 'indicator:' + signal['name'].lower()
+    return 'indicator:' + signal.get('name', signal['type']).lower()
 
 
 def template_signature(ast):
@@ -140,7 +152,8 @@ def template_signature(ast):
         if key == 'value' and isinstance(value, (int, float)):
             return '$parameter'
         if isinstance(value, dict):
-            return {k: visit(v, k) for k, v in value.items()}
+            return {k: visit(v, k) for k, v in value.items()
+                    if k not in {'parent_record_id', 'derivation'}}
         if isinstance(value, list):
             return [visit(v) for v in value]
         return value
