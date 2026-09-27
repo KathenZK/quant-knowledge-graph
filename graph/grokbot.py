@@ -91,7 +91,7 @@ def normalize_bundle(bundle):
             return [p for v in ast for p in parameters(v)]
         return []
     def assets(ast):
-        if ast['type'] == 'threshold_switch':
+        if ast['type'] in {'threshold_switch', 'conjunctive_switch'}:
             return [ast['then']['asset'], ast['else']['asset']]
         if ast['type'] == 'absolute_momentum':
             return [ast['risk_asset'], ast['safe_asset']]

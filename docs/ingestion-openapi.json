@@ -864,6 +864,48 @@
         }
       }
     },
+    "/v1/research/projection-status": {
+      "get": {
+        "summary": "Projection Status",
+        "operationId": "projection_status_v1_research_projection_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/ingest/stats": {
+      "get": {
+        "summary": "Ingest Stats",
+        "operationId": "ingest_stats_v1_ingest_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/v1/research/evidence": {
       "post": {
         "summary": "Evidence",
@@ -903,6 +945,48 @@
             "HTTPBearer": []
           }
         ]
+      }
+    },
+    "/v1/research/evidence/{variant_id}": {
+      "get": {
+        "summary": "Research Evidence",
+        "operationId": "research_evidence_v1_research_evidence__variant_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "variant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Variant Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/v1/usage": {

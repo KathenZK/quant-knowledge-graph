@@ -6,22 +6,34 @@ No raw payload or source text is written into request logs.
 """
 from contextlib import contextmanager
 from datetime import datetime, timezone
+from collections import Counter
+import hashlib
 import json
 from pathlib import Path
 import sqlite3
 import time
 from typing import Protocol
+from uuid import uuid4
 
 from quantgraph.graph.grokbot import content_hash, stable_json
 from quantgraph.models.ingestion import IngestBatch
 from quantgraph.normalize.strategy.parser import VERSION
+from quantgraph.graph.ingestion_migrations import migrate, IMMUTABLE_TABLES, SEMANTIC_HASH_VERSION, SCHEMA_VERSION
 
 
 def now():
     return datetime.now(timezone.utc).isoformat()
 
 
+class ProjectionUnavailable(ValueError):
+    def __init__(self, status):
+        self.status = status
+        super().__init__('Projection is not READY; run quantgraph reproject')
+
+
 class IngestionRepository(Protocol):
+    def projection_status(self) -> dict: ...
+    def ingest_stats(self) -> dict: ...
     def ingest(self, batch: IngestBatch, raw_bytes: bytes, key_id: str) -> dict: ...
     def get_job(self, job_id: str) -> dict: ...
     def get_batch(self, batch_id: str) -> dict: ...
@@ -31,6 +43,7 @@ class IngestionRepository(Protocol):
     def log_request(self, request_id: str, key_id: str, route: str, status: int) -> None: ...
     def usage(self, key_id: str) -> list[dict]: ...
     def put_evidence(self, payload: dict, key_id: str) -> dict: ...
+    def evidence_for(self, variant_id: str) -> list[dict]: ...
 
 
 class SQLiteIngestionRepository:
@@ -38,6 +51,8 @@ class SQLiteIngestionRepository:
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self.connect() as con:
+            if con.execute('PRAGMA user_version').fetchone()[0] > SCHEMA_VERSION:
+                raise ValueError('Ingestion database is newer than this application')
             con.execute('PRAGMA journal_mode=WAL')
             con.executescript('''
                 CREATE TABLE IF NOT EXISTS submissions (
@@ -69,9 +84,9 @@ class SQLiteIngestionRepository:
                 CREATE TABLE IF NOT EXISTS evidence (
                     research_run_id TEXT PRIMARY KEY, payload_hash TEXT NOT NULL, payload TEXT NOT NULL,
                     key_id TEXT NOT NULL, created_at TEXT NOT NULL);
-                PRAGMA user_version=1;
             ''')
-            for table in ('submissions', 'revisions', 'observations', 'projections', 'evidence', 'request_logs'):
+            migrate(con)
+            for table in ('submissions', 'revisions', 'observations', 'projections', 'evidence', 'request_logs', *IMMUTABLE_TABLES):
                 for operation in ('UPDATE', 'DELETE'):
                     con.execute(f'''CREATE TRIGGER IF NOT EXISTS immutable_{table}_{operation}
                         BEFORE {operation} ON {table} BEGIN SELECT RAISE(ABORT, 'append-only'); END''')
@@ -103,11 +118,13 @@ class SQLiteIngestionRepository:
             result = dict(job_id=job_id, batch_id=batch.batch_id, status='COMPLETED', accepted=0,
                           duplicate=0, revision=0, curated=0, review_required=0, errors=0, replayed=False)
             observations = []
+            observation_payloads = []
             for record in batch.records:
                 raw = record.audit_payload()
                 record_hash = content_hash(raw)
-                latest = con.execute('SELECT revision,record_hash FROM revisions WHERE record_id=? ORDER BY revision DESC LIMIT 1', (record.record_id,)).fetchone()
-                if latest and latest['record_hash'] == record_hash:
+                semantic_record_hash = content_hash(record.semantic_payload())
+                latest = con.execute('SELECT revision,semantic_record_hash FROM revision_semantics WHERE record_id=? ORDER BY revision DESC LIMIT 1', (record.record_id,)).fetchone()
+                if latest and latest['semantic_record_hash'] == semantic_record_hash:
                     revision = latest['revision']
                     outcome = 'duplicate'
                 else:
@@ -115,10 +132,23 @@ class SQLiteIngestionRepository:
                     outcome = 'revision' if latest else 'accepted'
                     con.execute('INSERT INTO revisions VALUES (?,?,?,?,?)',
                                 (record.record_id, revision, record_hash, stable_json(raw), now()))
+                    con.execute('INSERT INTO revision_semantics VALUES (?,?,?,?)',
+                                (record.record_id, revision, semantic_record_hash, SEMANTIC_HASH_VERSION))
                 projection = con.execute('SELECT 1 FROM projections WHERE record_id=? AND revision=? AND parser_version=?',
                                          (record.record_id, revision, VERSION)).fetchone()
                 if not projection:
-                    normalized = project_record(record, batch.batch_id, revision, record_hash)
+                    # Always project the revision's first immutable observation,
+                    # including when a duplicate arrives after a parser upgrade.
+                    if outcome == 'duplicate':
+                        from quantgraph.models.ingestion import IngestRecord
+                        saved = con.execute('SELECT * FROM revisions WHERE record_id=? AND revision=?', (record.record_id, revision)).fetchone()
+                        value = json.loads(saved['raw_payload'])
+                        value.pop('auditable_unknown_fields', None)
+                        first = con.execute('''SELECT s.batch_id FROM observations o JOIN submissions s USING(job_id)
+                            WHERE o.record_id=? AND o.revision=? ORDER BY s.created_at,s.job_id LIMIT 1''', (record.record_id, revision)).fetchone()
+                        normalized = project_record(IngestRecord.model_validate(value), first['batch_id'], revision, saved['record_hash'])
+                    else:
+                        normalized = project_record(record, batch.batch_id, revision, record_hash)
                     con.execute('INSERT INTO projections VALUES (?,?,?,?,?)',
                                 (record.record_id, revision, VERSION, normalized['variant']['strategy_variant_id'], stable_json(normalized)))
                     if outcome != 'duplicate':
@@ -127,9 +157,12 @@ class SQLiteIngestionRepository:
                         result['review_required'] += int(bool(normalized['review_reasons']))
                 result[outcome] += 1
                 observations.append((job_id, record.record_id, revision, outcome))
+                observation_payloads.append((job_id, record.record_id, record_hash, stable_json(raw), semantic_record_hash))
             con.execute('INSERT INTO submissions VALUES (?,?,?,?,?,?,?,?)',
                         (job_id, batch.batch_id, digest, raw_bytes, stable_json(payload), key_id, now(), stable_json(result)))
             con.executemany('INSERT INTO observations VALUES (?,?,?,?)', observations)
+            con.executemany('INSERT INTO observation_payloads VALUES (?,?,?,?,?)', observation_payloads)
+            con.execute('INSERT INTO submission_bytes VALUES (?,?)', (job_id, hashlib.sha256(raw_bytes).hexdigest()))
         return result
 
     def get_job(self, job_id):
@@ -150,20 +183,101 @@ class SQLiteIngestionRepository:
         if not 1 <= limit <= 1000 or offset < 0:
             raise ValueError('Invalid pagination')
         with self.connect() as con:
+            con.execute('BEGIN')
+            status = self._projection_status(con)
+            if status['projection_status'] != 'READY':
+                raise ProjectionUnavailable(status)
             rows = con.execute('''SELECT p.payload FROM projections p
                 WHERE p.parser_version=? AND p.revision=(SELECT MAX(r.revision) FROM revisions r WHERE r.record_id=p.record_id)
                 ORDER BY p.record_id LIMIT ? OFFSET ?''', (VERSION, limit, offset)).fetchall()
-        return [json.loads(r['payload']) for r in rows]
+            result = []
+            from quantgraph.graph.research_gate import evaluate
+            for row in rows:
+                value = json.loads(row['payload'])
+                rid = value['variant']['source_native_id']
+                digest = con.execute('SELECT semantic_record_hash FROM revision_semantics WHERE record_id=? ORDER BY revision DESC LIMIT 1', (rid,)).fetchone()[0]
+                review = con.execute('SELECT payload FROM review_decisions WHERE record_id=? AND semantic_record_hash=? ORDER BY rowid DESC LIMIT 1', (rid, digest)).fetchone()
+                decision = json.loads(review[0]) if review else None
+                value['candidate_gate'] = evaluate(value, decision)
+                value['candidate_quality_score'] = value['candidate_gate']['candidate_quality_score']
+                if decision:
+                    value.update(research_allowed=decision['research_use'] == 'ALLOWED',
+                                 research_rights_status=decision['research_use'],
+                                 execution_contract=decision['execution_contract'], data_available=decision['data_available'],
+                                 reviewed_evidence=decision)
+                    value['variant']['source_verification'] = 'VERIFIED'
+                    value['variant']['provenance_type'] = decision['provenance_type']
+                result.append(value)
+        return result
+
+    def review_record(self, payload):
+        """Local administrative review only. Deliberately not an ingestion route."""
+        from quantgraph.graph.research_gate import ReviewDecision
+        value = ReviewDecision.model_validate(payload).model_dump(mode='json')
+        decision_id = 'review-' + content_hash(value)
+        with self.connect() as con:
+            con.execute('BEGIN IMMEDIATE')
+            latest = con.execute('SELECT semantic_record_hash FROM revision_semantics WHERE record_id=? ORDER BY revision DESC LIMIT 1', (value['record_id'],)).fetchone()
+            if not latest or latest[0] != value['semantic_record_hash']:
+                raise ValueError('Review must reference the current semantic record hash')
+            con.execute('INSERT OR IGNORE INTO review_decisions VALUES (?,?,?,?,?)',
+                        (decision_id, value['record_id'], value['semantic_record_hash'], stable_json(value), now()))
+        return {'decision_id': decision_id, 'promotion_allowed': False}
+
+    def evidence_for(self, variant_id):
+        with self.connect() as con:
+            return [value for row in con.execute('SELECT payload FROM evidence ORDER BY created_at,research_run_id')
+                    if variant_id in (value := json.loads(row[0]))['source_strategy_ids']]
 
     def lineage(self, variant_id):
         with self.connect() as con:
             return [dict(r) for r in con.execute('''SELECT DISTINCT s.batch_id,s.job_id,o.record_id,o.revision,
-                    r.record_hash,s.payload_hash,s.created_at,p.parser_version
+                    r.record_hash,s.payload_hash,s.created_at,p.parser_version,
+                    op.raw_payload_hash,op.semantic_record_hash,sb.raw_payload_hash AS wire_payload_hash
                 FROM projections p JOIN revisions r USING(record_id,revision)
                 JOIN observations o USING(record_id,revision) JOIN submissions s USING(job_id)
+                JOIN observation_payloads op ON op.job_id=o.job_id AND op.record_id=o.record_id
+                JOIN submission_bytes sb ON sb.job_id=s.job_id
                 WHERE p.variant_id=? ORDER BY o.revision,s.created_at''', (variant_id,))]
 
+    def _projection_status(self, con):
+        latest = con.execute('SELECT COUNT(DISTINCT record_id) FROM revisions').fetchone()[0]
+        current = con.execute('''SELECT COUNT(*) FROM projections p WHERE parser_version=?
+            AND revision=(SELECT MAX(revision) FROM revisions r WHERE r.record_id=p.record_id)''', (VERSION,)).fetchone()[0]
+        run = con.execute('SELECT status FROM projection_runs WHERE parser_version=? ORDER BY rowid DESC LIMIT 1', (VERSION,)).fetchone()
+        status = 'READY' if latest == current else 'STALE'
+        if run and run['status'] in {'REPROJECTING', 'FAILED'}:
+            status = run['status']
+        return {'latest_revision_count': latest, 'current_projection_count': current,
+                'stale_projection_count': latest - current, 'parser_version': VERSION,
+                'projection_status': status}
+
+    def projection_status(self):
+        with self.connect() as con:
+            con.execute('BEGIN')
+            return self._projection_status(con)
+
     def reproject(self):
+        """Atomic, retryable rebuild; a killed worker stays blocked until retry.
+
+        SQLite serializes the rebuild writers. A run marker is committed first so
+        readers can see REPROJECTING without waiting for the rebuild transaction.
+        """
+        run_id = uuid4().hex
+        with self.connect() as con:
+            con.execute('INSERT INTO projection_runs VALUES (?,?,?,?,?,?)', (run_id, VERSION, 'REPROJECTING', now(), None, None))
+        try:
+            result = self._reproject()
+        except Exception as exc:
+            with self.connect() as con:
+                con.execute('UPDATE projection_runs SET status=?,finished_at=?,error_code=? WHERE run_id=?',
+                            ('FAILED', now(), type(exc).__name__, run_id))
+            raise
+        with self.connect() as con:
+            con.execute('UPDATE projection_runs SET status=?,finished_at=? WHERE run_id=?', ('READY', now(), run_id))
+        return {**result, **self.projection_status(), 'run_id': run_id}
+
+    def _reproject(self):
         """Append missing projections after an explicit parser version upgrade.
 
         Existing identities/raw history remain intact. Never change behavior
@@ -192,6 +306,39 @@ class SQLiteIngestionRepository:
                                 projection['variant']['strategy_variant_id'], encoded))
                     added += 1
         return {'parser_version': VERSION, 'projections_added': added, 'raw_mutated': False}
+
+    def ingest_stats(self):
+        with self.connect() as con:
+            con.execute('BEGIN')
+            status = self._projection_status(con)
+            counts = {name: con.execute(f'SELECT COUNT(*) FROM {name}').fetchone()[0]
+                      for name in ('observations', 'revisions', 'submissions')}
+            duplicates = con.execute("SELECT COUNT(*) FROM observations WHERE outcome='duplicate'").fetchone()[0]
+            rows = [json.loads(r[0]) for r in con.execute('''SELECT payload FROM projections p
+                WHERE parser_version=? AND revision=(SELECT MAX(revision) FROM revisions r WHERE r.record_id=p.record_id)''', (VERSION,))]
+            from quantgraph.graph.research_gate import evaluate
+            for value in rows:
+                rid = value['variant']['source_native_id']
+                digest = con.execute('SELECT semantic_record_hash FROM revision_semantics WHERE record_id=? ORDER BY revision DESC LIMIT 1', (rid,)).fetchone()[0]
+                review = con.execute('SELECT payload FROM review_decisions WHERE record_id=? AND semantic_record_hash=? ORDER BY rowid DESC LIMIT 1', (rid, digest)).fetchone()
+                decision = json.loads(review[0]) if review else None
+                value['candidate_gate'] = evaluate(value, decision)
+                if decision:
+                    value['research_rights_status'] = decision['research_use']
+        parsed = sum(r['variant']['parse_status'] == 'PARSED' for r in rows)
+        return {**status, 'total_observations': counts['observations'],
+                'semantic_records': status['latest_revision_count'],
+                'revision_rows': counts['revisions'], 'revisions': counts['revisions'] - status['latest_revision_count'],
+                'duplicates': duplicates, 'submissions': counts['submissions'],
+                'curated': sum(r['definition_admitted'] for r in rows),
+                'review_queue': sum(not r['candidate_gate']['eligible'] for r in rows),
+                'eligible_research_variants': sum(r['candidate_gate']['eligible'] for r in rows),
+                'rule_review_queue': len(rows) - parsed, 'parsed': parsed,
+                'parser_coverage': parsed / len(rows) if rows else 0,
+                'factor_linked': sum(bool(r['factor_links']) for r in rows),
+                'rights_status': dict(Counter(r['research_rights_status'] for r in rows)),
+                'counts_scope': 'CURRENT_PROJECTIONS_ONLY',
+                'complete': status['projection_status'] == 'READY'}
 
     def consume_quota(self, key_id, limit):
         window = int(time.time() // 60)

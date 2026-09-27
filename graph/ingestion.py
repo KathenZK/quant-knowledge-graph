@@ -25,6 +25,7 @@ def project_record(record, batch_id, revision, record_hash):
                           role='signal', confidence=1.0, evidence='Explicit reference in the fully parsed rule.',
                           source=record.source_url, link_reason='PARSED_RULE_SIGNAL_REFERENCE',
                           parser_version=variant['parser_version'], attribution_status='RULE_LINK_ONLY'))
-    return {**row, 'concepts': concepts, 'templates': templates, 'factor_links': links,
+    from quantgraph.graph.strategy_ontology import enrich
+    return enrich({**row, 'concepts': concepts, 'templates': templates, 'factor_links': links,
             'research_allowed': False, 'research_rights_status': 'REVIEW_REQUIRED',
-            'review_reasons': row['review_reasons'] + ['RIGHTS_REVIEW_REQUIRED', 'EXECUTION_CONTRACT_PENDING']}
+            'review_reasons': row['review_reasons'] + ['RIGHTS_REVIEW_REQUIRED', 'EXECUTION_CONTRACT_PENDING']})

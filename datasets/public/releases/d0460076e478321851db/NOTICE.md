@@ -1,0 +1,1 @@
+Qlib-derived expressions: Copyright Microsoft Corporation. MIT terms apply; see THIRD_PARTY_LICENSE.txt. QuantGraph modifies representation and grouping. Market data rights are excluded. No profitability or execution certification.

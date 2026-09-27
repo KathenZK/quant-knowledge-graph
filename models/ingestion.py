@@ -27,6 +27,26 @@ class IngestRecord(AuditableModel):
     backtestability: str | None = None
     collected_at: datetime
 
+    def semantic_payload(self):
+        """Versioned source semantics, excluding declared observation-only fields.
+
+        Unknown fields remain in audit_payload; they cannot grant rights or affect
+        strategy identity. Collectors put source facts in metadata/source_metadata
+        and parameters in strategy_parameters. Only the listed metadata keys are
+        operational; no recursive stripping of source-supported nested facts.
+        """
+        fields = ('source_url', 'name', 'author', 'source_publication_date',
+                  'raw_market', 'raw_rule', 'backtestability')
+        operational = {'collected_at', 'ingested_at', 'ingestion_timestamp',
+                       'request_time', 'request_timestamp', 'api_request_timestamp',
+                       'batch_id', 'batch_runtime_metadata', 'observation_metadata',
+                       'collected_at_basis', 'legacy_archive_sha256'}
+        payload = self.model_dump(mode='json')
+        return {**{key: payload[key] for key in fields},
+                'metadata': {k: v for k, v in self.metadata.items() if k not in operational},
+                'source_metadata': payload.get('source_metadata', {}),
+                'strategy_parameters': payload.get('strategy_parameters', {})}
+
     @field_validator('record_id', 'name', 'raw_market', 'raw_rule')
     @classmethod
     def nonblank(cls, value):
