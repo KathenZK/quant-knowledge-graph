@@ -78,34 +78,8 @@ def normalize_bundle(bundle):
         rows.append({'raw_record': dict(raw), 'variant': variant,
                      'definition_admitted': not reasons, 'review_reasons': reasons,
                      'rights_review_required': True})
-    # Variation axes are additional lineage facts, never substitutes for BOT_DERIVED.
-    grouped = defaultdict(list)
-    for row in rows:
-        v = row['variant']
-        if v['strategy_template_id']:
-            grouped[(v['source_bucket_id'], v['strategy_template_id'])].append(v)
-    def parameters(ast):
-        if isinstance(ast, dict):
-            return [(k, v) for k, v in ast.items() if k in {'parameters', 'value'}] + [p for v in ast.values() for p in parameters(v)]
-        if isinstance(ast, list):
-            return [p for v in ast for p in parameters(v)]
-        return []
-    def assets(ast):
-        if ast['type'] in {'threshold_switch', 'conjunctive_switch'}:
-            return [ast['then']['asset'], ast['else']['asset']]
-        if ast['type'] == 'absolute_momentum':
-            return [ast['risk_asset'], ast['safe_asset']]
-        return ast['assets']
-    for group in grouped.values():
-        axes = []
-        if len({stable_json(parameters(v['rule_ast'])) for v in group}) > 1:
-            axes.append('PARAMETER_VARIANT')
-        if len({stable_json(assets(v['rule_ast'])) for v in group}) > 1:
-            axes.append('ASSET_VARIANT')
-        if len({stable_json(v['market_taxonomy']) for v in group}) > 1:
-            axes.append('MARKET_VARIANT')
-        for v in group:
-            v['variation_axes'] = axes
+    from quantgraph.graph.variation import apply_observed_axes
+    apply_observed_axes(rows)
     return rows, list(concepts.values()), list(templates.values())
 
 

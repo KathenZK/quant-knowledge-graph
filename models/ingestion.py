@@ -27,24 +27,39 @@ class IngestRecord(AuditableModel):
     backtestability: str | None = None
     collected_at: datetime
 
-    def semantic_payload(self):
+    def semantic_payload(self, version='strategy-record-semantics-v2'):
         """Versioned source semantics, excluding declared observation-only fields.
 
         Unknown fields remain in audit_payload; they cannot grant rights or affect
         strategy identity. Collectors put source facts in metadata/source_metadata
-        and parameters in strategy_parameters. Only the listed metadata keys are
-        operational; no recursive stripping of source-supported nested facts.
+        and parameters in strategy_parameters. Reserved assessment keys in metadata
+        are observation-only, including legacy collector aliases.
         """
-        fields = ('source_url', 'name', 'author', 'source_publication_date',
-                  'raw_market', 'raw_rule', 'backtestability')
+        if version not in {'strategy-record-semantics-v1', 'strategy-record-semantics-v2'}:
+            raise ValueError('Unsupported semantic hash version')
+        fields = ('source_url', 'name', 'author', 'source_publication_date', 'raw_market', 'raw_rule')
         operational = {'collected_at', 'ingested_at', 'ingestion_timestamp',
                        'request_time', 'request_timestamp', 'api_request_timestamp',
                        'batch_id', 'batch_runtime_metadata', 'observation_metadata',
                        'collected_at_basis', 'legacy_archive_sha256'}
+        if version == 'strategy-record-semantics-v1':
+            fields += ('backtestability',)
+        else:
+            operational |= {'backtestability', 'bot_assessment', 'parser_output',
+                            'candidate_score', 'candidate_quality_score', 'research_readiness',
+                            'research_readiness_score', 'rights_enrichment_result'}
+        def source_facts(value):
+            if version == 'strategy-record-semantics-v1':
+                return value
+            if isinstance(value, dict):
+                return {k: source_facts(v) for k, v in value.items() if k not in operational | {'可回测'}}
+            if isinstance(value, list):
+                return [source_facts(v) for v in value]
+            return value
         payload = self.model_dump(mode='json')
         return {**{key: payload[key] for key in fields},
-                'metadata': {k: v for k, v in self.metadata.items() if k not in operational},
-                'source_metadata': payload.get('source_metadata', {}),
+                'metadata': source_facts({k: v for k, v in self.metadata.items() if k not in operational}),
+                'source_metadata': source_facts(payload.get('source_metadata', {})),
                 'strategy_parameters': payload.get('strategy_parameters', {})}
 
     @field_validator('record_id', 'name', 'raw_market', 'raw_rule')

@@ -74,12 +74,12 @@ def test_additive_migration_keeps_historical_rows_and_original_wire_bytes(tmp_pa
     with repo.connect() as con:
         before = {t: [tuple(r) for r in con.execute('SELECT * FROM ' + t)]
                   for t in ('submissions', 'observations', 'revisions', 'projections')}
-        for t in ('observation_payloads', 'revision_semantics', 'submission_bytes', 'projection_runs'):
+        for t in ('observation_hash_versions', 'observation_payloads', 'revision_semantics_v2', 'revision_semantics', 'submission_bytes', 'projection_runs'):
             con.execute('DROP TABLE ' + t)
         con.execute('PRAGMA user_version=1')
     migrated = SQLiteIngestionRepository(path)
     with migrated.connect() as con:
-        assert con.execute('PRAGMA user_version').fetchone()[0] == 3
+        assert con.execute('PRAGMA user_version').fetchone()[0] == 4
         for table, expected in before.items():
             assert [tuple(r) for r in con.execute('SELECT * FROM ' + table)] == expected
     value = payload()
@@ -145,3 +145,44 @@ def test_future_schema_is_never_downgraded(tmp_path):
         SQLiteIngestionRepository(path)
     with repo.connect() as con:
         assert con.execute('PRAGMA user_version').fetchone()[0] == 99
+
+
+@pytest.mark.parametrize('assessment', ['backtestability', 'bot_assessment', 'parser_output',
+    'candidate_score', 'research_readiness', 'rights_enrichment_result'])
+def test_assessment_updates_only_add_observations(tmp_path, assessment):
+    repo = SQLiteIngestionRepository(tmp_path / 'journal.sqlite')
+    value = payload()
+    ingest(repo, value)
+    record = value['records'][0]
+    record[assessment] = 'HIGH'
+    record['metadata'] = {assessment: 'HIGH'}
+    record['source_metadata'] = {assessment: 'HIGH'}
+    result, _ = ingest(repo, value)
+    assert result['duplicate'] == 1 and result['revision'] == 0
+    with repo.connect() as con:
+        assert con.execute('SELECT COUNT(*) FROM revisions').fetchone()[0] == 1
+        rows = con.execute('SELECT * FROM observation_payloads').fetchall()
+        assert len(rows) == 2
+        assert rows[0]['raw_payload_hash'] != rows[1]['raw_payload_hash']
+        assert rows[0]['semantic_record_hash'] == rows[1]['semantic_record_hash']
+        assert assessment in json.loads(rows[1]['raw_payload'])
+
+
+def test_v3_migration_preserves_old_hashes_and_observation_payloads(tmp_path):
+    path = tmp_path / 'v3.sqlite'
+    repo = SQLiteIngestionRepository(path)
+    value = payload()
+    value['records'][0]['backtestability'] = 'MEDIUM'
+    ingest(repo, value)
+    with repo.connect() as con:
+        before = {t: [tuple(r) for r in con.execute('SELECT * FROM ' + t)]
+                  for t in ('revisions', 'revision_semantics', 'observation_payloads', 'submissions')}
+        con.execute('DROP TABLE observation_hash_versions')
+        con.execute('DROP TABLE revision_semantics_v2')
+        con.execute('PRAGMA user_version=3')
+    repo = SQLiteIngestionRepository(path)
+    with repo.connect() as con:
+        for table, rows in before.items():
+            assert [tuple(r) for r in con.execute('SELECT * FROM ' + table)] == rows
+    value['records'][0]['backtestability'] = 'HIGH'
+    assert ingest(repo, value)[0]['duplicate'] == 1

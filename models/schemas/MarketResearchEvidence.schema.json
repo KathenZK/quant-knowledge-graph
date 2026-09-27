@@ -1,0 +1,345 @@
+{
+  "$defs": {
+    "DataRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "adjustment_method": {
+          "title": "Adjustment Method",
+          "type": "string"
+        },
+        "calendar": {
+          "title": "Calendar",
+          "type": "string"
+        },
+        "data_availability_status": {
+          "enum": [
+            "VERIFIED_AVAILABLE",
+            "PENDING",
+            "UNAVAILABLE"
+          ],
+          "title": "Data Availability Status",
+          "type": "string"
+        },
+        "data_source": {
+          "minLength": 1,
+          "title": "Data Source",
+          "type": "string"
+        },
+        "data_types": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Data Types",
+          "type": "array"
+        },
+        "dataset_hash": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dataset Hash"
+        },
+        "dataset_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dataset Version"
+        },
+        "downloaded_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Downloaded At"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End Date"
+        },
+        "evidence": {
+          "$ref": "#/$defs/EvidenceArtifact"
+        },
+        "exchange": {
+          "minLength": 1,
+          "title": "Exchange",
+          "type": "string"
+        },
+        "frequency": {
+          "minLength": 1,
+          "title": "Frequency",
+          "type": "string"
+        },
+        "quality_status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "UNVERIFIED"
+          ],
+          "title": "Quality Status",
+          "type": "string"
+        },
+        "raw_data_hashes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Raw Data Hashes",
+          "type": "array"
+        },
+        "real_market_data": {
+          "title": "Real Market Data",
+          "type": "boolean"
+        },
+        "required_fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Required Fields",
+          "type": "array"
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Start Date"
+        },
+        "symbols": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Symbols",
+          "type": "array"
+        },
+        "timezone": {
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "data_types",
+        "symbols",
+        "required_fields",
+        "frequency",
+        "data_availability_status",
+        "data_source",
+        "exchange",
+        "dataset_version",
+        "downloaded_at",
+        "adjustment_method",
+        "timezone",
+        "calendar",
+        "start_date",
+        "end_date",
+        "real_market_data",
+        "quality_status",
+        "evidence"
+      ],
+      "title": "DataRequirement",
+      "type": "object"
+    },
+    "EvidenceArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "uri": {
+          "minLength": 1,
+          "title": "Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256"
+      ],
+      "title": "EvidenceArtifact",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifact_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Artifact Sha256",
+      "type": "string"
+    },
+    "artifact_uri": {
+      "minLength": 1,
+      "title": "Artifact Uri",
+      "type": "string"
+    },
+    "candidate_snapshot_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Candidate Snapshot Sha256",
+      "type": "string"
+    },
+    "code_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Code Sha256",
+      "type": "string"
+    },
+    "config_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Config Sha256",
+      "type": "string"
+    },
+    "contract_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Contract Sha256",
+      "type": "string"
+    },
+    "data_provenance": {
+      "$ref": "#/$defs/DataRequirement"
+    },
+    "evidence_kind": {
+      "const": "REAL_MARKET_BACKTEST",
+      "title": "Evidence Kind",
+      "type": "string"
+    },
+    "experiment_family_id": {
+      "minLength": 1,
+      "title": "Experiment Family Id",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "parameter_grid": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "minItems": 1,
+      "title": "Parameter Grid",
+      "type": "array"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "real_market_data": {
+      "const": true,
+      "title": "Real Market Data",
+      "type": "boolean"
+    },
+    "research_run_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Research Run Id",
+      "type": "string"
+    },
+    "research_status": {
+      "enum": [
+        "RESEARCH_PASSED",
+        "RESEARCH_FAILED",
+        "INCONCLUSIVE"
+      ],
+      "title": "Research Status",
+      "type": "string"
+    },
+    "results": {
+      "additionalProperties": true,
+      "title": "Results",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "2.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_strategy_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 1000,
+      "minItems": 1,
+      "title": "Source Strategy Ids",
+      "type": "array"
+    },
+    "strategy_concept_id": {
+      "minLength": 1,
+      "title": "Strategy Concept Id",
+      "type": "string"
+    },
+    "strategy_template_id": {
+      "minLength": 1,
+      "title": "Strategy Template Id",
+      "type": "string"
+    },
+    "trial_count": {
+      "minimum": 1,
+      "title": "Trial Count",
+      "type": "integer"
+    },
+    "validation_status": {
+      "const": "SUBMITTED_NOT_INDEPENDENTLY_VERIFIED",
+      "default": "SUBMITTED_NOT_INDEPENDENTLY_VERIFIED",
+      "title": "Validation Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "research_run_id",
+    "experiment_family_id",
+    "source_strategy_ids",
+    "strategy_concept_id",
+    "strategy_template_id",
+    "artifact_uri",
+    "artifact_sha256",
+    "contract_sha256",
+    "code_sha256",
+    "config_sha256",
+    "candidate_snapshot_sha256",
+    "real_market_data",
+    "data_provenance",
+    "trial_count",
+    "parameter_grid",
+    "results",
+    "evidence_kind",
+    "research_status",
+    "limitations"
+  ],
+  "title": "MarketResearchEvidence",
+  "type": "object"
+}

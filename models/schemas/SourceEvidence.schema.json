@@ -1,0 +1,130 @@
+{
+  "$defs": {
+    "EvidenceArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "uri": {
+          "minLength": 1,
+          "title": "Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256"
+      ],
+      "title": "EvidenceArtifact",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifact": {
+      "$ref": "#/$defs/EvidenceArtifact"
+    },
+    "attributed_author": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Attributed Author"
+    },
+    "checked_at": {
+      "format": "date-time",
+      "title": "Checked At",
+      "type": "string"
+    },
+    "indicator_author_is_strategy_author": {
+      "default": false,
+      "title": "Indicator Author Is Strategy Author",
+      "type": "boolean"
+    },
+    "source_evidence_level": {
+      "enum": [
+        "PRIMARY",
+        "SECONDARY",
+        "TERTIARY",
+        "UNKNOWN"
+      ],
+      "title": "Source Evidence Level",
+      "type": "string"
+    },
+    "source_support_type": {
+      "enum": [
+        "EXACT_STRATEGY",
+        "STRATEGY_FRAMEWORK",
+        "INDICATOR_DEFINITION",
+        "PARAMETER_GUIDANCE",
+        "IMPLEMENTATION_EXAMPLE",
+        "RELATED_RESEARCH",
+        "NO_DIRECT_SUPPORT",
+        "UNKNOWN"
+      ],
+      "title": "Source Support Type",
+      "type": "string"
+    },
+    "source_type": {
+      "enum": [
+        "ACADEMIC_PAPER",
+        "AUTHOR_WEBSITE",
+        "OFFICIAL_DOCUMENTATION",
+        "BROKER_RESEARCH",
+        "OPEN_SOURCE_IMPLEMENTATION",
+        "COMMUNITY_POST",
+        "SECONDARY_SUMMARY",
+        "INDICATOR_DOCUMENTATION",
+        "BOT_DERIVED",
+        "UNKNOWN"
+      ],
+      "title": "Source Type",
+      "type": "string"
+    },
+    "supported_rule_components": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Supported Rule Components",
+      "type": "object"
+    },
+    "unsupported_rule_components": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Unsupported Rule Components",
+      "type": "object"
+    },
+    "url": {
+      "pattern": "^https?://",
+      "title": "Url",
+      "type": "string"
+    },
+    "version": {
+      "minLength": 1,
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_type",
+    "source_evidence_level",
+    "source_support_type",
+    "url",
+    "version",
+    "artifact",
+    "supported_rule_components",
+    "unsupported_rule_components",
+    "attributed_author",
+    "checked_at"
+  ],
+  "title": "SourceEvidence",
+  "type": "object"
+}

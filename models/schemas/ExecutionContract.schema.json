@@ -1,0 +1,182 @@
+{
+  "$defs": {
+    "CostModel": {
+      "additionalProperties": false,
+      "properties": {
+        "basis": {
+          "enum": [
+            "SOURCE_DEFINED",
+            "RESEARCH_ASSUMPTION"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "fee_bps": {
+          "minimum": 0,
+          "title": "Fee Bps",
+          "type": "number"
+        },
+        "slippage_bps": {
+          "minimum": 0,
+          "title": "Slippage Bps",
+          "type": "number"
+        }
+      },
+      "required": [
+        "fee_bps",
+        "slippage_bps",
+        "basis",
+        "description"
+      ],
+      "title": "CostModel",
+      "type": "object"
+    },
+    "EvidenceArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "uri": {
+          "minLength": 1,
+          "title": "Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256"
+      ],
+      "title": "EvidenceArtifact",
+      "type": "object"
+    },
+    "ExecutionFact": {
+      "additionalProperties": false,
+      "properties": {
+        "basis": {
+          "enum": [
+            "SOURCE_DEFINED",
+            "RESEARCH_ASSUMPTION",
+            "UNKNOWN"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvidenceArtifact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value"
+        }
+      },
+      "required": [
+        "value",
+        "basis",
+        "rationale"
+      ],
+      "title": "ExecutionFact",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "accepted_research_assumptions": {
+      "title": "Accepted Research Assumptions",
+      "type": "boolean"
+    },
+    "artifact": {
+      "$ref": "#/$defs/EvidenceArtifact"
+    },
+    "cash_rule": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "closed_bar_only": {
+      "title": "Closed Bar Only",
+      "type": "boolean"
+    },
+    "execution_price": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "execution_timing": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "fallback_rule": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "holding_period": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "indicator_semantics": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "leverage": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "long_short": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "missing_data_policy": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "position_rule": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "price_adjustment": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "rebalance_frequency": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "signal_timing": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "slippage_model": {
+      "$ref": "#/$defs/ExecutionFact"
+    },
+    "transaction_cost_model": {
+      "$ref": "#/$defs/CostModel"
+    }
+  },
+  "required": [
+    "signal_timing",
+    "execution_timing",
+    "execution_price",
+    "rebalance_frequency",
+    "holding_period",
+    "position_rule",
+    "cash_rule",
+    "fallback_rule",
+    "long_short",
+    "leverage",
+    "transaction_cost_model",
+    "slippage_model",
+    "price_adjustment",
+    "missing_data_policy",
+    "indicator_semantics",
+    "closed_bar_only",
+    "accepted_research_assumptions",
+    "artifact"
+  ],
+  "title": "ExecutionContract",
+  "type": "object"
+}
