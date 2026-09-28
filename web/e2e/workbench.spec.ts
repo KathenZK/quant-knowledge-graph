@@ -307,6 +307,12 @@ test("keyboard, form labels, contrast and narrow viewport", async ({
         .analyze()
     ).violations,
   ).toEqual([]);
+  await page.setViewportSize({ width: 1057, height: 975 });
+  expect(
+    (await page
+      .getByRole("combobox", { name: "方法族", exact: true })
+      .boundingBox())!.width,
+  ).toBeGreaterThan(100);
   await page.setViewportSize({ width: 390, height: 844 });
   for (const url of ["/explore?q=均线", "/list", "/results"]) {
     await page.goto(url);
