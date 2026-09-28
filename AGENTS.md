@@ -1,7 +1,7 @@
 # 项目约束
 
 - 本项目负责知识、定义、来源和关系。数据流只能是 quant-knowledge-graph → quant-research-lab → quant-runner。
-- 本机研究项目当前目录名是 `../quant-strategy-lab`；它承担用户所说 quant-research-lab 的角色。不重命名、不迁入其研究/回测代码。
+- 研究项目正式名称及同级目录为 `quant-research-lab` / `../quant-research-lab`；Python 包 `strategy_lab` 兼容保留，不迁入其研究/回测代码。
 - 不添加实盘执行、下单、策略发布或 runner 集成接口。
 - 原始来源保留字节、版本、摘要和许可。不可直接改写 raw；新版本须采集新快照、审核变更后更新锁文件。
 - normalized 收全部可追溯记录；curated 必须通过准入门槛。元数据质量、公式语法、计算语义、经济有效性、商用许可分别判断。
