@@ -34,7 +34,7 @@ class ReferenceBatch(BaseModel):
 class RequestDraft(BaseModel):
     model_config = ConfigDict(extra="forbid")
     entity_refs: list[EntityRef] = Field(min_length=1, max_length=500)
-    study_type: Literal["FACTOR_DIAGNOSTIC", "STRATEGY_REPLICATION"]
+    study_type: Literal["FACTOR_DIAGNOSTIC", "STRATEGY_REPLICATION", "STRATEGY_EVOLUTION"]
     requested_settings: dict
 
 
@@ -54,7 +54,11 @@ def create_web_app(root=None, *, private_journal=None, catalog=None, admin_passw
         from quantgraph.api.ingestion import BoundedBodyMiddleware
         app.state.catalog = catalog
         install_admin(app, catalog, password=admin_password)
-        app.add_middleware(BoundedBodyMiddleware)
+        if catalog.ingestion is not None:
+            from quantgraph.api.ingestion import install_ingestion
+            install_ingestion(app, catalog.ingestion)
+        else:
+            app.add_middleware(BoundedBodyMiddleware)
         if research_installer is None:
             research_profiles = research_profiles or {}
             research_database = research_database or catalog.path.parent / "research-jobs.sqlite"
@@ -101,6 +105,8 @@ def create_web_app(root=None, *, private_journal=None, catalog=None, admin_passw
                 from starlette.concurrency import run_in_threadpool
                 await run_in_threadpool(catalog.sync_ingestion)
             response = await call_next(request)
+            if catalog is not None and request.method == 'POST' and request.url.path == '/v1/ingest/grokbot/batches' and response.status_code < 300:
+                await run_in_threadpool(catalog.sync_ingestion)
         except Exception:
             # Do not emit exception messages, database paths, or source text to
             # HTTP responses or uvicorn's automatic unhandled-error traceback.

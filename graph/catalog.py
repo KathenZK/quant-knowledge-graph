@@ -35,7 +35,7 @@ class CatalogRepository:
                     entity_id TEXT PRIMARY KEY, kind TEXT NOT NULL, entity_type TEXT NOT NULL,
                     definition_revision TEXT NOT NULL, payload TEXT NOT NULL, private_payload TEXT NOT NULL,
                     visibility TEXT NOT NULL DEFAULT 'PUBLIC', patch TEXT NOT NULL DEFAULT '{}',
-                    search_text TEXT NOT NULL, active INTEGER NOT NULL DEFAULT 1);
+                    search_text TEXT NOT NULL, active INTEGER NOT NULL DEFAULT 1, is_test INTEGER NOT NULL DEFAULT 0);
                 CREATE TABLE IF NOT EXISTS catalog_versions (
                     entity_id TEXT, revision TEXT, payload TEXT, private_payload TEXT,
                     created_at TEXT, PRIMARY KEY(entity_id,revision));
@@ -48,6 +48,8 @@ class CatalogRepository:
                 CREATE INDEX IF NOT EXISTS catalog_edges_to ON catalog_edges(to_id);
                 CREATE TABLE IF NOT EXISTS catalog_edge_origins (
                     owner TEXT, relationship_id TEXT, active INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(owner,relationship_id));
+                CREATE INDEX IF NOT EXISTS catalog_origin_entity ON catalog_origins(entity_id,active);
+                CREATE INDEX IF NOT EXISTS catalog_edge_origin_edge ON catalog_edge_origins(relationship_id,active);
                 CREATE TABLE IF NOT EXISTS catalog_inputs (
                     source TEXT, record_id TEXT, revision TEXT, entity_id TEXT,
                     disposition TEXT, reason TEXT, is_test INTEGER, PRIMARY KEY(source,record_id));
@@ -60,9 +62,36 @@ class CatalogRepository:
                     entity_id TEXT, before_json TEXT, after_json TEXT);
                 CREATE TABLE IF NOT EXISTS catalog_suggestions (
                     suggestion_id TEXT PRIMARY KEY, payload TEXT, status TEXT, created_at TEXT);
+                CREATE VIEW IF NOT EXISTS catalog_visible_items AS SELECT i.* FROM catalog_items i
+                    WHERE i.active=1 AND i.visibility='PUBLIC' AND NOT(i.kind='source' AND EXISTS(
+                        SELECT 1 FROM catalog_edges e JOIN catalog_items parent ON parent.entity_id=e.to_id
+                        WHERE e.from_id=i.entity_id AND json_extract(e.payload,'$.relation')='DESCRIBES'
+                        AND (parent.active=0 OR parent.visibility='HIDDEN')));
                 PRAGMA user_version=1;
             ''')
+            if 'is_test' not in {r[1] for r in con.execute('PRAGMA table_info(catalog_items)')}:
+                con.execute('ALTER TABLE catalog_items ADD COLUMN is_test INTEGER NOT NULL DEFAULT 0')
+            self._classify_test_origins(con)
+            con.execute('DROP VIEW IF EXISTS catalog_visible_items')
+            con.execute("""CREATE VIEW catalog_visible_items AS SELECT i.* FROM catalog_items i
+                WHERE i.active=1 AND i.visibility='PUBLIC'
+                AND NOT(i.kind='source' AND EXISTS(SELECT 1 FROM catalog_edges e
+                    JOIN catalog_items parent ON parent.entity_id=e.to_id WHERE e.from_id=i.entity_id
+                    AND json_extract(e.payload,'$.relation')='DESCRIBES'
+                    AND (parent.active=0 OR parent.visibility='HIDDEN')))
+                AND (i.is_test=0 OR EXISTS(SELECT 1 FROM catalog_origins o
+                    JOIN catalog_inputs x ON x.source='grokbot' AND x.record_id=substr(o.owner,8)
+                    JOIN catalog_items parent ON parent.entity_id=x.entity_id
+                    WHERE o.entity_id=i.entity_id AND o.active=1 AND parent.active=1 AND parent.visibility='PUBLIC'))""")
         self.path.chmod(0o600)
+
+    @staticmethod
+    def _classify_test_origins(con):
+        con.execute("""UPDATE catalog_items SET is_test=NOT EXISTS(
+            SELECT 1 FROM catalog_origins o LEFT JOIN catalog_inputs x
+            ON x.source='grokbot' AND x.record_id=substr(o.owner,8)
+            WHERE o.entity_id=catalog_items.entity_id AND o.active=1
+            AND (o.owner NOT LIKE 'ingest:%' OR COALESCE(x.is_test,0)=0))""")
 
     @contextmanager
     def connect(self):
@@ -217,6 +246,7 @@ class CatalogRepository:
                 con.execute('INSERT INTO catalog_imports(created_at,status,processed,errors,reason) VALUES (?,?,?,?,?)',
                     (now(), 'PARTIAL' if errors else 'COMPLETED', len(rows)-errors, errors, 'Ingestion projection'))
                 self._refresh_lineage(con)
+                self._classify_test_origins(con)
             return {'processed': len(rows)-errors, 'errors': errors}
 
     def _refresh_lineage(self, con):
@@ -249,12 +279,14 @@ class CatalogRepository:
     def _value(row):
         value = json.loads(row['payload']) | json.loads(row['patch'])
         value['visibility'] = row['visibility']
+        value['test_record'] = bool(row['is_test'])
         value['statuses'] = value['statuses'] | {'display': row['visibility'] + ' · 字段与附件权限独立'}
         return value
 
     def get(self, entity_id, *, admin=False):
         with self.connect() as con:
-            row = con.execute('SELECT * FROM catalog_items WHERE entity_id=?' + ('' if admin else " AND active=1 AND visibility='PUBLIC'"), (entity_id,)).fetchone()
+            table = 'catalog_items' if admin else 'catalog_visible_items'
+            row = con.execute(f'SELECT entity_id,payload,patch,visibility,is_test FROM {table} WHERE entity_id=?', (entity_id,)).fetchone()
             if not row:
                 raise KeyError(entity_id)
             return self._value(row)
@@ -282,14 +314,16 @@ class CatalogRepository:
 
     def all_items(self, *, admin=False):
         with self.connect() as con:
-            rows = con.execute('SELECT * FROM catalog_items WHERE active=1' + ('' if admin else " AND visibility='PUBLIC'"))
+            table = 'catalog_items' if admin else 'catalog_visible_items'
+            rows = con.execute(f'SELECT entity_id,payload,patch,visibility,is_test FROM {table} WHERE active=1')
             return [self._value(r) for r in rows]
 
     def search(self, *, q='', kind='strategy', category='', family='', field='', market='', frequency='', source_type='', result_status='', page=1, page_size=20, admin=False):
         needle = normalize(q)
         researched = {ref['entity_id'] for r in self.results().get('items', []) for ref in r.get('entity_refs', [])}
         with self.connect() as con:
-            rows = con.execute('SELECT * FROM catalog_items WHERE active=1' + ('' if admin else " AND visibility='PUBLIC'") + ' AND kind=?', (kind,))
+            table = 'catalog_items' if admin else 'catalog_visible_items'
+            rows = con.execute(f'SELECT entity_id,payload,patch,visibility,is_test FROM {table} WHERE active=1 AND kind=?', (kind,))
             matched = []
             for row in rows:
                 value = self._value(row)
@@ -312,12 +346,12 @@ class CatalogRepository:
     def relations(self, entity_id, *, hops=1, relation='', limit=40, offset=0, admin=False):
         root = self.get(entity_id, admin=admin)
         with self.connect() as con:
-            # Both endpoints and edge are filtered before counts or traversal.
-            visible = {r['entity_id']:self._value(r) for r in con.execute('SELECT * FROM catalog_items WHERE active=1' + ('' if admin else " AND visibility='PUBLIC'"))}
-            candidates = [dict(r) for r in con.execute('''SELECT e.* FROM catalog_edges e
-                WHERE EXISTS(SELECT 1 FROM catalog_edge_origins o WHERE o.relationship_id=e.relationship_id AND o.active=1)'''
-                + ('' if admin else " AND e.visibility='PUBLIC'"))]
-        candidates = [r for r in candidates if r['from_id'] in visible and r['to_id'] in visible]
+            restriction = '' if admin else " AND a.visibility='PUBLIC' AND b.visibility='PUBLIC' AND e.visibility='PUBLIC'"
+            table = 'catalog_items' if admin else 'catalog_visible_items'
+            candidates = con.execute(f"""SELECT e.payload,e.patch FROM catalog_edges e
+                JOIN {table} a ON a.entity_id=e.from_id JOIN {table} b ON b.entity_id=e.to_id
+                WHERE a.active=1 AND b.active=1 AND EXISTS(SELECT 1 FROM catalog_edge_origins o
+                WHERE o.relationship_id=e.relationship_id AND o.active=1)""" + restriction).fetchall()
         # A filtered two-hop exploration walks only selected edge types.
         values = [json.loads(r['payload']) | json.loads(r['patch']) for r in candidates]
         if relation:
@@ -335,7 +369,7 @@ class CatalogRepository:
         rows = ordered[offset:offset+limit]
         nodes = {entity_id: root}
         for r in rows:
-            a,b = visible[r['from_id']],visible[r['to_id']]
+            a,b = self.get(r['from_id'],admin=admin),self.get(r['to_id'],admin=admin)
             nodes[a['entity_id']],nodes[b['entity_id']] = a,b
             r.update(from_name=a['name'],to_name=b['name'],from_type=a['entity_type'],to_type=b['entity_type'],
                      from_kind=a['kind'],to_kind=b['kind'])
@@ -371,7 +405,8 @@ class CatalogRepository:
 
     def metadata(self):
         items = self.all_items()
-        counts = Counter(i['kind'] for i in items)
+        visible_counts = Counter(i['kind'] for i in items)
+        counts = Counter(i['kind'] for i in items if not i.get('test_record'))
         def facet(key, multiple=False):
             values = {v for i in items for v in (i.get(key, []) if multiple else [i.get(key)]) if v}
             return [dict(value=v,label=FIELD_LABELS.get(v,v)) for v in sorted(values)]
@@ -380,6 +415,7 @@ class CatalogRepository:
             facets=dict(categories=facet('category'),families=facet('family'),fields=facet('required_fields',True),markets=facet('markets',True),
                         frequencies=facet('frequency'),source_types=facet('source_type')),
             contracts=dict(request='research-request/v1',result='factor-study-result/v1',status='CONNECTED',export_enabled=True),
+            visible_counts=dict(visible_counts),
             test_counts=dict(Counter(i['kind'] for i in items if i.get('test_record'))),
             knowledge_counts=dict(collected_strategy_records=sum(i['kind']=='strategy' and not i.get('test_record') for i in items),structured_strategy_variants=sum(i['kind']=='strategy' and i['record_level']=='variant' and not i.get('test_record') for i in items),
                 strategy_families=counts['family'],independent_strategies=None,
@@ -396,6 +432,12 @@ class CatalogRepository:
         allowed = {'visibility','name','aliases','description','family','family_label','source_url','source_type','frequency','markets'}
         if not ids or len(ids)>100 or set(patch)-allowed or patch.get('visibility','PUBLIC') not in {'PUBLIC','HIDDEN'}:
             raise ValueError('Invalid catalog edit')
+        for key, value in patch.items():
+            if key in {'aliases','markets'}:
+                if not isinstance(value,list) or len(value)>100 or any(not isinstance(v,str) or len(v)>500 for v in value):
+                    raise ValueError('Invalid list field')
+            elif value is not None and (not isinstance(value,str) or len(value)>3000):
+                raise ValueError('Invalid text field')
         patch = deepcopy(patch)
         if 'source_url' in patch:
             patch['source_url'] = public_url(patch['source_url'])
@@ -407,7 +449,7 @@ class CatalogRepository:
         with self.lock, self.connect() as con:
             con.execute('BEGIN IMMEDIATE')
             for eid in ids:
-                row = con.execute('SELECT * FROM catalog_items WHERE entity_id=?', (eid,)).fetchone()
+                row = con.execute('SELECT entity_id,payload,patch,visibility,is_test FROM catalog_items WHERE entity_id=?', (eid,)).fetchone()
                 if not row:
                     raise KeyError(eid)
                 before = self._value(row)
@@ -423,8 +465,13 @@ class CatalogRepository:
     def edit_relation(self, rid, patch, actor):
         if set(patch)-{'visibility','review_status','evidence','confidence'} or patch.get('visibility','PUBLIC') not in {'PUBLIC','HIDDEN'}:
             raise ValueError('Invalid relation review')
-        if 'confidence' in patch and not 0<=patch['confidence']<=1:
+        if 'confidence' in patch and (type(patch['confidence']) not in (int,float) or not 0<=patch['confidence']<=1):
             raise ValueError('Invalid confidence')
+        if 'review_status' in patch and patch['review_status'] not in {'CANDIDATE','REVIEWED','REJECTED'}:
+            raise ValueError('Invalid review status')
+        if 'evidence' in patch:
+            if not isinstance(patch['evidence'],str):raise ValueError('Invalid evidence')
+            patch=patch | {'evidence':public_text(patch['evidence'])}
         with self.connect() as con:
             row = con.execute('SELECT * FROM catalog_edges WHERE relationship_id=?',(rid,)).fetchone()
             if not row:

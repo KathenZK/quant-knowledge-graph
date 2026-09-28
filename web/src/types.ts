@@ -15,6 +15,7 @@ export interface EntityRef {
 export interface Item extends EntityRef {
   kind: Kind;
   visibility?: "PUBLIC" | "HIDDEN";
+  test_record?: boolean;
   source_type?: string;
   record_level?: string;
   strategy?: StrategyKnowledge;
@@ -202,6 +203,14 @@ export interface RelationGraph {
   types: string[];
 }
 export interface StudySummary {
+  numerical_display?: "ALLOWED" | "RESTRICTED";
+  evolution?: {
+    parent_experiment_id?: string;
+    reason?: string;
+    change?: string;
+    outcome?: string;
+    interpretation?: string;
+  };
   job_id: string;
   run_id: string;
   study_type: string;

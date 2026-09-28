@@ -548,6 +548,7 @@ function Explore({ meta, bench }: { meta: Meta; bench: Workbench }) {
                   <tr key={item.entity_id}>
                     <td>
                       <Link className="entity-name" to={entityUrl(item)}>
+                        {item.test_record ? "[验收测试] " : ""}
                         {item.name}
                         <ArrowUpRight size={14} aria-hidden="true" />
                       </Link>
@@ -932,9 +933,11 @@ function DetailPage({ bench }: { bench: Workbench }) {
             {Object.entries(item.rights).map(([key, value]) => (
               <p key={key}>{value}</p>
             ))}
-            <a href="/v1/web/license" target="_blank" rel="noreferrer">
-              Microsoft MIT 完整声明 ↗
-            </a>
+            {item.source_name?.toLowerCase().includes("qlib") && (
+              <a href="/v1/web/license" target="_blank" rel="noreferrer">
+                Qlib / Microsoft MIT 完整声明 ↗
+              </a>
+            )}
           </section>
           <section className="panel">
             <h2>
@@ -1143,7 +1146,11 @@ function NotebookPage({
   const [filter, setFilter] = useState("");
   const [busy, setBusy] = useState(false);
   const [importError, setImportError] = useState("");
-  const [study, setStudy] = useState("FACTOR_DIAGNOSTIC");
+  const [study, setStudy] = useState(
+    items.some((i) => i.entity_type === "FactorVariant")
+      ? "FACTOR_DIAGNOSTIC"
+      : "STRATEGY_REPLICATION",
+  );
   const [settings, setSettings] = useState({
     market: "",
     start_date: "",

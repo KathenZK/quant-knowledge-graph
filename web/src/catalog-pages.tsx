@@ -130,13 +130,51 @@ export function SummaryStudy({ study }: { study: StudySummary }) {
       <h4>样本与数据</h4>
       <Parameters value={study.sample} />
       <h4>实际指标</h4>
-      <Parameters value={study.metrics} />
+      {study.numerical_display === "RESTRICTED" ? (
+        <p className="notice">
+          研究已实际运行；数值指标受数据展示权限限制。登录后可在任务页查看获准的内部研究证据。
+        </p>
+      ) : (
+        <Parameters value={study.metrics} />
+      )}
       <h4>限制</h4>
       <ul>
         {study.limitations.map((text, i) => (
           <li key={i}>{text}</li>
         ))}
       </ul>
+      {study.evolution && (
+        <section>
+          <h4>有依据的演化</h4>
+          <dl className="facts">
+            <div>
+              <dt>改造理由</dt>
+              <dd>
+                <Values value={study.evolution.reason} />
+              </dd>
+            </div>
+            <div>
+              <dt>具体变化</dt>
+              <dd>
+                <Values value={study.evolution.change} />
+              </dd>
+            </div>
+            <div>
+              <dt>解释与限制</dt>
+              <dd>
+                <Values value={study.evolution.interpretation} />
+              </dd>
+            </div>
+            <div>
+              <dt>执行状态</dt>
+              <dd>
+                {study.evolution.outcome || "未补充"}
+                <small>SUCCESS 表示运行成功，不代表盈利或改造显著有效。</small>
+              </dd>
+            </div>
+          </dl>
+        </section>
+      )}
       {study.lineage.length > 0 && (
         <>
           <h4>父子研究脉络</h4>
@@ -307,7 +345,7 @@ function RelationExplorer({ eid }: { eid: string }) {
               >
                 <svg
                   viewBox={`0 0 900 ${Math.max(240, Math.ceil(nodes.length / 3) * 110 + 40)}`}
-                  role="img"
+                  role="group"
                   aria-label="知识关系图；等价的关系列表位于下方"
                 >
                   {data.data.items.map((edge) => {
@@ -454,7 +492,7 @@ interface Job {
   status: string;
   progress: number;
   stage: string;
-  error: string | null;
+  error: string | { code: string; message: string } | null;
   worker_available: boolean;
   result_url: string;
   entity_refs: EntityRef[];
@@ -572,8 +610,35 @@ export function SubmitResearch({ items }: { items: SavedItem[] }) {
     </section>
   );
 }
+function InternalEvidence({ id }: { id: string }) {
+  const data = useApi<{ items: Record<string, unknown>[]; visibility: string }>(
+    `/v1/research/jobs/${encodeURIComponent(id)}/evidence`,
+  );
+  return (
+    <section className="panel">
+      <h2>内部研究证据</h2>
+      <p>仅当前获授权会话可见；不代表获得公开传播行情或衍生指标的权利。</p>
+      {data.loading ? (
+        <Loading />
+      ) : data.error ? (
+        <ErrorState error={data.error} retry={data.retry} />
+      ) : (
+        data.data?.items.map((value, i) => (
+          <details key={i} open>
+            <summary>
+              结果 {i + 1} ·{" "}
+              {String(value.run_id || value.research_run_id || "")}
+            </summary>
+            <Parameters value={value} />
+          </details>
+        ))
+      )}
+    </section>
+  );
+}
 export function JobPage() {
   const { id } = useParams();
+  const [evidence, setEvidence] = useState(false);
   const job = useApi<Job>(`/v1/research/jobs/${encodeURIComponent(id || "")}`);
   const [error, setError] = useState("");
   useEffect(() => {
@@ -630,7 +695,11 @@ export function JobPage() {
               </div>
               <div>
                 <dt>可读错误</dt>
-                <dd>{job.data.error || "无"}</dd>
+                <dd>
+                  {typeof job.data.error === "object" && job.data.error
+                    ? `${job.data.error.code}: ${job.data.error.message}`
+                    : job.data.error || "无"}
+                </dd>
               </div>
             </dl>
             <Parameters value={job.data.timestamps} />
@@ -650,6 +719,7 @@ export function JobPage() {
               </p>
             ))}
             <button onClick={job.retry}>刷新状态</button>
+            <button onClick={() => setEvidence(true)}>查看内部研究证据</button>
             <button
               disabled={[
                 "SUCCEEDED",
@@ -665,6 +735,7 @@ export function JobPage() {
           </section>
         )
       )}
+      {evidence && id && <InternalEvidence id={id} />}
       {error && <p role="alert">{error}</p>}
     </>
   );
@@ -757,6 +828,8 @@ function AdminWorkspace() {
         {[
           ["catalog", "条目与关系"],
           ["imports", "导入与错误"],
+          ["research", "研究任务"],
+          ["merges", "合并建议"],
           ["audit", "操作审计"],
         ].map(([key, label]) => (
           <button
@@ -772,6 +845,10 @@ function AdminWorkspace() {
         <AdminCatalog />
       ) : tab === "imports" ? (
         <AdminImports />
+      ) : tab === "research" ? (
+        <AdminJobs />
+      ) : tab === "merges" ? (
+        <AdminSuggestions />
       ) : (
         <AdminAudit />
       )}
@@ -1037,7 +1114,25 @@ function AdminEdit({ item, done }: { item: Item; done: () => void }) {
           <p>
             {edge.from_name} → {edge.relation} → {edge.to_name}
           </p>
-          <p>{edge.evidence}</p>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              const data = new FormData(event.currentTarget);
+              void review(edge.relationship_id, {
+                evidence: String(data.get("evidence") || ""),
+              });
+            }}
+          >
+            <label>
+              关系依据
+              <textarea
+                name="evidence"
+                defaultValue={edge.evidence}
+                maxLength={3000}
+              />
+            </label>
+            <button>保存关系依据</button>
+          </form>
           <small>
             {edge.review_status} · {edge.version}
           </small>
@@ -1249,6 +1344,117 @@ function AdminAudit() {
           </details>
         ))
       )}
+    </section>
+  );
+}
+
+function AdminJobs() {
+  const [offset, setOffset] = useState(0);
+  const result = useApi<{
+    items: {
+      job_id: string;
+      status: string;
+      stage: string;
+      study_type: string;
+      progress: number;
+    }[];
+    total: number;
+  }>(`/v1/admin/research-jobs?offset=${offset}`);
+  return (
+    <section className="panel">
+      <h2>研究任务与结果</h2>
+      <button onClick={result.retry}>刷新任务</button>
+      {result.error && <ErrorState error={result.error} />}
+      {result.data?.items.length === 0 && <p>尚未提交研究任务。</p>}
+      {result.data?.items.map((job) => (
+        <article className="admin-edge" key={job.job_id}>
+          <Link to={`/jobs/${job.job_id}`}>
+            {job.study_type} · {job.job_id}
+          </Link>
+          <p>
+            {job.status} · {job.stage} · {Math.round(job.progress * 100)}%
+          </p>
+        </article>
+      ))}
+      <div className="actions">
+        <button
+          disabled={offset === 0}
+          onClick={() => setOffset(Math.max(0, offset - 25))}
+        >
+          上一页
+        </button>
+        <button
+          disabled={offset + 25 >= (result.data?.total || 0)}
+          onClick={() => setOffset(offset + 25)}
+        >
+          下一页
+        </button>
+      </div>
+    </section>
+  );
+}
+function AdminSuggestions() {
+  const result = useApi<{
+    items: {
+      suggestion_id: string;
+      status: string;
+      payload: { reason: string };
+      left: Pick<Item, "name" | "kind" | "entity_id"> | null;
+      right: Pick<Item, "name" | "kind" | "entity_id"> | null;
+    }[];
+  }>("/v1/admin/merge-suggestions");
+  const [message, setMessage] = useState("");
+  async function review(id: string, status: string) {
+    try {
+      await api(`/v1/admin/merge-suggestions/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ status }),
+      });
+      result.retry();
+      setMessage("审核已记录，历史定义引用保持不变。");
+    } catch (error) {
+      setMessage(String(error));
+    }
+  }
+  return (
+    <section className="panel">
+      <h2>合并建议审核</h2>
+      <p>
+        审核仅记录判断。实际定义合并需要来源证据和新的定义版本，不能覆盖历史研究引用。
+      </p>
+      {result.error && <ErrorState error={result.error} />}
+      {message && <p role="status">{message}</p>}
+      {result.data?.items.length === 0 && <p>尚无合并建议。</p>}
+      {result.data?.items.map((item) => (
+        <article className="admin-edge" key={item.suggestion_id}>
+          <p>
+            {item.left ? (
+              <Link to={entityUrl(item.left)}>{item.left.name}</Link>
+            ) : (
+              "条目不可用"
+            )}{" "}
+            →{" "}
+            {item.right ? (
+              <Link to={entityUrl(item.right)}>{item.right.name}</Link>
+            ) : (
+              "条目不可用"
+            )}
+          </p>
+          <p>{item.payload.reason}</p>
+          <small>{item.status}</small>
+          <div className="actions">
+            <button onClick={() => void review(item.suggestion_id, "REVIEWED")}>
+              标记已核对
+            </button>
+            <button onClick={() => void review(item.suggestion_id, "REJECTED")}>
+              拒绝建议
+            </button>
+            <button onClick={() => void review(item.suggestion_id, "PENDING")}>
+              重新待审
+            </button>
+          </div>
+        </article>
+      ))}
     </section>
   );
 }

@@ -42,7 +42,7 @@ def login(client):
 
 def test_real_qlib_and_ingestion_visible_unresearched(runtime):
     cat,client=runtime
-    assert cat.metadata()['counts']['strategy']==1
+    assert cat.metadata()['visible_counts'].get('strategy',0)==1
     row=client.get('/v1/web/search?kind=strategy&q=RSI').json()['items'][0]
     assert row['test_record'] is True
     assert row['entity_type']=='StrategyVariant'
@@ -63,11 +63,11 @@ def test_server_visibility_all_surfaces_and_restore(runtime):
     cat,client=runtime
     row=cat.search()['items'][0];eid=row['entity_id']
     ref={k:row[k] for k in ['entity_type','entity_id','definition_revision']}
-    original=cat.metadata()['counts']['strategy']
+    original=cat.metadata()['visible_counts'].get('strategy',0)
     assert client.patch('/v1/admin/catalog',json={'ids':[eid],'patch':{'visibility':'HIDDEN'}},headers=HEADERS).status_code==401
     login(client)
     assert client.patch('/v1/admin/catalog',json={'ids':[eid],'patch':{'visibility':'HIDDEN'}},headers=HEADERS).status_code==200
-    assert cat.metadata()['counts']['strategy']==original-1
+    assert cat.metadata()['visible_counts'].get('strategy',0)==original-1
     assert not cat.visible(eid)
     with pytest.raises(KeyError):cat.resolve_ref(**ref)
     for path in [f'/v1/web/entities/strategy/{eid}',f'/v1/web/relations/{eid}',f'/v1/web/export/strategy/{eid}',f'/v1/web/results?kind=strategy&eid={eid}']:
@@ -77,8 +77,9 @@ def test_server_visibility_all_surfaces_and_restore(runtime):
     assert client.get('/v1/web/search?kind=strategy&q=SYNTHETIC').json()['total']==0
     assert client.post('/v1/web/references/resolve',json={'refs':[ref]}).status_code==409
     assert client.post('/v1/web/research-requests',json={'entity_refs':[ref],'study_type':'STRATEGY_REPLICATION','requested_settings':{}}).status_code==409
-    factor=next(i for i in cat.all_items() if i.get('source_type')=='RULE_LINK_ONLY')
-    assert eid not in json.dumps(cat.relations(factor['entity_id'],hops=2))
+    # This fixture owns its rule-factor reference exclusively, so hiding the
+    # fixture must also remove that reference from the public projection.
+    assert not any(i.get('source_type')=='RULE_LINK_ONLY' for i in cat.all_items())
     assert client.patch('/v1/admin/catalog',json={'ids':[eid],'patch':{'visibility':'PUBLIC'}},headers=HEADERS).status_code==200
     assert client.get('/v1/web/entities/strategy/'+eid).status_code==200
     assert len(cat.audit())==2
@@ -135,3 +136,63 @@ def test_missing_invalid_pagination_and_safe_failure(runtime,monkeypatch):
     monkeypatch.setattr(cat,'search',lambda **kw: (_ for _ in ()).throw(RuntimeError('PRIVATE_DB_PATH_AND_TEXT')))
     r=client.get('/v1/web/search')
     assert r.status_code==500 and 'PRIVATE' not in r.text
+
+
+def test_existing_ingestion_api_updates_catalog_and_permissions(runtime,monkeypatch):
+    cat,_=runtime
+    token='synthetic-api-key-with-more-than-thirty-two-characters'
+    monkeypatch.setenv('QUANTGRAPH_API_KEYS',json.dumps({'test':{'token':token,'scopes':['ingest:write'],'requests_per_minute':60}}))
+    client=TestClient(create_web_app(catalog=cat,admin_password=PASSWORD))
+    body=batch(rid='TEST-INGEST-2',batch_id='TEST-INGEST-2')
+    assert client.post('/v1/ingest/grokbot/batches',json=body).status_code==401
+    result=client.post('/v1/ingest/grokbot/batches',json=body,headers={'Authorization':'Bearer '+token})
+    assert result.status_code==200 and result.json()['accepted']==1
+    assert cat.search()['total']==2
+    assert cat.metadata()['knowledge_counts']['collected_strategy_records']==0
+    row=cat.search()['items'][0]
+    source=next(e['from_id'] for e in cat.relations(row['entity_id'])['items'] if e['relation']=='DESCRIBES')
+    cat.edit([row['entity_id']],{'visibility':'HIDDEN'},'test')
+    assert not cat.visible(source)
+    assert client.get('/v1/web/entities/source/'+source).status_code==404
+    cat.edit([row['entity_id']],{'visibility':'PUBLIC'},'test')
+    assert cat.visible(source)
+
+
+def test_bad_admin_edits_fail_without_mutation(runtime):
+    cat,client=runtime;login(client);eid=cat.search()['items'][0]['entity_id']
+    for patch in [{'aliases':'not-a-list'},{'aliases':[{}]},{'markets':42},{'name':['bad']}]:
+        assert client.patch('/v1/admin/catalog',json={'ids':[eid],'patch':patch},headers=HEADERS).status_code==422
+    assert cat.audit()==[]
+
+
+def test_fixture_children_do_not_inflate_real_counts_and_shared_nodes_survive(runtime):
+    cat,_=runtime
+    row=cat.search()['items'][0]
+    factor=next(r['to_id'] for r in cat.relations(row['entity_id'])['items'] if r['relation']=='USES_FACTOR')
+    assert cat.get(factor)['test_record']
+    assert cat.metadata()['counts']['variant']==508
+    assert cat.metadata()['test_counts']['variant']==1
+    cat.edit([row['entity_id']],{'visibility':'HIDDEN'},'test')
+    assert not cat.visible(factor)
+    body=batch(rid='BUSINESS-SOURCE',batch_id='BUSINESS-SOURCE');body['records'][0]['metadata']={}
+    cat.ingestion.ingest(IngestBatch.model_validate(body),json.dumps(body).encode(),'test');cat.sync_ingestion()
+    assert cat.visible(factor) and not cat.get(factor)['test_record']
+    assert cat.metadata()['counts']['variant']==509
+
+
+def test_admin_operational_views_are_authenticated_and_audited(runtime):
+    cat,client=runtime
+    for route in ['/v1/admin/research-jobs','/v1/admin/merge-suggestions']:
+        assert client.get(route).status_code==401
+    login(client)
+    assert client.get('/v1/admin/research-jobs').json()=={'items':[],'total':0}
+    items=cat.search(kind='variant',page_size=2)['items']
+    body={'left':items[0]['entity_id'],'right':items[1]['entity_id'],'reason':'SYNTHETIC review only; no equivalence claim'}
+    proposed=client.post('/v1/admin/merge-suggestions',json=body,headers=HEADERS).json()
+    values=client.get('/v1/admin/merge-suggestions').json()['items']
+    assert values[0]['left']['name']==items[0]['name']
+    assert client.patch('/v1/admin/merge-suggestions/'+proposed['suggestion_id'],json={'status':'REJECTED'},headers=HEADERS).status_code==200
+    assert cat.audit()[0]['action']=='REVIEW_MERGE'
+    eid=cat.search()['items'][0]['entity_id']; edge=cat.relations(eid)['items'][0]
+    for patch in [{'confidence':'bad'},{'review_status':'SAME_AS'},{'evidence':[]}]:
+        assert client.patch('/v1/admin/relations/'+edge['relationship_id'],json=patch,headers=HEADERS).status_code==422
