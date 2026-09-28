@@ -6,8 +6,11 @@ The ingestion fixture is explicitly labelled and excluded from real counts.
 import argparse
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
+import signal
 import sqlite3
+import subprocess
 import time
 from urllib.parse import quote
 from uuid import uuid4
@@ -80,7 +83,7 @@ def main():
         rid='acceptance-'+case_name+'-'+uuid4().hex
         body=dict(schema_version='research-request/v1',request_id=rid,idempotency_key=rid,
                   entity_refs=[ref],study_type=profile['study_type'],requested_settings={'profile_id':case['profile_id']})
-        call('POST','/v1/research/jobs',json=body,expected=401)
+        call('POST','/v1/research/jobs',json=body,headers={'X-QuantGraph-Request':'1'},expected=401)
         job=call('POST','/v1/research/jobs',session=admin,json=body,expected=202)
         retry=call('POST','/v1/research/jobs',session=admin,json=body,expected=202)
         assert retry['job_id']==job['job_id'] and retry['duplicate']
@@ -134,15 +137,56 @@ def main():
         call('PATCH','/v1/admin/catalog',session=admin,json={'ids':[new['items'][0]['entity_id']],'patch':{'visibility':'HIDDEN'}})
         return {'record_id':rid,'first_receipt':first,'replay_idempotent':True,'history_retained':True,'test_only':True,'hidden_after_test':True}
 
+    def recovery():
+        if not cfg.get('allow_worker_interruption_test'):
+            raise KeyError('Explicit isolated worker interruption test not configured')
+        case=cfg['acceptance_cases']['factor'];profile=cfg['profiles'][case['profile_id']]
+        rid='acceptance-recovery-'+uuid4().hex
+        body=dict(request_id=rid,idempotency_key=rid,entity_refs=[case['entity_ref']],
+                  study_type='FACTOR_DIAGNOSTIC',requested_settings={'profile_id':case['profile_id']})
+        job=call('POST','/v1/research/jobs',session=admin,json=body,expected=202)
+        registration=Path(cfg['output_root'])/job['job_id']/'research/study/trial-registration.json'
+        deadline=time.monotonic()+30
+        while not registration.exists() and time.monotonic()<deadline:time.sleep(.01)
+        assert registration.exists(),'Worker did not register a real experiment before the fault test'
+        pidfile=Path(cfg['job_db']).parent/'worker.pid';pid=int(pidfile.read_text())
+        command=subprocess.check_output(['ps','-p',str(pid),'-o','command='],text=True)
+        assert 'strategy_lab.platform_worker --config ' in command and str(args.config) in command
+        # Only this supervised, isolated test worker is interrupted. The API and
+        # original data stay available; the parent command restarts the worker.
+        os.kill(pid,signal.SIGSTOP)
+        try:
+            before=call('GET','/v1/research/jobs/'+job['job_id'],session=admin)
+            assert before['status']=='RUNNING','Computation already finished before the requested fault'
+        finally:
+            os.kill(pid,signal.SIGKILL)
+        duplicate=call('POST','/v1/research/jobs',session=admin,json=body,expected=202)
+        assert duplicate['job_id']==job['job_id'] and duplicate['duplicate']
+        deadline=time.monotonic()+profile['max_seconds']+40
+        while time.monotonic()<deadline:
+            job=call('GET','/v1/research/jobs/'+job['job_id'],session=admin)
+            if job['status'] not in {'QUEUED','RUNNING'}:break
+            time.sleep(.5)
+        assert job['status']=='SUCCEEDED' and job['attempts']==2, str(job)
+        records=[json.loads(line)['data'] for line in Path(cfg['registry_path']).read_text().splitlines()]
+        attempts=[r for r in records if r['kind']=='trial_attempt' and r['spec']['selection_campaign_id']=='factor-study-'+job['job_id']]
+        assert len(attempts)==profile['trials_per_entity']
+        assert len({r['attempt_id'] for r in attempts})==len(attempts)
+        assert call('GET',job['result_url'])['items']
+        return {'job':job,'registered_attempts':len(attempts),'duplicate_submission':True,
+                'worker_restarted':int(pidfile.read_text())!=pid,'no_duplicate_statistical_trials':True}
+
     check('1_strategy_exploration',exploration)
     for name in ('factor','replication','evolution'):check(name,lambda name=name:research(name))
     check('5_visibility',visibility)
     check('6_ingestion',ingestion)
+    check('7_worker_recovery',recovery)
     report['counts']=call('GET','/v1/web/meta')['counts']
-    report['overall']='PASSED' if all(v['status']=='PASSED' for v in report['scenarios'].values()) else 'INCOMPLETE'
+    report['public_numerical_research']='AVAILABLE' if all(p.get('numeric_display') for p in cfg['profiles'].values()) else 'RESTRICTED_BY_DATA_RIGHTS'
+    report['overall']='BRIDGE_PATHS_PASSED' if all(v['status']=='PASSED' for v in report['scenarios'].values()) else 'INCOMPLETE'
     args.output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({'overall':report['overall'],'scenarios':{k:v['status'] for k,v in report['scenarios'].items()},'report':str(args.output)},ensure_ascii=False))
-    raise SystemExit(0 if report['overall']=='PASSED' else 1)
+    raise SystemExit(0 if report['overall']=='BRIDGE_PATHS_PASSED' else 1)
 
 
 if __name__=='__main__':main()
