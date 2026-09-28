@@ -20,13 +20,13 @@
 | 2–4 项比较 | 可用；不生成等价结论或收益排行榜 |
 | 收藏、取消、分组、备注、刷新保留 | 可用；只存当前浏览器，无云同步 |
 | 清单 JSON 导入/导出 | 可用；导入引用经真实公开 API 校验，旧版本拒绝自动替换 |
-| 正式研究请求导出 | **未完成：等待任务 A 的 research-request/v1 正式 schema/API** |
-| 研究结果 | 真实公开查询为空；四类证据解释可用，正式 factor-study-result/v1 尚未接入 |
-| PRIVATE 网站、多用户账户、支付 | 未实现；本轮网站只支持 PUBLIC 本地部署 |
+| 正式研究请求导出 | 已接 A 的 research-request/v1；仅支持当前具体 FactorVariant，DRAFT 不授权执行 |
+| 研究结果 | 接 factor-study-result/v1；PUBLIC 不读取私有 journal，显式本机 PRIVATE 可显示有内部权限的结果 |
+| PRIVATE 网站 | 显式 --private-study-journal；仅本机回环。多用户账户与支付未实现 |
 
-没有生产 mock、硬编码收益指标或虚构使用量。故障注入、恶意文本和损坏存储只存在于明确命名的测试中。清单导出是 `quantgraph-list/v1` 备份，不能冒充 `research-request/v1`。任务 A 缺席时，正式请求按钮关闭，服务端返回 503；不创建另一套研究 schema，也不把 BacktestResult 重新标记成确认性研究。
+没有生产 mock、硬编码收益指标或虚构使用量。故障注入、恶意文本和损坏存储只存在于明确命名的测试中。清单备份为 `quantgraph-list/v1`，研究请求为 A 的 `research-request/v1`，后者由服务端权威模型生成。网页不启动 Lab，运行需操作者在 Lab 端显式执行并通过准入、冻结与 TrialRegistry 登记。
 
-清单的 `entity_type + entity_id + definition_revision` 固定引用实际公开定义。当前源实体尚无正式 definition_revision，网页用去除收录时间后的规范化定义 SHA-256 作为本地书签身份；任务 A 接入时必须复核身份映射，不能默默改写历史引用。更新公开 release 后，旧引用保留原值，导入/请求需要显式解决版本变化。
+具体变体的 `entity_type + entity_id + definition_revision` 使用 A 的 `definition_identity`。旧 B 书签的 `sha256:` 身份不自动迁移：旧引用仍保留，导出会拒绝，须核对定义并重新收藏。概念书签仍可比较和整理，不能作为具体变体导出研究。
 
 ## 商业假设，尚待验证
 
@@ -51,7 +51,7 @@ bash web/start.sh
 
 浏览器打开 `http://127.0.0.1:8765`。同一个 FastAPI 进程提供 Graph API、网页 adapter 和编译后的 React 文件。启动使用此 worktree 的 `.venv`、`web/node_modules` 与 `web/dist`；只绑定回环地址。可用 `QUANTGRAPH_WEB_PORT=另一个端口 bash web/start.sh` 为其他独立 checkout 分配端口。禁止共用可写数据库。
 
-热更新开发时先启动后端，再运行 `npm --prefix web run dev`，Vite 固定 `127.0.0.1:5178`，代理到 `8765`。正式本地验收用生产构建与同源 `8765`。E2E 使用独立 `8766`，不复用已运行服务。
+热更新开发时先启动后端，再运行 `npm --prefix web run dev`，Vite 固定 `127.0.0.1:5178`，代理到 `8765`。正式本地验收用生产构建与同源 `8765`。E2E 使用独立 `8777`，不复用已运行服务。
 
 ```sh
 uv sync --frozen --extra test
@@ -81,20 +81,22 @@ Graph 查询继续使用 `/v1`，API 应用版本 `0.2.0`；只读网页投影�
 | GET /v1/web/compare?ref=kind/id&ref=kind/id | 比较 2–4 条真实定义 |
 | POST /v1/web/references/resolve | 仅校验公开 ID 与版本；不接收清单备注 |
 | GET /v1/web/results | 当前公开结果查询与契约状态 |
-| POST /v1/web/research-requests | 契约未接入时明确 503；不会执行研究 |
+| POST /v1/web/research-requests | 使用正式 schema 返回 DRAFT；不会执行研究 |
 | GET /v1/web/license | 当前 release 的 Microsoft MIT 完整声明 |
 
 网页启动先运行现有 `verify_public`，再用现有只读 FactorDB 打开经审核的 `datasets/public` SQLite。不会读 curated/current、私有 ingestion 或环境指定的 research profile。客户端添加 profile/mode/database 参数无法改变固定数据源；旧 Graph 路由也共享这一公开数据库。关系仅保留公开端点；计数与筛选从同一公开子图计算。
 
 公开定义的许可不授权底层行情，也不自动授权研究结果。来源只以 React 文本节点呈现；不使用 HTML 注入、Markdown HTML、公式求值或任意 Python。链接只接受无凭据的 HTTP(S)，外链隔离 opener。生产响应设置 CSP、nosniff、referrer 和权限策略；仅允许本地 Host，未知 API 路径不会回退成首页。旧 ingestion API 不在网页应用注册，密钥不进入浏览器。
 
-本地清单存储键包含 PUBLIC，导入必须显式声明 PUBLIC。存储损坏时保留原字节，不静默清空；存储被拒绝时显示未保存。导入只把实体引用送给当前同源服务校验，备注/分组留在浏览器，不进入公共统计或搜索。
+本地清单存储键区分 PUBLIC/PRIVATE，跨模式导入被拒绝。存储损坏时保留原字节，不静默清空；存储被拒绝时显示未保存。导入只把实体引用送给当前同源服务校验，备注/分组留在浏览器，不进入公共统计或搜索。
 
-## 正式契约接入剩余工作
+## 集成运行
 
-任务 A 交付后：复用其 schema 与实体版本解析，接真实请求生成/校验接口；按明确许可规则读取结果，展示方法、区间、成本、指标、限制与结论类别；补齐真实请求导出→生产 schema 校验和真实结果记录的契约测试。当前依赖未满足，不能宣布完整 MVP 成功标准通过。
+显式本机私有结果服务：`.venv/bin/python -m quantgraph.api.web --port 8776 --private-study-journal /absolute/private/studies.sqlite`。该入口仍只加载公开定义；私有结果来自单独指定的 journal，环境变量和 URL 参数不能启用私有能力。只绑定 `127.0.0.1`。不会向 PUBLIC 返回内部结果是否存在、数量、关系或指标，通用权限提示与内部数据无关。
 
-## 本轮验收记录
+完整集成重跑说明与固定依赖见 [集成验收记录](integration-acceptance.md)。
+
+## B 原始交付验收记录（集成前历史）
 
 本地验收日期：2026-09-28。公开 release `d0460076e478321851db`，实际为 **508 个定义变体、43 个概念族、0 个策略、0 个 BacktestResult**。这些是公开子图数量，不是独立盈利因子数量。
 

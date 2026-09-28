@@ -48,6 +48,15 @@ describe("browser notebook", () => {
     expect(loadNotebook().error).toBeTruthy();
     expect(localStorage.getItem(STORAGE_KEY)).toBe("{broken");
   });
+  it("round trips PRIVATE without leaking into PUBLIC or importing across modes", () => {
+    saveNotebook(fixture.items, "PRIVATE");
+    expect(loadNotebook("PRIVATE").items).toEqual(fixture.items);
+    expect(loadNotebook().items).toEqual([]);
+    expect(() => parseNotebook(JSON.stringify(fixture), "PRIVATE")).toThrow();
+    expect(() =>
+      parseNotebook(JSON.stringify({ ...fixture, mode: "PRIVATE" })),
+    ).toThrow();
+  });
   it("keeps PRIVATE storage isolated", () => {
     localStorage.setItem(
       "quantgraph:PRIVATE:research-list:v1",

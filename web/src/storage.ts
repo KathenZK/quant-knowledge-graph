@@ -1,5 +1,7 @@
 import type { EntityRef, Item, Notebook, SavedItem } from "./types";
 export const STORAGE_KEY = "quantgraph:PUBLIC:research-list:v1";
+type Mode = "PUBLIC" | "PRIVATE";
+export const storageKey = (mode: Mode) => `quantgraph:${mode}:research-list:v1`;
 export const refKey = (ref: EntityRef) =>
   `${ref.entity_type}:${ref.entity_id}@${ref.definition_revision}`;
 export const kindFor = (ref: EntityRef) =>
@@ -14,7 +16,7 @@ const isObject = (v: unknown): v is Record<string, unknown> =>
   !!v && typeof v === "object" && !Array.isArray(v);
 const bounded = (v: unknown, max: number) =>
   typeof v === "string" && v.length <= max;
-export function parseNotebook(raw: string): Notebook {
+export function parseNotebook(raw: string, mode: Mode = "PUBLIC"): Notebook {
   if (raw.length > 1_000_000) throw new Error("清单超过 1 MB。");
   let value: unknown;
   try {
@@ -25,11 +27,11 @@ export function parseNotebook(raw: string): Notebook {
   if (
     !isObject(value) ||
     value.schema_version !== "quantgraph-list/v1" ||
-    value.mode !== "PUBLIC" ||
+    value.mode !== mode ||
     !Array.isArray(value.items) ||
     value.items.length > 500
   )
-    throw new Error("清单格式不正确，或不属于 PUBLIC 模式。");
+    throw new Error(`清单格式不正确，或不属于 ${mode} 模式。`);
   const items: SavedItem[] = value.items.map((v: unknown) => {
     if (
       !isObject(v) ||
@@ -61,12 +63,15 @@ export function parseNotebook(raw: string): Notebook {
   });
   if (new Set(items.map(refKey)).size !== items.length)
     throw new Error("清单含重复的定义引用。");
-  return { schema_version: "quantgraph-list/v1", mode: "PUBLIC", items };
+  return { schema_version: "quantgraph-list/v1", mode, items };
 }
-export function loadNotebook(): { items: SavedItem[]; error?: string } {
+export function loadNotebook(mode: Mode = "PUBLIC"): {
+  items: SavedItem[];
+  error?: string;
+} {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return { items: raw ? parseNotebook(raw).items : [] };
+    const raw = localStorage.getItem(storageKey(mode));
+    return { items: raw ? parseNotebook(raw, mode).items : [] };
   } catch {
     return {
       items: [],
@@ -75,12 +80,12 @@ export function loadNotebook(): { items: SavedItem[]; error?: string } {
     };
   }
 }
-export function saveNotebook(items: SavedItem[]) {
+export function saveNotebook(items: SavedItem[], mode: Mode = "PUBLIC") {
   localStorage.setItem(
-    STORAGE_KEY,
+    storageKey(mode),
     JSON.stringify({
       schema_version: "quantgraph-list/v1",
-      mode: "PUBLIC",
+      mode,
       items,
     }),
   );

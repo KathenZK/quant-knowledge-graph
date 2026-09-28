@@ -1,6 +1,7 @@
 """Local, public-only web entry point. Reuses the existing read-only Graph API."""
 
 import argparse
+from uuid import uuid4
 from typing import Literal
 
 from fastapi import HTTPException, Query, Request
@@ -13,6 +14,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 from quantgraph.api.app import create_app
 from quantgraph.api.web_read_model import WebReadModel
 from quantgraph.db import project_root
+from quantgraph.models.factor_study import ResearchRequest, EntityRef
 
 Kind = Literal["variant", "concept", "strategy"]
 
@@ -29,10 +31,24 @@ class ReferenceBatch(BaseModel):
     refs: list[BookmarkRef] = Field(max_length=500)
 
 
-def create_web_app(root=None):
+class RequestDraft(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    entity_refs: list[EntityRef] = Field(min_length=1, max_length=500)
+    study_type: Literal["FACTOR_DIAGNOSTIC", "STRATEGY_REPLICATION"]
+    requested_settings: dict
+
+
+def create_web_app(root=None, *, private_journal=None):
     root = project_root(root)
     app = create_app(root, public_only=True)
-    model = WebReadModel(app.state.db)
+    repository = None
+    if private_journal is not None:
+        from pathlib import Path
+        from quantgraph.graph.factor_study_store import FactorStudyRepository
+        if not Path(private_journal).is_file():
+            raise ValueError("Explicit existing local study journal required")
+        repository = FactorStudyRepository(private_journal, app.state.db)
+    model = WebReadModel(app.state.db, studies=repository)
     app.state.web_model = model
     app.add_middleware(
         TrustedHostMiddleware,
@@ -146,13 +162,21 @@ def create_web_app(root=None):
                 raise HTTPException(404, "当前公开版本中没有此条目")
         return {"items": items}
 
-    # A owns request/result contracts. Fail closed until the real contract is
-    # available; browser list export remains independently usable.
     @app.post("/v1/web/research-requests")
-    def export_request():
-        raise HTTPException(
-            503, "正式 research-request/v1 契约尚未接入；可先导出清单备份，研究未运行"
-        )
+    def export_request(body: RequestDraft):
+        # A owns the formal schema; only existing public variants can be exported.
+        if body.study_type != "FACTOR_DIAGNOSTIC":
+            raise HTTPException(422, "当前仅支持具体因子变体的研究请求")
+        seen = set()
+        for ref in body.entity_refs:
+            item = model.by_key.get(("variant", ref.entity_id))
+            if (ref.entity_type != "FactorVariant" or not item
+                    or item["definition_revision"] != ref.definition_revision):
+                raise HTTPException(409, "请选择当前版本的具体因子变体；旧清单请重新收藏")
+            if ref.entity_id in seen:
+                raise HTTPException(422, "研究请求含重复引用")
+            seen.add(ref.entity_id)
+        return ResearchRequest(request_id="web-" + uuid4().hex, **body.model_dump()).model_dump(mode="json")
 
     dist = root / "web/dist"
     if dist.is_dir():
@@ -182,10 +206,11 @@ def main():
         description="QuantGraph PUBLIC website, loopback only"
     )
     parser.add_argument("--port", type=int, default=8765)
+    parser.add_argument("--private-study-journal", help="Explicit local-only private results journal")
     args = parser.parse_args()
     import uvicorn
 
-    uvicorn.run(create_web_app(), host="127.0.0.1", port=args.port, access_log=False)
+    uvicorn.run(create_web_app(private_journal=args.private_study_journal), host="127.0.0.1", port=args.port, access_log=False)
 
 
 if __name__ == "__main__":

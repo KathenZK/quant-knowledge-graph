@@ -1,0 +1,114 @@
+{
+  "schema_version": "factor-study-result/v1",
+  "run_id": "fixture-failed-computation",
+  "request_id": "fixture-draft",
+  "study_type": "COMPUTATION_CHECK",
+  "mapping": {
+    "identity": {
+      "factor_concept_id": "qkg:concept:813faeaa-3648-5065-9bf2-817e5a1504a5",
+      "factor_variant_id": "qkg:factor:a43634a4-29ed-51ec-86a5-bbd27b150c86",
+      "definition_revision": "9b1417b8e1cf15a6232d7b66a1261c2d2fd253327a15c105730acd5cfb4c1da1",
+      "source_revision": "be725493eb1a6bbb42bf11b37aa7669f59610ff1",
+      "source_snapshot": {
+        "uri": "https://github.com/microsoft/qlib/blob/be725493eb1a6bbb42bf11b37aa7669f59610ff1/qlib/contrib/data/loader.py",
+        "sha256": "814b7f7ab3d418ae3c87ce352220080b239eba2670eac9e38376b794be4075cb"
+      },
+      "source_native_ids": [
+        "Alpha158:KMID"
+      ],
+      "formula_id": "qkg:formula:29637667-1ff3-5e08-a7e4-47c2bdfdf45d",
+      "formula": "($close-$open)/$open",
+      "formula_sha256": "420d987b4b0780ac4ecb5648f176e66bce92b82b2dcebb8bf04d505402064261"
+    },
+    "implementation": {
+      "implementation_id": "fixture:unimplemented",
+      "version": "fixture-v1",
+      "code": {
+        "uri": "fixture://synthetic-only",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "semantic_version": "fixture-v1",
+      "parameters": {},
+      "required_fields": [
+        "close",
+        "open"
+      ],
+      "axis": "TIME_SERIES",
+      "semantics": {
+        "missing_values": "SYNTHETIC_TEST_ONLY",
+        "warmup": "SYNTHETIC_TEST_ONLY",
+        "ties": "SYNTHETIC_TEST_ONLY",
+        "window": "SYNTHETIC_TEST_ONLY",
+        "adjustment": "SYNTHETIC_TEST_ONLY",
+        "available_at": "SYNTHETIC_TEST_ONLY",
+        "delay": "SYNTHETIC_TEST_ONLY",
+        "volume_unit": "SYNTHETIC_TEST_ONLY",
+        "universe": "SYNTHETIC_TEST_ONLY",
+        "ddof": "SYNTHETIC_TEST_ONLY",
+        "rsi": "SYNTHETIC_TEST_ONLY"
+      }
+    },
+    "mapping_status": "FAILED",
+    "semantic_tests": []
+  },
+  "dataset": {
+    "uri": "fixture://synthetic-only",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "contract": {
+    "uri": "fixture://synthetic-only",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "code": {
+    "uri": "fixture://synthetic-only",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "sample": {
+    "real_market_data": false,
+    "axis": "TIME_SERIES"
+  },
+  "labels": [],
+  "methods": {
+    "kind": "fixture-only"
+  },
+  "results": {
+    "reason": "Synthetic invalid input fixture, never a real study"
+  },
+  "status": "FAILED",
+  "limitations": [
+    "Synthetic fixture; not research evidence"
+  ],
+  "integrity_assessment": {
+    "status": "UNKNOWN",
+    "evidence": [],
+    "independent_verification": false
+  },
+  "permissions": {
+    "definition": {
+      "internal_use": "ALLOWED",
+      "public_display": "DENIED",
+      "evidence": "SYNTHETIC_TEST_ONLY: no market rights asserted"
+    },
+    "implementation": {
+      "internal_use": "ALLOWED",
+      "public_display": "DENIED",
+      "evidence": "SYNTHETIC_TEST_ONLY: no market rights asserted"
+    },
+    "market_data": {
+      "internal_use": "ALLOWED",
+      "public_display": "DENIED",
+      "evidence": "SYNTHETIC_TEST_ONLY: no market rights asserted"
+    },
+    "derived_result": {
+      "internal_use": "ALLOWED",
+      "public_display": "DENIED",
+      "evidence": "SYNTHETIC_TEST_ONLY: no market rights asserted"
+    }
+  },
+  "artifacts": [],
+  "trial_registry": {
+    "status": "UNAVAILABLE"
+  },
+  "research_status": "EXPLORATORY_RETROSPECTIVE",
+  "promotion_allowed": false
+}

@@ -13,7 +13,7 @@ export async function api<T>(url: string, init?: RequestInit): Promise<T> {
           : response.status === 422
             ? "请求参数或引用格式不正确。"
             : response.status === 503 && url.endsWith("/research-requests")
-              ? "正式研究请求契约尚未接入。清单可先保存或备份，研究未运行。"
+              ? "研究请求导出服务暂时不可用。清单可先保存或备份，研究未运行。"
               : "服务暂时不可用，请重试。",
     );
   return response.json() as Promise<T>;

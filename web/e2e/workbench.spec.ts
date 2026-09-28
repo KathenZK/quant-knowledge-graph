@@ -100,7 +100,7 @@ test("real public workflow: search → detail → compare → save → reload �
   const value = JSON.parse(await fs.readFile((await file.path())!, "utf8"));
   expect(value.schema_version).toBe("quantgraph-list/v1");
   expect(value.mode).toBe("PUBLIC");
-  expect(value.items[0].definition_revision).toMatch(/^sha256:/);
+  expect(value.items[0].definition_revision).toMatch(/^[a-f0-9]{64}$/);
   const refs = value.items.map(
     ({
       entity_type,
@@ -128,12 +128,27 @@ test("real public workflow: search → detail → compare → save → reload �
     /公开样例备注/,
   );
   expect(privateNotesRequests).toEqual([]);
-  await expect(
-    page.getByRole("button", { name: "校验并导出请求" }),
-  ).toBeDisabled();
-  await expect(page.getByText(/正式契约等待任务 A/)).toBeVisible();
+  const requestDownload = page.waitForEvent("download");
+  await page.getByRole("button", { name: "校验并导出请求" }).click();
+  const draftFile = await requestDownload;
+  const draft = JSON.parse(
+    await fs.readFile((await draftFile.path())!, "utf8"),
+  );
+  await fs.mkdir(path.resolve(".artifacts/request-evidence"), {
+    recursive: true,
+  });
+  await fs.writeFile(
+    path.resolve(".artifacts/request-evidence/research-request.json"),
+    JSON.stringify(draft, null, 2) + "\n",
+  );
+  expect(draft.schema_version).toBe("research-request/v1");
+  expect(draft.status).toBe("DRAFT");
+  expect(draft.entity_refs).toEqual(refs);
+  expect(JSON.stringify(draft)).not.toContain("公开样例备注");
   await page.getByRole("link", { name: "研究结果", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "尚未研究" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "无可展示结果" }),
+  ).toBeVisible();
   await expect(page.getByText("confirmatory", { exact: true })).toBeVisible();
   await assertAccessible(page);
   await page.screenshot({
@@ -292,6 +307,12 @@ test("keyboard, form labels, contrast and narrow viewport", async ({
         .analyze()
     ).violations,
   ).toEqual([]);
+  await page.setViewportSize({ width: 1057, height: 975 });
+  expect(
+    (await page
+      .getByRole("combobox", { name: "方法族", exact: true })
+      .boundingBox())!.width,
+  ).toBeGreaterThan(100);
   await page.setViewportSize({ width: 390, height: 844 });
   for (const url of ["/explore?q=均线", "/list", "/results"]) {
     await page.goto(url);

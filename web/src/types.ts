@@ -36,7 +36,7 @@ export interface Item extends EntityRef {
   variant_count: number;
 }
 export interface Results {
-  items: never[];
+  items: FactorStudyResult[];
   total: number;
   status: string;
   reason: string;
@@ -94,7 +94,7 @@ export interface Facet {
   label: string;
 }
 export interface Meta {
-  mode: "PUBLIC";
+  mode: "PUBLIC" | "PRIVATE";
   release: string;
   graph_api: string;
   graph_version: string;
@@ -128,6 +128,29 @@ export interface SavedItem extends EntityRef {
 }
 export interface Notebook {
   schema_version: "quantgraph-list/v1";
-  mode: "PUBLIC";
+  mode: "PUBLIC" | "PRIVATE";
   items: SavedItem[];
+}
+
+// Display projection of A's factor-study-result/v1; no second export contract.
+export interface FactorStudyResult {
+  schema_version: "factor-study-result/v1";
+  run_id: string;
+  request_id: string;
+  research_status: string;
+  status: string;
+  mapping: {
+    identity: { factor_variant_id: string; definition_revision: string };
+    implementation: { implementation_id: string; version: string };
+  };
+  sample: Record<string, unknown>;
+  methods: Record<string, unknown>;
+  results: Record<string, unknown>;
+  limitations: string[];
+  trial_registry: {
+    assessment?: {
+      permitted_conclusion_level: string;
+      holdout_evidence_status: string;
+    };
+  };
 }
