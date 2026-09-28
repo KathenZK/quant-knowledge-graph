@@ -60,6 +60,8 @@ class ExecutionFact(StrictModel):
     basis: Literal['SOURCE_DEFINED','RESEARCH_ASSUMPTION','UNKNOWN']
     rationale: str = Field(min_length=1)
     evidence: EvidenceArtifact | None = None
+    assumption_reason: str | None = None
+    assumption_version: str | None = None
 
     @model_validator(mode='after')
     def source_needs_evidence(self):
@@ -75,6 +77,8 @@ class CostModel(StrictModel):
     slippage_bps: float = Field(ge=0)
     basis: Literal['SOURCE_DEFINED','RESEARCH_ASSUMPTION']
     description: str = Field(min_length=1)
+    assumption_reason: str | None = None
+    assumption_version: str | None = None
 
 
 class ExecutionContract(StrictModel):

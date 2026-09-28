@@ -212,7 +212,8 @@ class SQLiteIngestionRepository:
         """Local administrative review only. Deliberately not an ingestion route."""
         from quantgraph.graph.research_gate import ReviewDecision
         from quantgraph.models.evidence import EvidenceEnrichment
-        model = EvidenceEnrichment if payload.get('schema_version') == 'evidence-enrichment-v3' else ReviewDecision
+        from quantgraph.models.evidence_v4 import EvidenceEnrichmentV4
+        model = {'evidence-enrichment-v3': EvidenceEnrichment, 'evidence-enrichment-v4': EvidenceEnrichmentV4}.get(payload.get('schema_version'), ReviewDecision)
         value = model.model_validate(payload).model_dump(mode='json')
         decision_id = 'review-' + content_hash(value)
         with self.connect() as con:
@@ -341,7 +342,7 @@ class SQLiteIngestionRepository:
                 'factor_linked': sum(bool(r['factor_links']) for r in rows),
                 'rights_status': dict(Counter(r['research_rights_status'] for r in rows)),
                 'research_evidence_count': len(evidence),
-                'real_market_backtest_count': sum(e.get('schema_version') == '2.0' and e.get('evidence_kind') == 'REAL_MARKET_BACKTEST'
+                'real_market_backtest_count': sum(e.get('schema_version') == '3.0' and e.get('evidence_kind') == 'REAL_MARKET_BACKTEST'
                     and e.get('real_market_data') is True for e in evidence),
                 'counts_scope': 'CURRENT_PROJECTIONS_ONLY',
                 'complete': status['projection_status'] == 'READY'}
@@ -366,6 +367,9 @@ class SQLiteIngestionRepository:
             return [dict(r) for r in con.execute('SELECT route,status,count(*) AS requests FROM request_logs WHERE key_id=? GROUP BY route,status ORDER BY route,status', (key_id,))]
 
     def put_evidence(self, payload, key_id):
+        if payload.get('schema_version') == '3.0':
+            from quantgraph.models.evidence_v4 import MarketResearchEvidenceV4
+            payload = MarketResearchEvidenceV4.model_validate(payload).model_dump(mode='json')
         if payload.get('schema_version') == '2.0':
             from quantgraph.models.evidence import MarketResearchEvidence
             payload = MarketResearchEvidence.model_validate(payload).model_dump(mode='json')
@@ -377,6 +381,8 @@ class SQLiteIngestionRepository:
                 raise ValueError('Immutable research_run_id; use a new run for changed evidence')
             if not old:
                 if payload.get('schema_version') == '2.0':
+                    raise ValueError('Formal writeback requires V4 schema 3.0 dataset/rights bindings')
+                if payload.get('schema_version') == '3.0':
                     # Check admission in the same write transaction: review or
                     # revision updates cannot race with evidence insertion.
                     status = self._projection_status(con)
@@ -397,6 +403,14 @@ class SQLiteIngestionRepository:
                             raise ValueError('Research concept/template lineage mismatch')
                         if row['reviewed_evidence']['data_requirement'] != payload['data_provenance']:
                             raise ValueError('Research data differs from the admitted dataset')
+                        binding = row['reviewed_evidence']['dataset_binding']
+                        if any(binding[k] != payload[k] for k in ('contract_sha256', 'dataset_manifest_sha256', 'rights_id', 'rights_sha256')):
+                            raise ValueError('Contract/dataset/rights binding mismatch')
+                        contract = json.loads(binding['contract_json'])
+                        if any(contract[k] != payload[k] for k in ('experiment_family_id', 'strategy_variant_id', 'parameter_grid', 'trial_count')):
+                            raise ValueError('Frozen experiment/grid lineage mismatch')
+                        if content_hash(contract['engine_config']) != payload['config_sha256']:
+                            raise ValueError('Frozen engine config hash mismatch')
                 # Check the full table, not a pagination-dependent universe.
                 known = {r[0] for r in con.execute('SELECT DISTINCT variant_id FROM projections')}
                 if not set(payload['source_strategy_ids']) <= known:

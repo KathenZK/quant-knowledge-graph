@@ -1,0 +1,118 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "actual_count": {
+      "minimum": 0,
+      "title": "Actual Count",
+      "type": "integer"
+    },
+    "actual_end": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Actual End"
+    },
+    "actual_start": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Actual Start"
+    },
+    "calendar": {
+      "title": "Calendar",
+      "type": "string"
+    },
+    "calendar_version": {
+      "title": "Calendar Version",
+      "type": "string"
+    },
+    "coverage_reason": {
+      "title": "Coverage Reason",
+      "type": "string"
+    },
+    "coverage_status": {
+      "enum": [
+        "VERIFIED",
+        "PARTIAL",
+        "UNKNOWN",
+        "INVALID"
+      ],
+      "title": "Coverage Status",
+      "type": "string"
+    },
+    "duplicate_count": {
+      "minimum": 0,
+      "title": "Duplicate Count",
+      "type": "integer"
+    },
+    "expected_count": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Expected Count"
+    },
+    "gap_count": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Gap Count"
+    },
+    "ordered": {
+      "title": "Ordered",
+      "type": "boolean"
+    },
+    "requested_end": {
+      "title": "Requested End",
+      "type": "string"
+    },
+    "requested_start": {
+      "title": "Requested Start",
+      "type": "string"
+    },
+    "unexpected_count": {
+      "minimum": 0,
+      "title": "Unexpected Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "requested_start",
+    "requested_end",
+    "actual_start",
+    "actual_end",
+    "expected_count",
+    "actual_count",
+    "gap_count",
+    "duplicate_count",
+    "unexpected_count",
+    "ordered",
+    "calendar",
+    "calendar_version",
+    "coverage_status",
+    "coverage_reason"
+  ],
+  "title": "MarketCoverage",
+  "type": "object"
+}
