@@ -25,6 +25,9 @@ class EvidenceEnrichmentV4(EvidenceEnrichment):
             raise ValueError('Declared and derived data requirements differ')
         if (d.adjustment_method,d.timezone,d.calendar)!=(r.adjustment,r.timezone,r.calendar):
             raise ValueError('Data convention mismatch')
+        trust=self.dataset_binding.trust_assessment
+        if trust and trust.dataset_sha256!=d.dataset_hash:
+            raise ValueError('Trust assessment dataset digest mismatch')
         return self
 
 

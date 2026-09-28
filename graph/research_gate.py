@@ -21,7 +21,8 @@ def evaluate(row,decision=None):
     derived=False; data=False; rights=result['rights_status']=='ALLOWED'
     if e:
         try:
-            expected=derive(row['variant']['rule_ast'],e.execution.model_dump(mode='json'),calendar=e.derived_data_requirement.calendar)
+            expected=derive(row['variant']['rule_ast'],e.execution.model_dump(mode='json'),calendar=e.derived_data_requirement.calendar,
+                            dataset_profile=e.derived_data_requirement.dataset_profile)
             derived=expected==e.derived_data_requirement.model_dump(mode='json')
         except ValueError:pass
         b=e.dataset_binding;r=b.rights_evidence;d=e.data_requirement;c=b.coverage
@@ -33,6 +34,10 @@ def evaluate(row,decision=None):
             and not b.missing_native_fields and d.quality_status=='PASS' and d.real_market_data \
             and d.data_availability_status=='VERIFIED_AVAILABLE' and c.calendar==d.calendar \
             and not e.derived_data_requirement.auxiliary_data
+        if e.derived_data_requirement.dataset_profile=='TRUSTED_OHLCV_CORE_V1':
+            data=data and b.trust_assessment is not None and b.trust_assessment.status=='TRUSTED'
+            if b.trust_assessment is None or b.trust_assessment.status!='TRUSTED':
+                blockers.append('DATASET_TRUST_UNVERIFIED')
         if e.derived_data_requirement.auxiliary_data:blockers.append('AUXILIARY_DATA_UNVERIFIED')
         if r.status=='PROHIBITED' or r.research_use_allowed is False:result['status']='BLOCKED'
     else:

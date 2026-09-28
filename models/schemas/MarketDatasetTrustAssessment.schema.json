@@ -1,0 +1,172 @@
+{
+  "additionalProperties": false,
+  "description": "A pinned Lab audit, not a permission grant or a hand-written gate override.",
+  "properties": {
+    "assessed_at": {
+      "format": "date-time",
+      "title": "Assessed At",
+      "type": "string"
+    },
+    "assessment_code_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Assessment Code Sha256",
+      "type": "string"
+    },
+    "calendar": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN"
+      ],
+      "title": "Calendar",
+      "type": "string"
+    },
+    "contract_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Contract Sha256",
+      "type": "string"
+    },
+    "coverage": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN"
+      ],
+      "title": "Coverage",
+      "type": "string"
+    },
+    "dataset_profile": {
+      "const": "TRUSTED_OHLCV_CORE_V1",
+      "title": "Dataset Profile",
+      "type": "string"
+    },
+    "dataset_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Dataset Sha256",
+      "type": "string"
+    },
+    "finality": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN"
+      ],
+      "title": "Finality",
+      "type": "string"
+    },
+    "hashes": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN"
+      ],
+      "title": "Hashes",
+      "type": "string"
+    },
+    "integrity": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN"
+      ],
+      "title": "Integrity",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "page_count": {
+      "minimum": 1,
+      "title": "Page Count",
+      "type": "integer"
+    },
+    "provenance": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN"
+      ],
+      "title": "Provenance",
+      "type": "string"
+    },
+    "raw_dataset_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Raw Dataset Sha256",
+      "type": "string"
+    },
+    "rights": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN"
+      ],
+      "title": "Rights",
+      "type": "string"
+    },
+    "rights_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Rights Sha256",
+      "type": "string"
+    },
+    "schema_status": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN"
+      ],
+      "title": "Schema Status",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "market-dataset-trust-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_identity": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN"
+      ],
+      "title": "Source Identity",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "TRUSTED",
+        "DIAGNOSTIC_ONLY",
+        "REJECTED"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "dataset_profile",
+    "contract_sha256",
+    "dataset_sha256",
+    "rights_sha256",
+    "raw_dataset_sha256",
+    "source_identity",
+    "rights",
+    "coverage",
+    "schema_status",
+    "calendar",
+    "integrity",
+    "hashes",
+    "finality",
+    "provenance",
+    "page_count",
+    "assessment_code_sha256",
+    "assessed_at",
+    "status",
+    "limitations"
+  ],
+  "title": "MarketDatasetTrustAssessment",
+  "type": "object"
+}
