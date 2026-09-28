@@ -57,3 +57,36 @@ bash web/integration/replay.sh /absolute/integration/quant-research-lab /absolut
 - PUBLIC 与含合成私有 sentinel 的隔离测试覆盖搜索、统计、详情、关系、结果、错误和 profile 绕过。私有入口能读回 fixture，仅作为隔离测试证据。
 - 全私有 validate-release 未完成：此隔离 worktree 缺少锁文件要求的 330 个私有来源输入，在来源核对处失败；不降低门槛。
 - 真实行情链路尚待本轮执行，不能据此声明最终成功。已验收原始行情只存在于另一任务的不入 Git 数据目录，需明确本轮输入复用范围后固定字节和重新审计。重跑工具对缺失或摘要变化的输入拒绝运行。
+
+## 本轮已导出的真实请求
+
+浏览器实际下载并通过权威 JSON Schema 校验：
+
+- request_id：`web-d4b43706dabb4428be66625c52ed8152`
+- FactorVariant：`qkg:factor:0362c214-238c-55b7-8cd8-112b094bc6ab`（MA5）
+- definition_revision：`a59235098c1941b926503d1fd8c1209296668c5983ce5a6e8532d03d6945d372`
+- 来源：Qlib `be725493eb1a6bbb42bf11b37aa7669f59610ff1`，原始公式 `Mean($close, 5)/$close`。
+- run_id：尚未生成，不能用 A 的旧 run_id 替代此次请求。
+
+| 步骤 | 本轮状态 |
+|---|---|
+| 1 启动网页 | PASS，独立服务、真实公开 release |
+| 2 搜索公开因子 | PASS，中文/英文/原生别名 |
+| 3 定义、来源、版本 | PASS，实际 MA5 |
+| 4 清单、刷新、请求导出/schema | PASS，以上 DRAFT |
+| 5 准入及冻结 | PENDING，待冻结本轮真实行情输入 |
+| 6 TrialRegistry 登记真实实验 | PENDING，合成回归通过不计真实登记 |
+| 7 真实因子计算及研究 | PENDING |
+| 8 FactorStudyResult | PENDING |
+| 9 Graph 回写 | PENDING，幂等/权限合成回归通过不计真实回写 |
+| 10 同详情页研究结果或权限提示 | 通用公开权限提示通过；本轮真实私有结果尚未验证 |
+
+安全截图只包含公开定义和明确标记的测试备注：
+
+| 搜索 | 详情 |
+|---|---|
+| ![搜索](integration-screenshots/01-search.png) | ![详情](integration-screenshots/02-detail.png) |
+
+| 清单及导出 | 公开权限提示 |
+|---|---|
+| ![清单](integration-screenshots/03-notebook.png) | ![权限提示](integration-screenshots/04-permission.png) |
