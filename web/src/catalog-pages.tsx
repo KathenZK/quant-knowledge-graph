@@ -307,7 +307,7 @@ function RelationExplorer({ eid }: { eid: string }) {
               >
                 <svg
                   viewBox={`0 0 900 ${Math.max(240, Math.ceil(nodes.length / 3) * 110 + 40)}`}
-                  role="img"
+                  role="group"
                   aria-label="知识关系图；等价的关系列表位于下方"
                 >
                   {data.data.items.map((edge) => {
