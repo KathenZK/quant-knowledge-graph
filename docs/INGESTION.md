@@ -1,6 +1,6 @@
 # GrokBot 增量入口与研究接口
 
-数据流：QuantGraph → quant-strategy-lab（研究层）→ quant-runner。
+数据流：quant-knowledge-graph → quant-research-lab → quant-runner。
 本服务不提供下单、实盘策略发布或 runner 控制接口。
 
 ## 启动

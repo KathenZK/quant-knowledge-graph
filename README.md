@@ -60,6 +60,8 @@ quant-knowledge-graph → quant-research-lab → quant-runner
     知识与来源             研究与验证           交易与风控
 ```
 
+研究层仓库为 [quant-research-lab](https://github.com/KathenZK/quant-research-lab)，Python 包 `strategy_lab` 兼容保留；参见 [命名迁移](docs/REPOSITORY_NAME_MIGRATION.md)。
+
 知识库不包含既有研究项目的研究引擎，也没有向 runner 发布策略的接口。GrokBot 策略候选和旧筛选结果通过独立私有发布接入；研究验证和实盘执行仍分别属于下游两个项目。
 
 ## 仓库结构

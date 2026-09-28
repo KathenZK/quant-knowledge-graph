@@ -2,6 +2,8 @@
 
 `quant-knowledge-graph → quant-research-lab → quant-runner`
 
+Research repository: [quant-research-lab](https://github.com/KathenZK/quant-research-lab). Its Python package remains `strategy_lab` for import compatibility. Historical evidence stays immutable; see [repository migration](docs/REPOSITORY_NAME_MIGRATION.md).
+
 This repository owns definitions, citations, relationships and research artifact references. The research project owns reproduction, data/cost contracts, statistical validation and promotion decisions. The runner owns execution and risk controls. The knowledge graph has no runner publishing interface and imports no research engine.
 
 ## Existing factor pipeline

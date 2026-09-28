@@ -1,6 +1,8 @@
 # 研究项目接入契约
 
-用户称呼 `quant-research-lab`；本机现有研究代码位于 `/path/to/quant-research-lab`。这里仅记录映射，不修改研究项目。
+研究仓库正式名称为 [quant-research-lab](https://github.com/KathenZK/quant-research-lab)，同级目录为 `../quant-research-lab`。Python package/import 继续使用 `strategy_lab`。架构为 `quant-knowledge-graph → quant-research-lab → quant-runner`。
+
+新 ResearchEvidence、Implementation URI 和 repository identity 使用新仓库名；旧 evidence URI、artifact 字节及 hash 不回写。见 [命名迁移与兼容说明](REPOSITORY_NAME_MIGRATION.md)。
 
 安装本仓库 SDK 后，显式传 root 或环境变量 QUANTGRAPH_ROOT。FactorDB 默认 curated research；商业用途先使用 commercial profile，并独立确认底层市场数据授权。
 
