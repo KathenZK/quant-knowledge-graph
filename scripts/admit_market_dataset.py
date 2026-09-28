@@ -47,6 +47,19 @@ def build_review(previous, contract_path, manifest_path):
     if contract.rule_ast != previous['variant']['rule_ast']:
         raise ValueError('Frozen source rule differs')
     review = copy.deepcopy(previous['reviewed_evidence'])
+    for fact in [review['source']['artifact'],review['rule_evidence'],review['execution']['artifact']]:
+        if sha(fact['uri']) != fact['sha256']:
+            raise ValueError('Previously reviewed source/execution bytes changed')
+    for item in review['rights']:
+        if item['scope'] == 'MARKET_DATA':
+            for key in ('research_use_allowed','research_use_scope','commercial_use_allowed',
+                        'redistribution_allowed','derivative_allowed','attribution_required','attribution','rationale'):
+                item[key]=rights[key]
+            item.update(license_checked_at=rights['reviewed_at'],license_confidence=rights['confidence'],
+                        license_source=rights['license_url'],
+                        artifact=dict(uri=str((root/capture['rights_path']).resolve()),sha256=sha(root/capture['rights_path'])))
+        elif sha(item['artifact']['uri']) != item['artifact']['sha256']:
+            raise ValueError('Previously reviewed source permission bytes changed')
     review.update(reviewed_by='Codex trusted-market-v1 independent artifact review',
                   execution=contract.execution_contract,
                   derived_data_requirement=contract.data_requirements.model_dump(mode='json'),
