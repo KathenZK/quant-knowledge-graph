@@ -4,9 +4,19 @@ from fastapi import FastAPI, Query, HTTPException
 from quantgraph import FactorDB, AmbiguousAliasError
 
 
-def create_app(root=None, profile=None, *, ingestion_repository=None, ingestion_keys=None, max_body_bytes=None):
+def create_app(root=None, profile=None, *, ingestion_repository=None, ingestion_keys=None, max_body_bytes=None, public_only=False):
     selected=profile or os.getenv('QUANTGRAPH_PROFILE','commercial')
-    db=FactorDB(root,profile=selected)
+    if public_only:
+        # The website pins the reviewed public release, even on a private host.
+        # Never fall back to curated/current or an environment-selected journal.
+        from quantgraph.db import project_root
+        from quantgraph.graph.public import public_release, verify_public
+        root = project_root(root)
+        verify_public(root)
+        db = FactorDB(database=public_release(root)/'quantgraph.sqlite')
+        db.profile, db.dataset_scope = 'commercial', 'public_qlib'
+    else:
+        db=FactorDB(root,profile=selected)
     app=FastAPI(title='Quant Knowledge Graph',version='0.2.0',description='Curated definitions and provenance; no backtest or strategy execution endpoints.')
     app.state.db=db
 
@@ -20,6 +30,11 @@ def create_app(root=None, profile=None, *, ingestion_repository=None, ingestion_
 
     @app.get('/v1/ontology/factor-concepts')
     def economic_concepts():
+        if public_only:
+            # Only families present in the verified public graph are public here.
+            ids = sorted({r['canonical_factor_id'] for r in db.search_factors(limit=1000)})
+            return {'items': [db.get_entity('FactorConcept', cid) for cid in ids],
+                    'scope': 'CATEGORY_RELATIONS_NOT_FORMULA_EQUIVALENCE'}
         from quantgraph.graph.ontology.canonical import concepts
         return {'items': concepts(), 'scope': 'CATEGORY_RELATIONS_NOT_FORMULA_EQUIVALENCE'}
 
@@ -67,7 +82,7 @@ def create_app(root=None, profile=None, *, ingestion_repository=None, ingestion_
         return {'items':db.relationships(entity_id,limit=limit,offset=offset)}
 
     # Private journal is opt-in. It is never merged into public/commercial releases.
-    if ingestion_repository is not None or os.getenv('QUANTGRAPH_INGEST_DB'):
+    if not public_only and (ingestion_repository is not None or os.getenv('QUANTGRAPH_INGEST_DB')):
         from quantgraph.api.ingestion import install_ingestion
         from quantgraph.graph.ingestion_store import SQLiteIngestionRepository
         repository = ingestion_repository or SQLiteIngestionRepository(os.environ['QUANTGRAPH_INGEST_DB'])
