@@ -22,7 +22,23 @@ uv run quantgraph serve
 
 API 默认监听 `127.0.0.1:8000`，交互文档位于 `/docs`。无须市场数据账号，公开批次可以完全离线重建。它不执行上游交易代码，不连接券商或交易所。
 
+## 本地知识工作台
+
+需要 Node.js 22+；在仓库根目录运行 `bash web/start.sh`，打开
+[本地 QuantGraph](http://127.0.0.1:8765)。React + TypeScript 网页与现有 FastAPI
+使用同一进程、同一公开 release，提供中文检索、来源详情、2–4 项比较和浏览器研究清单。
+清单支持固定定义版本、备注、分组、刷新保留及 JSON 导入/导出。
+
+网页固定为 PUBLIC，服务端校验并仅读取 `datasets/public`，不会因环境中的私有 profile
+或 ingestion 配置而加载私有内容。数量来自实际公开数据，研究结果为空时明确显示“尚未研究”。
+正式 `research-request/v1` 和 `factor-study-result/v1` 仍等待任务 A：请求按钮暂不开放，
+清单备份不代表正式研究请求或研究已运行。详见 [产品范围、启动与验收](docs/product/quantgraph-web-mvp.md)。
+
 ## Python SDK
+
+公开因子研究桥接的正式契约见 [factor-study/v1](contracts/factor-study/v1/README.md)。
+Lab 计算与研究完成后可写入独立私有 FactorStudy journal，并从因子详情的 studies
+入口查询。DRAFT 不是运行/晋级授权；公开默认不展示私有研究结果，不改变已有定义准入。
 
 ```python
 from quantgraph import FactorDB

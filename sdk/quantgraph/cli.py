@@ -13,6 +13,9 @@ def main():
     p=argparse.ArgumentParser(description='Quant Knowledge Graph, upstream of research only')
     p.add_argument('--root',type=Path)
     sp=p.add_subparsers(dest='command',required=True)
+    s=sp.add_parser('factor-study-select');s.add_argument('--names',nargs='+',required=True);s.add_argument('--request-id',required=True);s.add_argument('--settings',type=Path,required=True);s.add_argument('--output',type=Path,required=True)
+    s=sp.add_parser('factor-study-import');s.add_argument('file',type=Path);s.add_argument('--journal',type=Path,required=True)
+    s=sp.add_parser('factor-study-query');s.add_argument('entity_id');s.add_argument('--journal',type=Path,required=True);s.add_argument('--profile',choices=['research','commercial'],default='commercial')
     for cmd in ('build','verify','stats','fetch','validate-release','build-public','verify-public'):sp.add_parser(cmd)
     s=sp.add_parser('search');s.add_argument('query');s.add_argument('--profile',choices=['research','commercial'],default='research');s.add_argument('--limit',type=int,default=10)
     s=sp.add_parser('serve');s.add_argument('--profile',choices=['research','commercial'],default='commercial');s.add_argument('--port',type=int,default=8000)
@@ -37,6 +40,17 @@ def main():
         result=QuantGraphClient(args.url).ingest_batch(load_batch(args.file,batch_id=args.batch_id,collector_version=args.collector_version),compress=args.gzip)
         print(json.dumps(result,ensure_ascii=False,indent=2));return
     root=project_root(args.root)
+    if args.command.startswith('factor-study-'):
+        from .factor_study import draft_request
+        from quantgraph.graph.factor_study_store import FactorStudyRepository
+        db=FactorDB(root,profile='commercial')
+        if args.command=='factor-study-select':
+            result=draft_request(db,args.names,args.request_id,json.loads(args.settings.read_text()))
+            with args.output.open('x') as f:json.dump(result,f,ensure_ascii=False,indent=2,allow_nan=False)
+        elif args.command=='factor-study-import':
+            result=FactorStudyRepository(args.journal,db).put(json.loads(args.file.read_text()))
+        else:result=db.factor_studies(args.entity_id,journal=args.journal,profile=args.profile)
+        print(json.dumps(result,ensure_ascii=False,indent=2));return
     if args.command in {'import-grokbot','verify-grokbot'}:
         from quantgraph.graph.grokbot import import_grokbot, verify_grokbot
         result=import_grokbot(root,args.archive) if args.command=='import-grokbot' else verify_grokbot(root)

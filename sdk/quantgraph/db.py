@@ -145,3 +145,7 @@ class FactorDB:
         }
         return dict(profile=self.profile, dataset_scope=self.dataset_scope,
                     release=self.release_path.name, counts=counts)
+
+    def factor_studies(self, entity_id, *, journal, profile='commercial', **page):
+        from quantgraph.graph.factor_study_store import FactorStudyRepository
+        return FactorStudyRepository(journal, self).query(entity_id, profile=profile, **page)

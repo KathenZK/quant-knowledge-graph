@@ -75,6 +75,16 @@ class QuantGraphClient:
     def submit_research_evidence(self, evidence):
         return self._request('POST', '/v1/research/evidence', json=evidence)
 
+    def submit_factor_study(self, result):
+        return self._request('POST', '/v1/research/factor-studies', json=result)
+
+    def factor_studies(self, entity_id, *, profile='commercial', **page):
+        if profile not in {'research', 'commercial'}:
+            raise ValueError('Invalid profile')
+        path = ('/v1/research/factor-studies/' + quote(entity_id, safe='') if profile == 'research'
+                else '/v1/factors/' + quote(entity_id, safe='') + '/studies')
+        return self._request('GET', path, params=page)
+
 
 def load_batch(path, *, batch_id=None, collector_version=None):
     path = Path(path)

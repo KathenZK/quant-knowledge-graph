@@ -1,0 +1,475 @@
+{
+  "$defs": {
+    "Artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "uri": {
+          "minLength": 1,
+          "title": "Uri",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "permissions": {
+          "$ref": "#/$defs/Permission"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256",
+        "kind",
+        "permissions"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "HashRef": {
+      "additionalProperties": false,
+      "properties": {
+        "uri": {
+          "minLength": 1,
+          "title": "Uri",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256"
+      ],
+      "title": "HashRef",
+      "type": "object"
+    },
+    "Identity": {
+      "additionalProperties": false,
+      "properties": {
+        "factor_concept_id": {
+          "minLength": 1,
+          "title": "Factor Concept Id",
+          "type": "string"
+        },
+        "factor_variant_id": {
+          "minLength": 1,
+          "title": "Factor Variant Id",
+          "type": "string"
+        },
+        "definition_revision": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Definition Revision",
+          "type": "string"
+        },
+        "source_revision": {
+          "minLength": 1,
+          "title": "Source Revision",
+          "type": "string"
+        },
+        "source_snapshot": {
+          "$ref": "#/$defs/HashRef"
+        },
+        "source_native_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Native Ids",
+          "type": "array"
+        },
+        "formula_id": {
+          "minLength": 1,
+          "title": "Formula Id",
+          "type": "string"
+        },
+        "formula": {
+          "minLength": 1,
+          "title": "Formula",
+          "type": "string"
+        },
+        "formula_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Formula Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "factor_concept_id",
+        "factor_variant_id",
+        "definition_revision",
+        "source_revision",
+        "source_snapshot",
+        "source_native_ids",
+        "formula_id",
+        "formula",
+        "formula_sha256"
+      ],
+      "title": "Identity",
+      "type": "object"
+    },
+    "Implementation": {
+      "additionalProperties": false,
+      "properties": {
+        "implementation_id": {
+          "minLength": 1,
+          "title": "Implementation Id",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        },
+        "code": {
+          "$ref": "#/$defs/HashRef"
+        },
+        "semantic_version": {
+          "minLength": 1,
+          "title": "Semantic Version",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": true,
+          "title": "Parameters",
+          "type": "object"
+        },
+        "required_fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Required Fields",
+          "type": "array"
+        },
+        "axis": {
+          "enum": [
+            "TIME_SERIES",
+            "CROSS_SECTIONAL"
+          ],
+          "title": "Axis",
+          "type": "string"
+        },
+        "semantics": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Semantics",
+          "type": "object"
+        }
+      },
+      "required": [
+        "implementation_id",
+        "version",
+        "code",
+        "semantic_version",
+        "parameters",
+        "required_fields",
+        "axis",
+        "semantics"
+      ],
+      "title": "Implementation",
+      "type": "object"
+    },
+    "Integrity": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "UNKNOWN",
+            "INTERNAL_CHECKED",
+            "FAILED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/HashRef"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "independent_verification": {
+          "const": false,
+          "default": false,
+          "title": "Independent Verification",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "evidence"
+      ],
+      "title": "Integrity",
+      "type": "object"
+    },
+    "Mapping": {
+      "additionalProperties": false,
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/Identity"
+        },
+        "implementation": {
+          "$ref": "#/$defs/Implementation"
+        },
+        "mapping_status": {
+          "enum": [
+            "VERIFIED",
+            "FAILED",
+            "UNVERIFIED"
+          ],
+          "title": "Mapping Status",
+          "type": "string"
+        },
+        "semantic_tests": {
+          "items": {
+            "$ref": "#/$defs/SemanticTest"
+          },
+          "title": "Semantic Tests",
+          "type": "array"
+        }
+      },
+      "required": [
+        "identity",
+        "implementation",
+        "mapping_status",
+        "semantic_tests"
+      ],
+      "title": "Mapping",
+      "type": "object"
+    },
+    "Permission": {
+      "additionalProperties": false,
+      "properties": {
+        "internal_use": {
+          "enum": [
+            "ALLOWED",
+            "DENIED",
+            "REVIEW_REQUIRED"
+          ],
+          "title": "Internal Use",
+          "type": "string"
+        },
+        "public_display": {
+          "enum": [
+            "ALLOWED",
+            "DENIED",
+            "REVIEW_REQUIRED"
+          ],
+          "title": "Public Display",
+          "type": "string"
+        },
+        "evidence": {
+          "minLength": 1,
+          "title": "Evidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "internal_use",
+        "public_display",
+        "evidence"
+      ],
+      "title": "Permission",
+      "type": "object"
+    },
+    "Permissions": {
+      "additionalProperties": false,
+      "properties": {
+        "definition": {
+          "$ref": "#/$defs/Permission"
+        },
+        "implementation": {
+          "$ref": "#/$defs/Permission"
+        },
+        "market_data": {
+          "$ref": "#/$defs/Permission"
+        },
+        "derived_result": {
+          "$ref": "#/$defs/Permission"
+        }
+      },
+      "required": [
+        "definition",
+        "implementation",
+        "market_data",
+        "derived_result"
+      ],
+      "title": "Permissions",
+      "type": "object"
+    },
+    "SemanticTest": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "UNKNOWN"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/HashRef"
+        }
+      },
+      "required": [
+        "name",
+        "status",
+        "evidence"
+      ],
+      "title": "SemanticTest",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "factor-study-result/v1",
+      "default": "factor-study-result/v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "run_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "request_id": {
+      "minLength": 1,
+      "title": "Request Id",
+      "type": "string"
+    },
+    "study_type": {
+      "enum": [
+        "COMPUTATION_CHECK",
+        "FACTOR_DIAGNOSTIC",
+        "PORTFOLIO_BACKTEST",
+        "CONFIRMATORY_VALIDATION"
+      ],
+      "title": "Study Type",
+      "type": "string"
+    },
+    "mapping": {
+      "$ref": "#/$defs/Mapping"
+    },
+    "dataset": {
+      "$ref": "#/$defs/HashRef"
+    },
+    "contract": {
+      "$ref": "#/$defs/HashRef"
+    },
+    "code": {
+      "$ref": "#/$defs/HashRef"
+    },
+    "sample": {
+      "additionalProperties": true,
+      "title": "Sample",
+      "type": "object"
+    },
+    "labels": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Labels",
+      "type": "array"
+    },
+    "methods": {
+      "additionalProperties": true,
+      "title": "Methods",
+      "type": "object"
+    },
+    "results": {
+      "additionalProperties": true,
+      "title": "Results",
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "SUCCESS",
+        "FAILED",
+        "INVALID"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "integrity_assessment": {
+      "$ref": "#/$defs/Integrity"
+    },
+    "permissions": {
+      "$ref": "#/$defs/Permissions"
+    },
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/Artifact"
+      },
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "trial_registry": {
+      "additionalProperties": true,
+      "title": "Trial Registry",
+      "type": "object"
+    },
+    "research_status": {
+      "const": "EXPLORATORY_RETROSPECTIVE",
+      "default": "EXPLORATORY_RETROSPECTIVE",
+      "title": "Research Status",
+      "type": "string"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "run_id",
+    "request_id",
+    "study_type",
+    "mapping",
+    "dataset",
+    "contract",
+    "code",
+    "sample",
+    "labels",
+    "methods",
+    "results",
+    "status",
+    "limitations",
+    "integrity_assessment",
+    "permissions",
+    "artifacts",
+    "trial_registry"
+  ],
+  "title": "FactorStudyResult",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "factor-study-result/v1"
+}
