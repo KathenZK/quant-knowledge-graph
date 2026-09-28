@@ -46,9 +46,9 @@ class DerivedDataRequirement(StrictModel):
     calendar: str = Field(min_length=1)
     auxiliary_data: list[str]
     derivation_sha256: str = Field(pattern=r'^[a-f0-9]{64}$')
-    # Required by the repository-wide OHLCV acceptance contract even when the
-    # signal does not use these fields. Derivation does NOT waive data quality.
-    dataset_profile: Literal['LAB_OHLCV_V1']
+    # Explicit acceptance profile is frozen separately from signal inputs.
+    # AST derivation does not waive either profile's independent quality gates.
+    dataset_profile: Literal['LAB_OHLCV_V1', 'TRUSTED_OHLCV_CORE_V1']
 
 
 class ResearchContract(StrictModel):
@@ -103,7 +103,8 @@ class ResearchContract(StrictModel):
         if not self.requested_start<=self.is_start<self.is_end==self.oos_start<self.oos_end==self.requested_end:
             raise ValueError('Nonoverlapping adjacent IS/OOS inside requested history required')
         from quantgraph.graph.data_requirements import derive
-        expected=derive(self.rule_ast,self.execution_contract,calendar=self.data_requirements.calendar)
+        expected=derive(self.rule_ast,self.execution_contract,calendar=self.data_requirements.calendar,
+                        dataset_profile=self.data_requirements.dataset_profile)
         if expected!=self.data_requirements.model_dump(mode='json'):
             raise ValueError('Data requirement differs from AST/execution derivation')
         return self
@@ -134,6 +135,39 @@ class MarketCoverage(StrictModel):
         return self
 
 
+class MarketDatasetTrustAssessment(StrictModel):
+    """A pinned Lab audit, not a permission grant or a hand-written gate override."""
+    schema_version: Literal['market-dataset-trust-v1']
+    dataset_profile: Literal['TRUSTED_OHLCV_CORE_V1']
+    contract_sha256: str = Field(pattern=r'^[a-f0-9]{64}$')
+    dataset_sha256: str = Field(pattern=r'^[a-f0-9]{64}$')
+    rights_sha256: str = Field(pattern=r'^[a-f0-9]{64}$')
+    raw_dataset_sha256: str = Field(pattern=r'^[a-f0-9]{64}$')
+    source_identity: Literal['PASS', 'FAIL', 'UNKNOWN']
+    rights: Literal['PASS', 'FAIL', 'UNKNOWN']
+    coverage: Literal['PASS', 'FAIL', 'UNKNOWN']
+    schema_status: Literal['PASS', 'FAIL', 'UNKNOWN']
+    calendar: Literal['PASS', 'FAIL', 'UNKNOWN']
+    integrity: Literal['PASS', 'FAIL', 'UNKNOWN']
+    hashes: Literal['PASS', 'FAIL', 'UNKNOWN']
+    finality: Literal['PASS', 'FAIL', 'UNKNOWN']
+    provenance: Literal['PASS', 'FAIL', 'UNKNOWN']
+    page_count: int = Field(ge=1)
+    assessment_code_sha256: str = Field(pattern=r'^[a-f0-9]{64}$')
+    assessed_at: datetime
+    status: Literal['TRUSTED', 'DIAGNOSTIC_ONLY', 'REJECTED']
+    limitations: list[str]
+
+    @model_validator(mode='after')
+    def derived_status(self):
+        checks=[getattr(self,k) for k in ('source_identity','rights','coverage','schema_status',
+                'calendar','integrity','hashes','finality','provenance')]
+        expected='REJECTED' if 'FAIL' in checks else 'TRUSTED' if set(checks)=={'PASS'} else 'DIAGNOSTIC_ONLY'
+        if self.status!=expected:
+            raise ValueError('Trust status must follow all independent checks')
+        return self
+
+
 class DatasetBinding(StrictModel):
     contract_json: Annotated[str, StringConstraints(strip_whitespace=False, min_length=1)]
     contract_sha256: str = Field(pattern=r'^[a-f0-9]{64}$')
@@ -144,6 +178,8 @@ class DatasetBinding(StrictModel):
     coverage: MarketCoverage
     acceptance_status: Literal['TRUSTED', 'raw_unaccepted']
     missing_native_fields: list[str]
+    trust_assessment: MarketDatasetTrustAssessment | None = None
+    trust_assessment_sha256: str | None = Field(default=None, pattern=r'^[a-f0-9]{64}$')
 
     @model_validator(mode='after')
     def rights_binding(self):
@@ -158,4 +194,14 @@ class DatasetBinding(StrictModel):
             raise ValueError('Rights ID mismatch')
         if self.rights_sha256!=canonical_sha256(self.rights_evidence.model_dump(mode='json')):
             raise ValueError('Reviewed rights digest mismatch')
+        if self.trust_assessment:
+            t=self.trust_assessment
+            if self.trust_assessment_sha256!=canonical_sha256(t.model_dump(mode='json')):
+                raise ValueError('Trust assessment digest mismatch')
+            if (t.contract_sha256,t.rights_sha256,t.dataset_profile)!=(self.contract_sha256,self.rights_sha256,contract.data_requirements.dataset_profile):
+                raise ValueError('Trust assessment binding mismatch')
+            if self.acceptance_status=='TRUSTED' and t.status!='TRUSTED':
+                raise ValueError('Dataset trust is not established')
+        elif self.trust_assessment_sha256:
+            raise ValueError('Trust assessment missing')
         return self

@@ -2,7 +2,9 @@
 from quantgraph.models.market import canonical_sha256
 
 
-def derive(ast, execution, *, calendar):
+def derive(ast, execution, *, calendar, dataset_profile='LAB_OHLCV_V1'):
+    if dataset_profile not in {'LAB_OHLCV_V1','TRUSTED_OHLCV_CORE_V1'}:
+        raise ValueError('Unknown trusted dataset profile')
     fields=set(); symbols=set(); aux=set(); unknown=[]
     close_indicators={'SMA','EMA','WMA','DEMA','TEMA','RSI','ZScore','BBW','%B','ROC','MOM','MACD','RealizedVolatility'}
     hlc_indicators={'ATR','ADX','+DI','-DI','CCI','Stochastic','WilliamsR','MassIndex'}
@@ -56,4 +58,4 @@ def derive(ast, execution, *, calendar):
         raise ValueError('Unresolved data dependencies: '+','.join(unknown or ['asset/frequency/adjustment/calendar']))
     return dict(derivation_version='ast-execution-v4',required_fields=sorted(fields),symbols=sorted(symbols),
         frequency=frequency,adjustment=adjustment,timezone='UTC',calendar=calendar,auxiliary_data=sorted(aux),
-        derivation_sha256=canonical_sha256({'ast':ast,'execution':execution,'calendar':calendar}),dataset_profile='LAB_OHLCV_V1')
+        derivation_sha256=canonical_sha256({'ast':ast,'execution':execution,'calendar':calendar}),dataset_profile=dataset_profile)
