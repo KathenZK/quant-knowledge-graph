@@ -174,7 +174,7 @@ export function SummaryStudy({ study }: { study: StudySummary }) {
           <li key={i}>{text}</li>
         ))}
       </ul>
-      {study.evolution && (
+      {study.evolution && Object.keys(study.evolution).length > 0 && (
         <section>
           <h4>有依据的演化</h4>
           <dl className="facts">
@@ -1486,6 +1486,86 @@ function AdminSuggestions() {
           </div>
         </article>
       ))}
+    </section>
+  );
+}
+
+export function ResearchCollections() {
+  const capabilities = useApi<{ collections_available?: boolean }>(
+    "/v1/research/capabilities",
+  );
+  if (!capabilities.data?.collections_available) return null;
+  return <CollectionList />;
+}
+function CollectionList() {
+  const values = useApi<{
+    items: {
+      collection_id: string;
+      title: string;
+      manifest_sha256: string;
+      imported_results: number;
+      trial_counts: Record<string, unknown>;
+      triage_counts: Record<string, unknown>;
+      limitations: string[];
+      internal_report_available: boolean;
+    }[];
+  }>("/v1/research/collections");
+  const [report, setReport] = useState<{
+    title: string;
+    content: string;
+    visibility: string;
+  }>();
+  const [error, setError] = useState("");
+  async function read(id: string) {
+    try {
+      setError("");
+      setReport(
+        await api(`/v1/research/collections/${encodeURIComponent(id)}/report`),
+      );
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "读取报告失败");
+    }
+  }
+  return (
+    <section className="panel">
+      <h2>研究集合与学习报告</h2>
+      <p>按冻结批次核对筛选去向与实验数量；候选筛选不等于确认性研究。</p>
+      {values.error && <ErrorState error={values.error} retry={values.retry} />}
+      {values.data?.items.map((value) => (
+        <article className="panel" key={value.collection_id}>
+          <h3>{value.title}</h3>
+          <p>
+            {value.imported_results} 条已导入结果 · {value.collection_id}
+          </p>
+          <h4>实验登记</h4>
+          <Parameters value={value.trial_counts} />
+          <h4>筛选去向</h4>
+          <Parameters value={value.triage_counts} />
+          <details>
+            <summary>批次版本与限制</summary>
+            <code>{value.manifest_sha256}</code>
+            <ul>
+              {value.limitations.map((v, i) => (
+                <li key={i}>{v}</li>
+              ))}
+            </ul>
+          </details>
+          {value.internal_report_available && (
+            <button onClick={() => void read(value.collection_id)}>
+              查看内部学习报告
+            </button>
+          )}
+        </article>
+      ))}
+      {error && <p role="alert">{error} 请先在管理后台登录。</p>}
+      {report && (
+        <section className="panel">
+          <h3>{report.title}</h3>
+          <p>{report.visibility} · 仅当前获授权会话可见。</p>
+          <button onClick={() => setReport(undefined)}>关闭内部报告</button>
+          <pre className="internal-report">{report.content}</pre>
+        </section>
+      )}
     </section>
   );
 }
