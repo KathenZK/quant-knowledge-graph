@@ -2,7 +2,7 @@
 from quantgraph.collectors.common import uid
 from quantgraph.graph.grokbot import content_hash
 
-VERSION = 'strategy-ontology-v2'
+VERSION = 'strategy-ontology-v3'
 
 
 def enrich(row):
@@ -17,9 +17,9 @@ def enrich(row):
     if v['strategy_template_id']:
         link('VARIANT_OF', v['strategy_variant_id'], v['strategy_template_id'], 'Explicit structured template slots')
         link('VARIANT_OF', v['strategy_template_id'], v['strategy_concept_id'], 'Parsed rule method family')
-        # These are axes against the parameterized template, independent of which
-        # sibling records happen to have been ingested before or after this row.
-        v['variation_axes'] = ['PARAMETER_VARIANT', 'ASSET_VARIANT']
+        # Current siblings are compared at read time, including across pages.
+        # One isolated projection cannot assert that a variation was observed.
+        v['variation_axes'] = []
     link('SOURCED_FROM', v['strategy_variant_id'], v['source_id'], 'Reported source URL; authorship not verified')
     if v['provenance_type'] in {'BOT_DERIVED', 'SOURCE_DERIVED'}:
         link('DERIVED_FROM', v['strategy_variant_id'], v['source_id'], v['provenance_evidence'])

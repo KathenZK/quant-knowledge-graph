@@ -18,7 +18,7 @@ from uuid import uuid4
 from quantgraph.graph.grokbot import content_hash, stable_json
 from quantgraph.models.ingestion import IngestBatch
 from quantgraph.normalize.strategy.parser import VERSION
-from quantgraph.graph.ingestion_migrations import migrate, IMMUTABLE_TABLES, SEMANTIC_HASH_VERSION, SCHEMA_VERSION
+from quantgraph.graph.ingestion_migrations import migrate, IMMUTABLE_TABLES, SEMANTIC_HASH_VERSION, SCHEMA_VERSION, LEGACY_HASH_VERSION, semantic_hash
 
 
 def now():
@@ -123,7 +123,7 @@ class SQLiteIngestionRepository:
                 raw = record.audit_payload()
                 record_hash = content_hash(raw)
                 semantic_record_hash = content_hash(record.semantic_payload())
-                latest = con.execute('SELECT revision,semantic_record_hash FROM revision_semantics WHERE record_id=? ORDER BY revision DESC LIMIT 1', (record.record_id,)).fetchone()
+                latest = con.execute('SELECT revision,semantic_record_hash FROM revision_semantics_v2 WHERE record_id=? ORDER BY revision DESC LIMIT 1', (record.record_id,)).fetchone()
                 if latest and latest['semantic_record_hash'] == semantic_record_hash:
                     revision = latest['revision']
                     outcome = 'duplicate'
@@ -132,8 +132,10 @@ class SQLiteIngestionRepository:
                     outcome = 'revision' if latest else 'accepted'
                     con.execute('INSERT INTO revisions VALUES (?,?,?,?,?)',
                                 (record.record_id, revision, record_hash, stable_json(raw), now()))
-                    con.execute('INSERT INTO revision_semantics VALUES (?,?,?,?)',
+                    con.execute('INSERT INTO revision_semantics_v2 VALUES (?,?,?,?)',
                                 (record.record_id, revision, semantic_record_hash, SEMANTIC_HASH_VERSION))
+                    con.execute('INSERT INTO revision_semantics VALUES (?,?,?,?)',
+                                (record.record_id, revision, semantic_hash(raw, LEGACY_HASH_VERSION), LEGACY_HASH_VERSION))
                 projection = con.execute('SELECT 1 FROM projections WHERE record_id=? AND revision=? AND parser_version=?',
                                          (record.record_id, revision, VERSION)).fetchone()
                 if not projection:
@@ -162,6 +164,8 @@ class SQLiteIngestionRepository:
                         (job_id, batch.batch_id, digest, raw_bytes, stable_json(payload), key_id, now(), stable_json(result)))
             con.executemany('INSERT INTO observations VALUES (?,?,?,?)', observations)
             con.executemany('INSERT INTO observation_payloads VALUES (?,?,?,?,?)', observation_payloads)
+            con.executemany('INSERT INTO observation_hash_versions VALUES (?,?,?)',
+                            [(job_id, record.record_id, SEMANTIC_HASH_VERSION) for record in batch.records])
             con.execute('INSERT INTO submission_bytes VALUES (?,?)', (job_id, hashlib.sha256(raw_bytes).hexdigest()))
         return result
 
@@ -189,35 +193,32 @@ class SQLiteIngestionRepository:
                 raise ProjectionUnavailable(status)
             rows = con.execute('''SELECT p.payload FROM projections p
                 WHERE p.parser_version=? AND p.revision=(SELECT MAX(r.revision) FROM revisions r WHERE r.record_id=p.record_id)
-                ORDER BY p.record_id LIMIT ? OFFSET ?''', (VERSION, limit, offset)).fetchall()
+                ORDER BY p.record_id''', (VERSION,)).fetchall()
+            from quantgraph.graph.variation import apply_observed_axes
+            values = apply_observed_axes([json.loads(row['payload']) for row in rows])
             result = []
             from quantgraph.graph.research_gate import evaluate
-            for row in rows:
-                value = json.loads(row['payload'])
+            for value in values[offset:offset + limit]:
                 rid = value['variant']['source_native_id']
-                digest = con.execute('SELECT semantic_record_hash FROM revision_semantics WHERE record_id=? ORDER BY revision DESC LIMIT 1', (rid,)).fetchone()[0]
+                digest = con.execute('SELECT semantic_record_hash FROM revision_semantics_v2 WHERE record_id=? ORDER BY revision DESC LIMIT 1', (rid,)).fetchone()[0]
                 review = con.execute('SELECT payload FROM review_decisions WHERE record_id=? AND semantic_record_hash=? ORDER BY rowid DESC LIMIT 1', (rid, digest)).fetchone()
                 decision = json.loads(review[0]) if review else None
-                value['candidate_gate'] = evaluate(value, decision)
-                value['candidate_quality_score'] = value['candidate_gate']['candidate_quality_score']
-                if decision:
-                    value.update(research_allowed=decision['research_use'] == 'ALLOWED',
-                                 research_rights_status=decision['research_use'],
-                                 execution_contract=decision['execution_contract'], data_available=decision['data_available'],
-                                 reviewed_evidence=decision)
-                    value['variant']['source_verification'] = 'VERIFIED'
-                    value['variant']['provenance_type'] = decision['provenance_type']
+                from quantgraph.graph.research_gate import enrich_projection
+                enrich_projection(value, decision)
                 result.append(value)
         return result
 
     def review_record(self, payload):
         """Local administrative review only. Deliberately not an ingestion route."""
         from quantgraph.graph.research_gate import ReviewDecision
-        value = ReviewDecision.model_validate(payload).model_dump(mode='json')
+        from quantgraph.models.evidence import EvidenceEnrichment
+        from quantgraph.models.evidence_v4 import EvidenceEnrichmentV4
+        model = {'evidence-enrichment-v3': EvidenceEnrichment, 'evidence-enrichment-v4': EvidenceEnrichmentV4}.get(payload.get('schema_version'), ReviewDecision)
+        value = model.model_validate(payload).model_dump(mode='json')
         decision_id = 'review-' + content_hash(value)
         with self.connect() as con:
             con.execute('BEGIN IMMEDIATE')
-            latest = con.execute('SELECT semantic_record_hash FROM revision_semantics WHERE record_id=? ORDER BY revision DESC LIMIT 1', (value['record_id'],)).fetchone()
+            latest = con.execute('SELECT semantic_record_hash FROM revision_semantics_v2 WHERE record_id=? ORDER BY revision DESC LIMIT 1', (value['record_id'],)).fetchone()
             if not latest or latest[0] != value['semantic_record_hash']:
                 raise ValueError('Review must reference the current semantic record hash')
             con.execute('INSERT OR IGNORE INTO review_decisions VALUES (?,?,?,?,?)',
@@ -233,10 +234,12 @@ class SQLiteIngestionRepository:
         with self.connect() as con:
             return [dict(r) for r in con.execute('''SELECT DISTINCT s.batch_id,s.job_id,o.record_id,o.revision,
                     r.record_hash,s.payload_hash,s.created_at,p.parser_version,
-                    op.raw_payload_hash,op.semantic_record_hash,sb.raw_payload_hash AS wire_payload_hash
+                    op.raw_payload_hash,op.semantic_record_hash,ohv.hash_version,rs2.semantic_record_hash AS current_semantic_record_hash,sb.raw_payload_hash AS wire_payload_hash
                 FROM projections p JOIN revisions r USING(record_id,revision)
                 JOIN observations o USING(record_id,revision) JOIN submissions s USING(job_id)
                 JOIN observation_payloads op ON op.job_id=o.job_id AND op.record_id=o.record_id
+                JOIN observation_hash_versions ohv ON ohv.job_id=o.job_id AND ohv.record_id=o.record_id
+                JOIN revision_semantics_v2 rs2 ON rs2.record_id=o.record_id AND rs2.revision=o.revision
                 JOIN submission_bytes sb ON sb.job_id=s.job_id
                 WHERE p.variant_id=? ORDER BY o.revision,s.created_at''', (variant_id,))]
 
@@ -319,12 +322,13 @@ class SQLiteIngestionRepository:
             from quantgraph.graph.research_gate import evaluate
             for value in rows:
                 rid = value['variant']['source_native_id']
-                digest = con.execute('SELECT semantic_record_hash FROM revision_semantics WHERE record_id=? ORDER BY revision DESC LIMIT 1', (rid,)).fetchone()[0]
+                digest = con.execute('SELECT semantic_record_hash FROM revision_semantics_v2 WHERE record_id=? ORDER BY revision DESC LIMIT 1', (rid,)).fetchone()[0]
                 review = con.execute('SELECT payload FROM review_decisions WHERE record_id=? AND semantic_record_hash=? ORDER BY rowid DESC LIMIT 1', (rid, digest)).fetchone()
                 decision = json.loads(review[0]) if review else None
                 value['candidate_gate'] = evaluate(value, decision)
                 if decision:
-                    value['research_rights_status'] = decision['research_use']
+                    value['research_rights_status'] = value['candidate_gate']['rights_status']
+            evidence = [json.loads(r[0]) for r in con.execute('SELECT payload FROM evidence')]
         parsed = sum(r['variant']['parse_status'] == 'PARSED' for r in rows)
         return {**status, 'total_observations': counts['observations'],
                 'semantic_records': status['latest_revision_count'],
@@ -337,6 +341,9 @@ class SQLiteIngestionRepository:
                 'parser_coverage': parsed / len(rows) if rows else 0,
                 'factor_linked': sum(bool(r['factor_links']) for r in rows),
                 'rights_status': dict(Counter(r['research_rights_status'] for r in rows)),
+                'research_evidence_count': len(evidence),
+                'real_market_backtest_count': sum(e.get('schema_version') == '3.0' and e.get('evidence_kind') == 'REAL_MARKET_BACKTEST'
+                    and e.get('real_market_data') is True for e in evidence),
                 'counts_scope': 'CURRENT_PROJECTIONS_ONLY',
                 'complete': status['projection_status'] == 'READY'}
 
@@ -360,6 +367,12 @@ class SQLiteIngestionRepository:
             return [dict(r) for r in con.execute('SELECT route,status,count(*) AS requests FROM request_logs WHERE key_id=? GROUP BY route,status ORDER BY route,status', (key_id,))]
 
     def put_evidence(self, payload, key_id):
+        if payload.get('schema_version') == '3.0':
+            from quantgraph.models.evidence_v4 import MarketResearchEvidenceV4
+            payload = MarketResearchEvidenceV4.model_validate(payload).model_dump(mode='json')
+        if payload.get('schema_version') == '2.0':
+            from quantgraph.models.evidence import MarketResearchEvidence
+            payload = MarketResearchEvidence.model_validate(payload).model_dump(mode='json')
         digest = content_hash(payload)
         with self.connect() as con:
             con.execute('BEGIN IMMEDIATE')
@@ -367,6 +380,37 @@ class SQLiteIngestionRepository:
             if old and old['payload_hash'] != digest:
                 raise ValueError('Immutable research_run_id; use a new run for changed evidence')
             if not old:
+                if payload.get('schema_version') == '2.0':
+                    raise ValueError('Formal writeback requires V4 schema 3.0 dataset/rights bindings')
+                if payload.get('schema_version') == '3.0':
+                    # Check admission in the same write transaction: review or
+                    # revision updates cannot race with evidence insertion.
+                    status = self._projection_status(con)
+                    if status['projection_status'] != 'READY':
+                        raise ProjectionUnavailable(status)
+                    from quantgraph.graph.research_gate import enrich_projection
+                    for vid in payload['source_strategy_ids']:
+                        current = con.execute('''SELECT p.payload, r.semantic_record_hash, p.record_id FROM projections p
+                            JOIN revision_semantics_v2 r USING(record_id, revision)
+                            WHERE variant_id=? AND parser_version=? AND p.revision=(
+                            SELECT MAX(revision) FROM revisions rr WHERE rr.record_id=p.record_id)''', (vid, VERSION)).fetchone()
+                        review = con.execute('SELECT payload FROM review_decisions WHERE record_id=? AND semantic_record_hash=? ORDER BY rowid DESC LIMIT 1',
+                            (current['record_id'], current['semantic_record_hash'])).fetchone() if current else None
+                        row = enrich_projection(json.loads(current['payload']), json.loads(review[0]) if review else None) if current else None
+                        if not row or row['candidate_gate']['status'] != 'ELIGIBLE':
+                            raise ValueError('Real research requires an ELIGIBLE source variant')
+                        if any(row['variant'][k] != payload[k] for k in ('strategy_concept_id', 'strategy_template_id')):
+                            raise ValueError('Research concept/template lineage mismatch')
+                        if row['reviewed_evidence']['data_requirement'] != payload['data_provenance']:
+                            raise ValueError('Research data differs from the admitted dataset')
+                        binding = row['reviewed_evidence']['dataset_binding']
+                        if any(binding[k] != payload[k] for k in ('contract_sha256', 'dataset_manifest_sha256', 'rights_id', 'rights_sha256')):
+                            raise ValueError('Contract/dataset/rights binding mismatch')
+                        contract = json.loads(binding['contract_json'])
+                        if any(contract[k] != payload[k] for k in ('experiment_family_id', 'strategy_variant_id', 'parameter_grid', 'trial_count')):
+                            raise ValueError('Frozen experiment/grid lineage mismatch')
+                        if content_hash(contract['engine_config']) != payload['config_sha256']:
+                            raise ValueError('Frozen engine config hash mismatch')
                 # Check the full table, not a pagination-dependent universe.
                 known = {r[0] for r in con.execute('SELECT DISTINCT variant_id FROM projections')}
                 if not set(payload['source_strategy_ids']) <= known:

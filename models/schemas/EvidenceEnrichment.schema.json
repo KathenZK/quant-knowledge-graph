@@ -1,0 +1,757 @@
+{
+  "$defs": {
+    "CostModel": {
+      "additionalProperties": false,
+      "properties": {
+        "assumption_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assumption Reason"
+        },
+        "assumption_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assumption Version"
+        },
+        "basis": {
+          "enum": [
+            "SOURCE_DEFINED",
+            "RESEARCH_ASSUMPTION"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "fee_bps": {
+          "minimum": 0,
+          "title": "Fee Bps",
+          "type": "number"
+        },
+        "slippage_bps": {
+          "minimum": 0,
+          "title": "Slippage Bps",
+          "type": "number"
+        }
+      },
+      "required": [
+        "fee_bps",
+        "slippage_bps",
+        "basis",
+        "description"
+      ],
+      "title": "CostModel",
+      "type": "object"
+    },
+    "DataRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "adjustment_method": {
+          "title": "Adjustment Method",
+          "type": "string"
+        },
+        "calendar": {
+          "title": "Calendar",
+          "type": "string"
+        },
+        "data_availability_status": {
+          "enum": [
+            "VERIFIED_AVAILABLE",
+            "PENDING",
+            "UNAVAILABLE"
+          ],
+          "title": "Data Availability Status",
+          "type": "string"
+        },
+        "data_source": {
+          "minLength": 1,
+          "title": "Data Source",
+          "type": "string"
+        },
+        "data_types": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Data Types",
+          "type": "array"
+        },
+        "dataset_hash": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dataset Hash"
+        },
+        "dataset_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dataset Version"
+        },
+        "downloaded_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Downloaded At"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End Date"
+        },
+        "evidence": {
+          "$ref": "#/$defs/EvidenceArtifact"
+        },
+        "exchange": {
+          "minLength": 1,
+          "title": "Exchange",
+          "type": "string"
+        },
+        "frequency": {
+          "minLength": 1,
+          "title": "Frequency",
+          "type": "string"
+        },
+        "quality_status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "UNVERIFIED"
+          ],
+          "title": "Quality Status",
+          "type": "string"
+        },
+        "raw_data_hashes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Raw Data Hashes",
+          "type": "array"
+        },
+        "real_market_data": {
+          "title": "Real Market Data",
+          "type": "boolean"
+        },
+        "required_fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Required Fields",
+          "type": "array"
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Start Date"
+        },
+        "symbols": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Symbols",
+          "type": "array"
+        },
+        "timezone": {
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "data_types",
+        "symbols",
+        "required_fields",
+        "frequency",
+        "data_availability_status",
+        "data_source",
+        "exchange",
+        "dataset_version",
+        "downloaded_at",
+        "adjustment_method",
+        "timezone",
+        "calendar",
+        "start_date",
+        "end_date",
+        "real_market_data",
+        "quality_status",
+        "evidence"
+      ],
+      "title": "DataRequirement",
+      "type": "object"
+    },
+    "EvidenceArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "uri": {
+          "minLength": 1,
+          "title": "Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256"
+      ],
+      "title": "EvidenceArtifact",
+      "type": "object"
+    },
+    "ExecutionContract": {
+      "additionalProperties": false,
+      "properties": {
+        "accepted_research_assumptions": {
+          "title": "Accepted Research Assumptions",
+          "type": "boolean"
+        },
+        "artifact": {
+          "$ref": "#/$defs/EvidenceArtifact"
+        },
+        "cash_rule": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "closed_bar_only": {
+          "title": "Closed Bar Only",
+          "type": "boolean"
+        },
+        "execution_price": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "execution_timing": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "fallback_rule": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "holding_period": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "indicator_semantics": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "leverage": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "long_short": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "missing_data_policy": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "position_rule": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "price_adjustment": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "rebalance_frequency": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "signal_timing": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "slippage_model": {
+          "$ref": "#/$defs/ExecutionFact"
+        },
+        "transaction_cost_model": {
+          "$ref": "#/$defs/CostModel"
+        }
+      },
+      "required": [
+        "signal_timing",
+        "execution_timing",
+        "execution_price",
+        "rebalance_frequency",
+        "holding_period",
+        "position_rule",
+        "cash_rule",
+        "fallback_rule",
+        "long_short",
+        "leverage",
+        "transaction_cost_model",
+        "slippage_model",
+        "price_adjustment",
+        "missing_data_policy",
+        "indicator_semantics",
+        "closed_bar_only",
+        "accepted_research_assumptions",
+        "artifact"
+      ],
+      "title": "ExecutionContract",
+      "type": "object"
+    },
+    "ExecutionFact": {
+      "additionalProperties": false,
+      "properties": {
+        "assumption_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assumption Reason"
+        },
+        "assumption_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assumption Version"
+        },
+        "basis": {
+          "enum": [
+            "SOURCE_DEFINED",
+            "RESEARCH_ASSUMPTION",
+            "UNKNOWN"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvidenceArtifact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value"
+        }
+      },
+      "required": [
+        "value",
+        "basis",
+        "rationale"
+      ],
+      "title": "ExecutionFact",
+      "type": "object"
+    },
+    "RightsEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact": {
+          "$ref": "#/$defs/EvidenceArtifact"
+        },
+        "attribution": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Attribution"
+        },
+        "attribution_required": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Attribution Required"
+        },
+        "commercial_use_allowed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commercial Use Allowed"
+        },
+        "derivative_allowed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Derivative Allowed"
+        },
+        "license_checked_at": {
+          "format": "date-time",
+          "title": "License Checked At",
+          "type": "string"
+        },
+        "license_confidence": {
+          "enum": [
+            "HIGH",
+            "MEDIUM",
+            "LOW",
+            "UNKNOWN"
+          ],
+          "title": "License Confidence",
+          "type": "string"
+        },
+        "license_source": {
+          "minLength": 1,
+          "title": "License Source",
+          "type": "string"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "redistribution_allowed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Redistribution Allowed"
+        },
+        "research_use_allowed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Research Use Allowed"
+        },
+        "research_use_scope": {
+          "enum": [
+            "PRIVATE_INTERNAL_RESEARCH",
+            "PERSONAL_NONCOMMERCIAL",
+            "UNKNOWN"
+          ],
+          "title": "Research Use Scope",
+          "type": "string"
+        },
+        "scope": {
+          "enum": [
+            "SOURCE_TEXT",
+            "IMPLEMENTATION_CODE",
+            "MARKET_DATA"
+          ],
+          "title": "Scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scope",
+        "research_use_allowed",
+        "research_use_scope",
+        "commercial_use_allowed",
+        "redistribution_allowed",
+        "derivative_allowed",
+        "attribution_required",
+        "attribution",
+        "license_source",
+        "license_checked_at",
+        "license_confidence",
+        "artifact",
+        "rationale"
+      ],
+      "title": "RightsEvidence",
+      "type": "object"
+    },
+    "SourceEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact": {
+          "$ref": "#/$defs/EvidenceArtifact"
+        },
+        "attributed_author": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Attributed Author"
+        },
+        "checked_at": {
+          "format": "date-time",
+          "title": "Checked At",
+          "type": "string"
+        },
+        "indicator_author_is_strategy_author": {
+          "default": false,
+          "title": "Indicator Author Is Strategy Author",
+          "type": "boolean"
+        },
+        "source_evidence_level": {
+          "enum": [
+            "PRIMARY",
+            "SECONDARY",
+            "TERTIARY",
+            "UNKNOWN"
+          ],
+          "title": "Source Evidence Level",
+          "type": "string"
+        },
+        "source_support_type": {
+          "enum": [
+            "EXACT_STRATEGY",
+            "STRATEGY_FRAMEWORK",
+            "INDICATOR_DEFINITION",
+            "PARAMETER_GUIDANCE",
+            "IMPLEMENTATION_EXAMPLE",
+            "RELATED_RESEARCH",
+            "NO_DIRECT_SUPPORT",
+            "UNKNOWN"
+          ],
+          "title": "Source Support Type",
+          "type": "string"
+        },
+        "source_type": {
+          "enum": [
+            "ACADEMIC_PAPER",
+            "AUTHOR_WEBSITE",
+            "OFFICIAL_DOCUMENTATION",
+            "BROKER_RESEARCH",
+            "OPEN_SOURCE_IMPLEMENTATION",
+            "COMMUNITY_POST",
+            "SECONDARY_SUMMARY",
+            "INDICATOR_DOCUMENTATION",
+            "BOT_DERIVED",
+            "UNKNOWN"
+          ],
+          "title": "Source Type",
+          "type": "string"
+        },
+        "supported_rule_components": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Supported Rule Components",
+          "type": "object"
+        },
+        "unsupported_rule_components": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Unsupported Rule Components",
+          "type": "object"
+        },
+        "url": {
+          "pattern": "^https?://",
+          "title": "Url",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_type",
+        "source_evidence_level",
+        "source_support_type",
+        "url",
+        "version",
+        "artifact",
+        "supported_rule_components",
+        "unsupported_rule_components",
+        "attributed_author",
+        "checked_at"
+      ],
+      "title": "SourceEvidence",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "data_requirement": {
+      "$ref": "#/$defs/DataRequirement"
+    },
+    "dedup_status": {
+      "enum": [
+        "INDEPENDENT_TEMPLATE",
+        "SIBLING_VARIANT",
+        "UNRESOLVED"
+      ],
+      "title": "Dedup Status",
+      "type": "string"
+    },
+    "execution": {
+      "$ref": "#/$defs/ExecutionContract"
+    },
+    "parent_record_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Parent Record Ids",
+      "type": "array"
+    },
+    "provenance_type": {
+      "enum": [
+        "SOURCE_NATIVE",
+        "SOURCE_IMPLEMENTATION",
+        "SOURCE_DERIVED",
+        "BOT_DERIVED",
+        "PARAMETER_VARIANT",
+        "MARKET_VARIANT",
+        "ASSET_VARIANT",
+        "UNKNOWN"
+      ],
+      "title": "Provenance Type",
+      "type": "string"
+    },
+    "record_id": {
+      "minLength": 1,
+      "title": "Record Id",
+      "type": "string"
+    },
+    "reviewed_by": {
+      "minLength": 1,
+      "title": "Reviewed By",
+      "type": "string"
+    },
+    "rights": {
+      "items": {
+        "$ref": "#/$defs/RightsEvidence"
+      },
+      "minItems": 1,
+      "title": "Rights",
+      "type": "array"
+    },
+    "rule_evidence": {
+      "$ref": "#/$defs/EvidenceArtifact"
+    },
+    "rule_review_status": {
+      "enum": [
+        "VERIFIED",
+        "INCOMPLETE",
+        "SOURCE_CONFLICT",
+        "UNVERIFIED"
+      ],
+      "title": "Rule Review Status",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "evidence-enrichment-v3",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "semantic_record_hash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Semantic Record Hash",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/SourceEvidence"
+    },
+    "use_context": {
+      "enum": [
+        "PRIVATE_INTERNAL_RESEARCH",
+        "PERSONAL_NONCOMMERCIAL"
+      ],
+      "title": "Use Context",
+      "type": "string"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "semantic_record_hash",
+    "reviewed_by",
+    "source",
+    "provenance_type",
+    "parent_record_ids",
+    "rights",
+    "use_context",
+    "execution",
+    "data_requirement",
+    "rule_review_status",
+    "rule_evidence",
+    "dedup_status",
+    "warnings"
+  ],
+  "title": "EvidenceEnrichment",
+  "type": "object"
+}

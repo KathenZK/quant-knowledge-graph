@@ -21,7 +21,10 @@ def test_closed_grammars(rule, kind):
 
 
 def test_asset_mismatch_arity_and_template_stability():
-    assert parse_rule('日频：若 QQQ21日实现波动×√252<0.12 → 满仓 SPY，否则 SHV。')['rule_ast'] is None
+    cross_asset = parse_rule('日频：若 QQQ21日实现波动×√252<0.12 → 满仓 SPY，否则 SHV。')['rule_ast']
+    assert cross_asset['condition']['left']['asset'] == 'QQQ'
+    assert cross_asset['then']['asset'] == 'SPY'
+    assert cross_asset['costs'] is None
     assert parse_rule('日频：若 RSI(7,9)>53 → 满仓 QQQ，否则 SHV。')['rule_ast'] is None
     a = parse_rule('日频：若 RSI(7)>53 → 满仓 QQQ，否则 SHV。')['rule_ast']
     b = parse_rule('日频：若 RSI(9)>62 → 满仓 GLD，否则 BIL。')['rule_ast']

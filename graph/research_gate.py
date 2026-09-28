@@ -1,92 +1,75 @@
-"""Readiness is evidence completeness, never expected profitability.
+"""V4 fail-closed gate, with independent source, derivation and data checks."""
+from quantgraph.graph.research_gate_v2 import ReviewDecision
+from quantgraph.graph.research_gate_v3 import evaluate as legacy_evaluate, enrich_projection as legacy_enrich
+from quantgraph.graph.data_requirements import derive
+from quantgraph.models.evidence_v4 import EvidenceEnrichmentV4
 
-Decisions come from a local reviewed ledger, not collector/API extra fields.
-Every decision is bound to a semantic hash and carries separate source, rights,
-execution and market-data evidence. Unknown is not permission.
-"""
-from typing import Literal
-import math
-from pydantic import BaseModel, ConfigDict, Field
-
-VERSION = 'research-candidate-gate-v2'
+VERSION='research-candidate-gate-v4'
 
 
-class Evidence(BaseModel):
-    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
-    uri: str = Field(min_length=1)
-    sha256: str = Field(pattern=r'^[a-f0-9]{64}$')
+def evaluate(row,decision=None):
+    e=None
+    old=decision
+    if decision and decision.get('schema_version')=='evidence-enrichment-v4':
+        e=EvidenceEnrichmentV4.model_validate(decision)
+        old={k:v for k,v in decision.items() if k not in {'derived_data_requirement','dataset_binding'}}
+        old['schema_version']='evidence-enrichment-v3'
+    result=legacy_evaluate(row,old)
+    blockers=[x for x in result['blocking_reasons'] if x!='DATA_AVAILABILITY_UNCONFIRMED']
+    traceable=bool(e and e.source.url==row['variant']['source_url'] and e.source.source_evidence_level in {'PRIMARY','SECONDARY'})
+    support=result['source_status']=='VERIFIED'
+    derived=False; data=False; rights=result['rights_status']=='ALLOWED'
+    if e:
+        try:
+            expected=derive(row['variant']['rule_ast'],e.execution.model_dump(mode='json'),calendar=e.derived_data_requirement.calendar)
+            derived=expected==e.derived_data_requirement.model_dump(mode='json')
+        except ValueError:pass
+        b=e.dataset_binding;r=b.rights_evidence;d=e.data_requirement;c=b.coverage
+        rights=rights and r.scope=='MARKET_DATA' and r.status=='VERIFIED' and r.research_use_allowed is True \
+            and r.confidence in {'HIGH','MEDIUM'} and r.provider==d.exchange and r.source==d.data_source \
+            and r.research_use_scope in {e.use_context,'PRIVATE_INTERNAL_RESEARCH'} \
+            and r.derivative_allowed is True and (r.attribution_required is False or bool(r.attribution))
+        data=derived and c.coverage_status=='VERIFIED' and b.acceptance_status=='TRUSTED' \
+            and not b.missing_native_fields and d.quality_status=='PASS' and d.real_market_data \
+            and d.data_availability_status=='VERIFIED_AVAILABLE' and c.calendar==d.calendar \
+            and not e.derived_data_requirement.auxiliary_data
+        if e.derived_data_requirement.auxiliary_data:blockers.append('AUXILIARY_DATA_UNVERIFIED')
+        if r.status=='PROHIBITED' or r.research_use_allowed is False:result['status']='BLOCKED'
+    else:
+        blockers.append('V4_REVIEW_REQUIRED')
+        rights=False
+    if not traceable:blockers.append('SOURCE_EVIDENCE_UNVERIFIED')
+    if not derived:blockers.append('DATA_REQUIREMENT_UNVERIFIED')
+    if not data:blockers.append('DATA_AVAILABILITY_UNCONFIRMED')
+    if not rights:blockers.append('RIGHTS_REVIEW_REQUIRED')
+    blockers=sorted(set(blockers))
+    status='BLOCKED' if result['status']=='BLOCKED' else 'ELIGIBLE' if not blockers else 'REVIEW_REQUIRED'
+    if e and blockers==['EXECUTION_CONTRACT_INCOMPLETE'] and not e.execution.accepted_research_assumptions:
+        status='CONDITIONALLY_ELIGIBLE'
+    scores=dict(source=10*traceable,source_support=10*support,rights=20*rights,
+        rule=20*(result['rule_status']=='VERIFIED'),execution=15*(result['execution_status']=='COMPLETE'),
+        data_requirement=5*derived,data_availability=10*data,dedup=5*(result['dedup_status']!='UNRESOLVED'),
+        ontology=5*(result['ontology_status']=='MAPPED'))
+    return {**result,'gate_version':VERSION,'status':status,'eligible':status=='ELIGIBLE',
+        'source_status':'VERIFIED' if traceable else 'UNVERIFIED',
+        'source_support_status':'VERIFIED' if support else 'UNVERIFIED',
+        'rights_status':'ALLOWED' if rights else 'REVIEW_REQUIRED',
+        'data_requirement_status':'COMPLETE' if derived else 'UNVERIFIED',
+        'data_availability_status':'VERIFIED_AVAILABLE' if data else 'UNCONFIRMED',
+        'data_status':'VERIFIED_AVAILABLE' if data else 'UNCONFIRMED',
+        'blocking_reasons':blockers,'blockers':blockers,'research_readiness_score':sum(scores.values()),
+        'candidate_quality_score':sum(scores.values()),'score_components':scores}
 
 
-class ReviewDecision(BaseModel):
-    model_config = ConfigDict(extra='forbid', allow_inf_nan=False, str_strip_whitespace=True)
-    record_id: str = Field(min_length=1)
-    semantic_record_hash: str = Field(pattern=r'^[a-f0-9]{64}$')
-    reviewed_by: str = Field(min_length=1)
-    source_evidence: Evidence
-    provenance_type: Literal['SOURCE_NATIVE', 'SOURCE_IMPLEMENTATION', 'SOURCE_DERIVED', 'BOT_DERIVED']
-    rights_evidence: Evidence
-    research_use: Literal['ALLOWED', 'PROHIBITED', 'REVIEW_REQUIRED']
-    rights_scope: Literal['PRIVATE_RESEARCH']
-    execution_evidence: Evidence
-    execution_contract: dict
-    data_evidence: Evidence
-    data_available: bool
-    symbols: list[str] = Field(min_length=1)
-    required_fields: list[str] = Field(min_length=1)
-
-
-def evaluate(row, decision=None):
-    v = row['variant']
-    blockers = []
-    scores = {}
-    source_ok = bool(v.get('source_url')) and bool(decision)
-    scores['source_evidence'] = 20 if source_ok else 0
-    if not source_ok:
-        blockers.append('SOURCE_EVIDENCE_UNVERIFIED')
-    rights_ok = bool(decision and decision['research_use'] == 'ALLOWED')
-    scores['rights_certainty'] = 20 if rights_ok else 0
-    if not rights_ok:
-        blockers.append('RIGHTS_REVIEW_REQUIRED')
-    rule_ok = bool(v.get('rule_ast') and row.get('definition_admitted'))
-    scores['rule_completeness'] = 20 if rule_ok else 0
-    if not rule_ok:
-        blockers.append('RULE_INCOMPLETE')
-    contract = decision['execution_contract'] if decision else {}
-    execution_ok = all(contract.get(k) for k in ('timing', 'price_adjustment', 'missing_data_policy', 'indicator_semantics'))
-    costs = contract.get('costs') or {}
-    execution_ok = execution_ok and all(type(costs.get(k)) in (int, float) and math.isfinite(costs[k]) and costs[k] >= 0 for k in ('fee_bps', 'slippage_bps'))
-    execution_ok = execution_ok and contract.get('closed_bar_only') is True
-    scores['execution_completeness'] = 20 if execution_ok else 0
-    if not execution_ok:
-        blockers.append('EXECUTION_CONTRACT_PENDING')
-    symbols = set()
-    unresolved_asset = False
-    def assets(node):
-        nonlocal unresolved_asset
-        if isinstance(node, dict):
-            for key, value in node.items():
-                if key in {'risk_asset', 'safe_asset'} or (key == 'asset' and 'allocation' in node):
-                    if value:
-                        symbols.add(value)
-                    else:
-                        unresolved_asset = True
-                elif key == 'assets':
-                    symbols.update(s for s in value if s)
-                    unresolved_asset |= any(s is None for s in value)
-                else:
-                    assets(value)
-        elif isinstance(node, list):
-            for value in node:
-                assets(value)
-    assets(v.get('rule_ast'))
-    data_ok = bool(decision and decision['data_available'] and symbols and not unresolved_asset
-                   and symbols <= set(decision['symbols'])
-                   and 'close' in decision['required_fields']
-                   and all(s.strip() for s in decision['symbols'] + decision['required_fields']))
-    scores['data_availability'] = 20 if data_ok else 0
-    if not data_ok:
-        blockers.append('DATA_AVAILABILITY_UNCONFIRMED')
-    return {'gate_version': VERSION, 'eligible': not blockers,
-            'candidate_quality_score': sum(scores.values()), 'score_components': scores,
-            'score_meaning': 'RESEARCH_READINESS_NOT_EXPECTED_RETURN', 'blockers': blockers,
-            'hypothesis_id': v.get('strategy_template_id'), 'promotion_allowed': False}
+def enrich_projection(row,decision):
+    legacy=decision
+    if decision and decision.get('schema_version')=='evidence-enrichment-v4':
+        legacy={k:v for k,v in decision.items() if k not in {'derived_data_requirement','dataset_binding'}}
+        legacy['schema_version']='evidence-enrichment-v3'
+    row=legacy_enrich(row,legacy)
+    gate=evaluate(row,decision)
+    row.update(candidate_gate=gate,candidate_quality_score=gate['research_readiness_score'],
+        research_allowed=gate['rights_status']=='ALLOWED',research_rights_status=gate['rights_status'],
+        data_available=gate['data_status']=='VERIFIED_AVAILABLE')
+    if decision:row['reviewed_evidence']=decision
+    return row
