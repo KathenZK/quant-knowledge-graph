@@ -58,7 +58,8 @@
     "study_type": {
       "enum": [
         "FACTOR_DIAGNOSTIC",
-        "STRATEGY_REPLICATION"
+        "STRATEGY_REPLICATION",
+        "STRATEGY_EVOLUTION"
       ],
       "title": "Study Type",
       "type": "string"
@@ -73,6 +74,48 @@
       "default": "DRAFT",
       "title": "Status",
       "type": "string"
+    },
+    "idempotency_key": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Idempotency Key"
+    },
+    "hypothesis": {
+      "anyOf": [
+        {
+          "maxLength": 4000,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Hypothesis"
+    },
+    "budget": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Budget"
     }
   },
   "required": [
