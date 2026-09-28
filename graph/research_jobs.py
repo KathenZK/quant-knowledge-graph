@@ -193,6 +193,7 @@ class ResearchJobRepository:
         if status in {'SUCCEEDED', 'PARTIAL'} and not results:
             raise ValueError('Successful execution requires retained research evidence')
         for value in results or []:
+            metadata = StudyMetadata.model_validate(value.get('study_metadata')).model_dump(mode='json')
             if value.get('schema_version') == 'factor-study-result/v1':
                 FactorStudyResult.model_validate(value)
                 identity = value['mapping']['identity']
@@ -200,6 +201,10 @@ class ResearchJobRepository:
                          'definition_revision':identity['definition_revision']}
                 if bound not in job['request']['entity_refs']:
                     raise ValueError('Result definition does not match request')
+                if metadata['entity_refs'] != [bound]:
+                    raise ValueError('Result metadata must identify its exact factor definition')
+                if status == 'SUCCEEDED' and value['status'] != 'SUCCESS':
+                    raise ValueError('Failed factor computation cannot be a successful job')
             else:
                 from quantgraph.api.ingestion import ResearchEvidence
                 from quantgraph.models.evidence_v4 import MarketResearchEvidenceV4
@@ -207,7 +212,8 @@ class ResearchJobRepository:
                 model.model_validate({k:v for k,v in value.items() if k != 'study_metadata'} if model is MarketResearchEvidenceV4 else value)
                 if not set(value['source_strategy_ids']) <= {r['entity_id'] for r in job['request']['entity_refs']}:
                     raise ValueError('Result strategy does not match request')
-            metadata = StudyMetadata.model_validate(value.get('study_metadata')).model_dump(mode='json')
+                if set(value['source_strategy_ids']) != {r['entity_id'] for r in metadata['entity_refs']}:
+                    raise ValueError('Result metadata must identify its exact strategy definitions')
             if metadata['study_type'] != job['request']['study_type'] or any(r not in job['request']['entity_refs'] for r in metadata['entity_refs']):
                 raise ValueError('Study metadata does not match request')
         now = self.clock()
@@ -228,3 +234,9 @@ class ResearchJobRepository:
         with self.connect() as con:
             rows = con.execute("SELECT * FROM research_jobs WHERE results IS NOT NULL ORDER BY created DESC").fetchall()
         return [self._decode(row) for row in rows if ref in json.loads(row['request'])['entity_refs']]
+
+    def result_refs(self):
+        with self.connect() as con:
+            rows = con.execute('SELECT request FROM research_jobs WHERE results IS NOT NULL').fetchall()
+        refs = {canonical(ref) for row in rows for ref in json.loads(row['request'])['entity_refs']}
+        return [json.loads(ref) for ref in sorted(refs)]
