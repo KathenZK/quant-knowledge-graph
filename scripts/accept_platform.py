@@ -189,7 +189,7 @@ def main():
         assert registration.exists(),'Worker did not register a real experiment before the fault test'
         pidfile=Path(cfg['job_db']).parent/'worker.pid';pid=int(pidfile.read_text())
         command=subprocess.check_output(['ps','-p',str(pid),'-o','command='],text=True)
-        assert 'strategy_lab.platform_worker --config ' in command and str(args.config) in command
+        assert 'strategy_lab.platform_worker --config ' in command and str(args.config.resolve()) in command, 'Configured worker identity does not match the supervised process'
         # Only this supervised, isolated test worker is interrupted. The API and
         # original data stay available; the parent command restarts the worker.
         os.kill(pid,signal.SIGSTOP)

@@ -97,7 +97,7 @@ def create_web_app(root=None, *, private_journal=None, catalog=None, admin_passw
     async def security_headers(request: Request, call_next):
         try:
             if catalog is not None and request.url.path.startswith("/v1/"):
-                allowed = ("/v1/web/", "/v1/admin/", "/v1/research/jobs", "/v1/research/results", "/v1/research/capabilities", "/v1/ingest/")
+                allowed = ("/v1/web/", "/v1/admin/", "/v1/research/jobs", "/v1/research/results", "/v1/research/capabilities", "/v1/research/collections", "/v1/ingest/")
                 if not request.url.path.startswith(allowed):
                     return JSONResponse(status_code=404, content={"detail": "请使用 Catalog 查询入口"})
                 # Incremental projection observes successful existing ingestion writes.

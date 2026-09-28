@@ -213,3 +213,15 @@ def test_collection_report_auth_hash_and_visibility(repo,tmp_path):
     visible[0]=False
     assert client.get('/v1/research/collections').json()['items']==[]
     assert client.get(route,headers=headers).status_code==404
+
+
+def test_composed_catalog_allows_collection_bridge_route(tmp_path):
+    from quantgraph.api.platform import create_platform_app
+    root=Path(__file__).parents[1]
+    config=dict(graph_root=str(root),catalog_db=str(tmp_path/'catalog.sqlite'),
+                ingestion_db=str(tmp_path/'ingestion.sqlite'),job_db=str(tmp_path/'jobs.sqlite'),
+                profiles=PROFILES,research_collections={})
+    client=TestClient(create_platform_app(config,admin_password='test-admin-passphrase'))
+    response=client.get('/v1/research/collections')
+    assert response.status_code==200 and response.json()=={'items':[]}
+    assert client.get('/v1/research/collections/missing/report').status_code==401

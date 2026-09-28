@@ -6,7 +6,7 @@ if [ "$#" -ne 1 ]; then
   exit 2
 fi
 graph_root=$(cd "$(dirname "$0")/.." && pwd)
-config_path=$1
+config_path=$("$graph_root/.venv/bin/python" -c 'import pathlib,sys; print(pathlib.Path(sys.argv[1]).resolve())' "$1")
 lab_python=$("$graph_root/.venv/bin/python" -c 'import json,sys; print(json.load(open(sys.argv[1]))["lab_python"])' "$config_path")
 api_port=$("$graph_root/.venv/bin/python" -c 'import json,sys; print(json.load(open(sys.argv[1])).get("port",8761))' "$config_path")
 test -x "$lab_python"
