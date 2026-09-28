@@ -1,0 +1,88 @@
+{
+  "$defs": {
+    "EntityRef": {
+      "additionalProperties": false,
+      "properties": {
+        "entity_type": {
+          "enum": [
+            "FactorDefinition",
+            "FactorVariant",
+            "StrategyVariant"
+          ],
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "entity_id": {
+          "minLength": 1,
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "definition_revision": {
+          "minLength": 1,
+          "title": "Definition Revision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entity_type",
+        "entity_id",
+        "definition_revision"
+      ],
+      "title": "EntityRef",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "research-request/v1",
+      "default": "research-request/v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "request_id": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Request Id",
+      "type": "string"
+    },
+    "entity_refs": {
+      "items": {
+        "$ref": "#/$defs/EntityRef"
+      },
+      "maxItems": 1000,
+      "minItems": 1,
+      "title": "Entity Refs",
+      "type": "array"
+    },
+    "study_type": {
+      "enum": [
+        "FACTOR_DIAGNOSTIC",
+        "STRATEGY_REPLICATION"
+      ],
+      "title": "Study Type",
+      "type": "string"
+    },
+    "requested_settings": {
+      "additionalProperties": true,
+      "title": "Requested Settings",
+      "type": "object"
+    },
+    "status": {
+      "const": "DRAFT",
+      "default": "DRAFT",
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "request_id",
+    "entity_refs",
+    "study_type",
+    "requested_settings"
+  ],
+  "title": "ResearchRequest",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-request/v1"
+}

@@ -4,7 +4,8 @@ from fastapi import FastAPI, Query, HTTPException
 from quantgraph import FactorDB, AmbiguousAliasError
 
 
-def create_app(root=None, profile=None, *, ingestion_repository=None, ingestion_keys=None, max_body_bytes=None, public_only=False):
+def create_app(root=None, profile=None, *, ingestion_repository=None, ingestion_keys=None, max_body_bytes=None,
+               public_only=False, factor_study_repository=None):
     selected=profile or os.getenv('QUANTGRAPH_PROFILE','commercial')
     if public_only:
         # The website pins the reviewed public release, even on a private host.
@@ -87,4 +88,9 @@ def create_app(root=None, profile=None, *, ingestion_repository=None, ingestion_
         from quantgraph.graph.ingestion_store import SQLiteIngestionRepository
         repository = ingestion_repository or SQLiteIngestionRepository(os.environ['QUANTGRAPH_INGEST_DB'])
         install_ingestion(app, repository, keys=ingestion_keys, max_bytes=max_body_bytes)
+    from quantgraph.api.factor_study import install_factor_studies
+    if not public_only and factor_study_repository is None and os.getenv('QUANTGRAPH_FACTOR_STUDY_DB'):
+        from quantgraph.graph.factor_study_store import FactorStudyRepository
+        factor_study_repository = FactorStudyRepository(os.environ['QUANTGRAPH_FACTOR_STUDY_DB'], db)
+    install_factor_studies(app, None if public_only else factor_study_repository, ingestion_keys)
     return app
