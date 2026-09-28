@@ -1,56 +1,55 @@
-# Integrated local platform delivery
+# QuantGraph 策略与因子产品
 
-The delivery consists of two independent Git repositories. Merge the Lab integration PR #17 first, then Graph #12; the Graph cross-repository CI pins the exact Lab commit. These integration PRs include the A/B implementation commits. Do not merge duplicate A/B branches separately. No main branch, runner or trading deployment is changed.
+桥接启动、持久任务、故障恢复和固定结果导入详见 [桥接交付说明](platform-bridge-delivery.md)。
 
-## Start and acceptance
+这是可在本地运行的知识与研究工作台。React/TypeScript 前台和鉴权管理后台复用 FastAPI、现有采集日志、Graph 定义与研究契约。业务条目默认公开；来源全文、代码、行情和结果数值分别判断权限。没有回测或规则未完全解析，不会让目录条目消失。
 
-With a reviewed operator config, the existing editable Graph/Lab virtual environments and `web/dist` built:
+## 用户与三个使用场景
 
-```sh
-bash scripts/start_platform.sh /absolute/path/to/operator-config.json
-```
+面向整理策略资料的量化研究员、负责复现的研究工程师，以及需要核对定义和来源的学习者。
 
-This command supervises the local API and the registered Lab worker together. The default address is `http://127.0.0.1:8761`. It restarts an interrupted worker up to three times. Ctrl-C stops the services. It does not deploy a public service or promise execution after the supervising process ends. Production reverse proxy, TLS, authentication deployment and lifecycle supervision require a separate explicit deployment.
+1. 从真实策略出发，查明入场、退出、仓位和未知项，对比同族或资产变体，再沿因子引用找到其他策略。
+2. 把策略与因子加入本地研究清单，固定定义版本，导出正式请求；获得管理会话后提交服务端已登记的研究能力，在原条目读回结果与限制。
+3. 管理者审核来源和关系，纠正别名，批量隐藏或重新公开条目，导入新批次并处理失败，查看研究任务和操作审计。
 
-Run the bounded real-data HTTP and browser acceptance against an isolated runtime copy:
+## 已交付的页面
 
-```sh
-QUANTGRAPH_NODE_BIN=/path/to/node22-or-newer/bin bash scripts/accept_platform_all.sh /absolute/path/to/operator-config.json
-```
+| 页面 | 路径与用途 |
+|---|---|
+| 策略/因子/来源目录 | `/explore`；中文、英文、别名和规则事实检索，方法族、市场、频率、数据、来源、研究状态筛选 |
+| 条目详情 | `/entity/{kind}/{id}`；独立收录/展示/计算/准备/结果状态，规则、定义、来源版本、关系、结果 |
+| 比较 | `/compare`；2–4 项；策略优先显示交易逻辑、仓位、现金与执行假设；不按不可比收益排名 |
+| 关系浏览 | `/relations`；可点击图形与关系列表，1/2 跳，关系筛选，每页限量加载 |
+| 研究清单 | `/list`；浏览器持久化、备注、分组、导入/导出、正式 DRAFT 与受控提交 |
+| 研究任务/结果 | `/jobs/{id}`、`/results`；实际任务与研究记录、限制、结论级别；数值受限时明确提示 |
+| 管理后台 | `/admin`；会话鉴权、条目编辑与批量可见性、关系审核、合并建议审核、导入/重试、任务与审计 |
 
-The config must declare `acceptance_copy: true` and `allow_worker_interruption_test: true`. This performs real computation, including an intentional worker termination after experiment registration. It creates 36 bounded statistical trial registrations across HTTP and browser flows, not an optimization search. Acceptance fixtures are labelled and excluded from real Catalog counts. Reports remain beside the private config; screenshots contain no credentials. The API must already be running. Existing pytest, public release verification and mocked transport tests are separate from this real acceptance.
+原始采集、策略族、模板和具体变体分别保留。完整原始规则留在受控来源日志；公开页显示有来源支持的结构化事实、原始链接和未补充项，不把第三方全文授权当成默认已获批。指标作者不自动成为 Bot 变体作者。
 
-## Configuration and contracts
+## 权限和事实边界
 
-`api/platform.py` composes the existing Catalog, ingestion journal, authenticated admin session and `ResearchJobRepository`. The JSON operator config contains `graph_root`, `lab_python`, `catalog_db`, `ingestion_db`, `job_db`, `registry_path`, `output_root`, `admin_password_file`, `port`, registered `profiles`, and optional `limits`, `acceptance_cases`, `research_collections`. Password files remain private, outside Git and the handoff. Use separate DBs and output directories for each runtime.
+- PUBLIC 是业务可见性，不是转载第三方全文或发布衍生行情指标的授权。默认受限字段在服务端投影时去除，从不先发全量私有数据给浏览器。
+- 未解析记录仍有可检索的来源资料条目；结构化程度与是否可研究独立显示。采集记录数、策略族、模板和参数变体不混称“独立策略”。
+- `RULE_LINK_ONLY` 是规则引用；`CATEGORY_LINK_ONLY` 是来源概念下的同类关系。均不证明等价、收益贡献或实证相关。没有相关性研究时不编造相关性边。
+- 本地受控研究能力覆盖已注册的定义/数据/预算，不能执行任意 Python 或公式。其他条目仍可导出请求，准入不通过时保留明确失败。
+- 研究结果支持成功、失败和限制；探索性研究不升级为确认性结论、买入建议或实盘资格。
+- 合并建议只是审核记录，不会自动重写历史定义、研究 artifact 或书签。规则修订走同原生 ID 的新采集版本。
+- 清单只存当前浏览器，PUBLIC/PRIVATE 存储隔离，没有多用户云同步。管理员是部署者的单一受控角色，不是公开注册账户系统。
 
-Each profile fixes `capability: discovery-v1`, one `study_type`, allowed `entity_types`, `max_entities`, `max_trials`, `trials_per_entity`, `max_seconds`, trusted `server_config`, and independently reviewed `display_policy`, `public_display`, `numeric_display`. The server config pins the actual data manifest, contract, source catalog and source roots. Requests only choose a registered profile ID. They cannot choose shell commands, Python, paths, market inputs or public-display permissions. Anonymous requests cannot start computation; queue, global concurrency, time and rolling trial budget limits apply. SQLite WAL/transactions, idempotency hashes and fenced leases preserve run identity on recovery. Cancellation stops the subprocess and retains partial artifacts.
+## 真实数据验收
 
-The compatible versions remain `research-request/v1`, `factor-study-result/v1`, and the existing strategy evidence 1.0/3.0 envelopes. Optional `study_metadata` adds exact entity revisions, provenance, limitations, lineage, study kind and conclusion strength. Absent optional metadata does not alter old artifact serialization. Job lifecycle is QUEUED/RUNNING/SUCCEEDED/PARTIAL/BLOCKED/FAILED/CANCELLED. Computational success does not grant ELIGIBLE, independent confirmation or trading rights.
+产品 A 的固定验收快照含 **5,816 条真实策略采集记录、35 个方法族、75 个模板、1,207 个因子变体、645 个因子概念**。其中 263 条策略通过当前结构化解析，5,553 条保留为待补充来源记录。不是 5,816 个独立且可运行的策略。
 
-Public research summaries are available at `/v1/research/results` and on the original Catalog detail, with exact definition revision and current server visibility. Authenticated `/v1/research/jobs/{job_id}/evidence` returns permitted internal research, without an arbitrary file/download endpoint. Hidden ancestors also suppress dependent public summaries. Already downloaded content cannot be recalled.
+浏览器实际检查了 **58 个策略详情与 5 个方法族**。策略→详情→变体比较→因子→反查策略、管理员隐藏/恢复、新批次幂等导入、清单刷新及正式导出均通过。因子诊断、策略复现、策略演化三条真实网页研究路径经独立 worker 跑通；17 个真实实验登记在 TrialRegistry。详见[验收与对账](platform-acceptance.md)。集成部署后新增已采集记录的数量，以实时 API 为准。
 
-## Import retained research without new trials
+运行路径没有 mock 研究结果。测试中的恶意输入、损坏存储、导入 fixture 明确标记并与真实数量分开；它们只用于隔离和故障测试。
 
-```sh
-.venv/bin/python -m quantgraph.graph.research_import \
-  --config /absolute/path/to/operator-config.json \
-  --manifest /authorized/artifacts/import-manifest.json \
-  --sha256 REVIEWED_MANIFEST_SHA256 \
-  --artifact-root /authorized/artifacts \
-  --receipt /private/output/import-receipt.json
-```
+## 尚需补齐与产品验证
 
-This operator-only command verifies every declared artifact hash and rejects paths outside the explicit directory before any mutation. It imports derived definitions through the existing ingestion journal, binds evidence to exact Catalog revisions, and records original result/envelope hashes, attempt IDs and registry scope. Imported jobs are terminal, use zero compute budget and cannot be claimed by a worker. A replay returns the same job IDs. An interrupted import may be retried; successfully imported evidence is retained, never overwritten. There is no HTTP import route.
+多数原始记录还没有完整结构化规则，未知执行时点、成本、现金处理不能靠 AI 补齐。更多市场和定义需要 Lab 登记新的受控能力。受限来源全文及市场衍生数值的公开展示，需要独立许可审查。本轮没有公网部署、支付、复杂账户系统或云同步。
 
-Optional `research_collections` maps stable collection IDs to `title`, `manifest_sha256`, operational `trial_counts`/`triage_counts`, `limitations`, and a fixed `report: {path, sha256}`. Public `/v1/research/collections` exposes no local path; its counts must come from the reviewed manifest. The authenticated report endpoint verifies the pinned digest on every read. Changed reports require an explicit new reviewed digest; request data cannot select report paths. A hidden linked entity suppresses the collection.
+免费知识查询、关系追溯和个人清单是当前产品定位。未来收费能力可能是团队协作、研究计算额度、版本化证据管理和获许可的结果服务；这些仍是待验证的商业假设，没有虚构付费用户或节省时间数字。
 
-## Current evidence and limits
+要用真实用户验证：是否能辨认同族与等价的区别；待补充规则是否仍有检索价值；原始规则/结构化事实/研究假设是否足够清晰；研究失败与数值受限是否容易区分；本地清单是否够用；哪些资料用户确实愿意投入研究预算。
 
-The reviewed B manifest has 98 Catalog-associated result revisions: 78 strategy results (60 baseline, six original failures, six repairs, six development-only component studies) plus 20 factor results covering 40 labels. Three buy-and-hold control configurations remain internal. The original registry holds 121 attempts: 81 strategy configurations (75 completed, six failed) and 40 factor labels; the initial two smoke labels are separate. Metadata import adds zero attempts. B's two derived strategies retain their parent and factor references. Failure and negative results are kept.
-
-The calculations use real BTC/EUR daily bars and explicit costs. They are cross-market independent research implementations of 20 source templates, not complete reproductions of original authors' equity/cash settings. Historical samples were observed, prior search completeness is UNKNOWN, and neither DSR nor diagnostic PBO grants independent confirmation. The two turnover-oriented modifications do not establish general profitability improvement. No fabricated improvement is used for acceptance.
-
-The reviewed Bit2Me source permits the configured internal research but restricts public numerical derivatives. Catalog entities and operational research metadata are PUBLIC; numerical evidence and the full learning report require authentication. This is a source-rights limitation, not an alpha-secrecy setting. Public numerical research and public production deployment are not claimed complete. An independently approved source or additional rights review is needed before changing `numeric_display`.
-
-`build-public`, `verify-public` and public tests run from the public checkout. Full `validate-release` additionally needs all locked private raw snapshots; a public-only worktree must report missing inputs, not fabricate a PASS or download replacements into frozen data. Local operational data, research artifacts, logs and reports remain outside public Git.
+[本地启动、导入、备份和部署](platform-operations.md) · [验收证据与安全截图](platform-acceptance.md)

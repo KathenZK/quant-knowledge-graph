@@ -64,6 +64,7 @@ import type {
 
 import {
   AdminPage,
+  ResearchCollections,
   JobPage,
   RelationsPage,
   StrategyRules,
@@ -305,7 +306,7 @@ function WorkbenchApp({ mode }: { mode: "PUBLIC" | "PRIVATE" }) {
                     />
                   }
                 />
-                <Route path="/results" element={<ResultsPage />} />
+                <Route path="/results" element={<ResultsPage meta={meta.data} />} />
                 <Route path="/relations" element={<RelationsPage />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/jobs/:id" element={<JobPage />} />
@@ -1496,13 +1497,14 @@ function NotebookPage({
     </>
   );
 }
-function ResultsPage() {
+function ResultsPage({ meta }: { meta: Meta }) {
   const result = useApi<Results>("/v1/web/results");
   return (
     <>
       <PageTitle eyebrow="EVIDENCE / 研究结果" title="结论需要证据。">
         按研究方法、数据区间、成本和限制理解结果，不把研究通过解释成买入建议。
       </PageTitle>
+      {meta.adapter_version === "catalog/v1" && <ResearchCollections />}
       {result.loading ? (
         <Loading />
       ) : result.error ? (
