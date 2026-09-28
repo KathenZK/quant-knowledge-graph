@@ -148,3 +148,61 @@ for (const name of ["factor", "replication", "evolution"]) {
     ).toBeVisible();
   });
 }
+
+test("retained real research collection and authenticated learning report", async ({
+  page,
+}) => {
+  test.skip(
+    !config.research_collections ||
+      Object.keys(config.research_collections).length === 0,
+    "This operator config has no retained research collection",
+  );
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  page.on("console", (m) => {
+    if (m.type() === "error") errors.push(m.text());
+  });
+  const publicResponse = await page.request.get("/v1/research/collections");
+  expect(publicResponse.ok()).toBe(true);
+  const collection = (await publicResponse.json()).items[0];
+  expect(collection.imported_results).toBeGreaterThan(0);
+  expect(collection.manifest_sha256).toBe(
+    config.research_collections[collection.collection_id].manifest_sha256,
+  );
+  await page.goto("/results");
+  await expect(
+    page.getByRole("heading", { name: "研究集合与学习报告", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: collection.title, exact: true }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: path.join(output, "collection-public-summary.png"),
+  });
+  await page.goto("/admin");
+  await page
+    .getByLabel("管理密码")
+    .fill((await fs.readFile(config.admin_password_file, "utf8")).trim());
+  await page.getByRole("button", { name: "登录后台", exact: true }).click();
+  await expect(page.getByRole("button", { name: "退出管理" })).toBeVisible();
+  await page.goto("/results");
+  await page
+    .getByRole("button", { name: "查看内部学习报告", exact: true })
+    .click();
+  await expect(
+    page.getByText("AUTHENTICATED_INTERNAL_RESEARCH · 仅当前获授权会话可见。", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  expect(
+    (await page.locator(".internal-report").innerText()).length,
+  ).toBeGreaterThan(500);
+  expect(
+    await page
+      .locator(".internal-report script,.internal-report iframe")
+      .count(),
+  ).toBe(0);
+  await page.getByRole("button", { name: "关闭内部报告", exact: true }).click();
+  await expect(page.locator(".internal-report")).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
