@@ -78,6 +78,7 @@ def install_research_jobs(app, repository, *, resolve_ref, can_view, keys=None, 
 
     def visible_job(job_id, principal):
         try:
+            repository.recover_expired()
             job = repository.get(job_id)
         except KeyError:
             raise HTTPException(404, 'Research job not found')

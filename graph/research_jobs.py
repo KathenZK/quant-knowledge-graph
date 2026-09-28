@@ -4,6 +4,7 @@ Each process uses short SQLite transactions. A reclaimed lease changes the fenci
 token; an old worker cannot publish. A retry retains the job/run and experiment IDs.
 """
 import json
+from contextlib import contextmanager
 import sqlite3
 import time
 from pathlib import Path
@@ -53,10 +54,15 @@ class ResearchJobRepository:
                     worker TEXT PRIMARY KEY, updated REAL NOT NULL, profiles TEXT NOT NULL);
             ''')
 
+    @contextmanager
     def connect(self):
         con = sqlite3.connect(self.path, timeout=30)
         con.row_factory = sqlite3.Row
-        return con
+        try:
+            with con:
+                yield con
+        finally:
+            con.close()
 
     def announce(self, worker, profiles):
         with self.connect() as con:
@@ -70,6 +76,14 @@ class ResearchJobRepository:
 
     def submit(self, request, *, owner, resolve_ref):
         request = ResearchRequest.model_validate(request).model_dump(mode='json')
+        idem = request.get('idempotency_key') or request['request_id']
+        fingerprint = digest(request)
+        with self.connect() as con:
+            old = con.execute('SELECT * FROM research_jobs WHERE owner=? AND idem=?',(owner,idem)).fetchone()
+            if old:
+                if old['request_hash'] != fingerprint:
+                    raise ValueError('Idempotency key already used for another request')
+                return self._decode(old),True
         settings = request['requested_settings']
         if set(settings) != {'profile_id'}:
             raise ValueError('Choose a registered profile_id; execution settings are server controlled')
@@ -92,8 +106,6 @@ class ResearchJobRepository:
         if trials < profile.get('trials_per_entity', 1) * len(refs):
             raise ValueError('Budget cannot cover the registered experiment count')
         snapshots = [resolve_ref(**r) for r in refs]
-        idem = request.get('idempotency_key') or request['request_id']
-        fingerprint = digest(request)
         now = self.clock()
         with self.connect() as con:
             con.execute('BEGIN IMMEDIATE')
@@ -138,6 +150,11 @@ class ResearchJobRepository:
                            lease_token=NULL,lease_until=NULL WHERE job_id=?''',
                         (state, 'RECOVERY_PENDING' if state == 'QUEUED' else state, canonical(error),
                          now, now if state in TERMINAL else None, row['job_id']))
+
+    def recover_expired(self):
+        with self.connect() as con:
+            con.execute('BEGIN IMMEDIATE')
+            self._recover(con,self.clock())
 
     def claim(self, worker, profiles, *, lease_seconds=15):
         now = self.clock()

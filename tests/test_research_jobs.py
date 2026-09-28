@@ -74,7 +74,7 @@ def test_budget_and_untrusted_execution_settings(tmp_path):
     submit(repo)
     with pytest.raises(CapacityExceeded):submit(repo,'two')
     for field in ('shell','python','manifest','path','live_ready'):
-        bad=request();bad['requested_settings'][field]='untrusted'
+        bad=request(field);bad['requested_settings'][field]='untrusted'
         with pytest.raises(ValueError,match='server controlled'):
             repo.submit(bad,owner='admin',resolve_ref=lambda **r:r)
 
@@ -84,6 +84,8 @@ def test_definition_snapshot_and_profile_are_pinned(repo):
     with pytest.raises(ValueError,match='revision'):
         repo.submit(request(),owner='admin',resolve_ref=stale)
     job=submit(repo)
+    retry,_=repo.submit(request(),owner='admin',resolve_ref=stale)
+    assert retry['job_id']==job['job_id']
     repo.profiles=deepcopy(PROFILES);repo.profiles['test']['max_trials']=3
     assert repo.claim('worker',['test']) is None
     assert repo.get(job['job_id'])['status']=='BLOCKED'
