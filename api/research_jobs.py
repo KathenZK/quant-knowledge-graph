@@ -31,6 +31,8 @@ def public_results(repository, ref, can_view):
             metrics = summary.get('metrics', {})
             safe_metrics = {str(k)[:100]: v for k,v in metrics.items()
                             if v is None or type(v) in (int,float,bool)} if isinstance(metrics, dict) else {}
+            if not profile.get('numeric_display',False):
+                safe_metrics = {}
             items.append(dict(
                 job_id=job['job_id'], run_id=result.get('run_id',result.get('research_run_id')),
                 entity_refs=meta['entity_refs'], study_type=meta['study_type'], study_kind=meta['study_kind'],
@@ -40,6 +42,7 @@ def public_results(repository, ref, can_view):
                         ('start','end','rows','frequency','symbols','dataset_version','real_market_data')},
                 status=job['status'], promotion_allowed=False, display_policy=policy,
                 assessment_version=summary.get('assessment_version'),
+                numerical_display='ALLOWED' if profile.get('numeric_display',False) else 'RESTRICTED',
             ))
     return items
 
@@ -118,6 +121,21 @@ def install_research_jobs(app, repository, *, resolve_ref, can_view, keys=None, 
     def cancel(job_id:str, principal=Depends(auth)):
         visible_job(job_id,principal)
         return status_view(repository.cancel(job_id))
+
+    @router.get('/jobs/{job_id}/evidence')
+    def private_evidence(job_id:str, principal=Depends(auth)):
+        job=visible_job(job_id,principal)
+        # Internal numerical research is usable without distributing the market
+        # attachment or providing any file-read/download endpoint.
+        def without_locations(value):
+            if isinstance(value,list):return [without_locations(v) for v in value]
+            if isinstance(value,dict):return {k:without_locations(v) for k,v in value.items()
+                                             if k not in {'uri','artifact_uri','full_result','artifacts'}}
+            return value
+        return {'items':[without_locations({k:r.get(k) for k in
+                         ('schema_version','run_id','research_run_id','status','sample','results','limitations','study_metadata')})
+                         for r in job['results'] or []], 'visibility':'AUTHENTICATED_INTERNAL_RESEARCH',
+                'promotion_allowed':False}
 
     @router.get('/results')
     def results(entity_type:str, entity_id:str, definition_revision:str):
