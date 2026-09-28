@@ -46,7 +46,7 @@ def empty_results():
 
 
 def item(kind, eid, name, entity_type, definition_revision, **fields):
-    return dict(kind=kind, entity_id=eid, entity_type=entity_type, name=public_text(name),
+    return dict(kind=kind, entity_id=eid, entity_type=entity_type, name=(public_text(name) or '')[:500],
         definition_revision=definition_revision, aliases=[], description=None, economic_logic=None,
         category=None, category_label='待分类', family=None, family_label=None, formula=None,
         parameters={}, required_fields=[], markets=[], frequency=None, axis='未补充',
@@ -179,6 +179,9 @@ def safe_factor(model, kind, eid, record, *, licensed=False):
     projected['license'] = record.get('license', 'REVIEW_REQUIRED')
     projected['authors'] = [public_text(a) for a in record.get('authors', [])]
     if licensed:
+        full = model.detail(kind, eid)
+        for key in ['implementations', 'papers', 'authors', 'lookback', 'source_locator', 'required_fields_status', 'terms_url']:
+            projected[key] = full.get(key)
         # A verified Qlib release, not an incoming producer license claim.
         projected['rights']['definition'] = '已核验 Qlib MIT 定义；保留归属和许可声明'
     else:

@@ -62,6 +62,14 @@ import type {
   SearchResult,
 } from "./types";
 
+import {
+  AdminPage,
+  JobPage,
+  RelationsPage,
+  StrategyRules,
+  SubmitResearch,
+} from "./catalog-pages";
+
 type CompareRef = { kind: Kind; entity_id: string; name: string };
 type Workbench = {
   saved: SavedItem[];
@@ -108,6 +116,7 @@ function PageTitle({
   );
 }
 function ItemActions({ item, bench }: { item: Item; bench: Workbench }) {
+  if (!["variant", "concept", "strategy"].includes(item.kind)) return null;
   return (
     <Actions
       item={item}
@@ -224,6 +233,14 @@ function WorkbenchApp({ mode }: { mode: "PUBLIC" | "PRIVATE" }) {
             <Bookmark size={19} aria-hidden="true" />
             研究清单<span className="nav-count">{notebook.items.length}</span>
           </NavLink>
+          <NavLink to="/relations">
+            <Network size={19} aria-hidden="true" />
+            关系浏览
+          </NavLink>
+          <NavLink to="/admin">
+            <ShieldCheck size={19} aria-hidden="true" />
+            管理后台
+          </NavLink>
           <NavLink to="/results">
             <FlaskConical size={19} aria-hidden="true" />
             研究结果
@@ -289,6 +306,9 @@ function WorkbenchApp({ mode }: { mode: "PUBLIC" | "PRIVATE" }) {
                   }
                 />
                 <Route path="/results" element={<ResultsPage />} />
+                <Route path="/relations" element={<RelationsPage />} />
+                <Route path="/admin" element={<AdminPage />} />
+                <Route path="/jobs/:id" element={<JobPage />} />
                 <Route
                   path="*"
                   element={
@@ -301,7 +321,7 @@ function WorkbenchApp({ mode }: { mode: "PUBLIC" | "PRIVATE" }) {
             )
           )}
           <footer>
-            定义收录 ≠ 收益验证。所有数量来自当前公开发布。
+            定义收录 ≠ 收益验证。所有数量来自当前服务端可见内容。
             {meta.data && (
               <span>
                 Release <code>{meta.data.release}</code> · Graph{" "}
@@ -350,11 +370,12 @@ function WorkbenchApp({ mode }: { mode: "PUBLIC" | "PRIVATE" }) {
 }
 function Explore({ meta, bench }: { meta: Meta; bench: Workbench }) {
   const [params, setParams] = useSearchParams();
-  const kind = (params.get("kind") || "variant") as Kind;
+  const defaultKind = meta.counts.strategy > 0 ? "strategy" : "variant";
+  const kind = (params.get("kind") || defaultKind) as Kind;
   const [query, setQuery] = useState(params.get("q") || "");
   useEffect(() => setQuery(params.get("q") || ""), [params]);
   const current = new URLSearchParams(params);
-  if (!current.has("kind")) current.set("kind", "variant");
+  if (!current.has("kind")) current.set("kind", defaultKind);
   const result = useApi<SearchResult>("/v1/web/search?" + current.toString());
   function setFilter(name: string, value: string) {
     const next = new URLSearchParams(params);
@@ -366,14 +387,14 @@ function Explore({ meta, bench }: { meta: Meta; bench: Workbench }) {
   const page = result.data?.page || 1;
   return (
     <>
-      <PageTitle eyebrow="EXPLORE / 知识检索" title="从一个定义，开始研究。">
-        查找公式、追溯来源、比较差异，再整理你的研究清单。
+      <PageTitle eyebrow="EXPLORE / 知识检索" title="从策略出发，沿证据研究。">
+        浏览真实采集的策略与因子，比较规则差异，沿关系追溯来源与研究。
       </PageTitle>
       <section className="overview" aria-label="当前公开库统计">
         {[
           ["因子变体", meta.counts.variant, "保留参数差异"],
           ["概念族", meta.counts.concept, "同族不代表等价"],
-          ["策略", meta.counts.strategy, "已审核公开条目"],
+          ["策略记录", meta.counts.strategy, "采集记录 ≠ 独立策略"],
           ["研究结果", meta.result_count, "独立于定义准入"],
         ].map(([label, num, note]) => (
           <div key={label}>
@@ -386,7 +407,14 @@ function Explore({ meta, bench }: { meta: Meta; bench: Workbench }) {
       <section className="catalog">
         <div className="catalog-head">
           <div className="tabs" role="group" aria-label="条目类型">
-            {(["variant", "concept", "strategy"] as Kind[]).map((k) => (
+            {(
+              [
+                "variant",
+                "concept",
+                "strategy",
+                ...(meta.adapter_version === "catalog/v1" ? ["source"] : []),
+              ] as Kind[]
+            ).map((k) => (
               <button
                 key={k}
                 aria-pressed={kind === k}
@@ -398,7 +426,7 @@ function Explore({ meta, bench }: { meta: Meta; bench: Workbench }) {
               </button>
             ))}
           </div>
-          <span className="muted small">仅包含经审核的公开内容</span>
+          <span className="muted small">知识默认公开 · 受限附件另行控制</span>
         </div>
         <form
           className="searchbar"
@@ -428,6 +456,12 @@ function Explore({ meta, bench }: { meta: Meta; bench: Workbench }) {
             ["family", "方法族", meta.facets.families],
             ["field", "所需数据", meta.facets.fields],
             ["market", "市场", meta.facets.markets],
+            ...(meta.facets.frequencies
+              ? [["frequency", "频率", meta.facets.frequencies]]
+              : []),
+            ...(meta.facets.source_types
+              ? [["source_type", "来源类型", meta.facets.source_types]]
+              : []),
             [
               "result_status",
               "研究状态",
@@ -521,7 +555,11 @@ function Explore({ meta, bench }: { meta: Meta; bench: Workbench }) {
                         {item.aliases.slice(0, 3).join(" · ") ||
                           item.family_label}
                       </div>
-                      <Formula value={item.formula} />
+                      {item.kind === "strategy" ? (
+                        <p className="strategy-summary">{item.description}</p>
+                      ) : (
+                        <Formula value={item.formula} />
+                      )}
                     </td>
                     <td>
                       <TypeTag kind={item.kind} />
@@ -623,9 +661,14 @@ function DetailPage({ bench }: { bench: Workbench }) {
       <Statuses item={item} />
       <div className="detail-grid">
         <div>
+          {item.strategy && <StrategyRules value={item.strategy} />}
           <section className="panel">
-            <h2>定义与计算</h2>
-            {item.kind === "concept" ? (
+            <h2>
+              {item.kind === "strategy" ? "策略知识与数据需求" : "定义与计算"}
+            </h2>
+            {item.kind === "strategy" ? (
+              <p>规则来自采集证据和既有解析，缺失的交易假设保持待补充。</p>
+            ) : item.kind === "concept" ? (
               <p>
                 来源内的概念族，用于组织相关定义。成员之间不自动构成数学等价关系。
               </p>
@@ -634,12 +677,14 @@ function DetailPage({ bench }: { bench: Workbench }) {
                 以下是来源中保存的原始定义表达式。参数和数据字段来自该定义，公式只展示，不在网页执行。
               </p>
             )}
-            <div className="formula-block">
-              <span>
-                原始公式 <small>{item.source_name}</small>
-              </span>
-              <Formula value={item.formula} />
-            </div>
+            {item.kind !== "strategy" && (
+              <div className="formula-block">
+                <span>
+                  原始公式 <small>{item.source_name}</small>
+                </span>
+                <Formula value={item.formula} />
+              </div>
+            )}
             <dl className="facts">
               <div>
                 <dt>来源描述</dt>
@@ -746,6 +791,12 @@ function DetailPage({ bench }: { bench: Workbench }) {
             <h2>
               关系与证据 <span>{item.relations.length}</span>
             </h2>
+            <Link
+              className="button"
+              to={`/relations?id=${encodeURIComponent(item.entity_id)}`}
+            >
+              打开关系图与两跳浏览 →
+            </Link>
             <p className="muted">
               RELATED_TO / CATEGORY_LINK_ONLY 仅表示关联；RULE_LINK_ONLY
               仅表示规则引用，均不是等价或收益贡献证明。
@@ -757,7 +808,8 @@ function DetailPage({ bench }: { bench: Workbench }) {
                     <summary>
                       <code>{edge.relation}</code>
                       <span>
-                        {edge.from_type} → {edge.to_type}
+                        {edge.from_name || edge.from_type} →{" "}
+                        {edge.to_name || edge.to_type}
                       </span>
                     </summary>
                     <dl className="facts">
@@ -774,9 +826,31 @@ function DetailPage({ bench }: { bench: Workbench }) {
                       <div>
                         <dt>端点</dt>
                         <dd>
-                          <code>{edge.from_id}</code>
+                          {edge.from_kind ? (
+                            <Link
+                              to={entityUrl({
+                                kind: edge.from_kind,
+                                entity_id: edge.from_id,
+                              })}
+                            >
+                              {edge.from_name}
+                            </Link>
+                          ) : (
+                            <code>{edge.from_id}</code>
+                          )}
                           <br />
-                          <code>{edge.to_id}</code>
+                          {edge.to_kind ? (
+                            <Link
+                              to={entityUrl({
+                                kind: edge.to_kind,
+                                entity_id: edge.to_id,
+                              })}
+                            >
+                              {edge.to_name}
+                            </Link>
+                          ) : (
+                            <code>{edge.to_id}</code>
+                          )}
                         </dd>
                       </div>
                       <div>
@@ -864,7 +938,7 @@ function DetailPage({ bench }: { bench: Workbench }) {
           </section>
           <section className="panel">
             <h2>
-              同族变体 <span>{item.related.length}</span>
+              相关定义与策略 <span>{item.related.length}</span>
             </h2>
             {item.concept && (
               <Link to={entityUrl(item.concept)}>{item.concept.name} →</Link>
@@ -911,7 +985,7 @@ function ComparePage() {
   return (
     <>
       <PageTitle eyebrow="COMPARE / 比较定义" title="先看差异，再提假设。">
-        并排比较 2–4 个条目的公式、参数、来源与研究状态。
+        并排比较 2–4 个条目的规则、仓位、执行假设、公式、来源与研究状态。
       </PageTitle>
       {refs.length >= 2 && refs.length <= 4 ? (
         <CompareTable query={params.toString()} />
@@ -937,6 +1011,43 @@ function CompareTable({ query }: { query: string }) {
     ["类型", (item) => <TypeTag kind={item.kind} />],
     ["原始公式", (item) => <Formula value={item.formula} />],
     ["参数", (item) => <Parameters value={item.parameters} />],
+    ["入场逻辑", (item) => <Values value={item.strategy?.facts.entry} />],
+    ["出场逻辑", (item) => <Values value={item.strategy?.facts.exit} />],
+    [
+      "仓位 / 现金",
+      (item) => (
+        <Values
+          value={
+            item.strategy
+              ? {
+                  position: item.strategy.facts.position,
+                  cash: item.strategy.facts.cash,
+                }
+              : null
+          }
+        />
+      ),
+    ],
+    [
+      "执行 / 成本假设",
+      (item) => (
+        <Values
+          value={
+            item.strategy
+              ? {
+                  execution: item.strategy.facts.execution,
+                  costs: item.strategy.facts.costs,
+                }
+              : null
+          }
+        />
+      ),
+    ],
+    [
+      "市场 / 频率",
+      (item) => `${item.markets.join(" / ")} · ${item.frequency || "未补充"}`,
+    ],
+    ["变化轴", (item) => <Values value={item.strategy?.variation_axes} />],
     ["时序 / 截面", (item) => item.axis],
     ["所需数据", (item) => item.required_fields.join(" / ") || "未补充"],
     ["方法族", (item) => `${item.category_label} / ${item.family || "未补充"}`],
@@ -1089,13 +1200,17 @@ function NotebookPage({
       const request = await api<unknown>("/v1/web/research-requests", {
         method: "POST",
         body: JSON.stringify({
-          entity_refs: shown.map(
-            ({ entity_type, entity_id, definition_revision }) => ({
+          entity_refs: shown
+            .filter((i) =>
+              study === "FACTOR_DIAGNOSTIC"
+                ? i.entity_type === "FactorVariant"
+                : i.entity_type === "StrategyVariant",
+            )
+            .map(({ entity_type, entity_id, definition_revision }) => ({
               entity_type,
               entity_id,
               definition_revision,
-            }),
-          ),
+            })),
           study_type: study,
           requested_settings: settings,
         }),
@@ -1253,88 +1368,93 @@ function NotebookPage({
             ))
           )}
         </section>
-        <section className="panel request-panel">
-          <div className="eyebrow">NEXT STEP</div>
-          <h2>导出研究请求</h2>
-          <p>
-            将当前分组的 {shown.length} 个引用整理为草稿。导出不会启动研究。
-          </p>
-          <label>
-            研究类型
-            <select value={study} onChange={(e) => setStudy(e.target.value)}>
-              <option value="FACTOR_DIAGNOSTIC">
-                因子诊断 / FACTOR_DIAGNOSTIC
-              </option>
-              <option value="STRATEGY_REPLICATION">
-                策略复现 / STRATEGY_REPLICATION
-              </option>
-            </select>
-          </label>
-          <label>
-            市场范围
-            <input
-              value={settings.market}
-              onChange={(e) =>
-                setSettings({ ...settings, market: e.target.value })
-              }
-              placeholder="待研究方确认，如：中国股票"
-              maxLength={200}
-            />
-          </label>
-          <div className="date-fields">
-            <label>
-              期望开始日期
-              <input
-                type="date"
-                value={settings.start_date}
-                onChange={(e) =>
-                  setSettings({ ...settings, start_date: e.target.value })
-                }
-              />
-            </label>
-            <label>
-              期望结束日期
-              <input
-                type="date"
-                value={settings.end_date}
-                onChange={(e) =>
-                  setSettings({ ...settings, end_date: e.target.value })
-                }
-              />
-            </label>
-          </div>
-          <label>
-            研究设置说明
-            <textarea
-              value={settings.notes}
-              onChange={(e) =>
-                setSettings({ ...settings, notes: e.target.value })
-              }
-              placeholder="数据、成本与对照设置需在研究端冻结"
-              maxLength={2000}
-            />
-          </label>
-          <div className="request-contract">
-            <code>{meta.contracts.request}</code>
-            <span className="tag">DRAFT</span>
-          </div>
-          {!meta.contracts.export_enabled && (
-            <p className="contract-pending">
-              正式契约等待任务 A
-              接入。当前可用“导出清单”保存引用；研究请求导出尚未开放。
-            </p>
+        <section>
+          {meta.adapter_version === "catalog/v1" && (
+            <SubmitResearch items={shown} />
           )}
-          <button
-            className="primary full"
-            disabled={busy || !shown.length || !meta.contracts.export_enabled}
-            onClick={() => void exportRequest()}
-          >
-            <Download size={16} />
-            {busy ? "正在校验…" : "校验并导出请求"}
-          </button>
-          <small>
-            清单备注不自动进入请求。只有这里填写的研究设置会随请求提交校验。
-          </small>
+          <section className="panel request-panel">
+            <div className="eyebrow">NEXT STEP</div>
+            <h2>导出研究请求</h2>
+            <p>
+              将当前分组中符合所选研究类型的引用整理为草稿。导出不会启动研究。
+            </p>
+            <label>
+              研究类型
+              <select value={study} onChange={(e) => setStudy(e.target.value)}>
+                <option value="FACTOR_DIAGNOSTIC">
+                  因子诊断 / FACTOR_DIAGNOSTIC
+                </option>
+                <option value="STRATEGY_REPLICATION">
+                  策略复现 / STRATEGY_REPLICATION
+                </option>
+              </select>
+            </label>
+            <label>
+              市场范围
+              <input
+                value={settings.market}
+                onChange={(e) =>
+                  setSettings({ ...settings, market: e.target.value })
+                }
+                placeholder="待研究方确认，如：中国股票"
+                maxLength={200}
+              />
+            </label>
+            <div className="date-fields">
+              <label>
+                期望开始日期
+                <input
+                  type="date"
+                  value={settings.start_date}
+                  onChange={(e) =>
+                    setSettings({ ...settings, start_date: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                期望结束日期
+                <input
+                  type="date"
+                  value={settings.end_date}
+                  onChange={(e) =>
+                    setSettings({ ...settings, end_date: e.target.value })
+                  }
+                />
+              </label>
+            </div>
+            <label>
+              研究设置说明
+              <textarea
+                value={settings.notes}
+                onChange={(e) =>
+                  setSettings({ ...settings, notes: e.target.value })
+                }
+                placeholder="数据、成本与对照设置需在研究端冻结"
+                maxLength={2000}
+              />
+            </label>
+            <div className="request-contract">
+              <code>{meta.contracts.request}</code>
+              <span className="tag">DRAFT</span>
+            </div>
+            {!meta.contracts.export_enabled && (
+              <p className="contract-pending">
+                正式契约等待任务 A
+                接入。当前可用“导出清单”保存引用；研究请求导出尚未开放。
+              </p>
+            )}
+            <button
+              className="primary full"
+              disabled={busy || !shown.length || !meta.contracts.export_enabled}
+              onClick={() => void exportRequest()}
+            >
+              <Download size={16} />
+              {busy ? "正在校验…" : "校验并导出请求"}
+            </button>
+            <small>
+              清单备注不自动进入请求。只有这里填写的研究设置会随请求提交校验。
+            </small>
+          </section>
         </section>
       </div>
     </>

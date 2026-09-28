@@ -10,6 +10,10 @@ export const kindFor = (ref: EntityRef) =>
       FactorVariant: "variant",
       FactorConcept: "concept",
       Strategy: "strategy",
+      StrategyVariant: "strategy",
+      StrategyConcept: "family",
+      StrategyTemplate: "template",
+      SourceRecord: "source",
     }) as const
   )[ref.entity_type];
 const isObject = (v: unknown): v is Record<string, unknown> =>
@@ -35,9 +39,12 @@ export function parseNotebook(raw: string, mode: Mode = "PUBLIC"): Notebook {
   const items: SavedItem[] = value.items.map((v: unknown) => {
     if (
       !isObject(v) ||
-      !["FactorVariant", "FactorConcept", "Strategy"].includes(
-        String(v.entity_type),
-      ) ||
+      ![
+        "FactorVariant",
+        "FactorConcept",
+        "Strategy",
+        "StrategyVariant",
+      ].includes(String(v.entity_type)) ||
       !bounded(v.entity_id, 200) ||
       !String(v.entity_id).startsWith("qkg:") ||
       !bounded(v.definition_revision, 200) ||
