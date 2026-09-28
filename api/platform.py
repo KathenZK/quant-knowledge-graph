@@ -34,7 +34,7 @@ def create_platform_app(config, *, admin_password=None):
 
     def install(app,cat):
         install_research_jobs(app,jobs,resolve_ref=cat.resolve_ref,can_view=cat.visible,
-                              auth_dependency=require_admin)
+                              auth_dependency=require_admin,collections=config.get('research_collections',{}))
 
     app=create_web_app(config['graph_root'],catalog=catalog,admin_password=admin_password,
                        research_installer=install)

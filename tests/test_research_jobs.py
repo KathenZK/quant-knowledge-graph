@@ -173,3 +173,43 @@ def test_restricted_summary_keeps_internal_evidence_authenticated(repo):
     assert private['items'][0]['results']=={'ic':.12}
     summary=public_results(repo,REF,lambda _:True)[0]
     assert summary['metrics']=={} and summary['numerical_display']=='RESTRICTED'
+
+
+def test_failed_provenance_cannot_report_success_and_import_has_readable_error(repo):
+    evidence=result(REF)
+    evidence['study_metadata']['provenance']['execution_status']='FAILED'
+    evidence['study_metadata']['public_summary'].update(
+        classification='COMPUTATION_FAILED', failure_reason='Retained original failure')
+    with pytest.raises(ValueError,match='Failed computation'):
+        repo._validate_results({'request':request()},'SUCCEEDED',[evidence])
+    job,_=repo.import_completed(request(),[evidence],source_receipt={'sha256':'a'*64},
+                                owner='administrator',resolve_ref=lambda **r:r)
+    assert job['error']['code']=='RETAINED_COMPUTATION_FAILURE'
+    shown=public_results(repo,REF,lambda _:True)[0]
+    assert shown['classification']=='COMPUTATION_FAILED'
+    assert shown['failure_reason']=='Retained original failure'
+
+
+def test_collection_report_auth_hash_and_visibility(repo,tmp_path):
+    import hashlib
+    sha='b'*64
+    repo.import_completed(request(),[result(REF)],source_receipt={'manifest_sha256':sha},
+                          owner='admin',resolve_ref=lambda **r:r)
+    report=tmp_path/'report.md';report.write_text('Private retained report')
+    collections={'study':dict(title='Study',manifest_sha256=sha,trial_counts={'completed':1},
+                             report={'path':str(report),'sha256':hashlib.sha256(report.read_bytes()).hexdigest()})}
+    visible=[True]
+    app=FastAPI();install_research_jobs(app,repo,resolve_ref=lambda **r:r,can_view=lambda _:visible[0],
+        keys={'admin':dict(token='test-token',scopes=['research:submit'])},collections=collections)
+    client=TestClient(app);headers={'Authorization':'Bearer test-token'}
+    assert client.get('/v1/research/capabilities').json()['collections_available']
+    summary=client.get('/v1/research/collections').json()
+    assert summary['items'][0]['imported_results']==1 and str(tmp_path) not in json.dumps(summary)
+    route='/v1/research/collections/study/report'
+    assert client.get(route).status_code==401
+    assert client.get(route,headers=headers).json()['content']=='Private retained report'
+    report.write_text('changed')
+    assert client.get(route,headers=headers).status_code==409
+    visible[0]=False
+    assert client.get('/v1/research/collections').json()['items']==[]
+    assert client.get(route,headers=headers).status_code==404

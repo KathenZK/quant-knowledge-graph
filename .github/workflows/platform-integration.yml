@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: KathenZK/quant-research-lab
-          ref: a066b0670ad1483a29e23c5383cd0f4d23887213
+          ref: e4df30141684be4d9e94ed92573a2da3095e8f4f
           path: lab
           persist-credentials: false
       - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
@@ -23,7 +23,7 @@ jobs:
       - run: uv venv --python 3.12 graph/.venv
       - run: uv pip install --python graph/.venv/bin/python -e './graph[test]' -e './lab[dev]'
       - working-directory: graph
-        run: .venv/bin/python -m pytest tests/test_research_jobs.py tests/test_runtime_catalog.py tests/test_factor_study.py -q
+        run: .venv/bin/python -m pytest tests/test_research_jobs.py tests/test_research_import.py tests/test_runtime_catalog.py tests/test_factor_study.py -q
       - working-directory: lab
         run: ../graph/.venv/bin/python -m pytest tests/test_platform_worker.py tests/test_factor_study_integration.py tests/test_discovery_capabilities.py tests/test_statistical_reference_v2.py -q
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6

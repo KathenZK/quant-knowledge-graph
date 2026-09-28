@@ -42,16 +42,19 @@ def public_results(repository, ref, can_view):
                 conclusion_level=meta['conclusion_level'], limitations=meta['limitations'],
                 lineage=meta.get('lineage', []), metrics=safe_metrics,
                 sample={k:summary.get('sample',{}).get(k) for k in
-                        ('start','end','rows','frequency','symbols','dataset_version','real_market_data')},
+                        ('start','end','rows','rows_meaning','frequency','symbols','dataset_version','real_market_data')},
                 status=job['status'], promotion_allowed=False, display_policy=policy,
                 assessment_version=summary.get('assessment_version'),
                 numerical_display='ALLOWED' if profile.get('numeric_display',False) else 'RESTRICTED',
                 evolution=evolution,
+                **{k:public_text(summary[k]) for k in
+                   ('classification','execution_status','failure_reason','source_reproduction','conclusion_reason')
+                   if isinstance(summary.get(k),str)},
             ))
     return items
 
 
-def install_research_jobs(app, repository, *, resolve_ref, can_view, keys=None, auth_dependency=None):
+def install_research_jobs(app, repository, *, resolve_ref, can_view, keys=None, auth_dependency=None, collections=None):
     """Install before the SPA catch-all. Catalog owns visibility and admin sessions.
 
     auth_dependency may return a stable owner ID (or {'id': ID}); it must reject
@@ -96,14 +99,62 @@ def install_research_jobs(app, repository, *, resolve_ref, can_view, keys=None, 
                   for k in ('created','updated','started','completed')}
         ref = job['request']['entity_refs'][0]
         return dict(job_id=job['job_id'],run_id=job['run_id'],status=job['status'],progress=job['progress'],
-                    stage=job['stage'], error=job['error'], worker_available=available,
+                    stage=job['stage'], error=job['error'] or (
+                        {'code':'RETAINED_COMPUTATION_FAILURE','message':'Original computation failure retained; inspect evidence and later revisions'}
+                        if job['stage']=='IMPORTED_COMPLETED_RESEARCH' and job['status'] in {'FAILED','PARTIAL'} else None),
+                    worker_available=available,
                     result_url='/v1/research/results?'+urlencode(ref), timestamps=stamps,
                     entity_refs=job['request']['entity_refs'], study_type=job['request']['study_type'],
                     attempts=job['attempts'], cancel_requested=bool(job['cancel_requested']))
 
+    def collection_view(collection_id):
+        from quantgraph.graph.catalog_projection import public_text
+        value=(collections or {}).get(collection_id)
+        if not value:
+            raise HTTPException(404,'Research collection not found')
+        jobs=repository.imported_for_manifest(value['manifest_sha256'])
+        if not jobs or any(not can_view(ref['entity_id']) for job in jobs for result in job['results']
+                           for ref in (result['study_metadata']['entity_refs'] + result['study_metadata'].get('lineage',[]))):
+            raise HTTPException(404,'Research collection not visible')
+        if any(not repository.profiles.get(job['profile'],{}).get('public_display') for job in jobs):
+            raise HTTPException(404,'Research collection not visible')
+        def counts(key):
+            return {k:v for k,v in value.get(key,{}).items() if isinstance(k,str) and type(v) is int and v>=0}
+        return dict(collection_id=collection_id,title=public_text(value['title']),
+                    manifest_sha256=value['manifest_sha256'],imported_results=len(jobs),
+                    trial_counts=counts('trial_counts'),triage_counts=counts('triage_counts'),
+                    limitations=[public_text(v) for v in value.get('limitations',[])],
+                    internal_report_available=bool(value.get('report')),promotion_allowed=False)
+
+    @router.get('/collections')
+    def collection_list():
+        values=[]
+        for key in collections or {}:
+            try:values.append(collection_view(key))
+            except HTTPException as exc:
+                if exc.status_code!=404:raise
+        return {'items':values}
+
+    @router.get('/collections/{collection_id}/report')
+    def collection_report(collection_id:str, principal=Depends(auth)):
+        from pathlib import Path
+        owner_id(principal)
+        view=collection_view(collection_id)
+        report=(collections or {})[collection_id].get('report')
+        if not report:
+            raise HTTPException(404,'No retained internal report')
+        try:
+            content=Path(report['path']).read_bytes()
+        except OSError:
+            raise HTTPException(409,'Pinned internal report unavailable')
+        if hashlib.sha256(content).hexdigest()!=report['sha256']:
+            raise HTTPException(409,'Pinned internal report changed; operator review required')
+        return dict(title=view['title'],content=content.decode('utf-8'),
+                    visibility='AUTHENTICATED_INTERNAL_RESEARCH',promotion_allowed=False)
+
     @router.get('/capabilities')
     def capabilities():
-        return {'items':[dict(profile_id=key, study_type=p['study_type'], entity_types=p['entity_types'],
+        return {'collections_available':bool(collections),'items':[dict(profile_id=key, study_type=p['study_type'], entity_types=p['entity_types'],
                               max_entities=p.get('max_entities',1), max_trials=p['max_trials'],
                               max_seconds=p['max_seconds'], worker_available=repository.worker_available(key))
                          for key,p in repository.profiles.items()]}

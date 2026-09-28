@@ -209,6 +209,8 @@ class ResearchJobRepository:
         if status in {'SUCCEEDED', 'PARTIAL'} and not results:
             raise ValueError('Successful execution requires retained research evidence')
         for value in results or []:
+            if status == 'SUCCEEDED' and value.get('study_metadata',{}).get('provenance',{}).get('execution_status') == 'FAILED':
+                raise ValueError('Failed computation cannot be a successful job')
             metadata = StudyMetadata.model_validate(value.get('study_metadata')).model_dump(mode='json')
             if value.get('schema_version') == 'factor-study-result/v1':
                 FactorStudyResult.model_validate(value)
@@ -284,8 +286,18 @@ class ResearchJobRepository:
                 (job_id,owner,idem,fingerprint,canonical(request),profile_id,digest(profile),
                  canonical({'definitions':snapshots,'import_receipt':source_receipt}),status,
                  'IMPORTED_COMPLETED_RESEARCH',1,canonical(results),now,now,now,0,0))
+            if status != 'SUCCEEDED':
+                con.execute('UPDATE research_jobs SET error=? WHERE job_id=?',
+                            (canonical({'code':'RETAINED_COMPUTATION_FAILURE',
+                                        'message':'Original computation failure retained; inspect the authenticated evidence and later revisions'}),job_id))
             row=con.execute('SELECT * FROM research_jobs WHERE job_id=?',(job_id,)).fetchone()
         return self._decode(row),False
+
+    def imported_for_manifest(self, sha256):
+        with self.connect() as con:
+            rows=con.execute("SELECT * FROM research_jobs WHERE stage='IMPORTED_COMPLETED_RESEARCH'").fetchall()
+        return [self._decode(row) for row in rows
+                if json.loads(row['snapshots']).get('import_receipt',{}).get('manifest_sha256')==sha256]
 
     def results_for(self, entity_type, entity_id, definition_revision):
         ref = dict(entity_type=entity_type, entity_id=entity_id, definition_revision=definition_revision)
