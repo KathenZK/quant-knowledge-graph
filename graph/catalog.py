@@ -114,12 +114,14 @@ class CatalogRepository:
         value = deepcopy(value)
         raw = private if private is not None else {}
         eid, rev = value['entity_id'], value['definition_revision']
+        old = con.execute('SELECT patch FROM catalog_items WHERE entity_id=?',(eid,)).fetchone()
+        indexed = value | (json.loads(old['patch']) if old else {})
         con.execute('INSERT OR IGNORE INTO catalog_versions VALUES (?,?,?,?,?)',
                     (eid, rev, stable_json(value), stable_json(raw), now()))
         con.execute('''INSERT INTO catalog_items(entity_id,kind,entity_type,definition_revision,payload,private_payload,search_text)
             VALUES (?,?,?,?,?,?,?) ON CONFLICT(entity_id) DO UPDATE SET definition_revision=excluded.definition_revision,
             payload=excluded.payload, private_payload=excluded.private_payload, search_text=excluded.search_text,active=1''',
-            (eid, value['kind'], value['entity_type'], rev, stable_json(value), stable_json(raw), self.index(value)))
+            (eid, value['kind'], value['entity_type'], rev, stable_json(value), stable_json(raw), self.index(indexed)))
         con.execute('INSERT INTO catalog_origins VALUES (?,?,1) ON CONFLICT(owner,entity_id) DO UPDATE SET active=1', (owner,eid))
 
     def _edge(self, con, value, owner):

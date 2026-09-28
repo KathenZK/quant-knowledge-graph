@@ -203,6 +203,11 @@ export interface RelationGraph {
   types: string[];
 }
 export interface StudySummary {
+  classification?: string;
+  execution_status?: string;
+  failure_reason?: string;
+  source_reproduction?: string;
+  conclusion_reason?: string;
   numerical_display?: "ALLOWED" | "RESTRICTED";
   evolution?: {
     parent_experiment_id?: string;

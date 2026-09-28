@@ -196,3 +196,14 @@ def test_admin_operational_views_are_authenticated_and_audited(runtime):
     eid=cat.search()['items'][0]['entity_id']; edge=cat.relations(eid)['items'][0]
     for patch in [{'confidence':'bad'},{'review_status':'SAME_AS'},{'evidence':[]}]:
         assert client.patch('/v1/admin/relations/'+edge['relationship_id'],json=patch,headers=HEADERS).status_code==422
+
+
+def test_projection_rebuild_preserves_administrator_search_overlay(runtime):
+    cat,_=runtime
+    value=cat.search(kind='variant')['items'][0]
+    cat.edit([value['entity_id']],{'aliases':['SYNTHETIC-REBUILD-ALIAS']},'test')
+    cat.import_factors(WebReadModel(create_app(public_only=True).state.db))
+    assert cat.search(kind='variant',q='SYNTHETIC-REBUILD-ALIAS')['total']==1
+    cat.edit([value['entity_id']],{'visibility':'HIDDEN'},'test')
+    cat.import_factors(WebReadModel(create_app(public_only=True).state.db))
+    assert not cat.visible(value['entity_id'])

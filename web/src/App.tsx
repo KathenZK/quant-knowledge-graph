@@ -1013,7 +1013,18 @@ function CompareTable({ query }: { query: string }) {
   const rows: [string, (item: Detail) => ReactNode][] = [
     ["类型", (item) => <TypeTag kind={item.kind} />],
     ["原始公式", (item) => <Formula value={item.formula} />],
-    ["参数", (item) => <Parameters value={item.parameters} />],
+    [
+      "参数",
+      (item) =>
+        item.strategy ? (
+          <details>
+            <summary>查看来源中的结构化参数</summary>
+            <Parameters value={item.parameters} />
+          </details>
+        ) : (
+          <Parameters value={item.parameters} />
+        ),
+    ],
     ["入场逻辑", (item) => <Values value={item.strategy?.facts.entry} />],
     ["出场逻辑", (item) => <Values value={item.strategy?.facts.exit} />],
     [
@@ -1085,6 +1096,24 @@ function CompareTable({ query }: { query: string }) {
     ["经济逻辑", (item) => item.economic_logic || "未补充"],
     ["状态", (item) => <Statuses item={item} />],
   ];
+  const strategyRows = [
+    "入场逻辑",
+    "出场逻辑",
+    "仓位 / 现金",
+    "执行 / 成本假设",
+    "市场 / 频率",
+    "变化轴",
+  ];
+  const hasStrategy = result.data.items.some(
+    (item) => item.kind === "strategy",
+  );
+  const displayRows = hasStrategy
+    ? [
+        rows[0],
+        ...strategyRows.map((label) => rows.find((row) => row[0] === label)!),
+        ...rows.slice(1).filter((row) => !strategyRows.includes(row[0])),
+      ]
+    : rows.filter((row) => !strategyRows.includes(row[0]));
   return (
     <>
       <div className="notice">
@@ -1113,7 +1142,7 @@ function CompareTable({ query }: { query: string }) {
             </tr>
           </thead>
           <tbody>
-            {rows.map(([label, render]) => (
+            {displayRows.map(([label, render]) => (
               <tr key={label}>
                 <th scope="row">{label}</th>
                 {result.data!.items.map((item) => (
