@@ -69,7 +69,7 @@ def build_review(previous, contract_path, manifest_path):
                             'Native optional quality fields absent; core profile uses independent finality and raw reconstruction'])
     review['data_requirement'].update(
         exchange=contract.provider,data_source=contract.source,symbols=contract.symbols,frequency=contract.frequency,
-        start_date=contract.requested_start,end_date=contract.requested_end,real_market_data=manifest['real_market_data'],
+        start_date=contract.requested_start.isoformat(),end_date=contract.requested_end.isoformat(),real_market_data=manifest['real_market_data'],
         adjustment_method=contract.data_requirements.adjustment,timezone=contract.data_requirements.timezone,
         calendar=contract.data_requirements.calendar,
         required_fields=contract.data_requirements.required_fields,quality_status='PASS',
