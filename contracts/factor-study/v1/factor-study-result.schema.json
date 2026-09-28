@@ -31,6 +31,37 @@
       "title": "Artifact",
       "type": "object"
     },
+    "EntityRef": {
+      "additionalProperties": false,
+      "properties": {
+        "entity_type": {
+          "enum": [
+            "FactorDefinition",
+            "FactorVariant",
+            "StrategyVariant"
+          ],
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "entity_id": {
+          "minLength": 1,
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "definition_revision": {
+          "minLength": 1,
+          "title": "Definition Revision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entity_type",
+        "entity_id",
+        "definition_revision"
+      ],
+      "title": "EntityRef",
+      "type": "object"
+    },
     "HashRef": {
       "additionalProperties": false,
       "properties": {
@@ -335,6 +366,88 @@
       ],
       "title": "SemanticTest",
       "type": "object"
+    },
+    "StudyMetadata": {
+      "additionalProperties": false,
+      "description": "Optional transport metadata; never promotes the underlying evidence.",
+      "properties": {
+        "entity_refs": {
+          "items": {
+            "$ref": "#/$defs/EntityRef"
+          },
+          "minItems": 1,
+          "title": "Entity Refs",
+          "type": "array"
+        },
+        "study_type": {
+          "enum": [
+            "FACTOR_DIAGNOSTIC",
+            "STRATEGY_REPLICATION",
+            "STRATEGY_EVOLUTION"
+          ],
+          "title": "Study Type",
+          "type": "string"
+        },
+        "study_kind": {
+          "enum": [
+            "HISTORICAL_REPLICATION",
+            "EXPLORATORY_ANALYSIS",
+            "CONFIRMATORY_HOLDOUT_TEST"
+          ],
+          "title": "Study Kind",
+          "type": "string"
+        },
+        "provenance": {
+          "additionalProperties": true,
+          "title": "Provenance",
+          "type": "object"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Limitations",
+          "type": "array"
+        },
+        "conclusion_level": {
+          "enum": [
+            "DESCRIPTIVE",
+            "EXPLORATORY",
+            "INCONCLUSIVE"
+          ],
+          "title": "Conclusion Level",
+          "type": "string"
+        },
+        "lineage": {
+          "items": {
+            "$ref": "#/$defs/EntityRef"
+          },
+          "title": "Lineage",
+          "type": "array"
+        },
+        "public_summary": {
+          "additionalProperties": true,
+          "title": "Public Summary",
+          "type": "object"
+        },
+        "display_policy": {
+          "minLength": 1,
+          "title": "Display Policy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entity_refs",
+        "study_type",
+        "study_kind",
+        "provenance",
+        "limitations",
+        "conclusion_level",
+        "display_policy"
+      ],
+      "title": "StudyMetadata",
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -447,6 +560,17 @@
       "default": false,
       "title": "Promotion Allowed",
       "type": "boolean"
+    },
+    "study_metadata": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/StudyMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     }
   },
   "required": [

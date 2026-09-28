@@ -1,10 +1,20 @@
 """Factor research contracts. These confer neither execution nor publication rights."""
 from typing import Literal
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator, model_serializer
 
 
 class Strict(BaseModel):
     model_config = ConfigDict(extra='forbid', allow_inf_nan=False)
+
+    @model_serializer(mode='wrap')
+    def compatible_optional_extensions(self, handler):
+        value = handler(self)
+        # Old immutable evidence must round-trip byte-equivalent canonical JSON.
+        # Absent v1 extensions must not materialize as new null fields on retry.
+        for key in ('study_metadata', 'idempotency_key', 'hypothesis', 'budget'):
+            if value.get(key) is None:
+                value.pop(key, None)
+        return value
 
 
 class EntityRef(Strict):
@@ -17,9 +27,25 @@ class ResearchRequest(Strict):
     schema_version: Literal['research-request/v1'] = 'research-request/v1'
     request_id: str = Field(min_length=1, max_length=200)
     entity_refs: list[EntityRef] = Field(min_length=1, max_length=1000)
-    study_type: Literal['FACTOR_DIAGNOSTIC', 'STRATEGY_REPLICATION']
+    study_type: Literal['FACTOR_DIAGNOSTIC', 'STRATEGY_REPLICATION', 'STRATEGY_EVOLUTION']
     requested_settings: dict
     status: Literal['DRAFT'] = 'DRAFT'
+    idempotency_key: str | None = Field(default=None, min_length=1, max_length=200)
+    hypothesis: str | None = Field(default=None, max_length=4000)
+    budget: dict[str, int] | None = None
+
+
+class StudyMetadata(Strict):
+    """Optional transport metadata; never promotes the underlying evidence."""
+    entity_refs: list[EntityRef] = Field(min_length=1)
+    study_type: Literal['FACTOR_DIAGNOSTIC', 'STRATEGY_REPLICATION', 'STRATEGY_EVOLUTION']
+    study_kind: Literal['HISTORICAL_REPLICATION', 'EXPLORATORY_ANALYSIS', 'CONFIRMATORY_HOLDOUT_TEST']
+    provenance: dict
+    limitations: list[str] = Field(min_length=1)
+    conclusion_level: Literal['DESCRIPTIVE', 'EXPLORATORY', 'INCONCLUSIVE']
+    lineage: list[EntityRef] = Field(default_factory=list)
+    public_summary: dict = Field(default_factory=dict)
+    display_policy: str = Field(min_length=1)
 
 
 class HashRef(Strict):
@@ -121,6 +147,7 @@ class FactorStudyResult(Strict):
     trial_registry: dict
     research_status: Literal['EXPLORATORY_RETROSPECTIVE'] = 'EXPLORATORY_RETROSPECTIVE'
     promotion_allowed: Literal[False] = False
+    study_metadata: StudyMetadata | None = None
 
     @model_validator(mode='after')
     def diagnostic_only(self):
