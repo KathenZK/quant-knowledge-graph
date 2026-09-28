@@ -111,6 +111,34 @@ export function SummaryStudy({ study }: { study: StudySummary }) {
         运行 <code>{study.run_id}</code> ·{" "}
         <Link to={`/jobs/${study.job_id}`}>任务状态</Link>
       </p>
+      {(study.classification ||
+        study.execution_status ||
+        study.failure_reason ||
+        study.source_reproduction ||
+        study.conclusion_reason) && (
+        <dl className="facts">
+          <div>
+            <dt>结论类别</dt>
+            <dd>{study.classification || "未补充"}</dd>
+          </div>
+          <div>
+            <dt>计算状态</dt>
+            <dd>{study.execution_status || study.status}</dd>
+          </div>
+          <div>
+            <dt>失败原因</dt>
+            <dd>{study.failure_reason || "无已报告失败"}</dd>
+          </div>
+          <div>
+            <dt>原来源复现程度</dt>
+            <dd>{study.source_reproduction || "未补充"}</dd>
+          </div>
+          <div>
+            <dt>结论依据</dt>
+            <dd>{study.conclusion_reason || "见方法与限制"}</dd>
+          </div>
+        </dl>
+      )}
       <h4>定义与版本</h4>
       {study.entity_refs.map((ref) => (
         <p key={ref.entity_id}>
@@ -132,7 +160,10 @@ export function SummaryStudy({ study }: { study: StudySummary }) {
       <h4>实际指标</h4>
       {study.numerical_display === "RESTRICTED" ? (
         <p className="notice">
-          研究已实际运行；数值指标受数据展示权限限制。登录后可在任务页查看获准的内部研究证据。
+          {["FAILED", "BLOCKED"].includes(study.status) ||
+          study.execution_status?.toUpperCase().includes("FAILED")
+            ? "研究未成功完成，请核对计算状态和失败原因。数值展示权限另行限制；登录后可查看已保留的内部证据。"
+            : "研究已实际运行；数值指标受数据展示权限限制。登录后可在任务页查看获准的内部研究证据。"}
         </p>
       ) : (
         <Parameters value={study.metrics} />
