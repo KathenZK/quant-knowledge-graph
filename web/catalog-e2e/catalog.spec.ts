@@ -101,7 +101,7 @@ test("actual strategy → detail → variants → factor → reverse strategies 
     page.getByRole("link", { name: source.name, exact: true }),
   ).toBeVisible();
   await page
-    .getByLabel("研究类型", { exact: true })
+    .getByRole("combobox", { name: "研究类型", exact: true })
     .selectOption("STRATEGY_REPLICATION");
   const event = page.waitForEvent("download");
   await page.getByRole("button", { name: "校验并导出请求" }).click();

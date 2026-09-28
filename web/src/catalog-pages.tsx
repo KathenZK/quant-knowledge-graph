@@ -130,13 +130,51 @@ export function SummaryStudy({ study }: { study: StudySummary }) {
       <h4>样本与数据</h4>
       <Parameters value={study.sample} />
       <h4>实际指标</h4>
-      <Parameters value={study.metrics} />
+      {study.numerical_display === "RESTRICTED" ? (
+        <p className="notice">
+          研究已实际运行；数值指标受数据展示权限限制。登录后可在任务页查看获准的内部研究证据。
+        </p>
+      ) : (
+        <Parameters value={study.metrics} />
+      )}
       <h4>限制</h4>
       <ul>
         {study.limitations.map((text, i) => (
           <li key={i}>{text}</li>
         ))}
       </ul>
+      {study.evolution && (
+        <section>
+          <h4>有依据的演化</h4>
+          <dl className="facts">
+            <div>
+              <dt>改造理由</dt>
+              <dd>
+                <Values value={study.evolution.reason} />
+              </dd>
+            </div>
+            <div>
+              <dt>具体变化</dt>
+              <dd>
+                <Values value={study.evolution.change} />
+              </dd>
+            </div>
+            <div>
+              <dt>解释与限制</dt>
+              <dd>
+                <Values value={study.evolution.interpretation} />
+              </dd>
+            </div>
+            <div>
+              <dt>执行状态</dt>
+              <dd>
+                {study.evolution.outcome || "未补充"}
+                <small>SUCCESS 表示运行成功，不代表盈利或改造显著有效。</small>
+              </dd>
+            </div>
+          </dl>
+        </section>
+      )}
       {study.lineage.length > 0 && (
         <>
           <h4>父子研究脉络</h4>
@@ -572,8 +610,35 @@ export function SubmitResearch({ items }: { items: SavedItem[] }) {
     </section>
   );
 }
+function InternalEvidence({ id }: { id: string }) {
+  const data = useApi<{ items: Record<string, unknown>[]; visibility: string }>(
+    `/v1/research/jobs/${encodeURIComponent(id)}/evidence`,
+  );
+  return (
+    <section className="panel">
+      <h2>内部研究证据</h2>
+      <p>仅当前获授权会话可见；不代表获得公开传播行情或衍生指标的权利。</p>
+      {data.loading ? (
+        <Loading />
+      ) : data.error ? (
+        <ErrorState error={data.error} retry={data.retry} />
+      ) : (
+        data.data?.items.map((value, i) => (
+          <details key={i} open>
+            <summary>
+              结果 {i + 1} ·{" "}
+              {String(value.run_id || value.research_run_id || "")}
+            </summary>
+            <Parameters value={value} />
+          </details>
+        ))
+      )}
+    </section>
+  );
+}
 export function JobPage() {
   const { id } = useParams();
+  const [evidence, setEvidence] = useState(false);
   const job = useApi<Job>(`/v1/research/jobs/${encodeURIComponent(id || "")}`);
   const [error, setError] = useState("");
   useEffect(() => {
@@ -650,6 +715,7 @@ export function JobPage() {
               </p>
             ))}
             <button onClick={job.retry}>刷新状态</button>
+            <button onClick={() => setEvidence(true)}>查看内部研究证据</button>
             <button
               disabled={[
                 "SUCCEEDED",
@@ -665,6 +731,7 @@ export function JobPage() {
           </section>
         )
       )}
+      {evidence && id && <InternalEvidence id={id} />}
       {error && <p role="alert">{error}</p>}
     </>
   );

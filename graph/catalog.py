@@ -62,6 +62,11 @@ class CatalogRepository:
                     entity_id TEXT, before_json TEXT, after_json TEXT);
                 CREATE TABLE IF NOT EXISTS catalog_suggestions (
                     suggestion_id TEXT PRIMARY KEY, payload TEXT, status TEXT, created_at TEXT);
+                CREATE VIEW IF NOT EXISTS catalog_visible_items AS SELECT i.* FROM catalog_items i
+                    WHERE i.active=1 AND i.visibility='PUBLIC' AND NOT(i.kind='source' AND EXISTS(
+                        SELECT 1 FROM catalog_edges e JOIN catalog_items parent ON parent.entity_id=e.to_id
+                        WHERE e.from_id=i.entity_id AND json_extract(e.payload,'$.relation')='DESCRIBES'
+                        AND (parent.active=0 OR parent.visibility='HIDDEN')));
                 PRAGMA user_version=1;
             ''')
         self.path.chmod(0o600)
@@ -256,7 +261,8 @@ class CatalogRepository:
 
     def get(self, entity_id, *, admin=False):
         with self.connect() as con:
-            row = con.execute('SELECT entity_id,payload,patch,visibility FROM catalog_items WHERE entity_id=?' + ('' if admin else " AND active=1 AND visibility='PUBLIC'"), (entity_id,)).fetchone()
+            table = 'catalog_items' if admin else 'catalog_visible_items'
+            row = con.execute(f'SELECT entity_id,payload,patch,visibility FROM {table} WHERE entity_id=?', (entity_id,)).fetchone()
             if not row:
                 raise KeyError(entity_id)
             return self._value(row)
@@ -284,14 +290,16 @@ class CatalogRepository:
 
     def all_items(self, *, admin=False):
         with self.connect() as con:
-            rows = con.execute('SELECT entity_id,payload,patch,visibility FROM catalog_items WHERE active=1' + ('' if admin else " AND visibility='PUBLIC'"))
+            table = 'catalog_items' if admin else 'catalog_visible_items'
+            rows = con.execute(f'SELECT entity_id,payload,patch,visibility FROM {table} WHERE active=1')
             return [self._value(r) for r in rows]
 
     def search(self, *, q='', kind='strategy', category='', family='', field='', market='', frequency='', source_type='', result_status='', page=1, page_size=20, admin=False):
         needle = normalize(q)
         researched = {ref['entity_id'] for r in self.results().get('items', []) for ref in r.get('entity_refs', [])}
         with self.connect() as con:
-            rows = con.execute('SELECT entity_id,payload,patch,visibility FROM catalog_items WHERE active=1' + ('' if admin else " AND visibility='PUBLIC'") + ' AND kind=?', (kind,))
+            table = 'catalog_items' if admin else 'catalog_visible_items'
+            rows = con.execute(f'SELECT entity_id,payload,patch,visibility FROM {table} WHERE active=1 AND kind=?', (kind,))
             matched = []
             for row in rows:
                 value = self._value(row)
@@ -315,8 +323,9 @@ class CatalogRepository:
         root = self.get(entity_id, admin=admin)
         with self.connect() as con:
             restriction = '' if admin else " AND a.visibility='PUBLIC' AND b.visibility='PUBLIC' AND e.visibility='PUBLIC'"
-            candidates = con.execute("""SELECT e.payload,e.patch FROM catalog_edges e
-                JOIN catalog_items a ON a.entity_id=e.from_id JOIN catalog_items b ON b.entity_id=e.to_id
+            table = 'catalog_items' if admin else 'catalog_visible_items'
+            candidates = con.execute(f"""SELECT e.payload,e.patch FROM catalog_edges e
+                JOIN {table} a ON a.entity_id=e.from_id JOIN {table} b ON b.entity_id=e.to_id
                 WHERE a.active=1 AND b.active=1 AND EXISTS(SELECT 1 FROM catalog_edge_origins o
                 WHERE o.relationship_id=e.relationship_id AND o.active=1)""" + restriction).fetchall()
         # A filtered two-hop exploration walks only selected edge types.
@@ -397,6 +406,12 @@ class CatalogRepository:
         allowed = {'visibility','name','aliases','description','family','family_label','source_url','source_type','frequency','markets'}
         if not ids or len(ids)>100 or set(patch)-allowed or patch.get('visibility','PUBLIC') not in {'PUBLIC','HIDDEN'}:
             raise ValueError('Invalid catalog edit')
+        for key, value in patch.items():
+            if key in {'aliases','markets'}:
+                if not isinstance(value,list) or len(value)>100 or any(not isinstance(v,str) or len(v)>500 for v in value):
+                    raise ValueError('Invalid list field')
+            elif value is not None and (not isinstance(value,str) or len(value)>3000):
+                raise ValueError('Invalid text field')
         patch = deepcopy(patch)
         if 'source_url' in patch:
             patch['source_url'] = public_url(patch['source_url'])
