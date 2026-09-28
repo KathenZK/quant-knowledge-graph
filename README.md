@@ -24,15 +24,17 @@ API 默认监听 `127.0.0.1:8000`，交互文档位于 `/docs`。无须市场数
 
 ## 本地知识工作台
 
-需要 Node.js 22+；在仓库根目录运行 `bash web/start.sh`，打开
-[本地 QuantGraph](http://127.0.0.1:8765)。React + TypeScript 网页与现有 FastAPI
-使用同一进程、同一公开 release，提供中文检索、来源详情、2–4 项比较和浏览器研究清单。
-清单支持固定定义版本、备注、分组、刷新保留及 JSON 导入/导出。
+需要 Node.js 22+；`bash web/start.sh` 会优先启动本机已导入的持久化 Catalog，
+提供真实策略/因子目录、2–4 项比较、可点击关系图、研究清单与鉴权管理后台。
+没有挂载业务语料时仍可显式运行 Qlib-only 分发场景；Git 附带的公开快照不是整个产品数据库。
 
-网页固定为 PUBLIC，服务端校验并仅读取 `datasets/public`，不会因环境中的私有 profile
-或 ingestion 配置而加载私有内容。数量来自实际公开数据，研究结果为空时明确显示“尚未研究”。
-正式 `research-request/v1` 和 `factor-study-result/v1` 仍等待任务 A：请求按钮暂不开放，
-清单备份不代表正式研究请求或研究已运行。详见 [产品范围、启动与验收](docs/product/quantgraph-web-mvp.md)。
+完整本机配置用 `bash scripts/start_platform.sh /absolute/operator/config.json` 同时启动 API
+和已登记的 Lab worker。策略、因子和演化请求复用 `research-request/v1`，在原条目读回对应结果。
+业务条目默认 PUBLIC，第三方全文、代码、行情与研究数值仍按字段分别执行许可规则。
+匿名访客不能修改资料或无限启动计算，DRAFT 导出不代表研究已执行。
+
+详见[当前产品范围](docs/product/platform-delivery.md)、[启动与运维](docs/product/platform-operations.md)、
+[真实数据验收与截图](docs/product/platform-acceptance.md)。
 
 ## Python SDK
 

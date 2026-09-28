@@ -306,7 +306,7 @@ function WorkbenchApp({ mode }: { mode: "PUBLIC" | "PRIVATE" }) {
                     />
                   }
                 />
-                <Route path="/results" element={<ResultsPage meta={meta} />} />
+                <Route path="/results" element={<ResultsPage meta={meta.data} />} />
                 <Route path="/relations" element={<RelationsPage />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/jobs/:id" element={<JobPage />} />
