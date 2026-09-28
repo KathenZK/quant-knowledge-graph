@@ -143,3 +143,33 @@ def test_cookie_auth_injection(repo):
     app=FastAPI();install_research_jobs(app,repo,resolve_ref=lambda **r:r,
                                       can_view=lambda _:True,auth_dependency=principal)
     assert TestClient(app).post('/v1/research/jobs',json=request()).status_code==202
+
+
+def test_past_result_import_is_idempotent_and_does_not_run_or_reserve_trials(repo):
+    evidence=result(REF)
+    kwargs=dict(source_receipt={'manifest_sha256':'c'*64,'original_sha256':'d'*64},
+                owner='administrator',resolve_ref=lambda **r:r)
+    job,duplicate=repo.import_completed(request(),[evidence],**kwargs)
+    assert not duplicate and job['status']=='FAILED'
+    assert job['stage']=='IMPORTED_COMPLETED_RESEARCH' and job['attempts']==0
+    assert job['trial_budget']==0 and job['seconds_budget']==0
+    assert repo.import_completed(request(),[evidence],**kwargs)[1]
+    assert repo.claim('worker',['test']) is None
+    assert repo.get(job['job_id'])['results']==[evidence]
+
+
+def test_restricted_summary_keeps_internal_evidence_authenticated(repo):
+    evidence=result(REF)
+    evidence['results']={'ic':.12,'artifact_uri':'/private/path'}
+    job,_=repo.import_completed(request(),[evidence],source_receipt={'sha256':'a'*64},
+                               owner='admin',resolve_ref=lambda **r:r)
+    app=FastAPI()
+    install_research_jobs(app,repo,resolve_ref=lambda **r:r,can_view=lambda _:True,
+                          keys={'admin':{'token':'test','scopes':['research:submit']}})
+    client=TestClient(app)
+    path='/v1/research/jobs/'+job['job_id']+'/evidence'
+    assert client.get(path).status_code==401
+    private=client.get(path,headers={'Authorization':'Bearer test'}).json()
+    assert private['items'][0]['results']=={'ic':.12}
+    summary=public_results(repo,REF,lambda _:True)[0]
+    assert summary['metrics']=={} and summary['numerical_display']=='RESTRICTED'

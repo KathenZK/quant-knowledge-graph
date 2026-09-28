@@ -203,10 +203,9 @@ class ResearchJobRepository:
                             (state, 'CANCEL_REQUESTED' if state == 'RUNNING' else state, now, now if state == 'CANCELLED' else None, job_id))
         return self.get(job_id)
 
-    def finish(self, job_id, token, *, status, results=None, error=None):
+    def _validate_results(self, job, status, results):
         if status not in TERMINAL:
             raise ValueError('A terminal state is required')
-        job = self.get(job_id)
         if status in {'SUCCEEDED', 'PARTIAL'} and not results:
             raise ValueError('Successful execution requires retained research evidence')
         for value in results or []:
@@ -233,6 +232,10 @@ class ResearchJobRepository:
                     raise ValueError('Result metadata must identify its exact strategy definitions')
             if metadata['study_type'] != job['request']['study_type'] or any(r not in job['request']['entity_refs'] for r in metadata['entity_refs']):
                 raise ValueError('Study metadata does not match request')
+
+    def finish(self, job_id, token, *, status, results=None, error=None):
+        job = self.get(job_id)
+        self._validate_results(job,status,results)
         now = self.clock()
         with self.connect() as con:
             con.execute('BEGIN IMMEDIATE')
@@ -245,6 +248,44 @@ class ResearchJobRepository:
                            lease_token=NULL,lease_until=NULL WHERE job_id=?''',
                         (status, status, 1 if status == 'SUCCEEDED' else row['progress'], canonical(results or []),
                          canonical(error) if error else None, now, now, job_id))
+
+    def import_completed(self, request, results, *, source_receipt, owner, resolve_ref):
+        """Local operator only: retain checked past evidence without running trials.
+
+        The caller verifies source artifact bytes before this method. No HTTP
+        route exposes it. Old artifacts and their original research IDs persist.
+        Imported records reserve zero new computation and cannot be claimed.
+        """
+        request=ResearchRequest.model_validate(request).model_dump(mode='json')
+        if set(request['requested_settings']) != {'profile_id'} or not results:
+            raise ValueError('A registered profile and retained evidence are required')
+        profile_id=request['requested_settings']['profile_id']
+        profile=self.profiles.get(profile_id)
+        if not profile or profile['study_type']!=request['study_type']:
+            raise ValueError('Import profile does not match the study type')
+        good=[v for v in results if v.get('status','SUCCESS')=='SUCCESS'
+              and v.get('study_metadata',{}).get('provenance',{}).get('execution_status','SUCCESS')=='SUCCESS'
+              and v.get('results',{}).get('in_sample',{}).get('status')!='FAILED']
+        status='SUCCEEDED' if len(good)==len(results) else ('PARTIAL' if good else 'FAILED')
+        self._validate_results({'request':request},status,results)
+        snapshots=[resolve_ref(**ref) for ref in request['entity_refs']]
+        fingerprint=digest({'request':request,'results':results,'source_receipt':source_receipt})
+        idem='artifact-import-'+fingerprint
+        job_id='import-'+fingerprint[:32]
+        now=self.clock()
+        with self.connect() as con:
+            con.execute('BEGIN IMMEDIATE')
+            old=con.execute('SELECT * FROM research_jobs WHERE job_id=?',(job_id,)).fetchone()
+            if old:return self._decode(old),True
+            con.execute('''INSERT INTO research_jobs
+                (job_id,owner,idem,request_hash,request,profile,profile_hash,snapshots,status,stage,progress,
+                 results,created,updated,completed,trial_budget,seconds_budget)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                (job_id,owner,idem,fingerprint,canonical(request),profile_id,digest(profile),
+                 canonical({'definitions':snapshots,'import_receipt':source_receipt}),status,
+                 'IMPORTED_COMPLETED_RESEARCH',1,canonical(results),now,now,now,0,0))
+            row=con.execute('SELECT * FROM research_jobs WHERE job_id=?',(job_id,)).fetchone()
+        return self._decode(row),False
 
     def results_for(self, entity_type, entity_id, definition_revision):
         ref = dict(entity_type=entity_type, entity_id=entity_id, definition_revision=definition_revision)
