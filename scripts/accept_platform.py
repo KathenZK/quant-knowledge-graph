@@ -6,6 +6,7 @@ The ingestion fixture is explicitly labelled and excluded from real counts.
 import argparse
 from datetime import datetime, timezone
 import json
+import hashlib
 import os
 from pathlib import Path
 import signal
@@ -137,6 +138,43 @@ def main():
         call('PATCH','/v1/admin/catalog',session=admin,json={'ids':[new['items'][0]['entity_id']],'patch':{'visibility':'HIDDEN'}})
         return {'record_id':rid,'first_receipt':first,'replay_idempotent':True,'history_retained':True,'test_only':True,'hidden_after_test':True}
 
+    def retained_learning():
+        from quantgraph.graph.research_import import import_manifest
+        spec=cfg['retained_import']
+        registry=Path(cfg['registry_path'])
+        before=hashlib.sha256(registry.read_bytes()).hexdigest()
+        receipt=import_manifest(cfg,spec['manifest'],spec['sha256'],spec['artifact_root'])
+        assert all(v['duplicate'] for v in receipt['imported']) and receipt['new_trials']==0
+        assert hashlib.sha256(registry.read_bytes()).hexdigest()==before
+        collection=call('GET','/v1/research/collections')['items']
+        one=next(v for v in collection if v['manifest_sha256']==spec['sha256'])
+        assert one['imported_results']==len(receipt['imported'])
+        path='/v1/research/collections/'+one['collection_id']+'/report'
+        call('GET',path,expected=401)
+        internal=call('GET',path,session=admin)
+        assert internal['visibility']=='AUTHENTICATED_INTERNAL_RESEARCH' and internal['content']
+        details={};failures=0;lineage=0
+        for entry in receipt['imported']:
+            job=call('GET','/v1/research/jobs/'+entry['job_id'],session=admin)
+            assert job['attempts']==0 and job['stage']=='IMPORTED_COMPLETED_RESEARCH'
+            if job['status']=='FAILED':
+                failures+=1;assert job['error']
+            for ref in job['entity_refs']:
+                eid=ref['entity_id']
+                if eid not in details:
+                    kind='variant' if ref['entity_type']=='FactorVariant' else 'strategy'
+                    details[eid]=call('GET','/v1/web/entities/'+kind+'/'+quote(eid,safe=''))
+                result=next(r for r in details[eid]['results']['items'] if r['job_id']==job['job_id'])
+                assert result['run_id']==entry['run_id'] and ref in result['entity_refs']
+                for parent in result['lineage']:
+                    kind='variant' if parent['entity_type']=='FactorVariant' else 'strategy'
+                    item=call('GET','/v1/web/entities/'+kind+'/'+quote(parent['entity_id'],safe=''))
+                    assert item['definition_revision']==parent['definition_revision'];lineage+=1
+        return {'collection_id':one['collection_id'],'manifest_sha256':spec['sha256'],
+                'retained_results':len(receipt['imported']),'retained_failures':failures,
+                'lineage_references_resolved':lineage,'replay_duplicates':len(receipt['imported']),
+                'new_trials':0,'registry_unchanged':True,'internal_report_verified':True}
+
     def recovery():
         if not cfg.get('allow_worker_interruption_test'):
             raise KeyError('Explicit isolated worker interruption test not configured')
@@ -178,6 +216,7 @@ def main():
 
     check('1_strategy_exploration',exploration)
     for name in ('factor','replication','evolution'):check(name,lambda name=name:research(name))
+    check('4_retained_learning',retained_learning)
     check('5_visibility',visibility)
     check('6_ingestion',ingestion)
     check('7_worker_recovery',recovery)
