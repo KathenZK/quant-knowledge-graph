@@ -49,7 +49,7 @@ import {
   parseNotebook,
   refKey,
   saveNotebook,
-  STORAGE_KEY,
+  storageKey,
 } from "./storage";
 import type {
   Detail,
@@ -122,7 +122,14 @@ function ItemActions({ item, bench }: { item: Item; bench: Workbench }) {
 }
 export default function App() {
   const meta = useApi<Meta>("/v1/web/meta");
-  const [notebook, setNotebook] = useState(loadNotebook);
+  if (meta.loading) return <Loading />;
+  if (!meta.data)
+    return <ErrorState error={meta.error || "服务不可用"} retry={meta.retry} />;
+  return <WorkbenchApp key={meta.data.mode} mode={meta.data.mode} />;
+}
+function WorkbenchApp({ mode }: { mode: "PUBLIC" | "PRIVATE" }) {
+  const meta = useApi<Meta>("/v1/web/meta");
+  const [notebook, setNotebook] = useState(() => loadNotebook(mode));
   const [compare, setCompare] = useState<CompareRef[]>(initialCompare);
   const [message, setMessage] = useState("");
   const location = useLocation();
@@ -131,11 +138,11 @@ export default function App() {
   }, [location.pathname]);
   useEffect(() => {
     const sync = (event: StorageEvent) => {
-      if (event.key === STORAGE_KEY) setNotebook(loadNotebook());
+      if (event.key === storageKey(mode)) setNotebook(loadNotebook(mode));
     };
     window.addEventListener("storage", sync);
     return () => window.removeEventListener("storage", sync);
-  }, []);
+  }, [mode]);
   function updateSaved(items: SavedItem[], recover = false) {
     if (notebook.error && !recover) {
       setMessage("请先在研究清单页面恢复备份或重置损坏的存储。");
@@ -146,7 +153,7 @@ export default function App() {
       return false;
     }
     try {
-      saveNotebook(items);
+      saveNotebook(items, mode);
       setNotebook({ items });
       return true;
     } catch {
@@ -224,7 +231,9 @@ export default function App() {
         </nav>
         <div className="sidebar-note">
           <ShieldCheck size={20} aria-hidden="true" />
-          <strong>公开知识模式</strong>
+          <strong>
+            {mode === "PUBLIC" ? "公开知识模式" : "私有本机研究模式"}
+          </strong>
           <p>
             可追溯的定义与来源。
             <br />
@@ -246,7 +255,7 @@ export default function App() {
           </span>
           <span className="public-badge">
             <span className="dot green" />
-            PUBLIC · 本地浏览器清单
+            {mode} · 本地浏览器清单
           </span>
         </div>
         <main id="main" tabIndex={-1}>
@@ -423,7 +432,7 @@ function Explore({ meta, bench }: { meta: Meta; bench: Workbench }) {
               "result_status",
               "研究状态",
               [
-                { value: "unresearched", label: "尚未研究" },
+                { value: "unresearched", label: "无可展示研究记录" },
                 { value: "researched", label: "有研究记录" },
               ],
             ],
@@ -538,7 +547,9 @@ function Explore({ meta, bench }: { meta: Meta; bench: Workbench }) {
                         <span className="dot" />
                         {item.statuses.result}
                       </span>
-                      <div className="cell-secondary">已收录 · 计算未验证</div>
+                      <div className="cell-secondary">
+                        已收录 · 查看证据与权限
+                      </div>
                     </td>
                     <td>
                       <ItemActions item={item} bench={bench} />
@@ -1036,7 +1047,7 @@ function NotebookPage({
     setImportError("");
     try {
       if (file.size > 1_000_000) throw new Error("清单超过 1 MB。");
-      const parsed = parseNotebook(await file.text());
+      const parsed = parseNotebook(await file.text(), meta.mode);
       const resolved = await api<{ items: Item[] }>(
         "/v1/web/references/resolve",
         {
@@ -1123,7 +1134,7 @@ function NotebookPage({
               onClick={() =>
                 download("quantgraph-list.json", {
                   schema_version: "quantgraph-list/v1",
-                  mode: "PUBLIC",
+                  mode: meta.mode,
                   items,
                 } satisfies Notebook)
               }

@@ -40,7 +40,7 @@ def test_real_counts_and_independent_statuses(client):
     row = client.get("/v1/web/search").json()["items"][0]
     assert len(row["statuses"]) == 5
     assert row["statuses"]["catalog"] == "已收录"
-    assert row["statuses"]["result"] == "尚未研究"
+    assert row["statuses"]["result"] == "无可展示的研究记录"
     assert row["economic_logic"] is None
 
 
@@ -151,7 +151,7 @@ def test_bookmark_import_revision_validation(client):
     )
 
 
-def test_real_results_empty_and_contract_unavailability_not_faked(client):
+def test_real_results_empty_and_formal_contract_connected(client):
     result = client.get("/v1/web/results").json()
     assert result["items"] == [] and result["total"] == 0
     assert set(result["levels"]) == {
@@ -163,8 +163,8 @@ def test_real_results_empty_and_contract_unavailability_not_faked(client):
     assert client.get("/v1/web/results?kind=variant&eid=missing").status_code == 404
     assert client.get("/v1/web/results?kind=variant").status_code == 422
     # No local second schema is invented while task A is absent.
-    assert client.get("/v1/web/meta").json()["contracts"]["export_enabled"] is False
-    assert client.post("/v1/web/research-requests", json={}).status_code == 503
+    assert client.get("/v1/web/meta").json()["contracts"]["export_enabled"] is True
+    assert client.post("/v1/web/research-requests", json={}).status_code == 422
 
 
 def test_public_ignores_private_profile_database_journal_and_client_switches(

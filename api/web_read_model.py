@@ -1,6 +1,7 @@
 """Website-only projection over FactorDB. No ingestion, execution or research gate."""
 
 from collections import Counter
+from quantgraph.factor_study import definition_identity
 import hashlib
 import json
 import unicodedata
@@ -74,6 +75,8 @@ def revision(record):
     Hash the actual public definition, not its UI translation or ingestion time.
     This is a local bookmark identity, not certification by a research contract.
     """
+    if record.get("factor_variant_id"):
+        return definition_identity(record)["definition_revision"]
     if record.get("definition_revision"):
         return record["definition_revision"]
     data = {
@@ -117,10 +120,12 @@ def calculation_axis(record):
 
 
 class WebReadModel:
-    def __init__(self, db):
+    def __init__(self, db, studies=None):
         if db.dataset_scope != "public_qlib":
             raise ValueError("The website requires a verified public release")
         self.db = db
+        self.studies = studies
+        self.mode = "PRIVATE" if studies is not None else "PUBLIC"
         self.records = {}
         offset = 0
         while batch := db.search_factors(limit=1000, offset=offset):
@@ -169,7 +174,7 @@ class WebReadModel:
             if kind == "concept"
             else "来源实现已收录 · 计算语义未验证",
             "readiness": "未完成研究准备",
-            "result": "尚未研究",
+            "result": "无可展示的研究记录",
             "display": "公开可展示 · 须保留归属声明",
         }
         return {
@@ -237,6 +242,11 @@ class WebReadModel:
                 and market not in item["markets"]
             ):
                 continue
+            if self.studies is not None:
+                studies = self.results(item["kind"], item["entity_id"])["items"]
+                if studies:
+                    item = {**item, "result_status": "researched",
+                            "statuses": {**item["statuses"], "result": "历史探索结果（私有）"}}
             if result_status and result_status != item["result_status"]:
                 continue
             haystack = normalize(
@@ -273,13 +283,13 @@ class WebReadModel:
             page=page,
             page_size=page_size,
             sort="name_alias_relevance_then_name",
-            scope="PUBLIC",
+            scope=self.mode,
         )
 
     def metadata(self):
         counts = Counter(i["kind"] for i in self.items)
         return dict(
-            mode="PUBLIC",
+            mode=self.mode,
             release=self.db.release_path.name,
             graph_api="v1",
             graph_version="0.2.0",
@@ -312,8 +322,8 @@ class WebReadModel:
             contracts={
                 "request": "research-request/v1",
                 "result": "factor-study-result/v1",
-                "status": "PENDING_TASK_A",
-                "export_enabled": False,
+                "status": "CONNECTED",
+                "export_enabled": True,
             },
         )
 
@@ -370,6 +380,12 @@ class WebReadModel:
             and i["entity_id"] != eid
         ]
         concept = self.by_key.get(("concept", cid)) if kind == "variant" else None
+        study_results = self.results(kind, eid)
+        if study_results["items"]:
+            matching = [r for r in study_results["items"] if r["mapping"]["identity"]["definition_revision"] == item["definition_revision"]]
+            item = {**item, "statuses": {**item["statuses"], "result": "历史探索结果（私有）"}}
+            if any(r["mapping"]["mapping_status"] == "VERIFIED" for r in matching):
+                item["statuses"].update(implementation="已通过所列研究的计算语义核验", readiness="所列研究计划已冻结")
         return item | dict(
             implementations=implementations,
             papers=papers,
@@ -393,25 +409,27 @@ class WebReadModel:
                 "market_data": "REVIEW_REQUIRED · 不包含底层行情授权",
                 "results": "没有已审核可公开展示的研究结果",
             },
-            results=self.results(kind, eid),
+            results=study_results,
         )
 
     def results(self, kind=None, eid=None):
         if kind is not None and (kind, eid) not in self.by_key:
             raise KeyError(eid)
-        # No factor-study-result producer exists in this revision. In particular,
-        # legacy BacktestResult records must not be relabelled confirmatory studies.
+        rows = []
+        if self.studies is not None:
+            ids = [eid] if eid else [i["entity_id"] for i in self.items if i["kind"] == "variant"]
+            for entity_id in ids:
+                offset = 0
+                while batch := self.studies.query(entity_id, profile="research", limit=1000, offset=offset):
+                    rows.extend(r for r in batch if all(p["internal_use"] == "ALLOWED"
+                                                       for p in r["permissions"].values()))
+                    offset += len(batch)
+        # PUBLIC never loads or queries the private journal, including its counts.
         return dict(
-            items=[],
-            total=0,
-            status="尚未研究",
-            contract="factor-study-result/v1",
-            contract_status="PENDING_TASK_A",
-            levels=[
-                "computational_test",
-                "exploratory",
-                "retrospective",
-                "confirmatory",
-            ],
-            reason="当前公开发布没有可展示的研究结果；正式结果契约等待任务 A。",
+            items=rows, total=len(rows),
+            status="历史探索结果" if rows else "无可展示结果",
+            contract="factor-study-result/v1", contract_status="CONNECTED",
+            levels=["computational_test", "exploratory", "retrospective", "confirmatory"],
+            reason=("仅供本机私有研究；不代表独立确认或实盘资格。" if rows else
+                    "当前没有经许可可展示的研究结果。内部结果受权限限制；公开页面不查询其存在性、数量或指标。"),
         )
