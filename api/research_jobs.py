@@ -33,6 +33,9 @@ def public_results(repository, ref, can_view):
                             if v is None or type(v) in (int,float,bool)} if isinstance(metrics, dict) else {}
             if not profile.get('numeric_display',False):
                 safe_metrics = {}
+            from quantgraph.graph.catalog_projection import public_text
+            evolution = {k:public_text(v) for k,v in summary.get('evolution',{}).items()
+                         if k in {'parent_experiment_id','reason','change','outcome','interpretation'} and isinstance(v,str)}
             items.append(dict(
                 job_id=job['job_id'], run_id=result.get('run_id',result.get('research_run_id')),
                 entity_refs=meta['entity_refs'], study_type=meta['study_type'], study_kind=meta['study_kind'],
@@ -43,6 +46,7 @@ def public_results(repository, ref, can_view):
                 status=job['status'], promotion_allowed=False, display_policy=policy,
                 assessment_version=summary.get('assessment_version'),
                 numerical_display='ALLOWED' if profile.get('numeric_display',False) else 'RESTRICTED',
+                evolution=evolution,
             ))
     return items
 
