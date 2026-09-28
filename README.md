@@ -24,6 +24,10 @@ API 默认监听 `127.0.0.1:8000`，交互文档位于 `/docs`。无须市场数
 
 ## Python SDK
 
+公开因子研究桥接的正式契约见 [factor-study/v1](contracts/factor-study/v1/README.md)。
+Lab 计算与研究完成后可写入独立私有 FactorStudy journal，并从因子详情的 studies
+入口查询。DRAFT 不是运行/晋级授权；公开默认不展示私有研究结果，不改变已有定义准入。
+
 ```python
 from quantgraph import FactorDB
 
