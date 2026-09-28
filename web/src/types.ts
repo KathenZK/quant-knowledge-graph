@@ -15,6 +15,7 @@ export interface EntityRef {
 export interface Item extends EntityRef {
   kind: Kind;
   visibility?: "PUBLIC" | "HIDDEN";
+  test_record?: boolean;
   source_type?: string;
   record_level?: string;
   strategy?: StrategyKnowledge;

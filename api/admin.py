@@ -1,6 +1,7 @@
 """Local/deployable administrative session; credentials never enter the bundle."""
 import hashlib
 import hmac
+import json
 import os
 import secrets
 import time
@@ -141,7 +142,43 @@ def install_admin(app, catalog, *, password=None):
     @router.get('/merge-suggestions')
     def suggestions(actor=Depends(require_admin)):
         with catalog.connect() as con:
-            return {'items':[dict(r) for r in con.execute('SELECT * FROM catalog_suggestions ORDER BY created_at DESC LIMIT 100')]}
+            items=[]
+            for row in con.execute('SELECT * FROM catalog_suggestions ORDER BY created_at DESC LIMIT 100'):
+                value=dict(row); value['payload']=json.loads(value['payload'])
+                for side in ('left','right'):
+                    try:
+                        entry=catalog.get(value['payload'][side],admin=True)
+                        value[side]={'name':entry['name'],'entity_id':entry['entity_id'],'kind':entry['kind']}
+                    except KeyError:
+                        value[side]=None
+                items.append(value)
+            return {'items':items}
+
+    @router.patch('/merge-suggestions/{sid}')
+    def review_suggestion(sid: str,body: dict,actor=Depends(require_admin)):
+        if set(body)!={'status'} or body['status'] not in {'PENDING','REVIEWED','REJECTED'}:
+            raise HTTPException(422,'审核状态无效')
+        with catalog.connect() as con:
+            row=con.execute('SELECT status FROM catalog_suggestions WHERE suggestion_id=?',(sid,)).fetchone()
+            if not row:raise HTTPException(404,'建议不存在')
+            con.execute('UPDATE catalog_suggestions SET status=? WHERE suggestion_id=?',(body['status'],sid))
+            con.execute('INSERT INTO catalog_audit(created_at,actor,action,entity_id,before_json,after_json) VALUES(?,?,?,?,?,?)',
+                (now(),actor,'REVIEW_MERGE',sid,stable_json({'status':row[0]}),stable_json(body)))
+        return {'status':body['status'],'notice':'审核不会自动合并定义或重写历史引用。'}
+
+    @router.get('/research-jobs')
+    def research_jobs(request: Request,offset: int=Query(0,ge=0),actor=Depends(require_admin)):
+        repository=getattr(request.app.state,'research_jobs',None)
+        if repository is None:return {'items':[],'total':0}
+        # Bounded, authenticated operational view of the existing queue; no new protocol.
+        with repository.connect() as con:
+            total=con.execute('SELECT count(*) FROM research_jobs WHERE owner=?',(actor,)).fetchone()[0]
+            items=[]
+            for row in con.execute('SELECT job_id,status,stage,progress,request,created,updated FROM research_jobs WHERE owner=? ORDER BY created DESC LIMIT 25 OFFSET ?',(actor,offset)):
+                item=dict(row); req=json.loads(item.pop('request'))
+                item.update(study_type=req['study_type'],entity_refs=req['entity_refs'])
+                items.append(item)
+        return {'items':items,'total':total}
 
     @router.get('/imports')
     def imports(actor=Depends(require_admin)):

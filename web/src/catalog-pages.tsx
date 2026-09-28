@@ -492,7 +492,7 @@ interface Job {
   status: string;
   progress: number;
   stage: string;
-  error: string | null;
+  error: string | { code: string; message: string } | null;
   worker_available: boolean;
   result_url: string;
   entity_refs: EntityRef[];
@@ -695,7 +695,11 @@ export function JobPage() {
               </div>
               <div>
                 <dt>可读错误</dt>
-                <dd>{job.data.error || "无"}</dd>
+                <dd>
+                  {typeof job.data.error === "object" && job.data.error
+                    ? `${job.data.error.code}: ${job.data.error.message}`
+                    : job.data.error || "无"}
+                </dd>
               </div>
             </dl>
             <Parameters value={job.data.timestamps} />
@@ -824,6 +828,8 @@ function AdminWorkspace() {
         {[
           ["catalog", "条目与关系"],
           ["imports", "导入与错误"],
+          ["research", "研究任务"],
+          ["merges", "合并建议"],
           ["audit", "操作审计"],
         ].map(([key, label]) => (
           <button
@@ -839,6 +845,10 @@ function AdminWorkspace() {
         <AdminCatalog />
       ) : tab === "imports" ? (
         <AdminImports />
+      ) : tab === "research" ? (
+        <AdminJobs />
+      ) : tab === "merges" ? (
+        <AdminSuggestions />
       ) : (
         <AdminAudit />
       )}
@@ -1104,7 +1114,25 @@ function AdminEdit({ item, done }: { item: Item; done: () => void }) {
           <p>
             {edge.from_name} → {edge.relation} → {edge.to_name}
           </p>
-          <p>{edge.evidence}</p>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              const data = new FormData(event.currentTarget);
+              void review(edge.relationship_id, {
+                evidence: String(data.get("evidence") || ""),
+              });
+            }}
+          >
+            <label>
+              关系依据
+              <textarea
+                name="evidence"
+                defaultValue={edge.evidence}
+                maxLength={3000}
+              />
+            </label>
+            <button>保存关系依据</button>
+          </form>
           <small>
             {edge.review_status} · {edge.version}
           </small>
@@ -1316,6 +1344,117 @@ function AdminAudit() {
           </details>
         ))
       )}
+    </section>
+  );
+}
+
+function AdminJobs() {
+  const [offset, setOffset] = useState(0);
+  const result = useApi<{
+    items: {
+      job_id: string;
+      status: string;
+      stage: string;
+      study_type: string;
+      progress: number;
+    }[];
+    total: number;
+  }>(`/v1/admin/research-jobs?offset=${offset}`);
+  return (
+    <section className="panel">
+      <h2>研究任务与结果</h2>
+      <button onClick={result.retry}>刷新任务</button>
+      {result.error && <ErrorState error={result.error} />}
+      {result.data?.items.length === 0 && <p>尚未提交研究任务。</p>}
+      {result.data?.items.map((job) => (
+        <article className="admin-edge" key={job.job_id}>
+          <Link to={`/jobs/${job.job_id}`}>
+            {job.study_type} · {job.job_id}
+          </Link>
+          <p>
+            {job.status} · {job.stage} · {Math.round(job.progress * 100)}%
+          </p>
+        </article>
+      ))}
+      <div className="actions">
+        <button
+          disabled={offset === 0}
+          onClick={() => setOffset(Math.max(0, offset - 25))}
+        >
+          上一页
+        </button>
+        <button
+          disabled={offset + 25 >= (result.data?.total || 0)}
+          onClick={() => setOffset(offset + 25)}
+        >
+          下一页
+        </button>
+      </div>
+    </section>
+  );
+}
+function AdminSuggestions() {
+  const result = useApi<{
+    items: {
+      suggestion_id: string;
+      status: string;
+      payload: { reason: string };
+      left: Pick<Item, "name" | "kind" | "entity_id"> | null;
+      right: Pick<Item, "name" | "kind" | "entity_id"> | null;
+    }[];
+  }>("/v1/admin/merge-suggestions");
+  const [message, setMessage] = useState("");
+  async function review(id: string, status: string) {
+    try {
+      await api(`/v1/admin/merge-suggestions/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ status }),
+      });
+      result.retry();
+      setMessage("审核已记录，历史定义引用保持不变。");
+    } catch (error) {
+      setMessage(String(error));
+    }
+  }
+  return (
+    <section className="panel">
+      <h2>合并建议审核</h2>
+      <p>
+        审核仅记录判断。实际定义合并需要来源证据和新的定义版本，不能覆盖历史研究引用。
+      </p>
+      {result.error && <ErrorState error={result.error} />}
+      {message && <p role="status">{message}</p>}
+      {result.data?.items.length === 0 && <p>尚无合并建议。</p>}
+      {result.data?.items.map((item) => (
+        <article className="admin-edge" key={item.suggestion_id}>
+          <p>
+            {item.left ? (
+              <Link to={entityUrl(item.left)}>{item.left.name}</Link>
+            ) : (
+              "条目不可用"
+            )}{" "}
+            →{" "}
+            {item.right ? (
+              <Link to={entityUrl(item.right)}>{item.right.name}</Link>
+            ) : (
+              "条目不可用"
+            )}
+          </p>
+          <p>{item.payload.reason}</p>
+          <small>{item.status}</small>
+          <div className="actions">
+            <button onClick={() => void review(item.suggestion_id, "REVIEWED")}>
+              标记已核对
+            </button>
+            <button onClick={() => void review(item.suggestion_id, "REJECTED")}>
+              拒绝建议
+            </button>
+            <button onClick={() => void review(item.suggestion_id, "PENDING")}>
+              重新待审
+            </button>
+          </div>
+        </article>
+      ))}
     </section>
   );
 }
