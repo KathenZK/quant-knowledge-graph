@@ -9,11 +9,15 @@ import {
   AlertCircle,
   LoaderCircle,
 } from "lucide-react";
+import { SummaryStudy } from "./catalog-pages";
 import type { Item, Kind, Results } from "./types";
 export const kindLabel: Record<Kind, string> = {
   variant: "因子变体",
   concept: "概念族",
   strategy: "策略",
+  family: "策略族",
+  template: "策略模板",
+  source: "来源资料",
 };
 export const entityUrl = (item: { kind: Kind; entity_id: string }) =>
   `/entity/${item.kind}/${encodeURIComponent(item.entity_id)}`;
@@ -248,70 +252,74 @@ export function ResearchResults({
           ))}
         </div>
       )}
-      {results.items.map((study) => (
-        <article className="panel" key={study.run_id}>
-          <h3>
-            {study.research_status} · {study.status}
-          </h3>
-          <p>私有结果 · 历史探索，不代表买入建议或实盘资格。</p>
-          <dl className="facts vertical">
-            <div>
-              <dt>研究请求</dt>
-              <dd>
-                <code>{study.request_id}</code>
-              </dd>
-            </div>
-            <div>
-              <dt>运行 ID</dt>
-              <dd>
-                <code>{study.run_id}</code>
-              </dd>
-            </div>
-            <div>
-              <dt>因子 / 定义版本</dt>
-              <dd>
-                <code>{study.mapping.identity.factor_variant_id}</code>
-                <br />
-                <code>{study.mapping.identity.definition_revision}</code>
-              </dd>
-            </div>
-            <div>
-              <dt>计算实现 / 版本</dt>
-              <dd>
-                <code>
-                  {study.mapping.implementation.implementation_id} /{" "}
-                  {study.mapping.implementation.version}
-                </code>
-              </dd>
-            </div>
-            <div>
-              <dt>结论级别 / 历史曝光</dt>
-              <dd>
-                {study.trial_registry.assessment?.permitted_conclusion_level ||
-                  "UNKNOWN"}{" "}
-                /{" "}
-                {study.trial_registry.assessment?.holdout_evidence_status ||
-                  "UNKNOWN"}
-              </dd>
-            </div>
-          </dl>
-          <details open>
-            <summary>样本、方法与结果</summary>
-            <h4>样本与区间</h4>
-            <Parameters value={study.sample} />
-            <h4>方法</h4>
-            <Parameters value={study.methods} />
-            <h4>实际统计（不是收益排名）</h4>
-            <Parameters value={study.results} />
-          </details>
-          <h4>限制</h4>
-          <ul>
-            {study.limitations.map((text) => (
-              <li key={text}>{text}</li>
-            ))}
-          </ul>
-        </article>
-      ))}
+      {results.items.map((study) =>
+        "job_id" in study ? (
+          <SummaryStudy key={study.run_id} study={study} />
+        ) : (
+          <article className="panel" key={study.run_id}>
+            <h3>
+              {study.research_status} · {study.status}
+            </h3>
+            <p>私有结果 · 历史探索，不代表买入建议或实盘资格。</p>
+            <dl className="facts vertical">
+              <div>
+                <dt>研究请求</dt>
+                <dd>
+                  <code>{study.request_id}</code>
+                </dd>
+              </div>
+              <div>
+                <dt>运行 ID</dt>
+                <dd>
+                  <code>{study.run_id}</code>
+                </dd>
+              </div>
+              <div>
+                <dt>因子 / 定义版本</dt>
+                <dd>
+                  <code>{study.mapping.identity.factor_variant_id}</code>
+                  <br />
+                  <code>{study.mapping.identity.definition_revision}</code>
+                </dd>
+              </div>
+              <div>
+                <dt>计算实现 / 版本</dt>
+                <dd>
+                  <code>
+                    {study.mapping.implementation.implementation_id} /{" "}
+                    {study.mapping.implementation.version}
+                  </code>
+                </dd>
+              </div>
+              <div>
+                <dt>结论级别 / 历史曝光</dt>
+                <dd>
+                  {study.trial_registry.assessment
+                    ?.permitted_conclusion_level || "UNKNOWN"}{" "}
+                  /{" "}
+                  {study.trial_registry.assessment?.holdout_evidence_status ||
+                    "UNKNOWN"}
+                </dd>
+              </div>
+            </dl>
+            <details open>
+              <summary>样本、方法与结果</summary>
+              <h4>样本与区间</h4>
+              <Parameters value={study.sample} />
+              <h4>方法</h4>
+              <Parameters value={study.methods} />
+              <h4>实际统计（不是收益排名）</h4>
+              <Parameters value={study.results} />
+            </details>
+            <h4>限制</h4>
+            <ul>
+              {study.limitations.map((text) => (
+                <li key={text}>{text}</li>
+              ))}
+            </ul>
+          </article>
+        ),
+      )}
       {!results.items.length && (
         <Empty title={results.status}>
           <p>{results.reason}</p>

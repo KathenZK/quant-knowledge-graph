@@ -128,6 +128,19 @@ class CatalogRepository:
                     con.execute('INSERT OR REPLACE INTO catalog_inputs VALUES (?,?,?,?,?,?,0)',
                         ('factors', eid, value['definition_revision'], eid, 'DISPLAYABLE_DEFINITION' if licensed else 'METADATA_ONLY',
                          '' if licensed else 'SOURCE_TEXT_RIGHTS_REVIEW_REQUIRED'))
+            # Concrete factor-to-factor navigation follows an existing source
+            # concept; it deliberately asserts only a category link.
+            groups = {}
+            for (kind, eid), row in public_model.records.items():
+                if kind == 'variant':
+                    groups.setdefault(row['canonical_factor_id'], []).append(row)
+            for group in groups.values():
+                group.sort(key=lambda r:r['variant_name'])
+                for row in group[1:]:
+                    first = group[0]
+                    self._edge(con, edge(first['factor_variant_id'], row['factor_variant_id'], 'CATEGORY_LINK_ONLY',
+                        '同一来源概念内的具体定义；公式与参数须逐项比较，无等价或实证相关性结论',
+                        row.get('source_url')), 'public-release')
             # Keep real public factor relationships with provenance, not name guesses.
             ids = {r[0] for r in con.execute('SELECT entity_id FROM catalog_items')}
             for raw in public_model.db._objects('SELECT payload FROM relationships'):
@@ -274,11 +287,15 @@ class CatalogRepository:
 
     def search(self, *, q='', kind='strategy', category='', family='', field='', market='', frequency='', source_type='', result_status='', page=1, page_size=20, admin=False):
         needle = normalize(q)
+        researched = {ref['entity_id'] for r in self.results().get('items', []) for ref in r.get('entity_refs', [])}
         with self.connect() as con:
             rows = con.execute('SELECT * FROM catalog_items WHERE active=1' + ('' if admin else " AND visibility='PUBLIC'") + ' AND kind=?', (kind,))
             matched = []
             for row in rows:
                 value = self._value(row)
+                if value['entity_id'] in researched:
+                    value['result_status'] = 'researched'
+                    value['statuses']['result'] = '已有研究记录 · 结论级别独立判断'
                 if needle and needle not in self.index(value):
                     continue
                 if any(wanted and value.get(key) != wanted for key, wanted in [('family', family), ('category', category), ('frequency', frequency), ('source_type', source_type), ('result_status',result_status)]):
@@ -359,11 +376,12 @@ class CatalogRepository:
             values = {v for i in items for v in (i.get(key, []) if multiple else [i.get(key)]) if v}
             return [dict(value=v,label=FIELD_LABELS.get(v,v)) for v in sorted(values)]
         return dict(mode='PUBLIC', release='runtime-catalog', graph_api='v1', graph_version='0.2.0', adapter_version='catalog/v1',
-            counts={k:counts[k] for k in ['strategy','variant','concept','family','template','source']}, result_count=0, legacy_result_count=0,
+            counts={k:counts[k] for k in ['strategy','variant','concept','family','template','source']}, result_count=self.results()['total'], legacy_result_count=0,
             facets=dict(categories=facet('category'),families=facet('family'),fields=facet('required_fields',True),markets=facet('markets',True),
                         frequencies=facet('frequency'),source_types=facet('source_type')),
             contracts=dict(request='research-request/v1',result='factor-study-result/v1',status='CONNECTED',export_enabled=True),
-            knowledge_counts=dict(collected_strategy_records=counts['strategy'],structured_strategy_variants=sum(i['kind']=='strategy' and i['record_level']=='variant' for i in items),
+            test_counts=dict(Counter(i['kind'] for i in items if i.get('test_record'))),
+            knowledge_counts=dict(collected_strategy_records=sum(i['kind']=='strategy' and not i.get('test_record') for i in items),structured_strategy_variants=sum(i['kind']=='strategy' and i['record_level']=='variant' and not i.get('test_record') for i in items),
                 strategy_families=counts['family'],independent_strategies=None,
                 explanation='采集记录、策略族与参数变体分别计数；独立策略数未经验证。'))
 

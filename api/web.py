@@ -38,7 +38,7 @@ class RequestDraft(BaseModel):
     requested_settings: dict
 
 
-def create_web_app(root=None, *, private_journal=None, catalog=None, admin_password=None, research_installer=None):
+def create_web_app(root=None, *, private_journal=None, catalog=None, admin_password=None, research_installer=None, research_profiles=None, research_database=None):
     root = project_root(root)
     app = create_app(root, public_only=True)
     repository = None
@@ -55,6 +55,32 @@ def create_web_app(root=None, *, private_journal=None, catalog=None, admin_passw
         app.state.catalog = catalog
         install_admin(app, catalog, password=admin_password)
         app.add_middleware(BoundedBodyMiddleware)
+        if research_installer is None:
+            research_profiles = research_profiles or {}
+            research_database = research_database or catalog.path.parent / "research-jobs.sqlite"
+            from quantgraph.api.research_jobs import install_research_jobs, public_results
+            from quantgraph.graph.research_jobs import ResearchJobRepository
+            from quantgraph.graph.catalog_projection import empty_results
+            jobs = ResearchJobRepository(research_database, research_profiles)
+            install_research_jobs(app, jobs, resolve_ref=catalog.resolve_ref, can_view=catalog.visible,
+                                  auth_dependency=app.state.require_admin)
+            def result_reader(kind, eid):
+                if eid:
+                    selected = [catalog.get(eid)]
+                else:
+                    import json
+                    with jobs.connect() as con:
+                        references = [ref for row in con.execute("SELECT request FROM research_jobs WHERE results IS NOT NULL")
+                                      for ref in json.loads(row[0])['entity_refs']]
+                    selected = [catalog.get(entity_id) for entity_id in {r['entity_id'] for r in references} if catalog.visible(entity_id)]
+                rows = []
+                for item in selected:
+                    ref = {k: item[k] for k in ['entity_type', 'entity_id', 'definition_revision']}
+                    rows.extend(public_results(jobs, ref, catalog.visible))
+                return empty_results() | {'items': rows, 'total': len(rows),
+                    'status': '已有研究记录' if rows else '尚未研究或展示权限受限',
+                    'reason': '研究结论与公开许可独立判断；无权限的内部结果不会暴露存在性或数量。'}
+            catalog.result_reader = result_reader
         if research_installer:
             research_installer(app, catalog)
     app.state.web_model = model
@@ -252,6 +278,8 @@ def main():
     parser.add_argument("--private-study-journal", help="Explicit local-only private results journal")
     parser.add_argument("--catalog", help="Explicit persistent Catalog SQLite path")
     parser.add_argument("--ingestion-journal", help="Own writable ingestion journal for incremental projection")
+    parser.add_argument("--research-profiles", help="Server-owned registered research profiles JSON")
+    parser.add_argument("--research-database", help="Durable research job journal")
     args = parser.parse_args()
     import uvicorn
 
@@ -260,7 +288,11 @@ def main():
         from quantgraph.graph.catalog import CatalogRepository
         from quantgraph.graph.ingestion_store import SQLiteIngestionRepository
         catalog = CatalogRepository(args.catalog, ingestion=SQLiteIngestionRepository(args.ingestion_journal) if args.ingestion_journal else None)
-    uvicorn.run(create_web_app(private_journal=args.private_study_journal, catalog=catalog), host="127.0.0.1", port=args.port, access_log=False)
+    import json
+    from pathlib import Path
+    profiles = json.loads(Path(args.research_profiles).read_text()) if args.research_profiles else None
+    uvicorn.run(create_web_app(private_journal=args.private_study_journal, catalog=catalog,
+                              research_profiles=profiles, research_database=args.research_database), host="127.0.0.1", port=args.port, access_log=False)
 
 
 if __name__ == "__main__":
