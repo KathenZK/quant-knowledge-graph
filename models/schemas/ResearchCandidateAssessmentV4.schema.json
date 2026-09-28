@@ -1,0 +1,123 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "data_availability_status": {
+      "title": "Data Availability Status",
+      "type": "string"
+    },
+    "data_requirement_status": {
+      "title": "Data Requirement Status",
+      "type": "string"
+    },
+    "data_status": {
+      "title": "Data Status",
+      "type": "string"
+    },
+    "dedup_status": {
+      "title": "Dedup Status",
+      "type": "string"
+    },
+    "execution_status": {
+      "title": "Execution Status",
+      "type": "string"
+    },
+    "gate_version": {
+      "const": "research-candidate-gate-v4",
+      "title": "Gate Version",
+      "type": "string"
+    },
+    "ontology_status": {
+      "title": "Ontology Status",
+      "type": "string"
+    },
+    "research_readiness_score": {
+      "maximum": 100,
+      "minimum": 0,
+      "title": "Research Readiness Score",
+      "type": "integer"
+    },
+    "rights_status": {
+      "title": "Rights Status",
+      "type": "string"
+    },
+    "rule_status": {
+      "title": "Rule Status",
+      "type": "string"
+    },
+    "source_status": {
+      "title": "Source Status",
+      "type": "string"
+    },
+    "source_support_status": {
+      "title": "Source Support Status",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "ELIGIBLE",
+        "CONDITIONALLY_ELIGIBLE",
+        "REVIEW_REQUIRED",
+        "BLOCKED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "strategy_concept_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Strategy Concept Id"
+    },
+    "strategy_template_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Strategy Template Id"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "gate_version",
+    "status",
+    "strategy_concept_id",
+    "strategy_template_id",
+    "source_status",
+    "rights_status",
+    "rule_status",
+    "execution_status",
+    "data_status",
+    "dedup_status",
+    "ontology_status",
+    "research_readiness_score",
+    "blocking_reasons",
+    "warnings",
+    "source_support_status",
+    "data_requirement_status",
+    "data_availability_status"
+  ],
+  "title": "ResearchCandidateAssessmentV4",
+  "type": "object"
+}

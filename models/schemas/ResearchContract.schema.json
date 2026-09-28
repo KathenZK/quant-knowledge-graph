@@ -1,0 +1,330 @@
+{
+  "$defs": {
+    "DerivedDataRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "adjustment": {
+          "minLength": 1,
+          "title": "Adjustment",
+          "type": "string"
+        },
+        "auxiliary_data": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Auxiliary Data",
+          "type": "array"
+        },
+        "calendar": {
+          "minLength": 1,
+          "title": "Calendar",
+          "type": "string"
+        },
+        "dataset_profile": {
+          "const": "LAB_OHLCV_V1",
+          "title": "Dataset Profile",
+          "type": "string"
+        },
+        "derivation_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Derivation Sha256",
+          "type": "string"
+        },
+        "derivation_version": {
+          "const": "ast-execution-v4",
+          "title": "Derivation Version",
+          "type": "string"
+        },
+        "frequency": {
+          "minLength": 1,
+          "title": "Frequency",
+          "type": "string"
+        },
+        "required_fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Required Fields",
+          "type": "array"
+        },
+        "symbols": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Symbols",
+          "type": "array"
+        },
+        "timezone": {
+          "const": "UTC",
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "derivation_version",
+        "required_fields",
+        "symbols",
+        "frequency",
+        "adjustment",
+        "timezone",
+        "calendar",
+        "auxiliary_data",
+        "derivation_sha256",
+        "dataset_profile"
+      ],
+      "title": "DerivedDataRequirement",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "cost_model": {
+      "minLength": 1,
+      "title": "Cost Model",
+      "type": "string"
+    },
+    "data_requirements": {
+      "$ref": "#/$defs/DerivedDataRequirement"
+    },
+    "engine_config": {
+      "additionalProperties": true,
+      "title": "Engine Config",
+      "type": "object"
+    },
+    "execution_contract": {
+      "additionalProperties": true,
+      "title": "Execution Contract",
+      "type": "object"
+    },
+    "execution_price": {
+      "minLength": 1,
+      "title": "Execution Price",
+      "type": "string"
+    },
+    "execution_timing": {
+      "minLength": 1,
+      "title": "Execution Timing",
+      "type": "string"
+    },
+    "experiment_family_id": {
+      "minLength": 1,
+      "title": "Experiment Family Id",
+      "type": "string"
+    },
+    "fees_bps": {
+      "exclusiveMaximum": 10000,
+      "minimum": 0,
+      "title": "Fees Bps",
+      "type": "number"
+    },
+    "frequency": {
+      "enum": [
+        "1d",
+        "4h"
+      ],
+      "title": "Frequency",
+      "type": "string"
+    },
+    "frozen_at": {
+      "format": "date-time",
+      "title": "Frozen At",
+      "type": "string"
+    },
+    "holding_period": {
+      "minLength": 1,
+      "title": "Holding Period",
+      "type": "string"
+    },
+    "holdout_status": {
+      "enum": [
+        "RETROSPECTIVE_PREVIOUSLY_OBSERVED",
+        "UNOBSERVED_AT_FREEZE"
+      ],
+      "title": "Holdout Status",
+      "type": "string"
+    },
+    "is_end": {
+      "format": "date-time",
+      "title": "Is End",
+      "type": "string"
+    },
+    "is_start": {
+      "format": "date-time",
+      "title": "Is Start",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "market_type": {
+      "const": "spot",
+      "title": "Market Type",
+      "type": "string"
+    },
+    "oos_end": {
+      "format": "date-time",
+      "title": "Oos End",
+      "type": "string"
+    },
+    "oos_start": {
+      "format": "date-time",
+      "title": "Oos Start",
+      "type": "string"
+    },
+    "parameter_grid": {
+      "items": {
+        "items": {},
+        "type": "array"
+      },
+      "minItems": 1,
+      "title": "Parameter Grid",
+      "type": "array"
+    },
+    "parameters": {
+      "items": {},
+      "minItems": 1,
+      "title": "Parameters",
+      "type": "array"
+    },
+    "prior_trial_count": {
+      "minimum": 0,
+      "title": "Prior Trial Count",
+      "type": "integer"
+    },
+    "provider": {
+      "minLength": 1,
+      "title": "Provider",
+      "type": "string"
+    },
+    "rebalance": {
+      "minLength": 1,
+      "title": "Rebalance",
+      "type": "string"
+    },
+    "requested_end": {
+      "format": "date-time",
+      "title": "Requested End",
+      "type": "string"
+    },
+    "requested_start": {
+      "format": "date-time",
+      "title": "Requested Start",
+      "type": "string"
+    },
+    "rule_ast": {
+      "additionalProperties": true,
+      "title": "Rule Ast",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "research-contract-v4",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "signal_timing": {
+      "minLength": 1,
+      "title": "Signal Timing",
+      "type": "string"
+    },
+    "slippage_bps": {
+      "exclusiveMaximum": 10000,
+      "minimum": 0,
+      "title": "Slippage Bps",
+      "type": "number"
+    },
+    "source": {
+      "minLength": 1,
+      "title": "Source",
+      "type": "string"
+    },
+    "strategy_concept_id": {
+      "minLength": 1,
+      "title": "Strategy Concept Id",
+      "type": "string"
+    },
+    "strategy_template_id": {
+      "minLength": 1,
+      "title": "Strategy Template Id",
+      "type": "string"
+    },
+    "strategy_variant_id": {
+      "minLength": 1,
+      "title": "Strategy Variant Id",
+      "type": "string"
+    },
+    "symbols": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Symbols",
+      "type": "array"
+    },
+    "trial_count": {
+      "minimum": 1,
+      "title": "Trial Count",
+      "type": "integer"
+    },
+    "universe": {
+      "const": "FIXED_SINGLE_ASSET",
+      "title": "Universe",
+      "type": "string"
+    },
+    "use_context": {
+      "enum": [
+        "PRIVATE_INTERNAL_RESEARCH",
+        "PERSONAL_NONCOMMERCIAL"
+      ],
+      "title": "Use Context",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "frozen_at",
+    "strategy_concept_id",
+    "strategy_template_id",
+    "strategy_variant_id",
+    "experiment_family_id",
+    "parameters",
+    "parameter_grid",
+    "trial_count",
+    "symbols",
+    "universe",
+    "provider",
+    "source",
+    "market_type",
+    "frequency",
+    "requested_start",
+    "requested_end",
+    "is_start",
+    "is_end",
+    "oos_start",
+    "oos_end",
+    "signal_timing",
+    "execution_timing",
+    "execution_price",
+    "rebalance",
+    "holding_period",
+    "fees_bps",
+    "slippage_bps",
+    "cost_model",
+    "execution_contract",
+    "rule_ast",
+    "data_requirements",
+    "use_context",
+    "engine_config",
+    "prior_trial_count",
+    "holdout_status",
+    "limitations"
+  ],
+  "title": "ResearchContract",
+  "type": "object"
+}

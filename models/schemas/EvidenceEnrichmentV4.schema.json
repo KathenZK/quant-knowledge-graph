@@ -227,6 +227,147 @@
       "title": "DataRequirement",
       "type": "object"
     },
+    "DatasetBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptance_status": {
+          "enum": [
+            "TRUSTED",
+            "raw_unaccepted"
+          ],
+          "title": "Acceptance Status",
+          "type": "string"
+        },
+        "contract_json": {
+          "minLength": 1,
+          "title": "Contract Json",
+          "type": "string"
+        },
+        "contract_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Contract Sha256",
+          "type": "string"
+        },
+        "coverage": {
+          "$ref": "#/$defs/MarketCoverage"
+        },
+        "dataset_manifest_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Dataset Manifest Sha256",
+          "type": "string"
+        },
+        "missing_native_fields": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Native Fields",
+          "type": "array"
+        },
+        "rights_evidence": {
+          "$ref": "#/$defs/ReviewedRightsEvidence"
+        },
+        "rights_id": {
+          "minLength": 1,
+          "title": "Rights Id",
+          "type": "string"
+        },
+        "rights_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Rights Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_json",
+        "contract_sha256",
+        "dataset_manifest_sha256",
+        "rights_id",
+        "rights_sha256",
+        "rights_evidence",
+        "coverage",
+        "acceptance_status",
+        "missing_native_fields"
+      ],
+      "title": "DatasetBinding",
+      "type": "object"
+    },
+    "DerivedDataRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "adjustment": {
+          "minLength": 1,
+          "title": "Adjustment",
+          "type": "string"
+        },
+        "auxiliary_data": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Auxiliary Data",
+          "type": "array"
+        },
+        "calendar": {
+          "minLength": 1,
+          "title": "Calendar",
+          "type": "string"
+        },
+        "dataset_profile": {
+          "const": "LAB_OHLCV_V1",
+          "title": "Dataset Profile",
+          "type": "string"
+        },
+        "derivation_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Derivation Sha256",
+          "type": "string"
+        },
+        "derivation_version": {
+          "const": "ast-execution-v4",
+          "title": "Derivation Version",
+          "type": "string"
+        },
+        "frequency": {
+          "minLength": 1,
+          "title": "Frequency",
+          "type": "string"
+        },
+        "required_fields": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Required Fields",
+          "type": "array"
+        },
+        "symbols": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Symbols",
+          "type": "array"
+        },
+        "timezone": {
+          "const": "UTC",
+          "title": "Timezone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "derivation_version",
+        "required_fields",
+        "symbols",
+        "frequency",
+        "adjustment",
+        "timezone",
+        "calendar",
+        "auxiliary_data",
+        "derivation_sha256",
+        "dataset_profile"
+      ],
+      "title": "DerivedDataRequirement",
+      "type": "object"
+    },
     "EvidenceArtifact": {
       "additionalProperties": false,
       "properties": {
@@ -393,6 +534,312 @@
         "rationale"
       ],
       "title": "ExecutionFact",
+      "type": "object"
+    },
+    "MarketCoverage": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_count": {
+          "minimum": 0,
+          "title": "Actual Count",
+          "type": "integer"
+        },
+        "actual_end": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Actual End"
+        },
+        "actual_start": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Actual Start"
+        },
+        "calendar": {
+          "title": "Calendar",
+          "type": "string"
+        },
+        "calendar_version": {
+          "title": "Calendar Version",
+          "type": "string"
+        },
+        "coverage_reason": {
+          "title": "Coverage Reason",
+          "type": "string"
+        },
+        "coverage_status": {
+          "enum": [
+            "VERIFIED",
+            "PARTIAL",
+            "UNKNOWN",
+            "INVALID"
+          ],
+          "title": "Coverage Status",
+          "type": "string"
+        },
+        "duplicate_count": {
+          "minimum": 0,
+          "title": "Duplicate Count",
+          "type": "integer"
+        },
+        "expected_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected Count"
+        },
+        "gap_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Gap Count"
+        },
+        "ordered": {
+          "title": "Ordered",
+          "type": "boolean"
+        },
+        "requested_end": {
+          "title": "Requested End",
+          "type": "string"
+        },
+        "requested_start": {
+          "title": "Requested Start",
+          "type": "string"
+        },
+        "unexpected_count": {
+          "minimum": 0,
+          "title": "Unexpected Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "requested_start",
+        "requested_end",
+        "actual_start",
+        "actual_end",
+        "expected_count",
+        "actual_count",
+        "gap_count",
+        "duplicate_count",
+        "unexpected_count",
+        "ordered",
+        "calendar",
+        "calendar_version",
+        "coverage_status",
+        "coverage_reason"
+      ],
+      "title": "MarketCoverage",
+      "type": "object"
+    },
+    "ReviewedRightsEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "attribution": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Attribution"
+        },
+        "attribution_required": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Attribution Required"
+        },
+        "commercial_use_allowed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commercial Use Allowed"
+        },
+        "confidence": {
+          "enum": [
+            "HIGH",
+            "MEDIUM",
+            "LOW",
+            "UNKNOWN"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "derivative_allowed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Derivative Allowed"
+        },
+        "evidence_path": {
+          "minLength": 1,
+          "title": "Evidence Path",
+          "type": "string"
+        },
+        "evidence_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Evidence Sha256",
+          "type": "string"
+        },
+        "license_source": {
+          "minLength": 1,
+          "title": "License Source",
+          "type": "string"
+        },
+        "license_url": {
+          "pattern": "^https://",
+          "title": "License Url",
+          "type": "string"
+        },
+        "provider": {
+          "minLength": 1,
+          "title": "Provider",
+          "type": "string"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "redistribution_allowed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Redistribution Allowed"
+        },
+        "research_use_allowed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Research Use Allowed"
+        },
+        "research_use_scope": {
+          "enum": [
+            "PRIVATE_INTERNAL_RESEARCH",
+            "PERSONAL_NONCOMMERCIAL",
+            "UNKNOWN"
+          ],
+          "title": "Research Use Scope",
+          "type": "string"
+        },
+        "reviewed_at": {
+          "format": "date-time",
+          "title": "Reviewed At",
+          "type": "string"
+        },
+        "reviewed_by": {
+          "minLength": 1,
+          "title": "Reviewed By",
+          "type": "string"
+        },
+        "rights_id": {
+          "minLength": 1,
+          "title": "Rights Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "reviewed-rights-v4",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "enum": [
+            "MARKET_DATA",
+            "SOURCE_TEXT",
+            "IMPLEMENTATION_CODE"
+          ],
+          "title": "Scope",
+          "type": "string"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "VERIFIED",
+            "REVIEW_REQUIRED",
+            "PROHIBITED"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "rights_id",
+        "provider",
+        "source",
+        "scope",
+        "research_use_allowed",
+        "research_use_scope",
+        "commercial_use_allowed",
+        "redistribution_allowed",
+        "derivative_allowed",
+        "attribution_required",
+        "attribution",
+        "license_source",
+        "license_url",
+        "reviewed_at",
+        "reviewed_by",
+        "confidence",
+        "status",
+        "evidence_path",
+        "evidence_sha256",
+        "rationale"
+      ],
+      "title": "ReviewedRightsEvidence",
       "type": "object"
     },
     "RightsEvidence": {
@@ -642,6 +1089,9 @@
     "data_requirement": {
       "$ref": "#/$defs/DataRequirement"
     },
+    "dataset_binding": {
+      "$ref": "#/$defs/DatasetBinding"
+    },
     "dedup_status": {
       "enum": [
         "INDEPENDENT_TEMPLATE",
@@ -650,6 +1100,9 @@
       ],
       "title": "Dedup Status",
       "type": "string"
+    },
+    "derived_data_requirement": {
+      "$ref": "#/$defs/DerivedDataRequirement"
     },
     "execution": {
       "$ref": "#/$defs/ExecutionContract"
@@ -707,7 +1160,7 @@
       "type": "string"
     },
     "schema_version": {
-      "const": "evidence-enrichment-v3",
+      "const": "evidence-enrichment-v4",
       "title": "Schema Version",
       "type": "string"
     },
@@ -750,8 +1203,10 @@
     "rule_review_status",
     "rule_evidence",
     "dedup_status",
-    "warnings"
+    "warnings",
+    "derived_data_requirement",
+    "dataset_binding"
   ],
-  "title": "EvidenceEnrichment",
+  "title": "EvidenceEnrichmentV4",
   "type": "object"
 }

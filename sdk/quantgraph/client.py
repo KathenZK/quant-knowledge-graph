@@ -69,6 +69,9 @@ class QuantGraphClient:
     def research_evidence(self, variant_id):
         return self._request('GET', '/v1/research/evidence/' + quote(variant_id, safe=''))
 
+    def research_chain(self, variant_id):
+        return self._request('GET', '/v1/research/chain/' + quote(variant_id, safe=''))
+
     def submit_research_evidence(self, evidence):
         return self._request('POST', '/v1/research/evidence', json=evidence)
 

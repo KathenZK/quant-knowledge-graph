@@ -1,7 +1,7 @@
 import copy
 import pytest
 from quantgraph.models.evidence import EvidenceEnrichment
-from quantgraph.graph.research_gate import evaluate
+from quantgraph.graph.research_gate_v3 import evaluate  # historical gate compatibility
 from quantgraph.graph.ingestion_store import SQLiteIngestionRepository
 from test_ingestion_lifecycle import ingest, payload
 
@@ -41,7 +41,8 @@ def sample(tmp_path):
 def test_v3_review_is_bound_and_explicit_assumptions_do_not_grant_commercial_rights(tmp_path):
     repo,row,d=sample(tmp_path);repo.review_record(d)
     got=repo.variants()[0]
-    assert got['candidate_gate']['status']=='ELIGIBLE'
+    assert got['candidate_gate']['status']=='REVIEW_REQUIRED'
+    assert 'V4_REVIEW_REQUIRED' in got['candidate_gate']['blockers']
     assert got['variant']['commercial_use']=='REVIEW_REQUIRED'
     assert got['reviewed_evidence']['source']['indicator_author_is_strategy_author'] is False
     changed=payload();changed['records'][0]['raw_rule']+=' 未明确规则';ingest(repo,changed)
@@ -121,9 +122,8 @@ def test_real_evidence_rechecks_admission_lineage_data_and_idempotency(tmp_path)
     bad=copy.deepcopy(body);bad['data_provenance']['exchange']='wrong'
     assert client.post('/v1/research/evidence',json=bad,headers=headers).status_code==409
     reply=client.post('/v1/research/evidence',json=body,headers=headers)
-    assert reply.status_code==200 and reply.json()['promotion_triggered'] is False
-    assert client.post('/v1/research/evidence',json=body,headers=headers).json()['duplicate']
-    assert client.get('/v1/research/evidence/'+row['variant']['strategy_variant_id'],headers=headers).json()['items'][0]['schema_version']=='2.0'
+    assert reply.status_code==409  # V3 lacks mandatory V4 dataset/rights bindings
+    assert client.get('/v1/research/evidence/'+row['variant']['strategy_variant_id'],headers=headers).json()['items']==[]
     bad=copy.deepcopy(body);bad['results']['oos']['sharpe']=1
     assert client.post('/v1/research/evidence',json=bad,headers=headers).status_code==409
     assert client.get('/v1/research/assessments',headers=headers).status_code==200

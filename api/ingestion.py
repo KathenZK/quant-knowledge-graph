@@ -14,6 +14,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from quantgraph.models.ingestion import IngestBatch
 from quantgraph.models.evidence import MarketResearchEvidence
+from quantgraph.models.evidence_v4 import MarketResearchEvidenceV4
 
 bearer = HTTPBearer(auto_error=False)
 
@@ -217,12 +218,30 @@ def install_ingestion(app, repository, *, keys=None, max_bytes=None):
     def projection_status():
         return repository.projection_status()
 
+    @router.get('/v1/research/chain/{variant_id}', dependencies=[Depends(require('research:read'))])
+    def research_chain(variant_id: str):
+        cursor=0
+        while page := repository.variants(1000,cursor):
+            for row in page:
+                if row['variant']['strategy_variant_id']==variant_id:
+                    evidence=repository.evidence_for(variant_id)
+                    formal=[x for x in evidence if x.get('schema_version')=='3.0' and x.get('evidence_kind')=='REAL_MARKET_BACKTEST']
+                    # BacktestResult is a deterministic projection of the same
+                    # immutable transaction, never a second copy to drift.
+                    results=[{'backtest_result_id':'backtest-'+x['research_run_id'],'research_run_id':x['research_run_id'],
+                              'results':x['results'],'research_status':x['research_status'],
+                              'dataset_sha256':x['dataset_sha256'],'dataset_manifest_sha256':x['dataset_manifest_sha256']} for x in formal]
+                    return {'strategy':row,'provenance':repository.lineage(variant_id),
+                            'research_evidence':evidence,'backtest_results':results,'promotion_allowed':False}
+            cursor+=len(page)
+        raise HTTPException(404,'Variant not found')
+
     @router.get('/v1/ingest/stats', dependencies=[Depends(require('ingest:read'))])
     def ingest_stats():
         return repository.ingest_stats()
 
     @router.post('/v1/research/evidence')
-    def evidence(value: ResearchEvidence | MarketResearchEvidence, key_id=Depends(require('research:write'))):
+    def evidence(value: ResearchEvidence | MarketResearchEvidence | MarketResearchEvidenceV4, key_id=Depends(require('research:write'))):
         try:
             return repository.put_evidence(value.model_dump(mode='json'), key_id)
         except ValueError as exc:
