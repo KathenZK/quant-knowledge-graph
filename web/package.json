@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5178 --strictPort",
-    "build": "tsc -b && vite build",
+    "build": "node scripts/personal-build.mjs build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run",
+    "test": "vitest run && node --test build-tests/build.mjs",
     "e2e": "playwright test",
     "start": "bash ./start.sh",
     "format:check": "prettier --check src tests e2e *.ts *.js *.json index.html",

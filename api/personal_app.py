@@ -85,8 +85,11 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
 
     @app.get('/v1/web/meta')
     def metadata():
+        from importlib.metadata import version
+        from quantgraph.graph.personal_build_info import build_info
+        running = dict(application_version=version('quant-knowledge-graph'), build=build_info(root))
         if catalog is None:
-            return dict(mode='personal_local', initialized=False, release=None, counts={}, facets={},
+            return dict(**running, mode='personal_local', initialized=False, release=None, counts={}, facets={},
                 initialization={'status': 'MISSING', 'message': '完整 Catalog 尚未初始化。请显式导入已有个人资料；不会退回 Qlib-only。'},
                 message='完整 Catalog 尚未初始化。个人工作台需要显式提供已导入资料，不会静默退回 Qlib-only。')
         snapshot = runtime / 'snapshot.json'
@@ -94,9 +97,9 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
         meta = catalog.metadata()
         reconciliation = catalog.reconcile()
         imports = reconciliation.get('imports', [])
-        return meta | dict(mode='personal_local', initialized=True,
+        return meta | dict(**running, mode='personal_local', initialized=True,
             snapshot=provenance.get('created_at', '未登记快照时间'),
-            dataset='GrokBot 策略与多来源因子 · 本机 Catalog', data_path=str(runtime),
+            dataset='GrokBot 策略与多来源因子 · 本机 Catalog',
             imported_at=imports[0]['created_at'] if imports else None,
             snapshot_inputs=[{'name': Path(v['copy']).name, 'sha256': v['sha256']}
                 for v in provenance.get('inputs', [])],
@@ -104,7 +107,7 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
             research_mode='只读历史研究；不运行研究任务')
 
     @app.get('/v1/web/search')
-    def search(q: str = Query('', max_length=200), kind: Kind = 'strategy', category: str = '',
+    def search(q: str = Query('', max_length=2000), kind: Kind = 'strategy', category: str = '',
                family: str = '', template_id: str = '', field: str = '', market: str = '', frequency: str = '',
                source_type: str = '', result_status: str = '', personal_status: str = '',
                axis: str = '', extra_data: str = '', completeness: str = '', method_family: str = '', asset_scope: str = '',

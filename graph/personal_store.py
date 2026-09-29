@@ -8,7 +8,6 @@ from copy import deepcopy
 import json
 from pathlib import Path
 import sqlite3
-import tempfile
 import threading
 from uuid import uuid4
 
@@ -20,7 +19,7 @@ KINDS = {'strategy', 'variant', 'concept', 'family', 'template', 'source'}
 PERSONAL_FIELDS = {'starred', 'status', 'tags', 'group', 'note', 'summary', 'questions', 'reason', 'aliases', 'problem'}
 IDENTITY_FIELDS = {'kind', 'entity_id', 'entity_type', 'definition_revision', 'name'}
 DECISIONS = {'PENDING', 'CONFIRMED', 'REJECTED', 'UNDONE', 'AUTO_MERGED'}
-BACKUP_VERSION = 'quantgraph-personal-backup/v1'
+BACKUP_VERSION = 'quantgraph-personal-backup/v2'
 
 
 def _text(value, limit=20000, *, required=False):
@@ -61,7 +60,7 @@ def blank(item):
     return identity | dict(stable_id='personal:' + content_hash([identity['kind'], item.get('stable_knowledge_id') or identity['entity_id']]),
         stable_knowledge_id=item.get('stable_knowledge_id') or identity['entity_id'],
         starred=False, status='待读', tags=[], group='', note='', summary='', questions='', reason='', aliases=[],
-        problem='', revisions=[identity['definition_revision']], created_at=None, updated_at=None)
+        problem='', revisions=[identity['definition_revision']], record_revision=0, created_at=None, updated_at=None)
 
 
 class PersonalStore:
@@ -71,7 +70,7 @@ class PersonalStore:
         self.lock = threading.RLock()
         with self.connect() as con:
             version = con.execute('PRAGMA user_version').fetchone()[0]
-            if version not in {0, 1}:
+            if version not in {0, 1, 2}:
                 raise ValueError('个人数据库需要迁移')
             con.executescript('''
                 PRAGMA journal_mode=WAL;
@@ -80,7 +79,8 @@ class PersonalStore:
                 CREATE TABLE IF NOT EXISTS personal_redirects(old_id TEXT PRIMARY KEY, canonical_id TEXT NOT NULL, suggestion_id TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS personal_migrations(migration_id TEXT PRIMARY KEY, digest TEXT NOT NULL, payload TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS personal_audit(event_id TEXT PRIMARY KEY, payload TEXT NOT NULL);
-                PRAGMA user_version=1;
+                CREATE TABLE IF NOT EXISTS personal_restore_plans(preview_token TEXT PRIMARY KEY, payload TEXT NOT NULL);
+                PRAGMA user_version=2;
             ''')
         self.path.chmod(0o600)
 
@@ -132,6 +132,7 @@ class PersonalStore:
         with self.connect() as con:
             row = self._note(con, item)
             value = json.loads(row[0]) if row else blank(item)
+            value.setdefault('record_revision', 0)
             value['canonical_id'] = self._resolve(con, item['entity_id'])
             value['requested_entity_id'] = item['entity_id']
             value['current_entity_id'] = item.get('current_entity_id') or item['entity_id']
@@ -157,6 +158,7 @@ class PersonalStore:
                 raise ValueError('定义版本已变化，请刷新后保存')
             # Saving a note does not silently move its reference to a new definition.
             value.update(patch)
+            value['record_revision'] = value.get('record_revision', 0) + 1
             value['updated_at'] = now()
             value['created_at'] = value['created_at'] or value['updated_at']
             con.execute('INSERT OR REPLACE INTO personal_items VALUES(?,?)', (value['entity_id'], stable_json(value)))
@@ -167,6 +169,7 @@ class PersonalStore:
         with self.connect() as con:
             items = [json.loads(r[0]) for r in con.execute('SELECT payload FROM personal_items ORDER BY entity_id')]
             for item in items:
+                item.setdefault('record_revision', 0)
                 item['canonical_id'] = self._resolve(con, item['entity_id'])
         items = [i for i in items if (not group or i['group'] == group) and (not status or i['status'] == status)
                  and (starred is None or i['starred'] == starred)]
@@ -271,158 +274,35 @@ class PersonalStore:
             return self._decision_view(value)
 
     def backup(self):
+        from quantgraph.graph.personal_restore import envelope, snapshot
         with self.lock, self.connect() as con:
-            payload = {
-                'items': [json.loads(r[0]) for r in con.execute('SELECT payload FROM personal_items ORDER BY entity_id')],
-                'duplicates': [json.loads(r[0]) for r in con.execute('SELECT payload FROM personal_duplicates ORDER BY suggestion_id')],
-                'redirects': [dict(r) for r in con.execute('SELECT * FROM personal_redirects ORDER BY old_id')],
-                'migrations': [dict(r) for r in con.execute('SELECT * FROM personal_migrations ORDER BY migration_id')],
-                'audit': [json.loads(r[0]) for r in con.execute('SELECT payload FROM personal_audit ORDER BY event_id')],
-            }
-        return dict(schema_version=BACKUP_VERSION, scope='LOCAL_PERSONAL_ONLY', created_at=now(), payload=payload, sha256=content_hash(payload))
+            con.execute('BEGIN')
+            return envelope(snapshot(con))
 
     @staticmethod
     def validate_backup(backup):
-        if not isinstance(backup, dict) or backup.get('schema_version') != BACKUP_VERSION or backup.get('scope') != 'LOCAL_PERSONAL_ONLY':
-            raise ValueError('不是个人工作台备份')
-        payload = backup.get('payload')
-        if not isinstance(payload, dict) or set(payload) != {'items', 'duplicates', 'redirects', 'migrations', 'audit'}:
-            raise ValueError('备份表结构不正确')
-        if backup.get('sha256') != content_hash(payload):
-            raise ValueError('备份校验失败，原数据未改变')
-        for values in payload.values():
-            if not isinstance(values, list) or len(values) > 100000:
-                raise ValueError('备份大小或内容格式不正确')
-        seen = set()
-        for value in payload['items']:
-            if not isinstance(value, dict):
-                raise ValueError('备份个人字段不正确')
-            _identity(value)
-            if set(value) != set(blank(value)):
-                raise ValueError('备份个人字段不正确')
-            _patch({k: value[k] for k in PERSONAL_FIELDS})
-            for key in ['stable_id', 'stable_knowledge_id', 'created_at', 'updated_at']:
-                _text(value[key], 200, required=True)
-            if value['stable_id'] != blank(value)['stable_id'] or not isinstance(value['revisions'], list) or not value['revisions']:
-                raise ValueError('备份稳定身份不正确')
-            for revision in value['revisions']:
-                _text(revision, 500, required=True)
-            if value['entity_id'] in seen:
-                raise ValueError('备份条目 ID 重复')
-            seen.add(value['entity_id'])
-        suggestions = {}
-        for value in payload['duplicates']:
-            expected = {'suggestion_id', 'left', 'right', 'classification', 'evidence', 'status', 'canonical_id', 'exact', 'created_at', 'updated_at'}
-            if not isinstance(value, dict) or set(value) != expected or value.get('status') not in DECISIONS:
-                raise ValueError('备份重复建议不正确')
-            for key in ['classification', 'evidence', 'created_at', 'updated_at']:
-                _text(value[key], 5000, required=True)
-            if not isinstance(value['exact'], bool):
-                raise ValueError('备份重复依据不正确')
-            sid = _text(value.get('suggestion_id'), 200, required=True)
-            if sid in suggestions:
-                raise ValueError('备份重复建议 ID 重复')
-            for side in ['left', 'right']:
-                if not isinstance(value[side], dict) or set(value[side]) != {'entity_id', 'name', 'kind', 'definition_revision'}:
-                    raise ValueError('备份重复建议条目不正确')
-                for key in ['entity_id', 'name', 'kind', 'definition_revision']:
-                    _text(value[side].get(key), 500, required=True)
-            if value['left']['entity_id'] == value['right']['entity_id']:
-                raise ValueError('备份重复建议指向自己')
-            suggestions[sid] = value
-        redirects = {}
-        for value in payload['redirects']:
-            if set(value) != {'old_id', 'canonical_id', 'suggestion_id'}:
-                raise ValueError('备份重定向字段不正确')
-            for val in value.values():
-                _text(val, 500, required=True)
-            sid = value['suggestion_id']
-            if value['old_id'] in redirects or sid not in suggestions or suggestions[sid]['status'] not in {'CONFIRMED', 'AUTO_MERGED'}:
-                raise ValueError('备份重定向依据不正确')
-            if value['old_id'] not in {suggestions[sid]['left']['entity_id'], suggestions[sid]['right']['entity_id']}:
-                raise ValueError('备份重定向与条目不一致')
-            redirects[value['old_id']] = value['canonical_id']
-        for eid in redirects:
-            chain = set()
-            while eid in redirects:
-                if eid in chain:
-                    raise ValueError('备份存在循环合并')
-                chain.add(eid)
-                eid = redirects[eid]
-        migration_ids = set()
-        for value in payload['migrations']:
-            if not isinstance(value, dict) or set(value) != {'migration_id', 'digest', 'payload'}:
-                raise ValueError('备份迁移字段不正确')
-            _text(value['migration_id'], 200, required=True)
-            if value['migration_id'] in migration_ids:
-                raise ValueError('备份迁移标识重复')
-            migration_ids.add(value['migration_id'])
-            _text(value['digest'], 64, required=True)
-            if not isinstance(json.loads(value['payload']), dict):
-                raise ValueError('迁移记录格式不正确')
-        audit_ids = set()
-        for value in payload['audit']:
-            if not isinstance(value, dict) or set(value) != {'event_id', 'action', 'at', 'detail'} or not isinstance(value['detail'], dict):
-                raise ValueError('备份审核记录不正确')
-            if value['event_id'] in audit_ids:
-                raise ValueError('备份审核记录重复')
-            audit_ids.add(value['event_id'])
-            for key in ['event_id', 'action', 'at']:
-                _text(value.get(key), 200, required=True)
-        return deepcopy(payload)
+        from quantgraph.graph.personal_restore import validate
+        payload, invalid = validate(backup)
+        if invalid:
+            raise ValueError(invalid[0]['reason'])
+        return payload
 
-    @staticmethod
-    def _load(con, payload, *, mode):
-        if mode == 'replace':
-            for table in ['personal_items', 'personal_duplicates', 'personal_redirects', 'personal_migrations', 'personal_audit']:
-                con.execute('DELETE FROM ' + table)
-        before = con.execute('SELECT count(*) FROM personal_items').fetchone()[0]
-        for value in payload['items']:
-            con.execute('INSERT OR IGNORE INTO personal_items VALUES(?,?)', (value['entity_id'], stable_json(value)))
-        new_decisions = set()
-        for value in payload['duplicates']:
-            changed = con.execute('INSERT OR IGNORE INTO personal_duplicates VALUES(?,?)', (value['suggestion_id'], stable_json(value)))
-            if changed.rowcount:
-                new_decisions.add(value['suggestion_id'])
-        conflicts = []
-        for value in payload['redirects']:
-            # Preserve this machine's later decision during a merge restore.
-            decision = json.loads(con.execute('SELECT payload FROM personal_duplicates WHERE suggestion_id=?', (value['suggestion_id'],)).fetchone()[0])
-            if decision['status'] in {'CONFIRMED', 'AUTO_MERGED'} and decision['canonical_id'] == value['canonical_id']:
-                current = con.execute('SELECT canonical_id,suggestion_id FROM personal_redirects WHERE old_id=?', (value['old_id'],)).fetchone()
-                if current and (current['canonical_id'] != value['canonical_id'] or current['suggestion_id'] != value['suggestion_id']):
-                    conflicts.append({'suggestion_id': value['suggestion_id'], 'old_id': value['old_id'], 'kept_canonical_id': current['canonical_id'], 'backup_canonical_id': value['canonical_id']})
-                    if value['suggestion_id'] in new_decisions:
-                        prior = deepcopy(decision)
-                        decision.update(status='PENDING', canonical_id=None, evidence='备份合并遇到本机已确认的重定向，保留为待核对建议。' + decision['evidence'])
-                        con.execute('UPDATE personal_duplicates SET payload=? WHERE suggestion_id=?', (stable_json(decision), value['suggestion_id']))
-                        PersonalStore._audit(con, 'RESTORE_MERGE_CONFLICT', {'retained_backup_decision': prior, 'kept_redirect': dict(current)})
-                else:
-                    con.execute('INSERT OR IGNORE INTO personal_redirects VALUES(?,?,?)', (value['old_id'], value['canonical_id'], value['suggestion_id']))
-        for value in payload['migrations']:
-            con.execute('INSERT OR IGNORE INTO personal_migrations VALUES(?,?,?)', (value['migration_id'], value['digest'], value['payload']))
-        for value in payload['audit']:
-            con.execute('INSERT OR IGNORE INTO personal_audit VALUES(?,?)', (value['event_id'], stable_json(value)))
-        for r in con.execute('SELECT old_id FROM personal_redirects'):
-            PersonalStore._resolve(con, r[0])
-        added = con.execute('SELECT count(*) FROM personal_items').fetchone()[0] - before
-        return {'imported': added, 'preserved': len(payload['items'])-added, 'conflicts': conflicts}
+    def preview_restore(self, backup):
+        from quantgraph.graph.personal_restore import preview
+        return preview(self, backup)
 
-    def restore(self, backup, *, mode='merge'):
-        if mode not in {'merge', 'replace'}:
-            raise ValueError('恢复方式不正确')
-        payload = self.validate_backup(backup)
-        # Build and check a separate temporary database before touching this one.
-        with tempfile.TemporaryDirectory(prefix='quantgraph-personal-restore-') as directory:
-            isolated = PersonalStore(Path(directory) / 'personal.sqlite')
-            with isolated.connect() as con:
-                self._load(con, payload, mode='replace')
-                if con.execute('PRAGMA quick_check').fetchone()[0] != 'ok':
-                    raise ValueError('隔离恢复校验失败')
-            if isolated.backup()['sha256'] != backup['sha256']:
-                raise ValueError('隔离恢复内容不一致')
-        with self.lock, self.connect() as con:
-            con.execute('BEGIN IMMEDIATE')
-            result = self._load(con, payload, mode=mode)
-            self._audit(con, 'RESTORE', result | {'mode': mode, 'sha256': backup['sha256']})
-        return result | {'mode': mode, 'verified': True}
+    def restore_report(self, preview_token):
+        from quantgraph.graph.personal_restore import report
+        return report(self, preview_token)
+
+    def restore_backup(self, backup_id):
+        from quantgraph.graph.personal_restore import saved_backup
+        return saved_backup(self, backup_id)
+
+    def restore(self, backup=None, *, preview_token=None, decisions=None, mode=None):
+        from quantgraph.graph.personal_restore import apply_restore, RestoreConflict
+        if mode is not None:
+            raise RestoreConflict('旧恢复方式已停用；请先预览，再明确选择每项冲突', 'PREVIEW_REQUIRED')
+        if not preview_token:
+            raise RestoreConflict('请先预览备份，再确认恢复', 'PREVIEW_REQUIRED')
+        return apply_restore(self, preview_token, {} if decisions is None else decisions, backup=backup)

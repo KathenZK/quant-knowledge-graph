@@ -14,31 +14,13 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from quantgraph.api.web_read_model import FIELD_LABELS, normalize, safe_url
 from quantgraph.graph.catalog import CatalogRepository
 from quantgraph.graph.catalog_projection import empty_results
+from quantgraph.graph.personal_search import QueryVocabulary, accepts_constraints, search_pattern, search_anchor, compact_formula
 
 VERSION = 'personal-reading/v1'
 UNKNOWN = '本机快照未收录'
 OHLCV = {'open', 'high', 'low', 'close', 'volume'}
 FIELD_NAMES = FIELD_LABELS | {'amount': '成交额', 'returns': '收益率', 'return': '收益率',
     'market_cap': '市值', 'industry': '行业分类', 'funding_rate': '资金费率'}
-SYNONYMS = [
-    ('均线', '移动平均', 'moving average'),
-    ('简单均线', '简单移动平均', 'simple moving average', 'sma'),
-    ('指数均线', '指数移动平均', 'exponential moving average', 'ema'),
-    ('动量', 'momentum'), ('反转', 'reversal'),
-    ('均值回归', 'mean reversion', 'mean_reversion'),
-    ('配对', 'pairs trading', 'pair trading', 'pairs'),
-    ('相对强弱', 'rsi', 'relative strength index'),
-    ('波动率', 'volatility', 'realized_volatility'),
-    ('布林', '布林带', 'bollinger'), ('成交量', 'volume'),
-    ('突破', 'breakout', 'channel breakout'), ('趋势', 'trend'),
-    ('价值', 'value'), ('质量', 'quality'), ('盈利', 'profitability'),
-    ('规模', 'size'), ('流动性', 'liquidity'), ('投资', 'investment'),
-    ('套利', 'arbitrage'), ('轮动', 'rotation'),
-    ('日频', 'daily', 'daily_eod'), ('月频', 'monthly', 'month_end'),
-    ('收盘价', 'close'), ('最高价', 'high'), ('最低价', 'low'),
-    ('开盘价', 'open'), ('资金费率', 'funding rate', 'funding_rate'),
-    ('分红', 'dividend'), ('财报', 'accounting', 'fundamental'),
-]
 METHODS = [
     ('pairs', '配对与价差', ('配对', 'pairs trading', 'pair trading', '协整', 'cointegration')),
     ('rotation', '相对强弱与轮动', ('轮动', 'rotation', 'relative_momentum', 'relative_momentum_rotation')),
@@ -590,6 +572,7 @@ class PersonalCatalogRepository(CatalogRepository):
         self._base_rows = {}
         self._view_stamps = {}
         self._document_stamps = {}
+        self._search_vocabulary = None
 
     def _stamp(self):
         return tuple((p.stat().st_mtime_ns, p.stat().st_size) if p.exists() else None
@@ -679,6 +662,7 @@ class PersonalCatalogRepository(CatalogRepository):
             self._documents = documents
             self._cache_stamp = self._stamp()
             self._content_digest = content_digest
+            self._search_vocabulary = QueryVocabulary(cache.values(), METHODS)
             return cache
 
     @staticmethod
@@ -688,10 +672,15 @@ class PersonalCatalogRepository(CatalogRepository):
                   ('native_id','来源原生 ID',value.get('source_native_ids')),('entity_id','条目 ID',value['entity_id']),
                   ('formula','公式',k['formula']),('rule','来源规则',k['original_rule']),
                   ('definition','来源定义',k['original_definition']),('family','方法族',value.get('family')),
-                  ('method_family','方法归类',k['method_family']['label']),('description','描述',value.get('description')),
+                  ('description','描述',value.get('description')),
                   ('source','来源',value.get('source_name')),('source_url','来源链接',value.get('source_url')),
                   ('frequency','频率',value.get('frequency')),('fields','数据字段',value.get('required_fields')),
                   ('market','市场',value.get('markets')),('parameters','参数',value.get('parameters'))]
+        # A broad category title is not evidence for every word in that title.
+        # Only the explicitly recognized rolling-price-mean formula gets this
+        # literal mathematical alias; no trend-to-momentum inference is added.
+        if k['method_family'].get('evidence')=='Mean($close, n)/$close':
+            fields.append(('formula_semantics','公式结构释义','简单均线 simple moving average SMA'))
         return [(key,label,_text(text),normalize(_text(text))) for key,label,text in fields if text]
 
     def _personal_notes(self):
@@ -755,26 +744,33 @@ class PersonalCatalogRepository(CatalogRepository):
     def all_items(self, *, admin=False, include_tests=False):
         return [deepcopy(v) for v in self._load().values() if include_tests or admin or not v.get('test_record')]
 
-    @staticmethod
-    def _terms(query):
-        query=normalize(query)
-        if not query:
-            return []
-        # Full multi-word synonyms such as 'moving average' are one query unit.
-        for group in SYNONYMS:
-            if query in group:
-                return [group]
-        return [next((group for group in SYNONYMS if token in group), (token,)) for token in query.split()]
+    def _terms(self, query):
+        self._load()
+        return self._search_vocabulary.plan(query)['expanded_terms']
 
-    def _match(self, eid, groups, extra_documents=()):
+    def _match(self, eid, groups, extra_documents=(), *, exact_text=''):
+        if exact_text:
+            value=self._cache[eid]
+            candidates=[('name','名称',value['name'])]
+            candidates += [('aliases','别名',alias) for alias in value.get('aliases',[])]
+            candidates += [(key,label,text) for key,label,text,_ in extra_documents if key=='user_aliases']
+            candidates += [('formula','公式',value['knowledge'].get('formula') or '')]
+            for key,label,text in candidates:
+                same=(compact_formula(text)==compact_formula(exact_text) if key=='formula' else normalize(text)==normalize(exact_text))
+                if same:
+                    return [dict(field=key,label=label,text=text,term=normalize(exact_text),start=0,end=len(text),match_type='EXACT_LITERAL')]
         matches=[]
         for group in groups:
             found=None
             for key,label,text,norm in [*self._documents[eid], *extra_documents]:
                 for term in group:
-                    if term not in norm:
+                    # Source URLs remain searchable by URL; words in a shared
+                    # discussion URL do not establish the current rule's method.
+                    if key=='source_url' and not term.startswith(('https://','http://')):
                         continue
-                    match=_term_pattern(term).search(norm)
+                    if search_anchor(term) not in norm:
+                        continue
+                    match=search_pattern(term).search(norm)
                     if match:
                         start=max(0,match.start()-60); end=min(len(text),match.end()+100)
                         found=dict(field=key,label=label,text=text[start:end],term=term,
@@ -791,7 +787,8 @@ class PersonalCatalogRepository(CatalogRepository):
                method_family='', daily_ohlcv=False, axis='', extra_data='', completeness='', collapse_templates=False, include_tests=False, allowed_ids=None, collapse_duplicates=True, template_id='', asset_scope=''):
         if page < 1 or not 1 <= page_size <= 100:
             raise ValueError('Invalid pagination')
-        data=self._load(); groups=self._terms(q); matched=[]
+        data=self._load(); plan=self._search_vocabulary.plan(q); groups=plan['expanded_terms']; matched=[]
+        exact_ids=self._search_vocabulary.exact_ids(q)
         notes=self._personal_notes()
         researched = {ref['entity_id'] for r in self.results().get('items', []) for ref in r.get('entity_refs', [])} if result_status else set()
         for eid,value in data.items():
@@ -818,16 +815,22 @@ class PersonalCatalogRepository(CatalogRepository):
             status='researched' if eid in researched else 'unresearched'
             if result_status and result_status!=status:
                 continue
+            item_notes=self._notes_for(value,notes)
             extra_documents=[]
-            for note in self._notes_for(value, notes):
+            for note in item_notes:
                 for key,label in [('aliases','我的别名'),('tags','我的标签'),('note','我的备注'),('summary','我的整理'),('questions','我的假设'),('reason','我的研究理由')]:
                     if note.get(key):
-                        text=_text(note[key])
-                        extra_documents.append(('user_'+key,label,text,normalize(text)))
-            matches=self._match(eid,groups,extra_documents)
+                        texts=note[key] if key=='aliases' else [_text(note[key])]
+                        for text in texts:
+                            extra_documents.append(('user_'+key,label,text,normalize(text)))
+            exact_user_alias=bool(q) and any(normalize(q)==normalize(alias) for note in item_notes for alias in note.get('aliases',[]))
+            exact=eid in exact_ids or exact_user_alias
+            if not exact and not accepts_constraints(value, plan['constraints']):
+                continue
+            matches=self._match(eid,groups,extra_documents,exact_text=q if exact else '')
             if matches is None:
                 continue
-            score=sum({'name':0,'native_id':0,'aliases':1,'formula':2,'rule':3,'definition':3}.get(m['field'],4) for m in matches)
+            score=(-1000 if eid in exact_ids or exact_user_alias else 0)+sum({'name':0,'native_id':0,'aliases':1,'user_aliases':1,'formula':2,'rule':3,'definition':3}.get(m['field'],4) for m in matches)
             matched.append((score,value,matches))
         matched.sort(key=lambda x:(x[0],x[1]['name'],x[1]['entity_id']))
         record_total=len(matched)
@@ -859,8 +862,8 @@ class PersonalCatalogRepository(CatalogRepository):
                 item['result_status']='researched' if item['entity_id'] in researched else 'unresearched'
             items.append(item)
         return dict(items=items,total=len(matched),record_total=record_total,page=page,page_size=page_size,
-                    scope='personal_local',sort='source_field_relevance_then_name',collapsed=collapse_templates,
-                    query=dict(text=q,expanded_terms=[list(g) for g in groups]))
+                    scope='personal_local',sort='exact_name_alias_formula_then_source_relevance_then_name',collapsed=collapse_templates,
+                    query=deepcopy(plan) | {'text':q})
 
     def detail(self, kind, eid):
         value=self.get(eid)

@@ -117,7 +117,15 @@ export interface PersonalMeta extends Omit<Meta, "mode" | "facets"> {
   snapshot?: string | Record<string, unknown>;
   imported_at?: string;
   last_imported_at?: string;
-  data_path?: string;
+  application_version?: string;
+  build?: {
+    status: "CURRENT" | "STALE" | "MISSING" | "INVALID";
+    build_id?: string;
+    source_fingerprint?: string;
+    built_at?: string;
+    app_version?: string;
+    message?: string;
+  };
   knowledge_counts?: Record<string, unknown>;
   reading_coverage?: Record<string, unknown>;
   method_families?: {
@@ -201,9 +209,11 @@ export async function personalApi<T>(
       detail =
         typeof error.detail === "string"
           ? error.detail
-          : typeof error.error === "string"
-            ? error.error
-            : "";
+          : typeof error.detail?.message === "string"
+            ? error.detail.message
+            : typeof error.error === "string"
+              ? error.error
+              : "";
     } catch {
       /* Non-JSON failures still have a useful status. */
     }

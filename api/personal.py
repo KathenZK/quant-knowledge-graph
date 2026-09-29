@@ -5,11 +5,12 @@ import re
 from uuid import uuid4
 
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 from pydantic import BaseModel, ConfigDict, Field
 
 from quantgraph.graph.grokbot import content_hash
 from quantgraph.graph.personal_store import IDENTITY_FIELDS, PERSONAL_FIELDS, STATUSES
+from quantgraph.graph.personal_restore import RestoreConflict
 from quantgraph.models.factor_study import ResearchRequest
 
 
@@ -18,8 +19,14 @@ class Strict(BaseModel):
 
 
 class Restore(Strict):
+    backup: dict | None = None
+    preview_token: str | None = None
+    decisions: dict[str, str] = Field(default_factory=dict)
+    mode: str | None = None
+
+
+class RestorePreview(Strict):
     backup: dict
-    mode: str = 'merge'
 
 
 class Migration(Strict):
@@ -138,7 +145,7 @@ def export_notebook(catalog, store, *, ids=None, group=''):
                     value = catalog.detail_version(personal['kind'], personal['entity_id'], personal['definition_revision'])
                     availability = 'PINNED_HISTORICAL_DEFINITION'
                 except (AttributeError, KeyError):
-                    current_definition = value
+                    current_definition = catalog.detail(current_item['kind'], current_item['entity_id'])
                     value = {key: personal[key] for key in IDENTITY_FIELDS}
                     availability = 'PINNED_DEFINITION_UNAVAILABLE'
         except KeyError:
@@ -184,11 +191,14 @@ def export_notebook(catalog, store, *, ids=None, group=''):
 def markdown_export(value):
     lines = ['# 我的研究清单', '', '用户自己的判断和研究问题；尚未调度研究。', '']
     for item in value['items']:
+        availability = item['availability']
+        if availability in {'PINNED_DEFINITION_UNAVAILABLE', 'SOURCE_NO_LONGER_IN_CURRENT_CATALOG'}:
+            availability += '\n\n固定定义缺失，仅保留原引用，未生成对应研究请求；未用新规则代替旧定义。'
         lines.extend(['## ' + item['name'], '', f"- 条目：`{item['entity_id']}`", f"- 定义版本：`{item['definition_revision']}`",
             f"- 状态：{item['status']}；分组：{item['group'] or '未分组'}", f"- 来源：{item['sources'].get('source_name') or '来源未说明'}",
             f"- 来源定位：{item['sources'].get('source_url') or item['sources'].get('source_locator') or '来源未说明'}", '',
             '### 版本核对', '', ('笔记固定的旧版本与当前版本不同；未确认前不会把新规则当成旧版本导出。' if item['version_changed'] else '笔记与当前定义版本一致。'), '',
-            f"- 资料状态：{item['availability']}", '', '### 我的判断', '', item['note'] or '未填写', '', '### 我的整理', '', item['summary'] or '未填写', '',
+            f"- 资料状态：{availability}", '', '### 我的判断', '', item['note'] or '未填写', '', '### 我的整理', '', item['summary'] or '未填写', '',
             '### 研究理由与问题', '', item['reason'] or '未填写研究理由', '', item['questions'] or '未填写问题', '',
             '### 规则或公式', '', _markdown_value(item['rule'] or item['formula'] or '来源未说明'), '',
             '### 参数', '', _markdown_value(item['parameters']), '', '### 所需数据与计算语义', '',
@@ -259,9 +269,29 @@ def install_personal(app, catalog, store):
     def backup():
         return store.backup()
 
+    @router.post('/restore/preview')
+    def restore_preview(body: RestorePreview):
+        return perform(lambda: store.preview_restore(body.backup))
+
+    @router.get('/restore/reports/{preview_token}')
+    def restore_report(preview_token: str):
+        return perform(lambda: store.restore_report(preview_token))
+
+    @router.get('/restore/backups/{backup_id}')
+    def restore_backup(backup_id: str):
+        return JSONResponse(perform(lambda: store.restore_backup(backup_id)), headers={
+            'Content-Disposition': f'attachment; filename="quantgraph-before-restore-{backup_id}.json"'})
+
     @router.post('/restore')
     def restore(body: Restore):
-        return perform(lambda: store.restore(body.backup, mode=body.mode))
+        try:
+            return store.restore(body.backup, preview_token=body.preview_token, decisions=body.decisions, mode=body.mode)
+        except RestoreConflict as exc:
+            raise HTTPException(409, detail={'code': exc.code, 'message': str(exc)})
+        except KeyError:
+            raise HTTPException(404, '恢复预览不存在，请重新上传备份')
+        except (ValueError, TypeError):
+            raise HTTPException(422, '恢复内容校验失败；个人记录未改变，请查看预览报告')
 
     @router.post('/migrate')
     def migrate(body: Migration):

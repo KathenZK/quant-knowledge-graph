@@ -7,7 +7,7 @@ export default defineConfig({
   timeout: 60000,
   expect: { timeout: 15000 },
   reporter: [["list"]],
-  outputDir: "../.artifacts/acceptance/personal-browser-results",
+  outputDir: "../.artifacts/polish-v1/browser-results",
   use: {
     baseURL: "http://127.0.0.1:8792",
     trace: "retain-on-failure",
