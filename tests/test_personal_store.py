@@ -41,6 +41,14 @@ def store(tmp_path):
     return PersonalStore(tmp_path / 'personal.sqlite')
 
 
+def reviewed_restore(store, backup, choice=None):
+    preview = store.preview_restore(backup)
+    assert preview['counts']['invalid'] == 0
+    assert not preview['conflicts'] or choice in {'KEEP_LOCAL', 'USE_BACKUP'}
+    return store.restore(preview_token=preview['preview_token'],
+                         decisions={v['id']: choice for v in preview['conflicts']})
+
+
 def test_restart_version_pin_and_personal_layer_independence(store):
     source = definition()
     original = deepcopy(source)
@@ -144,7 +152,7 @@ def test_confirming_variant_or_collision_keeps_separate_identities(store, tmp_pa
     assert store.get(a)['note'] == '20 日原笔记'
     assert store.get(b)['note'] == '10 日原笔记'
     restored = PersonalStore(tmp_path / 'relation-restored.sqlite')
-    assert restored.restore(store.backup())['verified']
+    assert reviewed_restore(restored, store.backup())['verified']
     assert restored.duplicates()['items'][0]['relation_only']
     assert restored.resolve(b['entity_id']) == b['entity_id']
     # An explicitly requested identity override remains separate from relation review.
@@ -165,25 +173,29 @@ def test_backup_isolated_roundtrip_atomic_corruption_and_merge_protection(store,
     store.decide(candidate['suggestion_id'], 'confirm', canonical_id=a['entity_id'])
     backup = store.backup()
     isolated = PersonalStore(tmp_path / 'isolated' / 'restored.sqlite')
-    assert isolated.restore(backup)['verified']
+    assert reviewed_restore(isolated, backup)['verified']
     assert isolated.get(a)['note'] == '原始笔记'
     assert isolated.resolve(b['entity_id']) == a['entity_id']
     store.update(a, {'note': '备份后的新笔记'})
-    store.restore(backup)
+    reviewed_restore(store, backup, 'KEEP_LOCAL')
     assert store.get(a)['note'] == '备份后的新笔记'
     corrupted = deepcopy(backup)
     corrupted['payload']['items'][0]['note'] = '篡改'
     before = store.backup()['sha256']
+    preview = store.preview_restore(corrupted)
+    assert preview['counts']['invalid'] > 0 and not preview['can_apply']
     with pytest.raises(ValueError):
-        store.restore(corrupted, mode='replace')
+        store.restore(preview_token=preview['preview_token'])
     assert before == store.backup()['sha256']
     cyclic = deepcopy(backup)
     cyclic['payload']['redirects'][0]['canonical_id'] = b['entity_id']
     cyclic['sha256'] = content_hash(cyclic['payload'])
+    preview = store.preview_restore(cyclic)
+    assert preview['counts']['invalid'] > 0 and not preview['can_apply']
     with pytest.raises(ValueError):
-        store.restore(cyclic, mode='replace')
+        store.restore(preview_token=preview['preview_token'])
     assert before == store.backup()['sha256']
-    assert store.restore(backup, mode='replace')['verified']
+    assert reviewed_restore(store, backup, 'USE_BACKUP')['verified']
     assert store.get(a)['note'] == '原始笔记'
 
 
@@ -223,10 +235,62 @@ def test_api_browser_independence_restore_validation_and_selected_export(store):
     assert first.put(path, json={'visibility': 'PUBLIC'}).status_code == 422
     assert first.put(path, json={'entity_id': 'wrong'}).status_code == 422
     assert first.get('/v1/personal/items/variant/' + value['entity_id']).status_code == 404
-    assert first.post('/v1/personal/restore', json={'backup': {'scope': 'PUBLIC'}}).status_code == 422
+    invalid = first.post('/v1/personal/restore/preview', json={'backup': {'scope': 'PUBLIC'}}).json()
+    assert invalid['counts']['invalid'] == 1
+    assert first.post('/v1/personal/restore', json={'preview_token': invalid['preview_token']}).status_code == 422
     response = first.post('/v1/personal/export', json={'ids': [value['entity_id']], 'format': 'markdown'})
     assert response.status_code == 200 and '跨浏览器保留' in response.text
     assert first.get('/v1/personal/export?format=bad').status_code == 422
+
+
+@pytest.mark.parametrize('selected_id', ['test:historical', 'test:current'])
+def test_missing_pinned_definition_current_snapshot_matches_current_reference(store, selected_id):
+    pinned = definition('test:historical', rev='revision-missing', rule='缺失版本的原规则')
+    historical = definition('test:historical', rev='revision-historical', rule='可读历史版本规则')
+    current = definition('test:current', rev='revision-current', rule='真实当前版本规则')
+    for value in [pinned, historical, current]:
+        value['stable_knowledge_id'] = 'test:lineage'
+    historical['current_entity_id'] = current['entity_id']
+    current['prior_version_ids'] = [historical['entity_id']]
+    store.update(pinned, {'note': '必须保留缺失版本的笔记'})
+
+    class MissingVersionCatalog(Catalog):
+        def detail_version(self, kind, eid, revision):
+            raise KeyError(revision)
+
+        def detail(self, kind, eid):
+            return super().detail(kind, eid) | {'detail_marker': 'detail:' + eid}
+
+    exported = export_notebook(MissingVersionCatalog([historical, current]), store, ids=[selected_id])
+    record = exported['items'][0]
+    assert record['availability'] == 'PINNED_DEFINITION_UNAVAILABLE'
+    assert record['original_note_ref']['entity_id'] == pinned['entity_id']
+    assert record['original_note_ref']['definition_revision'] == 'revision-missing'
+    assert record['note'] == '必须保留缺失版本的笔记'
+    assert record['rule'] is None and record['formula'] is None
+    assert exported['research_requests'] == []
+    snapshot = record['current_definition_snapshot']
+    assert {key: snapshot[key] for key in ['entity_type', 'entity_id', 'definition_revision']} == record['current_definition_ref']
+    assert snapshot['entity_id'] == current['entity_id']
+    assert snapshot['strategy']['original_rule'] == '真实当前版本规则'
+    assert snapshot['detail_marker'] == 'detail:test:current'
+    assert '- 资料状态：PINNED_DEFINITION_UNAVAILABLE' in markdown_export(exported).splitlines()
+    assert '固定定义缺失，仅保留原引用，未生成对应研究请求；未用新规则代替旧定义。' in markdown_export(exported)
+
+
+def test_removed_catalog_source_export_keeps_reference_and_explains_missing_definition(store):
+    pinned = definition()
+    store.update(pinned, {'note': '来源移除也须保留'})
+    exported = export_notebook(Catalog([]), store)
+    record = exported['items'][0]
+    assert record['availability'] == 'SOURCE_NO_LONGER_IN_CURRENT_CATALOG'
+    assert record['original_note_ref']['definition_revision'] == pinned['definition_revision']
+    assert record['note'] == '来源移除也须保留'
+    assert record['rule'] is None and record['formula'] is None
+    assert record['current_definition_ref'] is None and record['current_definition_snapshot'] is None
+    assert exported['research_requests'] == []
+    assert '- 资料状态：SOURCE_NO_LONGER_IN_CURRENT_CATALOG' in markdown_export(exported).splitlines()
+    assert '固定定义缺失，仅保留原引用，未生成对应研究请求；未用新规则代替旧定义。' in markdown_export(exported)
 
 
 def test_catalog_incremental_updates_cannot_overwrite_notes_or_merge(store, tmp_path):
@@ -325,10 +389,15 @@ def test_restore_conflicting_merges_preserves_current_and_audits_backup(store, t
     other = PersonalStore(tmp_path / 'other.sqlite')
     remote = other.suggest(b, c, 'BACKUP_CHOICE', '备份确认 b 为主')
     other.decide(remote['suggestion_id'], 'confirm', canonical_id='b')
-    result = store.restore(other.backup(), mode='merge')
-    assert result['conflicts'][0]['kept_canonical_id'] == 'a'
+    preview = store.preview_restore(other.backup())
+    conflict = next(v for v in preview['conflicts'] if v['section'] == 'relationships')
+    assert conflict['local']['redirects'][0]['canonical_id'] == 'a'
+    assert conflict['backup']['redirects'][0]['canonical_id'] == 'b'
+    store.restore(preview_token=preview['preview_token'], decisions={conflict['id']: 'KEEP_LOCAL'})
     assert store.resolve('c') == 'a'
-    restored = next(row for row in store.duplicates()['items'] if row['suggestion_id'] == remote['suggestion_id'])
-    assert restored['status'] == 'PENDING' and restored['canonical_id'] is None
+    retained = store.restore_report(preview['preview_token'])['conflicts'][0]['backup']['duplicates'][0]
+    assert retained['status'] == 'CONFIRMED' and retained['canonical_id'] == 'b'
     audit = store.backup()['payload']['audit']
-    assert any(row['action'] == 'RESTORE_MERGE_CONFLICT' and row['detail']['retained_backup_decision']['canonical_id'] == 'b' for row in audit)
+    assert any(row['action'] == 'RESTORE_REVIEWED' and row['detail']['decisions'][conflict['id']] == 'KEEP_LOCAL' for row in audit)
+    reviewed_restore(store, other.backup(), 'USE_BACKUP')
+    assert store.resolve('c') == 'b'

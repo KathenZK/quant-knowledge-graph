@@ -8,8 +8,6 @@
 
 ```sh
 uv sync --frozen --extra test
-npm --prefix web ci
-npm --prefix web run build
 # 只读取操作者明确指定的 Graph 数据目录，SQLite backup 创建独立副本。
 uv run python -m scripts.personal_runtime \
   --source-runtime /absolute/authorized/graph-runtime \
@@ -17,7 +15,11 @@ uv run python -m scripts.personal_runtime \
 bash scripts/start_personal.sh
 ```
 
-打开 `http://127.0.0.1:8791`。可传新的运行目录：`bash scripts/start_personal.sh .artifacts/my-workbench`；端口可由 `QUANTGRAPH_PERSONAL_PORT` 指定。服务始终绑定 `127.0.0.1`，拒绝非回环来源、不可信 Host 和跨站请求，不信任转发头。不要把个人端口反向代理到公网。
+打开 `http://127.0.0.1:8791`。可传新的运行目录：`bash scripts/start_personal.sh .artifacts/my-workbench`；端口可用 `--port 8793` 或 `QUANTGRAPH_PERSONAL_PORT` 指定；占用时只提示，不终止其他进程。服务始终绑定 `127.0.0.1`，拒绝非回环来源、不可信 Host 和跨站请求，不信任转发头。不要把个人端口反向代理到公网。
+
+日常更新后仍只运行 `bash scripts/start_personal.sh`。它会核对源码、静态资源、生成文件、package/lockfile、构建脚本、配置及生产环境文件的内容指纹，检测未提交修改和新增/删除文件；同时核对已构建文件摘要。有效构建直接复用；依赖签名未变化时不重装依赖。缺失、过期或损坏时先在临时目录构建，成功后替换，失败则不启动服务。`--rebuild` 可强制构建。不要绕过入口直接调用 API 模块来更新页面。
+
+需要使用指定 Node 时，可设置 `QUANTGRAPH_NODE_BIN=/path/to/node/bin`，或在本机忽略目录 `.artifacts/personal-launch.json` 保存 `{"node_bin":"/path/to/node/bin"}`。这些配置不进入 Git。页脚“运行信息”显示页面嵌入的构建编号、服务构建编号、应用版本、Catalog 快照和数量；源码变化或旧标签页与服务不一致时会提示先保存笔记再刷新，不自动刷新未保存内容。服务启动后再次修改源码，也应重新运行日常命令。
 
 公开仓库不分发完整个人资料。缺少已建 Catalog 时，先复用 [现有导入入口](platform-operations.md) 在自己的运行目录导入明确授权的 ingestion journal、factor database、normalized records；然后使用个人入口。原始材料没有找到时仍必须列明缺失，不能用公开 Qlib 或临时样例冒充完整资料。
 
@@ -31,6 +33,10 @@ bash scripts/start_personal.sh
 - 关系：方法/来源分开，列表和图形、一/两跳、类型/置信度、分页。RULE_LINK_ONLY 是规则引用，没有收益归因结论。
 - 比较：2–4 项，按实际字段解释窗口、资产、排名范围、数据和来源差异。未知字段不会因同时缺失而被认定相同。
 - 外链：保留文档 ID、必要查询参数和章节锚点，只去掉敏感凭证与已知跟踪参数。点击检查才发出有限 HEAD 请求，一天缓存、超时和限速；连接失败、权限限制与明确 404 分开，不删除资料。
+
+## 中文组合检索
+
+不需要刻意插入空格：“均线动量”按均线和动量两个条件一起查；同一概念的中英文别名任选其一匹配。未知词保留，不会被悄悄丢掉。RSI14、MA200、12-1 Momentum 等保留参数；名称、完整别名和完整公式优先。结果解释命中的字段和词，不能把相近方法当作等价定义。“只用日线”严格要求已确认日频且只需 OHLCV；资料未说明时不会猜测，有可能真实返回空结果。
 
 ## 个人判断、版本与重复
 
@@ -46,7 +52,13 @@ bash scripts/start_personal.sh
 
 “我的清单”可按主题和状态筛选，选择条目导出 Markdown 或 JSON。导出含固定版本、规则/公式、参数、数据需求、来源、个人疑问、相关方法和已有研究引用；兼容的 `research-request/v1` 始终是 DRAFT，没有运行研究。
 
-“完整备份”下载个人层及合并/迁移记录的带摘要备份。恢复前校验 schema、摘要和引用关系，在事务中合并；现有记录冲突保留较新内容并报告，不会默默覆盖。操作程序另会在替换前保留恢复点。个人备份不包含第三方原始语料，不能替代来源数据库的备份。
+“完整备份”下载个人层及重复关系、重定向、迁移和审核记录，包含笔记、收藏、状态、标签、分组、个人整理和定义引用。备份格式为 `quantgraph-personal-backup/v2`，兼容 v1（缺少的个人记录版本记为 0），不支持的未来格式明确拒绝。个人备份不包含第三方原始语料，不能替代来源数据库的备份。
+
+恢复必须先上传预览：显示新增、相同、冲突、无效的数量。计数单位是稳定身份记录组；关联的重复关系与重定向共同处理，避免悬空引用。相同个人内容即使时间不同也不会重复创建；内容或定义引用不同则显示双方全文、定义版本、个人记录版本与带时区时间。时间只供核对，不自动决定新旧，也不自动拼接笔记。
+
+逐项选择“保留本机（KEEP_LOCAL）”或“采用备份（USE_BACKUP）”后才可执行；任何未处理冲突或无效记录都阻止整批写入。冲突报告及双方原件保存在本机，可刷新查看。预览后本机记录变化会拒绝执行，要求重新预览。执行前写入可下载的恢复点，使用事务校验后整体写入；失败保留原个人资料。同一预览重复提交返回原结果，再次上传同一备份不会重复创建记录。文件上限 8 MiB，重复主键、损坏摘要、结构或引用错误均明确报告。
+
+身份含义各自独立：数据库主键 `entity_id` 定位记录；`stable_id`/`stable_knowledge_id` 关联稳定知识身份；`definition_revision` 固定当时定义；`record_revision` 是个人编辑计数；`schema_version` 是备份格式。采用备份也不会自动把旧笔记改挂到新定义上。恢复报告与执行前副本保存在本机运行目录；完整目录备份包含这些文件，普通个人 JSON 备份不递归包含历次上传的恢复计划。
 
 整套工作台备份请在新的目录再次运行 `scripts.personal_runtime`，源目录为当前运行目录。SQLite backup 不会漏掉已提交的 WAL 数据。原始资料快照应按已有 source lock 独立保留。恢复先在新的隔离目录启动并核对数量、版本和笔记，再选择使用；不要覆盖正式数据。
 
@@ -61,7 +73,8 @@ bash scripts/start_personal.sh
 ```sh
 uv run pytest tests/test_personal_catalog.py tests/test_personal_store.py \
   tests/test_factor_reading.py tests/test_personal_research.py \
-  tests/test_personal_app.py tests/test_source_links.py -q
+  tests/test_personal_app.py tests/test_source_links.py \
+  tests/test_personal_build.py tests/test_personal_search.py -q
 npm --prefix web run lint
 npm --prefix web run typecheck
 npm --prefix web test

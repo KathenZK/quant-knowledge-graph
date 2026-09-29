@@ -73,10 +73,28 @@ def test_textual_residual_definition_does_not_infer_from_title():
     guide = enrich_factor_reading({'name': 'Momentum based on FF3 residuals'}, raw)
     assert '36 个月' in guide['summary'] and '11 个月' in guide['summary']
     assert '滞后一个月' in guide['summary']
+    assert {v['name'] for v in guide['variables']} == {'retrf', 'mktrf', 'smb', 'hml'}
+    raw['required_fields'] = ['retrf', 'mktrf']
+    original = deepcopy(raw)
+    guide = enrich_factor_reading({'name': 'Momentum based on FF3 residuals'}, raw)
+    assert {v['name'] for v in guide['variables']} == {'retrf', 'mktrf', 'smb', 'hml'}
+    assert raw == original
+    assert all(v['evidence'] == '(smb, hml)' for v in guide['variables'] if v['name'] in {'smb', 'hml'})
     raw = {'description': 'Keep fpi = 1. Binary variable equal to 1 if mean analyst earnings forecast for the next quarter (meanest) has improved over the previous month, and 0 otherwise.'}
     guide = enrich_factor_reading({'name': 'Down forecast EPS'}, raw)
     assert '提高，指标取 1' in guide['summary']
     assert any(s['status'] == 'REVIEW_REQUIRED' for s in guide['semantics'])
+    assert {v['name'] for v in guide['variables']} == {'fpi', 'meanest'}
+
+
+def test_prose_symbols_require_explicit_definition_evidence():
+    value = {'name': 'FF3 smb hml profitable signal'}
+    no_definition = enrich_factor_reading(value, {})
+    assert no_definition['variables'] == []
+    guide = enrich_factor_reading(value, {'description': 'Measure return (monthly), from a paper (2011); see (Table 2). Universe (NYSE). Market excess return (market_excess), accounting assets (at). Keep flag = 1.'})
+    assert {v['name'] for v in guide['variables']} == {'market_excess', 'at', 'flag'}
+    assert all('EXPLICIT_DESCRIPTION_SYMBOL' == v['basis'] for v in guide['variables'])
+    assert all('原文' in v['meaning'] for v in guide['variables'])
 
 
 def test_unknown_reference_and_unsupported_formula_are_candid():

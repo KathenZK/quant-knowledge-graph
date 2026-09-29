@@ -79,3 +79,12 @@ def test_notes_survive_service_recreation_and_filter_before_pagination(personal)
     exported = other.get('/v1/personal/export?format=json').json()
     assert exported['items'][0]['rule'] and exported['research_requests'][0]['status'] == 'DRAFT'
     assert 'SYNTHETIC_ORIGINAL_ONLY' in json.dumps(exported)
+
+
+def test_long_formula_queries_are_accepted_with_bounded_length(personal):
+    client, _, _, _ = personal
+    formula = 'Mean($close, 5)/$close + ' * 25 + '$volume'
+    response = client.get('/v1/web/search', params={'kind':'variant', 'q':formula})
+    assert response.status_code == 200 and response.json()['total'] == 0
+    assert response.json()['query']['units'][0]['kind'] == 'formula'
+    assert client.get('/v1/web/search', params={'q':'x'*2001}).status_code == 422

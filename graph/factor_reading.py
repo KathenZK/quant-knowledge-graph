@@ -282,6 +282,31 @@ def _description_reading(description):
     return None
 
 
+def _description_variables(text):
+    """Read explicitly named prose symbols, never infer fields from a title.
+
+    Parentheses must follow a variable-bearing source label. Ordinary prose,
+    publication years and LaTeX macros are not interpreted as input symbols.
+    """
+    if not isinstance(text, str) or text.lstrip().startswith('$'):
+        return []
+    variables = []
+    label = r'(?:returns?|factors?|assets?|variables?|fields?|prices?|volumes?|sales|income|debt|equity|issuance|reduction|changes|forecast(?: for the next quarter)?)\s*$'
+    ordinary = {'monthly', 'daily', 'annual', 'annually', 'quarterly', 'weekly', 'average', 'current', 'previous', 'next'}
+    for match in re.finditer(r'\(([A-Za-z][A-Za-z0-9_]*(?:\s*,\s*[A-Za-z][A-Za-z0-9_]*)*)\)', text):
+        context = text[max(0, match.start()-100):match.start()]
+        if not re.search(label, context, re.I):
+            continue
+        for symbol in re.split(r'\s*,\s*', match[1]):
+            if symbol.lower() not in ordinary:
+                variables.append(dict(name=symbol, meaning=f'原文显式记号 {symbol}；具体构造、单位及可用时点仍按来源核对',
+                                      evidence=match[0], basis='EXPLICIT_DESCRIPTION_SYMBOL'))
+    for match in re.finditer(r'\bKeep\s+([A-Za-z][A-Za-z0-9_]*)\s*=\s*[-+]?\d+(?:\.\d+)?', text):
+        variables.append(dict(name=match[1], meaning=f'原文筛选条件中的记号 {match[1]}；不推断其未说明的业务含义',
+                              evidence=match[0], basis='EXPLICIT_DESCRIPTION_SYMBOL'))
+    return variables
+
+
 def enrich_factor_reading(value, raw):
     """Return explanation-only fields for the private reading projection."""
     raw = raw if isinstance(raw, dict) else {}
@@ -341,6 +366,9 @@ def enrich_factor_reading(value, raw):
         summary = _description_reading(description)
         if summary:
             basis = '对归档定义中明确列出的运算、窗口和条件作有限模式转述；原始英文或公式另行保留。'
+    if not formula:
+        known = {v['name'] for v in variables}
+        variables.extend(v for v in _description_variables(description) if v['name'] not in known)
     if not formula and not description:
         summary = '本机只保存了此条目的来源与方法引用，尚未收录完整定义；需要沿来源继续核对，不能据此还原计算。'
     if not summary and formula:

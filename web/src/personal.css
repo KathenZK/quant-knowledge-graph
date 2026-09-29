@@ -1930,3 +1930,217 @@
 .pw-linked-notes p {
   white-space: pre-wrap;
 }
+
+/* Restore decisions belong to the personal workspace, separate from source facts. */
+.pw-footer {
+  display: block;
+}
+.pw-footer-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.pw-runtime {
+  margin-top: 20px;
+  font-size: 12px;
+}
+.pw-runtime > details {
+  border-top: 1px solid #dde5d4;
+  padding-top: 14px;
+}
+.pw-runtime summary {
+  cursor: pointer;
+  line-height: 1.8;
+}
+.pw-runtime summary span {
+  margin-left: 12px;
+  font-size: 11px;
+}
+.pw-runtime-meta,
+.pw-runtime-counts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 28px;
+}
+.pw-runtime-meta > div,
+.pw-runtime-counts > div {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5eadf;
+  padding: 8px 0;
+}
+.pw-runtime dt {
+  flex-shrink: 0;
+}
+.pw-runtime dd {
+  margin: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+.pw-restore-preview {
+  font-size: 13px;
+  color: #344333;
+}
+.pw-restore-counts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 24px;
+  padding: 12px 0;
+  border-bottom: 1px solid #dedfc7;
+}
+.pw-restore-counts strong {
+  min-width: 190px;
+}
+.pw-restore-counts b {
+  padding-left: 5px;
+  font-variant-numeric: tabular-nums;
+}
+.pw-restore-conflict {
+  min-width: 0;
+  border: 1px solid #ccd4be;
+  border-radius: 6px;
+  margin: 24px 0;
+  padding: 18px;
+  background: #fffef9;
+}
+.pw-restore-conflict legend {
+  font-size: 15px;
+  font-weight: 650;
+  padding: 0 8px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.pw-restore-reason {
+  margin-top: 0;
+  color: #536448;
+}
+.pw-restore-versions,
+.pw-restore-raw {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+}
+.pw-restore-versions h3,
+.pw-restore-raw h3 {
+  font-size: 13px;
+}
+.pw-restore-versions dl {
+  margin: 0 0 15px;
+}
+.pw-restore-versions dl > div {
+  margin: 9px 0;
+}
+.pw-restore-versions dt {
+  color: #62735a;
+  font-size: 11px;
+}
+.pw-restore-versions dd {
+  margin: 3px 0 0;
+  overflow-wrap: anywhere;
+}
+.pw-restore-versions small {
+  display: block;
+  color: #88583c;
+}
+.pw-restore-diff {
+  min-width: 560px;
+  table-layout: fixed;
+  width: 100%;
+}
+.pw-restore-diff caption {
+  text-align: left;
+  padding: 8px 0;
+  font-size: 12px;
+}
+.pw-restore-diff th:first-child {
+  width: 100px;
+}
+.pw-restore-diff td {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+.pw-restore-changed {
+  background: #fff5df;
+}
+.pw-restore-conflict details {
+  margin-top: 15px;
+  font-size: 12px;
+}
+.pw-restore-conflict summary {
+  cursor: pointer;
+}
+.pw-restore-raw pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 12px;
+  background: #f0f3eb;
+  max-height: 420px;
+  overflow: auto;
+}
+.pw-restore-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+.pw-restore-choices label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #b9c9ac;
+  border-radius: 5px;
+  padding: 13px;
+  cursor: pointer;
+}
+.pw-restore-choices label:has(input:checked) {
+  background: #e3ecd5;
+  border-color: #607d47;
+}
+.pw-restore-choices code {
+  font-size: 10px;
+  color: #556946;
+}
+.pw-restore-result {
+  padding: 16px;
+  border: 1px solid #bacb9d;
+  border-radius: 6px;
+  background: #edf3e5;
+  margin: 20px 0;
+}
+.pw-restore-pending {
+  line-height: 1.8;
+  font-weight: 550;
+}
+@media (max-width: 700px) {
+  .pw-runtime-meta,
+  .pw-runtime-counts,
+  .pw-restore-versions,
+  .pw-restore-raw {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pw-footer-line {
+    flex-direction: column;
+  }
+  .pw-runtime summary span {
+    display: block;
+    margin-left: 0;
+  }
+  .pw-restore-preview {
+    padding: 14px;
+  }
+  .pw-restore-conflict {
+    padding: 12px;
+  }
+}
+.pw-search-explanation {
+  margin: 10px 0;
+  border-left: 3px solid #afc58c;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.8;
+  background: #f0f4e9;
+  color: #435538;
+}

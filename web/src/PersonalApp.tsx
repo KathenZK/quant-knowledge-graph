@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import {
   Link,
   NavLink,
@@ -57,6 +57,7 @@ import {
   type PersonalMeta,
   type PersonalRecord,
 } from "./personal-data";
+import PersonalRestore from "./PersonalRestore";
 import "./personal.css";
 
 function useApi<T>(url: string) {
@@ -226,95 +227,135 @@ function ItemActions({
     </div>
   );
 }
-function Snapshot({ meta }: { meta: PersonalMeta }) {
-  const [expanded, setExpanded] = useState(false);
+export function RuntimeInformation({
+  meta: initialMeta,
+}: {
+  meta: PersonalMeta;
+}) {
+  const [meta, setMeta] = useState(initialMeta);
+  useEffect(() => {
+    let active = true;
+    let pending = false;
+    const recheck = async () => {
+      if (pending || document.visibilityState === "hidden") return;
+      pending = true;
+      try {
+        const current = await personalApi<PersonalMeta>("/v1/web/meta");
+        if (active && current.mode === "personal_local") setMeta(current);
+      } catch {
+        /* Temporary service restart leaves the current page and unsaved notes intact. */
+      } finally {
+        pending = false;
+      }
+    };
+    const check = () => {
+      void recheck();
+    };
+    window.addEventListener("focus", check);
+    document.addEventListener("visibilitychange", check);
+    const timer = window.setInterval(check, 60_000);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      window.removeEventListener("focus", check);
+      document.removeEventListener("visibilitychange", check);
+    };
+  }, []);
+  const embeddedId = import.meta.env.VITE_QUANTGRAPH_BUILD_ID || "";
+  const serverId = meta.build?.build_id || "";
+  const mismatch = Boolean(embeddedId && serverId && embeddedId !== serverId);
   const counts = {
     ...meta.counts,
     ...meta.knowledge_counts,
     ...meta.layer_counts,
   };
+  const issue = mismatch
+    ? "服务已更新，本页仍是旧版本。请先保存正在编辑的笔记，再刷新页面。"
+    : meta.build && meta.build.status !== "CURRENT"
+      ? meta.build.message || "当前构建尚未与源码核对，请重新启动工作台。"
+      : "";
   return (
-    <section className="pw-snapshot" aria-label="当前数据快照">
-      <div className="pw-snapshot-main">
-        <span className="pw-live-dot" />
-        <strong>个人本地模式</strong>
-        <span className="pw-snapshot-name">
-          {readable(meta.dataset || meta.snapshot || meta.release)}
-        </span>
-        <button
-          className="pw-quiet"
-          aria-expanded={expanded}
-          onClick={() => setExpanded(!expanded)}
-        >
-          快照与分层统计 <ChevronDown size={14} />
-        </button>
-      </div>
-      <div className="pw-statline">
-        <span>
-          策略记录 <b>{meta.counts.strategy?.toLocaleString() ?? "未知"}</b>
-        </span>
-        <span>
-          因子变体 <b>{meta.counts.variant?.toLocaleString() ?? "未知"}</b>
-        </span>
-        <span>
-          因子来源定义{" "}
-          <b>
-            {meta.layer_counts?.normalized_factor_records?.toLocaleString() ??
-              "未知"}
-          </b>
-        </span>
-        <span>
-          关系{" "}
-          <b>
-            {String(
-              meta.knowledge_counts?.relations ??
-                meta.layer_counts?.relations ??
-                "见分层统计",
-            )}
-          </b>
-        </span>
-        <span>
-          最近导入{" "}
-          <b title={meta.imported_at || meta.last_imported_at}>
-            {humanDate(meta.imported_at || meta.last_imported_at)}
-          </b>
-        </span>
-      </div>
-      {expanded && (
-        <div className="pw-snapshot-detail">
-          <p>不同层级分别计数，不相加为独立方法数量。</p>
-          <dl>
-            {Object.entries(counts).map(([key, value]) => (
-              <div key={key}>
-                <dt>{countLabel(key)}</dt>
-                <dd>{readable(value)}</dd>
-              </div>
-            ))}
-          </dl>
-          {meta.data_path && (
-            <p>
-              本地数据：<code>{meta.data_path}</code>
-            </p>
-          )}
-          <p>
-            快照 <code>{readable(meta.snapshot || meta.release)}</code>
-          </p>
-          {meta.reading_coverage && (
-            <details>
-              <summary>已有原文的可读覆盖</summary>
-              <dl>
-                {Object.entries(meta.reading_coverage).map(([key, value]) => (
-                  <div key={key}>
-                    <dt>{countLabel(key)}</dt>
-                    <dd>{readable(value)}</dd>
-                  </div>
-                ))}
-              </dl>
-            </details>
-          )}
-        </div>
+    <div className="pw-runtime">
+      {issue && (
+        <p className="pw-error" role="status">
+          {issue}
+        </p>
       )}
-    </section>
+      <details aria-label="运行信息与数据快照">
+        <summary>
+          运行信息与数据快照{" "}
+          <span>
+            个人本地模式 · v{meta.application_version || "未知"} ·{" "}
+            {embeddedId || "开发预览"}
+          </span>
+        </summary>
+        <dl className="pw-runtime-meta">
+          <div>
+            <dt>本页构建版本</dt>
+            <dd>
+              <code>{embeddedId || "开发预览，未嵌入构建版本"}</code>
+            </dd>
+          </div>
+          <div>
+            <dt>服务构建版本</dt>
+            <dd>
+              <code>{serverId || "未记录"}</code> ·{" "}
+              {mismatch
+                ? "本页需要刷新"
+                : meta.build?.status === "CURRENT"
+                  ? "已核对当前源码"
+                  : meta.build?.status || "未核对"}
+            </dd>
+          </div>
+          <div>
+            <dt>构建时间</dt>
+            <dd
+              title={
+                import.meta.env.VITE_QUANTGRAPH_BUILD_AT || meta.build?.built_at
+              }
+            >
+              {humanDate(
+                import.meta.env.VITE_QUANTGRAPH_BUILD_AT ||
+                  meta.build?.built_at,
+              )}
+              （北京时间）
+            </dd>
+          </div>
+          <div>
+            <dt>Catalog 快照</dt>
+            <dd>{readable(meta.snapshot || meta.release || meta.dataset)}</dd>
+          </div>
+          <div>
+            <dt>最近导入时间</dt>
+            <dd title={meta.imported_at || meta.last_imported_at}>
+              {humanDate(meta.imported_at || meta.last_imported_at)}（北京时间）
+            </dd>
+          </div>
+        </dl>
+        <p>各层分别计数，不相加为独立方法数量。</p>
+        <dl className="pw-runtime-counts">
+          {Object.entries(counts).map(([key, value]) => (
+            <div key={key}>
+              <dt>{countLabel(key)}</dt>
+              <dd>{readable(value)}</dd>
+            </div>
+          ))}
+        </dl>
+        {meta.reading_coverage && (
+          <details>
+            <summary>已有原文的可读覆盖</summary>
+            <dl className="pw-runtime-counts">
+              {Object.entries(meta.reading_coverage).map(([key, value]) => (
+                <div key={key}>
+                  <dt>{countLabel(key)}</dt>
+                  <dd>{readable(value)}</dd>
+                </div>
+              ))}
+            </dl>
+          </details>
+        )}
+      </details>
+    </div>
   );
 }
 const countLabel = (key: string) =>
@@ -469,7 +510,6 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
           </Link>
         </div>
         <main id="personal-main" tabIndex={-1}>
-          <Snapshot meta={meta} />
           {meta.warnings?.map((warning) => (
             <div className="pw-notice" key={warning}>
               {warning}
@@ -540,8 +580,11 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
             </>
           )}
           <footer className="pw-footer">
-            来源事实、整理说明、个人判断分开保存。
-            <span>QuantGraph · 个人本地工作台</span>
+            <div className="pw-footer-line">
+              来源事实、整理说明、个人判断分开保存。
+              <span>QuantGraph · 个人本地工作台</span>
+            </div>
+            <RuntimeInformation meta={meta} />
           </footer>
         </main>
       </div>
@@ -608,6 +651,9 @@ function Browse({
     page: number;
     page_size: number;
     total_before_collapse?: number;
+    query?: {
+      constraints?: { key: string; text: string; explanation: string }[];
+    };
   }>("/v1/web/search?" + effective.toString());
   const filter = (name: string, value: string) => {
     const next = new URLSearchParams(params);
@@ -690,7 +736,7 @@ function Browse({
                 ? "搜索中文、英文、规则词，如：趋势、RSI、突破…"
                 : "搜索名称、缩写或公式，如：均线、MA、成交量…"
             }
-            maxLength={200}
+            maxLength={2000}
           />
           <button type="submit" className="primary">
             搜索
@@ -776,6 +822,15 @@ function Browse({
             )}
           </div>
         </div>
+        {results.data?.query?.constraints?.map((constraint, index) => (
+          <p
+            className="pw-search-explanation"
+            key={`${constraint.key}-${index}`}
+          >
+            <strong>{constraint.text}：</strong>
+            {constraint.explanation}
+          </p>
+        ))}
         {results.loading ? (
           <Loading />
         ) : results.error ? (
@@ -2549,10 +2604,8 @@ function Notebook({
   const [selected, setSelected] = useState<string[]>([]),
     [busy, setBusy] = useState(false),
     [failure, setFailure] = useState("");
-  const [restore, setRestore] = useState<{
-    name: string;
-    value: unknown;
-  } | null>(null);
+  const [restoreFile, setRestoreFile] = useState<File | null>(null);
+  const restoreFileProcessed = useCallback(() => setRestoreFile(null), []);
   const [legacy, setLegacy] = useState(() =>
     (["PUBLIC", "PRIVATE"] as const).map((mode) => ({
       mode,
@@ -2605,11 +2658,30 @@ function Notebook({
       });
       if (!response.ok)
         throw new Error("导出未完成。原笔记仍保留，请稍后重试。");
-      if (format === "markdown")
-        downloadText("quantgraph-research-notes.md", await response.text());
-      else download("quantgraph-research-notes.json", await response.json());
+      const unavailable = new Set([
+        "PINNED_DEFINITION_UNAVAILABLE",
+        "SOURCE_NO_LONGER_IN_CURRENT_CATALOG",
+      ]);
+      let missing = false;
+      if (format === "markdown") {
+        const markdown = await response.text();
+        missing = [...unavailable].some((status) =>
+          markdown.includes(`- 资料状态：${status}`),
+        );
+        downloadText("quantgraph-research-notes.md", markdown);
+      } else {
+        const value = await response.json();
+        missing =
+          Array.isArray(value.items) &&
+          value.items.some((item: { availability?: string }) =>
+            unavailable.has(item.availability || ""),
+          );
+        download("quantgraph-research-notes.json", value);
+      }
       workspace.notify(
-        "已导出条目、固定版本、规则、来源与个人问题。未运行研究任务。",
+        missing
+          ? "部分固定定义缺失。已保留原引用；缺失条目未导出替代规则，也未生成研究请求。"
+          : "已导出条目、固定版本、规则、来源与个人问题。未运行研究任务。",
       );
     });
   return (
@@ -2644,15 +2716,7 @@ function Notebook({
                 disabled={busy}
                 onChange={(event) => {
                   const file = event.target.files?.[0];
-                  if (file)
-                    void run(async () => {
-                      if (file.size > 25_000_000)
-                        throw new Error("备份超过 25 MB，请检查文件。");
-                      setRestore({
-                        name: file.name,
-                        value: JSON.parse(await file.text()),
-                      });
-                    });
+                  if (file) setRestoreFile(file);
                   event.target.value = "";
                 }}
               />
@@ -2702,42 +2766,12 @@ function Notebook({
           })
         }
       />
-      {restore && (
-        <section className="pw-restore-preview">
-          <h2>合并恢复「{restore.name}」</h2>
-          <p>
-            将把备份中的个人记录和身份判断导入当前服务。已有本机笔记优先保留，不覆盖原始知识资料。
-          </p>
-          <div className="pw-actions">
-            <button
-              className="primary"
-              disabled={busy}
-              onClick={() =>
-                void run(async () => {
-                  const result = await personalApi<{
-                    imported?: number;
-                    preserved?: number;
-                  }>("/v1/personal/restore", {
-                    method: "POST",
-                    body: JSON.stringify({
-                      backup: restore.value,
-                      mode: "merge",
-                    }),
-                  });
-                  setRestore(null);
-                  workspace.refresh();
-                  workspace.notify(
-                    `备份已合并恢复${result.imported != null ? `：导入 ${result.imported} 条` : ""}。已有个人修改保留。`,
-                  );
-                })
-              }
-            >
-              确认合并恢复
-            </button>
-            <button onClick={() => setRestore(null)}>取消</button>
-          </div>
-        </section>
-      )}
+      <PersonalRestore
+        file={restoreFile}
+        onFileProcessed={restoreFileProcessed}
+        refresh={workspace.refresh}
+        notify={workspace.notify}
+      />
       {failure && (
         <p className="pw-error" role="alert">
           {failure}
