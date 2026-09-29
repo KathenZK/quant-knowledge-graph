@@ -80,7 +80,7 @@ export function Loading() {
   return (
     <p role="status" className="loading">
       <LoaderCircle size={18} aria-hidden="true" />
-      正在读取公开知识库…
+      正在读取知识库…
     </p>
   );
 }

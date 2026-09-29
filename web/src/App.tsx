@@ -27,6 +27,8 @@ import {
   X,
 } from "lucide-react";
 import { api, useApi } from "./api";
+import PersonalApp from "./PersonalApp";
+import type { PersonalMeta } from "./personal-data";
 import {
   Actions,
   Empty,
@@ -131,10 +133,12 @@ function ItemActions({ item, bench }: { item: Item; bench: Workbench }) {
   );
 }
 export default function App() {
-  const meta = useApi<Meta>("/v1/web/meta");
+  const meta = useApi<Meta | PersonalMeta>("/v1/web/meta");
   if (meta.loading) return <Loading />;
   if (!meta.data)
     return <ErrorState error={meta.error || "服务不可用"} retry={meta.retry} />;
+  if (meta.data.mode === "personal_local")
+    return <PersonalApp meta={meta.data} />;
   return <WorkbenchApp key={meta.data.mode} mode={meta.data.mode} />;
 }
 function WorkbenchApp({ mode }: { mode: "PUBLIC" | "PRIVATE" }) {
@@ -306,7 +310,10 @@ function WorkbenchApp({ mode }: { mode: "PUBLIC" | "PRIVATE" }) {
                     />
                   }
                 />
-                <Route path="/results" element={<ResultsPage meta={meta.data} />} />
+                <Route
+                  path="/results"
+                  element={<ResultsPage meta={meta.data} />}
+                />
                 <Route path="/relations" element={<RelationsPage />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/jobs/:id" element={<JobPage />} />
