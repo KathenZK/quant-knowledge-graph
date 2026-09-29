@@ -152,3 +152,37 @@ describe("untrusted source rendering", () => {
     expect(screen.getByText("confirmatory")).toBeInTheDocument();
   });
 });
+
+it("a failed retained study shows its failure separately from numerical rights", async () => {
+  const { SummaryStudy } = await import("../src/catalog-pages");
+  render(
+    <BrowserRouter>
+      <SummaryStudy
+        study={{
+          job_id: "test-only-job",
+          run_id: "test-only-run",
+          study_type: "STRATEGY_REPLICATION",
+          study_kind: "EXPLORATORY_ANALYSIS",
+          conclusion_level: "INSUFFICIENT_EVIDENCE",
+          status: "FAILED",
+          numerical_display: "RESTRICTED",
+          classification: "DATA_OR_REPRODUCTION_FAILURE",
+          execution_status: "FAILED",
+          failure_reason: "SYNTHETIC missing execution data",
+          source_reproduction: "NOT_ESTABLISHED",
+          entity_refs: [],
+          lineage: [],
+          sample: {},
+          metrics: {},
+          limitations: [],
+          promotion_allowed: false,
+        }}
+      />
+    </BrowserRouter>,
+  );
+  expect(
+    screen.getByText("SYNTHETIC missing execution data"),
+  ).toBeInTheDocument();
+  expect(screen.getByText(/研究未成功完成/)).toBeInTheDocument();
+  expect(screen.queryByText(/研究已实际运行；/)).not.toBeInTheDocument();
+});

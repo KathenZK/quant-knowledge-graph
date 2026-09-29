@@ -108,7 +108,10 @@ class BoundedBodyMiddleware:
         await self.app(scope, bounded_receive, send)
 
 
-class ResearchEvidence(BaseModel):
+from quantgraph.models.factor_study import StudyMetadata, Strict
+
+
+class ResearchEvidence(Strict):
     model_config = ConfigDict(extra='forbid', allow_inf_nan=False)
     schema_version: Literal['1.0'] = '1.0'
     research_run_id: str = Field(min_length=1, max_length=200)
@@ -121,6 +124,8 @@ class ResearchEvidence(BaseModel):
     results: dict
     evidence_kind: Literal['PIPELINE_DIAGNOSTIC', 'LAB_REPRODUCED', 'ATTRIBUTION_ABLATION']
     validation_status: Literal['SUBMITTED_NOT_INDEPENDENTLY_VERIFIED'] = 'SUBMITTED_NOT_INDEPENDENTLY_VERIFIED'
+    # Optional bridge metadata keeps historical schema 1.0 envelopes valid.
+    study_metadata: StudyMetadata | None = None
 
 
 def install_ingestion(app, repository, *, keys=None, max_bytes=None):

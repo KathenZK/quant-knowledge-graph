@@ -1,5 +1,7 @@
 # QuantGraph / Lab 集成验收
 
+> 本文保留早期阶段验收快照，数量和待办不代表当前产品状态。当前交付见 [策略与因子产品](platform-delivery.md) 与 [最新验收](platform-acceptance.md)。
+
 本轮只修补接线，不改变因子算法、准入、holdout 或统计核心。公开定义仍来自经许可审查的 Qlib release；生产路径没有 mock。下面的状态只代表本轮实际执行，不借用 A 的历史运行作为本轮结果。
 
 ## 固定依赖

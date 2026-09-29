@@ -1688,6 +1688,8 @@ footer code {
   border: 0;
 }
 .parameters dt {
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: #53644c;
   font-size: 11px;
 }
@@ -1695,4 +1697,137 @@ footer code {
   margin: 0;
   font-size: 12px;
   overflow-wrap: anywhere;
+}
+
+.strategy-summary {
+  max-width: 38rem;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.relation-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: end;
+}
+.relation-controls label {
+  min-width: 160px;
+}
+.graph-scroll {
+  overflow: auto;
+  max-height: 580px;
+  border: 1px solid #d7dfd9;
+  background: #f8faf7;
+}
+.graph-scroll svg {
+  min-width: 780px;
+  width: 100%;
+}
+.graph-edge {
+  stroke: #b4c8bc;
+  stroke-width: 2;
+}
+.graph-node {
+  fill: #fff;
+  stroke: #778d80;
+  stroke-width: 1.5;
+}
+.graph-node.current {
+  fill: #e1efe6;
+  stroke: #2d6550;
+  stroke-width: 2;
+}
+.graph-scroll a:focus .graph-node {
+  stroke: #165eb8;
+  stroke-width: 4;
+}
+.graph-scroll text {
+  fill: #1d3429;
+  font-size: 13px;
+}
+.graph-scroll .graph-kind {
+  fill: #526459;
+  font-size: 11px;
+}
+.relationship-list article,
+.admin-edge {
+  padding: 1rem 0;
+  border-bottom: 1px solid #d7dfd9;
+}
+.relation-path {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.relation-path a {
+  max-width: 25rem;
+  overflow-wrap: anywhere;
+}
+.admin-login {
+  max-width: 620px;
+}
+.admin-editor {
+  margin-top: 2rem;
+  background: #f3f7f3;
+}
+.admin-editor label,
+.admin-login label,
+.code-input {
+  display: block;
+  margin: 0.9rem 0;
+}
+.admin-editor input,
+.admin-editor textarea,
+.admin-login input,
+.code-input {
+  width: 100%;
+}
+.admin-editor textarea {
+  min-height: 90px;
+}
+.code-input {
+  min-height: 190px;
+  font-family: monospace;
+}
+.admin-edge .actions {
+  flex-wrap: wrap;
+}
+.panel pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+progress {
+  width: 100%;
+  accent-color: #2d6550;
+}
+@media (max-width: 700px) {
+  .relation-path {
+    display: block;
+  }
+  .relation-path strong {
+    display: block;
+    margin: 0.5rem 0;
+  }
+  .admin-editor {
+    padding: 1rem;
+  }
+}
+
+.panel p a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+button.primary:hover,
+button.primary:focus-visible {
+  background: #184e3f;
+  color: #fff;
+}
+
+.internal-report {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  line-height: 1.7;
 }

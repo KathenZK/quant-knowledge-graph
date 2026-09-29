@@ -1,0 +1,227 @@
+"""Transport tests use explicit test evidence; real-market acceptance is separate."""
+from concurrent.futures import ThreadPoolExecutor
+from copy import deepcopy
+import json
+from pathlib import Path
+
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+import pytest
+
+from quantgraph.api.research_jobs import install_research_jobs, public_results
+from quantgraph.graph.research_jobs import ResearchJobRepository, LeaseLost, CapacityExceeded
+
+REF = {'entity_type':'FactorVariant','entity_id':'test-factor','definition_revision':'a'*64}
+PROFILES = {'test':dict(study_type='FACTOR_DIAGNOSTIC',entity_types=['FactorVariant'],
+                        max_trials=2,max_seconds=60,capability='discovery-v1',
+                        display_policy='test-rights-review',public_display=True)}
+
+
+def request(key='one'):
+    return dict(request_id=key,entity_refs=[REF],study_type='FACTOR_DIAGNOSTIC',
+                requested_settings={'profile_id':'test'})
+
+
+@pytest.fixture
+def repo(tmp_path):
+    return ResearchJobRepository(tmp_path/'jobs.sqlite',PROFILES)
+
+
+def submit(repo, key='one'):
+    return repo.submit(request(key),owner='admin',resolve_ref=lambda **ref: {'ref':ref})[0]
+
+
+def test_concurrent_idempotency_and_changed_request_are_distinct(repo):
+    with ThreadPoolExecutor(max_workers=12) as pool:
+        values=list(pool.map(lambda _: submit(repo), range(36)))
+    assert len({v['job_id'] for v in values}) == 1
+    changed=request();changed['hypothesis']='different'
+    with pytest.raises(ValueError,match='another request'):
+        repo.submit(changed,owner='admin',resolve_ref=lambda **r:r)
+    assert submit(repo,'two')['job_id'] != values[0]['job_id']
+
+
+def test_concurrency_limit_and_recovery_fencing_preserve_run(repo):
+    now=[100.0];repo.clock=lambda:now[0]
+    original=submit(repo);submit(repo,'two')
+    first=repo.claim('first',['test'],lease_seconds=5)
+    assert first['job_id']==original['job_id']
+    assert repo.claim('second',['test']) is None
+    now[0]=106
+    recovered=repo.claim('second',['test'])
+    assert recovered['run_id']==first['run_id'] and recovered['attempts']==2
+    with pytest.raises(LeaseLost):
+        repo.finish(first['job_id'],first['lease_token'],status='FAILED')
+    with pytest.raises(LeaseLost):
+        repo.heartbeat(first['job_id'],first['lease_token'],stage='stale',progress=.5)
+    repo.finish(recovered['job_id'],recovered['lease_token'],status='BLOCKED',error={'code':'TEST'})
+    assert repo.get(recovered['job_id'])['status']=='BLOCKED'
+
+
+def test_cancel_queued_and_running_jobs(repo):
+    one=submit(repo);two=submit(repo,'two')
+    assert repo.cancel(two['job_id'])['status']=='CANCELLED'
+    active=repo.claim('worker',['test'])
+    assert active['job_id']==one['job_id']
+    assert repo.cancel(one['job_id'])['cancel_requested']==1
+    assert repo.heartbeat(one['job_id'],active['lease_token'],stage='stop',progress=.1)
+    repo.finish(one['job_id'],active['lease_token'],status='FAILED')
+    assert repo.get(one['job_id'])['status']=='CANCELLED'
+
+
+def test_budget_and_untrusted_execution_settings(tmp_path):
+    repo=ResearchJobRepository(tmp_path/'jobs.sqlite',PROFILES,daily_trial_budget=2)
+    submit(repo)
+    with pytest.raises(CapacityExceeded):submit(repo,'two')
+    for field in ('shell','python','manifest','path','live_ready'):
+        bad=request(field);bad['requested_settings'][field]='untrusted'
+        with pytest.raises(ValueError,match='server controlled'):
+            repo.submit(bad,owner='admin',resolve_ref=lambda **r:r)
+
+
+def test_definition_snapshot_and_profile_are_pinned(repo):
+    def stale(**ref):raise ValueError('revision mismatch')
+    with pytest.raises(ValueError,match='revision'):
+        repo.submit(request(),owner='admin',resolve_ref=stale)
+    job=submit(repo)
+    retry,_=repo.submit(request(),owner='admin',resolve_ref=stale)
+    assert retry['job_id']==job['job_id']
+    repo.profiles=deepcopy(PROFILES);repo.profiles['test']['max_trials']=3
+    assert repo.claim('worker',['test']) is None
+    assert repo.get(job['job_id'])['status']=='BLOCKED'
+
+
+def result(ref):
+    value=json.loads((Path(__file__).parents[1]/'contracts/factor-study/v1/fixtures/factor-study-result.json').read_text())
+    value['mapping']['identity']['factor_variant_id']=ref['entity_id']
+    value['mapping']['identity']['definition_revision']=ref['definition_revision']
+    value['study_metadata']=dict(entity_refs=[ref],study_type='FACTOR_DIAGNOSTIC',
+        study_kind='EXPLORATORY_ANALYSIS',provenance={},limitations=['Explicit test data; not market acceptance'],
+        conclusion_level='INCONCLUSIVE',lineage=[],display_policy='test-rights-review',
+        public_summary={'metrics':{'ic':None,'forbidden_path':'/secret/path'},
+                        'sample':{'real_market_data':False},'artifact_uri':'/secret/file'})
+    return value
+
+
+def test_public_results_revision_visibility_and_server_rights(repo):
+    job=submit(repo);active=repo.claim('worker',['test'])
+    evidence=result(REF)
+    repo.finish(job['job_id'],active['lease_token'],status='PARTIAL',results=[evidence])
+    items=public_results(repo,REF,lambda _:True)
+    assert len(items)==1 and items[0]['promotion_allowed'] is False
+    assert '/secret' not in json.dumps(items)
+    with pytest.raises(KeyError):public_results(repo,REF,lambda _:False)
+    assert public_results(repo,{**REF,'definition_revision':'b'*64},lambda _:True)==[]
+    repo.profiles=deepcopy(PROFILES);repo.profiles['test']['public_display']=False
+    assert public_results(repo,REF,lambda _:True)==[]
+
+
+def test_result_wrong_definition_and_missing_metadata_rejected(repo):
+    job=submit(repo);active=repo.claim('worker',['test'])
+    for bad in (result({**REF,'definition_revision':'b'*64}), {**result(REF),'study_metadata':None}):
+        with pytest.raises(ValueError):repo.finish(job['job_id'],active['lease_token'],status='PARTIAL',results=[bad])
+
+
+def test_api_auth_idempotency_worker_state_and_cancel(repo):
+    app=FastAPI();keys={'admin':dict(token='test-token',scopes=['research:submit'])}
+    install_research_jobs(app,repo,resolve_ref=lambda **r:r,can_view=lambda _:True,keys=keys)
+    client=TestClient(app);headers={'Authorization':'Bearer test-token'}
+    assert client.post('/v1/research/jobs',json=request()).status_code==401
+    response=client.post('/v1/research/jobs',json=request(),headers=headers)
+    assert response.status_code==202,response.text
+    job=response.json();assert job['status']=='QUEUED' and not job['worker_available']
+    assert client.post('/v1/research/jobs',json=request(),headers=headers).json()['duplicate']
+    endpoint='/v1/research/jobs/'+job['job_id']
+    assert client.get(endpoint).status_code==401
+    repo.announce('live',['test'])
+    assert client.get(endpoint,headers=headers).json()['worker_available']
+    assert client.post(endpoint+'/cancel',headers=headers).json()['status']=='CANCELLED'
+
+
+def test_cookie_auth_injection(repo):
+    def principal():return {'id':'cookie-session-admin'}
+    app=FastAPI();install_research_jobs(app,repo,resolve_ref=lambda **r:r,
+                                      can_view=lambda _:True,auth_dependency=principal)
+    assert TestClient(app).post('/v1/research/jobs',json=request()).status_code==202
+
+
+def test_past_result_import_is_idempotent_and_does_not_run_or_reserve_trials(repo):
+    evidence=result(REF)
+    kwargs=dict(source_receipt={'manifest_sha256':'c'*64,'original_sha256':'d'*64},
+                owner='administrator',resolve_ref=lambda **r:r)
+    job,duplicate=repo.import_completed(request(),[evidence],**kwargs)
+    assert not duplicate and job['status']=='FAILED'
+    assert job['stage']=='IMPORTED_COMPLETED_RESEARCH' and job['attempts']==0
+    assert job['trial_budget']==0 and job['seconds_budget']==0
+    assert repo.import_completed(request(),[evidence],**kwargs)[1]
+    assert repo.claim('worker',['test']) is None
+    assert repo.get(job['job_id'])['results']==[evidence]
+
+
+def test_restricted_summary_keeps_internal_evidence_authenticated(repo):
+    evidence=result(REF)
+    evidence['results']={'ic':.12,'artifact_uri':'/private/path'}
+    job,_=repo.import_completed(request(),[evidence],source_receipt={'sha256':'a'*64},
+                               owner='admin',resolve_ref=lambda **r:r)
+    app=FastAPI()
+    install_research_jobs(app,repo,resolve_ref=lambda **r:r,can_view=lambda _:True,
+                          keys={'admin':{'token':'test','scopes':['research:submit']}})
+    client=TestClient(app)
+    path='/v1/research/jobs/'+job['job_id']+'/evidence'
+    assert client.get(path).status_code==401
+    private=client.get(path,headers={'Authorization':'Bearer test'}).json()
+    assert private['items'][0]['results']=={'ic':.12}
+    summary=public_results(repo,REF,lambda _:True)[0]
+    assert summary['metrics']=={} and summary['numerical_display']=='RESTRICTED'
+
+
+def test_failed_provenance_cannot_report_success_and_import_has_readable_error(repo):
+    evidence=result(REF)
+    evidence['study_metadata']['provenance']['execution_status']='FAILED'
+    evidence['study_metadata']['public_summary'].update(
+        classification='COMPUTATION_FAILED', failure_reason='Retained original failure')
+    with pytest.raises(ValueError,match='Failed computation'):
+        repo._validate_results({'request':request()},'SUCCEEDED',[evidence])
+    job,_=repo.import_completed(request(),[evidence],source_receipt={'sha256':'a'*64},
+                                owner='administrator',resolve_ref=lambda **r:r)
+    assert job['error']['code']=='RETAINED_COMPUTATION_FAILURE'
+    shown=public_results(repo,REF,lambda _:True)[0]
+    assert shown['classification']=='COMPUTATION_FAILED'
+    assert shown['failure_reason']=='Retained original failure'
+
+
+def test_collection_report_auth_hash_and_visibility(repo,tmp_path):
+    import hashlib
+    sha='b'*64
+    repo.import_completed(request(),[result(REF)],source_receipt={'manifest_sha256':sha},
+                          owner='admin',resolve_ref=lambda **r:r)
+    report=tmp_path/'report.md';report.write_text('Private retained report')
+    collections={'study':dict(title='Study',manifest_sha256=sha,trial_counts={'completed':1},
+                             report={'path':str(report),'sha256':hashlib.sha256(report.read_bytes()).hexdigest()})}
+    visible=[True]
+    app=FastAPI();install_research_jobs(app,repo,resolve_ref=lambda **r:r,can_view=lambda _:visible[0],
+        keys={'admin':dict(token='test-token',scopes=['research:submit'])},collections=collections)
+    client=TestClient(app);headers={'Authorization':'Bearer test-token'}
+    assert client.get('/v1/research/capabilities').json()['collections_available']
+    summary=client.get('/v1/research/collections').json()
+    assert summary['items'][0]['imported_results']==1 and str(tmp_path) not in json.dumps(summary)
+    route='/v1/research/collections/study/report'
+    assert client.get(route).status_code==401
+    assert client.get(route,headers=headers).json()['content']=='Private retained report'
+    report.write_text('changed')
+    assert client.get(route,headers=headers).status_code==409
+    visible[0]=False
+    assert client.get('/v1/research/collections').json()['items']==[]
+    assert client.get(route,headers=headers).status_code==404
+
+
+def test_composed_catalog_allows_collection_bridge_route(tmp_path):
+    from quantgraph.api.platform import create_platform_app
+    root=Path(__file__).parents[1]
+    config=dict(graph_root=str(root),catalog_db=str(tmp_path/'catalog.sqlite'),
+                ingestion_db=str(tmp_path/'ingestion.sqlite'),job_db=str(tmp_path/'jobs.sqlite'),
+                profiles=PROFILES,research_collections={})
+    client=TestClient(create_platform_app(config,admin_password='test-admin-passphrase'))
+    response=client.get('/v1/research/collections')
+    assert response.status_code==200 and response.json()=={'items':[]}
+    assert client.get('/v1/research/collections/missing/report').status_code==401

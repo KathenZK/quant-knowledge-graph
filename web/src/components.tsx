@@ -9,11 +9,15 @@ import {
   AlertCircle,
   LoaderCircle,
 } from "lucide-react";
+import { SummaryStudy } from "./catalog-pages";
 import type { Item, Kind, Results } from "./types";
 export const kindLabel: Record<Kind, string> = {
   variant: "因子变体",
   concept: "概念族",
   strategy: "策略",
+  family: "策略族",
+  template: "策略模板",
+  source: "来源资料",
 };
 export const entityUrl = (item: { kind: Kind; entity_id: string }) =>
   `/entity/${item.kind}/${encodeURIComponent(item.entity_id)}`;
@@ -122,6 +126,38 @@ export function Values({ value }: { value: unknown }) {
 
 export function Parameters({ value }: { value: Record<string, unknown> }) {
   const labels: Record<string, string> = {
+    strategies: "策略实验",
+    strategy_completed: "策略实验完成",
+    strategy_failed: "策略实验失败",
+    factor_label_trials: "因子标签实验",
+    smoke_factor_labels: "因子冒烟检查",
+    strategy_templates: "策略模板",
+    strategy_concepts: "策略概念",
+    factor_concepts: "因子概念",
+    factor_definitions: "因子定义",
+    factor_variants: "因子变体",
+    economic_mechanisms_conservative: "经济机制（保守计数）",
+    strategy_computational_groups: "策略计算类别",
+    factor_computational_groups: "因子计算类别",
+    source_exact_strategy_reproduction: "原始策略完整复现",
+    TS_definitions: "时序定义",
+    CS_definitions: "截面定义",
+    metadata_import_entries: "结果导入条目",
+    SELECTED_INDEPENDENT_IMPLEMENTATION: "已选独立实现",
+    SOURCE_OR_RULE_REVIEW: "来源 / 规则待核对",
+    DATA_OR_IMPLEMENTATION_QUEUE: "数据 / 实现待准备",
+    DUPLICATE_TEMPLATE: "重复模板引用",
+    DATA_OR_SEMANTIC_REVIEW: "数据 / 语义待核对",
+    SELECTED_PUBLIC_DEFINITION: "已选公开定义",
+    RULE_REFERENCE_ONLY: "仅规则引用",
+    start: "开始时间",
+    end: "结束时间",
+    rows: "数据行数",
+    rows_meaning: "行数含义",
+    frequency: "频率",
+    symbols: "标的",
+    dataset_version: "数据版本",
+    real_market_data: "真实市场数据",
     window_or_lag: "窗口 / 滞后",
     unit: "单位",
     operators: "来源算子",
@@ -248,70 +284,74 @@ export function ResearchResults({
           ))}
         </div>
       )}
-      {results.items.map((study) => (
-        <article className="panel" key={study.run_id}>
-          <h3>
-            {study.research_status} · {study.status}
-          </h3>
-          <p>私有结果 · 历史探索，不代表买入建议或实盘资格。</p>
-          <dl className="facts vertical">
-            <div>
-              <dt>研究请求</dt>
-              <dd>
-                <code>{study.request_id}</code>
-              </dd>
-            </div>
-            <div>
-              <dt>运行 ID</dt>
-              <dd>
-                <code>{study.run_id}</code>
-              </dd>
-            </div>
-            <div>
-              <dt>因子 / 定义版本</dt>
-              <dd>
-                <code>{study.mapping.identity.factor_variant_id}</code>
-                <br />
-                <code>{study.mapping.identity.definition_revision}</code>
-              </dd>
-            </div>
-            <div>
-              <dt>计算实现 / 版本</dt>
-              <dd>
-                <code>
-                  {study.mapping.implementation.implementation_id} /{" "}
-                  {study.mapping.implementation.version}
-                </code>
-              </dd>
-            </div>
-            <div>
-              <dt>结论级别 / 历史曝光</dt>
-              <dd>
-                {study.trial_registry.assessment?.permitted_conclusion_level ||
-                  "UNKNOWN"}{" "}
-                /{" "}
-                {study.trial_registry.assessment?.holdout_evidence_status ||
-                  "UNKNOWN"}
-              </dd>
-            </div>
-          </dl>
-          <details open>
-            <summary>样本、方法与结果</summary>
-            <h4>样本与区间</h4>
-            <Parameters value={study.sample} />
-            <h4>方法</h4>
-            <Parameters value={study.methods} />
-            <h4>实际统计（不是收益排名）</h4>
-            <Parameters value={study.results} />
-          </details>
-          <h4>限制</h4>
-          <ul>
-            {study.limitations.map((text) => (
-              <li key={text}>{text}</li>
-            ))}
-          </ul>
-        </article>
-      ))}
+      {results.items.map((study) =>
+        "job_id" in study ? (
+          <SummaryStudy key={study.run_id} study={study} />
+        ) : (
+          <article className="panel" key={study.run_id}>
+            <h3>
+              {study.research_status} · {study.status}
+            </h3>
+            <p>私有结果 · 历史探索，不代表买入建议或实盘资格。</p>
+            <dl className="facts vertical">
+              <div>
+                <dt>研究请求</dt>
+                <dd>
+                  <code>{study.request_id}</code>
+                </dd>
+              </div>
+              <div>
+                <dt>运行 ID</dt>
+                <dd>
+                  <code>{study.run_id}</code>
+                </dd>
+              </div>
+              <div>
+                <dt>因子 / 定义版本</dt>
+                <dd>
+                  <code>{study.mapping.identity.factor_variant_id}</code>
+                  <br />
+                  <code>{study.mapping.identity.definition_revision}</code>
+                </dd>
+              </div>
+              <div>
+                <dt>计算实现 / 版本</dt>
+                <dd>
+                  <code>
+                    {study.mapping.implementation.implementation_id} /{" "}
+                    {study.mapping.implementation.version}
+                  </code>
+                </dd>
+              </div>
+              <div>
+                <dt>结论级别 / 历史曝光</dt>
+                <dd>
+                  {study.trial_registry.assessment
+                    ?.permitted_conclusion_level || "UNKNOWN"}{" "}
+                  /{" "}
+                  {study.trial_registry.assessment?.holdout_evidence_status ||
+                    "UNKNOWN"}
+                </dd>
+              </div>
+            </dl>
+            <details open>
+              <summary>样本、方法与结果</summary>
+              <h4>样本与区间</h4>
+              <Parameters value={study.sample} />
+              <h4>方法</h4>
+              <Parameters value={study.methods} />
+              <h4>实际统计（不是收益排名）</h4>
+              <Parameters value={study.results} />
+            </details>
+            <h4>限制</h4>
+            <ul>
+              {study.limitations.map((text) => (
+                <li key={text}>{text}</li>
+              ))}
+            </ul>
+          </article>
+        ),
+      )}
       {!results.items.length && (
         <Empty title={results.status}>
           <p>{results.reason}</p>

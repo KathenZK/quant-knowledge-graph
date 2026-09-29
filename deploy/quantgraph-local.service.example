@@ -1,0 +1,20 @@
+# Operator template; replace paths/user and register reviewed profiles first.
+# No credential, runtime data, public bind or DNS changes are included.
+[Unit]
+Description=QuantGraph local knowledge and controlled research platform
+After=network.target
+
+[Service]
+Type=simple
+User=quantgraph
+WorkingDirectory=/srv/quantgraph
+ExecStart=/bin/bash /srv/quantgraph/scripts/start_platform.sh /srv/quantgraph-runtime/config.json
+Restart=on-failure
+RestartSec=5
+KillMode=control-group
+TimeoutStopSec=20
+UMask=0077
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
