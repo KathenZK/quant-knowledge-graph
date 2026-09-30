@@ -418,6 +418,7 @@ it("shows capital exhaustion as NA and keeps native windows separate", () => {
         },
         {
           window_id: "1",
+          capital_state: { state: "POSITIVE_TERMINAL_EQUITY" },
           curve: [{ date: "2026-07-01", equity: 1.1, drawdown: 0 }],
           curve_meta: { observations: 1 },
           source_window: {

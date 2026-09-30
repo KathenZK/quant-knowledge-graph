@@ -1,3 +1,4 @@
+import ResearchAssurance from "./ResearchAssurance";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, FileCheck2, Search } from "lucide-react";
@@ -5,6 +6,7 @@ import { useApi } from "./api";
 import { Empty, ErrorState, ExternalLink, Loading } from "./components";
 import { readable } from "./personal-data";
 import "./corpus-research.css";
+import type { Interpretation } from "./ResearchInterpretation";
 
 type Fidelity = "STANDARDIZED" | "PROXY" | "HYPOTHESIS" | "PROXY_HYPOTHESIS";
 type FidelityCounts = Partial<
@@ -92,6 +94,8 @@ export type CorpusSummary = {
   manifest_sha256?: string;
 };
 export type CorpusRecord = {
+  interpretations?: Interpretation[];
+  research_scope?: import("./personal-data").PersonalItem["research_scope"];
   related_results?: RelatedResult[];
   coverage_history?: { run_id: string; status: string; reason: string }[];
   id: string;
@@ -381,6 +385,7 @@ export function ResearchDetail({ detail }: { detail: CorpusDetail }) {
       <div className="cr-warning">
         探索性回顾筛查。来源忠实度、实现假设与经济有效性分别判断；留出段标签本身不证明独立样本外验证。
       </div>
+      <ResearchAssurance detail={detail} />
       {detail.metrics.retained_windows?.length ? (
         <label className="pw-research-select">
           独立数据窗口
@@ -401,7 +406,7 @@ export function ResearchDetail({ detail }: { detail: CorpusDetail }) {
           </span>
         </label>
       ) : null}
-      {m.capital_state && (
+      {m.capital_state?.state === "MODEL_CAPITAL_EXTINGUISHED" && (
         <div className="cr-warning">
           这条路径发生模型资本耗尽；它不是交易所保证金强平的复现。后续没有正权益的区间显示不适用，原始曲线保留。
           <details>
@@ -726,12 +731,16 @@ function RecordDetailLoader({ id, run }: { id: string; run: string }) {
 export function DetailLoader({
   variant,
   run,
+  snapshot,
+  expectedManifest,
 }: {
   variant: string;
   run: string;
+  snapshot?: string;
+  expectedManifest?: string;
 }) {
   const request = useApi<CorpusDetail>(
-    `${base}/implementations/${encodeURIComponent(variant)}?run_id=${encodeURIComponent(run)}`,
+    `${base}/implementations/${encodeURIComponent(variant)}?run_id=${encodeURIComponent(run)}${snapshot ? "&snapshot_batch=" + encodeURIComponent(snapshot) : ""}`,
   );
   if (request.loading) return <Loading />;
   if (request.error || !request.data)
@@ -741,7 +750,19 @@ export function DetailLoader({
         retry={request.retry}
       />
     );
-  return <ResearchDetail key={`${run}/${variant}`} detail={request.data} />;
+  if (
+    expectedManifest &&
+    request.data.lineage.manifest_sha256 !== expectedManifest
+  )
+    return (
+      <p className="pw-error">固定结果版本不匹配，未用新结果替代原引用。</p>
+    );
+  return (
+    <ResearchDetail
+      key={`${run}/${variant}/${expectedManifest}/${snapshot}`}
+      detail={request.data}
+    />
+  );
 }
 function RecordList({
   run,

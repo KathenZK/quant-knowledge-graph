@@ -653,20 +653,43 @@ function SnapshotProgress({
   kind: string;
 }) {
   const snapshot = meta.snapshot_progress;
+  const scope = meta.research_scope_summary;
   return (
     <div className="pw-snapshot-progress">
-      {snapshot && (
-        <p>
-          截至 {snapshot.as_of_utc}，原始{" "}
-          {snapshot.corpus_records.toLocaleString()} 条记录中，
-          {snapshot.executed_records.toLocaleString()} 条已有执行证据，共{" "}
-          {snapshot.execution_versions.toLocaleString()} 个实现版本。已导入{" "}
-          {snapshot.imported_runs} 批
-          {snapshot.awaiting_import_runs
-            ? `，另 ${snapshot.awaiting_import_runs} 批等待兼容校验`
-            : ""}
-          。
-        </p>
+      {scope ? (
+        <div>
+          <p>
+            截至 {scope.as_of_utc || "本次固定导入"}，已展示工作范围{" "}
+            {scope.total_work_items.toLocaleString()} 项：最终交接{" "}
+            {scope.final_handoff_records.toLocaleString()} 条，加后续{" "}
+            {scope.additional_collected_objects} 个候选、研究模型或组件。
+            {scope.initial_batch_records.toLocaleString()} 条是初始批次。
+          </p>
+          <p>
+            固定快照中 {scope.execution_records.toLocaleString()}{" "}
+            项已有探索性执行，共 {scope.execution_versions.toLocaleString()}{" "}
+            个版本、{scope.imported_runs} 批；其余{" "}
+            {scope.no_execution_records.toLocaleString()}{" "}
+            项仍在工作清单。人工研究总结已覆盖 {scope.interpreted_records} 项。
+          </p>
+          <p>
+            数据质量、历史可得性、实现忠实度与统计证据分别核验。执行覆盖不表示严格通过；当前不能用这些数量表示已验证的盈利策略。
+          </p>
+        </div>
+      ) : (
+        snapshot && (
+          <p>
+            截至 {snapshot.as_of_utc}，原始{" "}
+            {snapshot.corpus_records.toLocaleString()} 条记录中，
+            {snapshot.executed_records.toLocaleString()} 条已有执行证据，共{" "}
+            {snapshot.execution_versions.toLocaleString()} 个实现版本。已导入{" "}
+            {snapshot.imported_runs} 批
+            {snapshot.awaiting_import_runs
+              ? `，另 ${snapshot.awaiting_import_runs} 批等待兼容校验`
+              : ""}
+            。
+          </p>
+        )
       )}
       {meta.intake_summary && meta.intake_summary.reviewed_records > 0 && (
         <p>

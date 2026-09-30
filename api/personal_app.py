@@ -98,6 +98,7 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
         reconciliation = catalog.reconcile()
         imports = reconciliation.get('imports', [])
         return meta | dict(**running, mode='personal_local', initialized=True,
+            research_scope_summary=work_view.summary() if work_view else None,
             snapshot=provenance.get('created_at', '未登记快照时间'),
             dataset='GrokBot 策略与多来源因子 · 本机 Catalog',
             imported_at=imports[0]['created_at'] if imports else None,
@@ -128,11 +129,14 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
                 if starred is not None and note.get('starred', False) != starred:
                     continue
                 allowed_ids.add(item['entity_id'])
-        return model().search(q=q, kind=kind, category=category, family=family, template_id=template_id, field=field,
+        result = model().search(q=q, kind=kind, category=category, family=family, template_id=template_id, field=field,
             market=market, frequency=frequency, source_type=source_type, result_status=result_status,
             allowed_ids=allowed_ids, axis=axis, extra_data=extra_data, daily_ohlcv=daily_ohlcv, asset_scope=asset_scope,
             completeness=completeness, method_family=method_family, collapse_templates=collapse_templates, factor_scope=factor_scope,
             page=page, page_size=page_size)
+        if work_view:
+            result['items']=[work_view.attach(item) for item in result['items']]
+        return result
 
     @app.get('/v1/web/entities/{kind}/{eid}')
     @app.get('/v1/web/export/{kind}/{eid}')
@@ -142,7 +146,7 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
             if store:
                 canonical = store.resolve(eid)
                 value['canonical_id'] = canonical
-            return value
+            return work_view.attach(value) if work_view else value
         except KeyError:
             raise HTTPException(404, '个人资料中没有此条目')
 
@@ -151,7 +155,10 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
         if len(set(ref)) != len(ref):
             raise HTTPException(422, '请选择不同条目')
         try:
-            return model().compare(ref)
+            result=model().compare(ref)
+            if work_view:
+                result['items']=[work_view.attach(item) for item in result['items']]
+            return result
         except (KeyError, ValueError):
             raise HTTPException(404, '比较条目不存在或类型不匹配')
 
@@ -181,6 +188,8 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
     # There are deliberately no HTTP import, mutation or execution routes.
     from quantgraph.graph.corpus_research import CorpusResearch
     corpus_research = CorpusResearch(runtime)
+    from quantgraph.graph.research_views import ResearchWorkView
+    work_view = ResearchWorkView(catalog,corpus_research) if catalog else None
 
     def corpus_read(operation, *args, **kwargs):
         try:
@@ -205,11 +214,19 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
 
     @app.get('/v1/personal/corpus-research/records/{record_id}')
     def corpus_record(record_id: str, run_id: str | None = Query(None, max_length=200)):
-        return corpus_read(corpus_research.record, record_id, run_id=run_id)
+        return corpus_read(work_view.record if work_view else corpus_research.record, record_id, run_id=run_id)
 
     @app.get('/v1/personal/corpus-research/implementations/{variant_id}')
     def corpus_implementation(variant_id: str, run_id: str | None = Query(None, max_length=200)):
         return corpus_read(corpus_research.implementation, variant_id, run_id=run_id)
+
+    @app.get('/v1/personal/corpus-research/data-quality')
+    def corpus_quality(run_id: str = Query(...,max_length=200), variant_id: str = Query(...,max_length=200),
+                       origin_manifest_sha256: str = Query(...,max_length=64)):
+        from quantgraph.graph.research_data_quality import data_quality_annotations
+        rows=data_quality_annotations(catalog) if catalog else []
+        return [row for row in rows if row['origin_run_id']==run_id and row['variant_id']==variant_id
+                and row['origin_manifest_sha256']==origin_manifest_sha256]
 
     @app.get('/v1/personal/source-portfolios')
     def source_portfolios(record_id: str | None = Query(None, max_length=200)):

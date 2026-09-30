@@ -85,7 +85,18 @@ def _relative_origin_name(name):
             or any(p in {"", ".", ".."} for p in name.split('/'))
             or PurePosixPath(name).is_absolute()):
         _fail('Unsafe relative origin artifact name')
-    allowed = name in {'frozen_input_manifest.json','protocol_amendments.json'} or (name.startswith(('returns/','trades/','per_variant/')) and name.count('/')==1)
+    top_level={'frozen_input_manifest.json','protocol_amendments.json','protocol.json','producer_tests.json',
+               'source_corpus_records.json','source_review.json','research_summaries.json','research_summaries.md',
+               'DIA_corporate_actions.json','DIA_overnight_components.csv'}
+    parts=PurePosixPath(name).parts
+    ledger_files={'daily_book.csv.gz','trade_legs.csv.gz','scheduled_events.json','signal_decisions.json',
+                  'daily_book_0bps.csv.gz','daily_book_5bps.csv.gz','daily_book_10bps.csv.gz','daily_book_25bps.csv.gz'}
+    ledger=(len(parts)==3 and parts[0]=='ledgers' and parts[2] in ledger_files)
+    if ledger:_identifier(parts[1])
+    opaque_input=(len(parts)==2 and parts[0]=='inputs' and parts[1].endswith('.csv'))
+    opaque_code=(len(parts)==2 and parts[0]=='code' and parts[1].endswith('.py'))
+    # Code, input and ledger attachments are retained inert bytes only, never imported/executed.
+    allowed = name in top_level or ledger or opaque_input or opaque_code or (name.startswith(('returns/','trades/','per_variant/')) and name.count('/')==1)
     if not allowed:
         _fail('Unsupported additional origin artifact type')
     if name.startswith(('returns/','trades/')) and not name.endswith('.csv.gz'):
@@ -157,23 +168,170 @@ def _normalize_daily_csv(blob):
 def _native_fields(metric,spec):
     """Explicit metadata aliases, with original declarations retained separately."""
     if not isinstance(spec.get('assets'),list) and spec.get('instrument') in {'spot','perpetual'}:
-        if metric.get('assets')!=[spec.get('symbol')] or spec.get('cash_unit')!='USDT' or metric.get('cash_asset')!='USDT_CASH':
+        unit = spec.get('cash_unit')
+        metric_cash_alias = ('cash_unit' not in spec and spec.get('instrument') == 'spot'
+                             and isinstance(spec.get('symbol'), str)
+                             and spec['symbol'].endswith('USDT')
+                             and metric.get('cash_asset') == 'USDT_CASH')
+        if metric_cash_alias:
+            unit = 'USDT'
+        if metric.get('assets')!=[spec.get('symbol')] or unit!='USDT' or metric.get('cash_asset')!='USDT_CASH':
             _fail('Native crypto symbol/cash contract does not reconcile')
         spec.update(assets=[spec['symbol']],cash_asset='USDT_CASH')
         spec['native_field_projection']='assets from source symbol; cash_asset from explicit USDT cash_unit; no USD substitution'
+        if metric_cash_alias:
+            spec['cash_unit'] = 'USDT'
+            spec['native_field_projection'] = ('assets from source symbol; missing spot cash_unit from explicit '
+                'original metric USDT_CASH with matching USDT symbol; metadata enrichment only, no USD substitution')
+    price_assets = spec.get('price_assets')
+    signal_assets = spec.get('signal_only_assets')
+    if isinstance(price_assets, list) and isinstance(signal_assets, list):
+        if (not all(isinstance(a, str) for a in [*price_assets, *signal_assets])
+                or len(set(price_assets)) != len(price_assets)
+                or len(set(signal_assets)) != len(signal_assets)
+                or set(price_assets) & set(signal_assets)):
+            _fail('Price and signal-only asset declarations conflict')
+        if spec.get('assets') == price_assets and signal_assets:
+            if not isinstance(metric.get('assets'), list) or set(metric['assets']) != set(price_assets):
+                _fail('Signal-only universe enrichment cannot alter traded assets')
+            spec['assets'] = [*price_assets, *signal_assets]
+            spec['universe_membership_projection'] = 'Original price_assets plus separately explicit signal_only_assets; traded-price binding unchanged'
+    if spec.get('kind') == 'cny_daily_etf' or metric.get('kind') == 'cny_daily_etf':
+        if (spec.get('kind') != 'cny_daily_etf' or metric.get('kind') != 'cny_daily_etf'
+                or spec.get('account_currency') != 'CNY' or metric.get('account_currency') != 'CNY'
+                or spec.get('cash_asset') != 'CASH' or metric.get('cash_asset') != 'CASH'
+                or spec.get('execution_calendar') != 'XSHG' or metric.get('clock') != 'Asia/Shanghai XSHG'
+                or metric.get('cash_basis') != 'zero-yield CNY'
+                or metric.get('assets') != spec.get('assets')
+                or not isinstance(spec.get('assets'), list) or not spec['assets']
+                or any(not isinstance(a, str) or not a.endswith('.SS') for a in spec['assets'])):
+            _fail('CNY exchange-clock/cash/asset contract does not reconcile')
     for period in metric.get('periods',{}).values():
         if 'observations' not in period and 'n' in period:period['observations']=period['n']
         if 'annual_volatility' not in period and 'annual_vol' in period:period['annual_volatility']=period['annual_vol']
     return metric,spec
 
 
-def _native_windows(metric,attachments):
+def _native_capital_tail(metric, window, rows, attachments):
+    """Accept missing trailing returns only with a reconciled exhaustion ledger.
+
+    This verifies retained accounting evidence; it does not rerun a strategy or
+    certify exchange margin rules, source market data, or historic fill quality.
+    """
+    dates=[r['date'] for r in rows]
+    if any(a>=b for a,b in zip(dates,dates[1:])):
+        _fail('Native window dates must be strictly increasing')
+    missing=[r for r in rows if r.get('net_return')=='']
+    state=window.get('capital_state')
+    if not missing and not state:
+        return rows, None
+    if not isinstance(state,dict):
+        _fail('Missing native returns require explicit capital-state evidence')
+    if state.get('state')=='POSITIVE_TERMINAL_EQUITY':
+        if missing or state.get('capital_extinguished_at') is not None or state.get('events'):
+            _fail('Positive capital state cannot conceal missing returns or events')
+        if math.prod(1+float(r['net_return']) for r in rows)<=0:
+            _fail('Positive capital state differs from retained returns')
+        return rows, None
+    if state.get('state')!='MODEL_CAPITAL_EXTINGUISHED':
+        _fail('Unsupported native capital state')
+    events=state.get('events')
+    if not isinstance(events,list) or len(events)!=1 or not isinstance(events[0],dict):
+        _fail('Native exhaustion requires one terminal capital event')
+    event=events[0]
+    if (event.get('event_type')!='capital_extinguishment_no_exchange_fill'
+            or event.get('executed_exit_trade') is not False
+            or state.get('capital_extinguished_at')!=event.get('at')):
+        _fail('Capital reset cannot masquerade as an exchange liquidation')
+    try: at=datetime.fromisoformat(event['at'])
+    except (ValueError,TypeError):_fail('Invalid capital-event time')
+    if at.tzinfo is None or at.utcoffset().total_seconds()!=0:
+        _fail('Native capital-event time must be UTC')
+    day=at.date().isoformat();kept=[];equity=1.;zero_day=None
+    for row in rows:
+        if row.get('net_return')=='':
+            if zero_day is None or row['date']<=day:
+                _fail('A missing native return precedes capital exhaustion')
+            continue
+        if zero_day is not None:
+            _fail('Native returns cannot resume after capital exhaustion')
+        number=float(row['net_return'])
+        if not math.isfinite(number) or number < -1:_fail('Invalid native return')
+        equity*=1+number;kept.append(row)
+        if equity==0:zero_day=row['date']
+    if zero_day!=day or not kept or kept[-1]['date']!=day:
+        _fail('Capital event does not match the first zero-equity day')
+    name='trades/'+metric['variant_id']+'__w'+str(window['window_id'])+'.csv.gz'
+    if name not in attachments:_fail('Capital tail requires the retained trade log')
+    with gzip.GzipFile(fileobj=io.BytesIO(attachments[name])) as stream:
+        raw=stream.read(256*1024*1024+1)
+    if len(raw)>256*1024*1024:_fail('Capital trade log exceeds expansion limit')
+    trades=_csv(raw) if raw.strip() else []
+    def event_time(value):
+        try: stamp=datetime.fromisoformat(value)
+        except (ValueError,TypeError):_fail('Invalid capital ledger trade time')
+        if stamp.tzinfo is None or stamp.utcoffset().total_seconds()!=0:
+            _fail('Capital ledger trade times must be UTC')
+        return stamp
+    first_time=event_time(window.get('evaluation_start',rows[0]['date']+'T00:00:00+00:00'))
+    # The capital event names its containing five-minute bar. A final closing
+    # fill can legitimately carry the following bar-boundary timestamp.
+    from datetime import timedelta
+    last_time=at+timedelta(minutes=5)
+    book=1.;fees=0.;funding=0.
+    for trade in trades:
+        if not first_time<=event_time(trade.get('entry_time'))<=event_time(trade.get('exit_time'))<=last_time:
+            _fail('Capital trade log extends beyond its valid execution interval')
+        qty,entry,exit_price,pnl,entry_fee,exit_fee=[float(trade[k]) for k in
+            ['quantity','entry_price','exit_price','gross_pnl','entry_cost','exit_cost']]
+        if (not all(math.isfinite(x) for x in [qty,entry,exit_price,pnl,entry_fee,exit_fee])
+                or entry<=0 or exit_price<=0 or min(entry_fee,exit_fee)<0
+                or not _close(qty*(exit_price-entry),pnl)):
+            _fail('Capital trade PnL or fee arithmetic does not reconcile')
+        book+=pnl-entry_fee-exit_fee;fees+=entry_fee+exit_fee
+        funding+=float(trade.get('funding_paid',0))
+    active=event.get('active_position');quantity=float(event['quantity_before_model_reset'])
+    mark=float(event['trade_close_mark']);unclosed=float(event['unclosed_marked_pnl'])
+    if active is not None:
+        if not isinstance(active,dict):_fail('Invalid active capital-event position')
+        if not first_time<=event_time(active.get('entry_time'))<=last_time:
+            _fail('Active capital position was not entered within its window')
+        entry=float(active['entry_price']);entry_fee=float(active['entry_cost'])
+        if (entry<=0 or mark<=0 or entry_fee<0 or quantity==0
+                or not _close(quantity,active['quantity'])
+                or not _close(quantity*(mark-entry),unclosed)):
+            _fail('Unclosed capital-event position does not reconcile')
+        book+=unclosed-entry_fee;fees+=entry_fee
+        funding+=float(active.get('funding_paid',0))
+    elif quantity!=0 or unclosed!=0:
+        _fail('Capital event lacks its unclosed position evidence')
+    daily_funding=sum(float(r['funding_paid']) for r in rows)
+    daily_fees=sum(float(r['fees']) for r in rows)
+    raw_events=[float(r['trade_event']) for r in rows]
+    if any(not math.isfinite(x) or x<0 or x!=int(x) for x in raw_events):
+        _fail('Invalid native trade-event count')
+    if (not _close(funding,daily_funding) or not _close(fees,daily_fees)
+            or sum(raw_events)!=2*len(trades)+int(active is not None)):
+        _fail('Native capital funding, fees or events do not reconcile')
+    before=book-daily_funding;cap=float(event['model_loss_cap_adjustment'])
+    if (before>1e-8 or cap<0 or not _close(before,event['nav_before_model_loss_cap'])
+            or not _close(before-unclosed,event['wallet_balance_before_model_cap'])
+            or not _close(cap,-min(0,before)) or not _close(before+cap,equity)):
+        _fail('Native capital loss cap does not reconcile with the trade ledger')
+    return kept, dict(status='RETAINED_ACCOUNTING_RECONCILED',capital_extinguished_at=event['at'],
+        excluded_missing_tail_rows=len(missing),last_valid_return_date=day,
+        evidence_scope='Retained returns, completed trades, fees, funding and non-trade model reset only',
+        new_economic_trials=0,original_return_bytes_changed=False)
+
+
+def _native_windows(metric,attachments,period_bounds=None):
     retained=[]
     for window in metric.get('windows',[]):
         path=window.get('daily_returns_path')
         if path not in attachments or _sha(window.get('daily_returns_sha256'))!=_digest(attachments[path]):
             _fail('Native window returns lack verified origin attachment')
-        rows=_daily_csv(attachments[path]);observations=[];equity=peak=1.;curve=[]
+        raw_rows=_daily_csv(attachments[path]);rows,capital_validation=_native_capital_tail(metric,window,raw_rows,attachments)
+        observations=[];equity=peak=1.;curve=[]
         for row in rows:
             number=float(row['net_return'])
             if not math.isfinite(number) or number < -1:_fail('Invalid native window return')
@@ -182,17 +340,39 @@ def _native_windows(metric,attachments):
             observations.append([day,number]);equity*=1+number;peak=max(peak,equity)
             curve.append(dict(date=day,equity=equity,drawdown=equity/peak-1))
         if not curve:_fail('Empty native execution window')
-        for period in window.get('periods',{}).values():_observations_for_period(rows,period)
+        for name,period in window.get('periods',{}).items():
+            _observations_for_period(rows,period)
+            if capital_validation and period_bounds and name in period_bounds:
+                start,end=period_bounds[name]
+                if len([r for r in rows if start<=r['date']<=end])!=period.get('observations',period.get('n')):
+                    _fail('Capital-window period count differs from its declared scope')
         if len(curve)>1200:
             ids={0,len(curve)-1,min(range(len(curve)),key=lambda i:curve[i]['drawdown']),max(range(len(curve)),key=lambda i:curve[i]['equity'])}
             ids.update(i*(len(curve)-1)//1195 for i in range(1196));curve=[curve[i] for i in sorted(ids)]
         retained.append(dict(window_id=str(window['window_id']),curve=curve,curve_meta=dict(initial_equity=1,observations=len(observations),start=observations[0][0],end=observations[-1][0],source_return_sha256=_digest(attachments[path]),independent_window=True,gaps_not_connected=True),source_window=deepcopy(window)))
+        if window.get('capital_state') is not None:
+            retained[-1]['capital_state']=deepcopy(window['capital_state'])
+        if capital_validation:
+            if window.get('presentation_periods',window['periods'])!=window['periods']:
+                _fail('Inline capital presentation periods must match verified period evidence')
+            retained[-1].update(capital_state_validation=capital_validation,presentation_periods=deepcopy(window['periods']))
+            retained[-1]['curve_meta'].update(raw_rows=len(raw_rows),excluded_missing_tail_rows=capital_validation['excluded_missing_tail_rows'],scope='valid_returns_through_capital_exhaustion')
+            if str(metric.get('primary_window_id'))==str(window['window_id']):
+                if metric.get('capital_state')!=window['capital_state'] or metric.get('presentation_periods',window['periods'])!=window['periods']:
+                    _fail('Primary capital state or presentation periods differ from its window')
+                metric['capital_state_validation']=capital_validation
+                metric['presentation_periods']=deepcopy(window['periods'])
     if retained:
         primary=str(metric.get('primary_window_id'))
         if len({w['window_id'] for w in retained})!=len(retained) or primary not in {w['window_id'] for w in retained}:
             _fail('Native primary/window IDs do not reconcile')
         metric['retained_windows']=retained
-        metric['return_clock']='UTC calendar days; native-bar execution; idle USDT'
+        if metric.get('kind') == 'cny_daily_etf':
+            if metric.get('account_currency') != 'CNY' or metric.get('clock') != 'Asia/Shanghai XSHG' or metric.get('cash_basis') != 'zero-yield CNY':
+                _fail('CNY retained windows require explicit currency and exchange clock')
+            metric['return_clock']='Asia/Shanghai XSHG session closes; CNY account; zero-yield CNY idle cash'
+        else:
+            metric['return_clock']='UTC calendar days; native-bar execution; idle USDT'
     return metric
 
 
@@ -313,6 +493,11 @@ def derive(blobs):
     results = origin.get('result_hashes')
     legacy=advanced and results is None and 'normalized_data_sha256' in origin
     required=set(ORIGIN_NAMES)-{'run_manifest.json'}
+    missing_auxiliary=[]
+    if advanced and isinstance(results,dict) and 'target_hashes.json' not in results:
+        marker=_encoded(dict(schema_version='absent-origin-auxiliary/v1',artifact='target_hashes.json',origin_manifest_sha256=_digest(source['run_manifest.json']),status='NOT_INCLUDED_OR_DECLARED_IN_RECEIVED_ORIGIN',not_a_target_hash=True))
+        if source['target_hashes.json']!=marker:_fail('Missing target hashes require exact origin-bound absence receipt')
+        required.remove('target_hashes.json');missing_auxiliary.append('target_hashes.json')
     if legacy:
         expected_legacy={'protocol_amendments.json'} if origin.get('protocol_amendments_sha256') else set()
         if set(attachments)!=expected_legacy or _sha(origin.get('implementation_specs_sha256'))!=_digest(source['implemented_specs.json']):
@@ -412,7 +597,7 @@ def derive(blobs):
         metric = dict(deepcopy(original), **metadata)
         if advanced:
             metric,_=_native_fields(metric,deepcopy(spec))
-            metric=_native_windows(metric,attachments)
+            metric=_native_windows(metric,attachments,origin.get('periods',protocol.get('periods')))
         metrics.append(metric)
         by_record[metric['id']].append(metric)
         if advanced and original.get('additional_native_bar_lag') is not None:
@@ -465,6 +650,8 @@ def derive(blobs):
     main_end=periods['full'][1] if not legacy else origin['main_end']
     observation_end=max(bounds[1] for bounds in periods.values()) if not legacy else origin['descriptive_2026_end']
     origin_refs = {name: dict(sha256=_digest(blobs[name]), bytes=len(blobs[name])) for name in ORIGIN_ARTIFACTS}
+    for name in missing_auxiliary:
+        origin_refs['origin__'+name]['representation']='explicit_absence_receipt_not_source_artifact'
     run = dict(run_id=run_id, origin_run_id=run_id, created_at_utc=origin['created_at_utc'],
         corpus_sha256=verification['input']['sha256'], corpus_records=len(audit),
         protocol_sha256=origin['protocol_sha256'], implementation_specs_sha256=_digest(specs_blob),
@@ -479,7 +666,8 @@ def derive(blobs):
         run['metadata_enrichment']['economic_trial_recomputed']=False
         run['metadata_enrichment']['capital_presentation_statistics_derived_and_checked']=run['presentation_supplement_verification']['capital_states']>0
         run['projection_contract']='native-retained-projection/v3'
-        run['virtual_cash_assets']=sorted({m['cash_asset'] for m in metrics if m.get('cash_asset')=='USDT_CASH' and original_specs[m['variant_id']].get('cash_unit')=='USDT'})
+        projected_specs = {s.get('variant_id', s['id']): s for s in specs}
+        run['virtual_cash_assets']=sorted({m['cash_asset'] for m in metrics if m.get('cash_asset')=='USDT_CASH' and projected_specs[m['variant_id']].get('cash_unit')=='USDT'})
         bindings={}
         dependencies={a for m in metrics for a in m['assets']}|{a for m in metrics for a in original_specs[m['variant_id']].get('signal_only_assets',[])}|{m['cash_asset'] for m in metrics if m['cash_asset'] not in {'CASH',*run['virtual_cash_assets']}}
         for asset in sorted(dependencies):
@@ -497,6 +685,9 @@ def derive(blobs):
         run['metadata_enrichment']['legacy_result_pin_note']='Legacy producer did not publish per-result hashes; all supplied original result bytes are pinned by this separate operator-reviewed import manifest.' if legacy else None
         run['origin_attachment_refs']={name:dict(sha256=_digest(blob),bytes=len(blob)) for name,blob in attachments.items()}
         run['metadata_enrichment']['daily_date_normalization']='UTC-midnight timestamp labels canonicalized to YYYY-MM-DD; values unchanged, original bytes retained.'
+    if missing_auxiliary:
+        run['metadata_enrichment']['unavailable_origin_auxiliary_artifacts']=missing_auxiliary
+        run['metadata_enrichment']['target_hash_verification']='Not available in this origin; no reconstructed targets asserted'
     series = {asset for metric in metrics for asset in metric['assets']}
     series.update(metric['cash_asset'] for metric in metrics if metric['cash_asset'] not in {'CASH',*run.get('virtual_cash_assets',[])})
     summary = dict(run_id=run_id, corpus_records=len(audit), spec_variants=len(specs), tested_variants=len(metrics),
@@ -521,7 +712,16 @@ def export_delta(origin_dir, protocol_path, audit_dir, destination, annotations_
         _fail('Origin and audit directories must be explicit non-symlink directories')
     if destination.exists():
         _fail('Choose a new private export directory; no overwrite')
-    blobs = {'origin__'+name:_read_file(origin_dir/name) for name in ORIGIN_NAMES}
+    manifest_blob=_read_file(origin_dir/'run_manifest.json');source_manifest=_loads(manifest_blob)
+    blobs = {'origin__run_manifest.json':manifest_blob}
+    for name in ORIGIN_NAMES:
+        if name=='run_manifest.json':continue
+        path=origin_dir/name
+        absent_target=(format_version==3 and name=='target_hashes.json'
+                       and isinstance(source_manifest.get('result_hashes'),dict)
+                       and name not in source_manifest['result_hashes']
+                       and not path.exists() and not path.is_symlink())
+        blobs['origin__'+name]=(_encoded(dict(schema_version='absent-origin-auxiliary/v1',artifact=name,origin_manifest_sha256=_digest(manifest_blob),status='NOT_INCLUDED_OR_DECLARED_IN_RECEIVED_ORIGIN',not_a_target_hash=True)) if absent_target else _read_file(path))
     blobs['origin__protocol.json'] = _read_file(protocol_path)
     if format_version not in {2,3}:_fail('Unsupported projection version')
     if format_version==3:

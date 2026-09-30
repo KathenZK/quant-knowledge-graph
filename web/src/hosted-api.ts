@@ -28,7 +28,24 @@ async function detail(
   );
   if (revision && d.definition_revision !== revision)
     throw new Error("PINNED_DEFINITION_UNAVAILABLE：没有用新定义替换原引用");
-  return { ...d, snapshot_batch: batch };
+  const research = await load<Item>("/data/manifest.json", batch);
+  const recordId = research.workscope_entities?.[id];
+  let scope;
+  if (recordId && research.workscope_records?.[recordId]) {
+    const rows = await load<Item>(research.workscope_records[recordId], batch);
+    const row = rows[recordId];
+    if (
+      row?.definition_revision !== d.definition_revision ||
+      row?.research_scope?.entity_id !== id
+    )
+      throw new Error("研究范围与固定定义版本不一致");
+    scope = row.research_scope;
+  }
+  return {
+    ...d,
+    ...(scope ? { research_scope: scope } : {}),
+    snapshot_batch: batch,
+  };
 }
 async function search(u: URL) {
   const snapshot = await snapshotId();
@@ -165,9 +182,27 @@ async function search(u: URL) {
     query: { text: q, constraints: [] },
   };
 }
+async function allEdges(): Promise<Item[]> {
+  const value = await load<
+    Item[] | { schema_version: string; chunks: string[] }
+  >("/catalog/edges.json");
+  if (Array.isArray(value)) return value;
+  if (
+    value.schema_version !== "quantgraph-edges/v1" ||
+    !Array.isArray(value.chunks) ||
+    value.chunks.length > 1000 ||
+    value.chunks.some(
+      (p) => !/^\/catalog\/edge-chunks\/[a-zA-Z0-9_-]+\.json$/.test(p),
+    )
+  )
+    throw new Error("关系资料分片格式不正确");
+  return (
+    await Promise.all(value.chunks.map((path) => load<Item[]>(path)))
+  ).flat();
+}
 async function relations(u: URL) {
   const id = decodeURIComponent(u.pathname.split("/").pop()!),
-    all: Item[] = await load("/catalog/edges.json"),
+    all: Item[] = await allEdges(),
     index: Item[] = await load("/catalog/nodes.json"),
     nodes = new Map(index.map((i) => [i.entity_id, i]));
   if (!nodes.has(id)) throw new Error("未找到关系起点");

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import ResearchAssurance from "./ResearchAssurance";
 import { Link, Navigate, useSearchParams } from "react-router-dom";
 import { useApi } from "./api";
 import { ErrorState, ExternalLink, Loading } from "./components";
@@ -12,9 +12,15 @@ import {
 } from "./CorpusResearch";
 import type { PersonalDetail, PersonalItem } from "./personal-data";
 import { personalPath } from "./personal-data";
+import ResearchInterpretation from "./ResearchInterpretation";
 
 const base = "/v1/personal/corpus-research";
 export function nativeResearchId(item: PersonalItem) {
+  if (
+    item.research_scope?.in_scope &&
+    item.research_scope.definition_revision === item.definition_revision
+  )
+    return item.research_scope.record_id;
   if (item.kind !== "strategy" || item.source_type === "COLLECTION_CANDIDATE")
     return undefined;
   return (
@@ -58,7 +64,7 @@ function RecordResearch({
   compact: boolean;
 }) {
   const request = useApi<CorpusRecord>(
-    `${base}/records/${encodeURIComponent(id)}`,
+    `${base}/records/${encodeURIComponent(id)}${item.snapshot_batch ? "?snapshot_batch=" + encodeURIComponent(item.snapshot_batch) : ""}`,
   );
   const [params, setParams] = useSearchParams();
   const initial =
@@ -66,9 +72,10 @@ function RecordResearch({
       ? JSON.stringify([
           params.get("research_run"),
           params.get("research_variant"),
+          params.get("research_manifest"),
         ])
       : "";
-  const [selection, setSelection] = useState(initial);
+  const selection = initial;
   if (request.loading) return <Loading />;
   if (request.error || !request.data)
     return (
@@ -79,13 +86,43 @@ function RecordResearch({
     );
   const record = request.data;
   const results = record.related_results || [];
-  const selected = results.find(
-    (r) => JSON.stringify([r.origin_run_id, r.variant_id]) === selection,
-  );
+  const selected =
+    results.find(
+      (r) =>
+        JSON.stringify([r.origin_run_id, r.variant_id, r.manifest_sha256]) ===
+        selection,
+    ) ||
+    (selection && !params.get("research_manifest")
+      ? results.find(
+          (r) =>
+            JSON.stringify([r.origin_run_id, r.variant_id, null]) === selection,
+        )
+      : undefined);
   const sameText = record.audit["规则"] === item.knowledge?.original_rule;
   return (
     <div className="pw-inline-research">
       <PublishedPortfolio id={id} />
+      {record.research_scope && (
+        <p className="pw-reading-basis">
+          工作项类型：{record.research_scope.entity_type_label}。
+          {record.research_scope.reason}
+        </p>
+      )}
+      {record.research_scope?.source_title &&
+        Object.keys(record.research_scope.source_field_differences || {})
+          .length > 0 && (
+          <details>
+            <summary>交接来源标题与历史目录显示</summary>
+            <p>最终交接标题：{record.research_scope.source_title}</p>
+            <p>
+              早期目录曾以策略名称填充来源标题。这里保留原目录历史，并展示交接文件中的来源标题；规则定义和原实验没有因此改写。
+            </p>
+          </details>
+        )}
+      <ResearchInterpretation
+        rows={record.interpretations || []}
+        selected={selected}
+      />
       <p>
         {results.length
           ? `已导入 ${results.length} 个实现版本，可在这里查看结果。`
@@ -113,11 +150,13 @@ function RecordResearch({
             aria-label={`${item.name}的历史实现`}
             value={selected ? selection : ""}
             onChange={(e) => {
-              setSelection(e.target.value);
               const result = results.find(
                 (r) =>
-                  JSON.stringify([r.origin_run_id, r.variant_id]) ===
-                  e.target.value,
+                  JSON.stringify([
+                    r.origin_run_id,
+                    r.variant_id,
+                    r.manifest_sha256,
+                  ]) === e.target.value,
               );
               const next = new URLSearchParams(params);
               if (result) {
@@ -135,8 +174,12 @@ function RecordResearch({
             <option value="">请选择要读的实现与批次</option>
             {results.map((r) => (
               <option
-                key={`${r.origin_run_id}|${r.variant_id}`}
-                value={JSON.stringify([r.origin_run_id, r.variant_id])}
+                key={`${r.origin_run_id}|${r.variant_id}|${r.manifest_sha256}`}
+                value={JSON.stringify([
+                  r.origin_run_id,
+                  r.variant_id,
+                  r.manifest_sha256,
+                ])}
               >
                 {fidelityLabel(r.fidelity_class)} · {r.variant_id} ·{" "}
                 {r.origin_run_id}
@@ -155,11 +198,15 @@ function RecordResearch({
             <CompactResult
               run={selected.origin_run_id}
               variant={selected.variant_id}
+              snapshot={item.snapshot_batch}
+              expectedManifest={selected.manifest_sha256}
             />
           ) : (
             <DetailLoader
               run={selected.origin_run_id}
               variant={selected.variant_id}
+              snapshot={item.snapshot_batch}
+              expectedManifest={selected.manifest_sha256}
             />
           )}
         </>
@@ -245,9 +292,19 @@ function PublishedPortfolio({ id }: { id: string }) {
     </section>
   );
 }
-function CompactResult({ run, variant }: { run: string; variant: string }) {
+function CompactResult({
+  run,
+  variant,
+  snapshot,
+  expectedManifest,
+}: {
+  run: string;
+  variant: string;
+  snapshot?: string;
+  expectedManifest?: string;
+}) {
   const request = useApi<CorpusDetail>(
-    `${base}/implementations/${encodeURIComponent(variant)}?run_id=${encodeURIComponent(run)}`,
+    `${base}/implementations/${encodeURIComponent(variant)}?run_id=${encodeURIComponent(run)}${snapshot ? "&snapshot_batch=" + encodeURIComponent(snapshot) : ""}`,
   );
   if (request.loading) return <Loading />;
   if (request.error || !request.data)
@@ -258,9 +315,14 @@ function CompactResult({ run, variant }: { run: string; variant: string }) {
       />
     );
   const d = request.data;
+  if (expectedManifest && d.lineage.manifest_sha256 !== expectedManifest)
+    return (
+      <p className="pw-error">固定结果版本不匹配，未用新结果替代原引用。</p>
+    );
   return (
     <div>
       <p>{fidelityLabel(d.fidelity_class)} · 基础成本，历史全段</p>
+      <ResearchAssurance detail={d} />
       <MetricTable
         rows={[
           {

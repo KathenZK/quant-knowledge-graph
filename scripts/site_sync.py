@@ -6,7 +6,10 @@ confirms owner-only access, and supplies it through hidden stdin. Never persist
 the credential, reuse it at another destination, or impersonate a browser user.
 """
 import argparse
+import base64
+import gzip
 import hashlib
+import io
 import json
 from pathlib import Path
 import sys
@@ -16,6 +19,9 @@ from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 
 from quantgraph.graph.site_feedback import FeedbackLedger, canonical, read_envelope
+
+BATCH_MAX_OBJECTS = 32
+BATCH_MAX_BYTES = 4 * 1024 * 1024
 
 
 class NoRedirect(HTTPRedirectHandler):
@@ -55,6 +61,64 @@ class SiteClient:
             raise RuntimeError(f'Site operation failed with HTTP {error.code}') from None
 
 
+def object_upload_requests(objects):
+    """Pack exact wire/decoded/expanded bounds; larger objects retain single PUT."""
+    empty_bytes = len(canonical({'objects': []}).encode())
+    pending = []
+    wire_bytes, decoded_bytes, expanded_bytes = empty_bytes, 0, 0
+    seen = set()
+    for row, data in objects:
+        if row['sha256'] in seen:
+            continue
+        seen.add(row['sha256'])
+        expanded_size = len(data)
+        if data.startswith(b'\x1f\x8b'):
+            with gzip.GzipFile(fileobj=io.BytesIO(data)) as stream:
+                expanded_size = len(stream.read(BATCH_MAX_BYTES + 1))
+        entry = {
+            'sha256': row['sha256'], 'bytes': len(data),
+            'data_base64': '',
+        }
+        entry_bytes = len(canonical(entry).encode()) + 4 * ((len(data) + 2) // 3)
+        if pending and (
+            len(pending) == BATCH_MAX_OBJECTS
+            or wire_bytes + 1 + entry_bytes > BATCH_MAX_BYTES
+            or decoded_bytes + len(data) > BATCH_MAX_BYTES
+            or expanded_bytes + expanded_size > BATCH_MAX_BYTES
+        ):
+            yield '/v1/sync/objects-batch', {'objects': pending}, None
+            pending = []
+            wire_bytes, decoded_bytes, expanded_bytes = empty_bytes, 0, 0
+        if empty_bytes + entry_bytes > BATCH_MAX_BYTES or expanded_size > BATCH_MAX_BYTES:
+            yield '/v1/sync/objects/' + row['sha256'], None, data
+            continue
+        wire_bytes += entry_bytes + bool(pending)
+        decoded_bytes += len(data)
+        expanded_bytes += expanded_size
+        entry['data_base64'] = base64.b64encode(data).decode('ascii')
+        pending.append(entry)
+    if pending:
+        yield '/v1/sync/objects-batch', {'objects': pending}, None
+
+
+def verify_object_receipt(result, expected):
+    if not isinstance(result, dict) or result.get('complete') is not True:
+        raise RuntimeError('Object batch upload was incomplete; activation not attempted')
+    receipts = result.get('objects')
+    if not isinstance(receipts, list) or len(receipts) != len(expected):
+        raise RuntimeError('Object batch receipt is incomplete; activation not attempted')
+    received = set()
+    for row in receipts:
+        if (
+            not isinstance(row, dict) or not isinstance(row.get('sha256'), str)
+            or row['sha256'] not in expected
+            or row['sha256'] in received or row.get('stored') is not True
+            or type(row.get('replayed')) is not bool
+        ):
+            raise RuntimeError('Object batch receipt does not match; activation not attempted')
+        received.add(row['sha256'])
+
+
 def upload(client, manifest_path, object_root, expected_sha):
     manifest_path, root = Path(manifest_path), Path(object_root).resolve()
     raw = manifest_path.read_bytes()
@@ -76,8 +140,15 @@ def upload(client, manifest_path, object_root, expected_sha):
             raise ValueError('Object bytes differ')
         objects.append((row, data))
     receipt = client.request('/v1/sync/batches', 'POST', manifest)
-    for row, data in objects:
-        client.request('/v1/sync/objects/' + row['sha256'], 'PUT', raw=data)
+    for path, value, raw in object_upload_requests(objects):
+        try:
+            result = client.request(path, 'PUT' if raw is not None else 'POST', value, raw=raw)
+        except RuntimeError as error:
+            raise RuntimeError(f'{error}; object upload incomplete, activation not attempted') from None
+        if value is not None:
+            verify_object_receipt(result, {row['sha256'] for row in value['objects']})
+        elif not isinstance(result, dict) or result.get('sha256') != path.rsplit('/', 1)[1] or type(result.get('replayed')) is not bool:
+            raise RuntimeError('Single object receipt does not match; activation not attempted')
     active = client.request('/v1/sync/activate/' + receipt['batch_id'], 'POST', {})
     return {'batch': receipt, 'activation': active, 'objects': len(objects)}
 

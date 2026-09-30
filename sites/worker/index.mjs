@@ -2,6 +2,9 @@
 // boundary; browser notes additionally require trusted signed-in identity.
 import seed from "../seed.generated.json" with { type: "json" };
 const enc = new TextEncoder();
+const objectBatchLimit = 32;
+const objectBatchBytes = 4 * 1024 * 1024;
+const objectWriteConcurrency = 4;
 export const personalFields = [
   "starred",
   "status",
@@ -100,11 +103,10 @@ async function body(req, limit = 100000) {
   return bytes;
 }
 async function readJson(req, limit = 100000) {
-  const raw = new TextDecoder("utf-8", { fatal: true }).decode(
-    await body(req, limit),
-  );
-  let value;
+  const bytes = await body(req, limit);
+  let raw, value;
   try {
+    raw = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
     value = JSON.parse(raw);
   } catch {
     fail(422, "JSON格式不正确");
@@ -690,6 +692,11 @@ async function upload(req, env, digest) {
     digest,
   );
   if (prior) return json({ sha256: digest, replayed: true });
+  const { metadata } = await inspectObject(bytes);
+  await storeObject(env, digest, bytes, metadata);
+  return json({ sha256: digest, replayed: false });
+}
+async function inspectObject(bytes, expandedLimit = 8000000) {
   let expanded = bytes;
   if (bytes[0] === 31 && bytes[1] === 139) {
     expanded = await body(
@@ -700,11 +707,16 @@ async function upload(req, env, digest) {
         ),
         duplex: "half",
       }),
-      8000000,
+      expandedLimit,
     );
   }
-  if (expanded.byteLength > 8000000)
-    fail(413, "单个JSON资料超过8MB，请按已知对象边界分片");
+  if (expanded.byteLength > expandedLimit)
+    fail(
+      413,
+      expandedLimit === 8000000
+        ? "单个JSON资料超过8MB，请按已知对象边界分片"
+        : "批量资料解压后超过4MiB，请减少对象或使用单对象上传",
+    );
   let data;
   try {
     data = JSON.parse(
@@ -741,6 +753,9 @@ async function upload(req, env, digest) {
         [];
     }
   }
+  return { metadata: meta, expandedBytes: expanded.byteLength };
+}
+async function storeObject(env, digest, bytes, metadata) {
   await env.BUCKET.put("sha256/" + digest, bytes, {
     customMetadata: { sha256: digest },
   });
@@ -750,9 +765,139 @@ async function upload(req, env, digest) {
     digest,
     bytes.length,
     "sha256/" + digest,
-    JSON.stringify(meta),
+    JSON.stringify(metadata),
   );
-  return json({ sha256: digest, replayed: false });
+}
+async function uploadObjectsBatch(req, env) {
+  service(req);
+  const input = await readJson(req, objectBatchBytes);
+  keys(input, ["objects"], ["objects"]);
+  if (
+    !Array.isArray(input.objects) ||
+    !input.objects.length ||
+    input.objects.length > objectBatchLimit
+  )
+    fail(422, "每次需要1至32个资料对象");
+  const seen = new Set();
+  let decodedBytes = 0;
+  for (const row of input.objects) {
+    keys(
+      row,
+      ["sha256", "bytes", "data_base64"],
+      ["sha256", "bytes", "data_base64"],
+    );
+    sha(row.sha256);
+    integer(row.bytes);
+    if (seen.has(row.sha256)) fail(422, "批量请求含重复对象");
+    seen.add(row.sha256);
+    decodedBytes += row.bytes;
+    if (decodedBytes > objectBatchBytes) fail(413, "批量资料解码后超过4MiB");
+    if (
+      typeof row.data_base64 !== "string" ||
+      row.data_base64.length !== 4 * Math.ceil(row.bytes / 3)
+    )
+      fail(422, "对象Base64与声明大小不一致");
+  }
+  const digests = JSON.stringify([...seen]);
+  const registered = new Map(
+    (
+      await all(
+        env,
+        "SELECT sha256,MIN(bytes) AS min_bytes,MAX(bytes) AS max_bytes FROM qg_files WHERE sha256 IN (SELECT value FROM json_each(?)) GROUP BY sha256",
+        digests,
+      )
+    ).map((row) => [row.sha256, row]),
+  );
+  const stored = new Map(
+    (
+      await all(
+        env,
+        "SELECT sha256,bytes,object_key FROM qg_objects WHERE sha256 IN (SELECT value FROM json_each(?))",
+        digests,
+      )
+    ).map((row) => [row.sha256, row]),
+  );
+  const prepared = [];
+  let expandedBytes = 0;
+  // Validate the entire request, including replays and decompressed JSON,
+  // before making any content-addressed writes.
+  for (const row of input.objects) {
+    const expected = registered.get(row.sha256);
+    if (!expected) fail(409, "先登记包含该对象的固定批次");
+    if (expected.min_bytes !== expected.max_bytes)
+      fail(409, "该对象的已登记大小冲突");
+    if (row.bytes !== expected.min_bytes) fail(422, "资料字节与固定摘要不一致");
+    const prior = stored.get(row.sha256);
+    if (
+      prior &&
+      (prior.bytes !== row.bytes || prior.object_key !== "sha256/" + row.sha256)
+    )
+      fail(409, "已存对象与固定摘要冲突");
+    let decoded;
+    try {
+      decoded = atob(row.data_base64);
+    } catch {
+      fail(422, "对象Base64格式不正确");
+    }
+    if (btoa(decoded) !== row.data_base64 || decoded.length !== row.bytes)
+      fail(422, "对象Base64格式不正确");
+    const bytes = Uint8Array.from(decoded, (char) => char.charCodeAt(0));
+    if ((await hash(bytes)) !== row.sha256)
+      fail(422, "资料字节与固定摘要不一致");
+    let inspected;
+    try {
+      inspected = await inspectObject(bytes, objectBatchBytes - expandedBytes);
+    } catch (error) {
+      if (error.status) throw error;
+      fail(422, "资料不是有效JSON或gzip");
+    }
+    expandedBytes += inspected.expandedBytes;
+    prepared.push({
+      sha256: row.sha256,
+      bytes,
+      metadata: inspected.metadata,
+      replayed: !!prior,
+    });
+  }
+  if (!env.BUCKET) fail(503, "资料对象存储暂不可用");
+  const receipts = [];
+  for (
+    let offset = 0;
+    offset < prepared.length;
+    offset += objectWriteConcurrency
+  ) {
+    const group = prepared.slice(offset, offset + objectWriteConcurrency);
+    const outcomes = await Promise.allSettled(
+      group.map(async (obj) => {
+        if (!obj.replayed)
+          await storeObject(env, obj.sha256, obj.bytes, obj.metadata);
+        return { sha256: obj.sha256, stored: true, replayed: obj.replayed };
+      }),
+    );
+    outcomes.forEach((outcome, index) =>
+      receipts.push(
+        outcome.status === "fulfilled"
+          ? outcome.value
+          : {
+              sha256: group[index].sha256,
+              stored: false,
+            },
+      ),
+    );
+  }
+  const complete = receipts.every((row) => row.stored);
+  // A failed write may have reached R2 before metadata persistence failed.
+  // Retrying identical content is safe; activation remains a separate action.
+  return json(
+    {
+      complete,
+      objects: receipts,
+      ...(complete
+        ? {}
+        : { detail: "部分对象未确认写入；批次未激活，请重试相同对象" }),
+    },
+    complete ? 200 : 503,
+  );
 }
 async function activate(req, env, id) {
   service(req);
@@ -980,6 +1125,8 @@ export default {
         return json(await status(env));
       if (p === "/v1/sync/batches" && req.method === "POST")
         return await beginBatch(req, env);
+      if (p === "/v1/sync/objects-batch" && req.method === "POST")
+        return await uploadObjectsBatch(req, env);
       if (p.startsWith("/v1/sync/objects/") && req.method === "PUT")
         return await upload(req, env, p.slice("/v1/sync/objects/".length));
       if (p.startsWith("/v1/sync/activate/") && req.method === "POST")

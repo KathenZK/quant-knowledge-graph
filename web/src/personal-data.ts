@@ -150,6 +150,26 @@ export interface Knowledge {
   original_rule?: string;
 }
 export type PersonalItem = Item & {
+  research_scope?: {
+    record_id: string;
+    entity_id: string;
+    definition_revision: string;
+    definition_sha256?: string;
+    binding_kind: string;
+    universe_version: string;
+    entity_type: string;
+    entity_type_label: string;
+    status: string;
+    execution_versions: number;
+    reason: string;
+    interpreted: boolean;
+    in_scope: boolean;
+    source_title?: string;
+    source_field_differences?: Record<
+      string,
+      { catalog_value: unknown; source_value: unknown }
+    >;
+  };
   factor_quality?: {
     group: string;
     label: string;
@@ -203,6 +223,22 @@ export type PersonalItem = Item & {
 };
 export type PersonalDetail = Detail & PersonalItem;
 export interface PersonalMeta extends Omit<Meta, "mode" | "facets"> {
+  research_scope_summary?: {
+    total_work_items: number;
+    final_handoff_records: number;
+    initial_batch_records: number;
+    additional_collected_objects: number;
+    entity_types: Record<string, number>;
+    execution_records: number;
+    execution_versions: number;
+    no_execution_records: number;
+    imported_runs: number;
+    interpreted_records: number;
+    uninterpreted_execution_records: number;
+    unbound_execution_versions: number;
+    as_of_utc?: string;
+    notice: string;
+  };
   factor_quality_summary?: {
     total: number;
     groups: (Facet & { count: number })[];

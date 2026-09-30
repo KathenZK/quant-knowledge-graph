@@ -142,6 +142,14 @@ describe("Readable detail and research integration", () => {
           url.includes("/implementations/")
             ? {
                 name: "合成",
+                run_id: url.includes("run-b") ? "run-b" : "run-a",
+                variant_id: "same-id",
+                spec: {},
+                lineage: {
+                  manifest_sha256: url.includes("run-b")
+                    ? "b".repeat(64)
+                    : "a".repeat(64),
+                },
                 metrics: {
                   periods: {
                     full: {
@@ -159,11 +167,13 @@ describe("Readable detail and research integration", () => {
                 related_results: [
                   {
                     origin_run_id: "run-a",
+                    manifest_sha256: "a".repeat(64),
                     variant_id: "same-id",
                     fidelity_class: "STANDARDIZED",
                   },
                   {
                     origin_run_id: "run-b",
+                    manifest_sha256: "b".repeat(64),
                     variant_id: "same-id",
                     fidelity_class: "HYPOTHESIS",
                   },
@@ -179,14 +189,14 @@ describe("Readable detail and research integration", () => {
     );
     const select = await screen.findByLabelText("合成策略的历史实现");
     fireEvent.change(select, {
-      target: { value: JSON.stringify(["run-b", "same-id"]) },
+      target: { value: JSON.stringify(["run-b", "same-id", "b".repeat(64)]) },
     });
     expect(await screen.findByText("20.00%")).toBeInTheDocument();
     expect(
       fetch.mock.calls.some(([url]) => String(url).includes("run_id=run-b")),
     ).toBe(true);
     fireEvent.change(select, {
-      target: { value: JSON.stringify(["run-a", "same-id"]) },
+      target: { value: JSON.stringify(["run-a", "same-id", "a".repeat(64)]) },
     });
     expect(await screen.findByText("10.00%")).toBeInTheDocument();
   });

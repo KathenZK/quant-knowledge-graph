@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
+import { gzipSync } from "node:zlib";
 const ref = {
   kind: "strategy",
   entity_id: "synthetic:one",
@@ -474,6 +475,7 @@ test("browser context is rejected by every service mutation route", async () => 
   for (const [path, method] of [
     ["/v1/sync/batches", "POST"],
     ["/v1/sync/objects/" + "a".repeat(64), "PUT"],
+    ["/v1/sync/objects-batch", "POST"],
     ["/v1/sync/activate/missing", "POST"],
     ["/v1/sync/ack", "POST"],
   ])
@@ -486,4 +488,410 @@ test("browser context is rejected by every service mutation route", async () => 
       ).status,
       403,
     );
+});
+
+const batchPath = "/v1/sync/objects-batch";
+const batchBytes = 4 * 1024 * 1024;
+function syntheticObject(value) {
+  const bytes = Buffer.isBuffer(value)
+    ? value
+    : Buffer.from(JSON.stringify(value));
+  return {
+    sha256: createHash("sha256").update(bytes).digest("hex"),
+    bytes: bytes.length,
+    data_base64: bytes.toString("base64"),
+  };
+}
+async function registerObjects(env, objects) {
+  const response = await worker.fetch(
+    service("/v1/sync/batches", "POST", {
+      schema_version: "quantgraph-site-sync/v1",
+      parent_batch_id: seed.batch_id,
+      files: objects.map((row, index) => ({
+        path: `/catalog/details/synthetic-${index}.json`,
+        sha256: row.sha256,
+        bytes: row.bytes,
+      })),
+      entities: [],
+      results: [],
+    }),
+    env,
+  );
+  assert.equal(response.status, 200);
+  return (await response.json()).batch_id;
+}
+function noObjectsWritten(env) {
+  assert.equal(env.blobs.size, 0);
+  assert.equal(
+    env.sqlite.prepare("SELECT COUNT(*) AS count FROM qg_objects").get().count,
+    0,
+  );
+  assert.equal(
+    env.sqlite
+      .prepare("SELECT value FROM qg_settings WHERE key='active_batch'")
+      .get(),
+    undefined,
+  );
+}
+test("bulk object route rejects unauthenticated markers and all browser/CSRF contexts before reading", async () => {
+  const env = environment();
+  for (const headers of [
+    {},
+    { "X-QuantGraph-Sync": "0" },
+    { "X-QuantGraph-Sync": "1", Origin: "https://test.chatgpt.site" },
+    { "X-QuantGraph-Sync": "1", Origin: "https://evil.example" },
+    { "X-QuantGraph-Sync": "1", Origin: "" },
+    { "X-QuantGraph-Sync": "1", "Sec-Fetch-Site": "same-origin" },
+    { "X-QuantGraph-Sync": "1", "Sec-Fetch-Site": "cross-site" },
+    { "X-QuantGraph-Sync": "1", "oai-authenticated-user-id": "owner-one" },
+  ]) {
+    const response = await worker.fetch(
+      new Request("https://test.chatgpt.site" + batchPath, {
+        method: "POST",
+        headers,
+        body: "not JSON",
+      }),
+      env,
+    );
+    assert.equal(response.status, 403);
+  }
+  noObjectsWritten(env);
+});
+test("bulk object envelope, properties, types and canonical base64 are strict", async () => {
+  const env = environment();
+  const row = syntheticObject({});
+  await registerObjects(env, [row]);
+  const invalid = [
+    null,
+    [],
+    {},
+    { objects: null },
+    { objects: [row], object_key: "elsewhere" },
+    { objects: [null] },
+    { objects: [{ ...row, path: "/catalog/custom.json" }] },
+    { objects: [{ ...row, object_key: "sha256/arbitrary" }] },
+    ...[true, "2", -1, 1.5, null].map((bytes) => ({
+      objects: [{ ...row, bytes }],
+    })),
+    { objects: [{ ...row, sha256: row.sha256.toUpperCase() }] },
+    { objects: [{ sha256: row.sha256, bytes: row.bytes }] },
+    ...[null, 1234, "e30", "e31=", "e3 =", "e30\n", "____", "=e30", "e30-"].map(
+      (data_base64) => ({ objects: [{ ...row, data_base64 }] }),
+    ),
+    { objects: [row, row] },
+    { objects: [row, { ...row, bytes: 3, data_base64: "MTIz" }] },
+  ];
+  for (const payload of invalid) {
+    const response = await worker.fetch(
+      service(batchPath, "POST", payload),
+      env,
+    );
+    assert.equal(response.status, 422, JSON.stringify(payload));
+  }
+  for (const body of [
+    '{"objects":[],"objects":[]}',
+    '{"objects":[{"sha256":"a","sha256":"b"}]}',
+    new Uint8Array([0xff]),
+  ]) {
+    const response = await worker.fetch(
+      new Request("https://test.chatgpt.site" + batchPath, {
+        method: "POST",
+        headers: { "X-QuantGraph-Sync": "1" },
+        body,
+      }),
+      env,
+    );
+    assert.equal(response.status, 422);
+  }
+  noObjectsWritten(env);
+});
+test("bulk object counts, wire bytes and declared decoded sizes are bounded", async () => {
+  const env = environment();
+  const row = syntheticObject({});
+  await registerObjects(env, [row]);
+  for (const objects of [[], Array.from({ length: 33 }, () => row)])
+    assert.equal(
+      (await worker.fetch(service(batchPath, "POST", { objects }), env)).status,
+      422,
+    );
+  assert.equal(
+    (
+      await worker.fetch(
+        service(batchPath, "POST", {
+          objects: [{ ...row, bytes: batchBytes + 1, data_base64: "" }],
+        }),
+        env,
+      )
+    ).status,
+    413,
+  );
+  for (const [body, headers] of [
+    [" ".repeat(batchBytes + 1), {}],
+    ["{}", { "Content-Length": String(batchBytes + 1) }],
+  ])
+    assert.equal(
+      (
+        await worker.fetch(
+          new Request("https://test.chatgpt.site" + batchPath, {
+            method: "POST",
+            headers: { "X-QuantGraph-Sync": "1", ...headers },
+            body,
+          }),
+          env,
+        )
+      ).status,
+      413,
+    );
+  noObjectsWritten(env);
+  const valid = JSON.stringify({ objects: [row] });
+  assert.equal(
+    (
+      await worker.fetch(
+        new Request("https://test.chatgpt.site" + batchPath, {
+          method: "POST",
+          headers: { "X-QuantGraph-Sync": "1" },
+          body: valid + " ".repeat(batchBytes - Buffer.byteLength(valid)),
+        }),
+        env,
+      )
+    ).status,
+    200,
+  );
+});
+test("bulk gzip expansion is bounded across the complete batch before writes", async () => {
+  const env = environment();
+  const objects = ["a", "b"].map((char) =>
+    syntheticObject(
+      gzipSync(Buffer.from(JSON.stringify(char.repeat(3 * 1024 * 1024)))),
+    ),
+  );
+  await registerObjects(env, objects);
+  assert.equal(
+    (await worker.fetch(service(batchPath, "POST", { objects }), env)).status,
+    413,
+  );
+  noObjectsWritten(env);
+  const exact = syntheticObject(
+    gzipSync(Buffer.from(JSON.stringify("c".repeat(batchBytes - 2)))),
+  );
+  await registerObjects(env, [exact]);
+  assert.equal(
+    (await worker.fetch(service(batchPath, "POST", { objects: [exact] }), env))
+      .status,
+    200,
+  );
+});
+test("bulk validates later object registration, size, hash and JSON before any write", async () => {
+  const valid = syntheticObject({ synthetic: "valid" });
+  const other = syntheticObject({ synthetic: "other" });
+  for (const [row, registered, status] of [
+    [other, false, 409],
+    [{ ...other, bytes: other.bytes + 1 }, true, 422],
+    [{ ...other, sha256: "a".repeat(64) }, true, 422],
+    [syntheticObject(Buffer.from("not JSON")), true, 422],
+    [syntheticObject(Buffer.from('{"value":1e999}')), true, 422],
+    [syntheticObject(Buffer.from([0xff])), true, 422],
+    [syntheticObject(Buffer.from([31, 139, 0, 0])), true, 422],
+  ]) {
+    const env = environment();
+    await registerObjects(env, registered ? [valid, row] : [valid]);
+    const response = await worker.fetch(
+      service(batchPath, "POST", { objects: [valid, row] }),
+      env,
+    );
+    assert.equal(response.status, status);
+    noObjectsWritten(env);
+  }
+  const env = environment();
+  await registerObjects(env, [valid, other]);
+  assert.equal(
+    (
+      await worker.fetch(
+        service(batchPath, "POST", {
+          objects: [valid, { ...other, bytes: other.bytes - 1 }],
+        }),
+        env,
+      )
+    ).status,
+    422,
+  );
+  noObjectsWritten(env);
+});
+test("bulk rejects conflicting registrations and persisted object identities", async () => {
+  const row = syntheticObject({});
+  const env = environment();
+  await registerObjects(env, [row]);
+  await registerObjects(env, [{ ...row, bytes: row.bytes + 1 }]);
+  assert.equal(
+    (await worker.fetch(service(batchPath, "POST", { objects: [row] }), env))
+      .status,
+    409,
+  );
+  noObjectsWritten(env);
+  for (const [bytes, objectKey] of [
+    [row.bytes + 1, "sha256/" + row.sha256],
+    [row.bytes, "arbitrary"],
+  ]) {
+    const other = environment();
+    await registerObjects(other, [row]);
+    other.sqlite
+      .prepare("INSERT INTO qg_objects VALUES(?,?,?,?)")
+      .run(row.sha256, bytes, objectKey, "{}");
+    assert.equal(
+      (
+        await worker.fetch(
+          service(batchPath, "POST", { objects: [row] }),
+          other,
+        )
+      ).status,
+      409,
+    );
+    assert.equal(other.blobs.size, 0);
+  }
+});
+test("32 bulk objects write with bounded concurrency, replay and separate atomic activation", async () => {
+  const env = environment();
+  const objects = Array.from({ length: 32 }, (_, index) =>
+    syntheticObject({ synthetic: index }),
+  );
+  const id = await registerObjects(env, objects);
+  const put = env.BUCKET.put;
+  let inFlight = 0,
+    peak = 0,
+    writes = 0;
+  env.BUCKET.put = async (...args) => {
+    writes++;
+    peak = Math.max(peak, ++inFlight);
+    await new Promise((resolve) => setImmediate(resolve));
+    await put(...args);
+    inFlight--;
+  };
+  for (const replayed of [false, true]) {
+    const response = await worker.fetch(
+      service(batchPath, "POST", { objects }),
+      env,
+    );
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), {
+      complete: true,
+      objects: objects.map((row) => ({
+        sha256: row.sha256,
+        stored: true,
+        replayed,
+      })),
+    });
+  }
+  assert.equal(writes, 32);
+  assert.equal(peak, 4);
+  assert.equal(
+    (await (await worker.fetch(service("/v1/sync/status"), env)).json())
+      .active_batch,
+    seed.batch_id,
+  );
+  for (const replayed of [false, true]) {
+    const response = await worker.fetch(
+      service("/v1/sync/activate/" + id, "POST", {}),
+      env,
+    );
+    assert.equal(response.status, 200);
+    assert.equal((await response.json()).replayed, replayed);
+  }
+});
+test("partial R2 or metadata failure is explicit, cannot activate, and can be safely replayed", async () => {
+  for (const failure of ["bucket", "metadata"]) {
+    const env = environment();
+    const objects = [
+      syntheticObject({ first: true }),
+      syntheticObject({ second: true }),
+    ];
+    const id = await registerObjects(env, objects);
+    const put = env.BUCKET.put;
+    if (failure === "bucket")
+      env.BUCKET.put = async (key, ...args) => {
+        if (key === "sha256/" + objects[1].sha256)
+          throw new Error("synthetic private failure");
+        return put(key, ...args);
+      };
+    else
+      env.sqlite.exec(
+        `CREATE TRIGGER synthetic_write_failure BEFORE INSERT ON qg_objects WHEN NEW.sha256='${objects[1].sha256}' BEGIN SELECT RAISE(ABORT,'synthetic private failure'); END;`,
+      );
+    const response = await worker.fetch(
+      service(batchPath, "POST", { objects }),
+      env,
+    );
+    assert.equal(response.status, 503);
+    const receipt = await response.json();
+    assert.equal(receipt.complete, false);
+    assert.deepEqual(receipt.objects, [
+      { sha256: objects[0].sha256, stored: true, replayed: false },
+      { sha256: objects[1].sha256, stored: false },
+    ]);
+    assert.ok(!JSON.stringify(receipt).includes("synthetic private failure"));
+    assert.equal(
+      (await worker.fetch(service("/v1/sync/activate/" + id, "POST", {}), env))
+        .status,
+      409,
+    );
+    assert.equal(
+      (await (await worker.fetch(service("/v1/sync/status"), env)).json())
+        .active_batch,
+      seed.batch_id,
+    );
+    if (failure === "bucket") env.BUCKET.put = put;
+    else env.sqlite.exec("DROP TRIGGER synthetic_write_failure");
+    const retry = await worker.fetch(
+      service(batchPath, "POST", { objects }),
+      env,
+    );
+    assert.equal(retry.status, 200);
+    assert.deepEqual(
+      (await retry.json()).objects.map((row) => row.replayed),
+      [true, false],
+    );
+    assert.equal(
+      (await worker.fetch(service("/v1/sync/activate/" + id, "POST", {}), env))
+        .status,
+      200,
+    );
+  }
+});
+test("existing single-object route retains its larger JSON and gzip limits", async () => {
+  const env = environment();
+  for (const bytes of [
+    Buffer.from(JSON.stringify("a".repeat(batchBytes))),
+    gzipSync(Buffer.from(JSON.stringify("b".repeat(batchBytes)))),
+  ]) {
+    const row = syntheticObject(bytes);
+    await registerObjects(env, [row]);
+    for (const replayed of [false, true]) {
+      const response = await worker.fetch(
+        new Request("https://test.chatgpt.site/v1/sync/objects/" + row.sha256, {
+          method: "PUT",
+          headers: { "X-QuantGraph-Sync": "1" },
+          body: bytes,
+        }),
+        env,
+      );
+      assert.equal(response.status, 200);
+      assert.deepEqual(await response.json(), { sha256: row.sha256, replayed });
+    }
+  }
+  const oversized = gzipSync(Buffer.from(JSON.stringify("c".repeat(8000000))));
+  const row = syntheticObject(oversized);
+  await registerObjects(env, [row]);
+  assert.equal(
+    (
+      await worker.fetch(
+        new Request("https://test.chatgpt.site/v1/sync/objects/" + row.sha256, {
+          method: "PUT",
+          headers: { "X-QuantGraph-Sync": "1" },
+          body: oversized,
+        }),
+        env,
+      )
+    ).status,
+    413,
+  );
+  assert.equal(env.blobs.has("sha256/" + row.sha256), false);
 });
