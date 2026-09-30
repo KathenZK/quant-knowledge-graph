@@ -146,6 +146,15 @@ def derive(blobs):
         annotation = annotations['implementations'].get(variant_id, {})
         metadata = dict(origin_run_id=run_id, origin_protocol_sha256=origin['protocol_sha256'],
             protocol_sha256=origin['protocol_sha256'], implementation_specs_sha256=_digest(specs_blob), **_fidelity(declared, annotation))
+        executed_status = statuses[variant_id]['status']
+        status_classes = {
+            'tested': set(FIDELITY_STATUS),
+            'tested_proxy': {'PROXY', 'PROXY_HYPOTHESIS'},
+            'tested_hypothesis': {'HYPOTHESIS', 'PROXY_HYPOTHESIS'},
+            'tested_proxy_hypothesis': {'PROXY_HYPOTHESIS'},
+        }
+        if executed_status not in status_classes or metadata['fidelity_class'] not in status_classes[executed_status]:
+            _fail('Origin executed status requires explicit matching fidelity reasons')
         for key, value in metadata.items():
             if key in original and original[key] != value:
                 _fail('Conflicting origin metric metadata')

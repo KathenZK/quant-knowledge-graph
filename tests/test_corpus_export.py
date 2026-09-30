@@ -159,3 +159,12 @@ def test_conflicting_positive_fidelity_reasons_require_review(origin):
     with pytest.raises(ValueError,match='Conflicting nonempty'):
         do_export(origin)
     assert not origin['export'].exists()
+
+
+@pytest.mark.parametrize('status',['tested_proxy','tested_hypothesis','tested_unrecognized'])
+def test_positive_origin_status_cannot_silently_become_standardized(origin,status):
+    path=origin['origin']/'implementation_status.json';rows=json.loads(path.read_bytes());rows[0]['status']=status;path.write_bytes(encoded(rows))
+    manifest=origin['origin']/'run_manifest.json';value=json.loads(manifest.read_bytes());value['result_hashes'][path.name]=digest(path.read_bytes());manifest.write_bytes(encoded(value))
+    with pytest.raises(ValueError,match='executed status requires'):
+        do_export(origin)
+    assert not origin['export'].exists()
