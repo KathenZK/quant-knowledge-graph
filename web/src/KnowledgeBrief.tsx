@@ -19,6 +19,25 @@ export default function KnowledgeBrief({ item }: { item: PersonalDetail }) {
         <h2>{strategy ? "1. 这项策略做什么" : "1. 这个因子测什么"}</h2>
         <p className="pw-reader-purpose">{brief.purpose}</p>
         <p className="pw-reading-basis">{brief.purpose_basis}</p>
+        {item.factor_quality && (
+          <div className="pw-source-review">
+            <strong>{item.factor_quality.label}</strong>
+            <p>{item.factor_quality.review_label}</p>
+            {item.factor_quality.source_body_label && (
+              <p>原来源访问：{item.factor_quality.source_body_label}</p>
+            )}
+            {item.factor_quality.base_definition_label && (
+              <p>定义依据：{item.factor_quality.base_definition_label}</p>
+            )}
+            <p>{item.factor_quality.paper_scope_label}</p>
+            <p>
+              有解释、与源码吻合、能复现计算、已经验证收益，是四个不同的判断。
+            </p>
+            {item.factor_quality.metadata_corrections?.map((fix) => (
+              <p key={fix.version}>元数据已修正：{fix.basis}</p>
+            ))}
+          </div>
+        )}
         {brief.review_notice && (
           <p className="pw-reading-basis">{brief.review_notice}</p>
         )}
@@ -61,6 +80,57 @@ export default function KnowledgeBrief({ item }: { item: PersonalDetail }) {
         <h2>
           {strategy ? "2. 交易什么，怎样进出场" : "2. 怎样计算，用在哪些场景"}
         </h2>
+        {item.factor_quality?.calculation_explanation && (
+          <div className="pw-reader-example">
+            <strong>
+              {item.factor_quality.group === "definition_references"
+                ? "相关定义的阅读说明（尚未绑定为本条可执行公式）"
+                : "逐条计算释义"}
+            </strong>
+            <p>{item.factor_quality.calculation_explanation}</p>
+            {item.factor_quality.numeric_meaning && (
+              <p>数值怎样理解：{item.factor_quality.numeric_meaning}</p>
+            )}
+            {item.factor_quality.strategy_use && (
+              <p>怎样用于研究：{item.factor_quality.strategy_use}</p>
+            )}
+            {item.factor_quality.failure_modes && (
+              <p>使用限制：{item.factor_quality.failure_modes}</p>
+            )}
+            {item.factor_quality.data_timing && (
+              <p>何时可用：{item.factor_quality.data_timing}</p>
+            )}
+            {item.factor_quality.reference_template?.definition_source_url && (
+              <p>
+                <ExternalLink
+                  url={
+                    item.factor_quality.reference_template.definition_source_url
+                  }
+                >
+                  相关定义出处
+                </ExternalLink>{" "}
+                · {item.factor_quality.reference_template.source_locator}
+              </p>
+            )}
+            {item.factor_quality.source_comparisons?.map((source) => (
+              <p key={source.native_id}>
+                <ExternalLink url={source.source_url}>
+                  {source.native_id} · 已对照的源码位置
+                </ExternalLink>
+              </p>
+            ))}
+            {!!item.factor_quality.missing_facts.length && (
+              <details>
+                <summary>仍需核实什么</summary>
+                <ul>
+                  {item.factor_quality.missing_facts.map((fact) => (
+                    <li key={fact}>{fact}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
+          </div>
+        )}
         <dl className="pw-reader-facts">
           {brief.trading.map((fact) => (
             <div key={fact.key}>

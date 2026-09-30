@@ -75,6 +75,12 @@ async function search(u: URL) {
     )
       return false;
     const f = i.knowledge?.filters || {};
+    if (
+      p.get("factor_scope") &&
+      p.get("factor_scope") !== "all" &&
+      i.factor_quality?.group !== p.get("factor_scope")
+    )
+      return false;
     for (const k of ["axis", "extra_data", "completeness", "asset_scope"])
       if (p.get(k) && f[k] !== p.get(k)) return false;
     if (p.get("daily_ohlcv") === "true" && !f.daily_ohlcv) return false;

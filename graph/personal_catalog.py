@@ -560,6 +560,10 @@ def readable_item(value, raw):
         knowledge['source_facts']=[]
         knowledge['layers']['source_facts']=[]
         knowledge['unknowns']=[r['label']+'：'+r['text'] for r in brief['trading'] if r['status']=='UNKNOWN']
+    from quantgraph.graph.factor_quality import apply_factor_quality
+    value = apply_factor_quality(value, raw)
+    if 'factor_quality' in value:
+        value['factor_quality'] = _clean_private(value['factor_quality'])
     value['knowledge']['summary'] = value['knowledge']['reader_brief']['purpose']
     value['knowledge']['summary_basis'] = value['knowledge']['reader_brief']['purpose_basis']
     value['statuses']['display'] = '个人本机资料 · 公开权限与原有可见性未改变'
@@ -606,16 +610,21 @@ class PersonalCatalogRepository(CatalogRepository):
                 reviews = (con.execute('SELECT entity_id,revision,payload FROM private_intake_reviews WHERE sequence IN (SELECT MAX(sequence) FROM private_intake_reviews GROUP BY entity_id)').fetchall()
                            if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='private_intake_reviews'").fetchone() else [])
                 review_by_id={r['entity_id']:r for r in reviews}
+                assessments=(con.execute('SELECT * FROM factor_quality_assessments ORDER BY sequence').fetchall()
+                    if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='factor_quality_assessments'").fetchone() else [])
+                assessment_by_id={(r['entity_id'],r['definition_revision']):r for r in assessments}
             # SQLite/WAL housekeeping and an idempotent import can change mtimes
             # without changing any source row. Avoid repeating expensive reading.
             digest=hashlib.sha256(); row_stamps={}
-            for batch in (rows,historical,edges,reviews):
+            for batch in (rows,historical,edges,reviews,assessments):
                 for row in batch:
                     serialized=json.dumps(tuple(row),ensure_ascii=False).encode()
                     digest.update(serialized)
                     if batch is rows:
                         if row['entity_id'] in review_by_id:
                             serialized+=review_by_id[row['entity_id']]['payload'].encode()
+                        assessment=assessment_by_id.get((row['entity_id'],row['definition_revision']))
+                        if assessment:serialized+=assessment['payload'].encode()+assessment['input_sha256'].encode()
                         row_stamps[row['entity_id']]=hashlib.sha256(serialized).digest()
             content_digest=digest.digest()
             if content_digest==self._content_digest:
@@ -631,6 +640,11 @@ class PersonalCatalogRepository(CatalogRepository):
                 private=json.loads(row['private_payload'])
                 if eid in review_by_id:
                     private['intake_card']=json.loads(review_by_id[eid]['payload'])
+                assessment=assessment_by_id.get((eid,row['definition_revision']))
+                if assessment:
+                    private['_factor_quality_review']=json.loads(assessment['payload'])
+                    private['_factor_quality_version']=assessment['assessment_version']
+                    private['_factor_quality_sha256']=assessment['input_sha256']
                 base_rows[eid]=previous if previous and previous[0]==fingerprint else (
                     fingerprint,readable_item(self._value(row),private))
             base={eid:entry[1] for eid,entry in base_rows.items()}
@@ -807,7 +821,7 @@ class PersonalCatalogRepository(CatalogRepository):
         return matches
 
     def search(self, *, q='', kind='strategy', category='', family='', field='', market='', frequency='', source_type='', result_status='', page=1, page_size=20, admin=False,
-               method_family='', daily_ohlcv=False, axis='', extra_data='', completeness='', collapse_templates=False, include_tests=False, allowed_ids=None, collapse_duplicates=True, template_id='', asset_scope=''):
+               method_family='', daily_ohlcv=False, axis='', extra_data='', completeness='', collapse_templates=False, include_tests=False, allowed_ids=None, collapse_duplicates=True, template_id='', asset_scope='', factor_scope=''):
         if page < 1 or not 1 <= page_size <= 100:
             raise ValueError('Invalid pagination')
         data=self._load(); plan=self._search_vocabulary.plan(q); groups=plan['expanded_terms']; matched=[]
@@ -823,6 +837,8 @@ class PersonalCatalogRepository(CatalogRepository):
                 continue
             factor_source = kind=='variant' and value['kind']=='source' and value.get('source_type')=='factor_source_record'
             if kind and kind!='all' and value['kind']!=kind and not factor_source:
+                continue
+            if factor_scope and factor_scope!='all' and value.get('factor_quality',{}).get('group')!=factor_scope:
                 continue
             if any(wanted and value.get(key)!=wanted for key,wanted in [('category',category),('family',family),('frequency',frequency),('source_type',source_type)]):
                 continue
@@ -1071,7 +1087,8 @@ class PersonalCatalogRepository(CatalogRepository):
         relations=[e for e in self._edges if e['from_id'] in valid_ids and e['to_id'] in valid_ids]
         relation_layers=Counter(self.relation_explanation(e['relation'])['category'] for e in relations)
         reviewed=[i['knowledge']['reader_brief'] for i in items if i['knowledge']['reader_brief'].get('intake_status')]
-        return dict(mode='personal_local',release='local-catalog',graph_api='v1',graph_version='0.2.0',adapter_version=VERSION,
+        from quantgraph.graph.factor_quality import quality_summary
+        return dict(factor_quality_summary=quality_summary(items),mode='personal_local',release='local-catalog',graph_api='v1',graph_version='0.2.0',adapter_version=VERSION,
             intake_summary=dict(reviewed_records=len(reviewed),by_status=dict(Counter(r['intake_status'] for r in reviewed)),
                 by_type=dict(Counter(r.get('entry_type','unknown') for r in reviewed)),
                 source_reviews=sum(bool(r.get('existing_record_overlay')) for r in reviewed),new_backtests_from_import=0),

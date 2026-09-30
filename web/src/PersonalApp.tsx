@@ -697,6 +697,15 @@ function Browse({
   const effective = new URLSearchParams(params);
   effective.set("kind", kind);
   effective.set("page_size", "18");
+  if (
+    kind === "variant" &&
+    meta.factor_quality_summary &&
+    !effective.has("factor_scope")
+  )
+    effective.set(
+      "factor_scope",
+      effective.get("q") ? "all" : "research_cards",
+    );
   if (!effective.has("collapse_templates"))
     effective.set("collapse_templates", "true");
   const results = useApi<{
@@ -717,6 +726,18 @@ function Browse({
     setParams(next);
   };
   const filterSpec: [string, string, Facet[]][] = [
+    ...(kind === "variant" && meta.factor_quality_summary
+      ? [
+          [
+            "factor_scope",
+            "资料层次",
+            [
+              { value: "all", label: "全部资料" },
+              ...meta.factor_quality_summary.groups,
+            ],
+          ] as [string, string, Facet[]],
+        ]
+      : []),
     ["method_family", "方法类型", meta.facets.method_families || []],
     ["market", "市场", meta.facets.markets || []],
     ["frequency", "频率", meta.facets.frequencies || []],
@@ -770,6 +791,30 @@ function Browse({
           : "阅读原始公式、变量、计算口径与实现差异，沿关系理解它如何被使用。"}
       </Title>
       <SnapshotProgress meta={meta} kind={kind} />
+      {kind === "variant" && meta.factor_quality_summary && (
+        <section
+          className="pw-reading-section"
+          aria-label="因子资料质量与核验范围"
+        >
+          <p>
+            默认查看带用途说明与来源证据的研究资料卡。基础特征、指标引用和组件仍可从“资料层次”打开；输入名称搜索时默认查全部资料。
+          </p>
+          <p>
+            {meta.factor_quality_summary.groups
+              .filter((g) => g.count)
+              .map((g) => `${g.label} ${g.count}`)
+              .join(" · ")}
+          </p>
+          <p>
+            已逐ID登记 {meta.factor_quality_summary.assessed} /{" "}
+            {meta.factor_quality_summary.total} 条。源码逐式匹配{" "}
+            {meta.factor_quality_summary.source_statuses
+              .PASS_ALL_NATIVE_ALIASES_MATCH_PINNED_LOADER || 0}{" "}
+            条；指标引用仍缺完整执行合同。{meta.factor_quality_summary.notice}
+          </p>
+          <p>本轮没有删除条目，也没有把这些资料标为已经验证盈利的因子。</p>
+        </section>
+      )}
       <section className="pw-catalog">
         <form
           className="pw-search"
@@ -803,7 +848,7 @@ function Browse({
               key={key}
               name={label}
               options={options}
-              value={params.get(key) || ""}
+              value={effective.get(key) || ""}
               onChange={(value) => filter(key, value)}
             />
           ))}

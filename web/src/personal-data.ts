@@ -150,6 +150,36 @@ export interface Knowledge {
   original_rule?: string;
 }
 export type PersonalItem = Item & {
+  factor_quality?: {
+    group: string;
+    label: string;
+    assessment_version?: string;
+    assessment_sha256?: string;
+    review_label: string;
+    paper_scope_label: string;
+    source_body_label?: string;
+    base_definition_label?: string;
+    calculation_explanation?: string;
+    numeric_meaning?: string;
+    strategy_use?: string;
+    failure_modes?: string;
+    data_timing?: string;
+    missing_facts: string[];
+    metadata_corrections?: {
+      version: string;
+      field: string;
+      previous: unknown;
+      current: unknown;
+      basis: string;
+    }[];
+    reference_template?: {
+      what_zh?: string;
+      definition_source_url?: string;
+      source_locator?: string;
+      common_boundary_zh?: string;
+    };
+    source_comparisons?: { native_id?: string; source_url?: string }[];
+  };
   snapshot_batch?: string;
   is_historical?: boolean;
   current_entity_id?: string;
@@ -173,6 +203,15 @@ export type PersonalItem = Item & {
 };
 export type PersonalDetail = Detail & PersonalItem;
 export interface PersonalMeta extends Omit<Meta, "mode" | "facets"> {
+  factor_quality_summary?: {
+    total: number;
+    groups: (Facet & { count: number })[];
+    assessed: number;
+    archived: number;
+    notice: string;
+    source_statuses: Record<string, number>;
+    review_statuses: Record<string, number>;
+  };
   intake_summary?: {
     reviewed_records: number;
     by_status: Record<string, number>;

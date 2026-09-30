@@ -111,7 +111,7 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
                family: str = '', template_id: str = '', field: str = '', market: str = '', frequency: str = '',
                source_type: str = '', result_status: str = '', personal_status: str = '',
                axis: str = '', extra_data: str = '', completeness: str = '', method_family: str = '', asset_scope: str = '',
-               daily_ohlcv: bool = False, starred: bool | None = None, collapse_templates: bool = False,
+               factor_scope: str = '', daily_ohlcv: bool = False, starred: bool | None = None, collapse_templates: bool = False,
                page: int = Query(1, ge=1), page_size: int = Query(20, ge=1, le=50)):
         allowed_ids = None
         if personal_status or starred is not None:
@@ -131,7 +131,7 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
         return model().search(q=q, kind=kind, category=category, family=family, template_id=template_id, field=field,
             market=market, frequency=frequency, source_type=source_type, result_status=result_status,
             allowed_ids=allowed_ids, axis=axis, extra_data=extra_data, daily_ohlcv=daily_ohlcv, asset_scope=asset_scope,
-            completeness=completeness, method_family=method_family, collapse_templates=collapse_templates,
+            completeness=completeness, method_family=method_family, collapse_templates=collapse_templates, factor_scope=factor_scope,
             page=page, page_size=page_size)
 
     @app.get('/v1/web/entities/{kind}/{eid}')

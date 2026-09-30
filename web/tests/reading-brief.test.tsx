@@ -44,6 +44,69 @@ const item = {
 } as unknown as PersonalDetail;
 afterEach(() => vi.unstubAllGlobals());
 describe("Readable detail and research integration", () => {
+  it("keeps source matching, formula repair and empirical status separate", () => {
+    render(
+      <KnowledgeBrief
+        item={{
+          ...item,
+          kind: "variant",
+          factor_quality: {
+            group: "basic_features",
+            label: "基础价量特征",
+            review_label: "原式已对照源码；参数元数据已修正",
+            paper_scope_label: "平台论文没有逐条收益证据",
+            missing_facts: ["算子运行语义待核"],
+            calculation_explanation: "当根实体长度除以当根振幅",
+            numeric_meaning: "描述当根价格形状",
+            strategy_use: "可作为模型输入候选，需单独验证",
+            metadata_corrections: [
+              {
+                version: "synthetic-v1",
+                field: "window_or_lag",
+                previous: 2,
+                current: null,
+                basis: "当前观测需求1不表示滞后1",
+              },
+            ],
+          },
+        }}
+      />,
+    );
+    expect(screen.getByText("平台论文没有逐条收益证据")).toBeInTheDocument();
+    expect(screen.getByText(/当前观测需求1不表示滞后1/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/怎样用于研究：可作为模型输入候选/),
+    ).toBeInTheDocument();
+    expect(screen.queryByText("已经验证盈利")).not.toBeInTheDocument();
+  });
+  it("shows a related definition as an unbound reference, not the original formula", () => {
+    render(
+      <KnowledgeBrief
+        item={{
+          ...item,
+          kind: "variant",
+          factor_quality: {
+            group: "definition_references",
+            label: "待补定义的指标引用",
+            review_label: "来源正文待恢复",
+            paper_scope_label: "定义不构成alpha证据",
+            missing_facts: [],
+            calculation_explanation: "教学定义示意",
+            reference_template: {
+              definition_source_url: "https://example.com/definition",
+              source_locator: "合成定位",
+            },
+          },
+        }}
+      />,
+    );
+    expect(screen.getByText(/尚未绑定为本条可执行公式/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /相关定义出处/ })).toHaveAttribute(
+      "href",
+      "https://example.com/definition",
+    );
+    expect(screen.getByText("来源正文待恢复")).toBeInTheDocument();
+  });
   it("shows three understandable sections without fabricating missing evidence", () => {
     render(<KnowledgeBrief item={item} />);
     expect(
