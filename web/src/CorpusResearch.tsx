@@ -70,7 +70,7 @@ export type CorpusSummary = {
   limitations: string[];
   manifest_sha256?: string;
 };
-type CorpusRecord = {
+export type CorpusRecord = {
   related_results?: RelatedResult[];
   id: string;
   name: string;
@@ -177,7 +177,7 @@ export function metricValue(value: number | null | undefined, percent = false) {
       : value.toFixed(2)
     : "未提供";
 }
-function MetricTable({
+export function MetricTable({
   rows,
 }: {
   rows: { label: string; metrics?: Metrics }[];
@@ -569,7 +569,7 @@ function RecordDetailLoader({ id, run }: { id: string; run: string }) {
     );
   return <SourceRecordDetail record={request.data} />;
 }
-function DetailLoader({ variant, run }: { variant: string; run: string }) {
+export function DetailLoader({ variant, run }: { variant: string; run: string }) {
   const request = useApi<CorpusDetail>(
     `${base}/implementations/${encodeURIComponent(variant)}?run_id=${encodeURIComponent(run)}`,
   );
