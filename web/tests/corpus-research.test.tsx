@@ -315,3 +315,73 @@ it("pins opened evidence to its run and clears unavailable filters when switchin
     expect(screen.getByLabelText("研究快照")).toHaveValue("next-run"),
   );
 });
+
+it("labels hypothesis evidence prominently and derives period choices from retained data", () => {
+  const hypothetical: CorpusDetail = {
+    ...detail,
+    fidelity_class: "HYPOTHESIS",
+    fidelity_reason: "以全资金替代原始100股，仅检验信号",
+    metrics: {
+      ...detail.metrics,
+      periods: {
+        full: detail.metrics.periods!.full,
+        stress_window: { cagr: -0.15 },
+      },
+    },
+  };
+  render(<ResearchDetail detail={hypothetical} />);
+  expect(screen.getByText("假设性回测")).toBeInTheDocument();
+  expect(
+    screen.getByText("以全资金替代原始100股，仅检验信号"),
+  ).toBeInTheDocument();
+  expect(
+    screen.queryByRole("option", { name: "2026 观察段" }),
+  ).not.toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText("比较区间"), {
+    target: { value: "stress_window" },
+  });
+  expect(screen.getByText("-15.00%")).toBeInTheDocument();
+});
+
+it("links each cross-run result to its own immutable origin protocol", () => {
+  render(
+    <MemoryRouter>
+      <SourceRecordDetail
+        record={{
+          id: "SYNTHETIC-U",
+          name: "跨批次样例",
+          status: "not_evaluated_in_this_run",
+          reason: "本批没有实验",
+          tested_variants: 0,
+          families: [],
+          implementations: [],
+          audit: {},
+          related_results: [
+            {
+              origin_run_id: "original-run",
+              variant_id: "same-id",
+              fidelity_class: "STANDARDIZED",
+              protocol_sha256: "a".repeat(64),
+              manifest_sha256: "b".repeat(64),
+            },
+            {
+              origin_run_id: "hypothesis-run",
+              variant_id: "same-id",
+              fidelity_class: "HYPOTHESIS",
+              fidelity_reason: "仓位假设",
+              protocol_sha256: "c".repeat(64),
+              manifest_sha256: "d".repeat(64),
+            },
+          ],
+        }}
+      />
+    </MemoryRouter>,
+  );
+  expect(
+    screen.getByRole("link", { name: "same-id · 标准化规则实现" }),
+  ).toHaveAttribute("href", "/results?run_id=original-run&variant=same-id");
+  expect(
+    screen.getByRole("link", { name: "same-id · 假设性回测" }),
+  ).toHaveAttribute("href", "/results?run_id=hypothesis-run&variant=same-id");
+  expect(screen.getByText("仓位假设")).toBeInTheDocument();
+});

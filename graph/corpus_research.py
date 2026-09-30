@@ -22,6 +22,10 @@ import zlib
 
 SCHEMA = 'private-strategy-screen-collection/v1'
 DATABASE = 'corpus-research.sqlite'
+FIDELITY_CLASSES = ('STANDARDIZED', 'PROXY', 'HYPOTHESIS', 'PROXY_HYPOTHESIS')
+RESULT_STATUSES = {'tested', 'tested_proxy_only', 'tested_hypothesis_only', 'tested_mixed'}
+FIDELITY_STATUS = {'STANDARDIZED': 'tested', 'PROXY': 'tested_proxy_only', 'HYPOTHESIS': 'tested_hypothesis_only', 'PROXY_HYPOTHESIS': 'tested_mixed'}
+
 ARTIFACTS = {
     'run_manifest.json': 'results', 'run_summary.json': 'results',
     'strategy_metrics.json': 'results', 'implemented_specs.json': 'results',
@@ -150,20 +154,22 @@ def _read_file(path, limit=MAX_ARTIFACT_BYTES):
     return data
 
 
-def _read_inputs(results_dir, audit_dir):
+def _read_inputs(results_dir, audit_dir, artifacts=None):
     roots = {'results': Path(results_dir), 'audit': Path(audit_dir)}
     for root in roots.values():
         if root.is_symlink() or not root.is_dir():
             _fail('Explicit artifact directories must be non-symlink directories')
     # Names and directories come from code, never from the manifest or payload.
-    return {name: _read_file(roots[group] / name) for name, group in ARTIFACTS.items()}
+    return {name: _read_file(roots[group] / name) for name, group in (artifacts or ARTIFACTS).items()}
 
 
 def build_manifest(results_dir, audit_dir, output):
     """Pin byte hashes; does not import or certify research correctness."""
-    blobs = _read_inputs(results_dir, audit_dir)
+    from quantgraph.graph.corpus_export import SCHEMA_V2, V2_ARTIFACTS
+    version2 = (Path(results_dir) / 'origin__run_manifest.json').is_file()
+    blobs = _read_inputs(results_dir, audit_dir, V2_ARTIFACTS if version2 else ARTIFACTS)
     run = _loads(blobs['run_manifest.json'])
-    manifest = dict(schema_version=SCHEMA, collection_type='RETAINED_STANDARDIZED_SCREEN',
+    manifest = dict(schema_version=SCHEMA_V2 if version2 else SCHEMA, collection_type='RETAINED_STANDARDIZED_SCREEN',
                     run_id=_identifier(run['run_id']), execute_new_trials=False,
                     artifacts={name: {'sha256': _digest(blob), 'bytes': len(blob)}
                                for name, blob in blobs.items()})
@@ -200,6 +206,24 @@ def _csv(blob):
     return rows
 
 
+def fidelity_view(metric, run_id):
+    """Legacy absence means standardized screening, never source-exact replication."""
+    return dict(origin_run_id=metric.get('origin_run_id', run_id),
+                fidelity_class=metric.get('fidelity_class', 'STANDARDIZED'),
+                fidelity_reason=metric.get('fidelity_reason', ''),
+                origin_binding='EXPLICIT' if 'origin_run_id' in metric else 'CONTAINING_RUN_LEGACY')
+
+
+def fidelity_counts(results):
+    """Record class sets overlap; implementation identities are (origin run, variant)."""
+    output = {}
+    for category in FIDELITY_CLASSES:
+        matching = [r for r in results if r['fidelity_class'] == category]
+        output[category] = dict(records=len({r['id'] for r in matching}),
+            implementations=len({(r['origin_run_id'], r['variant_id']) for r in matching}))
+    return output
+
+
 def _prepare(blobs, manifest):
     values = {name: _loads(blob) for name, blob in blobs.items() if name.endswith('.json')}
     for value in values.values():
@@ -212,11 +236,14 @@ def _prepare(blobs, manifest):
     created = datetime.fromisoformat(run['created_at_utc'].replace('Z', '+00:00'))
     if created.tzinfo is None:
         _fail('Run creation time must include a timezone')
-    main_end, latest_end = _day(run['main_end']), _day(run['descriptive_2026_end'])
-    if main_end >= latest_end:
-        _fail('Descriptive period must follow the main period')
-    for key in ['corpus_sha256', 'protocol_sha256', 'protocol_amendments_sha256',
-                'implementation_specs_sha256', 'market_data_manifest_sha256', 'data_acquisition_status_sha256']:
+    main_end = _day(run['main_end'])
+    latest_end = _day(run.get('observation_end', run.get('descriptive_2026_end')))
+    if main_end > latest_end:
+        _fail('Observation end cannot precede the main period')
+    required_hashes = ['corpus_sha256', 'protocol_sha256', 'implementation_specs_sha256']
+    if 'origin__run_manifest.json' not in blobs:
+        required_hashes += ['protocol_amendments_sha256', 'market_data_manifest_sha256', 'data_acquisition_status_sha256']
+    for key in required_hashes:
         _sha(run.get(key))
     for key in ['engine_code_sha256', 'normalized_data_sha256']:
         if not isinstance(run.get(key), dict) or not run[key]:
@@ -233,6 +260,8 @@ def _prepare(blobs, manifest):
     metrics = _index(values['strategy_metrics.json'], lambda x: x['variant_id'], 'metrics')
     specs = _index(values['implemented_specs.json'], lambda x: x.get('variant_id', x['id']), 'specification')
     deep = _index(values['deep_validation.json'], lambda x: x['variant_id'], 'deep validation')
+    if not metrics or not specs:
+        _fail('Completed screen imports require nonempty results and specifications')
     verification = values['source_verification.json']
     source = _index(verification['records'], lambda x: x['checked_id'], 'source verification')
     _finite(audit)
@@ -269,15 +298,41 @@ def _prepare(blobs, manifest):
                 or set(metric['assets']) != set(spec['assets'])
                 or metric.get('cash_asset') != spec.get('cash_asset')):
             _fail('Result universe does not reconcile with specification')
-        by_record[metric['id']].append(dict(variant_id=variant_id, family=metric['family']))
+        # Every collection represents one actual execution protocol. A cumulative
+        # export must not relabel inherited results as a new run.
+        for value in [metric, spec]:
+            if 'origin_run_id' in value and value['origin_run_id'] != run_id:
+                _fail('Result origin_run_id must equal its independent containing run')
+            if 'origin_protocol_sha256' in value and value['origin_protocol_sha256'] != run['protocol_sha256']:
+                _fail('Result origin protocol does not reconcile')
+        category = metric.get('fidelity_class', 'STANDARDIZED')
+        if category not in FIDELITY_CLASSES or category != spec.get('fidelity_class', 'STANDARDIZED'):
+            _fail('Result and specification fidelity classes must agree')
+        if ('fidelity_class' in metric) != ('fidelity_class' in spec):
+            _fail('Explicit fidelity class must be present on both result and specification')
+        proxy_declared = any(bool(value.get('asset_proxy')) for value in [metric, spec])
+        hypothesis_declared = any(bool(value.get('parameter_hypothesis')) for value in [metric, spec])
+        if ((proxy_declared and category not in {'PROXY', 'PROXY_HYPOTHESIS'})
+                or (hypothesis_declared and category not in {'HYPOTHESIS', 'PROXY_HYPOTHESIS'})):
+            _fail('Fidelity class cannot downgrade a positive proxy/hypothesis declaration')
+        if category != 'STANDARDIZED':
+            reason = metric.get('fidelity_reason')
+            if not isinstance(reason, str) or not reason.strip() or reason != spec.get('fidelity_reason'):
+                _fail('Proxy and hypothesis results require matching explicit fidelity reasons')
+        by_record[metric['id']].append(dict(variant_id=variant_id, family=metric['family'],
+                                            **fidelity_view(metric, run_id)))
     for identity, record in coverage.items():
         if record.get('run_id') != run_id or not record.get('status') or not record.get('name'):
             _fail('Coverage identity, name and status are required')
         count = record.get('tested_variants', '')
         if not re.fullmatch(r'0|[1-9]\d*', count):
             _fail('Invalid coverage tested-variant count')
-        if int(count) != len(by_record[identity]) or (record['status'] == 'tested') != bool(by_record[identity]):
-            _fail('Coverage tested status/count does not reconcile')
+        classes = {value['fidelity_class'] for value in by_record[identity]}
+        expected_status = ('tested_mixed' if len(classes) > 1 else FIDELITY_STATUS[next(iter(classes))]) if classes else None
+        if (int(count) != len(by_record[identity])
+                or (bool(classes) and record['status'] != expected_status)
+                or (not classes and record['status'] in RESULT_STATUSES)):
+            _fail('Coverage tested status/count/fidelity does not reconcile')
         if audit[identity].get('名称') != record['name'] or audit[identity].get('source_url') != record.get('source_url'):
             _fail('Coverage and audit source identities do not reconcile')
         for key in ['source_verification_status', 'source_rule_attribution_status']:
@@ -365,7 +420,7 @@ def _prepare(blobs, manifest):
         records.append(dict(id=identity, name=record['name'], status=record['status'], reason=record.get('reason', ''),
             source_url=record.get('source_url', ''), tested_variants=len(implementations),
             families=sorted({v['family'] for v in implementations}), audit=detail_audit, implementations=implementations))
-    summary = dict(summary, standardized_implementations=len(metrics),
+    summary = dict(summary, standardized_implementations=sum(v.get('fidelity_class', 'STANDARDIZED') == 'STANDARDIZED' for v in metrics.values()),
         supplemental_defaults_implementations=sum(v.get('supplemental_defaults_flag') is True for v in metrics.values()))
     return dict(run=run, summary=summary, records=records, metrics=metrics, specs=specs, deep=deep,
                 returns=returns, families=families, verification=verification)
@@ -397,21 +452,26 @@ def import_manifest(runtime, manifest_path, expected_sha256, results_dir, audit_
     if _digest(payload) != expected_sha256:
         _fail('Manifest digest mismatch')
     manifest = _loads(payload)
-    if (manifest.get('schema_version') != SCHEMA
+    from quantgraph.graph.corpus_export import SCHEMA_V2, V2_ARTIFACTS, verify_derived
+    version2 = manifest.get('schema_version') == SCHEMA_V2
+    expected_artifacts = V2_ARTIFACTS if version2 else ARTIFACTS
+    if (manifest.get('schema_version') not in {SCHEMA, SCHEMA_V2}
             or manifest.get('collection_type') != 'RETAINED_STANDARDIZED_SCREEN'
             or manifest.get('execute_new_trials') is not False):
         _fail('Unsupported retained collection contract')
     _identifier(manifest.get('run_id'))
     refs = manifest.get('artifacts')
-    if not isinstance(refs, dict) or set(refs) != set(ARTIFACTS):
+    if not isinstance(refs, dict) or set(refs) != set(expected_artifacts):
         _fail('Manifest must pin every fixed-name artifact and no extra files')
-    blobs = _read_inputs(results_dir, audit_dir)
+    blobs = _read_inputs(results_dir, audit_dir, expected_artifacts)
     for name, blob in blobs.items():
         ref = refs[name]
         if not isinstance(ref, dict) or set(ref) != {'sha256', 'bytes'}:
             _fail('Artifact references support only digest and byte count')
         if _sha(ref['sha256']) != _digest(blob) or _integer(ref['bytes']) != len(blob):
             _fail('Artifact digest or byte count mismatch: ' + name)
+    if version2:
+        verify_derived(blobs)
     prepared = _prepare(blobs, manifest)
     runtime = Path(runtime)
     if runtime.is_symlink() or (runtime / DATABASE).is_symlink():
@@ -430,6 +490,14 @@ def import_manifest(runtime, manifest_path, expected_sha256, results_dir, audit_
             for action in ['UPDATE', 'DELETE']:
                 con.execute(f"CREATE TRIGGER IF NOT EXISTS {table}_no_{action.lower()} BEFORE {action} ON {table} "
                             "BEGIN SELECT RAISE(ABORT,'Retained corpus collections are append-only'); END")
+        # The declared corpus digest is an aggregation boundary. Reject a
+        # contradictory ID universe before appending an otherwise valid run.
+        new_ids = {row['id'] for row in prepared['records']}
+        for prior_run_id, prior_lineage in con.execute('SELECT run_id,lineage FROM corpus_runs'):
+            if _loads(prior_lineage)['declared_lineage']['corpus_sha256'] == prepared['run']['corpus_sha256']:
+                prior_ids = {row[0] for row in con.execute('SELECT id FROM corpus_records WHERE run_id=?', (prior_run_id,))}
+                if prior_ids != new_ids:
+                    _fail('Same-corpus run record identities are inconsistent')
         previous = con.execute('SELECT manifest_sha256 FROM corpus_runs WHERE run_id=?', (manifest['run_id'],)).fetchone()
         if previous:
             if previous[0] != expected_sha256:
@@ -480,6 +548,39 @@ class CorpusResearch:
             raise KeyError('Unknown retained run')
         return row
 
+    def _results(self, con, runs):
+        results = []
+        for run in runs:
+            protocol = _loads(run['lineage'])['declared_lineage']['protocol_sha256']
+            for row in con.execute('SELECT variant_id,record_id,metrics FROM corpus_implementations WHERE run_id=? ORDER BY variant_id', (run['run_id'],)):
+                metric = _loads(row['metrics'])
+                results.append(dict(id=row['record_id'], variant_id=row['variant_id'],
+                    manifest_sha256=run['manifest_sha256'], protocol_sha256=protocol,
+                    **fidelity_view(metric, run['run_id'])))
+        return results
+
+    def _compatible_runs(self, con, selected):
+        corpus = _loads(selected['lineage'])['declared_lineage']['corpus_sha256']
+        ids = {row[0] for row in con.execute('SELECT id FROM corpus_records WHERE run_id=?', (selected['run_id'],))}
+        runs = []
+        for run in con.execute('SELECT * FROM corpus_runs ORDER BY created_at DESC,run_id DESC'):
+            if _loads(run['lineage'])['declared_lineage']['corpus_sha256'] != corpus:
+                continue
+            candidate_ids = {row[0] for row in con.execute('SELECT id FROM corpus_records WHERE run_id=?', (run['run_id'],))}
+            if candidate_ids != ids:
+                _fail('Same-corpus run record identities are inconsistent')
+            runs.append(run)
+        return corpus, ids, runs
+
+    def _aggregate(self, con, selected):
+        corpus, ids, runs = self._compatible_runs(con, selected)
+        results = self._results(con, runs)
+        tested_ids = {row['id'] for row in results}
+        return dict(corpus_sha256=corpus, run_ids=[run['run_id'] for run in runs], run_count=len(runs),
+            corpus_records=len(ids), tested_records=len(tested_ids), untested_records=len(ids - tested_ids),
+            fidelity_counts=fidelity_counts(results),
+            counting_note='Distinct source records across same-corpus runs; fidelity record sets overlap. Protocols and results remain separate.')
+
     def summary(self, run_id=None):
         if not self.path.exists():
             if run_id:
@@ -494,7 +595,9 @@ class CorpusResearch:
                 runs=[dict(row) for row in con.execute('SELECT run_id,created_at FROM corpus_runs ORDER BY created_at DESC,run_id DESC')],
                 counts={key: summary[key] for key in ['corpus_records', 'tested_records', 'tested_variants', 'used_data_series', 'data_files', 'standardized_implementations', 'supplemental_defaults_implementations']},
                 coverage_counts=summary['coverage_counts'], families=[dict(value=row['family'], count=row['n']) for row in families],
-                limitations=LIMITATIONS, manifest_sha256=run['manifest_sha256'])
+                limitations=LIMITATIONS, manifest_sha256=run['manifest_sha256'],
+                fidelity_counts=fidelity_counts(self._results(con, [run])),
+                aggregate=self._aggregate(con, run))
 
     def records(self, *, run_id=None, q='', status='', family='', page=1, page_size=20):
         if not 1 <= page_size <= 100 or page < 1 or len(q) > 2000:
@@ -520,6 +623,12 @@ class CorpusResearch:
                 item = _loads(row['payload'])
                 item.pop('source_url', None)
                 item['audit'] = {key: item['audit'][key] for key in ['source_verification_status', 'source_rule_attribution_status']}
+                # Legacy database payloads lack fidelity labels. Derive only from
+                # the immutable per-run metric; never rewrite retained payloads.
+                for implementation in item['implementations']:
+                    metric_row = con.execute('SELECT metrics FROM corpus_implementations WHERE run_id=? AND variant_id=?',
+                        (run['run_id'], implementation['variant_id'])).fetchone()
+                    implementation.update(fidelity_view(_loads(metric_row[0]), run['run_id']))
                 items.append(item)
             return dict(run_id=run['run_id'], items=items, total=total, page=page, page_size=page_size)
 
@@ -536,6 +645,8 @@ class CorpusResearch:
             record['lineage'] = dict(run_id=run['run_id'], source_native_id=record['id'],
                 source_native_namespace='GrokBot corpus record ID', definition_revision_bound=False,
                 manifest_sha256=run['manifest_sha256'], artifacts=_loads(run['manifest'])['artifacts'])
+            _, _, compatible = self._compatible_runs(con, run)
+            record['related_results'] = [result for result in self._results(con, compatible) if result['id'] == record_id]
             record['limitations'] = LIMITATIONS
             return record
 
@@ -571,6 +682,7 @@ class CorpusResearch:
                            implementation_variant_id=variant_id)
             return dict(run_id=run['run_id'], id=record['id'], variant_id=variant_id, name=record['name'],
                 family=row['family'], metrics=_loads(row['metrics']), spec=_loads(row['spec']), audit=record['audit'],
+                **fidelity_view(_loads(row['metrics']), run['run_id']),
                 deep_validation=_loads(row['deep_validation']) if row['deep_validation'] else None,
                 curve=curve, curve_meta=dict(method='daily_compounded', initial_equity=1,
                     total_observations=count, returned_points=len(curve), sampling='uniform_index_with_endpoints_and_global_extrema' if count > MAX_CURVE_POINTS else 'none',

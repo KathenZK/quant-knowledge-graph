@@ -423,3 +423,126 @@ def test_untested_record_has_complete_bounded_private_audit(collection):
     assert client.post(base+'R2',json={}).status_code==405
     public=TestClient(create_web_app(catalog=CatalogRepository(collection['root']/'public.sqlite')))
     assert public.get(base+'R2').status_code==404
+
+
+def set_fidelity(fixture, category, variant='R1@A', reason='Explicit synthetic deviation'):
+    for filename in ['implemented_specs.json', 'strategy_metrics.json']:
+        def change(values):
+            for value in values:
+                if value.get('variant_id', value['id']) == variant:
+                    value.update(fidelity_class=category, fidelity_reason=reason)
+        mutate(fixture, filename, change)
+    specs_digest=digest((fixture['results']/'implemented_specs.json').read_bytes())
+    mutate(fixture,'run_manifest.json',lambda x:x.update(implementation_specs_sha256=specs_digest))
+    mutate(fixture,'strategy_metrics.json',lambda x:[v.update(implementation_specs_sha256=specs_digest) for v in x])
+    # R1 has another standardized variant, so a nonstandard addition is mixed.
+    rows=list(csv.DictReader(io.StringIO((fixture['results']/'all_record_coverage.csv').read_text())))
+    rows[0]['status']='tested' if category=='STANDARDIZED' else 'tested_mixed'
+    (fixture['results']/'all_record_coverage.csv').write_bytes(write_csv(rows,list(rows[0])))
+    mutate(fixture,'run_summary.json',lambda x:x['coverage_counts'].update({rows[0]['status']:x['coverage_counts'].pop('tested')}))
+
+
+@pytest.mark.parametrize('category',['PROXY','HYPOTHESIS','PROXY_HYPOTHESIS'])
+def test_explicit_fidelity_categories_preserve_origin_and_count_overlap(collection,category):
+    set_fidelity(collection,category)
+    ingest(collection)
+    reader=CorpusResearch(collection['runtime'])
+    summary=reader.summary()
+    assert summary['fidelity_counts'][category]==dict(records=1,implementations=1)
+    assert summary['fidelity_counts']['STANDARDIZED']==dict(records=1,implementations=1)
+    assert summary['aggregate']['tested_records']==1  # Never sum overlapping record classes.
+    detail=reader.implementation('R1@A')
+    assert detail['fidelity_class']==category and detail['fidelity_reason']
+    assert detail['origin_run_id']=='synthetic-screen-v1'
+    assert reader.record('R1')['related_results'][0]['protocol_sha256']=='2'*64
+    assert detail['lineage']['definition_revision_bound'] is False
+
+
+@pytest.mark.parametrize('change,message',[
+    (lambda x:x[0].update(origin_run_id='different-origin'),'origin_run_id'),
+    (lambda x:x[0].update(origin_protocol_sha256='8'*64),'origin protocol'),
+    (lambda x:x.clear(),'nonempty'),
+    (lambda x:x[0].update(fidelity_class='SOURCE_EXACT'),'fidelity classes'),
+])
+def test_origin_and_empty_execution_rejected(collection,change,message):
+    mutate(collection,'strategy_metrics.json',change)
+    with pytest.raises(ValueError,match=message):
+        ingest(collection)
+    assert not collection['runtime'].exists()
+
+
+def test_proxy_cannot_hide_reason_or_claim_plain_tested(collection):
+    set_fidelity(collection,'PROXY')
+    mutate(collection,'strategy_metrics.json',lambda x:x[0].update(fidelity_reason=''))
+    with pytest.raises(ValueError,match='fidelity reasons'):
+        ingest(collection)
+    mutate(collection,'strategy_metrics.json',lambda x:x[0].update(fidelity_reason='Explicit synthetic deviation'))
+    p=collection['results']/'all_record_coverage.csv'
+    p.write_bytes(p.read_bytes().replace(b'tested_mixed',b'tested'))
+    with pytest.raises(ValueError,match='status/count/fidelity'):
+        ingest(collection)
+
+
+def test_separate_run_protocols_aggregate_without_rewriting_prior(collection):
+    first=ingest(collection)
+    reader=CorpusResearch(collection['runtime'])
+    prior=reader.implementation('R1@A',run_id='synthetic-screen-v1')
+    set_fidelity(collection,'HYPOTHESIS')
+    for name in ['run_manifest.json','run_summary.json']:
+        mutate(collection,name,lambda x:x.update(run_id='synthetic-screen-v2'))
+    mutate(collection,'run_manifest.json',lambda x:x.update(protocol_sha256='8'*64,created_at_utc='2026-02-01T00:00:00Z',observation_end='2024-01-03'))
+    mutate(collection,'strategy_metrics.json',lambda x:[v.update(run_id='synthetic-screen-v2',origin_run_id='synthetic-screen-v2',protocol_sha256='8'*64) for v in x])
+    p=collection['results']/'all_record_coverage.csv';p.write_bytes(p.read_bytes().replace(b'synthetic-screen-v1',b'synthetic-screen-v2'))
+    ingest(collection)
+    aggregate=reader.summary()['aggregate']
+    assert aggregate['run_count']==2 and aggregate['tested_records']==1
+    related=reader.record('R1')['related_results']
+    assert len(related)==4 and {r['protocol_sha256'] for r in related}=={'2'*64,'8'*64}
+    assert reader.implementation('R1@A',run_id=first['run_id'])==prior
+    assert all(r['origin_run_id'] in aggregate['run_ids'] for r in related)
+
+
+def test_distinct_corpus_hashes_never_aggregate(collection):
+    ingest(collection)
+    for name in ['run_manifest.json','run_summary.json']:
+        mutate(collection,name,lambda x:x.update(run_id='other-corpus-run'))
+    mutate(collection,'run_manifest.json',lambda x:x.update(corpus_sha256='a'*64,created_at_utc='2026-02-01T00:00:00Z'))
+    mutate(collection,'source_verification.json',lambda x:x['input'].update(sha256='a'*64))
+    mutate(collection,'strategy_metrics.json',lambda x:[v.update(run_id='other-corpus-run') for v in x])
+    p=collection['results']/'all_record_coverage.csv';p.write_bytes(p.read_bytes().replace(b'synthetic-screen-v1',b'other-corpus-run'))
+    ingest(collection)
+    aggregate=CorpusResearch(collection['runtime']).summary()['aggregate']
+    assert aggregate['run_ids']==['other-corpus-run'] and aggregate['run_count']==1
+
+
+@pytest.mark.parametrize('category,status',[
+    ('PROXY','tested_proxy_only'),('HYPOTHESIS','tested_hypothesis_only'),('PROXY_HYPOTHESIS','tested_mixed')])
+def test_pure_nonstandard_record_never_claims_standardized_completion(collection,category,status):
+    set_fidelity(collection,category)
+    for filename in ['implemented_specs.json','strategy_metrics.json']:
+        mutate(collection,filename,lambda values:[v.update(fidelity_class=category,fidelity_reason='Explicit synthetic deviation') for v in values if v.get('variant_id')=='R1@B'])
+    specs_digest=digest((collection['results']/'implemented_specs.json').read_bytes())
+    mutate(collection,'run_manifest.json',lambda x:x.update(implementation_specs_sha256=specs_digest))
+    mutate(collection,'strategy_metrics.json',lambda x:[v.update(implementation_specs_sha256=specs_digest) for v in x])
+    p=collection['results']/'all_record_coverage.csv';p.write_bytes(p.read_bytes().replace(b'tested_mixed',status.encode()))
+    mutate(collection,'run_summary.json',lambda x:x['coverage_counts'].update({status:x['coverage_counts'].pop('tested_mixed')}))
+    ingest(collection)
+    reader=CorpusResearch(collection['runtime'])
+    assert reader.record('R1')['status']==status
+    assert reader.summary()['fidelity_counts']['STANDARDIZED']['records']==0
+    assert reader.summary()['fidelity_counts'][category]['implementations']==2
+
+
+def test_same_corpus_digest_with_changed_native_ids_is_rejected(collection):
+    ingest(collection)
+    before=(collection['runtime']/DATABASE).read_bytes()
+    for name in ['run_manifest.json','run_summary.json']:
+        mutate(collection,name,lambda x:x.update(run_id='contradictory-ids'))
+    mutate(collection,'strategy_metrics.json',lambda x:[v.update(run_id='contradictory-ids') for v in x])
+    p=collection['results']/'all_record_coverage.csv'
+    p.write_bytes(p.read_bytes().replace(b'synthetic-screen-v1',b'contradictory-ids').replace(b',R2,',b',R2-new,'))
+    p=collection['audit']/'record_audit.jsonl';rows=[json.loads(line) for line in p.read_bytes().splitlines()]
+    rows[1]['id']='R2-new';p.write_bytes(b'\n'.join(encoded(r) for r in rows))
+    with pytest.raises(ValueError,match='Same-corpus run record identities'):
+        ingest(collection)
+    assert (collection['runtime']/DATABASE).read_bytes()==before

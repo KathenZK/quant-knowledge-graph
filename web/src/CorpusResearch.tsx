@@ -6,6 +6,25 @@ import { Empty, ErrorState, ExternalLink, Loading } from "./components";
 import { readable } from "./personal-data";
 import "./corpus-research.css";
 
+type Fidelity = "STANDARDIZED" | "PROXY" | "HYPOTHESIS" | "PROXY_HYPOTHESIS";
+type FidelityCounts = Partial<
+  Record<Fidelity, { records: number; implementations: number }>
+>;
+type RelatedResult = {
+  origin_run_id: string;
+  variant_id: string;
+  fidelity_class: Fidelity;
+  fidelity_reason?: string;
+  protocol_sha256: string;
+  manifest_sha256: string;
+};
+export const fidelityLabel = (value?: string) =>
+  ({
+    STANDARDIZED: "标准化规则实现",
+    PROXY: "代理回测",
+    HYPOTHESIS: "假设性回测",
+    PROXY_HYPOTHESIS: "代理 + 假设性回测",
+  })[value || "STANDARDIZED"] || value;
 type Metrics = {
   start?: string;
   end?: string;
@@ -24,6 +43,16 @@ type Audit = {
   [key: string]: unknown;
 };
 export type CorpusSummary = {
+  fidelity_counts?: FidelityCounts;
+  aggregate?: {
+    corpus_sha256: string;
+    run_ids: string[];
+    run_count: number;
+    corpus_records: number;
+    tested_records: number;
+    untested_records: number;
+    fidelity_counts: FidelityCounts;
+  };
   available: boolean;
   run_id?: string;
   runs: { run_id: string; created_at?: string }[];
@@ -42,6 +71,7 @@ export type CorpusSummary = {
   manifest_sha256?: string;
 };
 type CorpusRecord = {
+  related_results?: RelatedResult[];
   id: string;
   name: string;
   status: string;
@@ -49,10 +79,18 @@ type CorpusRecord = {
   tested_variants: number;
   families: string[];
   audit: Audit;
-  implementations: { variant_id: string; family: string }[];
+  implementations: {
+    variant_id: string;
+    family: string;
+    origin_run_id?: string;
+    fidelity_class?: Fidelity;
+  }[];
   catalog_refs?: { entity_id: string; definition_revision: string }[];
 };
 export type CorpusDetail = {
+  fidelity_class?: Fidelity;
+  fidelity_reason?: string;
+  origin_run_id?: string;
   run_id: string;
   id: string;
   variant_id: string;
@@ -90,7 +128,11 @@ export type CorpusDetail = {
 const base = "/v1/personal/corpus-research";
 export const statusLabel = (status: string) =>
   ({
-    tested: "本次已回测",
+    tested: "本次标准化规则回测",
+    tested_proxy_only: "仅有代理回测",
+    tested_hypothesis_only: "仅有假设性回测",
+    tested_mixed: "含多类实验结果",
+    not_evaluated_in_this_run: "本批未评估（其他批次另列）",
     not_implemented_or_data_scope_unresolved: "未实现 / 数据范围待定",
     screened_not_implemented: "已筛查 · 尚未实现",
     screened_data: "额外数据待补",
@@ -110,8 +152,24 @@ const periodLabels: Record<string, string> = {
   development: "开发段",
   validation: "验证段",
   holdout: "留出段（回顾性）",
-  latest_2026: "2026 观察段",
 };
+const periodLabel = (key: string) =>
+  periodLabels[key] || (key.startsWith("latest_") ? "后续观察段" : key);
+function FidelitySummary({ counts }: { counts?: FidelityCounts }) {
+  if (!counts) return null;
+  return (
+    <div className="cr-fidelity-counts">
+      {Object.entries(counts).map(([kind, value]) => (
+        <div key={kind}>
+          <strong>{fidelityLabel(kind)}</strong>
+          <span>
+            {value.records} 条原记录 · {value.implementations} 个实现
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
 export function metricValue(value: number | null | undefined, percent = false) {
   return typeof value === "number" && Number.isFinite(value)
     ? percent
@@ -240,12 +298,19 @@ export function ResearchDetail({ detail }: { detail: CorpusDetail }) {
         探索性回顾筛查。来源忠实度、实现假设与经济有效性分别判断；留出段标签本身不证明独立样本外验证。
       </div>
       <p>
-        <strong>独立标准化实现</strong> ·{" "}
+        <strong>{fidelityLabel(detail.fidelity_class)}</strong> ·{" "}
         {m.supplemental_defaults_flag === true ||
         detail.spec.supplemental_defaults_flag === true
           ? "包含额外补充默认假设，请逐项核对"
           : "仍使用统一执行与成本约定；未标记额外默认假设不代表来源精确复现"}
       </p>
+      {detail.fidelity_reason && (
+        <div className="cr-warning">
+          <strong>与原始规则的区别</strong>
+          <p>{detail.fidelity_reason}</p>
+          <p>代理与假设性结果不能替代原策略本身的验证。</p>
+        </div>
+      )}
       <div className="cr-audit">
         <span>
           {statusLabel(
@@ -282,9 +347,9 @@ export function ResearchDetail({ detail }: { detail: CorpusDetail }) {
           <label>
             比较区间{" "}
             <select value={period} onChange={(e) => setPeriod(e.target.value)}>
-              {Object.entries(periodLabels).map(([v, label]) => (
+              {Object.keys(m.periods || {}).map((v) => (
                 <option value={v} key={v}>
-                  {label}
+                  {periodLabel(v)}
                 </option>
               ))}
             </select>
@@ -344,6 +409,11 @@ export function ResearchDetail({ detail }: { detail: CorpusDetail }) {
           <summary>逐条来源核验（未核验不会记为通过）</summary>
           <p>{readable(detail.audit)}</p>
         </details>
+        {detail.deep_validation?.scope === "FIXED_ORDER_PATH_DELAY" && (
+          <div className="cr-warning">
+            此延迟情景仅平移既有订单路径，没有按新的实际入场价重算退出逻辑，不能当作完整再次执行验证。
+          </div>
+        )}
         <details>
           <summary>额外延迟 / 现金收益敏感性</summary>
           <p>
@@ -433,6 +503,35 @@ export function SourceRecordDetail({
           <p>{readable(record.audit.source_verification)}</p>
         ) : (
           <p>本条没有附带逐条来源检查，不从抽样记录推断它已通过。</p>
+        )}
+      </section>
+      <section>
+        <h3>同一原记录的跨批次实验</h3>
+        <p>
+          只关联相同语料摘要和原生
+          ID；各批次使用各自协议，不合并收益，也不认定定义版本等价。
+        </p>
+        {record.related_results?.length ? (
+          <div className="cr-related">
+            {record.related_results.map((result) => (
+              <div key={`${result.origin_run_id}/${result.variant_id}`}>
+                <Link
+                  to={`/results?run_id=${encodeURIComponent(result.origin_run_id)}&variant=${encodeURIComponent(result.variant_id)}`}
+                >
+                  {result.variant_id} · {fidelityLabel(result.fidelity_class)}
+                </Link>
+                <small>{result.origin_run_id}</small>
+                {result.fidelity_reason && <p>{result.fidelity_reason}</p>}
+                <details>
+                  <summary>该实验的固定协议与来源摘要</summary>
+                  <p>协议 {result.protocol_sha256}</p>
+                  <p>导入manifest {result.manifest_sha256}</p>
+                </details>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>相同语料下尚无已导入实验，不据此判定无法回测。</p>
         )}
       </section>
       <section>
@@ -558,7 +657,9 @@ function RecordList({
                 aria-pressed={params.get("variant") === v.variant_id}
               >
                 {v.variant_id}
-                <span>{v.family}</span>
+                <span>
+                  {v.family} · {fidelityLabel(v.fidelity_class)}
+                </span>
                 <ArrowRight size={14} />
               </button>
             ))}
@@ -665,6 +766,24 @@ export default function CorpusResearch() {
             {summary.data.runs.find((r) => r.run_id === summary.data?.run_id)
               ?.created_at || "未登记"}
           </p>
+          {summary.data.aggregate && (
+            <section className="cr-aggregate">
+              <h2>相同语料的跨批次覆盖</h2>
+              <p>
+                {summary.data.aggregate.run_count} 个独立运行，
+                {summary.data.aggregate.tested_records} /{" "}
+                {summary.data.aggregate.corpus_records}{" "}
+                条原记录至少有一项保留实验；
+                {summary.data.aggregate.untested_records} 条暂无实验。
+              </p>
+              <FidelitySummary
+                counts={summary.data.aggregate.fidelity_counts}
+              />
+              <p className="pw-muted">
+                同一原记录可出现在不同类别，类别记录数不可相加。代理和假设性实验单列，不算作原规则验证；各运行协议、指标与原始证据独立保留。
+              </p>
+            </section>
+          )}
           <div className="cr-coverage">
             <label htmlFor="cr-coverage">
               本次已回测覆盖 {summary.data.counts.tested_records} /{" "}
@@ -694,12 +813,13 @@ export default function CorpusResearch() {
               </div>
             ))}
           </div>
+          <FidelitySummary counts={summary.data.fidelity_counts} />
           <div className="cr-warning">
             <strong>本地只读 · 探索性研究</strong>
             {summary.data.counts.standardized_implementations !== undefined && (
               <p>
-                全部 {summary.data.counts.standardized_implementations}{" "}
-                个回测实现采用标准化约定；其中{" "}
+                本批 {summary.data.counts.tested_variants}{" "}
+                个实现分别标注保真类别；其中{" "}
                 {summary.data.counts.supplemental_defaults_implementations ??
                   "未统计"}{" "}
                 个标记额外补充默认假设。
