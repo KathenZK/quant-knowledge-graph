@@ -4,6 +4,7 @@ No source files, market data, strategy engine or inherited result is modified.
 The origin protocol and every producer output are pinned independently.
 """
 import argparse
+import hashlib
 import base64
 import calendar
 import gzip
@@ -87,16 +88,27 @@ def _relative_origin_name(name):
         _fail('Unsafe relative origin artifact name')
     top_level={'frozen_input_manifest.json','protocol_amendments.json','protocol.json','producer_tests.json',
                'source_corpus_records.json','source_review.json','research_summaries.json','research_summaries.md',
-               'DIA_corporate_actions.json','DIA_overnight_components.csv'}
+               'DIA_corporate_actions.json','DIA_overnight_components.csv',
+               'data_acceptance_contract.json','data_acceptance_result.json','data_gate_evaluations.json',
+               'dependence_groups.json','environment.json','macro_unavailability_boundaries.json',
+               'official_macro_gap_facts.json','original_records.json','pending_routes.json',
+               'preperformance_freeze.json','price_quality.json','reference_xnys_sessions.json',
+               'trade_clock_cost_qa.json','trade_ledger.csv','trade_ledger.csv.gz'}
     parts=PurePosixPath(name).parts
     ledger_files={'daily_book.csv.gz','trade_legs.csv.gz','scheduled_events.json','signal_decisions.json',
-                  'daily_book_0bps.csv.gz','daily_book_5bps.csv.gz','daily_book_10bps.csv.gz','daily_book_25bps.csv.gz'}
+                  'daily_book_0bps.csv.gz','daily_book_5bps.csv.gz','daily_book_10bps.csv.gz','daily_book_25bps.csv.gz',
+                  'daily_book_common_endpoint.csv.gz','daily_book_extra_session.csv.gz','first_blocked_decision.json'}
     ledger=(len(parts)==3 and parts[0]=='ledgers' and parts[2] in ledger_files)
     if ledger:_identifier(parts[1])
     opaque_input=(len(parts)==2 and parts[0]=='inputs' and parts[1].endswith('.csv'))
-    opaque_code=(len(parts)==2 and parts[0]=='code' and parts[1].endswith('.py'))
+    opaque_code=(len(parts)==2 and parts[0]=='code' and parts[1].endswith(('.py','.json','.log')))
     # Code, input and ledger attachments are retained inert bytes only, never imported/executed.
-    allowed = name in top_level or ledger or opaque_input or opaque_code or (name.startswith(('returns/','trades/','per_variant/')) and name.count('/')==1)
+    opaque_supplement=(len(parts)==2 and ((parts[0] in {'orders','decisions','ledgers'} and parts[1].endswith('.csv.gz'))
+        or (parts[0]=='qa' and parts[1].endswith(('.json','.log')))
+        or (parts[0]=='research_notes' and parts[1].endswith('.md'))
+        or (parts[0]=='signals' and parts[1].endswith(('.csv','.json')))
+        or (parts[0]=='sources' and parts[1].endswith(('.txt','.html','.json')))))
+    allowed = name in top_level or ledger or opaque_input or opaque_code or opaque_supplement or (name.startswith(('returns/','trades/','per_variant/')) and name.count('/')==1)
     if not allowed:
         _fail('Unsupported additional origin artifact type')
     if name.startswith(('returns/','trades/')) and not name.endswith('.csv.gz'):
@@ -188,14 +200,26 @@ def _native_fields(metric,spec):
     if isinstance(price_assets, list) and isinstance(signal_assets, list):
         if (not all(isinstance(a, str) for a in [*price_assets, *signal_assets])
                 or len(set(price_assets)) != len(price_assets)
-                or len(set(signal_assets)) != len(signal_assets)
-                or set(price_assets) & set(signal_assets)):
+                or len(set(signal_assets)) != len(signal_assets)):
             _fail('Price and signal-only asset declarations conflict')
-        if spec.get('assets') == price_assets and signal_assets:
+        overlap=set(price_assets) & set(signal_assets)
+        if overlap:
+            if set(spec.get('assets',[]))!=set(price_assets)|set(signal_assets) or metric.get('signal_only_assets')!=signal_assets or metric.get('assets')!=spec.get('assets'):
+                _fail('Overlapping signal/price declarations require identical explicit producer metadata')
+            spec['signal_role_warning']='Producer price_assets and signal_only_assets overlap: '+', '.join(sorted(overlap))+'. Retained declarations are not an independently certified traded-only partition.'
+            metric['signal_role_warning']=spec['signal_role_warning']
+        if spec.get('assets') == price_assets and signal_assets and not overlap:
             if not isinstance(metric.get('assets'), list) or set(metric['assets']) != set(price_assets):
                 _fail('Signal-only universe enrichment cannot alter traded assets')
             spec['assets'] = [*price_assets, *signal_assets]
             spec['universe_membership_projection'] = 'Original price_assets plus separately explicit signal_only_assets; traded-price binding unchanged'
+    if (isinstance(price_assets,list) and isinstance(signal_assets,list)
+            and metric.get('assets')==spec.get('assets')
+            and set(metric['assets'])==set(price_assets)|set(signal_assets)
+            and set(metric['assets'])!=set(price_assets)):
+        metric['original_metric_universe_assets']=deepcopy(metric['assets'])
+        metric['assets']=deepcopy(price_assets)
+        metric['universe_membership_projection']='Price assets from explicit producer price_assets; original combined price/signal array retained separately.'
     if spec.get('kind') == 'cny_daily_etf' or metric.get('kind') == 'cny_daily_etf':
         if (spec.get('kind') != 'cny_daily_etf' or metric.get('kind') != 'cny_daily_etf'
                 or spec.get('account_currency') != 'CNY' or metric.get('account_currency') != 'CNY'
@@ -498,6 +522,10 @@ def derive(blobs):
         marker=_encoded(dict(schema_version='absent-origin-auxiliary/v1',artifact='target_hashes.json',origin_manifest_sha256=_digest(source['run_manifest.json']),status='NOT_INCLUDED_OR_DECLARED_IN_RECEIVED_ORIGIN',not_a_target_hash=True))
         if source['target_hashes.json']!=marker:_fail('Missing target hashes require exact origin-bound absence receipt')
         required.remove('target_hashes.json');missing_auxiliary.append('target_hashes.json')
+    if advanced and isinstance(results,dict) and 'strategy_metrics.csv' not in results:
+        marker=_encoded(dict(schema_version='absent-origin-auxiliary/v1',artifact='strategy_metrics.csv',origin_manifest_sha256=_digest(source['run_manifest.json']),status='NOT_INCLUDED_OR_DECLARED_IN_RECEIVED_ORIGIN',not_an_original_csv=True))
+        if source['strategy_metrics.csv']!=marker:_fail('Missing metrics CSV requires exact origin-bound absence receipt')
+        required.remove('strategy_metrics.csv');missing_auxiliary.append('strategy_metrics.csv')
     if legacy:
         expected_legacy={'protocol_amendments.json'} if origin.get('protocol_amendments_sha256') else set()
         if set(attachments)!=expected_legacy or _sha(origin.get('implementation_specs_sha256'))!=_digest(source['implemented_specs.json']):
@@ -523,7 +551,13 @@ def derive(blobs):
             name='per_variant/'+vid+'.json'
             if name in attachments and _loads(attachments[name])!=m:_fail('Per-variant/aggregate metric declarations conflict')
     original_specs = _index(_loads(source['implemented_specs.json']), lambda x:x.get('variant_id', x['id']), 'origin specifications')
-    statuses = _index(_loads(source['implementation_status.json']), lambda x:x['variant_id'], 'origin implementation statuses')
+    raw_statuses=_loads(source['implementation_status.json'])
+    def status_identity(row):
+        if row.get('variant_id') is not None:return row['variant_id']
+        if not isinstance(row.get('status'),str) or row['status'].startswith('tested'):
+            _fail('Executed status must bind an explicit variant')
+        return _identifier(row['id'])+'@record_scope_unexecuted_status'
+    statuses = _index(raw_statuses, status_identity, 'origin implementation statuses')
     if not original_metrics or not original_specs:
         _fail('Empty origin execution cannot be imported as completed evidence')
     if not set(original_metrics) <= set(original_specs) or not set(original_metrics) <= set(statuses):
@@ -587,6 +621,7 @@ def derive(blobs):
             'tested_proxy': {'PROXY', 'PROXY_HYPOTHESIS'},
             'tested_hypothesis': {'HYPOTHESIS', 'PROXY_HYPOTHESIS'},
             'tested_proxy_hypothesis': {'PROXY_HYPOTHESIS'},
+            'tested_proxy_hypothesis_truncated_at_macro_unavailability': {'PROXY_HYPOTHESIS'},
         }
         if executed_status not in status_classes or metadata['fidelity_class'] not in status_classes[executed_status]:
             _fail('Origin executed status requires explicit matching fidelity reasons')
@@ -636,8 +671,12 @@ def derive(blobs):
     else:
         normalized={ticker+'.csv':_sha(value['sha256']) for ticker,value in data.items()} if not legacy else {str(key):_sha(value) for key,value in data.items()}
     code={}
+    code_items=origin.get('code_hashes',{}) if not legacy else origin['engine_code_sha256']
+    duplicate_names={Path(p).name for p in code_items if sum(Path(q).name==Path(p).name for q in code_items)>1}
     for path,digest in (origin.get('code_hashes',{}) if not legacy else origin['engine_code_sha256']).items():
         basename=Path(path).name
+        if basename in duplicate_names:
+            basename='path_'+hashlib.sha256(str(path).encode()).hexdigest()+'__'+basename
         if basename in code:_fail('Ambiguous origin engine code basename')
         code[basename]=_sha(digest)
     if not data or not code:_fail('Origin run lacks declared data/code lineage')
@@ -677,7 +716,20 @@ def derive(blobs):
                 labels=[]
                 for key,value in data.items():
                     path=Path(value.get('path',key));stem=path.name.removesuffix('.gz').removesuffix('.csv')
-                    if key in {asset,'signal:'+asset} or stem==asset or asset in path.parts:labels.append(input_aliases[key])
+                    if key in {asset,'signal:'+asset} or (key.startswith(asset+'/') and '..' not in PurePosixPath(key).parts) or stem==asset or asset in path.parts:labels.append(input_aliases[key])
+            if not labels and 'signals/macro_signal_normalization_v1.json' in attachments:
+                declaration=_loads(attachments['signals/macro_signal_normalization_v1.json'])
+                matching=[d for d in declaration.get('datasets',[]) if d.get('symbol')==asset and d.get('layer')=='signal_only']
+                if len(matching)==1:
+                    d=matching[0];name='signals/'+Path(d.get('normalized_path','')).name
+                    raw_name='signals/'+Path(d.get('raw_path','')).name
+                    if (name not in attachments or raw_name not in attachments
+                            or _sha(d.get('normalized_sha256'))!=_digest(attachments[name])
+                            or _sha(d.get('raw_sha256'))!=_digest(attachments[raw_name])):
+                        _fail('Retained macro data declaration does not match source and normalized attachments')
+                    label='signal_attachment_'+_digest(attachments[name])+'.csv'
+                    normalized[label]=_digest(attachments[name]);labels=[label]
+                    run['metadata_enrichment'].setdefault('signal_data_from_pinned_attachments',{})[asset]=dict(normalized_artifact=name,raw_artifact=raw_name,declaration_artifact='signals/macro_signal_normalization_v1.json',not_tradable_price=True)
             if not labels:_fail('Used data series lacks matching origin data declaration: '+asset)
             bindings[asset]=sorted(set(labels))
         run['series_data_bindings']=bindings
@@ -692,7 +744,7 @@ def derive(blobs):
     series.update(metric['cash_asset'] for metric in metrics if metric['cash_asset'] not in {'CASH',*run.get('virtual_cash_assets',[])})
     summary = dict(run_id=run_id, corpus_records=len(audit), spec_variants=len(specs), tested_variants=len(metrics),
         tested_records=len(by_record.keys() & {m['id'] for m in metrics}), families=len({m['family'] for m in metrics}),
-        used_data_series=len(series), data_files=len(data), deep_selected=len(deep), coverage_counts=dict(Counter(r['status'] for r in coverage)))
+        used_data_series=len(series), data_files=len(normalized), deep_selected=len(deep), coverage_counts=dict(Counter(r['status'] for r in coverage)))
     return {'run_manifest.json':_encoded(run), 'run_summary.json':_encoded(summary),
         'implemented_specs.json':specs_blob, 'strategy_metrics.json':_encoded(metrics),
         'all_record_coverage.csv':_csv_bytes(coverage), 'daily_returns.csv.gz':_normalize_daily_csv(source['daily_returns.csv.gz']) if advanced else source['daily_returns.csv.gz'],
@@ -721,6 +773,13 @@ def export_delta(origin_dir, protocol_path, audit_dir, destination, annotations_
                        and isinstance(source_manifest.get('result_hashes'),dict)
                        and name not in source_manifest['result_hashes']
                        and not path.exists() and not path.is_symlink())
+        absent_csv=(format_version==3 and name=='strategy_metrics.csv'
+                    and isinstance(source_manifest.get('result_hashes'),dict)
+                    and name not in source_manifest['result_hashes']
+                    and not path.exists() and not path.is_symlink())
+        if absent_csv:
+            blobs['origin__'+name]=_encoded(dict(schema_version='absent-origin-auxiliary/v1',artifact=name,origin_manifest_sha256=_digest(manifest_blob),status='NOT_INCLUDED_OR_DECLARED_IN_RECEIVED_ORIGIN',not_an_original_csv=True))
+            continue
         blobs['origin__'+name]=(_encoded(dict(schema_version='absent-origin-auxiliary/v1',artifact=name,origin_manifest_sha256=_digest(manifest_blob),status='NOT_INCLUDED_OR_DECLARED_IN_RECEIVED_ORIGIN',not_a_target_hash=True)) if absent_target else _read_file(path))
     blobs['origin__protocol.json'] = _read_file(protocol_path)
     if format_version not in {2,3}:_fail('Unsupported projection version')

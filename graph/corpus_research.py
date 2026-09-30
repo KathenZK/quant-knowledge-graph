@@ -28,7 +28,7 @@ FIDELITY_STATUS = {'STANDARDIZED': 'tested', 'PROXY': 'tested_proxy_only', 'HYPO
 
 def _empty_period(period):
     """An empty sample may describe its scope but cannot assert performance."""
-    metadata={'observations','n','start','end','status','reason','annualization','sharpe_cash_basis'}
+    metadata={'observations','n','start','end','status','reason','annualization','sharpe_cash_basis','requested_start','requested_end'}
     if any(value is not None for key,value in period.items() if key not in metadata):
         _fail('Empty sample cannot contain performance statistics')
     if period.get('n',0)!=0 or period.get('observations',0)!=0:
