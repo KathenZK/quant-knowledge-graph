@@ -177,6 +177,40 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
     def reconciliation():
         return model().reconcile()
 
+    # This separate retained collection is never installed by create_web_app.
+    # There are deliberately no HTTP import, mutation or execution routes.
+    from quantgraph.graph.corpus_research import CorpusResearch
+    corpus_research = CorpusResearch(runtime)
+
+    def corpus_read(operation, *args, **kwargs):
+        try:
+            from quantgraph.graph.corpus_research import safe_research_view
+            return safe_research_view(operation(*args, **kwargs))
+        except KeyError:
+            raise HTTPException(404, '本机未保留此筛选批次或实现')
+        except (ValueError, OSError):
+            raise HTTPException(503, '本机筛选资料完整性检查失败')
+
+    @app.get('/v1/personal/corpus-research')
+    def corpus_summary(run_id: str | None = Query(None, max_length=200)):
+        return corpus_read(corpus_research.summary, run_id)
+
+    @app.get('/v1/personal/corpus-research/records')
+    def corpus_records(run_id: str | None = Query(None, max_length=200),
+                       q: str = Query('', max_length=2000), status: str = Query('', max_length=200),
+                       family: str = Query('', max_length=200), page: int = Query(1, ge=1),
+                       page_size: int = Query(20, ge=1, le=100)):
+        return corpus_read(corpus_research.records, run_id=run_id, q=q, status=status,
+                           family=family, page=page, page_size=page_size)
+
+    @app.get('/v1/personal/corpus-research/records/{record_id}')
+    def corpus_record(record_id: str, run_id: str | None = Query(None, max_length=200)):
+        return corpus_read(corpus_research.record, record_id, run_id=run_id)
+
+    @app.get('/v1/personal/corpus-research/implementations/{variant_id}')
+    def corpus_implementation(variant_id: str, run_id: str | None = Query(None, max_length=200)):
+        return corpus_read(corpus_research.implementation, variant_id, run_id=run_id)
+
     @app.get('/v1/personal/source-check/{eid}')
     def link_status(eid: str):
         try:

@@ -58,6 +58,7 @@ import {
   type PersonalRecord,
 } from "./personal-data";
 import PersonalRestore from "./PersonalRestore";
+import CorpusResearch from "./CorpusResearch";
 import "./personal.css";
 
 function useApi<T>(url: string) {
@@ -478,6 +479,10 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
             <Network size={19} />
             方法族
           </NavLink>
+          <NavLink to="/results">
+            <FileText size={19} />
+            研究证据
+          </NavLink>
           <NavLink to="/list">
             <Bookmark size={19} />
             我的清单<span>{records.filter((item) => item.starred).length}</span>
@@ -515,8 +520,9 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
               {warning}
             </div>
           ))}
-          {meta.initialized === false ||
-          meta.initialization?.status === "MISSING" ? (
+          {(meta.initialized === false ||
+            meta.initialization?.status === "MISSING") &&
+          location.pathname !== "/results" ? (
             <Empty title="完整 Catalog 尚未初始化">
               <p>
                 {meta.initialization?.message ||
@@ -562,6 +568,7 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
                   element={<DetailPage workspace={workspace} />}
                 />
                 <Route path="/compare" element={<Compare />} />
+                <Route path="/results" element={<CorpusResearch />} />
                 <Route
                   path="/list"
                   element={
@@ -1606,6 +1613,17 @@ function Reading({
             ) : null}
           </Section>
           <Section id="research" title="已有研究" label="只读研究记录">
+            {item.kind === "strategy" &&
+              item.knowledge?.source.native_ids?.[0] && (
+                <p>
+                  <Link
+                    to={`/results?q=${encodeURIComponent(item.knowledge.source.native_ids[0])}`}
+                  >
+                    按原生 ID 查看本次全库筛查记录
+                  </Link>
+                  （仅作来源关联，定义版本需单独核对）
+                </p>
+              )}
             {item.results ? (
               <PersonalResearch results={item.results} />
             ) : (
