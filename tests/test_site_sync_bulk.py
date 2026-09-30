@@ -224,3 +224,55 @@ def test_single_put_receipt_mismatch_never_activates(tmp_path):
     with pytest.raises(RuntimeError, match='Single object receipt does not match'):
         site_sync.upload(client, manifest, tmp_path, pin)
     assert not any('/activate/' in path for path, *_ in client.calls)
+
+
+def test_upload_parallelism_is_bounded_and_waits_for_all_receipts(tmp_path):
+    from threading import Barrier, Lock
+    manifest, pin = write_inputs(tmp_path, [json.dumps({'synthetic': i}).encode() for i in range(128)])
+    barrier, lock = Barrier(4), Lock()
+
+    class ConcurrentClient(SyntheticClient):
+        active = 0
+        completed = 0
+        maximum = 0
+
+        def request(self, path, method='GET', value=None, raw=None):
+            if path == '/v1/sync/objects-batch':
+                with lock:
+                    self.active += 1
+                    self.maximum = max(self.maximum, self.active)
+                barrier.wait(timeout=5)
+                result = super().request(path, method, value, raw)
+                with lock:
+                    self.active -= 1
+                    self.completed += 1
+                return result
+            if path.startswith('/v1/sync/activate/'):
+                assert self.completed == 4 and self.active == 0
+            return super().request(path, method, value, raw)
+
+    client = ConcurrentClient()
+    site_sync.upload(client, manifest, tmp_path, pin)
+    assert client.maximum == site_sync.UPLOAD_CONCURRENCY == 4
+
+
+def test_parallel_partial_failure_waits_for_workers_and_never_activates(tmp_path):
+    from threading import Barrier, Lock
+    manifest, pin = write_inputs(tmp_path, [json.dumps({'synthetic': i}).encode() for i in range(128)])
+    barrier, lock = Barrier(4), Lock()
+
+    class FailingClient(SyntheticClient):
+        finished = 0
+        def request(self, path, method='GET', value=None, raw=None):
+            if path == '/v1/sync/objects-batch':
+                barrier.wait(timeout=5)
+                with lock:
+                    self.finished += 1
+                raise RuntimeError('Site operation failed with HTTP 503')
+            return super().request(path, method, value, raw)
+
+    client = FailingClient()
+    with pytest.raises(RuntimeError, match='activation not attempted'):
+        site_sync.upload(client, manifest, tmp_path, pin)
+    assert client.finished == 4
+    assert not any('/activate/' in path for path, *_ in client.calls)

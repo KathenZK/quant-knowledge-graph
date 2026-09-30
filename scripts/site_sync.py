@@ -6,6 +6,8 @@ confirms owner-only access, and supplies it through hidden stdin. Never persist
 the credential, reuse it at another destination, or impersonate a browser user.
 """
 import argparse
+from concurrent.futures import ThreadPoolExecutor
+from itertools import islice
 import base64
 import gzip
 import hashlib
@@ -22,6 +24,7 @@ from quantgraph.graph.site_feedback import FeedbackLedger, canonical, read_envel
 
 BATCH_MAX_OBJECTS = 32
 BATCH_MAX_BYTES = 4 * 1024 * 1024
+UPLOAD_CONCURRENCY = 4
 
 
 class NoRedirect(HTTPRedirectHandler):
@@ -140,7 +143,8 @@ def upload(client, manifest_path, object_root, expected_sha):
             raise ValueError('Object bytes differ')
         objects.append((row, data))
     receipt = client.request('/v1/sync/batches', 'POST', manifest)
-    for path, value, raw in object_upload_requests(objects):
+    def send_object(request):
+        path, value, raw = request
         try:
             result = client.request(path, 'PUT' if raw is not None else 'POST', value, raw=raw)
         except RuntimeError as error:
@@ -149,6 +153,13 @@ def upload(client, manifest_path, object_root, expected_sha):
             verify_object_receipt(result, {row['sha256'] for row in value['objects']})
         elif not isinstance(result, dict) or result.get('sha256') != path.rsplit('/', 1)[1] or type(result.get('replayed')) is not bool:
             raise RuntimeError('Single object receipt does not match; activation not attempted')
+
+    # Independent immutable objects may upload concurrently. Keep both queued
+    # requests and in-flight payloads bounded; activation follows every receipt.
+    requests = iter(object_upload_requests(objects))
+    with ThreadPoolExecutor(max_workers=UPLOAD_CONCURRENCY) as pool:
+        while group := list(islice(requests, UPLOAD_CONCURRENCY)):
+            list(pool.map(send_object, group))
     active = client.request('/v1/sync/activate/' + receipt['batch_id'], 'POST', {})
     return {'batch': receipt, 'activation': active, 'objects': len(objects)}
 
