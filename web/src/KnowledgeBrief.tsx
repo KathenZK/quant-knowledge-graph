@@ -42,7 +42,18 @@ export default function KnowledgeBrief({ item }: { item: PersonalDetail }) {
           )}
         {brief.intake_status && (
           <p className="pw-reading-basis">
-            本次采集状态：{brief.intake_status}。资料收录与执行准入分别判断。
+            本次采集状态：
+            {brief.intake_label ||
+              {
+                SOURCE_VERIFIED_WITH_EXPLICIT_VARIANT:
+                  "来源已核对，保留实现差异",
+                SOURCE_VERIFIED_EXPLICIT_IMPLEMENTATION:
+                  "定义已核对，实现口径单列",
+                QUARANTINE: "待补证候选",
+                ADMIT_VARIANT: "规则合同已准入，研究结果另审",
+              }[brief.intake_status] ||
+              brief.intake_status}
+            。资料收录与执行准入分别判断。
           </p>
         )}
       </section>
@@ -58,9 +69,11 @@ export default function KnowledgeBrief({ item }: { item: PersonalDetail }) {
                 {fact.text}
                 {fact.origin && (
                   <small className="pw-reading-basis">
-                    {fact.origin === "RESEARCH_DESIGN_SUGGESTION"
-                      ? "研究用途建议，非原作者交易结论"
-                      : `内容依据：${fact.origin}；核对状态：${fact.status}`}
+                    {fact.origin === "MANUAL_REVIEW_SUMMARY_UNBOUND"
+                      ? "人工审读摘要，尚未逐字段绑定"
+                      : fact.origin === "RESEARCH_DESIGN_SUGGESTION"
+                        ? "研究用途建议，非原作者交易结论"
+                        : `内容依据：${fact.origin}；核对状态：${fact.status}`}
                   </small>
                 )}
                 {fact.status.toUpperCase() === "UNKNOWN" && (
@@ -88,7 +101,9 @@ export default function KnowledgeBrief({ item }: { item: PersonalDetail }) {
         <p>{brief.economic_rationale.text}</p>
         {brief.economic_rationale.status !== "UNKNOWN" && (
           <p className="pw-reading-basis">
-            来源中的解释，尚未作为因果或收益证明核验。
+            {brief.economic_rationale.status.startsWith("AUTHOR_")
+              ? "作者提出的解释；历史相关性不等于已识别因果。"
+              : "来源说明或研究解释；尚未作为因果与收益证明核验。"}
           </p>
         )}
         <p className="pw-reading-basis">{brief.economic_rationale.notice}</p>
@@ -136,6 +151,38 @@ export default function KnowledgeBrief({ item }: { item: PersonalDetail }) {
           <p>
             当前没有保存可核对的论文书目与具体实证位置。网页或代码出处保留如下，不替代论文证据。
           </p>
+        )}
+        {!!brief.definition_sources?.length && (
+          <div className="pw-definition-evidence">
+            <h3>定义与实现的直接出处</h3>
+            {brief.definition_sources.map((source, index) => (
+              <p key={index}>
+                <ExternalLink url={source.url}>
+                  {source.locator || "原始定义"}
+                </ExternalLink>
+                ：{source.supports?.join("；") || "支持范围未单独说明"}
+              </p>
+            ))}
+          </div>
+        )}
+        {!!brief.evidence_links?.length && (
+          <details>
+            <summary>逐项来源短引文与定位</summary>
+            {brief.evidence_links.map((source, index) => (
+              <div className="pw-paper-evidence" key={source.claim_id || index}>
+                <p>
+                  <ExternalLink url={source.url}>
+                    {source.locator || "打开原始来源"}
+                  </ExternalLink>
+                </p>
+                {source.quote && <p>{source.quote}</p>}
+                {source.supports && (
+                  <p>支持范围：{readable(source.supports)}</p>
+                )}
+                <small>来源摘要：{source.source_sha256 || "未提供"}</small>
+              </div>
+            ))}
+          </details>
         )}
         {brief.empirical_scope && (
           <details>

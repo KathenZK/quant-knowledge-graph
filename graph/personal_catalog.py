@@ -549,6 +549,19 @@ def readable_item(value, raw):
                 knowledge['reading'][0].update(label='分类整理说明',status='ORGANIZED_EXPLANATION')
     from quantgraph.graph.reading_brief import reading_brief
     value['knowledge']['reader_brief'] = _clean_private(reading_brief(value, value['knowledge'], METHOD_GUIDES[method['value']], raw.get('intake_card')))
+    if raw.get('intake_card') and not strategy:
+        # A collected implementation formula is not a quotation from the linked
+        # paper or exchange API. Keep the detailed fallback consistent with the
+        # evidence-aware card instead of relabelling it SOURCE_REPORTED.
+        knowledge=value['knowledge'];brief=knowledge['reader_brief']
+        knowledge['reading']=[dict(key=r['key'],label=r['label'],text=r['text'],status=r['status'],origin=r.get('origin')) for r in brief['trading']]
+        if formula:
+            knowledge['reading'].insert(0,dict(key='formula',label='资料卡的实现公式',text=private_text(formula),status='CARD_IMPLEMENTATION'))
+        knowledge['source_facts']=[]
+        knowledge['layers']['source_facts']=[]
+        knowledge['unknowns']=[r['label']+'：'+r['text'] for r in brief['trading'] if r['status']=='UNKNOWN']
+    value['knowledge']['summary'] = value['knowledge']['reader_brief']['purpose']
+    value['knowledge']['summary_basis'] = value['knowledge']['reader_brief']['purpose_basis']
     value['statuses']['display'] = '个人本机资料 · 公开权限与原有可见性未改变'
     value['stable_knowledge_id'] = stable_knowledge_id(value)
     value['prior_version_ids'] = []

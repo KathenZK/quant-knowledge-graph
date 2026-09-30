@@ -50,6 +50,9 @@ def test_private_cards_are_readable_idempotent_and_never_public(tmp_path):
     with pytest.raises(KeyError):cat.get(eid)
     got=PersonalCatalogRepository(cat.path).get(eid)
     assert got['knowledge']['reader_brief']['purpose']=='观察合成量'
+    assert not got['knowledge']['source_facts']
+    assert got['knowledge']['reading'][0]['status']=='CARD_IMPLEMENTATION'
+    assert not any(r['status']=='SOURCE_REPORTED' for r in got['knowledge']['reading'])
     assert got['results']['total']==0
     assert 'do-not-ship' not in json.dumps(got)
     with cat.connect() as con:

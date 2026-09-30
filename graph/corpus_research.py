@@ -26,6 +26,15 @@ FIDELITY_CLASSES = ('STANDARDIZED', 'PROXY', 'HYPOTHESIS', 'PROXY_HYPOTHESIS')
 RESULT_STATUSES = {'tested', 'tested_proxy_only', 'tested_hypothesis_only', 'tested_mixed'}
 FIDELITY_STATUS = {'STANDARDIZED': 'tested', 'PROXY': 'tested_proxy_only', 'HYPOTHESIS': 'tested_hypothesis_only', 'PROXY_HYPOTHESIS': 'tested_mixed'}
 
+def _empty_period(period):
+    """An empty sample may describe its scope but cannot assert performance."""
+    metadata={'observations','n','start','end','status','reason','annualization','sharpe_cash_basis'}
+    if any(value is not None for key,value in period.items() if key not in metadata):
+        _fail('Empty sample cannot contain performance statistics')
+    if period.get('n',0)!=0 or period.get('observations',0)!=0:
+        _fail('Empty sample counts disagree')
+
+
 ARTIFACTS = {
     'run_manifest.json': 'results', 'run_summary.json': 'results',
     'strategy_metrics.json': 'results', 'implemented_specs.json': 'results',
@@ -43,7 +52,7 @@ LIMITATIONS = [
     'Unsupported, unavailable and unimplemented records remain untested; lack of a result is not evidence of ineffectiveness.',
     'Source attribution, implementation assumptions and economic evidence are separate. Source checks are selective and do not verify the entire corpus.',
     'Catalog references identify source-native records only; they do not establish an exact Catalog definition-revision binding.',
-    'Source, protocol, engine and market-data lineage hashes are retained declarations; only the nine imported artifact byte hashes are independently verified here.',
+    'Imported artifact bytes are verified against the supplied pin; engine and market-data lineage hashes remain declarations unless separately audited.',
     'Daily curves compound retained strategy returns, with an initial unit of capital. Benchmark metrics are retained; benchmark curves are not supplied.',
 ]
 AUDIT_FIELDS = {
@@ -165,11 +174,12 @@ def _read_inputs(results_dir, audit_dir, artifacts=None):
 
 def build_manifest(results_dir, audit_dir, output):
     """Pin byte hashes; does not import or certify research correctness."""
-    from quantgraph.graph.corpus_export import SCHEMA_V2, V2_ARTIFACTS
+    from quantgraph.graph.corpus_export import SCHEMA_V2, V2_ARTIFACTS, SCHEMA_V3, V3_ARTIFACTS
+    version3=(Path(results_dir)/'origin-attachments.json').is_file()
     version2 = (Path(results_dir) / 'origin__run_manifest.json').is_file()
-    blobs = _read_inputs(results_dir, audit_dir, V2_ARTIFACTS if version2 else ARTIFACTS)
+    blobs = _read_inputs(results_dir, audit_dir, V3_ARTIFACTS if version3 else V2_ARTIFACTS if version2 else ARTIFACTS)
     run = _loads(blobs['run_manifest.json'])
-    manifest = dict(schema_version=SCHEMA_V2 if version2 else SCHEMA, collection_type='RETAINED_STANDARDIZED_SCREEN',
+    manifest = dict(schema_version=SCHEMA_V3 if version3 else SCHEMA_V2 if version2 else SCHEMA, collection_type='RETAINED_STANDARDIZED_SCREEN',
                     run_id=_identifier(run['run_id']), execute_new_trials=False,
                     artifacts={name: {'sha256': _digest(blob), 'bytes': len(blob)}
                                for name, blob in blobs.items()})
@@ -231,6 +241,9 @@ def _prepare(blobs, manifest):
     run = values['run_manifest.json']
     summary = values['run_summary.json']
     run_id = manifest['run_id']
+    native_projection='origin-attachments.json' in blobs and run.get('projection_contract')=='native-retained-projection/v3'
+    if run.get('projection_contract') and not native_projection:_fail('Native projection marker requires verifiedv3 artifacts')
+    virtual_cash=run.get('virtual_cash_assets',[]) if native_projection else []
     if run.get('run_id') != run_id or summary.get('run_id') != run_id:
         _fail('Run identity does not reconcile')
     created = datetime.fromisoformat(run['created_at_utc'].replace('Z', '+00:00'))
@@ -295,7 +308,8 @@ def _prepare(blobs, manifest):
         # bindings intact; membership agreement is not implementation equivalence.
         if (not isinstance(metric.get('assets'), list) or not isinstance(spec.get('assets'), list)
                 or not all(isinstance(x, str) for x in [*metric['assets'], *spec['assets']])
-                or set(metric['assets']) != set(spec['assets'])
+                or set(metric['assets']) != set(spec.get('price_assets',spec['assets']))
+                or ('price_assets' in spec and (set(spec['assets']) != set(spec['price_assets']) | set(spec.get('signal_only_assets',[]))))
                 or metric.get('cash_asset') != spec.get('cash_asset')):
             _fail('Result universe does not reconcile with specification')
         # Every collection represents one actual execution protocol. A cumulative
@@ -345,9 +359,14 @@ def _prepare(blobs, manifest):
         if not isinstance(metric.get('assets'), list) or not all(isinstance(x, str) for x in metric['assets']):
             _fail('Result assets must be a string array')
         series.update(metric['assets'])
-        if metric.get('cash_asset') != 'CASH':
+        if metric.get('cash_asset') not in {'CASH',*virtual_cash}:
             series.add(metric['cash_asset'])
-    if any(asset + '.csv' not in run['normalized_data_sha256'] for asset in series):
+    if native_projection:
+        bindings=run.get('series_data_bindings',{})
+        for asset in series:
+            refs=bindings.get(asset)
+            if not isinstance(refs,list) or not refs or any(ref not in run['normalized_data_sha256'] for ref in refs):_fail('Used data series lacks retained typed lineage')
+    elif any(asset + '.csv' not in run['normalized_data_sha256'] for asset in series):
         _fail('Used data series lacks a retained lineage digest')
     expected_counts = dict(corpus_records=len(coverage), spec_variants=len(specs),
         tested_variants=len(metrics), tested_records=len({v['id'] for v in metrics.values()}),
@@ -391,6 +410,16 @@ def _prepare(blobs, manifest):
         for name, period in periods.items():
             if not isinstance(period, dict):
                 _fail('Period metrics must be objects')
+            count=_integer(period.get('observations'))
+            if native_projection and count==0:_empty_period(period)
+            if native_projection and (count==0 or (count<2 and not {'start','end','total_return'}<=set(period))):
+                if count>0 and set(period)-{'observations','n','status','reason'}:_fail('Incomplete short-sample metrics contain unbound statistics')
+                if 'n' in period and period['n']!=count:_fail('Short-sample counts disagree')
+                bounds=run.get('periods',{}).get(name)
+                if not bounds or len(bounds)!=2:_fail('Short-sampleperiod requires explicitdeclaredscope')
+                if len([(d,v) for d,v in observations if _day(bounds[0])<=d<=_day(bounds[1])])!=count:
+                    _fail('Short-sample observation count does not reconcile')
+                continue
             start, end = _day(period['start']), _day(period['end'])
             if start > end or end > latest_end or (name == 'full' and end > main_end):
                 _fail('Metric period dates exceed declared scope')
@@ -452,10 +481,11 @@ def import_manifest(runtime, manifest_path, expected_sha256, results_dir, audit_
     if _digest(payload) != expected_sha256:
         _fail('Manifest digest mismatch')
     manifest = _loads(payload)
-    from quantgraph.graph.corpus_export import SCHEMA_V2, V2_ARTIFACTS, verify_derived
+    from quantgraph.graph.corpus_export import SCHEMA_V2, V2_ARTIFACTS, SCHEMA_V3, V3_ARTIFACTS, verify_derived
+    version3=manifest.get('schema_version')==SCHEMA_V3
     version2 = manifest.get('schema_version') == SCHEMA_V2
-    expected_artifacts = V2_ARTIFACTS if version2 else ARTIFACTS
-    if (manifest.get('schema_version') not in {SCHEMA, SCHEMA_V2}
+    expected_artifacts = V3_ARTIFACTS if version3 else V2_ARTIFACTS if version2 else ARTIFACTS
+    if (manifest.get('schema_version') not in {SCHEMA, SCHEMA_V2, SCHEMA_V3}
             or manifest.get('collection_type') != 'RETAINED_STANDARDIZED_SCREEN'
             or manifest.get('execute_new_trials') is not False):
         _fail('Unsupported retained collection contract')
@@ -470,7 +500,7 @@ def import_manifest(runtime, manifest_path, expected_sha256, results_dir, audit_
             _fail('Artifact references support only digest and byte count')
         if _sha(ref['sha256']) != _digest(blob) or _integer(ref['bytes']) != len(blob):
             _fail('Artifact digest or byte count mismatch: ' + name)
-    if version2:
+    if version2 or version3:
         verify_derived(blobs)
     prepared = _prepare(blobs, manifest)
     runtime = Path(runtime)
@@ -524,6 +554,35 @@ def import_manifest(runtime, manifest_path, expected_sha256, results_dir, audit_
     return dict(run_id=run_id, manifest_sha256=expected_sha256, duplicate=False, counts=prepared['summary'], new_trials=0)
 
 
+def import_source_portfolio(runtime, origin_dir, expected_manifest_sha256):
+    """Install authored portfolio evidence in a separate append-only table."""
+    from quantgraph.graph.corpus_export import validate_source_portfolio
+    prepared=validate_source_portfolio(origin_dir,expected_manifest_sha256)
+    raw={name:_read_file(Path(origin_dir)/name) for name in prepared['artifacts']}
+    raw['evaluation_manifest.json']=_read_file(Path(origin_dir)/'evaluation_manifest.json')
+    if _digest(raw['evaluation_manifest.json'])!=expected_manifest_sha256:_fail('Source manifestchanged before import')
+    for name,ref in prepared['artifacts'].items():
+        if _digest(raw[name])!=ref['sha256'] or len(raw[name])!=ref['bytes']:_fail('Source artifactchanged before import')
+    runtime=Path(runtime);path=runtime/DATABASE
+    if runtime.is_symlink() or path.is_symlink() or not path.is_file():_fail('Import corpus runs before binding source evidence')
+    with sqlite3.connect(path) as con:
+        con.execute('BEGIN IMMEDIATE')
+        for record in prepared['records']:
+            names={r[0] for r in con.execute('SELECT name FROM corpus_records WHERE id=?',(record['id'],))}
+            if names!={record['name']}:_fail('Source evidence does not bind existing corpus record/name')
+        con.execute('CREATE TABLE IF NOT EXISTS corpus_source_evaluations (evaluation_id TEXT PRIMARY KEY,manifest_sha256 TEXT NOT NULL,payload TEXT NOT NULL)')
+        con.execute('CREATE TABLE IF NOT EXISTS corpus_source_artifacts (evaluation_id TEXT NOT NULL REFERENCES corpus_source_evaluations(evaluation_id), name TEXT NOT NULL,sha256 TEXT NOT NULL,content BLOB NOT NULL,PRIMARY KEY(evaluation_id,name))')
+        for action in ['UPDATE','DELETE']:
+            con.execute(f"CREATE TRIGGER IF NOT EXISTS corpus_source_artifacts_no_{action.lower()} BEFORE {action} ON corpus_source_artifacts BEGIN SELECT RAISE(ABORT,'Source artifacts are append-only'); END")
+            con.execute(f"CREATE TRIGGER IF NOT EXISTS corpus_source_evaluations_no_{action.lower()} BEFORE {action} ON corpus_source_evaluations BEGIN SELECT RAISE(ABORT,'Source evaluations are append-only'); END")
+        old=con.execute('SELECT manifest_sha256 FROM corpus_source_evaluations WHERE evaluation_id=?',(prepared['evaluation_id'],)).fetchone()
+        if old and old[0]!=expected_manifest_sha256:_fail('Conflicting immutable source evaluation ID')
+        if not old:
+            con.execute('INSERT INTO corpus_source_evaluations VALUES(?,?,?)',(prepared['evaluation_id'],expected_manifest_sha256,_json(prepared)))
+            con.executemany('INSERT INTO corpus_source_artifacts VALUES(?,?,?,?)',[(prepared['evaluation_id'],name,_digest(blob),zlib.compress(blob)) for name,blob in raw.items()])
+    return dict(evaluation_id=prepared['evaluation_id'],manifest_sha256=expected_manifest_sha256,duplicate=bool(old),source_evidence_records=len(prepared['records']),new_execution_records=0,new_trials=0)
+
+
 class CorpusResearch:
     """Read-only, bounded personal projection over an operator-managed database."""
     def __init__(self, runtime):
@@ -540,6 +599,16 @@ class CorpusResearch:
             yield con
         finally:
             con.close()
+
+    def source_portfolios(self, record_id=None):
+        """Read authored factor evidence separately from every execution count."""
+        with self.connect() as con:
+            if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='corpus_source_evaluations'").fetchone() is None:return []
+            output=[]
+            for row in con.execute('SELECT payload FROM corpus_source_evaluations ORDER BY evaluation_id'):
+                value=_loads(row[0]);records=[r for r in value['records'] if record_id is None or r['id']==record_id]
+                if records:output.append(dict(evaluation_id=value['evaluation_id'],evidence_class='PUBLISHED_SOURCE_PORTFOLIO',manifest_sha256=value['manifest_sha256'],records=records,new_execution_records=0))
+            return output
 
     def _run(self, con, run_id):
         row = (con.execute('SELECT * FROM corpus_runs WHERE run_id=?', (run_id,)).fetchone() if run_id

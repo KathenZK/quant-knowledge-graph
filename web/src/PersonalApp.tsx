@@ -1186,9 +1186,11 @@ function Reading({
   const location = useLocation();
   useEffect(() => {
     if (location.hash)
-      requestAnimationFrame(() =>
-        document.getElementById(location.hash.slice(1))?.scrollIntoView(),
-      );
+      requestAnimationFrame(() => {
+        const target = document.getElementById(location.hash.slice(1));
+        if (target instanceof HTMLDetailsElement) target.open = true;
+        target?.scrollIntoView?.();
+      });
   }, [location.hash]);
   const knowledge = item.knowledge;
   const rules = knowledge?.reading || [];
@@ -1355,7 +1357,11 @@ function Reading({
                             ? "未说明"
                             : rule.status === "SOURCE_REPORTED"
                               ? "来源明确"
-                              : "从来源整理"}
+                              : rule.status === "CARD_IMPLEMENTATION"
+                                ? "资料卡实现约定"
+                                : rule.status === "CARD_REPORTED"
+                                  ? "资料卡说明"
+                                  : "从来源整理"}
                         </span>
                       </h3>
                       <p>{rule.text || "来源未说明"}</p>

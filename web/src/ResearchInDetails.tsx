@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, Navigate, useSearchParams } from "react-router-dom";
 import { useApi } from "./api";
-import { ErrorState, Loading } from "./components";
+import { ErrorState, ExternalLink, Loading } from "./components";
 import {
   DetailLoader,
+  EquityChart,
   MetricTable,
   fidelityLabel,
   type CorpusDetail,
@@ -14,7 +15,8 @@ import { personalPath } from "./personal-data";
 
 const base = "/v1/personal/corpus-research";
 export function nativeResearchId(item: PersonalItem) {
-  if (item.kind !== "strategy") return undefined;
+  if (item.kind !== "strategy" || item.source_type === "COLLECTION_CANDIDATE")
+    return undefined;
   return (
     item.knowledge?.source.native_ids ||
     item.source_native_ids ||
@@ -83,6 +85,7 @@ function RecordResearch({
   const sameText = record.audit["规则"] === item.knowledge?.original_rule;
   return (
     <div className="pw-inline-research">
+      <PublishedPortfolio id={id} />
       <p>
         {results.length
           ? `已导入 ${results.length} 个实现版本，可在这里查看结果。`
@@ -93,6 +96,16 @@ function RecordResearch({
           ? "与当前原始规则文本一致；成交、成本和补充假设仍需核对。"
           : "按原生来源 ID 关联历史实验，尚未证明与当前定义版本完全一致。"}
       </p>
+      {record.coverage_history?.length ? (
+        <details>
+          <summary>各批次的执行状态与未完成原因</summary>
+          {record.coverage_history.map((entry) => (
+            <p key={entry.run_id}>
+              {entry.run_id}：{entry.reason || entry.status}
+            </p>
+          ))}
+        </details>
+      ) : null}
       {results.length > 0 && (
         <label className="pw-research-select">
           选择历史实现
@@ -136,6 +149,84 @@ function RecordResearch({
     </div>
   );
 }
+type PublishedMetric = {
+  source_url?: string;
+  source_vintage?: string;
+  scope?: string;
+  periods: Record<
+    string,
+    {
+      observations?: number;
+      start?: string;
+      end?: string;
+      annualized_compound_factor_return?: number;
+      sharpe_zero_cash?: number;
+      monthly_max_drawdown?: number;
+    }
+  >;
+};
+type PublishedSeries = {
+  evaluation_id: string;
+  records: {
+    id: string;
+    name: string;
+    metrics: PublishedMetric;
+    curve: { date: string; equity: number; drawdown: number }[];
+  }[];
+};
+function PublishedPortfolio({ id }: { id: string }) {
+  const request = useApi<PublishedSeries[]>(
+    `/v1/personal/source-portfolios?record_id=${encodeURIComponent(id)}`,
+  );
+  if (request.loading) return null;
+  if (request.error)
+    return (
+      <p className="pw-reading-basis">
+        作者公布组合的评估资料暂不可读；不据此判定没有来源数据。
+      </p>
+    );
+  if (!Array.isArray(request.data) || !request.data.length) return null;
+  return (
+    <section className="pw-published-evidence">
+      <h3>作者公布组合收益的评价</h3>
+      <p>
+        这是对来源已发布收益序列的计算，没有独立重建持仓，也不计入策略执行覆盖。以下为月度组合统计，不是我们实现的净收益。
+      </p>
+      {request.data.flatMap((group) =>
+        group.records.map((row) => (
+          <div key={group.evaluation_id + "/" + row.id}>
+            <h4>{row.name}</h4>
+            <MetricTable
+              rows={Object.entries(row.metrics.periods).map(([label, p]) => ({
+                label,
+                metrics: {
+                  ...p,
+                  cagr: p.annualized_compound_factor_return,
+                  sharpe: p.sharpe_zero_cash,
+                  max_drawdown: p.monthly_max_drawdown,
+                },
+              }))}
+            />
+            <p className="pw-reading-basis">
+              数据版本：{row.metrics.source_vintage}
+              。当前版本可能修订历史；没有建立当时可见的数据版本。
+            </p>
+            <details>
+              <summary>来源组合的归一化收益路径（月频）</summary>
+              <p>
+                按公布的月收益归一化为1；这不是独立重建交易的净值，月度回撤不包含月内最低点。
+              </p>
+              <EquityChart points={row.curve} />
+            </details>
+            <ExternalLink url={row.metrics.source_url}>
+              核对作者数据来源
+            </ExternalLink>
+          </div>
+        )),
+      )}
+    </section>
+  );
+}
 function CompactResult({ run, variant }: { run: string; variant: string }) {
   const request = useApi<CorpusDetail>(
     `${base}/implementations/${encodeURIComponent(variant)}?run_id=${encodeURIComponent(run)}`,
@@ -153,7 +244,13 @@ function CompactResult({ run, variant }: { run: string; variant: string }) {
     <div>
       <p>{fidelityLabel(d.fidelity_class)} · 基础成本，历史全段</p>
       <MetricTable
-        rows={[{ label: d.name, metrics: d.metrics.periods?.full }]}
+        rows={[
+          {
+            label: d.name,
+            metrics: (d.metrics.presentation_periods || d.metrics.periods)
+              ?.full,
+          },
+        ]}
       />
       <p className="pw-reading-basis">
         批次 {run}。不同区间、资产和费用不能直接按收益排名。

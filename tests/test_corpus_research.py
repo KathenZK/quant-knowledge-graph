@@ -282,6 +282,10 @@ def test_api_missing_private_only_and_read_only(collection):
     assert client.get(base+'/records?page_size=101').status_code==422
     assert client.get(base+'/records?page=0').status_code==422
     assert client.get(base+'/records',params={'q':'x'*2001}).status_code==422
+    portfolios='/v1/personal/source-portfolios'
+    assert client.get(portfolios).json()==[]
+    assert client.post(portfolios,json={}).status_code==405
+    assert client.get(portfolios,headers={'Origin':'https://example.org'}).status_code==403
     assert client.post(base,json={}).status_code==405
     assert client.put(base+'/implementations/R1@A',json={}).status_code==405
     assert client.get(base,headers={'Origin':'https://example.org'}).status_code==403
@@ -289,8 +293,9 @@ def test_api_missing_private_only_and_read_only(collection):
     assert client.get(base,headers={'Host':'example.org'}).status_code==400
     remote=TestClient(app,client=('192.0.2.1',9999))
     assert remote.get(base).status_code==403
+    assert remote.get(portfolios).status_code==403
     public=TestClient(create_web_app(catalog=CatalogRepository(collection['root']/'public.sqlite')))
-    for path in [base,base+'/records',base+'/implementations/R1@A']:
+    for path in [base,base+'/records',base+'/implementations/R1@A',portfolios]:
         response=public.get(path)
         assert response.status_code==404
         assert 'PRIVATE_SYNTHETIC_SCREEN' not in response.text

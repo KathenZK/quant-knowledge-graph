@@ -385,3 +385,67 @@ it("links each cross-run result to its own immutable origin protocol", () => {
   ).toHaveAttribute("href", "/results?run_id=hypothesis-run&variant=same-id");
   expect(screen.getByText("仓位假设")).toBeInTheDocument();
 });
+
+it("shows capital exhaustion as NA and keeps native windows separate", () => {
+  const d: CorpusDetail = {
+    ...detail,
+    metrics: {
+      ...detail.metrics,
+      primary_window_id: "0",
+      retained_windows: [
+        {
+          window_id: "0",
+          curve: detail.curve,
+          curve_meta: { observations: 2 },
+          source_window: {
+            evaluation_start: "2024-01-01",
+            evaluation_end: "2024-01-02",
+            periods: {
+              full: { observations: 2, cagr: 0.1 },
+              latest_2026: { observations: 243, cagr: 0, max_drawdown: 0 },
+            },
+          },
+          capital_state: { state: "MODEL_CAPITAL_EXTINGUISHED" },
+          presentation_periods: {
+            full: { observations: 2, cagr: -1, max_drawdown: -1 },
+            latest_2026: {
+              observations: 0,
+              status: "no_positive_equity",
+              cagr: null,
+              max_drawdown: null,
+            },
+          },
+        },
+        {
+          window_id: "1",
+          curve: [{ date: "2026-07-01", equity: 1.1, drawdown: 0 }],
+          curve_meta: { observations: 1 },
+          source_window: {
+            evaluation_start: "2026-07-01",
+            evaluation_end: "2026-07-01",
+            periods: { full: { observations: 0, cagr: 0 } },
+          },
+        },
+      ],
+    },
+  };
+  render(<ResearchDetail detail={d} />);
+  expect(screen.getByText(/模型资本耗尽/)).toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText("比较区间"), {
+    target: { value: "latest_2026" },
+  });
+  expect(screen.getByText("资本已耗尽，此区间不适用")).toBeInTheDocument();
+  expect(
+    Array.from(document.querySelectorAll(".cr-metrics td")).map(
+      (el) => el.textContent,
+    ),
+  ).not.toContain("0.00%");
+  fireEvent.change(screen.getByLabelText("独立数据窗口"), {
+    target: { value: "1" },
+  });
+  fireEvent.change(screen.getByLabelText("比较区间"), {
+    target: { value: "full" },
+  });
+  expect(screen.getByText("样本不足（0个观察）")).toBeInTheDocument();
+  expect(screen.queryByText(/模型资本耗尽/)).not.toBeInTheDocument();
+});

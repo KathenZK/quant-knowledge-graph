@@ -17,3 +17,11 @@ Keep actual cards, private databases, research snapshots, logs and Site data out
 Component tests check navigation, old-link redirects, origin-scoped result selection and missing evidence. Python tests check strict imports, isolation, idempotence, unchanged source definitions and non-upgrading evidence states. These tests are not live browser visual verification and do not establish strategy profitability.
 
 Public Qlib verification/build remain separate from full private `validate-release`, which requires the original mixed-source private bundle. A missing private bundle must be reported rather than replacing it with the public-only subset.
+
+## Heterogeneous retained research
+
+The explicit v3 export contract preserves the complete hash-checked origin file inventory, including native-bar windows, funding evidence, annotations and separately pinned ledger supplements. The existing v2 default stays strict. Empty sample periods cannot carry non-null performance metrics. Signal-only inputs are distinguished from traded assets. Native windows keep independent dates and curves; presentation capital-state overlays can mark later periods as inapplicable without changing the original return trial. Period-end forced closing is distinct from exchange margin liquidation.
+
+Published author portfolios have a separate append-only evidence table and read-only endpoint. They never increase strategy execution coverage, and their historical return series do not claim independently reconstructed holdings. Detail pages display source explanations and explicit implementation conventions without turning a linked paper or API into proof of the formula or strategy profitability.
+
+Private Site refreshes pin the imported runtime, export lazy detail assets, reconcile distinct native records and `(origin_run_id, variant_id)` versions, and render real source cards before publication. Factor browsing must include source-layer factor cards and signal components as well as normalized variants. Static exports are deployment data only, never public repository inputs.

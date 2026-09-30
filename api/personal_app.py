@@ -211,6 +211,10 @@ def create_personal_app(root=None, *, runtime=None, catalog=None, store=None):
     def corpus_implementation(variant_id: str, run_id: str | None = Query(None, max_length=200)):
         return corpus_read(corpus_research.implementation, variant_id, run_id=run_id)
 
+    @app.get('/v1/personal/source-portfolios')
+    def source_portfolios(record_id: str | None = Query(None, max_length=200)):
+        return corpus_read(corpus_research.source_portfolios, record_id)
+
     @app.get('/v1/personal/source-check/{eid}')
     def link_status(eid: str):
         try:

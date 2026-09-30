@@ -26,6 +26,12 @@ export const fidelityLabel = (value?: string) =>
     PROXY_HYPOTHESIS: "代理 + 假设性回测",
   })[value || "STANDARDIZED"] || value;
 type Metrics = {
+  status?: string;
+  reason?: string;
+  annualization?: number;
+  sharpe_cash_basis?: string;
+  funding_paid_per_initial_equity?: number;
+  fees_per_initial_equity?: number;
   start?: string;
   end?: string;
   observations?: number;
@@ -36,6 +42,21 @@ type Metrics = {
   annual_turnover?: number | null;
 };
 type Periods = Record<string, Metrics>;
+type RetainedWindow = {
+  window_id: string;
+  curve: CurvePoint[];
+  curve_meta?: CorpusDetail["curve_meta"];
+  presentation_periods?: Periods;
+  capital_state?: Record<string, unknown>;
+  source_window: {
+    evaluation_start?: string;
+    evaluation_end?: string;
+    periods?: Periods;
+    cost_sensitivity?: Record<string, Periods>;
+    same_instrument_buyhold?: Periods;
+    additional_native_bar_lag?: Periods;
+  };
+};
 export type CurvePoint = { date: string; equity: number; drawdown: number };
 type Audit = {
   source_verification_status?: string;
@@ -72,6 +93,7 @@ export type CorpusSummary = {
 };
 export type CorpusRecord = {
   related_results?: RelatedResult[];
+  coverage_history?: { run_id: string; status: string; reason: string }[];
   id: string;
   name: string;
   status: string;
@@ -98,6 +120,12 @@ export type CorpusDetail = {
   family: string;
   metrics: {
     periods?: Periods;
+    presentation_periods?: Periods;
+    primary_window_id?: string;
+    retained_windows?: RetainedWindow[];
+    capital_state?: Record<string, unknown>;
+    same_instrument_benchmark?: Periods;
+    additional_native_bar_lag?: Periods;
     cost_sensitivity?: Record<string, Periods>;
     spy_benchmark?: Periods;
     risk_matched_benchmark?: Periods;
@@ -119,10 +147,11 @@ export type CorpusDetail = {
   lineage: Record<string, unknown>;
   limitations: string[];
   curve_meta?: {
-    total_observations: number;
-    returned_points: number;
-    sampling: string;
-    benchmark_curve_available: boolean;
+    observations?: number;
+    total_observations?: number;
+    returned_points?: number;
+    sampling?: string;
+    benchmark_curve_available?: boolean;
   };
 };
 const base = "/v1/personal/corpus-research";
@@ -202,11 +231,45 @@ export function MetricTable({
           {rows.map(({ label, metrics: m }) => (
             <tr key={label}>
               <th scope="row">{label}</th>
-              <td>{m?.start && m?.end ? `${m.start} → ${m.end}` : "未提供"}</td>
-              <td>{metricValue(m?.cagr, true)}</td>
-              <td>{metricValue(m?.sharpe)}</td>
-              <td>{metricValue(m?.max_drawdown, true)}</td>
-              <td>{metricValue(m?.annual_turnover)}</td>
+              <td>
+                {m?.status === "no_positive_equity"
+                  ? "资本已耗尽，此区间不适用"
+                  : m?.observations !== undefined && m.observations < 2
+                    ? `样本不足（${m.observations}个观察）`
+                    : m?.start && m?.end
+                      ? `${m.start} → ${m.end}`
+                      : "未提供"}
+              </td>
+              <td>
+                {metricValue(
+                  m?.observations !== undefined && m.observations < 2
+                    ? undefined
+                    : m?.cagr,
+                  true,
+                )}
+              </td>
+              <td>
+                {metricValue(
+                  m?.observations !== undefined && m.observations < 2
+                    ? undefined
+                    : m?.sharpe,
+                )}
+              </td>
+              <td>
+                {metricValue(
+                  m?.observations !== undefined && m.observations < 2
+                    ? undefined
+                    : m?.max_drawdown,
+                  true,
+                )}
+              </td>
+              <td>
+                {metricValue(
+                  m?.observations !== undefined && m.observations < 2
+                    ? undefined
+                    : m?.annual_turnover,
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -283,7 +346,28 @@ export function EquityChart({
 }
 export function ResearchDetail({ detail }: { detail: CorpusDetail }) {
   const [period, setPeriod] = useState("full");
-  const m = detail.metrics;
+  const [windowId, setWindowId] = useState(
+    String(detail.metrics.primary_window_id || ""),
+  );
+  const window = detail.metrics.retained_windows?.find(
+    (w) => w.window_id === windowId,
+  );
+  const m = window
+    ? {
+        ...detail.metrics,
+        periods: window.source_window.periods,
+        presentation_periods: window.presentation_periods,
+        capital_state: window.capital_state,
+        cost_sensitivity: window.source_window.cost_sensitivity,
+        same_instrument_benchmark: window.source_window.same_instrument_buyhold,
+        additional_native_bar_lag:
+          window.source_window.additional_native_bar_lag,
+      }
+    : detail.metrics;
+  const shownPeriods = m.presentation_periods || m.periods;
+  const noEquity = shownPeriods?.[period]?.status === "no_positive_equity";
+  const curve = window?.curve || detail.curve;
+  const curveMeta = window?.curve_meta || detail.curve_meta;
   return (
     <article className="cr-detail">
       <header>
@@ -297,6 +381,35 @@ export function ResearchDetail({ detail }: { detail: CorpusDetail }) {
       <div className="cr-warning">
         探索性回顾筛查。来源忠实度、实现假设与经济有效性分别判断；留出段标签本身不证明独立样本外验证。
       </div>
+      {detail.metrics.retained_windows?.length ? (
+        <label className="pw-research-select">
+          独立数据窗口
+          <select
+            aria-label="独立数据窗口"
+            value={windowId}
+            onChange={(e) => setWindowId(e.target.value)}
+          >
+            {detail.metrics.retained_windows.map((w) => (
+              <option key={w.window_id} value={w.window_id}>
+                {w.source_window.evaluation_start} →{" "}
+                {w.source_window.evaluation_end} · 窗口{w.window_id}
+              </option>
+            ))}
+          </select>
+          <span className="pw-reading-basis">
+            缺口前后分别从初始资金计算，窗口净值不会拼接。默认窗口按有效日期长度选取，不按收益择优。样本末日仍有持仓时记为期末强制平仓；这与交易所保证金强平不同。
+          </span>
+        </label>
+      ) : null}
+      {m.capital_state && (
+        <div className="cr-warning">
+          这条路径发生模型资本耗尽；它不是交易所保证金强平的复现。后续没有正权益的区间显示不适用，原始曲线保留。
+          <details>
+            <summary>资本状态与原始记录</summary>
+            <p>{readable(m.capital_state)}</p>
+          </details>
+        </div>
+      )}
       <p>
         <strong>{fidelityLabel(detail.fidelity_class)}</strong> ·{" "}
         {m.supplemental_defaults_flag === true ||
@@ -347,7 +460,7 @@ export function ResearchDetail({ detail }: { detail: CorpusDetail }) {
           <label>
             比较区间{" "}
             <select value={period} onChange={(e) => setPeriod(e.target.value)}>
-              {Object.keys(m.periods || {}).map((v) => (
+              {Object.keys(shownPeriods || {}).map((v) => (
                 <option value={v} key={v}>
                   {periodLabel(v)}
                 </option>
@@ -357,8 +470,17 @@ export function ResearchDetail({ detail }: { detail: CorpusDetail }) {
         </div>
         <MetricTable
           rows={[
-            { label: "策略（基础成本）", metrics: m.periods?.[period] },
-            { label: "SPY 买入持有", metrics: m.spy_benchmark?.[period] },
+            { label: "策略（基础成本）", metrics: shownPeriods?.[period] },
+            ...(m.same_instrument_benchmark
+              ? [
+                  {
+                    label: "相同工具买入持有",
+                    metrics: m.same_instrument_benchmark[period],
+                  },
+                ]
+              : [
+                  { label: "SPY 买入持有", metrics: m.spy_benchmark?.[period] },
+                ]),
             {
               label: "开发段定权风险匹配",
               metrics: m.risk_matched_benchmark?.[period],
@@ -373,17 +495,43 @@ export function ResearchDetail({ detail }: { detail: CorpusDetail }) {
           基准按原研究记录展示，请逐行核对区间与风险暴露；超额收益不是 alpha
           证明。{m.risk_match_note}
         </p>
+        {shownPeriods?.[period]?.sharpe_cash_basis && (
+          <p className="pw-reading-basis">
+            Sharpe现金口径：{shownPeriods[period].sharpe_cash_basis}
+            ；年化观察数：{shownPeriods[period].annualization ?? "原记录未注明"}
+            。不同现金与交易日口径不能直接混比。
+          </p>
+        )}
+        {shownPeriods?.[period]?.funding_paid_per_initial_equity !==
+          undefined && (
+          <p className="pw-reading-basis">
+            实际资金费净支出 / 窗口初始资金：
+            {metricValue(
+              shownPeriods[period].funding_paid_per_initial_equity,
+              true,
+            )}
+            ；费用 / 窗口初始资金：
+            {metricValue(shownPeriods[period].fees_per_initial_equity, true)}
+            。资金费负值表示净收入。
+          </p>
+        )}
       </section>
       <section>
         <h3>3. 成本敏感性</h3>
-        <MetricTable
-          rows={Object.entries(m.cost_sensitivity || {})
-            .sort(([a], [b]) => Number(a) - Number(b))
-            .map(([bps, periods]) => ({
-              label: `${bps} bps / 成交金额`,
-              metrics: periods[period],
-            }))}
-        />
+        {noEquity ? (
+          <p>
+            基础路径在本区间开始前已没有正权益。其他成本情景需独立核对资本状态，不把原始零占位显示为正常收益。
+          </p>
+        ) : (
+          <MetricTable
+            rows={Object.entries(m.cost_sensitivity || {})
+              .sort(([a], [b]) => Number(a) - Number(b))
+              .map(([bps, periods]) => ({
+                label: `${bps} bps / 成交金额`,
+                metrics: periods[period],
+              }))}
+          />
+        )}
         {!Object.keys(m.cost_sensitivity || {}).length && (
           <p>未附带成本情景。</p>
         )}
@@ -393,15 +541,21 @@ export function ResearchDetail({ detail }: { detail: CorpusDetail }) {
         <p className="pw-muted">
           以下曲线来自保存的基础成本逐日净收益，覆盖其全部日期，不随上方区间切换。仅作显示抽样，指标来自原完整结果。未附带基准逐日序列时不绘制基准曲线。
         </p>
-        {detail.curve_meta && (
+        {curveMeta && (
           <p className="pw-muted">
-            完整 {detail.curve_meta.total_observations.toLocaleString()}{" "}
-            个观察值，显示 {detail.curve_meta.returned_points.toLocaleString()}{" "}
-            点；{detail.curve_meta.sampling}
+            完整{" "}
+            {(
+              curveMeta.total_observations ??
+              curveMeta.observations ??
+              curve.length
+            ).toLocaleString()}{" "}
+            个观察值，显示{" "}
+            {(curveMeta.returned_points ?? curve.length).toLocaleString()} 点；
+            {curveMeta.sampling || "保留当前独立窗口的收益路径"}
           </p>
         )}
-        <EquityChart points={detail.curve} />
-        <EquityChart points={detail.curve} drawdown />
+        <EquityChart points={curve} />
+        <EquityChart points={curve} drawdown />
       </section>
       <section>
         <h3>5. 审计、敏感性与证据链</h3>
@@ -569,7 +723,13 @@ function RecordDetailLoader({ id, run }: { id: string; run: string }) {
     );
   return <SourceRecordDetail record={request.data} />;
 }
-export function DetailLoader({ variant, run }: { variant: string; run: string }) {
+export function DetailLoader({
+  variant,
+  run,
+}: {
+  variant: string;
+  run: string;
+}) {
   const request = useApi<CorpusDetail>(
     `${base}/implementations/${encodeURIComponent(variant)}?run_id=${encodeURIComponent(run)}`,
   );

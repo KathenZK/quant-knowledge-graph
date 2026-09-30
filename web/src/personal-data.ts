@@ -69,6 +69,20 @@ export interface Knowledge {
     }[];
     empirical_notice: string;
     intake_status?: string;
+    intake_label?: string;
+    definition_sources?: {
+      url?: string;
+      locator?: string;
+      supports?: string[];
+    }[];
+    evidence_links?: {
+      url?: string;
+      locator?: string;
+      quote?: string;
+      source_sha256?: string;
+      claim_id?: string;
+      supports?: string[] | string;
+    }[];
     entry_type?: string;
     review_notice?: string;
     source_review_summary?: string;

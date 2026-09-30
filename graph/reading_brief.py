@@ -34,6 +34,14 @@ def reading_brief(value, knowledge, method_guide, card=None):
             subject=explicit_asset[1]
             next(f for f in facts if f['key']=='scope').update(text=subject,status='EXTRACTED',evidence=source.get('url'))
         actions=list(dict.fromkeys(x for x in [entry,exit_rule] if x))
+        # Keep the comparison's observation/window context; the action alone
+        # (for example A >= B) is not a complete readable rule.
+        for sentence in reversed(re.split(r'[。；\n]',knowledge.get('original_rule') or '')):
+            sentence=re.sub(r'^[*`\s]*本条只写','',sentence).strip(' *`')
+            if (re.search(r'比较|排序|排名|回看|过去.{0,30}(?:回报|收益)',sentence)
+                    and not re.search(r'不是|并非|不同于|不与',sentence)
+                    and not any(sentence in action for action in actions)):
+                actions.insert(0,sentence)
         if actions:
             purpose=(f'针对{subject}，' if subject else '')+'；'.join(actions)+'。'
             if len(purpose)>360:
@@ -81,6 +89,7 @@ def reading_brief(value, knowledge, method_guide, card=None):
         result['validation']=card.get('validation',{})
         result['novelty']=card.get('novelty',{})
         result['entry_type']=card.get('entity_type') or ('strategy' if strategy else 'factor')
+        result['intake_label']=card.get('admission_label_zh')
         relation=card.get('relation') or {}
         result['existing_record_overlay']=relation.get('type')=='source_curation_overlay_for' and relation.get('also_in_frozen_5813') is True
         if strategy and isinstance(card.get('field_evidence'),dict):
@@ -93,8 +102,12 @@ def reading_brief(value, knowledge, method_guide, card=None):
             for fact in result['trading']:
                 key={'scope':'asset','observation':'timeframe','execution':'fill_timing'}.get(fact['key'],fact['key'])
                 evidence=evidence_fields.get(key,{})
-                if evidence.get('value') is not None:
-                    fact.update(text=content(evidence['value']),status=evidence.get('verification_status') or 'UNVERIFIED',origin=evidence.get('origin') or 'unknown',evidence=content(evidence.get('source_evidence_refs',[])))
+                translated=(card.get('assets_entry_exit') or {}).get(key)
+                if evidence.get('value') is not None or isinstance(translated,str) and translated:
+                    fact.update(text=translated if isinstance(translated,str) and translated else content(evidence['value']),status=evidence.get('verification_status') or 'UNVERIFIED',origin=evidence.get('origin') or 'unknown',evidence=content(evidence.get('source_evidence_refs',[])))
+                    if evidence.get('value') is None:
+                        fact['origin']='MANUAL_REVIEW_SUMMARY_UNBOUND'
+                        fact['status']=evidence.get('verification_status') or 'UNVERIFIED'
             result['review_notice']='补证资料挂回原记录；未改写原始规则，也未将来源核对升级为回测通过。' if result['existing_record_overlay'] else '本次采集资料保留原始准入状态；来源内容与研究假设分开判断。'
         if card.get('one_line'):
             if result['existing_record_overlay']:
@@ -126,4 +139,8 @@ def reading_brief(value, knowledge, method_guide, card=None):
                 causal_status=rationale.get('causal_status'),source_url=rationale.get('source_url'),source_locator=rationale.get('source_locator'))
         if isinstance(card.get('empirical_scope'),dict):
             result['empirical_scope']=card['empirical_scope']
+        if isinstance(card.get('definition_sources'),list):
+            result['definition_sources']=[{key:row.get(key) for key in ['url','locator','supports']} for row in card['definition_sources'] if isinstance(row,dict)]
+        if isinstance(card.get('evidence_links'),list):
+            result['evidence_links']=[{**{key:row.get(key) for key in ['url','locator','quote','source_sha256','claim_id']},'supports':row.get('supports',row.get('support_scope'))} for row in card['evidence_links'] if isinstance(row,dict)]
     return result
