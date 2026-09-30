@@ -1,0 +1,24 @@
+{
+  "name": "quantgraph-sites-runtime",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node sites/build.mjs",
+    "test": "node --test sites/tests/*.test.mjs",
+    "db:generate": "drizzle-kit generate --config sites/drizzle.config.ts"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.1.0",
+    "drizzle-kit": "0.31.10",
+    "drizzle-orm": "0.45.2",
+    "esbuild": "^0.25.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.0",
+    "vite": "^6.4.0"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

@@ -14,6 +14,7 @@ export const kindFor = (ref: EntityRef) =>
       StrategyConcept: "family",
       StrategyTemplate: "template",
       SourceRecord: "source",
+      FactorSourceRecord: "source",
     }) as const
   )[ref.entity_type];
 const isObject = (v: unknown): v is Record<string, unknown> =>

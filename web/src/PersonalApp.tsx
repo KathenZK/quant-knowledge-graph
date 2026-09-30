@@ -1,3 +1,6 @@
+import HostedNotebookImport, { HostedSyncStatus } from "./HostedNotebook";
+import { isHosted, hostedSave } from "./hosted-transport";
+import { applicationFetch } from "./api";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import {
   Link,
@@ -417,13 +420,17 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
     notify: setMessage,
     refresh: notebook.retry,
     save: async (item, values) => {
-      const saved = await personalApi<PersonalRecord>(recordPath(item), {
-        method: "PUT",
-        body: JSON.stringify(personalPatch(values)),
-      });
+      const saved = isHosted
+        ? await hostedSave(item, values)
+        : await personalApi<PersonalRecord>(recordPath(item), {
+            method: "PUT",
+            body: JSON.stringify(personalPatch(values)),
+          });
       setRecords((rows) => [
-        ...rows.filter(
-          (row) => row.kind !== saved.kind || row.entity_id !== saved.entity_id,
+        ...rows.filter((row) =>
+          isHosted
+            ? !sameRecord(row, saved)
+            : row.kind !== saved.kind || row.entity_id !== saved.entity_id,
         ),
         saved,
       ]);
@@ -492,13 +499,15 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
         <div className="pw-sidebar-bottom">
           <span className="pw-local-label">
             <span className="pw-live-dot" />
-            仅本机使用
+            {isHosted ? "仅本人访问" : "仅本机使用"}
           </span>
           <p>从定义到规则，从来源到自己的判断。</p>
           <small>
             知识收录 ≠ 收益验证
             <br />
-            个人笔记保存在本地服务中
+            {isHosted
+              ? "批注保存到云端，可跨设备读取"
+              : "个人笔记保存在本地服务中"}
           </small>
         </div>
       </aside>
@@ -1143,8 +1152,14 @@ function Families({ meta }: { meta: PersonalMeta }) {
 }
 function DetailPage({ workspace }: { workspace: Workspace }) {
   const { kind, id } = useParams();
+  const [params] = useSearchParams();
+  const pinned = new URLSearchParams();
+  if (isHosted) {
+    for (const key of ["definition_revision", "snapshot_batch"])
+      if (params.get(key)) pinned.set(key, params.get(key)!);
+  }
   const result = useApi<PersonalDetail>(
-    `/v1/web/entities/${encodeURIComponent(kind || "")}/${encodeURIComponent(id || "")}`,
+    `/v1/web/entities/${encodeURIComponent(kind || "")}/${encodeURIComponent(id || "")}${pinned.size ? "?" + pinned : ""}`,
   );
   if (result.loading) return <Loading />;
   if (result.error || !result.data)
@@ -1152,7 +1167,11 @@ function DetailPage({ workspace }: { workspace: Workspace }) {
       <ErrorState error={result.error || "条目不存在"} retry={result.retry} />
     );
   return (
-    <Reading key={`${kind}/${id}`} item={result.data} workspace={workspace} />
+    <Reading
+      key={`${kind}/${id}/${pinned}`}
+      item={result.data}
+      workspace={workspace}
+    />
   );
 }
 function Section({
@@ -1684,7 +1703,7 @@ function Reading({
             title="我的判断"
             label="你的整理独立于原始来源"
           >
-            <NoteEditor item={item} workspace={workspace} />
+            <ScopedNoteEditor item={item} workspace={workspace} />
           </Section>
           <DuplicateSuggestions
             item={item}
@@ -1846,13 +1865,58 @@ function axisLabel(axis: string) {
     "来源未说明"
   );
 }
-function NoteEditor({
+function ScopedNoteEditor({
   item,
   workspace,
 }: {
   item: PersonalItem;
   workspace: Workspace;
 }) {
+  const [params] = useSearchParams();
+  const target = {
+    ...item,
+    ...(isHosted &&
+    params.get("research_run") &&
+    params.get("research_variant") &&
+    params.get("research_manifest")
+      ? {
+          origin_run_id: params.get("research_run")!,
+          variant_id: params.get("research_variant")!,
+          manifest_sha256: params.get("research_manifest")!,
+        }
+      : {}),
+  };
+  return (
+    <NoteEditor
+      key={JSON.stringify([
+        target.entity_id,
+        target.definition_revision,
+        target.origin_run_id,
+        target.variant_id,
+        target.manifest_sha256,
+      ])}
+      item={target}
+      workspace={workspace}
+    />
+  );
+}
+export function NoteEditor({
+  item,
+  workspace,
+}: {
+  item: PersonalItem;
+  workspace: Workspace;
+}) {
+  const draftKey =
+    "quantgraph-unsaved:" +
+    JSON.stringify([
+      item.kind,
+      item.entity_id,
+      item.definition_revision,
+      item.origin_run_id,
+      item.variant_id,
+      item.manifest_sha256,
+    ]);
   const serverRecord = useApi<PersonalRecord>(recordPath(item));
   const workspaceRecord = workspace.records.find((row) =>
     sameRecord(row, item),
@@ -1863,23 +1927,75 @@ function NoteEditor({
       (workspaceRecord.updated_at || "") > (serverRecord.data.updated_at || ""))
       ? workspaceRecord
       : serverRecord.data;
-  const [draft, setDraft] = useState<PersonalRecord>(
-    saved || emptyRecord(item),
-  );
-  const [dirty, setDirty] = useState(false);
-  const [tagsText, setTagsText] = useState((saved?.tags || []).join(", "));
+  const [draft, setDraft] = useState<PersonalRecord>(() => {
+    if (isHosted) {
+      try {
+        const raw = sessionStorage.getItem(draftKey);
+        if (raw) {
+          const cached = JSON.parse(raw);
+          if (
+            cached.entity_id === item.entity_id &&
+            cached.definition_revision === item.definition_revision
+          )
+            return cached;
+        }
+      } catch {
+        /* original text remains in the browser */
+      }
+    }
+    return {
+      ...emptyRecord(item),
+      ...saved,
+      origin_run_id: item.origin_run_id,
+      variant_id: item.variant_id,
+      manifest_sha256: item.manifest_sha256,
+    };
+  });
+  const [dirty, setDirty] = useState(() => {
+    try {
+      return isHosted && !!sessionStorage.getItem(draftKey);
+    } catch {
+      return false;
+    }
+  });
+  const [draftPersisted, setDraftPersisted] = useState(false);
+  const [tagsText, setTagsText] = useState((draft.tags || []).join(", "));
   const [aliasesText, setAliasesText] = useState(
-    (saved?.aliases || []).join(", "),
+    (draft.aliases || []).join(", "),
   );
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   useEffect(() => {
     if (!dirty) {
-      setDraft(saved || emptyRecord(item));
+      setDraft({
+        ...emptyRecord(item),
+        ...saved,
+        origin_run_id: item.origin_run_id,
+        variant_id: item.variant_id,
+        manifest_sha256: item.manifest_sha256,
+      });
       setTagsText((saved?.tags || []).join(", "));
       setAliasesText((saved?.aliases || []).join(", "));
     }
   }, [saved, item, dirty]);
+  useEffect(() => {
+    if (!isHosted) return;
+    try {
+      if (dirty)
+        sessionStorage.setItem(
+          draftKey,
+          JSON.stringify({
+            ...draft,
+            tags: tokenList(tagsText),
+            aliases: tokenList(aliasesText),
+          }),
+        );
+      else sessionStorage.removeItem(draftKey);
+      setDraftPersisted(dirty);
+    } catch {
+      setDraftPersisted(false);
+    }
+  }, [draftKey, draft, dirty, tagsText, aliasesText]);
   const change = <K extends keyof PersonalRecord>(
     key: K,
     value: PersonalRecord[K],
@@ -1888,6 +2004,7 @@ function NoteEditor({
     setDirty(true);
   };
   const submit = async () => {
+    if (serverRecord.loading || serverRecord.error) return;
     setBusy(true);
     setError("");
     try {
@@ -1898,8 +2015,9 @@ function NoteEditor({
       });
       setDirty(false);
       serverRecord.retry();
-      workspace.notify("个人判断已保存到本地服务。刷新或更换浏览器仍可读取。");
+      workspace.notify("个人判断已保存。刷新或更换浏览器仍可读取。");
     } catch (error) {
+      serverRecord.retry();
       setError(
         error instanceof Error ? error.message : "保存失败，编辑内容仍保留。",
       );
@@ -1915,158 +2033,216 @@ function NoteEditor({
         void submit();
       }}
     >
-      {saved &&
-        (saved.version_changed ||
-          saved.definition_revision !== item.definition_revision) && (
-          <p className="pw-notice">
-            来源定义已有修订。以下笔记仍关联原保存版本，保存判断不会自动替换历史引用。
-          </p>
-        )}
-      {serverRecord.data?.linked_notes?.length ? (
-        <details className="pw-linked-notes">
-          <summary>
-            查看归并前分别保存的 {serverRecord.data.linked_notes.length}{" "}
-            份个人笔记
-          </summary>
-          {serverRecord.data.linked_notes.map((note) => (
-            <div key={note.entity_id}>
-              <Link to={personalPath(note)}>{note.name}</Link>
-              <p>
-                {note.note ||
-                  note.reason ||
-                  note.summary ||
-                  "该引用没有文字备注"}
-              </p>
-              <small>原版本：{note.definition_revision}</small>
-            </div>
-          ))}
-        </details>
-      ) : null}
-      <div className="pw-form-row">
-        <label>
-          阅读状态
-          <select
-            value={draft.status}
-            onChange={(event) =>
-              change("status", event.target.value as PersonalRecord["status"])
-            }
-          >
-            {personalStatuses.map((status) => (
-              <option key={status}>{status}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          主题分组
-          <input
-            maxLength={100}
-            value={draft.group}
-            onChange={(event) => change("group", event.target.value)}
-            placeholder="例如：低换手趋势方法"
-          />
-        </label>
-      </div>
-      <label>
-        标签（逗号分隔）
-        <input
-          maxLength={1000}
-          value={tagsText}
-          onChange={(event) => {
-            setTagsText(event.target.value);
-            setDirty(true);
-          }}
-          placeholder="如：价格、趋势、待核对退出规则"
-        />
-      </label>
-      <label>
-        研究选择的理由
-        <textarea
-          maxLength={12000}
-          value={draft.reason}
-          onChange={(event) => change("reason", event.target.value)}
-          placeholder="为什么值得研究，或为什么暂不研究？"
-          rows={2}
-        />
-      </label>
-      <label>
-        备注
-        <textarea
-          maxLength={12000}
-          value={draft.note}
-          onChange={(event) => change("note", event.target.value)}
-          placeholder="记录自己的理解、比较结果和阅读线索"
-          rows={3}
-        />
-      </label>
-      <label>
-        我的问题与研究假设
-        <textarea
-          maxLength={12000}
-          value={draft.questions}
-          onChange={(event) => change("questions", event.target.value)}
-          placeholder="哪些条件需要验证？还缺哪些证据？"
-          rows={3}
-        />
-      </label>
-      <details className="pw-note-extras">
-        <summary>我的整理、别名与来源问题</summary>
-        <label>
-          我的整理
-          <textarea
-            maxLength={20000}
-            rows={4}
-            value={draft.summary}
-            onChange={(event) => change("summary", event.target.value)}
-            placeholder="用自己的话整理方法，不会覆盖作者原文"
-          />
-        </label>
-        <label>
-          补充别名（逗号分隔）
-          <input
-            maxLength={1000}
-            value={aliasesText}
-            onChange={(event) => {
-              setAliasesText(event.target.value);
-              setDirty(true);
-            }}
-          />
-        </label>
-        <label>
-          来源 / 规则问题
-          <textarea
-            maxLength={12000}
-            rows={3}
-            value={draft.problem}
-            onChange={(event) => change("problem", event.target.value)}
-            placeholder="例如：退出条件不一致、来源链接失效、参数单位缺失"
-          />
-        </label>
-      </details>
-      <div className="pw-note-save">
-        <label className="pw-checkbox">
-          <input
-            type="checkbox"
-            checked={draft.starred}
-            onChange={(event) => change("starred", event.target.checked)}
-          />
-          收藏到我的清单
-        </label>
-        <span>
-          {dirty
-            ? "有未保存的修改"
-            : saved?.updated_at
-              ? `已保存 · ${humanDate(saved.updated_at)}`
-              : "尚未保存个人判断"}
-        </span>
-        <button className="primary" disabled={busy || !dirty} type="submit">
-          {busy ? "保存中…" : "保存个人判断"}
-        </button>
-      </div>
-      {error && (
-        <p className="pw-error" role="alert">
-          {error}
+      {isHosted && item.origin_run_id && (
+        <p className="pw-notice">
+          这份批注固定关联 {item.origin_run_id} / {item.variant_id}
+          。来源ID关联不等于定义版本已精确复现。
         </p>
       )}
+      {serverRecord.error && (
+        <ErrorState error={serverRecord.error} retry={serverRecord.retry} />
+      )}
+      {dirty && (
+        <p className="pw-reading-basis">
+          有未保存草稿，尚未写入云端。
+          {draftPersisted
+            ? "当前浏览器会话已暂存，刷新后可恢复。"
+            : "请保留本页，保存失败后可重试。"}
+        </p>
+      )}
+      {isHosted &&
+        dirty &&
+        serverRecord.data &&
+        serverRecord.data.record_revision !== draft.record_revision && (
+          <div className="pw-notice">
+            <p>云端有较新批注，你的草稿没有丢失。</p>
+            <details>
+              <summary>读取云端版本后比较</summary>
+              <p>批注：{serverRecord.data.note}</p>
+              <p>问题：{serverRecord.data.questions}</p>
+              <p>标签：{serverRecord.data.tags.join("、")}</p>
+            </details>
+            <button
+              type="button"
+              onClick={() => {
+                setDraft(serverRecord.data!);
+                setTagsText(serverRecord.data!.tags.join(", "));
+                setAliasesText(serverRecord.data!.aliases.join(", "));
+                setDirty(false);
+                setError("");
+              }}
+            >
+              采用云端版本
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setDraft({
+                  ...draft,
+                  record_revision: serverRecord.data!.record_revision,
+                });
+                setError("");
+                setDirty(true);
+              }}
+            >
+              保留我的草稿，下一次保存作为新修订
+            </button>
+          </div>
+        )}
+      <fieldset disabled={busy || serverRecord.loading || !!serverRecord.error}>
+        {saved &&
+          (saved.version_changed ||
+            saved.definition_revision !== item.definition_revision) && (
+            <p className="pw-notice">
+              来源定义已有修订。以下笔记仍关联原保存版本，保存判断不会自动替换历史引用。
+            </p>
+          )}
+        {serverRecord.data?.linked_notes?.length ? (
+          <details className="pw-linked-notes">
+            <summary>
+              查看归并前分别保存的 {serverRecord.data.linked_notes.length}{" "}
+              份个人笔记
+            </summary>
+            {serverRecord.data.linked_notes.map((note) => (
+              <div key={note.entity_id}>
+                <Link to={personalPath(note)}>{note.name}</Link>
+                <p>
+                  {note.note ||
+                    note.reason ||
+                    note.summary ||
+                    "该引用没有文字备注"}
+                </p>
+                <small>原版本：{note.definition_revision}</small>
+              </div>
+            ))}
+          </details>
+        ) : null}
+        <div className="pw-form-row">
+          <label>
+            阅读状态
+            <select
+              value={draft.status}
+              onChange={(event) =>
+                change("status", event.target.value as PersonalRecord["status"])
+              }
+            >
+              {personalStatuses.map((status) => (
+                <option key={status}>{status}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            主题分组
+            <input
+              maxLength={100}
+              value={draft.group}
+              onChange={(event) => change("group", event.target.value)}
+              placeholder="例如：低换手趋势方法"
+            />
+          </label>
+        </div>
+        <label>
+          标签（逗号分隔）
+          <input
+            maxLength={1000}
+            value={tagsText}
+            onChange={(event) => {
+              setTagsText(event.target.value);
+              setDirty(true);
+            }}
+            placeholder="如：价格、趋势、待核对退出规则"
+          />
+        </label>
+        <label>
+          研究选择的理由
+          <textarea
+            maxLength={12000}
+            value={draft.reason}
+            onChange={(event) => change("reason", event.target.value)}
+            placeholder="为什么值得研究，或为什么暂不研究？"
+            rows={2}
+          />
+        </label>
+        <label>
+          备注
+          <textarea
+            maxLength={12000}
+            value={draft.note}
+            onChange={(event) => change("note", event.target.value)}
+            placeholder="记录自己的理解、比较结果和阅读线索"
+            rows={3}
+          />
+        </label>
+        <label>
+          我的问题与研究假设
+          <textarea
+            maxLength={12000}
+            value={draft.questions}
+            onChange={(event) => change("questions", event.target.value)}
+            placeholder="哪些条件需要验证？还缺哪些证据？"
+            rows={3}
+          />
+        </label>
+        <details className="pw-note-extras">
+          <summary>我的整理、别名与来源问题</summary>
+          <label>
+            我的整理
+            <textarea
+              maxLength={20000}
+              rows={4}
+              value={draft.summary}
+              onChange={(event) => change("summary", event.target.value)}
+              placeholder="用自己的话整理方法，不会覆盖作者原文"
+            />
+          </label>
+          <label>
+            补充别名（逗号分隔）
+            <input
+              maxLength={1000}
+              value={aliasesText}
+              onChange={(event) => {
+                setAliasesText(event.target.value);
+                setDirty(true);
+              }}
+            />
+          </label>
+          <label>
+            来源 / 规则问题
+            <textarea
+              maxLength={12000}
+              rows={3}
+              value={draft.problem}
+              onChange={(event) => change("problem", event.target.value)}
+              placeholder="例如：退出条件不一致、来源链接失效、参数单位缺失"
+            />
+          </label>
+        </details>
+        <div className="pw-note-save">
+          <label className="pw-checkbox">
+            <input
+              type="checkbox"
+              checked={draft.starred}
+              onChange={(event) => change("starred", event.target.checked)}
+            />
+            收藏到我的清单
+          </label>
+          <span>
+            {dirty
+              ? "有未保存的修改"
+              : saved?.updated_at
+                ? `已保存 · ${humanDate(saved.updated_at)}`
+                : "尚未保存个人判断"}
+          </span>
+          <button className="primary" disabled={busy || !dirty} type="submit">
+            {busy ? "保存中…" : "保存个人判断"}
+          </button>
+        </div>
+        {error && (
+          <p className="pw-error" role="alert">
+            {error}
+          </p>
+        )}
+      </fieldset>
     </form>
   );
 }
@@ -2397,7 +2573,8 @@ function DuplicateSuggestions({
         同名、同模板或公式相似不等于同一方法。确认只调整个人关联，原始材料保留。
       </p>
       <button
-        disabled={busy}
+        disabled={busy || isHosted}
+        title={isHosted ? "重新采集由研究端处理" : undefined}
         onClick={async () => {
           setBusy(true);
           setError("");
@@ -2752,7 +2929,7 @@ function Notebook({
   };
   const exportItems = (format: string) =>
     run(async () => {
-      const response = await fetch("/v1/personal/export", {
+      const response = await applicationFetch("/v1/personal/export", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -2831,54 +3008,70 @@ function Notebook({
           </>
         }
       >
-        收藏、阅读状态、个人整理和问题保存在同一个本地服务中，不依赖当前浏览器。
+        {isHosted
+          ? "收藏、阅读状态、批注和研究问题保存在云端，不依赖当前浏览器。"
+          : "收藏、阅读状态、个人整理和问题保存在同一个本地服务中，不依赖当前浏览器。"}
       </Title>
       <div className="pw-notice">
         <FolderOpen size={18} />
-        同一台机器的浏览器连接此服务，都可读取这些笔记。备份只含个人层；原始来源资料保持独立。
+        {isHosted
+          ? "使用同一账户可读取已保存批注。云端接收状态单独显示；研究端拉取后继续研究。"
+          : "同一台机器的浏览器连接此服务，都可读取这些笔记。备份只含个人层；原始来源资料保持独立。"}
       </div>
       {error && <ErrorState error={error} retry={workspace.refresh} />}
-      <Migration
-        legacy={legacy}
-        busy={busy}
-        migrate={(mode, items) =>
-          void run(async () => {
-            const digest = await crypto.subtle.digest(
-              "SHA-256",
-              new TextEncoder().encode(JSON.stringify(items)),
-            );
-            const contentId = Array.from(new Uint8Array(digest), (byte) =>
-              byte.toString(16).padStart(2, "0"),
-            ).join("");
-            const result = await personalApi<{
-              imported?: number;
-              preserved?: number;
-              skipped?: number;
-              already_migrated?: boolean;
-              replayed?: boolean;
-            }>("/v1/personal/migrate", {
-              method: "POST",
-              body: JSON.stringify({
-                migration_id: `localStorage-v1:${mode}:${contentId}`,
-                items,
-              }),
-            });
-            workspace.refresh();
-            setLegacy(legacy.filter((row) => row.mode !== mode));
-            workspace.notify(
-              result.already_migrated || result.replayed
-                ? "这份浏览器清单此前已迁移，本次没有重复导入。"
-                : `浏览器清单已迁移：新增 ${result.imported || 0} 条，保留已有 ${result.preserved || 0} 条。浏览器原清单仍保留。`,
-            );
-          })
-        }
-      />
-      <PersonalRestore
-        file={restoreFile}
-        onFileProcessed={restoreFileProcessed}
-        refresh={workspace.refresh}
-        notify={workspace.notify}
-      />
+      {isHosted ? (
+        <HostedNotebookImport
+          file={restoreFile}
+          onFileProcessed={restoreFileProcessed}
+          refresh={workspace.refresh}
+        />
+      ) : (
+        <Migration
+          legacy={legacy}
+          busy={busy}
+          migrate={(mode, items) =>
+            void run(async () => {
+              const digest = await crypto.subtle.digest(
+                "SHA-256",
+                new TextEncoder().encode(JSON.stringify(items)),
+              );
+              const contentId = Array.from(new Uint8Array(digest), (byte) =>
+                byte.toString(16).padStart(2, "0"),
+              ).join("");
+              const result = await personalApi<{
+                imported?: number;
+                preserved?: number;
+                skipped?: number;
+                already_migrated?: boolean;
+                replayed?: boolean;
+              }>("/v1/personal/migrate", {
+                method: "POST",
+                body: JSON.stringify({
+                  migration_id: `localStorage-v1:${mode}:${contentId}`,
+                  items,
+                }),
+              });
+              workspace.refresh();
+              setLegacy(legacy.filter((row) => row.mode !== mode));
+              workspace.notify(
+                result.already_migrated || result.replayed
+                  ? "这份浏览器清单此前已迁移，本次没有重复导入。"
+                  : `浏览器清单已迁移：新增 ${result.imported || 0} 条，保留已有 ${result.preserved || 0} 条。浏览器原清单仍保留。`,
+              );
+            })
+          }
+        />
+      )}
+      {isHosted ? (
+        <HostedSyncStatus />
+      ) : (
+        <PersonalRestore
+          file={restoreFile}
+          onFileProcessed={restoreFileProcessed}
+          refresh={workspace.refresh}
+          notify={workspace.notify}
+        />
+      )}
       {failure && (
         <p className="pw-error" role="alert">
           {failure}
@@ -3105,7 +3298,8 @@ function SourceCheck({ id }: { id: string }) {
         </small>
       )}
       <button
-        disabled={busy}
+        disabled={busy || isHosted}
+        title={isHosted ? "实时来源复查由研究端处理" : undefined}
         onClick={async () => {
           setBusy(true);
           setFailure("");

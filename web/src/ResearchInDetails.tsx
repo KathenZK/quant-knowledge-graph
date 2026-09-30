@@ -60,7 +60,7 @@ function RecordResearch({
   const request = useApi<CorpusRecord>(
     `${base}/records/${encodeURIComponent(id)}`,
   );
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const initial =
     params.get("research_run") && params.get("research_variant")
       ? JSON.stringify([
@@ -112,7 +112,25 @@ function RecordResearch({
           <select
             aria-label={`${item.name}的历史实现`}
             value={selected ? selection : ""}
-            onChange={(e) => setSelection(e.target.value)}
+            onChange={(e) => {
+              setSelection(e.target.value);
+              const result = results.find(
+                (r) =>
+                  JSON.stringify([r.origin_run_id, r.variant_id]) ===
+                  e.target.value,
+              );
+              const next = new URLSearchParams(params);
+              if (result) {
+                next.set("research_run", result.origin_run_id);
+                next.set("research_variant", result.variant_id);
+                next.set("research_manifest", result.manifest_sha256);
+              } else {
+                next.delete("research_run");
+                next.delete("research_variant");
+                next.delete("research_manifest");
+              }
+              setParams(next, { replace: true });
+            }}
           >
             <option value="">请选择要读的实现与批次</option>
             {results.map((r) => (

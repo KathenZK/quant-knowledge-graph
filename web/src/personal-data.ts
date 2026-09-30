@@ -1,3 +1,5 @@
+import { isHosted, hostedRecordPath } from "./hosted-transport";
+import { hostedRequest } from "./hosted-api";
 import type { Detail, Facet, Item, Kind, Meta, RelationGraph } from "./types";
 
 export type PersonalStatus =
@@ -31,6 +33,12 @@ export interface PersonalRecord {
   aliases: string[];
   problem: string;
   updated_at?: string;
+  record_revision?: number;
+  snapshot_batch?: string;
+  origin_run_id?: string;
+  variant_id?: string;
+  manifest_sha256?: string;
+  definition_revision_bound?: boolean;
 }
 export interface Knowledge {
   reader_brief?: {
@@ -142,8 +150,12 @@ export interface Knowledge {
   original_rule?: string;
 }
 export type PersonalItem = Item & {
+  snapshot_batch?: string;
   is_historical?: boolean;
   current_entity_id?: string;
+  origin_run_id?: string;
+  variant_id?: string;
+  manifest_sha256?: string;
   stable_knowledge_id?: string;
   prior_version_ids?: string[];
   knowledge?: Knowledge;
@@ -241,10 +253,49 @@ export function readable(value: unknown): string {
       .join("；");
   return String(value);
 }
-export function personalPath(item: { kind: Kind; entity_id: string }) {
-  return `/entity/${item.kind}/${encodeURIComponent(item.entity_id)}`;
+export function personalPath(item: {
+  kind: Kind;
+  entity_id: string;
+  definition_revision?: string;
+  snapshot_batch?: string;
+  origin_run_id?: string;
+  variant_id?: string;
+  manifest_sha256?: string;
+}) {
+  const base = `/entity/${item.kind}/${encodeURIComponent(item.entity_id)}`;
+  if (isHosted && item.snapshot_batch && item.definition_revision) {
+    const q = new URLSearchParams({
+      definition_revision: item.definition_revision,
+      snapshot_batch: item.snapshot_batch,
+    });
+    for (const key of [
+      "origin_run_id",
+      "variant_id",
+      "manifest_sha256",
+    ] as const)
+      if (item[key])
+        q.set(
+          "research_" +
+            (key === "origin_run_id"
+              ? "run"
+              : key === "variant_id"
+                ? "variant"
+                : "manifest"),
+          item[key]!,
+        );
+    return base + "?" + q;
+  }
+  return base;
 }
-export function recordPath(item: { kind: Kind; entity_id: string }) {
+export function recordPath(item: {
+  kind: Kind;
+  entity_id: string;
+  definition_revision: string;
+  origin_run_id?: string;
+  variant_id?: string;
+  manifest_sha256?: string;
+}) {
+  if (isHosted) return hostedRecordPath(item);
   return `/v1/personal/items/${item.kind}/${encodeURIComponent(item.entity_id)}`;
 }
 export function emptyRecord(item: PersonalItem): PersonalRecord {
@@ -270,6 +321,7 @@ export async function personalApi<T>(
   url: string,
   init?: RequestInit,
 ): Promise<T> {
+  if (isHosted) return hostedRequest<T>(url, init);
   const response = await fetch(url, {
     ...init,
     headers: {
@@ -346,7 +398,29 @@ export const kindNames: Record<Kind, string> = {
   source: "来源记录",
 };
 
-export function sameRecord(record: PersonalRecord, item: PersonalItem) {
+export function sameRecord(
+  record: PersonalRecord,
+  item: Pick<
+    PersonalItem,
+    | "kind"
+    | "entity_id"
+    | "definition_revision"
+    | "stable_knowledge_id"
+    | "prior_version_ids"
+    | "origin_run_id"
+    | "variant_id"
+    | "manifest_sha256"
+  >,
+) {
+  if (isHosted)
+    return (
+      record.kind === item.kind &&
+      record.entity_id === item.entity_id &&
+      record.definition_revision === item.definition_revision &&
+      (record.origin_run_id || "") === (item.origin_run_id || "") &&
+      (record.variant_id || "") === (item.variant_id || "") &&
+      (record.manifest_sha256 || "") === (item.manifest_sha256 || "")
+    );
   return (
     record.kind === item.kind &&
     (record.entity_id === item.entity_id ||

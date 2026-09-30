@@ -1,6 +1,8 @@
 # 项目约束
 
-- 本项目负责知识、定义、来源和关系。数据流只能是 quant-knowledge-graph → quant-research-lab → quant-runner。
+- QuantGraph 负责公开资料整理、定义/来源/关系、基础与筛选回测的编排和结果管理，以及个人标记。当前以单用户为主；未来 to C 是方向，不代表现在可以公开私有资料。
+- quant-research-lab 承担对感兴趣策略的深入研究；quant-runner 用于实盘。基础筛选回测不要求先移入 Lab，不能自动把研究意向升级为实盘权限。
+- quant-data 是助手云端共享数据湖，保留采集原件和研究结果，避免依赖用户本地电脑；不把机器路径写死为产品身份。
 - 研究项目正式名称及同级目录为 `quant-research-lab` / `../quant-research-lab`；Python 包 `strategy_lab` 兼容保留，不迁入其研究/回测代码。
 - 不添加实盘执行、下单、策略发布或 runner 集成接口。
 - 原始来源保留字节、版本、摘要和许可。不可直接改写 raw；新版本须采集新快照、审核变更后更新锁文件。

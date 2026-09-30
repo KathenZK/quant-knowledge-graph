@@ -8,7 +8,8 @@ export interface EntityRef {
     | "StrategyVariant"
     | "StrategyConcept"
     | "StrategyTemplate"
-    | "SourceRecord";
+    | "SourceRecord"
+    | "FactorSourceRecord";
   entity_id: string;
   definition_revision: string;
 }
