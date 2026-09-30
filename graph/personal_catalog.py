@@ -547,6 +547,8 @@ def readable_item(value, raw):
             knowledge['layers']['source_facts']=[]
             if knowledge['reading']:
                 knowledge['reading'][0].update(label='分类整理说明',status='ORGANIZED_EXPLANATION')
+    from quantgraph.graph.reading_brief import reading_brief
+    value['knowledge']['reader_brief'] = _clean_private(reading_brief(value, value['knowledge'], METHOD_GUIDES[method['value']], raw.get('intake_card')))
     value['statuses']['display'] = '个人本机资料 · 公开权限与原有可见性未改变'
     value['stable_knowledge_id'] = stable_knowledge_id(value)
     value['prior_version_ids'] = []
@@ -588,14 +590,19 @@ class PersonalCatalogRepository(CatalogRepository):
                 historical = con.execute('SELECT entity_id,payload FROM catalog_items WHERE active=0').fetchall()
                 edges = con.execute('''SELECT e.payload,e.patch,e.visibility FROM catalog_edges e
                     WHERE EXISTS(SELECT 1 FROM catalog_edge_origins o WHERE o.relationship_id=e.relationship_id AND o.active=1)''').fetchall()
+                reviews = (con.execute('SELECT entity_id,revision,payload FROM private_intake_reviews WHERE sequence IN (SELECT MAX(sequence) FROM private_intake_reviews GROUP BY entity_id)').fetchall()
+                           if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='private_intake_reviews'").fetchone() else [])
+                review_by_id={r['entity_id']:r for r in reviews}
             # SQLite/WAL housekeeping and an idempotent import can change mtimes
             # without changing any source row. Avoid repeating expensive reading.
             digest=hashlib.sha256(); row_stamps={}
-            for batch in (rows,historical,edges):
+            for batch in (rows,historical,edges,reviews):
                 for row in batch:
                     serialized=json.dumps(tuple(row),ensure_ascii=False).encode()
                     digest.update(serialized)
                     if batch is rows:
+                        if row['entity_id'] in review_by_id:
+                            serialized+=review_by_id[row['entity_id']]['payload'].encode()
                         row_stamps[row['entity_id']]=hashlib.sha256(serialized).digest()
             content_digest=digest.digest()
             if content_digest==self._content_digest:
@@ -608,8 +615,11 @@ class PersonalCatalogRepository(CatalogRepository):
             for row in rows:
                 eid=row['entity_id']; fingerprint=row_stamps[eid]
                 previous=self._base_rows.get(eid)
+                private=json.loads(row['private_payload'])
+                if eid in review_by_id:
+                    private['intake_card']=json.loads(review_by_id[eid]['payload'])
                 base_rows[eid]=previous if previous and previous[0]==fingerprint else (
-                    fingerprint,readable_item(self._value(row),json.loads(row['private_payload'])))
+                    fingerprint,readable_item(self._value(row),private))
             base={eid:entry[1] for eid,entry in base_rows.items()}
             lineage = defaultdict(list)
             for r in historical:
@@ -1047,7 +1057,11 @@ class PersonalCatalogRepository(CatalogRepository):
         valid_ids={i['entity_id'] for i in items}
         relations=[e for e in self._edges if e['from_id'] in valid_ids and e['to_id'] in valid_ids]
         relation_layers=Counter(self.relation_explanation(e['relation'])['category'] for e in relations)
+        reviewed=[i['knowledge']['reader_brief'] for i in items if i['knowledge']['reader_brief'].get('intake_status')]
         return dict(mode='personal_local',release='local-catalog',graph_api='v1',graph_version='0.2.0',adapter_version=VERSION,
+            intake_summary=dict(reviewed_records=len(reviewed),by_status=dict(Counter(r['intake_status'] for r in reviewed)),
+                by_type=dict(Counter(r.get('entry_type','unknown') for r in reviewed)),
+                source_reviews=sum(bool(r.get('existing_record_overlay')) for r in reviewed),new_backtests_from_import=0),
             counts={k:counts[k] for k in ['strategy','variant','concept','family','template','source']},
             visible_counts=dict(counts),test_counts=dict(Counter(v['kind'] for v in self._load().values() if v.get('test_record'))),
             result_count=self.results()['total'],legacy_result_count=0,

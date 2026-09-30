@@ -33,6 +33,51 @@ export interface PersonalRecord {
   updated_at?: string;
 }
 export interface Knowledge {
+  reader_brief?: {
+    version: string;
+    purpose: string;
+    purpose_basis: string;
+    trading: {
+      key: string;
+      label: string;
+      text: string;
+      status: string;
+      origin?: string;
+      evidence?: string;
+    }[];
+    source_url?: string;
+    economic_rationale: {
+      text: string;
+      status: string;
+      notice: string;
+      causal_status?: string;
+      source_url?: string;
+      source_locator?: string;
+    };
+    papers: {
+      paper_id?: string;
+      title: string;
+      url?: string;
+      year?: number;
+      authors: string[];
+      relationship: string;
+      status: string;
+      locator?: string;
+      claim: string;
+      version_read?: string;
+      does_not_support?: string[];
+    }[];
+    empirical_notice: string;
+    intake_status?: string;
+    entry_type?: string;
+    review_notice?: string;
+    source_review_summary?: string;
+    empirical_scope?: Record<string, unknown>;
+    blocked_reasons?: string[];
+    validation?: Record<string, string>;
+    novelty?: Record<string, unknown>;
+    worked_example?: { text: string; basis: string };
+  };
   version?: string;
   summary: string;
   method_family: { value: string; label: string; basis?: string };
@@ -102,6 +147,23 @@ export type PersonalItem = Item & {
 };
 export type PersonalDetail = Detail & PersonalItem;
 export interface PersonalMeta extends Omit<Meta, "mode" | "facets"> {
+  intake_summary?: {
+    reviewed_records: number;
+    by_status: Record<string, number>;
+    by_type: Record<string, number>;
+    source_reviews: number;
+    new_backtests_from_import: number;
+  };
+  snapshot_progress?: {
+    as_of_utc: string;
+    corpus_records: number;
+    executed_records: number;
+    execution_versions: number;
+    imported_runs: number;
+    awaiting_import_runs?: number;
+    collection_cards?: number;
+    factor_cards?: number;
+  };
   mode: "personal_local";
   initialized?: boolean;
   message?: string;

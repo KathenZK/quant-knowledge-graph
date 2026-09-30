@@ -58,7 +58,8 @@ import {
   type PersonalRecord,
 } from "./personal-data";
 import PersonalRestore from "./PersonalRestore";
-import CorpusResearch from "./CorpusResearch";
+import ResearchInDetails, { LegacyResearchEntry } from "./ResearchInDetails";
+import KnowledgeBrief from "./KnowledgeBrief";
 import "./personal.css";
 
 function useApi<T>(url: string) {
@@ -479,10 +480,6 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
             <Network size={19} />
             方法族
           </NavLink>
-          <NavLink to="/results">
-            <FileText size={19} />
-            研究证据
-          </NavLink>
           <NavLink to="/list">
             <Bookmark size={19} />
             我的清单<span>{records.filter((item) => item.starred).length}</span>
@@ -515,11 +512,14 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
           </Link>
         </div>
         <main id="personal-main" tabIndex={-1}>
-          {meta.warnings?.map((warning) => (
-            <div className="pw-notice" key={warning}>
-              {warning}
-            </div>
-          ))}
+          {meta.warnings?.length ? (
+            <details className="pw-snapshot-notes">
+              <summary>资料快照与阅读边界</summary>
+              {meta.warnings.map((warning) => (
+                <p key={warning}>{warning}</p>
+              ))}
+            </details>
+          ) : null}
           {(meta.initialized === false ||
             meta.initialization?.status === "MISSING") &&
           location.pathname !== "/results" ? (
@@ -568,7 +568,7 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
                   element={<DetailPage workspace={workspace} />}
                 />
                 <Route path="/compare" element={<Compare />} />
-                <Route path="/results" element={<CorpusResearch />} />
+                <Route path="/results" element={<LegacyResearchEntry />} />
                 <Route
                   path="/list"
                   element={
@@ -630,6 +630,42 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
             <span>再选择一个条目</span>
           )}
         </div>
+      )}
+    </div>
+  );
+}
+function SnapshotProgress({
+  meta,
+  kind,
+}: {
+  meta: PersonalMeta;
+  kind: string;
+}) {
+  const snapshot = meta.snapshot_progress;
+  return (
+    <div className="pw-snapshot-progress">
+      {snapshot && (
+        <p>
+          截至 {snapshot.as_of_utc}，原始{" "}
+          {snapshot.corpus_records.toLocaleString()} 条记录中，
+          {snapshot.executed_records.toLocaleString()} 条已有执行证据，共{" "}
+          {snapshot.execution_versions.toLocaleString()} 个实现版本。已导入{" "}
+          {snapshot.imported_runs} 批
+          {snapshot.awaiting_import_runs
+            ? `，另 ${snapshot.awaiting_import_runs} 批等待兼容校验`
+            : ""}
+          。
+        </p>
+      )}
+      {meta.intake_summary && meta.intake_summary.reviewed_records > 0 && (
+        <p>
+          本次补证与采集资料 {meta.intake_summary.reviewed_records} 条，其中{" "}
+          {meta.intake_summary.source_reviews} 条补回既有记录。
+          {kind === "variant"
+            ? "因子原论文说明、规则组件和Qlib特征分别标注；"
+            : "隔离候选和研究模型仍可阅读；"}
+          资料入库不增加回测次数。
+        </p>
       )}
     </div>
   );
@@ -722,6 +758,7 @@ function Browse({
           ? "查看已有来源中的信号、入场、出场与参数，把值得研究的方法留下。"
           : "阅读原始公式、变量、计算口径与实现差异，沿关系理解它如何被使用。"}
       </Title>
+      <SnapshotProgress meta={meta} kind={kind} />
       <section className="pw-catalog">
         <form
           className="pw-search"
@@ -1204,431 +1241,437 @@ function Reading({
                 )}
             </div>
           )}
-          <section className="pw-summary">
-            <span className="pw-kicker">一句话理解 · 来源整理</span>
-            <p>{summary}</p>
-            <div className="pw-summary-tags">
-              <SmallState item={item} workspace={workspace} />
-              <span>
-                知识：
-                {rules.some((rule) => rule.status !== "UNKNOWN") || item.formula
-                  ? "已有可读定义"
-                  : "来源资料"}
-              </span>
-              <span>
-                研究：
-                {item.results?.total
-                  ? `${item.results.total} 条记录`
-                  : "尚未研究"}
-              </span>
-            </div>
-          </section>
-          <Section
-            id="logic"
-            title={factor ? "定义与计算对象" : "方法逻辑"}
-            label="来源观点与整理说明"
-          >
-            <p className="pw-prose">
-              {item.economic_logic ||
-                (factor
-                  ? "这是技术特征或经验构造，来源未给出独立经济解释。"
-                  : "来源未单独说明方法的经济逻辑；请结合下面的原始规则理解。")}
-            </p>
-            {knowledge?.source_facts?.length ? (
-              <details className="pw-source-facts">
-                <summary>查看来源支持的事实与定位</summary>
-                {knowledge.source_facts.map((fact, index) => (
-                  <div key={index}>
-                    <strong>{fact.label}</strong>
-                    <p>{fact.text}</p>
-                    {fact.source && <small>依据：{fact.source}</small>}
+          <KnowledgeBrief item={item} />
+          <details className="pw-reading-technical" id="reading-details">
+            <summary>完整规则、计算细节与来源沿革</summary>
+            <section className="pw-summary">
+              <span className="pw-kicker">一句话理解 · 来源整理</span>
+              <p>{summary}</p>
+              <div className="pw-summary-tags">
+                <SmallState item={item} workspace={workspace} />
+                <span>
+                  知识：
+                  {rules.some((rule) => rule.status !== "UNKNOWN") ||
+                  item.formula
+                    ? "已有可读定义"
+                    : "来源资料"}
+                </span>
+                <span>
+                  研究：
+                  {item.results?.total
+                    ? `${item.results.total} 条记录`
+                    : "尚未研究"}
+                </span>
+              </div>
+            </section>
+            <Section
+              id="logic"
+              title={factor ? "定义与计算对象" : "方法逻辑"}
+              label="来源观点与整理说明"
+            >
+              <p className="pw-prose">
+                {item.economic_logic ||
+                  (factor
+                    ? "这是技术特征或经验构造，来源未给出独立经济解释。"
+                    : "来源未单独说明方法的经济逻辑；请结合下面的原始规则理解。")}
+              </p>
+              {knowledge?.source_facts?.length ? (
+                <details className="pw-source-facts">
+                  <summary>查看来源支持的事实与定位</summary>
+                  {knowledge.source_facts.map((fact, index) => (
+                    <div key={index}>
+                      <strong>{fact.label}</strong>
+                      <p>{fact.text}</p>
+                      {fact.source && <small>依据：{fact.source}</small>}
+                    </div>
+                  ))}
+                </details>
+              ) : null}
+            </Section>
+            {factor && (
+              <Section id="formula" title="公式与变量" label="原始定义保留">
+                <Formula value={knowledge?.formula || item.formula} />
+                {knowledge?.explanation_basis && (
+                  <p className="pw-muted">
+                    释义依据：{knowledge.explanation_basis}
+                  </p>
+                )}
+                {knowledge?.variables?.length ? (
+                  <dl className="pw-definition-list">
+                    {knowledge.variables.map((variable) => (
+                      <div key={variable.name}>
+                        <dt>
+                          <code>{variable.name}</code>
+                        </dt>
+                        <dd>{variable.meaning}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : (
+                  <p className="pw-muted">
+                    来源未提供单独的变量释义。可在原始公式和来源资料中核对。
+                  </p>
+                )}
+                <dl className="pw-definition-list">
+                  <div>
+                    <dt>计算结构</dt>
+                    <dd>{axisLabel(item.axis)}</dd>
                   </div>
-                ))}
-              </details>
-            ) : null}
-          </Section>
-          {factor && (
-            <Section id="formula" title="公式与变量" label="原始定义保留">
-              <Formula value={knowledge?.formula || item.formula} />
-              {knowledge?.explanation_basis && (
+                  <div>
+                    <dt>所需数据</dt>
+                    <dd>{humanList(item.required_fields)}</dd>
+                  </div>
+                  <div>
+                    <dt>历史窗口</dt>
+                    <dd>
+                      {item.lookback
+                        ? `${item.lookback.value} ${item.lookback.unit}`
+                        : "来源未说明"}
+                    </dd>
+                  </div>
+                </dl>
+              </Section>
+            )}
+            <Section
+              id="rules"
+              title={factor ? "计算语义" : "具体规则"}
+              label="已知项与未知项分别展示"
+            >
+              {rules.length ? (
+                <div className="pw-rule-grid">
+                  {rules.map((rule, index) => (
+                    <div
+                      className={
+                        rule.status === "UNKNOWN"
+                          ? "pw-rule unknown"
+                          : "pw-rule"
+                      }
+                      key={`${rule.key}-${index}`}
+                    >
+                      <h3>
+                        {rule.label}
+                        <span>
+                          {rule.status === "UNKNOWN"
+                            ? "未说明"
+                            : rule.status === "SOURCE_REPORTED"
+                              ? "来源明确"
+                              : "从来源整理"}
+                        </span>
+                      </h3>
+                      <p>{rule.text || "来源未说明"}</p>
+                      {rule.evidence && (
+                        <details>
+                          <summary>定位依据</summary>
+                          <p>{rule.evidence}</p>
+                        </details>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="pw-rule-grid">
+                  {(factor
+                    ? ["缺失值处理", "预热期", "复权口径"]
+                    : [
+                        "信号",
+                        "入场",
+                        "出场",
+                        "持仓与仓位",
+                        "换仓频率",
+                        "现金处理",
+                        "多空方向",
+                        "数据与时间条件",
+                      ]
+                  ).map((label) => (
+                    <div className="pw-rule unknown" key={label}>
+                      <h3>{label}</h3>
+                      <p>来源未说明</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {!factor &&
+                (knowledge?.original_rule || item.strategy?.original_rule) && (
+                  <details className="pw-original-inline">
+                    <summary>完整原始规则（不受解析状态限制）</summary>
+                    <pre>
+                      {knowledge?.original_rule || item.strategy?.original_rule}
+                    </pre>
+                  </details>
+                )}
+            </Section>
+            <Section
+              id="parameters"
+              title="参数说明"
+              label="不推测缺失单位与作用"
+            >
+              {params.length ? (
+                <div className="pw-table-scroll">
+                  <table className="pw-table">
+                    <thead>
+                      <tr>
+                        <th>参数</th>
+                        <th>数值</th>
+                        <th>作用 / 单位</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {params.map((parameter, index) => (
+                        <tr key={index}>
+                          <th>
+                            <code>{parameter.name}</code>
+                          </th>
+                          <td>{readable(parameter.value)}</td>
+                          <td>
+                            {parameter.meaning}
+                            {"unit" in parameter && parameter.unit
+                              ? ` / ${parameter.unit}`
+                              : ""}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
                 <p className="pw-muted">
-                  释义依据：{knowledge.explanation_basis}
+                  没有可单独提取的参数。已有原文仍完整保留在规则和技术详情中。
                 </p>
               )}
-              {knowledge?.variables?.length ? (
+            </Section>
+            <Section
+              id="example"
+              title={factor ? "简单计算例子" : "一个说明用途的例子"}
+              label="不代表真实交易或回测"
+            >
+              {knowledge?.example ? (
+                <div className="pw-example">
+                  <p>{knowledge.example.text}</p>
+                  <small>依据：{knowledge.example.basis}</small>
+                </div>
+              ) : (
+                <p className="pw-muted">
+                  现有定义不足以提供确定的计算例子，暂不补造数值或执行条件。
+                </p>
+              )}
+            </Section>
+            <Section
+              id="sources"
+              title="来源与沿革"
+              label="作者、材料与版本分开核对"
+            >
+              <dl className="pw-definition-list">
+                <div>
+                  <dt>来源材料</dt>
+                  <dd>
+                    {item.source_name || item.source_type || "已收录来源"}
+                  </dd>
+                </div>
+                <div>
+                  <dt>提出者 / 来源作者</dt>
+                  <dd>
+                    {source?.author ||
+                      item.strategy?.source_author ||
+                      item.authors?.join("、") ||
+                      "来源未说明"}
+                  </dd>
+                </div>
+                {item.strategy && (
+                  <div>
+                    <dt>具体策略变体作者</dt>
+                    <dd>
+                      {item.strategy.variant_author ||
+                        "来源未说明；指标作者不等于派生策略作者"}
+                    </dd>
+                  </div>
+                )}
+                <div>
+                  <dt>来源定位</dt>
+                  <dd>
+                    {source?.locator ||
+                      item.source_locator ||
+                      "当前记录未提供定位"}
+                  </dd>
+                </div>
+                <div>
+                  <dt>原生编号</dt>
+                  <dd>
+                    {readable(source?.native_ids || item.source_native_ids)}
+                  </dd>
+                </div>
+                <div>
+                  <dt>版本</dt>
+                  <dd>
+                    {source?.revision || item.source_revision || "来源未记录"}
+                  </dd>
+                </div>
+              </dl>
+              <dl className="pw-definition-list">
+                <div>
+                  <dt>材料发表时间</dt>
+                  <dd>
+                    {source?.publication_date
+                      ? readable(source.publication_date)
+                      : "未确认；不以采集时间代替"}
+                  </dd>
+                </div>
+                {source?.reference_year && (
+                  <div>
+                    <dt>来源记录的文献年份</dt>
+                    <dd>
+                      {readable(source.reference_year)}（未核为正式发表日期）
+                    </dd>
+                  </div>
+                )}
+                {source?.reported_date && (
+                  <div>
+                    <dt>来源报告的时间</dt>
+                    <dd>
+                      {source.reported_date}
+                      {source.date_status === "UNVERIFIED_REPORTED_DATE"
+                        ? "（未独立确认准确含义）"
+                        : ""}
+                    </dd>
+                  </div>
+                )}
+                <div>
+                  <dt>{source?.collected_at_label || "资料采集时间"}</dt>
+                  <dd title={source?.collected_at}>
+                    {humanDate(source?.collected_at)}
+                  </dd>
+                </div>
+                {source?.ingestion_observed_at && (
+                  <div>
+                    <dt>迁移 / 入库观察时间</dt>
+                    <dd title={source.ingestion_observed_at}>
+                      {humanDate(source.ingestion_observed_at)}
+                      {source.collection_time_notice && (
+                        <small className="pw-block">
+                          {source.collection_time_notice}
+                        </small>
+                      )}
+                    </dd>
+                  </div>
+                )}
+                {source?.variant_created_at && (
+                  <div>
+                    <dt>该变体创建时间</dt>
+                    <dd>{humanDate(source.variant_created_at)}</dd>
+                  </div>
+                )}
+              </dl>
+              <SourceCheck id={item.entity_id} />
+              <div className="pw-source-links">
+                <ExternalLink url={source?.url || item.source_url}>
+                  打开来源资料
+                </ExternalLink>
+                {family && (
+                  <Link to={`/families#${encodeURIComponent(family.value)}`}>
+                    所属方法族：{family.label} →
+                  </Link>
+                )}
+              </div>
+              {item.papers?.length > 0 && (
+                <div className="pw-papers">
+                  {item.papers.map((paper) => (
+                    <p key={paper.paper_id}>
+                      <ExternalLink url={paper.url}>
+                        {paper.title || paper.paper_id}
+                      </ExternalLink>{" "}
+                      · {paper.year || "发表年未确认"} ·{" "}
+                      {paper.authors?.join("、") || "作者未确认"}
+                    </p>
+                  ))}
+                </div>
+              )}
+              <details>
+                <summary>来源许可和个人阅读边界</summary>
+                <p>
+                  来源许可：{item.license || "未记录"}
+                  。个人阅读不改变公开分发或商业使用授权结论。
+                </p>
                 <dl className="pw-definition-list">
-                  {knowledge.variables.map((variable) => (
-                    <div key={variable.name}>
-                      <dt>
-                        <code>{variable.name}</code>
-                      </dt>
-                      <dd>{variable.meaning}</dd>
+                  {Object.entries(item.rights || {}).map(([key, value]) => (
+                    <div key={key}>
+                      <dt>{key}</dt>
+                      <dd>{value}</dd>
                     </div>
                   ))}
                 </dl>
-              ) : (
-                <p className="pw-muted">
-                  来源未提供单独的变量释义。可在原始公式和来源资料中核对。
-                </p>
-              )}
-              <dl className="pw-definition-list">
-                <div>
-                  <dt>计算结构</dt>
-                  <dd>{axisLabel(item.axis)}</dd>
-                </div>
-                <div>
-                  <dt>所需数据</dt>
-                  <dd>{humanList(item.required_fields)}</dd>
-                </div>
-                <div>
-                  <dt>历史窗口</dt>
-                  <dd>
-                    {item.lookback
-                      ? `${item.lookback.value} ${item.lookback.unit}`
-                      : "来源未说明"}
-                  </dd>
-                </div>
-              </dl>
+              </details>
             </Section>
-          )}
-          <Section
-            id="rules"
-            title={factor ? "计算语义" : "具体规则"}
-            label="已知项与未知项分别展示"
-          >
-            {rules.length ? (
-              <div className="pw-rule-grid">
-                {rules.map((rule, index) => (
-                  <div
-                    className={
-                      rule.status === "UNKNOWN" ? "pw-rule unknown" : "pw-rule"
-                    }
-                    key={`${rule.key}-${index}`}
-                  >
-                    <h3>
-                      {rule.label}
-                      <span>
-                        {rule.status === "UNKNOWN"
-                          ? "未说明"
-                          : rule.status === "SOURCE_REPORTED"
-                            ? "来源明确"
-                            : "从来源整理"}
-                      </span>
-                    </h3>
-                    <p>{rule.text || "来源未说明"}</p>
-                    {rule.evidence && (
-                      <details>
-                        <summary>定位依据</summary>
-                        <p>{rule.evidence}</p>
-                      </details>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="pw-rule-grid">
-                {(factor
-                  ? ["缺失值处理", "预热期", "复权口径"]
-                  : [
-                      "信号",
-                      "入场",
-                      "出场",
-                      "持仓与仓位",
-                      "换仓频率",
-                      "现金处理",
-                      "多空方向",
-                      "数据与时间条件",
-                    ]
-                ).map((label) => (
-                  <div className="pw-rule unknown" key={label}>
-                    <h3>{label}</h3>
-                    <p>来源未说明</p>
-                  </div>
-                ))}
-              </div>
-            )}
-            {!factor &&
-              (knowledge?.original_rule || item.strategy?.original_rule) && (
-                <details className="pw-original-inline">
-                  <summary>完整原始规则（不受解析状态限制）</summary>
-                  <pre>
-                    {knowledge?.original_rule || item.strategy?.original_rule}
-                  </pre>
-                </details>
-              )}
-          </Section>
-          <Section
-            id="parameters"
-            title="参数说明"
-            label="不推测缺失单位与作用"
-          >
-            {params.length ? (
-              <div className="pw-table-scroll">
-                <table className="pw-table">
-                  <thead>
-                    <tr>
-                      <th>参数</th>
-                      <th>数值</th>
-                      <th>作用 / 单位</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {params.map((parameter, index) => (
-                      <tr key={index}>
-                        <th>
-                          <code>{parameter.name}</code>
-                        </th>
-                        <td>{readable(parameter.value)}</td>
-                        <td>
-                          {parameter.meaning}
-                          {"unit" in parameter && parameter.unit
-                            ? ` / ${parameter.unit}`
-                            : ""}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p className="pw-muted">
-                没有可单独提取的参数。已有原文仍完整保留在规则和技术详情中。
-              </p>
-            )}
-          </Section>
-          <Section
-            id="example"
-            title={factor ? "简单计算例子" : "一个说明用途的例子"}
-            label="不代表真实交易或回测"
-          >
-            {knowledge?.example ? (
-              <div className="pw-example">
-                <p>{knowledge.example.text}</p>
-                <small>依据：{knowledge.example.basis}</small>
-              </div>
-            ) : (
-              <p className="pw-muted">
-                现有定义不足以提供确定的计算例子，暂不补造数值或执行条件。
-              </p>
-            )}
-          </Section>
-          <Section
-            id="sources"
-            title="来源与沿革"
-            label="作者、材料与版本分开核对"
-          >
-            <dl className="pw-definition-list">
-              <div>
-                <dt>来源材料</dt>
-                <dd>{item.source_name || item.source_type || "已收录来源"}</dd>
-              </div>
-              <div>
-                <dt>提出者 / 来源作者</dt>
-                <dd>
-                  {source?.author ||
-                    item.strategy?.source_author ||
-                    item.authors?.join("、") ||
-                    "来源未说明"}
-                </dd>
-              </div>
-              {item.strategy && (
-                <div>
-                  <dt>具体策略变体作者</dt>
-                  <dd>
-                    {item.strategy.variant_author ||
-                      "来源未说明；指标作者不等于派生策略作者"}
-                  </dd>
-                </div>
-              )}
-              <div>
-                <dt>来源定位</dt>
-                <dd>
-                  {source?.locator ||
-                    item.source_locator ||
-                    "当前记录未提供定位"}
-                </dd>
-              </div>
-              <div>
-                <dt>原生编号</dt>
-                <dd>
-                  {readable(source?.native_ids || item.source_native_ids)}
-                </dd>
-              </div>
-              <div>
-                <dt>版本</dt>
-                <dd>
-                  {source?.revision || item.source_revision || "来源未记录"}
-                </dd>
-              </div>
-            </dl>
-            <dl className="pw-definition-list">
-              <div>
-                <dt>材料发表时间</dt>
-                <dd>
-                  {source?.publication_date
-                    ? readable(source.publication_date)
-                    : "未确认；不以采集时间代替"}
-                </dd>
-              </div>
-              {source?.reference_year && (
-                <div>
-                  <dt>来源记录的文献年份</dt>
-                  <dd>
-                    {readable(source.reference_year)}（未核为正式发表日期）
-                  </dd>
-                </div>
-              )}
-              {source?.reported_date && (
-                <div>
-                  <dt>来源报告的时间</dt>
-                  <dd>
-                    {source.reported_date}
-                    {source.date_status === "UNVERIFIED_REPORTED_DATE"
-                      ? "（未独立确认准确含义）"
-                      : ""}
-                  </dd>
-                </div>
-              )}
-              <div>
-                <dt>{source?.collected_at_label || "资料采集时间"}</dt>
-                <dd title={source?.collected_at}>
-                  {humanDate(source?.collected_at)}
-                </dd>
-              </div>
-              {source?.ingestion_observed_at && (
-                <div>
-                  <dt>迁移 / 入库观察时间</dt>
-                  <dd title={source.ingestion_observed_at}>
-                    {humanDate(source.ingestion_observed_at)}
-                    {source.collection_time_notice && (
-                      <small className="pw-block">
-                        {source.collection_time_notice}
-                      </small>
-                    )}
-                  </dd>
-                </div>
-              )}
-              {source?.variant_created_at && (
-                <div>
-                  <dt>该变体创建时间</dt>
-                  <dd>{humanDate(source.variant_created_at)}</dd>
-                </div>
-              )}
-            </dl>
-            <SourceCheck id={item.entity_id} />
-            <div className="pw-source-links">
-              <ExternalLink url={source?.url || item.source_url}>
-                打开来源资料
-              </ExternalLink>
-              {family && (
-                <Link to={`/families#${encodeURIComponent(family.value)}`}>
-                  所属方法族：{family.label} →
-                </Link>
-              )}
-            </div>
-            {item.papers?.length > 0 && (
-              <div className="pw-papers">
-                {item.papers.map((paper) => (
-                  <p key={paper.paper_id}>
-                    <ExternalLink url={paper.url}>
-                      {paper.title || paper.paper_id}
-                    </ExternalLink>{" "}
-                    · {paper.year || "发表年未确认"} ·{" "}
-                    {paper.authors?.join("、") || "作者未确认"}
-                  </p>
-                ))}
-              </div>
-            )}
-            <details>
-              <summary>来源许可和个人阅读边界</summary>
-              <p>
-                来源许可：{item.license || "未记录"}
-                。个人阅读不改变公开分发或商业使用授权结论。
-              </p>
-              <dl className="pw-definition-list">
-                {Object.entries(item.rights || {}).map(([key, value]) => (
-                  <div key={key}>
-                    <dt>{key}</dt>
-                    <dd>{value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </details>
-          </Section>
-          <Section
-            id="related"
-            title="沿关系继续阅读"
-            label="点击节点或名称查看详情"
-          >
-            <RelationExplorer item={item} />
-          </Section>
-          {factor && item.implementations?.length > 0 && (
             <Section
-              id="implementations"
-              title="实现与差异"
-              label="同名不能证明计算等价"
+              id="related"
+              title="沿关系继续阅读"
+              label="点击节点或名称查看详情"
             >
-              {item.implementations.map((impl) => (
-                <div className="pw-implementation" key={impl.implementation_id}>
-                  <strong>
-                    {impl.language} ·{" "}
-                    {impl.source_locator || impl.implementation_id}
-                  </strong>
-                  <p>
-                    版本：{impl.revision || "未说明"} · 是否执行：
-                    {impl.executed ? "已有执行记录" : "未执行"} · 许可：
-                    {impl.license || "未记录"}
-                  </p>
-                  {impl.code_url && (
-                    <ExternalLink url={impl.code_url}>查看该实现</ExternalLink>
-                  )}
-                  <small>
-                    现有记录未提供跨实现等价验证时，不能视为相同口径。
-                  </small>
-                </div>
-              ))}
+              <RelationExplorer item={item} />
             </Section>
-          )}
-          <Section
-            id="unknowns"
-            title="局限与未知"
-            label="研究前值得核对的问题"
-          >
-            {unknowns.length ? (
-              <ul className="pw-unknowns">
-                {unknowns.map((unknown, index) => (
-                  <li key={index}>{unknown}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>当前来源没有单独列出限制。这不表示方法不存在限制。</p>
-            )}
-            {item.strategy?.research_hypotheses?.length ? (
-              <div className="pw-hypotheses">
-                <h3>待验证的研究假设</h3>
-                {item.strategy.research_hypotheses.map((hypothesis, index) => (
-                  <p key={index}>{hypothesis}</p>
-                ))}
-              </div>
-            ) : null}
-          </Section>
-          <Section id="research" title="已有研究" label="只读研究记录">
-            {item.kind === "strategy" &&
-              item.knowledge?.source.native_ids?.[0] && (
-                <p>
-                  <Link
-                    to={`/results?q=${encodeURIComponent(item.knowledge.source.native_ids[0])}`}
+            {factor && item.implementations?.length > 0 && (
+              <Section
+                id="implementations"
+                title="实现与差异"
+                label="同名不能证明计算等价"
+              >
+                {item.implementations.map((impl) => (
+                  <div
+                    className="pw-implementation"
+                    key={impl.implementation_id}
                   >
-                    按原生 ID 查看本次全库筛查记录
-                  </Link>
-                  （仅作来源关联，定义版本需单独核对）
-                </p>
-              )}
-            {item.results ? (
-              <PersonalResearch results={item.results} />
-            ) : (
-              <p>尚未研究</p>
+                    <strong>
+                      {impl.language} ·{" "}
+                      {impl.source_locator || impl.implementation_id}
+                    </strong>
+                    <p>
+                      版本：{impl.revision || "未说明"} · 是否执行：
+                      {impl.executed ? "已有执行记录" : "未执行"} · 许可：
+                      {impl.license || "未记录"}
+                    </p>
+                    {impl.code_url && (
+                      <ExternalLink url={impl.code_url}>
+                        查看该实现
+                      </ExternalLink>
+                    )}
+                    <small>
+                      现有记录未提供跨实现等价验证时，不能视为相同口径。
+                    </small>
+                  </div>
+                ))}
+              </Section>
             )}
+            <Section
+              id="unknowns"
+              title="局限与未知"
+              label="研究前值得核对的问题"
+            >
+              {unknowns.length ? (
+                <ul className="pw-unknowns">
+                  {unknowns.map((unknown, index) => (
+                    <li key={index}>{unknown}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>当前来源没有单独列出限制。这不表示方法不存在限制。</p>
+              )}
+              {item.strategy?.research_hypotheses?.length ? (
+                <div className="pw-hypotheses">
+                  <h3>待验证的研究假设</h3>
+                  {item.strategy.research_hypotheses.map(
+                    (hypothesis, index) => (
+                      <p key={index}>{hypothesis}</p>
+                    ),
+                  )}
+                </div>
+              ) : null}
+            </Section>
+          </details>
+          <Section id="research" title="已有研究" label="只读研究记录">
+            <ResearchInDetails item={item} />
+            {item.results?.total ? (
+              <PersonalResearch results={item.results} />
+            ) : item.kind !== "strategy" ? (
+              <p>尚无与该因子定义版本绑定的本地诊断或回测结果。</p>
+            ) : null}
           </Section>
           <Section
             id="personal"
@@ -1720,14 +1763,53 @@ function Reading({
           <div>
             <span className="pw-kicker">本文导航</span>
             <nav aria-label="详情章节">
-              <a href="#logic">{factor ? "定义与对象" : "方法逻辑"}</a>
-              {factor && <a href="#formula">公式与变量</a>}
-              <a href="#rules">{factor ? "计算语义" : "具体规则"}</a>
-              <a href="#parameters">参数说明</a>
-              <a href="#sources">来源与沿革</a>
-              <a href="#related">相关方法</a>
-              <a href="#unknowns">局限与未知</a>
-              <a href="#personal">我的判断</a>
+              <Link to={`${location.pathname}${location.search}#overview`}>
+                {factor ? "因子含义" : "策略用途"}
+              </Link>
+              <Link to={`${location.pathname}${location.search}#trading`}>
+                {factor ? "计算与场景" : "标的与进出场"}
+              </Link>
+              <Link to={`${location.pathname}${location.search}#rationale`}>
+                论文与盈利依据
+              </Link>
+              <Link to={`${location.pathname}${location.search}#research`}>
+                已有研究结果
+              </Link>
+              {factor && (
+                <Link
+                  to={`${location.pathname}${location.search}#reading-details`}
+                >
+                  公式与变量
+                </Link>
+              )}
+              <Link
+                to={`${location.pathname}${location.search}#reading-details`}
+              >
+                {factor ? "计算语义" : "具体规则"}
+              </Link>
+              <Link
+                to={`${location.pathname}${location.search}#reading-details`}
+              >
+                参数说明
+              </Link>
+              <Link
+                to={`${location.pathname}${location.search}#reading-details`}
+              >
+                来源与沿革
+              </Link>
+              <Link
+                to={`${location.pathname}${location.search}#reading-details`}
+              >
+                相关方法
+              </Link>
+              <Link
+                to={`${location.pathname}${location.search}#reading-details`}
+              >
+                局限与未知
+              </Link>
+              <Link to={`${location.pathname}${location.search}#personal`}>
+                我的判断
+              </Link>
             </nav>
             <div className="pw-aside-facts">
               <span>所需数据</span>
@@ -2508,6 +2590,7 @@ function ComparisonTable({ query }: { query: string }) {
         </div>
       ),
     ],
+    ["已保存的研究结果", (item) => <ResearchInDetails item={item} compact />],
     ["所需数据", (item) => humanList(item.required_fields)],
     ["时序 / 截面", (item) => axisLabel(item.axis)],
     [

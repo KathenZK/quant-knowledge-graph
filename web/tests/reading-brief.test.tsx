@@ -1,0 +1,156 @@
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
+import KnowledgeBrief from "../src/KnowledgeBrief";
+import ResearchInDetails, {
+  LegacyResearchEntry,
+  nativeResearchId,
+} from "../src/ResearchInDetails";
+import type { PersonalDetail } from "../src/personal-data";
+
+const item = {
+  kind: "strategy",
+  entity_id: "synthetic:catalog",
+  name: "合成策略",
+  source_native_ids: ["M9999"],
+  knowledge: {
+    original_rule: "合成规则",
+    source: { native_ids: ["M9999"] },
+    reader_brief: {
+      version: "reader-brief/v1",
+      purpose: "比较价格与参考水平",
+      purpose_basis: "根据规则整理",
+      trading: [
+        { key: "entry", label: "入场", text: "条件未说明", status: "UNKNOWN" },
+      ],
+      economic_rationale: {
+        text: "未收录盈利机制证据",
+        status: "UNKNOWN",
+        notice: "操作规则不证明盈利",
+      },
+      papers: [
+        {
+          paper_id: "platform",
+          title: "合成平台论文",
+          authors: [],
+          relationship: "平台或集合引用",
+          status: "COLLECTION_REFERENCE",
+          claim: "不证明具体因子收益",
+        },
+      ],
+      empirical_notice: "定义和实证分别判断",
+    },
+  },
+} as unknown as PersonalDetail;
+afterEach(() => vi.unstubAllGlobals());
+describe("Readable detail and research integration", () => {
+  it("shows three understandable sections without fabricating missing evidence", () => {
+    render(<KnowledgeBrief item={item} />);
+    expect(
+      screen.getByRole("heading", { name: "1. 这项策略做什么" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "2. 交易什么，怎样进出场" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "3. 论文与盈利依据" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("平台或集合引用")).toBeInTheDocument();
+    expect(screen.getByText("待补资料")).toBeInTheDocument();
+  });
+  it("never associates a factor with strategy results by matching source name", () => {
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+    render(
+      <MemoryRouter>
+        <ResearchInDetails item={{ ...item, kind: "variant" }} />
+      </MemoryRouter>,
+    );
+    expect(nativeResearchId({ ...item, kind: "variant" })).toBeUndefined();
+    expect(fetch).not.toHaveBeenCalled();
+    expect(screen.getByText(/因子定义版本单独关联/)).toBeInTheDocument();
+  });
+  it("keeps identical variant IDs scoped to their origin runs in comparison", async () => {
+    const fetch = vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      return {
+        ok: true,
+        json: async () =>
+          url.includes("/implementations/")
+            ? {
+                name: "合成",
+                metrics: {
+                  periods: {
+                    full: {
+                      start: "2024-01-01",
+                      end: "2024-12-31",
+                      cagr: url.includes("run-b") ? 0.2 : 0.1,
+                    },
+                  },
+                },
+                fidelity_class: "HYPOTHESIS",
+              }
+            : {
+                id: "M9999",
+                audit: { 规则: "合成规则" },
+                related_results: [
+                  {
+                    origin_run_id: "run-a",
+                    variant_id: "same-id",
+                    fidelity_class: "STANDARDIZED",
+                  },
+                  {
+                    origin_run_id: "run-b",
+                    variant_id: "same-id",
+                    fidelity_class: "HYPOTHESIS",
+                  },
+                ],
+              },
+      } as Response;
+    });
+    vi.stubGlobal("fetch", fetch);
+    render(
+      <MemoryRouter>
+        <ResearchInDetails item={item} compact />
+      </MemoryRouter>,
+    );
+    const select = await screen.findByLabelText("合成策略的历史实现");
+    fireEvent.change(select, {
+      target: { value: JSON.stringify(["run-b", "same-id"]) },
+    });
+    expect(await screen.findByText("20.00%")).toBeInTheDocument();
+    expect(
+      fetch.mock.calls.some(([url]) => String(url).includes("run_id=run-b")),
+    ).toBe(true);
+    fireEvent.change(select, {
+      target: { value: JSON.stringify(["run-a", "same-id"]) },
+    });
+    expect(await screen.findByText("10.00%")).toBeInTheDocument();
+  });
+  it("redirects old native record links into the existing strategy detail", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          ({ ok: true, json: async () => ({ items: [item] }) }) as Response,
+      ),
+    );
+    function Location() {
+      const l = useLocation();
+      return <p>{l.pathname + l.search + l.hash}</p>;
+    }
+    render(
+      <MemoryRouter initialEntries={["/results?record=M9999"]}>
+        <Routes>
+          <Route path="/results" element={<LegacyResearchEntry />} />
+          <Route path="*" element={<Location />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+    await waitFor(() =>
+      expect(
+        screen.getByText("/entity/strategy/synthetic%3Acatalog#research"),
+      ).toBeInTheDocument(),
+    );
+  });
+});
