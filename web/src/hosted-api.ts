@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { load, snapshotId } from "./hosted-data";
 import { corpusApi } from "./hosted-corpus-api";
-import { remote } from "./hosted-transport";
+import { remote, hostedNoteKey } from "./hosted-transport";
 type Item = Record<string, any>;
 const norm = (v: unknown) =>
   String(v ?? "")
@@ -132,27 +132,25 @@ async function search(u: URL) {
   const page = Math.max(1, Number(p.get("page")) || 1),
     size = Math.min(50, Math.max(1, Number(p.get("page_size")) || 20));
   return {
-    items: rows
-      .slice((page - 1) * size, page * size)
-      .map((i) => ({
-        ...i,
-        snapshot_batch: snapshot,
-        matches: q
-          ? [
-              {
-                field: "rule",
-                label: "已有名称 / 原文",
-                text:
-                  Object.values(i.search_fields || {}).find((x) =>
-                    norm(x).includes(q),
-                  ) || i.name,
-                term: q,
-                start: 0,
-                end: q.length,
-              },
-            ]
-          : [],
-      })),
+    items: rows.slice((page - 1) * size, page * size).map((i) => ({
+      ...i,
+      snapshot_batch: snapshot,
+      matches: q
+        ? [
+            {
+              field: "rule",
+              label: "已有名称 / 原文",
+              text:
+                Object.values(i.search_fields || {}).find((x) =>
+                  norm(x).includes(q),
+                ) || i.name,
+              term: q,
+              start: 0,
+              end: q.length,
+            },
+          ]
+        : [],
+    })),
     total: rows.length,
     record_total: before,
     total_before_collapse: before,
@@ -361,7 +359,8 @@ export async function hostedFetch(
     const items = await Promise.all(
       all.items
         .filter(
-          (r: Item) => !query.ids?.length || query.ids.includes(r.entity_id),
+          (r: Item) =>
+            !query.ids?.length || query.ids.includes(hostedNoteKey(r)),
         )
         .map(async (r: Item) => {
           let definition;

@@ -107,3 +107,14 @@ export async function hostedSave(
   pending.delete(key);
   return saved;
 }
+
+export function hostedNoteKey(record: Partial<PersonalRecord>) {
+  return JSON.stringify([
+    record.kind,
+    record.entity_id,
+    record.definition_revision,
+    record.origin_run_id || "",
+    record.variant_id || "",
+    record.manifest_sha256 || "",
+  ]);
+}

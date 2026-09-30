@@ -1,5 +1,5 @@
 import HostedNotebookImport, { HostedSyncStatus } from "./HostedNotebook";
-import { isHosted, hostedSave } from "./hosted-transport";
+import { isHosted, hostedSave, hostedNoteKey } from "./hosted-transport";
 import { applicationFetch } from "./api";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import {
@@ -81,6 +81,8 @@ type Workspace = {
   notify: (message: string) => void;
   refresh: () => void;
 };
+const selectionKey = (r: PersonalRecord) =>
+  isHosted ? hostedNoteKey(r) : r.entity_id;
 const compareUrl = (refs: CompareRef[]) =>
   "/compare?" +
   new URLSearchParams(
@@ -2936,7 +2938,7 @@ function Notebook({
           "X-QuantGraph-Request": "1",
         },
         body: JSON.stringify({
-          ids: selected.length ? selected : shown.map((item) => item.entity_id),
+          ids: selected.length ? selected : shown.map(selectionKey),
           format,
         }),
       });
@@ -3114,12 +3116,10 @@ function Notebook({
             type="checkbox"
             checked={
               shown.length > 0 &&
-              shown.every((item) => selected.includes(item.entity_id))
+              shown.every((item) => selected.includes(selectionKey(item)))
             }
             onChange={(event) =>
-              setSelected(
-                event.target.checked ? shown.map((item) => item.entity_id) : [],
-              )
+              setSelected(event.target.checked ? shown.map(selectionKey) : [])
             }
           />
           选择当前结果
@@ -3160,20 +3160,17 @@ function Notebook({
       ) : (
         <div className="pw-notebook-list">
           {shown.map((record) => (
-            <article
-              className="pw-saved"
-              key={`${record.kind}/${record.entity_id}`}
-            >
+            <article className="pw-saved" key={selectionKey(record)}>
               <div className="pw-saved-title">
                 <input
                   type="checkbox"
                   aria-label={`选择 ${record.name}`}
-                  checked={selected.includes(record.entity_id)}
+                  checked={selected.includes(selectionKey(record))}
                   onChange={(event) =>
                     setSelected(
                       event.target.checked
-                        ? [...selected, record.entity_id]
-                        : selected.filter((id) => id !== record.entity_id),
+                        ? [...selected, selectionKey(record)]
+                        : selected.filter((id) => id !== selectionKey(record)),
                     )
                   }
                 />

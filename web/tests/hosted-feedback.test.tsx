@@ -10,7 +10,7 @@ import {
 import { MemoryRouter } from "react-router-dom";
 import type { PersonalItem, PersonalRecord } from "../src/personal-data";
 vi.stubEnv("VITE_QUANTGRAPH_DEPLOYMENT", "sites");
-const { hostedSave } = await import("../src/hosted-transport");
+const { hostedSave, hostedNoteKey } = await import("../src/hosted-transport");
 const { NoteEditor } = await import("../src/PersonalApp");
 const { default: HostedNotebookImport } = await import("../src/HostedNotebook");
 const item = {
@@ -122,5 +122,19 @@ it("offers explicit import for the actual old Site key without overwriting cloud
   expect(fetch).toHaveBeenCalledTimes(1);
   expect(localStorage.getItem("quantgraph-private-site-notebook-v1")).toContain(
     "原笔记",
+  );
+});
+
+it("keeps notebook selection distinct across origins and definition versions", () => {
+  expect(hostedNoteKey(note)).not.toBe(
+    hostedNoteKey({
+      ...note,
+      origin_run_id: "run1",
+      variant_id: "v",
+      manifest_sha256: "a".repeat(64),
+    }),
+  );
+  expect(hostedNoteKey(note)).not.toBe(
+    hostedNoteKey({ ...note, definition_revision: "v2" }),
   );
 });
