@@ -67,12 +67,15 @@ function RecordResearch({
     `${base}/records/${encodeURIComponent(id)}${item.snapshot_batch ? "?snapshot_batch=" + encodeURIComponent(item.snapshot_batch) : ""}`,
   );
   const [params, setParams] = useSearchParams();
+  const queryKey = (name: string) =>
+    compact ? `${name}.${item.entity_id}` : name;
   const initial =
-    params.get("research_run") && params.get("research_variant")
+    params.get(queryKey("research_run")) &&
+    params.get(queryKey("research_variant"))
       ? JSON.stringify([
-          params.get("research_run"),
-          params.get("research_variant"),
-          params.get("research_manifest"),
+          params.get(queryKey("research_run")),
+          params.get(queryKey("research_variant")),
+          params.get(queryKey("research_manifest")),
         ])
       : "";
   const selection = initial;
@@ -92,7 +95,7 @@ function RecordResearch({
         JSON.stringify([r.origin_run_id, r.variant_id, r.manifest_sha256]) ===
         selection,
     ) ||
-    (selection && !params.get("research_manifest")
+    (selection && !params.get(queryKey("research_manifest"))
       ? results.find(
           (r) =>
             JSON.stringify([r.origin_run_id, r.variant_id, null]) === selection,
@@ -121,7 +124,17 @@ function RecordResearch({
         )}
       <ResearchInterpretation
         rows={record.interpretations || []}
-        selected={selected}
+        selected={
+          selected ||
+          (selection
+            ? {
+                origin_run_id: params.get(queryKey("research_run")) || "",
+                variant_id: params.get(queryKey("research_variant")) || "",
+                manifest_sha256:
+                  params.get(queryKey("research_manifest")) || "",
+              }
+            : undefined)
+        }
       />
       <p>
         {results.length
@@ -160,13 +173,13 @@ function RecordResearch({
               );
               const next = new URLSearchParams(params);
               if (result) {
-                next.set("research_run", result.origin_run_id);
-                next.set("research_variant", result.variant_id);
-                next.set("research_manifest", result.manifest_sha256);
+                next.set(queryKey("research_run"), result.origin_run_id);
+                next.set(queryKey("research_variant"), result.variant_id);
+                next.set(queryKey("research_manifest"), result.manifest_sha256);
               } else {
-                next.delete("research_run");
-                next.delete("research_variant");
-                next.delete("research_manifest");
+                next.delete(queryKey("research_run"));
+                next.delete(queryKey("research_variant"));
+                next.delete(queryKey("research_manifest"));
               }
               setParams(next, { replace: true });
             }}

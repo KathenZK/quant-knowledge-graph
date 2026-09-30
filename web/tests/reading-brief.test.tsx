@@ -1,6 +1,12 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
+import {
+  MemoryRouter,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import KnowledgeBrief from "../src/KnowledgeBrief";
 import ResearchInDetails, {
   LegacyResearchEntry,
@@ -226,4 +232,83 @@ describe("Readable detail and research integration", () => {
       ).toBeInTheDocument(),
     );
   });
+});
+
+it("keeps two comparison selections independent and restores them with history", async () => {
+  const second = {
+    ...item,
+    entity_id: "synthetic:second",
+    name: "第二策略",
+    source_native_ids: ["M9998"],
+    knowledge: { ...item.knowledge, source: { native_ids: ["M9998"] } },
+  } as PersonalDetail;
+  const values = {
+    first: JSON.stringify(["run-a", "one", "a".repeat(64)]),
+    second: JSON.stringify(["run-b", "two", "b".repeat(64)]),
+  };
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes("data-quality") || url.includes("source-portfolios"))
+        return Response.json([]);
+      if (url.includes("/implementations/")) {
+        const first = url.includes("run-a");
+        return Response.json({
+          name: first ? "第一结果" : "第二结果",
+          run_id: first ? "run-a" : "run-b",
+          variant_id: first ? "one" : "two",
+          spec: {},
+          lineage: { manifest_sha256: (first ? "a" : "b").repeat(64) },
+          metrics: { periods: { full: { cagr: first ? 0.11 : 0.22 } } },
+        });
+      }
+      const first = url.includes("M9999");
+      return Response.json({
+        audit: { 规则: "合成规则" },
+        related_results: [
+          {
+            origin_run_id: first ? "run-a" : "run-b",
+            variant_id: first ? "one" : "two",
+            manifest_sha256: (first ? "a" : "b").repeat(64),
+            fidelity_class: "HYPOTHESIS",
+          },
+        ],
+      });
+    }),
+  );
+  function HistoryControls() {
+    const navigate = useNavigate();
+    return (
+      <>
+        <button onClick={() => navigate("?unrelated=preserved")}>
+          另一个历史状态
+        </button>
+        <button onClick={() => navigate(-1)}>返回选择</button>
+      </>
+    );
+  }
+  render(
+    <MemoryRouter>
+      <HistoryControls />
+      <ResearchInDetails item={item} compact />
+      <ResearchInDetails item={second} compact />
+    </MemoryRouter>,
+  );
+  const first = await screen.findByLabelText("合成策略的历史实现"),
+    other = await screen.findByLabelText("第二策略的历史实现");
+  fireEvent.change(first, { target: { value: values.first } });
+  expect(await screen.findByText("11.00%")).toBeInTheDocument();
+  fireEvent.change(other, { target: { value: values.second } });
+  expect(await screen.findByText("22.00%")).toBeInTheDocument();
+  expect(screen.getByText("11.00%")).toBeInTheDocument();
+  expect(first).toHaveValue(values.first);
+  expect(other).toHaveValue(values.second);
+  fireEvent.click(screen.getByText("另一个历史状态"));
+  await waitFor(() =>
+    expect(screen.queryByText("11.00%")).not.toBeInTheDocument(),
+  );
+  fireEvent.click(screen.getByText("返回选择"));
+  expect(await screen.findByText("11.00%")).toBeInTheDocument();
+  expect(await screen.findByText("22.00%")).toBeInTheDocument();
 });
