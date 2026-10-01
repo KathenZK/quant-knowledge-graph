@@ -757,12 +757,16 @@ def verify_derived(blobs):
             _fail('Derived projection differs from retained origin bytes: ' + name)
 
 
-def export_delta(origin_dir, protocol_path, audit_dir, destination, annotations_path=None, *, format_version=2, capital_overlay_path=None, ledger_supplement_path=None):
-    """Write only a NEW private directory after origin and projection validation."""
+def export_delta(origin_dir, protocol_path, audit_dir, destination, annotations_path=None, *, format_version=2, capital_overlay_path=None, ledger_supplement_path=None, object_store=None):
+    """Write a NEW export, reusing immutable bytes without changing manifests.
+
+    Pass one object_store across batches for cross-batch reuse. By default,
+    sibling run exports share a private store in their parent directory.
+    """
     origin_dir, destination, audit_dir = Path(origin_dir), Path(destination), Path(audit_dir)
     if origin_dir.is_symlink() or not origin_dir.is_dir() or audit_dir.is_symlink() or not audit_dir.is_dir():
         _fail('Origin and audit directories must be explicit non-symlink directories')
-    if destination.exists():
+    if destination.exists() or destination.is_symlink():
         _fail('Choose a new private export directory; no overwrite')
     manifest_blob=_read_file(origin_dir/'run_manifest.json');source_manifest=_loads(manifest_blob)
     blobs = {'origin__run_manifest.json':manifest_blob}
@@ -803,17 +807,22 @@ def export_delta(origin_dir, protocol_path, audit_dir, destination, annotations_
         blobs[name] = _read_file(audit_dir/name)
     blobs.update(derive(blobs))
     _prepare(blobs, {'run_id':_loads(blobs['run_manifest.json'])['run_id']})
+    from quantgraph.graph.immutable_artifacts import materialize_immutable, publish_export_directory
+    object_store = Path(object_store) if object_store is not None else destination.parent / '.corpus-export-objects'
+    object_store = Path(os.path.abspath(object_store))
+    destination_absolute = Path(os.path.abspath(destination))
+    if object_store == destination_absolute or destination_absolute in object_store.parents:
+        _fail('Object store must be outside the new export directory')
     destination.parent.mkdir(parents=True, exist_ok=True)
     temporary = Path(tempfile.mkdtemp(prefix='.corpus-export-', dir=destination.parent))
     try:
         for name, data in blobs.items():
             target = temporary/name
-            target.write_bytes(data)
-            target.chmod(0o600)
+            materialize_immutable(data, target, object_store)
         receipt = build_manifest(temporary, temporary, temporary/'import-manifest.json')
-        os.rename(temporary, destination)
+        publish_export_directory(temporary, destination)
     except Exception:
-        shutil.rmtree(temporary)
+        shutil.rmtree(temporary, ignore_errors=True)
         raise
     return dict(receipt, origin_run_id=_loads(blobs['run_manifest.json'])['run_id'], recomputed=False)
 
@@ -879,12 +888,13 @@ def main():
     parser.add_argument('--protocol', type=Path, required=True)
     parser.add_argument('--audit-dir', type=Path, required=True)
     parser.add_argument('--destination', type=Path, required=True)
+    parser.add_argument('--object-store', type=Path, help='Shared immutable byte store across export batches; same filesystem required')
     parser.add_argument('--format-version',type=int,choices=[2,3],default=2)
     parser.add_argument('--capital-overlay',type=Path)
     parser.add_argument('--ledger-supplement',type=Path)
     parser.add_argument('--annotations', type=Path, help='Reviewed metadata annotations for missing fidelity/deep-validation declarations')
     args = parser.parse_args()
-    print(json.dumps(export_delta(args.origin_dir,args.protocol,args.audit_dir,args.destination,args.annotations,format_version=args.format_version,capital_overlay_path=args.capital_overlay,ledger_supplement_path=args.ledger_supplement)))
+    print(json.dumps(export_delta(args.origin_dir,args.protocol,args.audit_dir,args.destination,args.annotations,format_version=args.format_version,capital_overlay_path=args.capital_overlay,ledger_supplement_path=args.ledger_supplement,object_store=args.object_store)))
 
 
 if __name__ == '__main__':

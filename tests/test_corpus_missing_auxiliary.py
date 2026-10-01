@@ -28,7 +28,7 @@ def test_broken_symlink_not_absence(origin):
  with pytest.raises(ValueError):export(origin)
 
 def test_forged_absence_receipt_rejected_on_reimport(origin):
- remove_aux(origin);export(origin);p=origin['export']/'origin__target_hashes.json';m=json.loads(p.read_bytes());m['origin_manifest_sha256']='a'*64;p.write_bytes(encoded(m));q=origin['root']/'repin.json';r=build_manifest(origin['export'],origin['export'],q)
+ remove_aux(origin);export(origin);p=origin['export']/'origin__target_hashes.json';m=json.loads(p.read_bytes());m['origin_manifest_sha256']='a'*64;p.unlink();p.write_bytes(encoded(m));q=origin['root']/'repin.json';r=build_manifest(origin['export'],origin['export'],q)
  with pytest.raises(ValueError):import_manifest(origin['runtime'],q,r['manifest_sha256'],origin['export'],origin['export'])
 
 @pytest.mark.parametrize('name',['strategy_metrics.json','daily_returns.csv.gz','implemented_specs.json'])

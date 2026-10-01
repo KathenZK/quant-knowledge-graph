@@ -67,7 +67,7 @@ def test_export_keeps_all_origin_bytes_and_rebuilds_only_own_coverage(origin):
 def test_repinning_changed_projection_cannot_change_original_metrics(origin):
     do_export(origin)
     path=origin['export']/'strategy_metrics.json';rows=json.loads(path.read_bytes())
-    rows[0]['periods']['full']['total_return']=999;path.write_bytes(encoded(rows))
+    rows[0]['periods']['full']['total_return']=999;path.unlink();path.write_bytes(encoded(rows))
     pinned=origin['root']/'repinned.json'
     receipt=build_manifest(origin['export'],origin['export'],pinned)
     with pytest.raises(ValueError,match='differs from retained origin bytes'):
