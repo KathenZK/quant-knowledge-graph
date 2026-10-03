@@ -245,6 +245,41 @@ def test_m1349_completed_closes_and_m1270_zero_null(tmp_path, monkeypatch):
         with pytest.raises(ValueError): project(e, verified_source(root, e))
 
 
+@pytest.mark.parametrize('rid', list(dot.CONTRACTS))
+@pytest.mark.parametrize('role,field,value', [
+    ('record', 'reused_control_configurations', True),
+    ('record', 'reused_control_configurations', 1.0),
+    ('record', 'configuration_runs', 4.0),
+    ('record', 'strategy_configurations', 4.0),
+    ('record', 'new_control_runs', False),
+    ('record', 'new_control_runs', 0.0),
+    ('record', 'control_configurations', False),
+    ('record', 'control_configurations', 0.0),
+    ('publication_manifest', 'revision', True),
+    ('publication_manifest', 'revision', 1.0),
+])
+def test_rebound_derived_metadata_requires_integer_types(tmp_path, monkeypatch, rid, role, field, value):
+    root, entry, blobs = fixture(tmp_path, monkeypatch, rid)
+    original_lock = blobs['selected_source_lock']
+    obj = json.loads(blobs[role]); obj[field] = value; blobs[role] = encoded(obj)
+    if role == 'record':
+        # Rebind the changed public record and its entire current outer inventory,
+        # while preserving all pinned origin sources and source-lock bytes.
+        repin(root, entry, blobs)
+    else:
+        entry['artifacts'][role].update(dot.fingerprint(blobs[role]))
+        (root/entry['artifacts'][role]['path']).write_bytes(blobs[role])
+    assert blobs['selected_source_lock'] == original_lock
+    assert entry['artifacts'][role]['sha256'] == digest(blobs[role])
+    if role == 'record':
+        pub = json.loads(blobs['publication_manifest'])
+        bound = next(x for x in pub['files'] if x['path'] == entry['artifacts']['record']['path'])
+        assert bound['sha256'] == digest(blobs['record'])
+        assert entry['artifacts']['publication_manifest']['sha256'] == digest(blobs['publication_manifest'])
+    with pytest.raises(ValueError, match='integer'):
+        project(entry, verified_source(root, entry))
+
+
 def test_dot009_merge_is_additive_and_transport_unchanged(tmp_path, monkeypatch):
     source, e, b = fixture(tmp_path, monkeypatch)
     r, d = project(e, verified_source(source, e))

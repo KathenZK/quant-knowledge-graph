@@ -113,6 +113,7 @@ def source_binding(entry, blobs):
             and pub['not_original_publication_manifest'] is True and pub['historical_publication_manifest_existed'] is False
             and pub['previous_publication_manifest'] is None and pub['self_excluded'] is True,
             'Current selective inventory is not a historical publication')
+    same(pub['revision'], 1, 'Selective inventory revision must remain an integer')
     require(pub['actual_strategy_configurations'] == 4 and pub['projection_new_trials'] == pub['projection_new_controls'] == 0
             and pub['strict_reproductions'] == 0 and pub['public_curve_points'] == 25
             and pub['original_metric_observations'] == 731 and pub['matched_cost_controls_available'] is False
@@ -212,11 +213,11 @@ def validate(entry, blobs):
     require(r['projection_status'] == d['projection_status'] == 'STAGED_NOT_IMPORTED'
             and r['definition_revision_bound'] is False and lineage['definition_revision_bound'] is False
             and all('entity_id' not in x and 'definition_revision' not in x for x in [r, d]), 'Cannot invent active identity')
-    require(s['strategy_configurations'] == r['configuration_runs'] == r['strategy_configurations'] == 4
-            and s['new_controls'] == c0['new_controls'] == r['new_control_runs'] == r['control_configurations'] == 0
-            and r['reused_control_configurations'] == 1, 'Original/projection control or configuration count conflict')
-    same([s['new_controls'], c0['new_controls'], r['new_control_runs'], r['control_configurations']],
-         [0, 0, 0, 0], 'Zero control counts must remain integers')
+    same(dict(strategy_configurations=[s['strategy_configurations'], r['configuration_runs'], r['strategy_configurations']],
+              new_controls=[s['new_controls'], c0['new_controls'], r['new_control_runs'], r['control_configurations']],
+              reused_control_configurations=r['reused_control_configurations']),
+         dict(strategy_configurations=[4, 4, 4], new_controls=[0, 0, 0, 0], reused_control_configurations=1),
+         'Original/projection configuration and control counts must remain integers')
     same(d['lab_counts'], dict(strategy_ids=1, strategy_configurations=4, new_control_configurations=0,
                               reused_control_configurations=1, strict_reproductions=0), 'Lab counts conflict')
     same(d['projection_activity'], dict(new_strategy_trials=0, new_controls=0), 'Projection must not add trials')
