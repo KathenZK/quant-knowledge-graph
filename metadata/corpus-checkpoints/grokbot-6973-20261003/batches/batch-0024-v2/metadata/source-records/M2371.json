@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2371",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2371,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5c382e480ee7110ec7b8692e476bf02263881d597e851d5b9bee616a48ba9a31",
+    "rule_sha256": "6c250eab4a7bf9b1bafbc2ff79d83497b1f86d85f824681e99ae9aa437771bff"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2371",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2371"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/NowoIchimoku1hV2/NowoIchimoku1hV2.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（NowoIchimoku1hV2.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区NowoIchimoku1hV2：1h，阳线+绿云+转换>基准等且 buy_allowed 做多；卖出信号关，靠ROI/硬止损−34.5%/自定义止盈止损/追踪止损"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区NowoIchimoku1hV2；1h）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区NowoIchimoku1hV2：1h，阳线+绿云+转换>基准等且 buy_allowed 做多；卖出信号关，靠ROI/硬止损−34.5%/自定义止盈止损/追踪止损"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/NowoIchimoku1hV2/NowoIchimoku1hV2.py默认。timeframe=1h；stoploss=−0.345；minimal_roi约0/448/1123/2355分钟对应42.7%/20.2%/8.9%/0；trailing_stop=True；use_sell_signal=False；use_custom_stoploss=True；startup_candle_count=100。indicators.ichimoku 默认；HMA布林上轨 length=20 mult=2.5；StochRSI(14/14/3/3)。close_above_shifted_upper_cloud 默认 0.603。should_buy：收阳，且 close>shifted_upper×0.603，且 close>shifted_lower，且绿云，且 conversion>base，且 close>conversion.shift(25)，且 close>upper_cloud.shift(50)。buy_allowed：曾买入后锁至云变红再允许。populate_sell 恒0。custom_stoploss：srsi_k>80且利润>0.036、或上穿 HMA 上轨且利润>0.011、或达开仓相对下云 limit_factor(1.918) 目标、或跌破开仓时 shifted_lower×0.971 时返回 −0.0001，否则 −0.99。不是 W251（硬阈值×1.04、止损−8%、无 buy_allowed/自定义止损）。提出日期未知。 不是W251/M2265 NowoIchimoku1hV1：本条为1h V2 buy_allowed锁、硬止损−34.5%、自定义止盈止损。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

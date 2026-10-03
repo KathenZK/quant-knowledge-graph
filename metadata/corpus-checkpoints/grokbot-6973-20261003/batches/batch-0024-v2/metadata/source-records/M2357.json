@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2357",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2357,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "259b64b61c0e95e165c8a628ee059b8374b9b3b55a3798bf840e332876b84fbb",
+    "rule_sha256": "ed5610d9e4210317677b0229fee7aac4f7022ee5e9793fdffbbe509c5b722ea6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2357",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2357"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/trading-crypto-futures"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：BTCUSDT永续分钟EMA(9)>EMA(21)满仓多，否则满仓空（EasyQuant币圈合约趋势）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（BTCUSDT永续分钟EMA9/21多空；EasyQuant/QC）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-02"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：BTCUSDT永续分钟EMA(9)>EMA(21)满仓多，否则满仓空（EasyQuant币圈合约趋势）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Trading Crypto Futures》已印 CryptoFuturesTrendFollow。BrokerageName.BINANCE_FUTURES + AccountType.MARGIN；add_crypto_future(\"BTCUSDT\", MINUTE, Market.BINANCE)；杠杆 set_leverage(3)；fast_ema=EMA(9)、slow_ema=EMA(21)；WarmUp=21分钟。fast>slow 且持仓≤0 则 SetHoldings(+1.0)；fast<slow 且持仓≥0 则 SetHoldings(−1.0)。不是现货 SMA/EMA 状态核，也不是 W244 期现价差套利核。提出日期取页面 Published on。 不是现货SMA/EMA状态，也不是W244期现价差：本条为BTCUSDT永续分钟EMA9>EMA21满仓多否则满仓空（杠杆3）。 计入加密。 提出日期按源文件原样保留2025-12-02。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
