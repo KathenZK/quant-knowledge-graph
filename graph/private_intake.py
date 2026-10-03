@@ -27,9 +27,10 @@ def import_cards(catalog, path, expected_sha256, kind):
         rows = rows.get('records')
     if not isinstance(rows, list) or len(rows) > 10000:
         raise ValueError('Expected bounded card array')
-    prepared=[];seen=set();overlays=[]
+    prepared=[];seen=set();overlays=[];guarded_overlays={}
     with catalog.connect() as con:
         existing={}
+        exact={r['entity_id']:dict(r) for r in con.execute("SELECT entity_id,kind,definition_revision,payload FROM catalog_items WHERE active=1")}
         for found in con.execute("SELECT entity_id,payload FROM catalog_items WHERE active=1 AND kind='strategy'"):
             for native_id in json.loads(found['payload']).get('source_native_ids',[]):
                 existing.setdefault(native_id,[]).append(found['entity_id'])
@@ -60,6 +61,21 @@ def import_cards(catalog, path, expected_sha256, kind):
         eid='private-intake:'+kind+':'+hashlib.sha256(native.encode()).hexdigest()[:32]
         revision=hashlib.sha256(json.dumps(row,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
         relation=row.get('relation') or {}
+        if relation.get('binding_mode') and (relation.get('type')!='source_curation_overlay_for' or relation['binding_mode']!='EXACT_CURRENT_REVISION'):
+            raise ValueError('Unsupported metadata overlay binding mode')
+        if relation.get('type')=='source_curation_overlay_for' and relation.get('binding_mode')=='EXACT_CURRENT_REVISION':
+            target=exact.get(relation.get('expected_entity_id'))
+            revision_pin=relation.get('expected_definition_revision')
+            allowed_kinds={'strategy'} if kind=='strategy' else {'factor','source'}
+            if (not target or target['kind'] not in allowed_kinds or not isinstance(revision_pin,str)
+                    or not revision_pin or target['definition_revision']!=revision_pin
+                    or native!=relation.get('id')
+                    or row.get('entity_type')!=kind or row.get('native_source_id')!=native
+                    or native not in json.loads(target['payload']).get('source_native_ids',[])):
+                raise ValueError('Metadata overlay requires exact current entity, native ID, type and revision')
+            guarded_overlays[target['entity_id']]=(revision_pin, target['kind'], native)
+            overlays.append((target['entity_id'],revision,row))
+            continue
         if kind=='strategy' and relation.get('type')=='source_curation_overlay_for' and relation.get('also_in_frozen_5813') is True:
             matches=existing.get(relation.get('id'),[])
             if len(matches)!=1:
@@ -88,6 +104,11 @@ def import_cards(catalog, path, expected_sha256, kind):
     inserted=updated=noop=review_inserted=review_noop=0
     with catalog.lock,catalog.connect() as con:
         con.execute('BEGIN IMMEDIATE')
+        for eid,(pin,expected_kind,native) in guarded_overlays.items():
+            current=con.execute('SELECT definition_revision,kind,payload FROM catalog_items WHERE entity_id=? AND active=1',(eid,)).fetchone()
+            if (not current or current[0]!=pin or current[1]!=expected_kind
+                    or native not in json.loads(current[2]).get('source_native_ids',[])):
+                raise ValueError('Catalog revision changed before metadata overlay import')
         con.execute('CREATE TABLE IF NOT EXISTS private_intake_reviews (sequence INTEGER PRIMARY KEY, entity_id TEXT NOT NULL, revision TEXT NOT NULL, payload TEXT NOT NULL, UNIQUE(entity_id,revision))')
         for eid,revision,row in overlays:
             cursor=con.execute('INSERT OR IGNORE INTO private_intake_reviews(entity_id,revision,payload) VALUES (?,?,?)',(eid,revision,json.dumps(row,ensure_ascii=False,sort_keys=True)))

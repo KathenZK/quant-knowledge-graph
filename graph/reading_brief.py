@@ -91,9 +91,13 @@ def reading_brief(value, knowledge, method_guide, card=None):
         result['entry_type']=card.get('entity_type') or ('strategy' if strategy else 'factor')
         result['intake_label']=card.get('admission_label_zh')
         relation=card.get('relation') or {}
-        result['existing_record_overlay']=relation.get('type')=='source_curation_overlay_for' and relation.get('also_in_frozen_5813') is True
+        result['existing_record_overlay']=relation.get('type')=='source_curation_overlay_for' and (relation.get('also_in_frozen_5813') is True or relation.get('binding_mode')=='EXACT_CURRENT_REVISION')
         if strategy and isinstance(card.get('field_evidence'),dict):
             evidence_fields=card['field_evidence']
+            if relation.get('binding_mode')=='EXACT_CURRENT_REVISION':
+                for key,label in [('universe','如何选池'),('signal','信号如何计算'),('risk','止损与风险'),('cost','成本假设')]:
+                    if key in evidence_fields and not any(f['key']==key for f in result['trading']):
+                        result['trading'].append(dict(key=key,label=label,status='UNKNOWN'))
             def content(value):
                 if isinstance(value,str):return value
                 if isinstance(value,list):return '、'.join(map(str,value))

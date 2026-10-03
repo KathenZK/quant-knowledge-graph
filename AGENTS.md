@@ -13,4 +13,5 @@
 - 不将归因猜测写成收益驱动证据；策略与因子关联须有 role、confidence、evidence、source。
 - 变更后运行相关测试；发布前运行 `quantgraph validate-release` 检查离线重建、schema、外键、隔离和导出一致性。
 - 公开 Git 仓库只包含已审查的 Qlib 原始文件和 datasets/public；完整 normalized/curated、其他来源原文、本机验收日志不得加入 Git。
+- 用户指定的 `metadata/strategies/`、`metadata/factors/` 保存经审查的逐编号元数据、来源链接和自撰规则；不复制来源全文、原始行情或历史私有材料。旧编号和实体类型分别保留；导入覆盖层须绑定现有实体的精确版本，不改原定义或个人批注。
 - 公开发布先运行 build-public、verify-public 和 tests/test_public.py；完整私有数据仍运行 validate-release。
