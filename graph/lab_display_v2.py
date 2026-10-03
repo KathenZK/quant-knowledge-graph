@@ -11,6 +11,7 @@ import re
 from quantgraph.graph.corpus_research import _finite, _loads
 from quantgraph.graph.metadata_pilot import digest
 from quantgraph.graph.lab_display_catalog_daily import CONTRACT as CATALOG_DAILY, validate as catalog_daily
+from quantgraph.graph.lab_display_catalog_pair import CONTRACTS as CATALOG_PAIR, validate as catalog_pair
 
 SCHEMA = 'quantgraph-public-derived-display-manifest/v2'
 KIND = 'PUBLIC_DERIVED_DISPLAY_MANIFEST'
@@ -32,8 +33,11 @@ def bindings(entry, blobs, origin, record, detail):
     rid = entry['id']
     profile = entry.get('projection_profile')
     contract = entry.get('source_contract')
-    require(contract is None or (contract == CATALOG_DAILY and profile == DAILY and rid == 'M1258'),
+    require(contract is None or (profile == DAILY and (
+            (contract == CATALOG_DAILY and rid == 'M1258') or CATALOG_PAIR.get(rid) == contract)),
             'Unknown or incompatible explicit source contract')
+    if rid in CATALOG_PAIR:
+        require(contract == CATALOG_PAIR[rid], 'Catalog pair requires its explicit source contract')
     require(profile in PROFILES and origin.get('projection_profile') == profile,
             'Unsupported or conflicting explicit v2 profile')
     require(origin.get('schema_version') == SCHEMA
@@ -69,6 +73,14 @@ def bindings(entry, blobs, origin, record, detail):
                           'source_card', 'catalog_fields', 'original_record', 'original_detail'}
         require(record.get('projection_profile') == detail.get('projection_profile') == DAILY,
                 'Catalog source record/detail profile conflict')
+    pair = contract in CATALOG_PAIR.values()
+    if pair:
+        expected_roles = {'publication_manifest', 'summary', 'protocol', 'C0', 'rules',
+                          'catalog_fields', 'original_record', 'original_detail', 'control_reference', 'control_release'}
+        require(record.get('projection_profile') == detail.get('projection_profile') == DAILY
+                and origin.get('source_contract') == record.get('source_contract') ==
+                detail.get('source_contract') == detail['lineage'].get('source_contract') == contract,
+                'Catalog pair source profile/contract conflict')
     require(set(refs) == expected_roles, 'Unexpected v2 source role set')
     for role, ref in refs.items():
         path = ref['path']
@@ -76,8 +88,9 @@ def bindings(entry, blobs, origin, record, detail):
                 and '..' not in PurePosixPath(path).parts and '\\' not in path
                 and ref['url'] == f'https://github.com/KathenZK/quant-research-lab/blob/{pin}/{path}',
                 'V2 source URL/path must bind same ID and origin commit')
+        publication_name = 'publication-manifest.v1.json' if pair else 'publication-manifest.json'
         expected = (fingerprint(blobs['origin_publication_manifest'])
-                    if role == 'publication_manifest' and path == prefix + 'publication-manifest.json'
+                    if role == 'publication_manifest' and path == prefix + publication_name
                     else allowed.get(path))
         require(expected == {k: ref[k] for k in ['sha256', 'bytes']},
                 'V2 source outside historical publication allowlist')
@@ -273,6 +286,8 @@ def project_v2(entry, blobs):
     profile = bindings(entry, blobs, origin, record, detail)
     if entry.get('source_contract') == CATALOG_DAILY:
         catalog_daily(entry, blobs, values)
+    elif entry.get('source_contract') in CATALOG_PAIR.values():
+        catalog_pair(entry, blobs, values)
     else:
         card = _loads(blobs['source_rule_card'])
         _finite(card)
@@ -300,6 +315,9 @@ def project_v2(entry, blobs):
         metrics = result['metrics']
         for periods in [metrics['periods'], metrics['same_instrument_benchmark'],
                         metrics['additional_native_bar_lag'], *metrics['cost_sensitivity'].values()]:
+            if entry.get('source_contract') in CATALOG_PAIR.values() and 'full' in periods:
+                require(periods['full'] == periods['2023-2024'], 'Conflicting approved daily full alias')
+                continue
             require('full' not in periods, 'Unexpected existing daily full alias')
             periods['full'] = deepcopy(periods['2023-2024'])
         metrics['source_period_aliases'] = {'2023-2024': 'full'}
