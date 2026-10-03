@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0648",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 648,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b0273234287865b7b211938454c0617730cc12f140ab27a67f293fbee2f2606f",
+    "rule_sha256": "6157311deeba50a20377e8369a7a16c3ed77b61cf90c8b94866cb9c3d77684b6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0648",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0648"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/blending-buy-hold-with-tactical-a-lethargic-approach-to-asset-allocation/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Wouter J. Keller；Allocate Smartly实测；QuantReturns实现页写明两信号"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://quantreturns.com/strategy-review/kellers-lethargic-asset-allocation-portfolio/ ； https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3498092"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "迟缓资产配置LAA：75%静态加失业率与标普趋势切换QQQ"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2019-12"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Growth-Trend Timing and 60-40 Variations: Lethargic Asset Allocation (LAA)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "75%买入持有：25% IWD、25% GLD、25% IEF。余下25%在QQQ与短债之间切换。Allocate Smartly写明作者用SHY代表短债，该站实测改持现金（等于三个月国库券利率），并在每月最后一个交易日收盘成交、即使信号不变也再平衡。切换条件以本轮另开的QuantReturns实现页为准：最近失业率高于其12个月移动平均，且标普500低于其200日简单移动平均，两条件同时成立时把该25%从QQQ换成SHY，否则持QQQ。该页写明这是对公开资料的研究实现，并写成半年再平衡；与Allocate Smartly的每月再平衡、现金替代SHY不同。1975年前Allocate Smartly因数据不足用SPY代替IWD。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Strategy rules tested；End notes（1）（4）。两信号原文见 QuantReturns 第3节。论文日期见 SSRN 摘要行 December 4, 2019。"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
