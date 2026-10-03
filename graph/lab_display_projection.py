@@ -23,6 +23,7 @@ from quantgraph.graph.metadata_pilot import (
 )
 from quantgraph.graph.site_feedback import canonical
 from quantgraph.graph.lab_display_v2 import SCHEMA as DISPLAY_V2_SCHEMA, project_v2
+from quantgraph.graph import lab_display_dot009
 
 REGISTRY = Path(__file__).resolve().parents[1] / 'metadata/lab-display-sources.json'
 MANIFEST_KIND = 'LAB_ORIGIN_RESULT_MANIFEST_NOT_GRAPH_COLLECTION'
@@ -48,6 +49,8 @@ def reviewed(value):
 
 
 def verified_source(root, entry):
+    if lab_display_dot009.selected(entry):
+        return lab_display_dot009.verified_source(root, entry)
     rid = entry['id']
     if not re.fullmatch(r'M\d{4}', rid) or not re.fullmatch(r'[a-f0-9]{40}', entry['lab_commit']):
         raise ValueError('Invalid pinned source identity')
