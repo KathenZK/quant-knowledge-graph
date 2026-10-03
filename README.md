@@ -8,8 +8,8 @@
 
 ## 原目录阅读入口
 
-原目录首批 100 条完整 11 字段已整理到 [86 条策略候选](metadata/strategies/README.md)、
-[9 条因子候选](metadata/factors/README.md) 与 [5 条待分类](metadata/unclassified/README.md)。
+原目录前两批 200 条完整 11 字段已整理到 [171 条策略候选](metadata/strategies/README.md)、
+[12 条因子候选](metadata/factors/README.md) 与 [17 条待分类](metadata/unclassified/README.md)。
 它们是 CONTENT_INFERRED / UNVERIFIED 的目录阅读层，不增加下文 Qlib 已审定义或回测数量。
 [完整计数、固定来源与分类证据](metadata/README.md)。
 

@@ -4,16 +4,21 @@
       "commit": "961e59d036652b252bf49b54eb56527f308632af",
       "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0001-v2",
       "sha256": "ca01f42ce6230210341670be46ef751d4f5ba6c4d0ef0b6037c0a9236bebd874"
+    },
+    {
+      "commit": "961e59d036652b252bf49b54eb56527f308632af",
+      "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "sha256": "7802d47e1385562c8481280f58cdc6251f4c51c37e46ff1e336a77204567fa49"
     }
   ],
   "classification_status": "CONTENT_INFERRED",
   "counts": {
-    "factor_candidates": 9,
+    "factor_candidates": 12,
     "new_execution_trials": 0,
     "new_native_definitions": 0,
-    "readable_original_ids": 100,
-    "strategy_candidates": 86,
-    "unclassified": 5
+    "readable_original_ids": 200,
+    "strategy_candidates": 171,
+    "unclassified": 17
   },
   "definition_status": "UNVERIFIED",
   "records": [
@@ -2815,6 +2820,2806 @@
         "bytes": 2114,
         "path": "unclassified/M0100.md",
         "sha256": "533cf90231fd152234a2cd9bcec59022c8e605d3b8bbae95ee78b5341de739b6"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "用科技股历史收益拟合高斯朴素贝叶斯，交易次日预测。"
+          }
+        ],
+        "reason": "只有朴素贝叶斯训练和交易预测概述，未交代预测输出如何形成信号或交易规则，暂保留待分类。",
+        "record_id": "M0101",
+        "row_sha256": "167014ec82c3b6779a18f0193d628cb4d5ce5d7d6e33e6f1a245180b32d1f224",
+        "rule_sha256": "55ce194a7546b489a3fc5cb16ff29762ca49d527b96618237e5bcc1cba914022"
+      },
+      "record_id": "M0101",
+      "source": {
+        "bytes": 2334,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0101.json",
+        "sha256": "6a39215d6b84e08d1a0ace1a2f96e98308f5ea94ef60bd7ad7f1951d555859b1",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0101.json"
+      },
+      "view": {
+        "bytes": 2228,
+        "path": "unclassified/M0101.md",
+        "sha256": "abdd374cec23a5aea141349ce6d0b0afc4b97dbb6e908626ec244406ec247cea"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做多最低、做空最高，等权、每月再平衡"
+          }
+        ],
+        "reason": "[factor_based] 主要对象是有具体股票池/资产或组合选择的因子应用实现，不把所用底层指标同时新增为因子 ID；规则和定义仍未复核。",
+        "record_id": "M0102",
+        "row_sha256": "83c19ff418be831d20d6bb5d6d5e6465231605c2265e885fcad82d4ff8013d7d",
+        "rule_sha256": "c4fa165c0dc8cbb226304e9c987e2716b9171a26b8220486631077ddd5388e32"
+      },
+      "record_id": "M0102",
+      "source": {
+        "bytes": 2426,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0102.json",
+        "sha256": "6fd25341ec855170873f6a40b422bdb55c205bf490aa31630bf904decee5260c",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0102.json"
+      },
+      "view": {
+        "bytes": 2342,
+        "path": "strategies/M0102.md",
+        "sha256": "36231fd06274d1304b88214413a2a6213fb07abaaa8560734a40108dcc26b83f"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "在开盘区间高点买入"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0103",
+        "row_sha256": "0837c99a55f9e6fa56e4eea79d52906458482331ed55d5fe1f33149955f01ff3",
+        "rule_sha256": "317f6656ab80726cea8c8cbf60a14c5fc87c6b97941bd4dbb117712a33244ad8"
+      },
+      "record_id": "M0103",
+      "source": {
+        "bytes": 2764,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0103.json",
+        "sha256": "fe3d08eaa98b08831bfe10798aed9a017eeba8e5688733f62eec82411728fe08",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0103.json"
+      },
+      "view": {
+        "bytes": 2637,
+        "path": "strategies/M0103.md",
+        "sha256": "3777ce5bafb416c8cc3a89c20931c20f3bb6c61e9f5175c803b12b97c043e6f7"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "6月23日之后的第一个交易日收盘买入，7月第一个交易日收盘卖出。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0104",
+        "row_sha256": "871c458a51606fc1f044dff7019ccf898fb88b661ca7e54c3cfccc8c3d0d7a29",
+        "rule_sha256": "ea0163cf1d1e57a60d111b6fd7a001f0881b64a2e65d64c08a69b3a08df31317"
+      },
+      "record_id": "M0104",
+      "source": {
+        "bytes": 2620,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0104.json",
+        "sha256": "f0302ef25d384b0347aa4a60586b9ef9fe382ac6036a5d77e4033f38dff19020",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0104.json"
+      },
+      "view": {
+        "bytes": 2617,
+        "path": "strategies/M0104.md",
+        "sha256": "e9936e30f4df85c36254f28407a7cdb6ccf9e822fb6026b9f86c4314ba156734"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做多加权比率最高的6个行业、做空最低的6个行业"
+          }
+        ],
+        "reason": "[factor_based] 主要对象是有具体股票池/资产或组合选择的因子应用实现，不把所用底层指标同时新增为因子 ID；规则和定义仍未复核。",
+        "record_id": "M0105",
+        "row_sha256": "04b2da892011787d332bb52389ee0d84d3404498656f0c865a0c2abfc1819459",
+        "rule_sha256": "cafc975e7713e35670fae5648e9b9c23ef9ea945103d022112d389c229f5a6c0"
+      },
+      "record_id": "M0105",
+      "source": {
+        "bytes": 2546,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0105.json",
+        "sha256": "656cf0ce998281b42cf6a434a117a0f6e56a4fde06ef56cc8252d6980608dc68",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0105.json"
+      },
+      "view": {
+        "bytes": 2478,
+        "path": "strategies/M0105.md",
+        "sha256": "186de72f98c87362f235bf919b60ec69bc184eda323464348c20246dadfdd443"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做多各组最高三个十分位、做空最低三个十分位"
+          }
+        ],
+        "reason": "[factor_based] 主要对象是有具体股票池/资产或组合选择的因子应用实现，不把所用底层指标同时新增为因子 ID；规则和定义仍未复核。",
+        "record_id": "M0106",
+        "row_sha256": "199c29db241678cab432f2c9c995bfd38809f1b9f36073ceabf0d5bca79d9d2b",
+        "rule_sha256": "397113d0ecd60263b5a1583a99e4b509d9d5b3bf347735885ac68c3eb3c1f1ca"
+      },
+      "record_id": "M0106",
+      "source": {
+        "bytes": 2897,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0106.json",
+        "sha256": "e209750198ce849fc05635cfcadb5db637bb28eb820aa5188f91ab6372bdb09e",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0106.json"
+      },
+      "view": {
+        "bytes": 2819,
+        "path": "strategies/M0106.md",
+        "sha256": "16194fd870e395ce7a317cbbaf1d9dadc43828f6b1bbd3bc67e2451897d5ca38"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "源码改为约一年波动率最低四分位、仅做多。"
+          }
+        ],
+        "reason": "[factor_based] 主要对象是有具体股票池/资产或组合选择的因子应用实现，不把所用底层指标同时新增为因子 ID；规则和定义仍未复核。",
+        "record_id": "M0107",
+        "row_sha256": "dca8085755665e6467bce19fb48b49c38c36fb2f9df4083fd0f5d8c5f47f460e",
+        "rule_sha256": "5151792fe193732d37fec8d84b6b63af19b2cb934011938a969cfd71babd8bab"
+      },
+      "record_id": "M0107",
+      "source": {
+        "bytes": 2678,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0107.json",
+        "sha256": "b29b0f5d814402f269fcb3867ebe901d3c5f1b90e6772f7460c8edff665f5d0e",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0107.json"
+      },
+      "view": {
+        "bytes": 2603,
+        "path": "strategies/M0107.md",
+        "sha256": "16ed5ffa6e86ba63b2902b5ba78c38200ab85428bde3320c56f9817e80a376b2"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "factor",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "多空两边都缩放到贝塔为1后，做多低贝塔、做空高贝塔。"
+          }
+        ],
+        "reason": "主要对象是经收缩贝塔排序、两腿贝塔缩放和多空差额定义的 BAB 因子构造；多空组合不自动改判交易应用。",
+        "record_id": "M0108",
+        "row_sha256": "eaf76fd3d3a2c35ca3ac6142080638444d22f75494d8f5e5ed3f965350780dad",
+        "rule_sha256": "03abeb9a7fa71848bdf22cded033a58e7b9c53badec71fac74cac9f71f12e44d"
+      },
+      "record_id": "M0108",
+      "source": {
+        "bytes": 2965,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0108.json",
+        "sha256": "68c86c43d71f1fac2364a3f6089c5d52df7d061c928c86414cee7f211174406c",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0108.json"
+      },
+      "view": {
+        "bytes": 2868,
+        "path": "factors/M0108.md",
+        "sha256": "33ee6d547e247655ce59e9d493fdcc0bbe91014c0baf0e7a2e14fa44735f41de"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "factor",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "Mom = 1/2(Small High+Big High) − 1/2(Small Low+Big Low)。"
+          }
+        ],
+        "reason": "主要对象是规模—动量2×3组合定义的 Mom 因子收益公式。",
+        "record_id": "M0109",
+        "row_sha256": "c30090731f47dd14d75143636f632d3505bba12e2fa6c5b9a2a8897fcad7d2e7",
+        "rule_sha256": "4ffee2d355d67b2dda6f1824418e9db7568958a68305d99921271f198f3d8a3b"
+      },
+      "record_id": "M0109",
+      "source": {
+        "bytes": 2959,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0109.json",
+        "sha256": "5e63a2e44e1105a5dd49f1257c0a6652d5ce371f2d4aa8472ae9723c30705d27",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0109.json"
+      },
+      "view": {
+        "bytes": 2781,
+        "path": "factors/M0109.md",
+        "sha256": "56199d75f9fd85232a365fc160cc58b262bb2ae6118cc4168ceada1917c91fc0"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做多赢家分位、做空输家分位"
+          }
+        ],
+        "reason": "[factor_based] 主要对象是有具体股票池/资产或组合选择的因子应用实现，不把所用底层指标同时新增为因子 ID；规则和定义仍未复核。",
+        "record_id": "M0110",
+        "row_sha256": "58cf1b687d3b09033c6f71e8cbf903574924eedb4e2357d8ce7b9f8e3e58f401",
+        "rule_sha256": "0c2199612733657e27920542138d5db1a69406490c741fc6906fb720cc93853e"
+      },
+      "record_id": "M0110",
+      "source": {
+        "bytes": 2890,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0110.json",
+        "sha256": "803e65813120f0a09c19529c1cbe70ee423866171607bafd94559e070993bc2b",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0110.json"
+      },
+      "view": {
+        "bytes": 2808,
+        "path": "strategies/M0110.md",
+        "sha256": "4cf7c81f66d56e6c02c684d69ceb32163fc18ea8744617cdc7cb3f51ee038fc9"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做多上一周表现最差的十只、做空上一月表现最好的十只"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0111",
+        "row_sha256": "e7084d2e7466e860f36fe81f3e7cecb5b231af0db6f21a58490104c84288df18",
+        "rule_sha256": "5de27e561639f07ba38d5b06ddbfb13e8d2fbba5b11a4a8a36b922d3bb76191d"
+      },
+      "record_id": "M0111",
+      "source": {
+        "bytes": 2377,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0111.json",
+        "sha256": "def1d498ebb6c4dcb40f432ba4dc15331158871f9513eb20af6c1641bcb9d15d",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0111.json"
+      },
+      "view": {
+        "bytes": 2304,
+        "path": "strategies/M0111.md",
+        "sha256": "11c51e90e5d672b463655a4c0e7cad32c3994b838913c37edd79e4215fcba6d4"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "按股价残差做统计套利组合。"
+          }
+        ],
+        "reason": "只描述股价残差与统计套利组合，未明确残差信号计算或组合构造，暂保留待分类。",
+        "record_id": "M0112",
+        "row_sha256": "1e8dfb03ed25ca75f8f8e40d9d0b89f33996396455b48e3532025532b44b501b",
+        "rule_sha256": "2f0b2fd812bbf27a23a06cf369ce81cb8c2595db9a3d495efa80ffe66cba3c17"
+      },
+      "record_id": "M0112",
+      "source": {
+        "bytes": 2286,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0112.json",
+        "sha256": "7a19fe97baf4dc7f9caede6af82ca0b17394b72a6697e0375fe8afd12c2585b7",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0112.json"
+      },
+      "view": {
+        "bytes": 2120,
+        "path": "unclassified/M0112.md",
+        "sha256": "0851073df015655d06f56196d01826b25e7d97a8ae6a36f07b70caabce5a929d"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "收盘价创历史最高收盘则做多，用10期ATR跟踪止损退出"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0113",
+        "row_sha256": "9b814ef0a88b95d27b4371c4021cf22f73951f0d67f5bb378769de8fb505fc2b",
+        "rule_sha256": "8dd42454187078230e7479e9dd1cec378fd5af5eaf12005a5201fc39da476261"
+      },
+      "record_id": "M0113",
+      "source": {
+        "bytes": 2512,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0113.json",
+        "sha256": "b376930a4db7323d555913070d896feea01fe9c19baa8720c3b46b943fed184d",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0113.json"
+      },
+      "view": {
+        "bytes": 2435,
+        "path": "strategies/M0113.md",
+        "sha256": "bb1cd6230f3f21c3893946acf0e12e2522ce475ca80a99248249e3222f68f048"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "价差偏离两倍标准差开多空，价格回归时平仓"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0114",
+        "row_sha256": "ede5c76b4f3a99a037509faf7d1e2c1bf01963f8741ca4d9255b4b9907b1e961",
+        "rule_sha256": "3b1202d2d887026a37d998375066c49cd546e4cab4552b735bb31f338ba82105"
+      },
+      "record_id": "M0114",
+      "source": {
+        "bytes": 2507,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0114.json",
+        "sha256": "45c4ddadc68388cdcdc0910123558a652effc18421c5baabda9ff1fee463ef14",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0114.json"
+      },
+      "view": {
+        "bytes": 2419,
+        "path": "strategies/M0114.md",
+        "sha256": "34005d51a2782090b0e84b96a86e3a329f8c312e8e3f91c1a4a0485099539e4d"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "最大能源股上用一目均衡表交叉。"
+          }
+        ],
+        "reason": "只提能源股与一目均衡交叉，未明确交叉对象和交易映射，暂保留待分类。",
+        "record_id": "M0115",
+        "row_sha256": "2d1b3bc5f439bb1bc30033262f9de16347d23d507501781bbacc186fe6376daf",
+        "rule_sha256": "a2a4fa7889de8f69c0b13e1a8434831f054d8897f634c1cfc616bf9f8013d5db"
+      },
+      "record_id": "M0115",
+      "source": {
+        "bytes": 2298,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0115.json",
+        "sha256": "6526b0e9ed699ee37b19dda4dd002fc6636928df6515a7bcbf22c76afb56314e",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0115.json"
+      },
+      "view": {
+        "bytes": 2129,
+        "path": "unclassified/M0115.md",
+        "sha256": "910b72e091e8aa6e0aa7f2bf14b6501d8166cc162fb416f68e105c7caecf0b0d"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "在节假日前2个交易日持有股票市场，其余交易日持有现金。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0116",
+        "row_sha256": "4272cab0e442fb370503e9baa96fa9b5de72c65e06d045895a75a6fdab5d14ba",
+        "rule_sha256": "94cf11b454d2444837f44f0cc3c383efca8456fa051a8f2395c9b1c7432862c6"
+      },
+      "record_id": "M0116",
+      "source": {
+        "bytes": 2287,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0116.json",
+        "sha256": "47a86873eaa5e7f3fed4790c9f5bcb70647a26537859eef8b3bab61935dedc96",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0116.json"
+      },
+      "view": {
+        "bytes": 2212,
+        "path": "strategies/M0116.md",
+        "sha256": "c8ab6029d72db825e6285d6f3bbbc39c60a1b9a55b26d444ca15e3dd2e455f7d"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "日内做多有正面新闻的制药股。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0117",
+        "row_sha256": "9ffcde38d659813e8fde7a7c9380d8c7e7a0a6f1aa34b0e58ffd1a526e5bc6b8",
+        "rule_sha256": "8417249d06b6088bfc03003c216147dc4a86c283f6cabac4219f989fcae979e4"
+      },
+      "record_id": "M0117",
+      "source": {
+        "bytes": 2289,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0117.json",
+        "sha256": "7b63d9db6512327080e576c5f0db1240954e0cd2a0a9286039a02b941f2590f1",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0117.json"
+      },
+      "view": {
+        "bytes": 2183,
+        "path": "strategies/M0117.md",
+        "sha256": "7d367d36d0449e532f06de6a1915f4319e7976373a64719969bd53e42e40cae8"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "在财报前后-10至+15日做多这些股票"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0118",
+        "row_sha256": "6269c6b3579bb050c0f2d6a880b5a8cd1ed9dd8b58f184682096a76e533b2cd8",
+        "rule_sha256": "464fe7126fd313fe4b3de17c7364147f829e0c6830e792ec1a0bf22a71ccc1ee"
+      },
+      "record_id": "M0118",
+      "source": {
+        "bytes": 2560,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0118.json",
+        "sha256": "88d6447d18f6c46227d0098bf7f07a121728def4a2e6c86379896f01878e9a81",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0118.json"
+      },
+      "view": {
+        "bytes": 2466,
+        "path": "strategies/M0118.md",
+        "sha256": "8278e7acb2267bef37c5458848974929511351ea5a161a3655d0b5c406f683bf"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做多高成交量集中度的预期公告组合、对应做空"
+          }
+        ],
+        "reason": "[factor_based] 主要对象是有具体股票池/资产或组合选择的因子应用实现，不把所用底层指标同时新增为因子 ID；规则和定义仍未复核。",
+        "record_id": "M0119",
+        "row_sha256": "a41555c6893ef575f833f300e1690b50fd61266529618f68aaf33a94e6b00f2f",
+        "rule_sha256": "1c942188c5d2fd19a2252a4a4d4428de444899e2ffb2a20060578ac7e338bdfd"
+      },
+      "record_id": "M0119",
+      "source": {
+        "bytes": 2544,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0119.json",
+        "sha256": "f9c00d9549de0fb94790a8fad94579cc8bcc1959b3ffe2d21a8b6b5438fde317",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0119.json"
+      },
+      "view": {
+        "bytes": 2469,
+        "path": "strategies/M0119.md",
+        "sha256": "a72267e09155fb6b95f7a9fa2efd01fabb094d97234bb31cd0bdef3e0fe9e4ba"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "持有t-1至t+1共三日后平仓"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0120",
+        "row_sha256": "93aeff47032eb426fe1c523f58ea1e0f7c7a4e8da8d5c1c908c40066a552d18c",
+        "rule_sha256": "d59f8d099f1868d3a69c0eec3dedaaf8f4b77aca4877a3f5a9126d0126d2a8f5"
+      },
+      "record_id": "M0120",
+      "source": {
+        "bytes": 2422,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0120.json",
+        "sha256": "1e04d38f5eb14805f96d036288a1bdf253c31b08747bf645a0e6fce819233271",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0120.json"
+      },
+      "view": {
+        "bytes": 2307,
+        "path": "strategies/M0120.md",
+        "sha256": "1d6369c9b4f87803f7351fa3ca89651fd84b215edc5eac153cda9a9b57f6a82e"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "factor",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "HML = 1/2(Small Value+Big Value) − 1/2(Small Growth+Big Growth)。"
+          }
+        ],
+        "reason": "主要对象是规模—账面市值比组合定义的 HML 因子收益公式。",
+        "record_id": "M0121",
+        "row_sha256": "0022d713299c90a387178c4b70e4cfa73ddf944f63cba1e385443800f7afdece",
+        "rule_sha256": "18ccd4ab2b62288dee9fa693995400581caffbd2a7ef67e4ac5c811bb084eb03"
+      },
+      "record_id": "M0121",
+      "source": {
+        "bytes": 3203,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0121.json",
+        "sha256": "6b2e1438dfe171194c6f3939044abf276bca600a76ebd8438b0f2662a0e3e2f8",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0121.json"
+      },
+      "view": {
+        "bytes": 3047,
+        "path": "factors/M0121.md",
+        "sha256": "8650d0e61495aff59b22008e8756334662fbdac3f97150aa597ede88e8af833f"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "用 CAPM 给道指 30 只股票打分，按分数交易。"
+          }
+        ],
+        "reason": "[review_disputed] 仅称 CAPM 打分并按分数交易，未明确分数定义或交易映射；独立复核认为仍属主题性描述，按保守口径待分类。",
+        "record_id": "M0122",
+        "row_sha256": "7c178ed6302b6d040af6672f7803d3df3cc1a6860f67851a166d2c6dfcbf0267",
+        "rule_sha256": "71785d67312b5be5aa4c74eef0fc6d9dca7f38bdaad11ad9d1ace7e64ac73f73"
+      },
+      "record_id": "M0122",
+      "source": {
+        "bytes": 2329,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0122.json",
+        "sha256": "d4c4a71a2a896c05d036f50f08a7f03601b08a0db48bdad80ba3e62c0c504807",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0122.json"
+      },
+      "view": {
+        "bytes": 2248,
+        "path": "unclassified/M0122.md",
+        "sha256": "dafd2ede0803b19372e2997c3fdfa1a4a12d0e56d82f06f4cb661f494ec3d1a3"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "残差穿越±2.33σ开仓"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0123",
+        "row_sha256": "ec3989ede4f3e55cc4e2a5d987890c6f1542a6c4690907e52824f78e543ee146",
+        "rule_sha256": "39261d6931b914a07e76324f93691b2f192ab3650b153999fcb7d6fefce0cda3"
+      },
+      "record_id": "M0123",
+      "source": {
+        "bytes": 2543,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0123.json",
+        "sha256": "166a9c225725fd7cd674f449756b6c612c8d95196b966b830da00e3251c9ce46",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0123.json"
+      },
+      "view": {
+        "bytes": 2430,
+        "path": "strategies/M0123.md",
+        "sha256": "18ea1caa046a61c2dbeaae3da69d8a8ca0170634bb47a34007f9a679545b1603"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "每个交易日按收盘价买入SPY，于次日开盘卖出。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0124",
+        "row_sha256": "0af9dcbc74e55aa4933b991e2f54378ddcdc3dd7ea8ffa6ec696281c1f7e1793",
+        "rule_sha256": "3de54811639d2fcbce028befc2d7bce3f89856e8ca3df3cc54359328e35eff5d"
+      },
+      "record_id": "M0124",
+      "source": {
+        "bytes": 2337,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0124.json",
+        "sha256": "7c617847fb5f727ad365485e94ad13c6f96728b41727e78ad8db8648e3fe1901",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0124.json"
+      },
+      "view": {
+        "bytes": 2246,
+        "path": "strategies/M0124.md",
+        "sha256": "68a27b29fd2cf30d3b7436a17c89d610a2220ad4a740a4bf3d2ccd622ee14e9e"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做多过去一年最好的 10 只，做空最差的 10 只。"
+          }
+        ],
+        "reason": "[factor_based] 主要对象是有具体股票池/资产或组合选择的因子应用实现，不把所用底层指标同时新增为因子 ID；规则和定义仍未复核。",
+        "record_id": "M0125",
+        "row_sha256": "2c130e8c3908e01f09b347b9ccaf5bffeb9e09d22349b6c15535868fec57415a",
+        "rule_sha256": "9353ee31d5e54ff2d62168b316bafc8f143aff68cb53139cd37a9357a5e727b6"
+      },
+      "record_id": "M0125",
+      "source": {
+        "bytes": 2317,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0125.json",
+        "sha256": "67287ae091f1e6d0c6786d2d9977bcf6c5183fad8e48b36431a056a81056b7e1",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0125.json"
+      },
+      "view": {
+        "bytes": 2245,
+        "path": "strategies/M0125.md",
+        "sha256": "0fe49ac3c25d553eca54eb2d171844cb7c245fcce0f2c3a62cdcf9d8c1cd7762"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做多偏度最低的 5%。"
+          }
+        ],
+        "reason": "[factor_based] 主要对象是有具体股票池/资产或组合选择的因子应用实现，不把所用底层指标同时新增为因子 ID；规则和定义仍未复核。",
+        "record_id": "M0126",
+        "row_sha256": "a7ee8f28f23f04f3cb455094f7ce405ccd2547cbad26264cb3c822f16de8d88b",
+        "rule_sha256": "d8ffcd98581586e837206a77c8da0cf0cfae200b9d1d229d3299e4be5b01cac2"
+      },
+      "record_id": "M0126",
+      "source": {
+        "bytes": 2301,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0126.json",
+        "sha256": "d4b350ded454e055ba2a348c17c9750dd6d4a4ff2641c7af3b44288380eef510",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0126.json"
+      },
+      "view": {
+        "bytes": 2190,
+        "path": "strategies/M0126.md",
+        "sha256": "c1d6a2dcfc7dc641356882488f70c6fbb5f6e96e18aa33ad0c8e7655e1615e7f"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "按投资情绪在成长和价值之间做多空。"
+          }
+        ],
+        "reason": "[review_disputed] 只给情绪、成长/价值与多空方向主题，未明确情绪计算或方向映射；独立复核建议待分类。",
+        "record_id": "M0127",
+        "row_sha256": "5823f28d5019892e19f621d4c0db52d7b7f604663a78a106a4d1ce41675faa79",
+        "rule_sha256": "8fc533e4fd054ce03db68d1ea54e97014394effa6bae81dcd86c3abbb471fa28"
+      },
+      "record_id": "M0127",
+      "source": {
+        "bytes": 2304,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0127.json",
+        "sha256": "2075e8c8bd13edf09a7a0c9bef07b2f89808fa4457c2dbe71b09759d144dd36e",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0127.json"
+      },
+      "view": {
+        "bytes": 2178,
+        "path": "unclassified/M0127.md",
+        "sha256": "b7515f0edcf9736c06a3beae7df3d214f901f893654d907e5ae0f97eec0c6e45"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "15 分钟收盘同时穿过 Camarilla R3 和前日高"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0128",
+        "row_sha256": "97a037ed7e568a339a43162f75497e564e596de24b6da48472247476980877c0",
+        "rule_sha256": "f8b557e6d46f54b8910876df2d67ee97d9cd89b91edecbcd661f98d4ab78f32f"
+      },
+      "record_id": "M0128",
+      "source": {
+        "bytes": 2450,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0128.json",
+        "sha256": "8a3e9499fb0bda32f9fb467e0938e8f59608f2716fd3f3ceb009b56363f7faf4",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0128.json"
+      },
+      "view": {
+        "bytes": 2362,
+        "path": "strategies/M0128.md",
+        "sha256": "4c6c71a89d43778f4aef00dd582ceb831f8d5ece08a56eae9c0918e1db8b1973"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "只在 50 云上方做多，下方做空。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0129",
+        "row_sha256": "def9411e392266a6b622e84dd17c5d511ba9d13ab284e003b928686c989e6158",
+        "rule_sha256": "ee285fad50b976cfa1b02029b01341223fa20a8ff30d4935ded9e588d3eb148c"
+      },
+      "record_id": "M0129",
+      "source": {
+        "bytes": 2395,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0129.json",
+        "sha256": "3247c2c2c4e79d7426083fe87d4c6313809effd482e4c3c758075acef3916d4c",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0129.json"
+      },
+      "view": {
+        "bytes": 2286,
+        "path": "strategies/M0129.md",
+        "sha256": "d404d3c4ff85d7a2945fa3576fecb2ee005eaa493ba3818fb932c00ad6f3f6bc"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "价格和均线都在 VWAP 上方才做多"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0130",
+        "row_sha256": "4d4d7e4ec88892378c708a7d2e2a1d66cbe3624bc98350b20da331409047a022",
+        "rule_sha256": "a0fffda75cdb402fff6ddde04de1a2cea0837f3dab4b4d8f42cd7db5ca8e67ec"
+      },
+      "record_id": "M0130",
+      "source": {
+        "bytes": 2384,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0130.json",
+        "sha256": "435417d1935da154df45614da2f6d09282fbcd14ff6bf6dbefd7d638639ea06a",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0130.json"
+      },
+      "view": {
+        "bytes": 2278,
+        "path": "strategies/M0130.md",
+        "sha256": "532b9fd41f05c1ad38259c3480e2ba07d849eb35009dd089b33bdc6c4c1dcc47"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "收盘上穿 VWAP 做多，跌回 VWAP 下止损"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0131",
+        "row_sha256": "3b0d8bae216d0dc4e1e369fd2884fe5476d343015c10c0d983fa1437328e9b45",
+        "rule_sha256": "9047d913fd4cac7eebed3a957e06f10efd8d9a98b44cfc49ea80ce8b613eb1af"
+      },
+      "record_id": "M0131",
+      "source": {
+        "bytes": 2387,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0131.json",
+        "sha256": "7656d8fae2db8d78934a9a26b1f25d6578054e5ef6cce2753a76a3cf20aac2f3",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0131.json"
+      },
+      "view": {
+        "bytes": 2286,
+        "path": "strategies/M0131.md",
+        "sha256": "a5b1822242b5d011b37cb0d132a4f665f8f14f62aa76c1e336128a8ba31e4917"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "入场：20 周新高，且 20 周涨幅至少 30%"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0132",
+        "row_sha256": "bb76c929297ca9d88dfee89e10d8e41082576ca179083d307fa309ecd7c21e38",
+        "rule_sha256": "facb2bba30c09d883ebedc761ed2a77388cb8ff74dcf74238cfbb044bd1c2eb0"
+      },
+      "record_id": "M0132",
+      "source": {
+        "bytes": 2549,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0132.json",
+        "sha256": "1b506909b66c5ec9b1106003dcec9c4680ff40319421cc015f8632a1a52680f4",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0132.json"
+      },
+      "view": {
+        "bytes": 2451,
+        "path": "strategies/M0132.md",
+        "sha256": "61efa5fb515d3dd72b215f4c3bd7205126dd38b58041dea66e7274badfb2aa06"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "从开盘算起的 ETF 动量。"
+          }
+        ],
+        "reason": "只说明从开盘计算 ETF 动量，缺少明确分数公式或交易映射，暂保留待分类。",
+        "record_id": "M0133",
+        "row_sha256": "dfc976402b2bcd8686f903d9b4cc40c218ac040c7f24690d7b9ae7526532d0c0",
+        "rule_sha256": "43f4f62ac032317a7320410486c3702f67c2cc93e3cf34be1473396b7d3e630b"
+      },
+      "record_id": "M0133",
+      "source": {
+        "bytes": 2279,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0133.json",
+        "sha256": "76831ed3933140219d48a20a0302565c992534ca512827bcb29f53752df5e996",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0133.json"
+      },
+      "view": {
+        "bytes": 2094,
+        "path": "unclassified/M0133.md",
+        "sha256": "dc2b1be033a108c189966e0aa9ce7a96894fbfef3ec3360ac2c869bd7a9cc9c3"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "VIX 处于最高分位做多股指 ETF，最低分位做空"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0134",
+        "row_sha256": "3ee98eb4cf06cd9dbb0346c1f824544f56f331d790e89021cc5cd31a447c6598",
+        "rule_sha256": "f5f972a20d38913c60a170170d045395d653b0cc5189ac1afbf0552b68f93d83"
+      },
+      "record_id": "M0134",
+      "source": {
+        "bytes": 2325,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0134.json",
+        "sha256": "11b88d3e62068494c886a4a6d022d231bfcef9da0bd7a04d275f9e279650f370",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0134.json"
+      },
+      "view": {
+        "bytes": 2234,
+        "path": "strategies/M0134.md",
+        "sha256": "850de6b1b49d079b51973d292b6579f8fa6ec8a4fafd59fd0f55b2030eb40d71"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "交易两条相关指数 ETF 日内路径的偏离。"
+          }
+        ],
+        "reason": "[review_disputed] 只给相关 ETF 路径偏离交易概述，未明确偏离定义、方向或组合构造；独立复核建议待分类。",
+        "record_id": "M0135",
+        "row_sha256": "0b860532b183b1ff28571b2ae40f6c3023e9916d0c9cc38ecd43e1bb6ed80e62",
+        "rule_sha256": "e86ae7cd56c67bed433c3ad042dba1d5f37cc68b25307583098ed8cb76ec1c3e"
+      },
+      "record_id": "M0135",
+      "source": {
+        "bytes": 2400,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0135.json",
+        "sha256": "53eb7595c2978c2630b158edc33eb4010bdc897cea5d50e8ca0d71e5fc41cd26",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0135.json"
+      },
+      "view": {
+        "bytes": 2282,
+        "path": "unclassified/M0135.md",
+        "sha256": "d22795d02ecfbecf920302156eb153cbed81d7a0164d4cfba27c4f9dd0420bff"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "用简单均线择时杠杆 ETF"
+          }
+        ],
+        "reason": "[review_disputed] 仅给简单均线择时杠杆 ETF 的主题，未明确均线或交易映射；独立复核建议待分类。",
+        "record_id": "M0136",
+        "row_sha256": "c9d9a638ba370c55b1032af1a8b99172255df8f0427e7734a6e073a96ab2e6bd",
+        "rule_sha256": "80a8ffe7a235bd812677196b5a0c831f27dcc0a5a5d1ee42661bfa07878e42a7"
+      },
+      "record_id": "M0136",
+      "source": {
+        "bytes": 2314,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0136.json",
+        "sha256": "70682acbbfc5f218fa9c7f84556a36869d724e90e014975e0972ed3f865a5866",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0136.json"
+      },
+      "view": {
+        "bytes": 2156,
+        "path": "unclassified/M0136.md",
+        "sha256": "9ca23b0c194f3e0248d9ebafb98b96b13428a72b95a3829e2978665eb878f61d"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "两者都正满仓风险资产，一个正半仓，都没有则空仓"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0137",
+        "row_sha256": "f0334ad29ab602ae49587cf96c676f105dd93490b80db95544c4825b38939af8",
+        "rule_sha256": "2cde26bbf5cd9dd838e10d7dd834b17a2f67f06026c93d0eba58326d04b81fff"
+      },
+      "record_id": "M0137",
+      "source": {
+        "bytes": 2705,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0137.json",
+        "sha256": "8422bdafe6ee4a5f89fa9e78d4916999b4698303784efb70e70301ffb81f5b50",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0137.json"
+      },
+      "view": {
+        "bytes": 2646,
+        "path": "strategies/M0137.md",
+        "sha256": "16b86487c8a7ff9c2af2b7faf7ed6891a414fa374dbdccfdfecc03ddd3fad814"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "若当天是周一或周二且IBS≤0.15，收盘买入。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0138",
+        "row_sha256": "b886fb5d2f9d18daf07266adaad79d085314dd7b008d37bfdc60a127b9e13ed8",
+        "rule_sha256": "95fdb809b4b368895b913e2b21e4f8bb9224ecd7387b26cd4ab0d65ccd6d5b0a"
+      },
+      "record_id": "M0138",
+      "source": {
+        "bytes": 2365,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0138.json",
+        "sha256": "a348186a471bbdcd4022889226d856ae2b5b2bb6885ed8102a777b6c99668145",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0138.json"
+      },
+      "view": {
+        "bytes": 2291,
+        "path": "strategies/M0138.md",
+        "sha256": "dacdf6f2852b6929ba222da9a5a51f267c38d6f99e98146aea78bdaad062b356"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "若第一根5分钟阳线且收盘在350期均线上方则买入"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0139",
+        "row_sha256": "79564124d59052eed62401d3ca569ee49a9d072f0cd5742f04adfb5810f97b68",
+        "rule_sha256": "539061a45a6a808f85f298be5aa9f96eee7467612c0c462cdde21743c50923ed"
+      },
+      "record_id": "M0139",
+      "source": {
+        "bytes": 2649,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0139.json",
+        "sha256": "d26478b3bc0fef5b9eae75ce79a513a80e63f2a4c400c91fbda889324bab971b",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0139.json"
+      },
+      "view": {
+        "bytes": 2584,
+        "path": "strategies/M0139.md",
+        "sha256": "2c995d56ef73cca581e1da62e29a6249d0ade7c552e108f73a98bb04ee18399c"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "价格在上沿上方且高于VWAP做多"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0140",
+        "row_sha256": "f05b7f3a656bad9b79aa1671597242496187b8e366ab34d189c26d647f873a15",
+        "rule_sha256": "8be5ae0c30825f1592cec2a3cc523f3335145de16571f4e98bd5eeb504be57b3"
+      },
+      "record_id": "M0140",
+      "source": {
+        "bytes": 2869,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0140.json",
+        "sha256": "e2c2d551f14682d0e21720c1b060f3841d6cffea61cfe747b2f3542d3d4281af",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0140.json"
+      },
+      "view": {
+        "bytes": 2767,
+        "path": "strategies/M0140.md",
+        "sha256": "f2ebaabd24a92f0152bf376e316f4ea85e6c4c7ec3e3e7eaf26550962cd79ccb"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "ExcessZ≤-1.0则收盘买TQQQ。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0141",
+        "row_sha256": "e0807e14950598d556096f9a8212440bad176fa1d2ca5216ac6aea82fe7ced42",
+        "rule_sha256": "d7251fcf4886f7f4b8937ad528d5b396e3e9b9c78afeffdf26197b123ac25c4a"
+      },
+      "record_id": "M0141",
+      "source": {
+        "bytes": 2363,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0141.json",
+        "sha256": "b7fc55a51372e16b8adb2c0dfb0232d5ca424e01e0bff44ed7729bb3606f1888",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0141.json"
+      },
+      "view": {
+        "bytes": 2259,
+        "path": "strategies/M0141.md",
+        "sha256": "fd7c615d87a82d5179c361ad0ced97ff25865c15884192cfb60f3ce7f650576a"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "收盘在带下且IBS>0.4则收盘买入。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0142",
+        "row_sha256": "174cb8103c282050d900b38162b593fbcaf98a5ce18b8710dc4351d249f6f303",
+        "rule_sha256": "490d92d132728931003f78a79f0bfbcb9b6642e5a7df30bee267c3efb9cb5ab9"
+      },
+      "record_id": "M0142",
+      "source": {
+        "bytes": 2341,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0142.json",
+        "sha256": "2ae0f4c137f4d0d64a00c4f50a98b2dedef1b9952726d6672d0b0d6d0f1b0b4d",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0142.json"
+      },
+      "view": {
+        "bytes": 2233,
+        "path": "strategies/M0142.md",
+        "sha256": "b4479ee15cb3b5c191def1b4566ebf394cae11f68190b6f75135ff0ad881c0af"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "若1月收益为正则继续持有股票，否则切换到短期国债BIL。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0143",
+        "row_sha256": "8127258f79675a2d7db45187e2837fe0b107ec6cdb84a017ee8609e2c22a50de",
+        "rule_sha256": "2b4f101041b6d0f663977f2c1995886662b23ed693e319aa18ba0d9d90f2713c"
+      },
+      "record_id": "M0143",
+      "source": {
+        "bytes": 2514,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0143.json",
+        "sha256": "717a97551aa9519fcf4a2296fe7d4ab19ae03cc3645885073c5fda078ce2c71f",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0143.json"
+      },
+      "view": {
+        "bytes": 2439,
+        "path": "strategies/M0143.md",
+        "sha256": "869b6e039c6f6a7221293c71deb0b58927b92ff50c1dd29d933e61c1dd330dbc"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "每月再平衡到1年动量最高的4个SPY行业"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0144",
+        "row_sha256": "9df9689f069eb1cad41d422c9eb7a11dee251e042474bba07cbe0c5838135926",
+        "rule_sha256": "3286862f85bd2a09e040624f9575c5c90a3febfc563b43ff332bed8c7e9cbd67"
+      },
+      "record_id": "M0144",
+      "source": {
+        "bytes": 2419,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0144.json",
+        "sha256": "df6f88aa9f4d0b37bcbe7dd6f2ae75a47bbf512a6ee6c86cf539c4679b51dbb6",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0144.json"
+      },
+      "view": {
+        "bytes": 2330,
+        "path": "strategies/M0144.md",
+        "sha256": "d63cb8e4f11f4bd8585a5fd2ea2426e346517b62b3dbe1de5589cc8095cbd6df"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "收盘买入SPY，下一个交易日平仓"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0145",
+        "row_sha256": "b091861c57ca43c6f83a15d362792bfe0fdeefa32a9c263b644d4ac7e90a867e",
+        "rule_sha256": "a4a7f8d1d5dc6e0b2fafed557f37d51f0a849927885a958be82a5838c8353426"
+      },
+      "record_id": "M0145",
+      "source": {
+        "bytes": 2331,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0145.json",
+        "sha256": "dfb07db032d481f3502a68050f5e5711bf7c0d3932e330bc9f3592ac5bc57e1c",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0145.json"
+      },
+      "view": {
+        "bytes": 2222,
+        "path": "strategies/M0145.md",
+        "sha256": "89507d5ccb9abe9ba363eb56d91c8573a226ea2d1aee8d84210040926cde5f94"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "差值为正则15:59买入SPY、为负则做空"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0146",
+        "row_sha256": "789c3c00fc3628653f84bdb08b27bce3bd28618e7ebbcf73fd823a392fa5f8b8",
+        "rule_sha256": "c86dbbbc4f0754048ad3f0a0f6d24a58bb587182c4370545040f17e3e4b64be4"
+      },
+      "record_id": "M0146",
+      "source": {
+        "bytes": 2591,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0146.json",
+        "sha256": "d4bf7b3b63cb1a0c1651f7c373263f6e4ac68b6d9bc785d2638b4dd537fcf02a",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0146.json"
+      },
+      "view": {
+        "bytes": 2502,
+        "path": "strategies/M0146.md",
+        "sha256": "93395a0d0685f3520d45f3b7fee724bd41480329e9e2edc3bf74b145e444df64"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "离场改为收盘高于昨日最高价，或满4个交易日"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0147",
+        "row_sha256": "79222097c1f21709df8eef7d4fddb25c3abb12dd9494c326262c1c1f373e3aaa",
+        "rule_sha256": "9f2b94850710c41d38c62b40899422f4514f92690a784a7ab53fb23b97f311df"
+      },
+      "record_id": "M0147",
+      "source": {
+        "bytes": 2383,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0147.json",
+        "sha256": "fae8ea7125ddba834d219c01ec9f9962511f07a6f8f1e23fe358bb8f4ee9159d",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0147.json"
+      },
+      "view": {
+        "bytes": 2323,
+        "path": "strategies/M0147.md",
+        "sha256": "69e00e9dcb1bd995cdd7a1bfac472a77451ed4a168e5d78995bbbb2a9061b85d"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "若当天是周一且收盘至少比周五收盘低1%，收盘买入。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0148",
+        "row_sha256": "d685ccafc3cc710f1a1e53ac62fbd383d653fd9f6f1ae5336128e562b18acfe0",
+        "rule_sha256": "d79ac78e50866812b314a2e1324d2395a1d6ba8b51ccafcbdc774088cad75896"
+      },
+      "record_id": "M0148",
+      "source": {
+        "bytes": 2390,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0148.json",
+        "sha256": "22a5e42b3109e8233a3a7bc9ba191e0f91f9ca6f4e512699038309ecbda8e66b",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0148.json"
+      },
+      "view": {
+        "bytes": 2339,
+        "path": "strategies/M0148.md",
+        "sha256": "2a3180e28e0b09c12c1011cf379244e0b5ad0cb707ead3738f82b879a2e43063"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "收盘买入。4个交易日后收盘卖出。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0149",
+        "row_sha256": "f97c2e372264efaf41c00691b73e6a69b158132472ac4ee61b2e5ba12058b196",
+        "rule_sha256": "82c1d3d7300c4ddd85b6d6dd24c4cf1630762c4b8510fb8c1888fba11a486af2"
+      },
+      "record_id": "M0149",
+      "source": {
+        "bytes": 2349,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0149.json",
+        "sha256": "d881ee8a45112f0cb79d4b6fea446e59f70c9e2f9574d507e847c95bf3799e12",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0149.json"
+      },
+      "view": {
+        "bytes": 2280,
+        "path": "strategies/M0149.md",
+        "sha256": "565510fbcccb1e868c676f47516e03e0d2da3844861f9f81220f2ee832ab4f63"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "收盘买入。周二收盘卖出。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0150",
+        "row_sha256": "6aaf1548e0cf4e6dbadc5e550115e768880039346fe93758d5986b6140dd1414",
+        "rule_sha256": "e8747ebddba669b3128f1902f789cab953679905234b4d4f0df18cee4ae524e5"
+      },
+      "record_id": "M0150",
+      "source": {
+        "bytes": 2335,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0150.json",
+        "sha256": "853862176f88791465b50169ef91ad35df941699dc28293c81a2660f1fbea169",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0150.json"
+      },
+      "view": {
+        "bytes": 2244,
+        "path": "strategies/M0150.md",
+        "sha256": "e5a537564dc84752db00ceefe70c5b10b1239cdfe51e181ed39c810d9bbcbb13"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "收盘买入SPY并次日开盘卖出，只做隔夜。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0151",
+        "row_sha256": "c4b0b4fe3ff98b786fb366fc23be9349d4dbc418d272873d0b03305391aae5e6",
+        "rule_sha256": "f617d1faa2f2196d158dbdb13a21778b85b40b69cd23d36d6f4a71501d135120"
+      },
+      "record_id": "M0151",
+      "source": {
+        "bytes": 2438,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0151.json",
+        "sha256": "90ee4966213a5dcfdf584b0821caa48caacfb2d7d22691097d889d6f95ccefce",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0151.json"
+      },
+      "view": {
+        "bytes": 2353,
+        "path": "strategies/M0151.md",
+        "sha256": "2004f07df85bcffce40719f08ebb7a54e7ba68e6a38ed50c3441c2544329227b"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "期权到期周做多标普100"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0152",
+        "row_sha256": "f7ca8affd7a18fd08774bedab6a926f73e3518034003f55a6fc34078b3f86d01",
+        "rule_sha256": "512e3f9b3d0fde0a1707688b48ea83df2d5a8f7bb87c7ab4110e4030f0a64b16"
+      },
+      "record_id": "M0152",
+      "source": {
+        "bytes": 2483,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0152.json",
+        "sha256": "b23b9a83cbdb56f31c8438f5cc04ce57bd1a4fda3a8a8b5153ae2ebb42b9fc08",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0152.json"
+      },
+      "view": {
+        "bytes": 2368,
+        "path": "strategies/M0152.md",
+        "sha256": "fc9005e9ed8f3964c15ee0584745bf35866d2aa780cc5c3dc63ab0d070c26451"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "预测为正则满仓SPY，否则持有短期国债。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0153",
+        "row_sha256": "5661b497693e5c4e5c23b68072b7fa193b354b16b670b1e956c0046394e71011",
+        "rule_sha256": "ccd5fc6184b42e3f217266911e7731ac680dfbc14e4abc50ecd95103183e2a3f"
+      },
+      "record_id": "M0153",
+      "source": {
+        "bytes": 2351,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0153.json",
+        "sha256": "bfd42437ca4b2a87100c445973013d45d39c1c416700dcb48c12e42bcb305035",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0153.json"
+      },
+      "view": {
+        "bytes": 2254,
+        "path": "strategies/M0153.md",
+        "sha256": "c0e3729c92be42707d7abf948641d987f548ee5fb66dbe2955a46d7934ce4bed"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "月末前一交易日买入SPY，新月第三个交易日收盘卖出。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0154",
+        "row_sha256": "2d25ab99ad34a8ef639b6f8e63936481fcd08a71f02973f539fd22fc37af94ef",
+        "rule_sha256": "d1e91a4cedf195512731b36571c240a93895049f14c1db05c616c4b71d047b64"
+      },
+      "record_id": "M0154",
+      "source": {
+        "bytes": 2632,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0154.json",
+        "sha256": "984ad91505bd9b4c8712f0e78998a9d98a7661004e76c39c1b459ff65d4fed8b",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0154.json"
+      },
+      "view": {
+        "bytes": 2556,
+        "path": "strategies/M0154.md",
+        "sha256": "78f27dc702b66404d75b7f4a365661a39a639c9d43a57fa4a67a107ca66e7904"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "突破位=今日开盘±ATR。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0155",
+        "row_sha256": "7b61f0050dcb0ddef6fed6ef64e65782a573af95211b10e13aa4b48574663001",
+        "rule_sha256": "d4ae73abdc9f48877a7cc41c0539033a79d67edf4eae53bd987ec1991c975644"
+      },
+      "record_id": "M0155",
+      "source": {
+        "bytes": 2507,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0155.json",
+        "sha256": "5ffa5485b4fbf2eea7a2f3210dea6d972b56b30a7d11d7397c8ab659e25c00ee",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0155.json"
+      },
+      "view": {
+        "bytes": 2398,
+        "path": "strategies/M0155.md",
+        "sha256": "f6774d819ce34e7916b70a4f357225f54f4df14d7ea0b70fc80aede28a27103c"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做多 12 个月动量最好的国家股票 ETF。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0156",
+        "row_sha256": "ddf5cd5ed20f54c5c6906fc098378541e2d1795e5a6a4ccda1ba8a08d0a1a1d6",
+        "rule_sha256": "eaba637792e3ba981d6f5a92ab2206e54cb4ded22686eccc659696db6cd67291"
+      },
+      "record_id": "M0156",
+      "source": {
+        "bytes": 2307,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0156.json",
+        "sha256": "5c089b70001134857ef4ddba3c5aedd90979b3171df4d1a806aca06e893638a4",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0156.json"
+      },
+      "view": {
+        "bytes": 2209,
+        "path": "strategies/M0156.md",
+        "sha256": "3baa8340e4795a2f3784568e260cde658dae427ebb849a7647c0043b2bb5a30e"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做多过去 36 个月最差的国家 ETF，做空最好的。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0157",
+        "row_sha256": "1e7e5a8b3c8ae5d279e93a7b4ee768ed9f8bf7df976da2419d240fb573843c2d",
+        "rule_sha256": "14f4cd674b5e4410ef8c0362c31e234912156dc9af72a688d4639e96df14f4d9"
+      },
+      "record_id": "M0157",
+      "source": {
+        "bytes": 2331,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0157.json",
+        "sha256": "c7e7a5efd3e233c3756f2f7826a9fc068436d236e16dee6295c59084a014aa39",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0157.json"
+      },
+      "view": {
+        "bytes": 2251,
+        "path": "strategies/M0157.md",
+        "sha256": "11e4002c53f202776d43ce3bf0097fbd8316c79f9ab6e78b8f6f0fb80f442536"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "动态混合为快信号权重四分之三加慢信号四分之一"
+          }
+        ],
+        "reason": "[factor_based] 主要对象是有具体股票池/资产或组合选择的因子应用实现，不把所用底层指标同时新增为因子 ID；规则和定义仍未复核。",
+        "record_id": "M0158",
+        "row_sha256": "52310fb5e965d03f4d36e6849451c1385d98b6642aca65001616f88e9c84f976",
+        "rule_sha256": "22f10921858e2350c8e8a6a6a2ece3204dffe269f6b66a4beabdd4cee102b91d"
+      },
+      "record_id": "M0158",
+      "source": {
+        "bytes": 2698,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0158.json",
+        "sha256": "7c7900b6528bcfbbc7de8b667e9d7de99c1884904b40e5f747c761ad2c7010d2",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0158.json"
+      },
+      "view": {
+        "bytes": 2641,
+        "path": "strategies/M0158.md",
+        "sha256": "96a26c6cbe6c1ad0176f0c6a84f9be04a2c060b5e8c8afda52b319d818d95de7"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "最近三根RSI(2)都小于10且收盘高于200期均线则买入。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0159",
+        "row_sha256": "1ff84a545761d583e4e5fba5372244b0f3a3a984f060d21296c48151f3666750",
+        "rule_sha256": "c2dfb4f154a532ae6676ff840e37af97ca7f3f988f86343ed41c6427ddf83471"
+      },
+      "record_id": "M0159",
+      "source": {
+        "bytes": 2418,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0159.json",
+        "sha256": "ac022fc8c97aac188cc35765e2031650b311e14daac4253cbb9bb7e74252d99a",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0159.json"
+      },
+      "view": {
+        "bytes": 2340,
+        "path": "strategies/M0159.md",
+        "sha256": "520d1b620b342bc4bd508f62acd008ae4f584fdc5956dbd384aa0b8c9e6362a4"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "RSI(2)<5、上一收盘高于200期均线且空仓时买入。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0160",
+        "row_sha256": "856f6409c307b1b882cc77b40b7aa942ccce70ca12e16aa89f1f3cd22a01d72e",
+        "rule_sha256": "6a6ad40fb640151ace384c80e18f0770e91c9f602729062c1929d112c54e9a68"
+      },
+      "record_id": "M0160",
+      "source": {
+        "bytes": 2533,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0160.json",
+        "sha256": "25033c7136cd06669ed3697dcd922044080c3f3cbea63980a6a4467d3af7a4cf",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0160.json"
+      },
+      "view": {
+        "bytes": 2482,
+        "path": "strategies/M0160.md",
+        "sha256": "c32abc439c602ece5335b64912843f9144f2de6e977d404c4c801406d1a6779d"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "RSI(2)<5且收盘高于50期均线买入。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0161",
+        "row_sha256": "dd23214df65be36a5f4f290de7d450b965613c80c68404e466173aef75ce588b",
+        "rule_sha256": "eeca45c63318318db5dd3a40b0bb2e4a911b14e641aaa342bb9a6da5cf4af809"
+      },
+      "record_id": "M0161",
+      "source": {
+        "bytes": 2351,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0161.json",
+        "sha256": "57361663b7dbdd2c686b011796140040cb95afa788997b8c30c3e4fed95336d3",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0161.json"
+      },
+      "view": {
+        "bytes": 2261,
+        "path": "strategies/M0161.md",
+        "sha256": "537e59f21db8578bcdc7806a11dbd87dea8c2188568f8471f2d82901f06ed532"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "价格来回穿过云算震荡，减仓。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0162",
+        "row_sha256": "ac8ce133796c4c778d91ba47de45a64c3642d6df7944e842131b42a78178c2af",
+        "rule_sha256": "8fb0c8d99f3edf2c4315d7fcd747458e146a5dc69395f383eb669b204d33d0aa"
+      },
+      "record_id": "M0162",
+      "source": {
+        "bytes": 2386,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0162.json",
+        "sha256": "9c515ce99a8825ca4b7a2d3c04442b4c70cf4a5e27c31a2360b592d47742d718",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0162.json"
+      },
+      "view": {
+        "bytes": 2277,
+        "path": "strategies/M0162.md",
+        "sha256": "7e6007ec8bcae8d25cc7094cb190dcf36f5f020956b22971c6e78c9497141fa5"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "价格在前日高和 8 日均线上方才做看涨"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0163",
+        "row_sha256": "f32bc15ad1ce4ee5b9a3bf8b5170191237635fffedb067d2684dc3bd0df16506",
+        "rule_sha256": "f41cdf484f6370668bcf7f6ca900cfd90563928d122eadbc8d9fbf784196b028"
+      },
+      "record_id": "M0163",
+      "source": {
+        "bytes": 2426,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0163.json",
+        "sha256": "bcdb675af55fd9261e746c206bd440f9211737b96a153a9141c5865464669e8d",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0163.json"
+      },
+      "view": {
+        "bytes": 2336,
+        "path": "strategies/M0163.md",
+        "sha256": "549208606f5e1d36530532f57033bfa0de3975c5314139a801dce3b4f237a9fc"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "突破前日高做多，拒绝前日高做空"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0164",
+        "row_sha256": "e7b71a76640595b432fac29ef974e11b8420e8872b6544dbee9d8e42d4ea515b",
+        "rule_sha256": "7517b46fc7cfb096de936d2ddce826bac45744e019b8ad1da1d318e843b2e489"
+      },
+      "record_id": "M0164",
+      "source": {
+        "bytes": 2421,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0164.json",
+        "sha256": "891c0c123bdcaa68d4d28d848421500e5877e12f3b733074e83ecf6c66e44bc7",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0164.json"
+      },
+      "view": {
+        "bytes": 2330,
+        "path": "strategies/M0164.md",
+        "sha256": "1e61934f702fd1d2fa0943c588c0ddcfa285d1c6b86bebf28214bf1f52bb1b95"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "预期高于无风险利率则满仓股指、否则持有现金"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0165",
+        "row_sha256": "f2ce6da3a15fa47d69e2f49481df2b4d8047f99bd11df733dd925e806df003c3",
+        "rule_sha256": "fc3cb8bcda8aafda2592e5d5bac8cc35dfcdad5be5d6bc5be324dd57a379cc9d"
+      },
+      "record_id": "M0165",
+      "source": {
+        "bytes": 2412,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0165.json",
+        "sha256": "e73c70f9886093b6970c888f989be614d22a9ff382bff1d0e33b8924dd5c293f",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0165.json"
+      },
+      "view": {
+        "bytes": 2333,
+        "path": "strategies/M0165.md",
+        "sha256": "132f250b468890afa8b12e224bd369c53ab2cbf0a34ea24f0ea532fce0b61f99"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "回踩或收回 10 日均线进场。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0166",
+        "row_sha256": "1d5570221dbd90caa9155a1908e1af9f878ccd4e4d1c46cbef6a8025b3d70cca",
+        "rule_sha256": "9799cb478d504b8dc1490315e8606adde7b73f60ced2515f2f7e6e80e0ef3622"
+      },
+      "record_id": "M0166",
+      "source": {
+        "bytes": 2386,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0166.json",
+        "sha256": "391ad554de74a743a7fe96a9a1c0147644aadee2a17d799b57a457a49b822d13",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0166.json"
+      },
+      "view": {
+        "bytes": 2276,
+        "path": "strategies/M0166.md",
+        "sha256": "5f28bd1fb7054b285faf2f31ea8f1307777d7b239897b3625ead09d225d79b70"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "每月卖出SPY约一个月到期的平值跨式，并买入15%价外认沽作保护"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0167",
+        "row_sha256": "a915206d97158c3abc21762d431da236f3e10cc146858970d7e2f19132672c2d",
+        "rule_sha256": "452aadbff6fcac5cc6f7ba762161ec750df07a370ffaab597244d43131a3c253"
+      },
+      "record_id": "M0167",
+      "source": {
+        "bytes": 2536,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0167.json",
+        "sha256": "53ff3f656872562fb610d4cc289ffb80398002787263568516d90a76aee5667b",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0167.json"
+      },
+      "view": {
+        "bytes": 2475,
+        "path": "strategies/M0167.md",
+        "sha256": "96ed940e2bef16ccab02e249e5bf7b7165389b7b2cf7546bd4a0906a1b61c927"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "买入高分歧个股认沽并卖出SPX认沽"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0168",
+        "row_sha256": "900bfe6d3fcaec9d8e8cb9dc195850e2f7564d24ca65507af2ef6a0e3f0cde40",
+        "rule_sha256": "13c3c099f6df2c8a17e83064008506a34e0e61a876bcdd87ccd5252bfcc5b632"
+      },
+      "record_id": "M0168",
+      "source": {
+        "bytes": 2421,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0168.json",
+        "sha256": "0b517ca7c61dedad74a3e92751a031e6f95e7391c0c97cf3f4042aad5417e55b",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0168.json"
+      },
+      "view": {
+        "bytes": 2315,
+        "path": "strategies/M0168.md",
+        "sha256": "87c9294a2c59f59fde93b93e5c9df253f120c4340d6a7c542e4d6eb432c4f8a4"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "每月选取12个月动量最强的3只等权持有一个月后再平衡。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0169",
+        "row_sha256": "b10fda524b04c4b3824849f45ae54424cd640d7ebbb13ad63c9d4d3873e3278e",
+        "rule_sha256": "bb72709bafc1ae1a4e696ecdec5e554090e4d60e383448ced0bb2fc56f697133"
+      },
+      "record_id": "M0169",
+      "source": {
+        "bytes": 2583,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0169.json",
+        "sha256": "ceeadbfca7e04b910bf73f0e169b99b927e8139e5cfd06e953ca1aee82735044",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0169.json"
+      },
+      "view": {
+        "bytes": 2510,
+        "path": "strategies/M0169.md",
+        "sha256": "03462dea9954280f46375e26592569e7ade2defa8b1e54297da87ac2b0ca859b"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "按12个月动量做多最强、做空最弱"
+          }
+        ],
+        "reason": "[factor_based] 主要对象是有具体股票池/资产或组合选择的因子应用实现，不把所用底层指标同时新增为因子 ID；规则和定义仍未复核。",
+        "record_id": "M0170",
+        "row_sha256": "8f5886305c593c86bf35af2e23dade3eca7eafabe5a73bedd6a0c6676593d959",
+        "rule_sha256": "cb40f0952dfcf0cd8d000984dc36a05f9636e4b5f1a1ed2d63204f0ddcfbc9e7"
+      },
+      "record_id": "M0170",
+      "source": {
+        "bytes": 2516,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0170.json",
+        "sha256": "e6238b93cfe6347707c246a6e32d2ffa0f73162e1be304f6fa9c1d90d41304c1",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0170.json"
+      },
+      "view": {
+        "bytes": 2422,
+        "path": "strategies/M0170.md",
+        "sha256": "6b0e83ce15e09c6a969da8d52a411354a3bcb7b0616e203a38abf83e70fb7f61"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "买单成交后在对应卖价补卖单。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0171",
+        "row_sha256": "e04a698acc42eb234f23024a7faa4f22942814ac6ede42532cdac5890f5068a1",
+        "rule_sha256": "573fedee8d1d74d49d4a95c8c043ea61a6987da79ace94d2283ff2f65dddce37"
+      },
+      "record_id": "M0171",
+      "source": {
+        "bytes": 2489,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0171.json",
+        "sha256": "68318ac24c2df979f663c89744ad8b95cfb1b7fca2120113adf8278bf6976ccd",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0171.json"
+      },
+      "view": {
+        "bytes": 2386,
+        "path": "strategies/M0171.md",
+        "sha256": "a6a797843adbef0b6198b05961f81fe746580f39c117b35b4dfaf82ecc112e22"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "SPY 收盘高于 200 日均线则 60% 持有 SPY"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0172",
+        "row_sha256": "50a0b0ef2c145722b9294f37903f9eecd97cb726ed5b8865ff359e838d7b36f0",
+        "rule_sha256": "536015dfe1a766ffe03b38c1af1196aaaae238f068bc8e839487943e1df6c990"
+      },
+      "record_id": "M0172",
+      "source": {
+        "bytes": 2418,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0172.json",
+        "sha256": "addc1c1434e9056925bdd4fe6d9f25b7a38968bef7cd08512ec005ba4daa6437",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0172.json"
+      },
+      "view": {
+        "bytes": 2318,
+        "path": "strategies/M0172.md",
+        "sha256": "2f0ec82f4f1cc199ce133004fb90828f13682418a5d3955a35d5f5c6a24c75f7"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "在0.72（0.66与0.786中点）进场，止损在1.0延伸"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0173",
+        "row_sha256": "b114bdfbf3739f861ea5d5a40a63727d7807bfcbc105426afa039730a72d97f4",
+        "rule_sha256": "0e68322d9ed4a4f215f22bb1fc18f2e461aa32348c5ea97df6b4d313e1dcecc8"
+      },
+      "record_id": "M0173",
+      "source": {
+        "bytes": 2373,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0173.json",
+        "sha256": "7522b6399077a7f259a48673c9e1f157b060ae3072d5da19a1d15574ff597fde",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0173.json"
+      },
+      "view": {
+        "bytes": 2301,
+        "path": "strategies/M0173.md",
+        "sha256": "b547017efb0df52fc659b24a9836c8555e4d045e07143a9bb63dec10cac86a04"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "价格至少穿过局部摆动0.236回撤才做多"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0174",
+        "row_sha256": "7556157cf701fe78c6d5fc4bebcffdfe45093055f124024ea4e7972b6b8b51e5",
+        "rule_sha256": "5c72e0da050f4b93a38428f092136264bd075cecc3b472f608df417cf5666985"
+      },
+      "record_id": "M0174",
+      "source": {
+        "bytes": 2480,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0174.json",
+        "sha256": "0ed8c79645d8cbd6bbb41b1c8a567c7d49315e1dd86cd430c7ce2573e4988fbb",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0174.json"
+      },
+      "view": {
+        "bytes": 2405,
+        "path": "strategies/M0174.md",
+        "sha256": "f4b585e5e9be0ff218981a37c89feb626dcfa530c40774e3b66b545fc7cbfb6f"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "成交量>1.5倍20期均量时做多"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0175",
+        "row_sha256": "e6009fa4c67a33fc6cf65375dee45c832ab1a5aefc628141079c0df078b7fd3d",
+        "rule_sha256": "a1a48067a72c39fb86c05c94380b10f8a3aa4ea3db3aaf90f9b27b7fb5b87fac"
+      },
+      "record_id": "M0175",
+      "source": {
+        "bytes": 2397,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0175.json",
+        "sha256": "27bf31f2a18d4e6dd6e3aecc907b00f7132964930ce55b820c694cd00087d8f0",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0175.json"
+      },
+      "view": {
+        "bytes": 2299,
+        "path": "strategies/M0175.md",
+        "sha256": "42a261d55c56cb1d773b239e109e8871a2756705281666c25dbddf35ed7b40e2"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "趋势对齐。RSI(9)加EMA(9)，阈值75/25，15分钟。"
+          }
+        ],
+        "reason": "列出 RSI/EMA 周期和75/25阈值，但未明确趋势对齐与阈值的交易映射，暂保留待分类。",
+        "record_id": "M0176",
+        "row_sha256": "e6d7dea93024a700a03c7b932d7d6c316cba828e01407ad73c7a54276c83b163",
+        "rule_sha256": "7bcd7541c677795a8dd702d4317f7ea868418b7cfe226320661d663fbf22f97d"
+      },
+      "record_id": "M0176",
+      "source": {
+        "bytes": 2220,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0176.json",
+        "sha256": "7b6c1a61a83f5b04cd1146fd7aaa9ef5dabd9ec90e718974ff5867e7a4f25523",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0176.json"
+      },
+      "view": {
+        "bytes": 2077,
+        "path": "unclassified/M0176.md",
+        "sha256": "421b8e884513ca193eaae3ac92c8a497fa7faba45cae754f2bc29060e232cddf"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "超卖<25做多，超买>75做空。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0177",
+        "row_sha256": "af31aa1142a393e2705344660880ddd3b8181adcc8bc3ea24881a3e3045aaf5f",
+        "rule_sha256": "43f4140f160eab079c021590c093207b6764779dc45a4dca8004af9dec36d292"
+      },
+      "record_id": "M0177",
+      "source": {
+        "bytes": 2403,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0177.json",
+        "sha256": "d8fa0722a483c21c5442640f681f9f54afed056cfa661f058721260cc068ad00",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0177.json"
+      },
+      "view": {
+        "bytes": 2311,
+        "path": "strategies/M0177.md",
+        "sha256": "95a615be0c86e0fd3df9a001d81b268a1126e9624546db6e407e8b9997d104b9"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "止损-1.5%，1分钟内ROI 1%。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。 [partial_rule] 摘录尚缺关键条件或完整交易映射，目录归类不代表可执行或规则齐全。",
+        "record_id": "M0178",
+        "row_sha256": "3862cd7cec7aa357de6bffa36e30d53552bd8fd5a63db34c83cdc729dcada85b",
+        "rule_sha256": "4fa89e99d306f03b6a4387aee129cbc36723f583d1e1aedb9bcfc19bb5d6bdd2"
+      },
+      "record_id": "M0178",
+      "source": {
+        "bytes": 2454,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0178.json",
+        "sha256": "e214aff1d0b84b110b39bcf0fd33183d41aa577dda7a456bcf039f48808ab872",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0178.json"
+      },
+      "view": {
+        "bytes": 2459,
+        "path": "strategies/M0178.md",
+        "sha256": "7490e07cf4fe0b482077d11bb2b27a08875102d42b2b5f5392d062e609ee1368"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "唐奇安突破入场，ATR止损，最多加仓4次。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0179",
+        "row_sha256": "3437a176729acea59de7e019e0a1830dc2c79fb4b12755ac1479ba391a3c59d4",
+        "rule_sha256": "cd24771f7172bae9ac61d6942237b5141f297c6e1cbef573873207c592756553"
+      },
+      "record_id": "M0179",
+      "source": {
+        "bytes": 2367,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0179.json",
+        "sha256": "cc8713292912ab6a66a4387a750c3a967af68a682bddd4cb9d5ed33799d7fa60",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0179.json"
+      },
+      "view": {
+        "bytes": 2282,
+        "path": "strategies/M0179.md",
+        "sha256": "90aff7e543e22466b8582bda6df5d96a4e7d5091b32c37cb4d2016f70f46658f"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "趋势加仓2%，KDJ死叉减2%。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0180",
+        "row_sha256": "e92194cf9f3f26ca4b6be6f268376930f496d27af7f3227a3d6815b482588ddb",
+        "rule_sha256": "2c13d1f68011214aa7d95dc3e511455679b005d5373b491f1a33400119918a73"
+      },
+      "record_id": "M0180",
+      "source": {
+        "bytes": 2618,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0180.json",
+        "sha256": "c593aae7165ddad86b1469afd8cc144449e48f484238ba707a35db97da2cc39f",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0180.json"
+      },
+      "view": {
+        "bytes": 2514,
+        "path": "strategies/M0180.md",
+        "sha256": "5acf63f0bf480c0adc110b24f0338e3ac1ec1f0c8a23c0388565ee30f1915cef"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "突破最近30根最高价进场，持有3根后离场"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0181",
+        "row_sha256": "a3317030f831db502d65836d8e7686d494dba28f05d882ced9eebccde64c10ef",
+        "rule_sha256": "67d028c034f9f21edff2e8a30fa205612ffd855e8a25b24ddc81e66e6a0cd0d2"
+      },
+      "record_id": "M0181",
+      "source": {
+        "bytes": 2316,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0181.json",
+        "sha256": "e488f94b5ca38626646de2dab0fe1d6a538459f3d8af9c7d55f9d8149a66ff49",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0181.json"
+      },
+      "view": {
+        "bytes": 2231,
+        "path": "strategies/M0181.md",
+        "sha256": "b8998f3ad8b5e436aadc772b16d96e37a089b79f605a5bb59fcbddb9041a757b"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "只是止损放置。止损放在进场K的24期ATR距离处"
+          }
+        ],
+        "reason": "[partial_risk_module] 原条目明确是 ATR 止损放置模块，归交易风险管理应用；不是完整进场系统，不补造入场规则。",
+        "record_id": "M0182",
+        "row_sha256": "ef4e82feb667daeb1a83583e6964ea899b4da9b2623795836f9b9b93e988bad8",
+        "rule_sha256": "e6ed18a2fa432101059797418673f8b986e4f03ab2bc1716379b027b0e1e2eab"
+      },
+      "record_id": "M0182",
+      "source": {
+        "bytes": 2257,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0182.json",
+        "sha256": "3619cb10467702604cc8a8bee9c36f99e2b575deefbdc85fe35c441de49e8909",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0182.json"
+      },
+      "view": {
+        "bytes": 2160,
+        "path": "strategies/M0182.md",
+        "sha256": "79ac730879690f2c1bb94be480198889c7e75a95180236853f0f50b072966ccb"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "下一根开盘做多"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0183",
+        "row_sha256": "7862582726eed1e30df04d73a6178ab57fb8b5c7b5f56691d865b3005dd83b6b",
+        "rule_sha256": "9b86f27158ae7b5299eda0348e334001060f81ad17ff055cb5b2e4bc4b86b84e"
+      },
+      "record_id": "M0183",
+      "source": {
+        "bytes": 2378,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0183.json",
+        "sha256": "30e9c54c1a641193365b45be2c4aa0b17449a77805047cef124427c034bbf068",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0183.json"
+      },
+      "view": {
+        "bytes": 2264,
+        "path": "strategies/M0183.md",
+        "sha256": "5833ad1ca60aa6eaad0ac436aab3a64cc8108722fdd3b91f6203dc2d699115b1"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "收盘低于下轨且RSI<35且ADX<25做多"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0184",
+        "row_sha256": "259c6874bc180d7cbf8eb84fbaa24cbaf03405f976fa6059a34e29e6f30d5b52",
+        "rule_sha256": "8a1c7143ac195e5c9bd115388d357e7ed26647b90084d45e8ad7d385c633458c"
+      },
+      "record_id": "M0184",
+      "source": {
+        "bytes": 2530,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0184.json",
+        "sha256": "df7846b01d602a6bfd6e17fe484411d0e191b38c1e10fc079663cd7776e10344",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0184.json"
+      },
+      "view": {
+        "bytes": 2425,
+        "path": "strategies/M0184.md",
+        "sha256": "74879e8cd22020cd0a76968ff81a573fd675a46f84fafdd7b31cf4aab8feda88"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "币安4小时收盘穿越才成交。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0185",
+        "row_sha256": "0bf3d1b14b7407f3a2b00b2c0c1296a830d3b6ab5e3bb6a4c33b95fab89d6cdb",
+        "rule_sha256": "5783de3dd1a03533950145ccb4164292aaa9f9e01d5072a1e4b893d3ef3018f1"
+      },
+      "record_id": "M0185",
+      "source": {
+        "bytes": 2328,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0185.json",
+        "sha256": "6070ff444393eeac09bbef49a693b672210c688d5de181312fbd17c9066feb6f",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0185.json"
+      },
+      "view": {
+        "bytes": 2235,
+        "path": "strategies/M0185.md",
+        "sha256": "97b659bbefcfc1bdd8d032a39d35ffde8a952aaf88c4518461c9b6c7da317e82"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "跟踪止损6%，止盈15%，盈利3%后保本。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0186",
+        "row_sha256": "292db3cd402d33b164c357df27a9dd0bb9d400d4799cdb74e65a0e1e9db55c41",
+        "rule_sha256": "69e99bb99b4f414d980a30988defe18896f332704ec3caf3c52db76fe2279ae8"
+      },
+      "record_id": "M0186",
+      "source": {
+        "bytes": 2359,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0186.json",
+        "sha256": "0ee11526f89621640966f2b0e241647856c1d9a9602276ca574c7e5d248f8f54",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0186.json"
+      },
+      "view": {
+        "bytes": 2263,
+        "path": "strategies/M0186.md",
+        "sha256": "f565f5526dc5124a755f8391bb39a0d1f198712cfd0abb1b4eaf51f84e6fab9b"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "仅震荡低波动R3满仓均值回归；R4空仓。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0187",
+        "row_sha256": "fcc399e7591fcc5f4b1a18265a8b47dfb0f581bd428abff414239c1a2f402d35",
+        "rule_sha256": "fa77fcabd500374277ba1b361e71a2c75112a553bed55942f302e102ec28e07b"
+      },
+      "record_id": "M0187",
+      "source": {
+        "bytes": 2502,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0187.json",
+        "sha256": "22cea7faf98012ed5e24ed1b7e9034aae94936e31eb58c1e87bfd69034454564",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0187.json"
+      },
+      "view": {
+        "bytes": 2416,
+        "path": "strategies/M0187.md",
+        "sha256": "528fd36ed7aef0ecf6d21076ecfc7b69d412aa4d0ad1b8b91673eb802ec5a3ec"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "止损2%、止盈4%、单仓上限10%"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0188",
+        "row_sha256": "5f784e6a97a534a2bb8cf2d9512ef57b2a1347ba4d2b591a22f79ff2b869810f",
+        "rule_sha256": "23cc44f38c9b15d4b9ffb2f4839545d1574f976b52ae7cc19c858b38c93d8ebe"
+      },
+      "record_id": "M0188",
+      "source": {
+        "bytes": 2474,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0188.json",
+        "sha256": "74dd8d10203e8dd60cb05595133863c4208dfe42a9cdf7bbdfbb650c4cdfdb8b",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0188.json"
+      },
+      "view": {
+        "bytes": 2378,
+        "path": "strategies/M0188.md",
+        "sha256": "3d04467454a4999e381dece953176f7c18986aa891e2163ce429725346d558fa"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "蒙特卡洛突破置信度至少0.55时进场。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0189",
+        "row_sha256": "224554f0d797f96fe57ee8530778f6d01747af7bac4db2d919983754d57a71e5",
+        "rule_sha256": "a75b334f7b45c94bd765d1cb668b70a08525315dce20ab14bcc7ef61c75a840b"
+      },
+      "record_id": "M0189",
+      "source": {
+        "bytes": 2662,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0189.json",
+        "sha256": "012941c387c5ca77a6cb66b7443e6582afa194661c9510bb30ebf345c963fce1",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0189.json"
+      },
+      "view": {
+        "bytes": 2581,
+        "path": "strategies/M0189.md",
+        "sha256": "e98be451ded14dae8e0656bf320f2d60694904e37402a680c460c1881bbd67d0"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "下一根开盘进。止损=关键K低点-ATR"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0190",
+        "row_sha256": "b9539cd26b9757001e9e2b62e184bb091162f6bfdc9472dd99265b68aaec4090",
+        "rule_sha256": "753020ac53af398109ddb6d56587a3a621f5756596e8a25dd8c4629d6eeeef9c"
+      },
+      "record_id": "M0190",
+      "source": {
+        "bytes": 2588,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0190.json",
+        "sha256": "9eb2a292f76399f5b14f4895050b50ca9ea09cdc3068f1ab4da19401f9e756dc",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0190.json"
+      },
+      "view": {
+        "bytes": 2486,
+        "path": "strategies/M0190.md",
+        "sha256": "c6dafc987c4e91e6d79500d31717e5fde688dc6d0d6bb40e9e55b96609c18da3"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "RSI回到中性或时间止损离场。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。 [partial_rule] 摘录尚缺关键条件或完整交易映射，目录归类不代表可执行或规则齐全。",
+        "record_id": "M0191",
+        "row_sha256": "faf490fa65944e0d4ea4aa16045ee7faa2e8a989aeae3ac643b06668d9974664",
+        "rule_sha256": "d0eb02e0c73920298461d0dd436aeb9c8884c1dd97eb9617f26bf66df35151cf"
+      },
+      "record_id": "M0191",
+      "source": {
+        "bytes": 2334,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0191.json",
+        "sha256": "e10e15fc3ce2f3c34d4a98c3974f02fa44405172bd75ef49cb5a3bd18a55dce2",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0191.json"
+      },
+      "view": {
+        "bytes": 2343,
+        "path": "strategies/M0191.md",
+        "sha256": "a64e4214b8a6332036e090224055d8ff53e9a33c267ac093eae1f815109d74c9"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "用RSI、MACD与EMA做趋势跟踪。公开键含RSI周期14、超买70、超卖30，以及MACD快线长度（摘录截断其余字典）。"
+          }
+        ],
+        "reason": "只有指标组合、趋势用途和部分参数，摘录未形成明确的信号或交易映射，暂保留待分类。",
+        "record_id": "M0192",
+        "row_sha256": "cdc2a13355e43e20960a639753ae4b8c7d6a2d11867b0b082c040cdeaf26115c",
+        "rule_sha256": "71509e1b5e465c17129569f76bf53b128293a4601747e55232abdef6375ac32f"
+      },
+      "record_id": "M0192",
+      "source": {
+        "bytes": 2296,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0192.json",
+        "sha256": "e3f51fcd4cda546b1290a1c57517698767d7073110f9265af7e804c824dd6613",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0192.json"
+      },
+      "view": {
+        "bytes": 2244,
+        "path": "unclassified/M0192.md",
+        "sha256": "b749ffe40c4a90ef8217fae34d59ebf7373c3eb4d0310841793c78a9bd8c52d9"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做空RSI>90，做多RSI<10"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0193",
+        "row_sha256": "ab6f6e75ae4c671f113bef8e4d06a5d402f565d675e677900a33bdca2bf48de0",
+        "rule_sha256": "ef381f81d2a3a61fbfe493d8389d1854d4b5327ce8bb98fa70fdf2c097ea770d"
+      },
+      "record_id": "M0193",
+      "source": {
+        "bytes": 2319,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0193.json",
+        "sha256": "06548dbcf24ed6b2a544bd6bb850f791e4d87d01723fa25ae39aa7cd9bbfc455",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0193.json"
+      },
+      "view": {
+        "bytes": 2217,
+        "path": "strategies/M0193.md",
+        "sha256": "a401f1b29334b890d7e392509ae31a095199fd1869e8f4d44b2589c9b6b0da40"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "有仓且MA20下穿MA60平多、上穿平空"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0194",
+        "row_sha256": "a550b800bd23fc2c5c8577adc173d8551ea70d971a351c3263c0ec4de8027132",
+        "rule_sha256": "b6e87a1e76052b0faeb94d57e41e88685058783598a8a0b09ba2692d7c840596"
+      },
+      "record_id": "M0194",
+      "source": {
+        "bytes": 2317,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0194.json",
+        "sha256": "7de7448352fe9e60a382c42c6b8b4c88ba1beb1c6e7990792bb68cd603ea40bd",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0194.json"
+      },
+      "view": {
+        "bytes": 2214,
+        "path": "strategies/M0194.md",
+        "sha256": "20d167b116d0954e723d96472eb2213b2f3983c3f2879429256bc9f24e432b28"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "做空在日开回测进场，止损在日开上方"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0195",
+        "row_sha256": "9dfaa49af4d8d3b648d5f9a887bb76e6d7be64e48f8272f7939f1966dba49415",
+        "rule_sha256": "3e53e96e374d50bf4b6fc91eb67ced6806089de87d1378e35bbff3b962bfcc9d"
+      },
+      "record_id": "M0195",
+      "source": {
+        "bytes": 2450,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0195.json",
+        "sha256": "c1e3bd8034565fa8243ff2d892590a72f9bfd6cdcd35d0dae5448d8116afa243",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0195.json"
+      },
+      "view": {
+        "bytes": 2356,
+        "path": "strategies/M0195.md",
+        "sha256": "2f7876ec8321e512b132e79e3ec0187c7e3e6afecc0879662c404e5ada6cad22"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "XBTUSD 1分钟。SuperTrend倍数2、周期14。作为公开测试，不是完整风险框架。与Freqtrade三组Supertrend参数不同，单独保留。"
+          }
+        ],
+        "reason": "仅给 SuperTrend 参数及测试频率，未写明信号计算或交易规则，暂保留待分类。",
+        "record_id": "M0196",
+        "row_sha256": "140a0447be4e97511e301bc64f92e5953706a907b943e8e50d59277128b0e319",
+        "rule_sha256": "21ee9116991d0537bfad70187e3780d223e89897b570d7c61f64c0c0a4c649e7"
+      },
+      "record_id": "M0196",
+      "source": {
+        "bytes": 2343,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0196.json",
+        "sha256": "8e021f53bed2697050d41d0cee173f73e2f71ef9e5d953ef598f9ea0d0013678",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0196.json"
+      },
+      "view": {
+        "bytes": 2294,
+        "path": "unclassified/M0196.md",
+        "sha256": "fdf80e1c9fb6d9ec7c25fc1582e36141b36d9416bd99aed9ebd2e284e4f1862f"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "枢轴低点做多、枢轴高点做空。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。 [partial_rule] 摘录尚缺关键条件或完整交易映射，目录归类不代表可执行或规则齐全。 [catalog_rule_inference] 原采集文字自述按脚本常用实现解释，未核实为作者原规则；不升级来源真实性。",
+        "record_id": "M0197",
+        "row_sha256": "9eeb7158dd10807121387fb6b972163ade77c151bcb782b4d202b362d08ce9ca",
+        "rule_sha256": "5df9d170dd4f0c09502351f2ff02032f34ac9ed47f9c3ac16efa1f4200e7ddad"
+      },
+      "record_id": "M0197",
+      "source": {
+        "bytes": 2357,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0197.json",
+        "sha256": "426ff9c664ba08f89d8044c5d0c859920a80d999b9d455013bea1cca45b9b8dc",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0197.json"
+      },
+      "view": {
+        "bytes": 2518,
+        "path": "strategies/M0197.md",
+        "sha256": "c8d6e13d5adcc4da701d7c0d6ec54363696a15ed3ae9939b944aa3353522d25a"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "按过去24小时收益排序，买入最差的币。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。 [partial_rule] 摘录尚缺关键条件或完整交易映射，目录归类不代表可执行或规则齐全。",
+        "record_id": "M0198",
+        "row_sha256": "15600f8914794383bfd24a4c2ab0d94734489e0af7aef57a9aa723992b325f17",
+        "rule_sha256": "51960a9e6dde2fe7aee4bc3a1b50feedf83209bd7f844eded8e5260f6963b36f"
+      },
+      "record_id": "M0198",
+      "source": {
+        "bytes": 2424,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0198.json",
+        "sha256": "58e0b70d90a70c0dba938e5ca8c7dbe940f46608d619cbb78f09451fb5f5d45b",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0198.json"
+      },
+      "view": {
+        "bytes": 2455,
+        "path": "strategies/M0198.md",
+        "sha256": "98b198bd260d471288baf426e83cb29ee15ec99dce1de5783671cfcc941a1640"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "unclassified",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "不是封闭交易系统。清单：200周均线、已实现价格，以及约58%到61%币处于水下（Max Pain）。无机械离场。"
+          }
+        ],
+        "reason": "原文自述不是封闭交易系统；仅列价格/已实现价格/水下筹码指标，未给可组合的评分或交易规则，暂保留待分类。",
+        "record_id": "M0199",
+        "row_sha256": "048fc92048a247db7507473461a2b94b45e32eef94bfcfd0e283ee371a1aad71",
+        "rule_sha256": "6b582f5b5091ed7a16d75a6af93d96908308ccf82db08a1857356580be3388cf"
+      },
+      "record_id": "M0199",
+      "source": {
+        "bytes": 2293,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0199.json",
+        "sha256": "b5396f9d17f439038a842d6b88948034e51c7fca3594496e708a728dba2f29e2",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0199.json"
+      },
+      "view": {
+        "bytes": 2290,
+        "path": "unclassified/M0199.md",
+        "sha256": "8f51391e6eae1e9196751999150bf1e13750bd32a779b95ce624494b0c5ecac6"
+      }
+    },
+    {
+      "batch_path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2",
+      "classification": {
+        "entity_type": "strategy",
+        "evidence": [
+          {
+            "field": "规则",
+            "quote": "收盘高于MA(5)离场。按日收盘成交。"
+          }
+        ],
+        "reason": "原采集规则以明确的交易动作、持仓选择、轮动、退出或风险管理为主要对象，归为具体策略应用候选；缺失参数仍未核实。",
+        "record_id": "M0200",
+        "row_sha256": "b9fcf2e86629b90d0a10eb3aadeddb6f054b0b725b552e05ffe872c4d819e210",
+        "rule_sha256": "99da4929860ece76b72bcfabe7300860efa572efb8d1caba0efd0080f375d5ed"
+      },
+      "record_id": "M0200",
+      "source": {
+        "bytes": 2255,
+        "path": "corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0200.json",
+        "sha256": "0ace9ae1db22f738eaf6f4d983e8d326af93323d3d458e423933dba73172891d",
+        "url": "https://github.com/KathenZK/quant-knowledge-graph/blob/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0200.json"
+      },
+      "view": {
+        "bytes": 2164,
+        "path": "strategies/M0200.md",
+        "sha256": "81078d0933ab71c9315b24d9df3bf558e64e470f67a25fcbcdd15164a2c4348b"
       }
     }
   ],

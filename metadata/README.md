@@ -1,23 +1,24 @@
 # 逐编号知识元数据
 
-原目录首批 **M0001–M0100 共 100 条**已经可以直接阅读完整 11 字段：
+原目录前两批 **M0001–M0200 共 200 条**已经可以直接阅读完整 11 字段：
 
 | 目录 | 可读原 ID 数 | 状态 |
 |---|---:|---|
-| [策略候选](strategies/README.md) | 86 | CONTENT_INFERRED / UNVERIFIED |
-| [因子候选](factors/README.md) | 9 | CONTENT_INFERRED / UNVERIFIED |
-| [待分类](unclassified/README.md) | 5 | CONTENT_INFERRED / UNVERIFIED |
+| [策略候选](strategies/README.md) | 171 | CONTENT_INFERRED / UNVERIFIED |
+| [因子候选](factors/README.md) | 12 | CONTENT_INFERRED / UNVERIFIED |
+| [待分类](unclassified/README.md) | 17 | CONTENT_INFERRED / UNVERIFIED |
 
 本轮新增已审原生定义 **0**，新增回测 **0**。既有研究审阅 JSON **2**（M0256/M0259）保持原字节；
-它们不在首批 100 个 ID 内，因此目前两类阅读材料合计 **102 个不同原 ID**，不把同号多层重复计数。
+它们不在前两批 200 个 ID 内，因此目前两类阅读材料合计 **202 个不同原 ID**，不把同号多层重复计数。
 固定来源快照 [`961e59d`](https://github.com/KathenZK/quant-knowledge-graph/tree/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003)
-包含 600 条完整 source records，其中 **500 条尚未集成到本目录阅读视图**。checkpoint 已保存不等于目录集成或定义准入。
+包含 600 条完整 source records，其中 **400 条尚未集成到本目录阅读视图**。checkpoint 已保存不等于目录集成或定义准入。
 本次主分支集成基线的 [checkpoint 目录](corpus-checkpoints/grokbot-6973-20261003/batches/) 有前 5 批 500 条；
-上面的 600 专指固定来源快照。本轮只集成首批 100 条阅读视图，未声称全部 6973 条已经集成。
+上面的 600 专指固定来源快照。本轮追加 batch-0002 的 100 条，累计集成 200 条阅读视图，未声称全部 6973 条已经集成。
 
 Markdown 是完整采集字段的目录阅读层；`metadata/index.json` 仍只登记原有审阅 JSON，原生 loader/API、
 用户批注和定义均未改变。[目录清单](directory-index.json) 固定每份视图、原始 JSON、行 hash 和分类证据；
-[分类裁决](directory-classification-batch-0001.json) 保留独立复核与最终口径差异。
+[首批分类裁决](directory-classification-batch-0001.json) 与 [第二批分类记录](directory-classification-batch-0002.json) 保留独立复核与最终口径差异。
+第二批为 85 策略候选、3 因子候选、12 待分类；其中 4 条分类争议保守留在待分类。首批 100 条原文、分类与视图保持不变。
 因子分数和因子收益允许通过多空组合构造，不能仅因存在持仓就一律归为策略。
 
 校验完整 11 字段、分类证据、目录计数和固定来源：

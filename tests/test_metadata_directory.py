@@ -110,8 +110,48 @@ def test_render_does_not_infer_a_type_without_explicit_evidence(directory_input)
 
 def test_committed_first_hundred_have_complete_views_and_honest_types():
     manifest=validate_directory(ROOT/'metadata')
-    assert [r['record_id'] for r in manifest['records']]==[f'M{i:04d}' for i in range(1,101)]
-    assert manifest['counts']==dict(readable_original_ids=100,strategy_candidates=86,factor_candidates=9,unclassified=5,new_native_definitions=0,new_execution_trials=0)
-    assert {r['record_id'] for r in manifest['records'] if r['classification']['entity_type']=='factor'}=={'M0017','M0018','M0019','M0020','M0021','M0026','M0027','M0028','M0068'}
-    assert {r['record_id'] for r in manifest['records'] if r['classification']['entity_type']=='unclassified'}=={'M0041','M0066','M0085','M0092','M0100'}
+    first=[r for r in manifest['records'] if r['batch_path'].endswith('/batch-0001-v2')]
+    assert [r['record_id'] for r in first]==[f'M{i:04d}' for i in range(1,101)]
+    assert sum(r['classification']['entity_type']=='strategy' for r in first)==86
+    assert {r['record_id'] for r in first if r['classification']['entity_type']=='factor'}=={'M0017','M0018','M0019','M0020','M0021','M0026','M0027','M0028','M0068'}
+    assert {r['record_id'] for r in first if r['classification']['entity_type']=='unclassified'}=={'M0041','M0066','M0085','M0092','M0100'}
     assert len(validate(ROOT/'metadata'))==2
+
+
+def test_appending_batch_preserves_previous_views_classifications_and_unique_ids(directory_input,tmp_path):
+    root,batch,decisions,_=directory_input;first=tmp_path/'first'
+    prepare_directory(root,batch,decisions,first);install(root,first)
+    previous=validate_directory(root)
+    frozen={entry['view']['path']:(root/entry['view']['path']).read_bytes() for entry in previous['records']}
+    rows=[row('M0301','持有指定资产，收盘离场。'),row('M0303','只有研究主题。')]
+    csv=tmp_path/'next.csv';contract=write_csv(csv,[row('M0297'),row('M0299'),*rows]);plan=tmp_path/'next-plan'
+    p=create_plan(csv,root,plan,contract=contract,batch_size=2)
+    relative='corpus-checkpoints/synthetic/batches/batch-0002-v2'
+    staged=stage_batch(plan,p['plan_sha256'],csv,'batch-0002',root/relative)
+    next_decisions=[]
+    for original,kind in zip(rows,['strategy','unclassified']):
+        source=json.loads((root/relative/f"metadata/source-records/{original['id']}.json").read_bytes())
+        next_decisions.append(dict(record_id=original['id'],row_sha256=source['provenance']['row_sha256'],
+            rule_sha256=source['provenance']['rule_sha256'],entity_type=kind,reason='独立合成内容决定。',
+            evidence=[dict(field='规则',quote=original['规则'])]))
+    candidate=tmp_path/'candidate'
+    result=prepare_directory(root,dict(path=relative,sha256=staged['checkpoint_sha256'],commit='b'*40),next_decisions,candidate)
+    assert result['counts']['readable_original_ids']==5
+    assert frozen=={name:(candidate/name).read_bytes() for name in frozen}
+    install(root,candidate);after=validate_directory(root)
+    assert after['records'][:3]==previous['records']
+    assert frozen=={name:(root/name).read_bytes() for name in frozen}
+    assert [r['record_id'] for r in after['records'][-2:]]==['M0301','M0303']  # Preserve gaps.
+    assert len(validate(root))==2
+
+
+def test_committed_second_batch_matches_manifest_ids_and_keeps_native_count():
+    root=ROOT/'metadata';manifest=validate_directory(root)
+    second=[r for r in manifest['records'] if r['batch_path'].endswith('/batch-0002-v2')]
+    source=json.loads((root/'corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/manifest.json').read_bytes())
+    assert [r['record_id'] for r in second]==source['record_ids'] and len(second)==100
+    assert {r['record_id'] for r in second if r['classification']['entity_type']=='factor'}=={'M0108','M0109','M0121'}
+    assert {r['record_id'] for r in second if r['classification']['entity_type']=='unclassified'}=={'M0101','M0112','M0115','M0122','M0127','M0133','M0135','M0136','M0176','M0192','M0196','M0199'}
+    assert manifest['counts']==dict(readable_original_ids=200,strategy_candidates=171,factor_candidates=12,unclassified=17,new_native_definitions=0,new_execution_trials=0)
+    assert len({r['record_id'] for r in manifest['records']})==200
+    assert len(validate(root))==2
