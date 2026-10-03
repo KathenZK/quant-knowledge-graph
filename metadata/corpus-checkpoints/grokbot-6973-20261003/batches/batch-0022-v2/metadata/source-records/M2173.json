@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2173",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2173,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "65981aa2ded1406a15febe8668893b9d01c663a804f89af742b800bb3be52603",
+    "rule_sha256": "e537a9be1a01ae1b5ad4cdd0d5486fe145fa50f1bf595061c1df8bdc6cb276f4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2173",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2173"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Saturn5/Saturn5.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Saturn5.py；Shane Jones / goddard）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Saturn5：15m，三支OR做多（VWMACD空头区EMA交叉 / Fib下轨上穿BB下轨 / 触BB下轨夹慢均）；卖出信号关，靠ROI5%/止损−20%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Saturn5；15m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Saturn5：15m，三支OR做多（VWMACD空头区EMA交叉 / Fib下轨上穿BB下轨 / 触BB下轨夹慢均）；卖出信号关，靠ROI5%/止损−20%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/Saturn5/Saturn5.py默认（buy_signal_1/2/3 均为 True；use_sell_signal=False）。timeframe=15m；stoploss=−0.20；minimal_roi={\"0\":0.05}；trailing_stop=False。信号1：vwmacd<signal，low<s1_ema_xxl(240)且close>该均，s1_ema_sm(5)上穿s1_ema_md(10)，s1_ema_xs(3)<s1_ema_xl(50)，volume>0。信号2：s2_fib_lower_band 上穿 s2_bb_lower_band，close<s2_ema(50)，volume>0（Fib ATR 下轨倍数默认 4.236；BB SMA49/std相关默认见文件）。信号3：low<s3_bb_lowerband，high>s3_slow_ma 且 high<s3_ema_long(50)，volume>0。populate_sell_trend 置空。提出日期未知。 不是单VWMACD或单BB：本条是15m Saturn5三支OR做多，卖信号关靠ROI/止损。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

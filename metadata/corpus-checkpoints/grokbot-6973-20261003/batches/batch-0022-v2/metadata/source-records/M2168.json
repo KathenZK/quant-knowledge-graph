@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2168",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2168,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "729e4d42c750c88f2bc7ded2c53391fb2bcb935a4627ef746a77762cd97f8beb",
+    "rule_sha256": "13a51200730e089350a2c32633b0248c297045aca0b937356247486fe62dac6c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2168",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2168"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/pairs-trading-statistical-arbitrage-strategy"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：PEP/KO日线60日OLS对冲比价差Z分数>±2开配对，回到0平仓（EasyQuant统计套利）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股（PEP/KO；60日OLS价差Z配对；EasyQuant）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-10"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：PEP/KO日线60日OLS对冲比价差Z分数>±2开配对，回到0平仓（EasyQuant统计套利）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Building a Pairs Trading Strategy with Python in QuantConnect》已印 PairsTradingAlgorithm。标的 PEP、KO，日线。lookback=60；entry_threshold=2.0；exit_threshold=0.0；WarmUp=60。每日用近60日收盘对 Y=PEP、X=KO 做带截距 OLS，得 beta 与 intercept；spread=Y−(beta×X+intercept)；z=(当前spread−均值)/标准差。空仓：z>2 则 SetHoldings(PEP,−0.5) 与 SetHoldings(KO,0.5)；z<−2 则 PEP+0.5、KO−0.5。持仓：若 PEP 为空头且 z≤0 则 Liquidate；若 PEP 为多头且 z≥0 则 Liquidate。不是 master 价格比布林配对或12个月距离配对核。提出日期取页面 Published on。 不是已收配对距离法：本条是EasyQuant PEP/KO日线60日OLS对冲比价差Z>±2开配对、回到0平仓。 计入美股/ETF。 提出日期按源文件原样保留2025-12-10。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

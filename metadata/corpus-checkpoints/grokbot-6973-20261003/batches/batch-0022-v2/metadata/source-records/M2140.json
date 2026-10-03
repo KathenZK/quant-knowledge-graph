@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2140",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2140,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3e75dc8f0f1ab31ae0065b2e36e9badaf3f8c033231b82d0fb18235c942b3c50",
+    "rule_sha256": "3b834e25078b1edb6599e4803e8024f5a3b8cd7c9eb1a5b7de9b5e626b04bf96"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2140",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2140"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/RSI/RSI.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（RSI.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区RSI：15m，RSI(14)<30且Williams%R(14)<−80做多；30m上RSI>70且%R>−20平多；止损−99%，ROI9%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区RSI；15m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区RSI：15m，RSI(14)<30且Williams%R(14)<−80做多；30m上RSI>70且%R>−20平多；止损−99%，ROI9%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/RSI/RSI.py默认。timeframe=15m；stoploss=−0.99；minimal_roi={\"0\":0.09}；trailing_stop=False；@informative('30m') 算 rsi/rperc。主周期：RSI(14)、WILLR(14)。做多：rsi<30 且 rperc<−80（单根，不要求连续两根）。平多：rsi_30m>70 且 rperc_30m>−20。不是 RSIv2（买/卖均要求连续两根同条件）。提出日期未知。 不是RSIv2连续两根：本条是15m RSI，RSI(14)<30且%R<−80做多，30m RSI>70且%R>−20平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

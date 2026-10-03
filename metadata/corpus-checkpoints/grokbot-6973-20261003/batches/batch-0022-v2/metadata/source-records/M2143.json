@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2143",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2143,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1ddb98a5265734a6814989998fb6c66397522f748af39c5589ca8ca1887ff82e",
+    "rule_sha256": "1b50c8af54ff522585867bcdb20f123592cb8c9702d4792f555d8c89202cc587"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2143",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2143"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Dracula/Dracula.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Dracula.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Dracula：1m，CMF>0且触及BB下轨、价在支撑上、EMA(150)下收阳且带宽比>0.023做多；custom_sell 触上轨转阴/远离EMA等离场；止损−20%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Dracula；1m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Dracula：1m，CMF>0且触及BB下轨、价在支撑上、EMA(150)下收阳且带宽比>0.023做多；custom_sell 触上轨转阴/远离EMA等离场；止损−20%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/Dracula/Dracula.py默认（buy_bbt 默认 0.023）。timeframe=1m；stoploss=−0.2；minimal_roi={\"0\":10}；trailing_stop=False；populate_sell_trend 恒为0，离场靠 custom_sell。指标：BB上下轨 window=20（pandas_ta/ta.volatility）；bb_bbt=(上−下)/上；EMA(150)；自写支撑/阻力；CMF(20)；RSI(14)。做多两支（OR 写入同一 buy）：(1) volume>0、cmf>0、前根触及下轨、前收≥再前支撑、前根 ema<close、本根阳线且前根阴线、bb_bbt>0.023、近10根无出现 ema>close×1.07；(2) 本根触及下轨、开盘≥再前支撑、其余类似且不强制前根阴线。custom_sell：前根触上轨且本根转阴且前收低于再前阻力；或本根触上轨转阴且开盘低于再前阻力；或收阴且 ema>close×1.07；或收阴且 close≤下轨×1.002 且浮盈≥0。提出日期未知。 不是普通BB触及：本条是1m Dracula，CMF>0且触及BB下轨、价在支撑上、EMA150下收阳且带宽比>0.023做多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
