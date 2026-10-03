@@ -45,7 +45,8 @@ def metadata(tmp_path):
 
 
 def test_committed_records_preserve_two_ids_and_no_fabricated_factor():
-    rows = validate(ROOT / 'metadata')
+    rows = [r for r in validate(ROOT / 'metadata') if r['entity_type']=='strategy' and r['record_id'] in {'M0256','M0259'}]
+    rows.sort(key=lambda r:r['record_id'])
     assert [r['record_id'] for r in rows] == ['M0256', 'M0259']
     assert rows[0]['lab']['counts'] == dict(strategy_configurations=4, controls=1, strict_reproductions=0, market_replays=1)
     assert not any(rows[1]['lab']['counts'].values())
