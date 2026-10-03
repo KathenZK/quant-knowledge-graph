@@ -25,6 +25,7 @@ from quantgraph.graph.site_feedback import canonical
 from quantgraph.graph.lab_display_v2 import SCHEMA as DISPLAY_V2_SCHEMA, project_v2
 from quantgraph.graph import lab_display_dot009
 from quantgraph.graph import lab_display_m1347
+from quantgraph.graph import lab_display_m1266
 
 REGISTRY = Path(__file__).resolve().parents[1] / 'metadata/lab-display-sources.json'
 MANIFEST_KIND = 'LAB_ORIGIN_RESULT_MANIFEST_NOT_GRAPH_COLLECTION'
@@ -50,6 +51,8 @@ def reviewed(value):
 
 
 def verified_source(root, entry):
+    if lab_display_m1266.selected(entry):
+        return lab_display_m1266.verified_source(root, entry)
     if lab_display_m1347.selected(entry):
         # Validate the bounded role set before reading any source bytes.
         lab_display_m1347.check_entry(entry)
@@ -156,6 +159,9 @@ def derived_manifest(entry, blobs, origin, record, protocol):
 
 
 def project(entry, blobs):
+    if lab_display_m1266.selected(entry):
+        record, detail = lab_display_m1266.project(entry, blobs)
+        return reviewed(record), reviewed(detail)
     if lab_display_m1347.selected(entry):
         record, detail = lab_display_m1347.project(entry, blobs)
         return reviewed(record), reviewed(detail)
@@ -376,6 +382,8 @@ def merge_snapshot(records, details, root, expected_sha256, expected_parent):
                 and r['manifest_sha256']==detail['lineage']['manifest_sha256'] for r in record['related_results']):
             raise ValueError('Display record/detail identity mismatch')
         kind = detail['lineage']['manifest_kind']
+        if lab_display_m1266.selected(record) or lab_display_m1266.selected(detail):
+            lab_display_m1266.check_output(record, detail)
         if kind == lab_display_m1347.KIND:
             lab_display_m1347.check_merge_kind(record, detail)
         if kind not in {MANIFEST_KIND, DERIVED_MANIFEST_KIND, lab_display_m1347.KIND} or (kind == DERIVED_MANIFEST_KIND and (
