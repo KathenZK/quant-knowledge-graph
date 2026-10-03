@@ -1,6 +1,6 @@
 # 冻结 Lab 结果的显示投影
 
-`graph.lab_display_projection` 是既有详情/比较页的数据适配器，不是回测器、原生corpus导入器或Site上传器。默认 `lab-display-sources.json` 显式固定25个已获准公开的Lab来源，保留16个ADAPTED与9个HYPOTHESIS；M1358的Graph HYPOTHESIS枚举与实际研究ADAPTED单列，M1258保留未核实来源的catalog研究假设，不改变研究可信度。只有指定inventory内的ID可进入，不自动扫描Lab、catalog或全库。原M0256/M0259 pilot不变。
+`graph.lab_display_projection` 是既有详情/比较页的数据适配器，不是回测器、原生corpus导入器或Site上传器。默认 `lab-display-sources.json` 显式固定26个已获准公开的Lab来源，保留16个ADAPTED与10个HYPOTHESIS；M1358的Graph HYPOTHESIS枚举与实际研究ADAPTED单列，M1258保留未核实来源的catalog研究假设，不改变研究可信度。只有指定inventory内的ID可进入，不自动扫描Lab、catalog或全库。原M0256/M0259 pilot不变。
 
 源清单包含每个ID的Lab commit、run/variant、publication manifest和实际消费文件的路径、URL、bytes、SHA256。支持publication的repo-relative及逐策略relative文件清单；源角色必须同时通过独立hash与publication allowlist。无原文全文、行情原始文件、完整账本、private Graph detail或批注输入。
 
@@ -75,3 +75,16 @@ dot009 的22→25追加只含 M1346/M1349/M1270，固定已远端fetch及逐文�
 三条保留11个原公开catalog字段、未核实研究假设、Graph HYPOTHESIS和ADAPTED_EXECUTION_PROXY。每条4原配置，共12原配置；本次0新试验/0新控制，同一个M1258满仓含费base控制复用3次，仅1个唯一控制，明确没有fee0/20匹配成本控制。保留25个原单位点与731指标观察数，不重归一化、不由采样重算；所有已有full指标须与2023–2024深等值，bool/int、0/null不混同。M1349保留25个completed closes持期，M1270 delay2保留全现金/零成交/零收益/Sharpe null。费用0/20、2bps滑点和日延迟按原值验证；策略monthly仍null，只保留已公开的基准月度投影。未知合同、错误inventory/lock类型、共享路径错配、指标别名冲突和来源升级均拒绝。UI、六字段transport与active绑定门槛不变。
 
 测试：`pytest tests/test_lab_display_dot009.py tests/test_lab_display_catalog_pair.py tests/test_lab_display_catalog_daily.py tests/test_lab_display_v2.py tests/test_lab_display_projection.py tests/test_metadata_pilot.py tests/test_site_sync_bulk.py`；前端历史兼容门禁为`npm exec vitest run tests/lab-display.test.ts tests/corpus-research.test.tsx tests/reading-brief.test.tsx tests/research-scope.test.tsx tests/hosted-feedback.test.tsx`及`npm run typecheck`，仅适配Python结构且未改UI时按范围选择复跑。fixture全为合成值，不在CI读取私人Lab数据；实际源预览和逐文件读回回执保持私有，不进Git。
+
+
+M1347 是25→26的单独批准追加，固定 Lab main Git pin `475ee92d451b581b8565dc1ef487437cdc39b743`，只读18个明确公开角色。`publication-manifest.v1.json` 虽保留旧文件名，实际 delivery_revision 为整数2，SHA256 `684cefa26887cdf2420e71d8b728d2e686f8cb5a6fed8c36c26a2f20a5306859`。原25个registry对象、record和压缩detail不变；本次未改UI、六字段transport、原生定义或用户批注，未导入Site。
+
+新 `graph.lab_display_m1347` 仅接受 `CATALOG_UTC_MONTHTURN_FULLCASH_PUBLIC_GRAPH_V2` 合同与 `APPROVED_M1347_GRAPH_PROJECTION_V2` profile。它的来源schema是 `M1347-public-graph-projection/v2`，类型为 **PUBLIC_DERIVED_GRAPH_PROJECTION**，不改称旧派生显示清单或原私有运行清单。该类型保留在record、两组结果引用、detail、lineage及增量manifest.runs中；含此类型的离线文件索引标LAB_DISPLAY_ARTIFACT_INDEX。Site transport仍不附加kind字段，由detail_sha256固定类型。原Lab manifest绑定原Lab record/detail，新增Graph对象引用其hash且不被源manifest反向引用，没有自循环。
+
+18角色路径必须全都属于M1347的精确批准路径/固定pin/publication allowlist；C0、规则、protocol、catalog、控制、许可和原导出脚本另受冻结hash约束。规则来自已公开root实施契约；只输出10个原目录字段和单独许可operational excerpt，`full_original_rule_public=false`。不读取或补回完整原规则/内部批注、私有输出清单正文、原始行情或731日NAV。源网页全文与作者环境仍未核实，纸面依据缺失明确；公开派生许可不推导为原作者全文或行情的商用许可。
+
+保留Graph HYPOTHESIS、研究HYPOTHESIS_FROM_CATALOG_NOT_SOURCE_VERIFIED、执行ADAPTED_EXECUTION_PROXY和源tested_proxy_only。UTC24/7日历中月末倒数第三日收盘信号于下一日开盘执行，次月第3日收盘退出信号于第4日开盘执行；lag2是两根日bar。100000USDT、100%含费、base费8bps加滑点2bps、fee0/20仍保留2bps滑点。4个原策略配置全部亏损，strict0、非OOS、PIT未证明；本适配0新试验/0新控制，只引用唯一M1258满仓含费base控制，不声称已有fee0/20匹配成本控制。
+
+直接保留25个已归一化原单位点及其drawdown，不再次除100000、不插值、不从抽样重算731日指标。五处full与2023–2024必须类型和值深等同，成本0/20与日延迟、null/零以及全部旧结果原值保持。全量重绑定后的错误schema/kind/身份/路径、bool/float冒充整数计数、规则或资本冲突、来源升级、错误控制、曲线单位/数量/别名冲突均拒绝。未读真实active-root/entity/revision时仍为STAGED_NOT_IMPORTED/BLOCKED_CURRENT_ACTIVE_ROOT_ENTITY_REVISION_REQUIRED，不以旧seed或虚构身份补齐。
+
+新增源组参数为 `--lab-root m1347_graph_projection_v2=<Lab-475ee92d-source-root>`，可加 `--ids M1347` 仅作离线小批。增加 `tests/test_lab_display_m1347.py` 验证上述合同、确定性、不可覆盖、真实绑定门槛及既有记录/批注保留；原v1/v2和dot009合同没有放宽。

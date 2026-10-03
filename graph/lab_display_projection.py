@@ -24,6 +24,7 @@ from quantgraph.graph.metadata_pilot import (
 from quantgraph.graph.site_feedback import canonical
 from quantgraph.graph.lab_display_v2 import SCHEMA as DISPLAY_V2_SCHEMA, project_v2
 from quantgraph.graph import lab_display_dot009
+from quantgraph.graph import lab_display_m1347
 
 REGISTRY = Path(__file__).resolve().parents[1] / 'metadata/lab-display-sources.json'
 MANIFEST_KIND = 'LAB_ORIGIN_RESULT_MANIFEST_NOT_GRAPH_COLLECTION'
@@ -49,6 +50,9 @@ def reviewed(value):
 
 
 def verified_source(root, entry):
+    if lab_display_m1347.selected(entry):
+        # Validate the bounded role set before reading any source bytes.
+        lab_display_m1347.check_entry(entry)
     if lab_display_dot009.selected(entry):
         return lab_display_dot009.verified_source(root, entry)
     rid = entry['id']
@@ -152,6 +156,9 @@ def derived_manifest(entry, blobs, origin, record, protocol):
 
 
 def project(entry, blobs):
+    if lab_display_m1347.selected(entry):
+        record, detail = lab_display_m1347.project(entry, blobs)
+        return reviewed(record), reviewed(detail)
     # V2 is an explicit, separately bounded profile. Do not reinterpret a
     # profile-tagged source through the historical v1/default code path.
     if entry.get('projection_profile') is not None or _loads(blobs['result_manifest']).get('schema_version') == DISPLAY_V2_SCHEMA:
@@ -369,7 +376,9 @@ def merge_snapshot(records, details, root, expected_sha256, expected_parent):
                 and r['manifest_sha256']==detail['lineage']['manifest_sha256'] for r in record['related_results']):
             raise ValueError('Display record/detail identity mismatch')
         kind = detail['lineage']['manifest_kind']
-        if kind not in {MANIFEST_KIND, DERIVED_MANIFEST_KIND} or (kind == DERIVED_MANIFEST_KIND and (
+        if kind == lab_display_m1347.KIND:
+            lab_display_m1347.check_merge_kind(record, detail)
+        if kind not in {MANIFEST_KIND, DERIVED_MANIFEST_KIND, lab_display_m1347.KIND} or (kind == DERIVED_MANIFEST_KIND and (
                 detail.get('manifest_kind') != kind or not any(r['origin_run_id']==run and r['variant_id']==variant
                     and r.get('manifest_kind')==kind for r in record['related_results']))):
             raise ValueError('Display record/detail manifest kind mismatch')
@@ -467,7 +476,7 @@ def prepare(roots, output, *, registry=None, active_root=None, active_sha256=Non
     manifest = dict(schema_version='quantgraph-lab-display-file-manifest/v1',
         manifest_kind=MANIFEST_KIND, files={p:dict(sha256=digest(b),bytes=len(b)) for p,b in sorted(files.items())})
     kinds = sorted({d['lineage']['manifest_kind'] for d in details})
-    if DERIVED_MANIFEST_KIND in kinds:
+    if any(k in kinds for k in [DERIVED_MANIFEST_KIND, lab_display_m1347.KIND]):
         manifest.update(manifest_kind='LAB_DISPLAY_ARTIFACT_INDEX', source_manifest_kinds=kinds)
     files['manifest.json'] = encoded(manifest)
     if shutil.disk_usage(output.parent).free <= RESERVE + sum(map(len,files.values())):
