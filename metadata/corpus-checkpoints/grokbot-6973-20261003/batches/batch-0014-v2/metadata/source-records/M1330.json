@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1330",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1330,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "54632914b47a38b9332e5d8404d566d76fd6b64c07a23cdf43134522b4660d8b",
+    "rule_sha256": "ac72cf0814f185bfdb4c0eb75c934d1d21b9f4719b602097946936b84b025c03"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1330",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1330"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/roll/2025-04-18/doc-inetqqsq4776690.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "开源证券金工（魏建榕等；新浪转载《筹码结构视角下的动量反转融合》；报告2025-04-17）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "开源金工筹码收益调整因子holding_ret_adj（回溯250日均匀换手假设；切分阈值−2%；周频）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（全A；周频/月频叙述）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-04-17"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "开源金工筹码收益调整因子holding_ret_adj（回溯250日均匀换手假设；切分阈值−2%；周频）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。筹码：强假设「历史筹码按当日换手率均匀交易」，用日成交均价滚动累积；250日以前衰减忽略。holding_ret=最新成交均价相对历史筹码加权成本的相对收益。市场赚钱效应mkt_holding_ret为全市场筹码收益加权均值。调整：以切分阈值−2%（敏感性优选；原默认0）调节动量/反转——赚钱效应强做动量、弱做反转，得holding_ret_adj。回溯敏感性述60–500日连续；执行层页优选周频调仓。 不是已收动量/反转纯价量因子：本条是筹码holding_ret（250日均匀换手假设）经市场赚钱效应与切分阈值−2%得holding_ret_adj，周频。 计入其他。 提出日期按源文件原样保留2025-04-17。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
