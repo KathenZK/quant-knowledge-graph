@@ -33,6 +33,140 @@
     }
   ],
   "properties": {
+    "catalog_origin": {
+      "additionalProperties": false,
+      "properties": {
+        "classification_evidence": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "classification_reason": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "csv_row_ordinal": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "csv_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "original_classification": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parser": {
+          "additionalProperties": false,
+          "properties": {
+            "rule_type": {
+              "anyOf": [
+                {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "status": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "version": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "version",
+            "status",
+            "rule_type"
+          ],
+          "type": "object"
+        },
+        "row_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "rule_content_copied": {
+          "const": false
+        },
+        "rule_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "source_column_labels": {
+          "additionalProperties": false,
+          "properties": {
+            "backtestability": {
+              "anyOf": [
+                {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "proposed_date": {
+              "anyOf": [
+                {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "backtestability",
+            "proposed_date"
+          ],
+          "type": "object"
+        },
+        "source_url_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "type_status": {
+          "enum": [
+            "REVIEWED_EXPLICIT_DECISION",
+            "EXISTING_REVIEWED_METADATA"
+          ]
+        }
+      },
+      "required": [
+        "csv_sha256",
+        "csv_row_ordinal",
+        "row_sha256",
+        "rule_sha256",
+        "source_url_sha256",
+        "original_classification",
+        "type_status",
+        "classification_reason",
+        "classification_evidence",
+        "source_column_labels",
+        "parser",
+        "rule_content_copied"
+      ],
+      "type": "object"
+    },
     "economic_basis": {
       "additionalProperties": false,
       "properties": {
@@ -77,7 +211,10 @@
           "type": "array"
         },
         "status": {
-          "const": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+          "enum": [
+            "RESEARCH_HYPOTHESIS_NOT_PROVEN",
+            "MISSING"
+          ]
         }
       },
       "required": [
@@ -111,7 +248,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -140,7 +278,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -169,7 +308,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -198,7 +338,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -227,7 +368,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -256,7 +398,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -486,6 +629,30 @@
     "sources": {
       "items": {
         "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "sha256": {
+                  "type": "null"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "revision": {
+                  "type": "null"
+                },
+                "verification": {
+                  "enum": [
+                    "NOT_FETCHED_REFERENCE_ONLY",
+                    "MISSING_SOURCE_LINK"
+                  ]
+                }
+              }
+            }
+          }
+        ],
         "properties": {
           "attribution": {
             "minLength": 1,
@@ -504,12 +671,26 @@
             "type": "string"
           },
           "revision": {
-            "minLength": 1,
-            "type": "string"
+            "anyOf": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "sha256": {
-            "pattern": "^[0-9a-f]{64}$",
-            "type": "string"
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "supports": {
             "items": {
@@ -519,8 +700,15 @@
             "type": "array"
           },
           "url": {
-            "pattern": "^https://",
-            "type": "string"
+            "anyOf": [
+              {
+                "pattern": "^https?://",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "verification": {
             "minLength": 1,
@@ -560,7 +748,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -589,7 +778,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -618,7 +808,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -647,7 +838,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -676,7 +868,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -705,7 +898,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -734,7 +928,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -763,7 +958,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -792,7 +988,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
@@ -821,7 +1018,8 @@
               "enum": [
                 "SOURCE_CODE_REVIEWED",
                 "RESEARCH_ASSUMPTION",
-                "MISSING"
+                "MISSING",
+                "CATALOG_REPORTED_UNVERIFIED"
               ]
             },
             "text": {
