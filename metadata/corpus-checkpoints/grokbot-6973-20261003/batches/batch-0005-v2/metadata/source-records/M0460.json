@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0460",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 460,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "003e7b1f223fc670bd76b1a7997ef6a67a66e8d60191a65ca7b3961324884194",
+    "rule_sha256": "5d795f2d2463dfde2e0498123afe6a6052952f884d3bfd1159d0b200ea9e450c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0460",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0460"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/fgr5yrLag.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "La Porta (1996, JF)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://openassetpricing.com/SignalDoc-Browser.html"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Long-term EPS forecast（fgr5yrLag）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美国股票（CRSP/Compustat；Chen-Zimmermann 复制）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "1996"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Long-term EPS forecast"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "信号（Signal Browser Definition）：Lag long-term earnings forecast (fgr5yr) by 6 months. Then keep only June observations, and fill in missing with most recent obs. Exclude if book equity (ceq), net income (ib), deferred taxes (txdi), dividends (dvp), revenue (sale) or depreciation (dp) is missing. Keep only 组合规则（该页字段）：StockWeight=EW；LSQuantile=未写；PortfolioPeriod=3.0个月；StartMonth=6.0；Sign=-1.0；TestInOP=univariate reg。股票池/过滤：过滤列为空；定义/注释中的股票池限制：Lag long-term earnings forecast (fgr5yr) by 6 months. Then keep only June observations, and fill in missing with most recent obs. Exclude if book equity (ceq), net income (ib), deferred taxes (txdi), dividends (dvp), revenue (sale) or depreciation (dp) is missing. Keep only。 Notes：Port sort in Tab 2 is very strong but no t-stats. Regression in Tab 3 E{g} is univariate. We find the timing of the lag is important, but it may be more important to compound monthly returns to annual, as described on page 1717. If we compound returns, the high volatility of the high long-term-growth stocks leads to very poor performance, consistent with Table II of OP and Figure 1 of the 2019 JF paper. We are grateful to Rafael La Porta for helping us identify this feature. But for our paper, our portfolio is just the arithmetic mean of monthly returns for simplicity.。 基线为原论文分组的多空组合（FAQ：baseline follows the original paper split）。未在该行写出的细节不补。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "signalname=fgr5yrLag; KeyTable=3 E{g}"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
