@@ -6,7 +6,7 @@ import json
 import pytest
 
 from quantgraph.graph.lab_display_projection import (
-    MANIFEST_KIND, digest, encoded, encode_asset, merge_snapshot, prepare, project, verified_source,
+    DERIVED_MANIFEST_KIND, MANIFEST_KIND, digest, encoded, encode_asset, merge_snapshot, prepare, project, verified_source,
 )
 
 
@@ -219,3 +219,162 @@ def test_pinned_orphan_implementation_is_immutable_without_index(tmp_path,identi
         m=json.loads(assets['/data/manifest.json'])
         assert m['details'][detail['run_id']+'|'+detail['variant_id']]==key
     assert p.read_bytes()==raw
+
+
+def derived_source(tmp_path):
+    root,entry,blobs=source(tmp_path,'M0253')
+    rid=entry['id'];prefix=f'research/public-strategies/{rid}/'
+    protocol=json.loads(blobs['protocol'])
+    protocol.update(risk={'stoploss':-.05})
+    protocol['source']['sha256']='c'*64
+    blobs['protocol']=encoded(protocol)
+    card=dict(record_id=rid,source={'sha256':'c'*64},entry='synthetic entry',exit='synthetic exit',
+              catalog_difference_or_omission='synthetic missing author configuration')
+    blobs['source_rule_card']=encoded(card)
+    blobs['C0']=encoded(dict(record_id=rid,protocol_sha256=digest(blobs['protocol']),source_sha256='c'*64))
+    blobs['curve']=b'date,valuation_time_utc,equity,nav,source_native_drawdown\n2024-01-01,2024-01-02T00:00:00Z,99000,0.99,-0.04\n2024-01-02,2024-01-03T00:00:00Z,110000,1.1,0\n'
+    def ref(role,commit='a'*40):
+        path=prefix+role+'.json' if role!='curve' else prefix+'curve.csv'
+        return dict(path=path,bytes=len(blobs[role]),sha256=digest(blobs[role]),
+                    url=f'https://github.com/KathenZK/quant-research-lab/blob/{commit}/{path}')
+    frozen={role:ref(role) for role in ['protocol','summary','C0','source_rule_card']}
+    blobs['origin_publication_manifest']=encoded(dict(id=rid,files=list(frozen.values())))
+    pubref=ref('origin_publication_manifest')
+    pubref.update(path=prefix+'publication-manifest.json',
+                  url=f'https://github.com/KathenZK/quant-research-lab/blob/{"a"*40}/{prefix}publication-manifest.json')
+    frozen['publication_manifest']=pubref
+    manifest=dict(schema_version='quantgraph-public-derived-display-manifest/v1',manifest_kind=DERIVED_MANIFEST_KIND,
+        id=rid,origin_run_id=entry['run_id'],variant_id=entry['variant_id'],origin_lab_commit='a'*40,
+        original_private_result_manifest=False,original_results_modified=False,source_artifacts=frozen,
+        files={name:ref(role) for name,role in [('summary.json','summary'),('protocol.json','protocol'),
+                                                ('C0.json','C0'),('base-nav-light.csv','curve')]},
+        excluded_from_self_hash=['public-display-manifest.json','graph-record.json'])
+    blobs['result_manifest']=encoded(manifest)
+    record=json.loads(blobs['record'])
+    record['related_results'][0].update(manifest_sha256=digest(blobs['result_manifest']),
+        manifest_kind=DERIVED_MANIFEST_KIND,protocol_sha256=digest(blobs['protocol']))
+    record['rules']=dict(entry=card['entry'],exit=card['exit'],risk=protocol['risk'],
+        execution=protocol['execution'],parameters=protocol['parameters'],
+        catalog_difference_or_omission=card['catalog_difference_or_omission'])
+    record['economic_basis']={'hypothesis':{'status':'NOT_ESTABLISHED_IN_APPROVED_SOURCE','value':None}}
+    blobs['record']=encoded(record)
+    entry.update(lab_commit='b'*40,manifest_kind=DERIVED_MANIFEST_KIND)
+    artifacts={role:ref(role,'b'*40) for role in blobs if role!='publication_manifest'}
+    blobs['publication_manifest']=encoded(dict(id=rid,files=list(artifacts.values())))
+    artifacts['publication_manifest']=ref('publication_manifest','b'*40)
+    entry['artifacts']=artifacts
+    for role,raw in blobs.items():
+        p=root/artifacts[role]['path'];p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
+    return root,entry,blobs
+
+
+def test_derived_manifest_retains_type_rules_and_separate_native_drawdown(tmp_path):
+    root,entry,blobs=derived_source(tmp_path)
+    record,detail=project(entry,verified_source(root,entry))
+    assert detail['manifest_kind']==detail['lineage']['manifest_kind']==DERIVED_MANIFEST_KIND
+    assert detail['lineage']['source_display_manifest_sha256']==digest(blobs['result_manifest'])
+    assert 'source_run_manifest_sha256' not in detail['lineage']
+    assert record['related_results'][0]['manifest_kind']==record['implementations'][0]['manifest_kind']==DERIVED_MANIFEST_KIND
+    assert detail['spec']['params']['rules']==json.loads(blobs['record'])['rules']
+    assert detail['curve'][0]['equity']==.99
+    assert detail['curve'][0]['drawdown']==pytest.approx(-.01)
+    assert detail['curve'][0]['source_native_drawdown']==-.04
+    assert not record['definition_revision_bound']
+    status=prepare({'synthetic':root},tmp_path/'derived-preview',registry={
+        'schema_version':'quantgraph-approved-lab-display-sources/v1','records':[entry]})
+    index=json.loads((tmp_path/'derived-preview/manifest.json').read_bytes())
+    assert index['manifest_kind']=='LAB_DISPLAY_ARTIFACT_INDEX'
+    assert index['source_manifest_kinds']==[DERIVED_MANIFEST_KIND]
+    assert status['new_execution_trials']==0
+
+
+@pytest.mark.parametrize('change',['hidden_kind','wrong_kind','ref_kind','cycle','curve_binding',
+                                  'historical_allowlist','C0','rules','private','timestamp'])
+def test_derived_boundary_rejections(tmp_path,change):
+    _,entry,blobs=derived_source(tmp_path)
+    manifest=json.loads(blobs['result_manifest']);record=json.loads(blobs['record'])
+    if change=='hidden_kind':entry.pop('manifest_kind')
+    elif change=='wrong_kind':entry['manifest_kind']='NATIVE_CORPUS'
+    elif change=='ref_kind':record['related_results'][0].pop('manifest_kind')
+    elif change=='cycle':manifest['files']['graph-record.json']={}
+    elif change=='curve_binding':manifest['files']['base-nav-light.csv']['sha256']='0'*64
+    elif change=='historical_allowlist':manifest['source_artifacts']['summary']['sha256']='0'*64
+    elif change=='C0':
+        c=json.loads(blobs['C0']);c['protocol_sha256']='0'*64;blobs['C0']=encoded(c)
+    elif change=='rules':record['rules']['entry']='invented entry'
+    elif change=='private':record['economic_basis']={'hypothesis':{'value':'libfile_private000example'}}
+    elif change=='timestamp':
+        blobs['curve']=blobs['curve'].replace(b'2024-01-02T00:00:00Z',b'2024-01-01T00:00:00Z')
+        manifest['files']['base-nav-light.csv'].update(sha256=digest(blobs['curve']),bytes=len(blobs['curve']))
+    blobs['result_manifest']=encoded(manifest)
+    record['related_results'][0]['manifest_sha256']=digest(blobs['result_manifest'])
+    blobs['record']=encoded(record)
+    with pytest.raises(ValueError):project(entry,blobs)
+
+
+def test_derived_type_survives_additive_snapshot_refs_and_replay(tmp_path):
+    _,entry,blobs=derived_source(tmp_path);record,detail=project(entry,blobs)
+    root,receipt,shard=active(tmp_path,record,detail)
+    assets,envelope=merge_snapshot([record],[detail],root,digest(encoded(receipt)),receipt['active_batch'])
+    # Existing Site envelope rejects unknown fields. Its fixed detail hash
+    # binds the type, while record refs and implementation details retain it.
+    transport_ref=envelope['results'][0]
+    assert set(transport_ref)=={'origin_run_id','variant_id','manifest_sha256','record_id','detail_path','detail_sha256'}
+    transported=json.loads(gzip.decompress(assets[transport_ref['detail_path']]))
+    assert transported['manifest_kind']==DERIVED_MANIFEST_KIND
+    assert digest(assets[transport_ref['detail_path']])==transport_ref['detail_sha256']
+    m=json.loads(assets['/data/manifest.json'])
+    assert m['runs'][-1]['manifest_kind']==DERIVED_MANIFEST_KIND
+    rows=json.loads(gzip.decompress(assets[shard]))
+    assert rows[entry['id']]['related_results'][-1]['manifest_kind']==DERIVED_MANIFEST_KIND
+    assert rows[entry['id']]['note_marker']=='unchanged' and len(rows[entry['id']]['related_results'])==3
+    bad=deepcopy(record);bad['related_results'][0].pop('manifest_kind')
+    with pytest.raises(ValueError,match='manifest kind mismatch'):
+        merge_snapshot([bad],[detail],root,digest(encoded(receipt)),receipt['active_batch'])
+    for path,raw in assets.items():
+        p=root/'assets'/path[1:];p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
+        receipt['files'][path]=dict(sha256=digest(raw),bytes=len(raw))
+    (root/'active-snapshot.json').write_bytes(encoded(receipt))
+    again,replay=merge_snapshot([record],[detail],root,digest(encoded(receipt)),receipt['active_batch'])
+    assert not again and not replay['results']
+
+
+def test_legacy_projection_bytes_match_frozen_main_fixture(tmp_path):
+    # Independent baseline: synthetic fixture evaluated with the complete
+    # adapter from Graph main 55ca776 before derived-manifest support.
+    _,entry,blobs=source(tmp_path)
+    record,detail=project(entry,blobs)
+    assert digest(encoded(record))=='2f9d9b208a33571f685613d0e724cac1bc49fb576feb663faf57008674b98e67'
+    # JSON bytes stay stable across Python gzip header/zlib versions; actual
+    # pinned-source preview receipts separately compare all twelve gzip bytes.
+    assert digest(encoded(detail))=='a34989fbaa3ae63c6b03a7f35a7580f7f11a19914f44af89e60872a6beb2bbcd'
+
+
+@pytest.mark.parametrize('derived',[False,True])
+@pytest.mark.parametrize('change',['kind','hash','missing_kind','missing_hash','duplicate','identical'])
+def test_existing_target_run_requires_exact_manifest_binding(tmp_path,derived,change):
+    _,entry,blobs=derived_source(tmp_path) if derived else source(tmp_path)
+    record,detail=project(entry,blobs)
+    root,receipt,shard=active(tmp_path,record,detail)
+    p=root/'assets/data/manifest.json';m=json.loads(p.read_bytes())
+    run=dict(run_id=detail['run_id'],manifest_kind=detail['lineage']['manifest_kind'],
+             source_manifest_sha256=detail['lineage']['manifest_sha256'],retained='unchanged')
+    if change=='kind':run['manifest_kind']=MANIFEST_KIND if derived else DERIVED_MANIFEST_KIND
+    elif change=='hash':run['source_manifest_sha256']='f'*64
+    elif change=='missing_kind':run.pop('manifest_kind')
+    elif change=='missing_hash':run.pop('source_manifest_sha256')
+    m['runs'].append(run)
+    if change=='duplicate':m['runs'].append(deepcopy(run))
+    raw=encoded(m);p.write_bytes(raw)
+    receipt['files']['/data/manifest.json']=dict(sha256=digest(raw),bytes=len(raw))
+    (root/'active-snapshot.json').write_bytes(encoded(receipt))
+    before={p.relative_to(root):p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    if change=='identical':
+        assets,envelope=merge_snapshot([record],[detail],root,digest(encoded(receipt)),receipt['active_batch'])
+        actual=json.loads(assets['/data/manifest.json'])
+        assert actual['runs']==m['runs']  # Existing annotations and non-target legacy run survive.
+        assert len(envelope['results'])==1
+    else:
+        with pytest.raises(ValueError,match='run manifest kind/hash binding'):
+            merge_snapshot([record],[detail],root,digest(encoded(receipt)),receipt['active_batch'])
+    assert before=={p.relative_to(root):p.read_bytes() for p in root.rglob('*') if p.is_file()}

@@ -25,6 +25,7 @@ from quantgraph.graph.site_feedback import canonical
 
 REGISTRY = Path(__file__).resolve().parents[1] / 'metadata/lab-display-sources.json'
 MANIFEST_KIND = 'LAB_ORIGIN_RESULT_MANIFEST_NOT_GRAPH_COLLECTION'
+DERIVED_MANIFEST_KIND = 'PUBLIC_DERIVED_DISPLAY_MANIFEST'
 COMMON_LIMITS = [
     '研究者按可用数据选定2024年BTCUSDT现货5分钟实例；不是样本外，也不是原作者完整运行环境。',
     'DIAGNOSTIC_ONLY；PIT、历史可交易性及数据最终性未获严格认证；0严格复现，不晋升。',
@@ -85,6 +86,67 @@ def period(metric, start, end):
                 max_drawdown_basis='original native 5m close equity including initial capital', oos_claim=False)
 
 
+def derived_manifest(entry, blobs, origin, record, protocol):
+    """Bind additive display evidence without relabeling it as a private run manifest."""
+    rid = entry['id']
+    if (origin.get('schema_version') != 'quantgraph-public-derived-display-manifest/v1'
+            or origin.get('id') != rid or origin.get('origin_run_id') != entry['run_id']
+            or origin.get('variant_id') != entry['variant_id']
+            or origin.get('original_private_result_manifest') is not False
+            or origin.get('original_results_modified') is not False):
+        raise ValueError('Invalid derived display manifest identity or scope')
+    origin_commit = origin.get('origin_lab_commit', '')
+    if not re.fullmatch(r'[a-f0-9]{40}', origin_commit):
+        raise ValueError('Derived source commit required')
+    names = {'summary.json':'summary', 'protocol.json':'protocol', 'C0.json':'C0', 'base-nav-light.csv':'curve'}
+    if (set(origin['files']) != set(names)
+            or set(origin.get('excluded_from_self_hash', [])) != {'public-display-manifest.json', 'graph-record.json'}):
+        raise ValueError('Derived evidence must exclude cyclic record/self references')
+    for name, role in names.items():
+        ref = origin['files'][name]
+        if any(ref[k] != value for k,value in dict(path=entry['artifacts'][role]['path'],
+                sha256=digest(blobs[role]),bytes=len(blobs[role])).items()):
+            raise ValueError('Derived evidence file binding mismatch: '+role)
+    prior = _loads(blobs['origin_publication_manifest'])
+    if (prior.get('record_id') or prior.get('id')) != rid:
+        raise ValueError('Historical publication identity mismatch')
+    prefix = f'research/public-strategies/{rid}/'
+    allowed = {}
+    for item in prior['files']:
+        path = item['path'] if item['path'].startswith(prefix) else prefix+item['path']
+        if path in allowed:
+            raise ValueError('Duplicate historical publication path')
+        allowed[path] = {'sha256':item['sha256'],'bytes':item['bytes']}
+    source_refs = origin['source_artifacts']
+    for role, ref in source_refs.items():
+        path = ref['path']
+        if (not path.startswith(prefix) or '..' in Path(path).parts or '\\' in path
+                or ref['url'] != f'https://github.com/KathenZK/quant-research-lab/blob/{origin_commit}/{path}'):
+            raise ValueError('Derived source must pin a same-ID public artifact')
+        expected = (dict(sha256=digest(blobs['origin_publication_manifest']),bytes=len(blobs['origin_publication_manifest']))
+                    if role=='publication_manifest' and path==prefix+'publication-manifest.json' else allowed.get(path))
+        if expected != {'sha256':ref['sha256'],'bytes':ref['bytes']}:
+            raise ValueError('Derived source outside historical publication allowlist')
+    for role in ['summary','protocol','C0','source_rule_card','publication_manifest']:
+        selected = 'origin_publication_manifest' if role=='publication_manifest' else role
+        ref = source_refs[role]
+        if ref['sha256'] != digest(blobs[selected]) or ref['bytes'] != len(blobs[selected]):
+            raise ValueError('Derived source hash mismatch: '+role)
+    c0, card = (_loads(blobs[k]) for k in ['C0','source_rule_card'])
+    if (c0.get('record_id') != rid or card.get('record_id') != rid
+            or c0['protocol_sha256'] != digest(blobs['protocol'])
+            or c0['source_sha256'] != protocol['source']['sha256']
+            or card['source']['sha256'] != protocol['source']['sha256']):
+        raise ValueError('Derived C0/rule source binding mismatch')
+    expected_rules = dict(entry=card['entry'],exit=card['exit'],risk=protocol['risk'],
+        execution=protocol['execution'],parameters=protocol['parameters'],
+        catalog_difference_or_omission=card['catalog_difference_or_omission'])
+    if record.get('rules') != expected_rules or ('rules' in protocol and protocol['rules'] != expected_rules):
+        raise ValueError('Record rules differ from pinned rule card/protocol')
+    reviewed(expected_rules)
+    return expected_rules
+
+
 def project(entry, blobs):
     rid = entry['id']
     record, summary, protocol = (_loads(blobs[k]) for k in ['record', 'summary', 'protocol'])
@@ -104,6 +166,16 @@ def project(entry, blobs):
     if entry['fidelity_class'] not in {'ADAPTED', 'HYPOTHESIS'}:
         raise ValueError('Unsupported Lab fidelity')
     origin = _loads(blobs['result_manifest'])
+    manifest_kind = entry.get('manifest_kind', MANIFEST_KIND)
+    if manifest_kind not in {MANIFEST_KIND, DERIVED_MANIFEST_KIND}:
+        raise ValueError('Unsupported display manifest kind')
+    declared_kinds = [v.get('manifest_kind') for v in [origin, ref]]
+    if manifest_kind == DERIVED_MANIFEST_KIND:
+        if declared_kinds != [DERIVED_MANIFEST_KIND, DERIVED_MANIFEST_KIND]:
+            raise ValueError('Derived manifest kind requires explicit matching source and reference')
+        rules = derived_manifest(entry, blobs, origin, record, protocol)
+    elif any(k is not None and k != MANIFEST_KIND for k in declared_kinds):
+        raise ValueError('Origin manifest cannot hide a derived/unsupported kind')
     origin_files = origin['files']
     if isinstance(origin_files, list):
         origin_files = {v.get('path') or v.get('name'):v for v in origin_files}
@@ -146,6 +218,13 @@ def project(entry, blobs):
             point = dict(date=stamp, equity=nav, drawdown=nav / peak - 1)
             if 'valuation_time_utc' in row:
                 point['valuation_time_utc'] = row['valuation_time_utc']
+            if manifest_kind == DERIVED_MANIFEST_KIND:
+                if row.get('valuation_time_utc') != (date.fromisoformat(stamp)+timedelta(days=1)).isoformat()+'T00:00:00Z':
+                    raise ValueError('Derived curve valuation boundary differs from retained UTC day')
+                native_dd = float(row['source_native_drawdown'])
+                if not math.isfinite(native_dd) or not -1 <= native_dd <= 0:
+                    raise ValueError('Invalid retained native drawdown')
+                point['source_native_drawdown'] = native_dd
             curve.append(point)
         if not curve or curve[-1]['date'] != end or not math.isclose(curve[-1]['equity'] - 1, summary['results']['base']['metrics']['total_return'], abs_tol=1e-11):
             raise ValueError('Public curve end or terminal return mismatch')
@@ -172,7 +251,7 @@ def project(entry, blobs):
                  data_quality_status='DIAGNOSTIC_ONLY', trusted_input=False)
     lineage = dict(origin_run_id=run, variant_id=variant, protocol_sha256=digest(blobs['protocol']),
                    manifest_sha256=manifest_sha, source_run_manifest_sha256=manifest_sha,
-                   manifest_kind=MANIFEST_KIND, lab_commit=entry['lab_commit'],
+                   manifest_kind=manifest_kind, lab_commit=entry['lab_commit'],
                    publication_manifest_sha256=digest(blobs['publication_manifest']),
                    definition_revision_bound=False, new_execution_trials=0,
                    source_artifacts=entry['artifacts'])
@@ -182,6 +261,10 @@ def project(entry, blobs):
                       manifest_sha256=manifest_sha)
     if entry['fidelity_class'] == 'ADAPTED':
         result_ref['execution_class'] = 'ADAPTED_EXECUTION_PROXY'
+    if manifest_kind == DERIVED_MANIFEST_KIND:
+        result_ref['manifest_kind'] = manifest_kind
+        lineage['source_display_manifest_sha256'] = lineage.pop('source_run_manifest_sha256')
+        lineage['origin_lab_commit'] = origin['origin_lab_commit']
     projected = dict(id=rid, name=record['name'], status='tested_adapted_only' if entry['fidelity_class']=='ADAPTED' else 'tested_hypothesis_only',
                      reason=record.get('reason') or record.get('method') or explanation, tested_variants=1,
                      families=[family], audit=audit, related_results=[result_ref],
@@ -189,6 +272,8 @@ def project(entry, blobs):
                      definition_revision_bound=False, limitations=limits)
     parameters = {k: protocol[k] for k in ['parameters', 'signals', 'rules', 'risk', 'execution',
                     'execution_plan', 'risk_plan', 'runtime_resolution', 'implementation_adjustments_before_returns'] if k in protocol}
+    if manifest_kind == DERIVED_MANIFEST_KIND:
+        parameters['rules'] = deepcopy(rules)
     detail = dict(id=rid, name=record['name'], run_id=run, origin_run_id=run, variant_id=variant,
                   fidelity_class=entry['fidelity_class'], fidelity_reason=explanation, family=family,
                   metrics=dict(periods={'full': metric('base')}, same_instrument_benchmark={'full': period(benchmark,start,end)},
@@ -207,6 +292,12 @@ def project(entry, blobs):
                       license='CC BY-NC-SA-4.0 plus Binance Dataset Terms',
                       terms_url='https://github.com/binance/binance-public-data/blob/f446ce3812bd4e5521f21faecd4ae3c6460e49fc/TERMS_AND_CONDITIONS.md',
                       changes='Display projection of approved aggregate summary; no raw data or full logs'))
+    if manifest_kind == DERIVED_MANIFEST_KIND:
+        projected['manifest_kind'] = manifest_kind
+        detail['manifest_kind'] = manifest_kind
+        detail['curve_meta']['source_native_drawdown_basis'] = 'retained original full5m peaks; separate from daily display drawdown'
+        detail['curve_meta']['date_mapping'] = 'retained UTC day and its exclusive next-midnight valuation timestamp'
+        detail['spec']['economic_basis'] = deepcopy(record['economic_basis'])
     configs=summary['strategy_configurations']
     controls=summary.get('new_control_configurations',summary.get('control_configurations',summary.get('controls')))
     reused=summary.get('reused_control_configurations',0)
@@ -268,6 +359,18 @@ def merge_snapshot(records, details, root, expected_sha256, expected_parent):
         if detail['id'] != rid or not any(r['origin_run_id']==run and r['variant_id']==variant
                 and r['manifest_sha256']==detail['lineage']['manifest_sha256'] for r in record['related_results']):
             raise ValueError('Display record/detail identity mismatch')
+        kind = detail['lineage']['manifest_kind']
+        if kind not in {MANIFEST_KIND, DERIVED_MANIFEST_KIND} or (kind == DERIVED_MANIFEST_KIND and (
+                detail.get('manifest_kind') != kind or not any(r['origin_run_id']==run and r['variant_id']==variant
+                    and r.get('manifest_kind')==kind for r in record['related_results']))):
+            raise ValueError('Display record/detail manifest kind mismatch')
+        existing_runs = [r for r in merged['runs'] if r['run_id']==run]
+        if existing_runs and (len(existing_runs)!=1
+                or existing_runs[0].get('manifest_kind')!=kind
+                or existing_runs[0].get('source_manifest_sha256')!=detail['lineage']['manifest_sha256']):
+            # A target legacy run missing provenance is unresolved, not an
+            # implicit match. Keep its bytes and require an explicit readback.
+            raise ValueError('Existing run manifest kind/hash binding conflicts or is incomplete')
         binding = receipt['bindings'].get(rid)
         if not binding or not binding.get('entity_id') or not binding.get('definition_revision'):
             raise ValueError('Current entity/revision binding required')
@@ -303,8 +406,8 @@ def merge_snapshot(records, details, root, expected_sha256, expected_parent):
                 detail_path=path,detail_sha256=digest(body)))
         chunks[shard][rid] = merge_record(previous, record)
         merged['details'][run+'|'+variant] = key
-        if not any(r['run_id']==run for r in merged['runs']):
-            merged['runs'].append(dict(run_id=run, manifest_kind=MANIFEST_KIND,
+        if not existing_runs:
+            merged['runs'].append(dict(run_id=run, manifest_kind=detail['lineage']['manifest_kind'],
                                       source_manifest_sha256=detail['lineage']['manifest_sha256']))
     for path, value in chunks.items():
         body = encode_asset(value)
@@ -352,8 +455,12 @@ def prepare(roots, output, *, registry=None, active_root=None, active_sha256=Non
         status['active_merge_status'] = 'DRAFT_ONLY_PENDING_SOLE_SITE_WRITER_ACCEPTANCE'
         status['expected_parent'] = parent
     files['status.json'] = encoded(status)
-    files['manifest.json'] = encoded(dict(schema_version='quantgraph-lab-display-file-manifest/v1',
-        manifest_kind=MANIFEST_KIND, files={p:dict(sha256=digest(b),bytes=len(b)) for p,b in sorted(files.items())}))
+    manifest = dict(schema_version='quantgraph-lab-display-file-manifest/v1',
+        manifest_kind=MANIFEST_KIND, files={p:dict(sha256=digest(b),bytes=len(b)) for p,b in sorted(files.items())})
+    kinds = sorted({d['lineage']['manifest_kind'] for d in details})
+    if DERIVED_MANIFEST_KIND in kinds:
+        manifest.update(manifest_kind='LAB_DISPLAY_ARTIFACT_INDEX', source_manifest_kinds=kinds)
+    files['manifest.json'] = encoded(manifest)
     if shutil.disk_usage(output.parent).free <= RESERVE + sum(map(len,files.values())):
         raise ValueError('Insufficient 5 GiB reserve for the complete projection')
     output.mkdir()
