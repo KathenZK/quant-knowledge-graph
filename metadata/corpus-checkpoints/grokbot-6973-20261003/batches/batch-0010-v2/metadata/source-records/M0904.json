@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0904",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 904,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "cf78cbc78731cffdcb391536eee11159f140119f7c78d6004fff37ad705e8bac",
+    "rule_sha256": "4f7bb6d9dbd2b43b4ce7655ac57f5fbc5be3c49827e6774081cc0a4057d77095"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0904",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0904"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/86/hmm-intraday-regime-detection/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Louis Szeto"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "HMM盘中体制：基本面可得市值最大10只，5分钟约150根，3状态高斯HMM对1-bar变动率，后验最高为最bullish则做多否则做空，活跃股票等权"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-06-09"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "HMM Intraday Regime Detection"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该公开策略页已印出的基本面可得、市值最大的 10 只、默认 5 分钟、约 150 根观测、每月初重训、每 5 分钟检查、1-bar 变动率、3 状态高斯 HMM。后验概率最高状态为最 bullish 时做多，否则做空；活跃股票等权配置。信号变化时不强制清仓或再平衡，持仓可持续到新信号逐步改变目标权重。不是已收的市值前十、五分钟三状态隐马尔可夫：那边比较预测概率下标 2 与下标 0，下标 2 大于下标 0 则该只权重正 10%，否则负 10%，页面没有印出三个状态如何按收益均值排序后再赋给下标。本条用最高后验是否为最 bullish 决定多空，并用等权，不是固定 ±10%。主文件没有已印出的这组等权多空。提出日期按源文件原样保留2024-06-09。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
