@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0796",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 796,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b5fd4f8af247c2d4699961381e96aa2bbeba120a845b86813a9e3bc6ff7cfe8c",
+    "rule_sha256": "8602dc5a549b039230b15b16bfe7ac73a8dedcf45a25e701740558eff681fb99"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0796",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0796"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://cdn.cboe.com/api/global/us_indices/governance/Cboe_BuyWrite_Indices_Methodology.pdf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cboe Global Indices"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "标普500三十德尔塔备兑：多头标普500并卖出月度虚值认购，行权价取虚值且德尔塔最接近0.30，并列取更高行权价"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2015-08-03"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cboe BuyWrite Indices Methodology"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：需要期权链（虚值且德尔塔最接近0.30、再平衡表写0.303的标普500月度认购行权价），不能只凭标普500价格回测。本条只写该备兑指数方法已印出的三十德尔塔规则，不是已收的标普500平值备兑按11:00美东前最后值或之上最接近档卖出认购，也不是同文件百分之二虚值备兑按102%，也不是同批铁鹰按约0.20与0.05德尔塔。指数跟踪一套假想备兑认购：建立跟踪标普500指数的多头，并卖出月度虚值的标普500指数认购。方法概述写卖出时选取德尔塔最接近0.30的期权；再平衡表写选取在芝加哥期权交易所上市、虚值、且德尔塔最接近0.303的期权。德尔塔用布莱克公式，全部输入取11:00美东之前最后可得值。脚注写若两张期权的德尔塔到0.30的距离相等，则取更高行权价。滚动日为每月第三个星期五；若该日为交易所假日，则提前到前一营业日。认购持有至到期，通常即该第三个星期五。到期结算用标的指数的特别开盘价，到期认购结算值为0与特别开盘价减行权价的较大者。结算后按同一规则卖出下月认购。指数多头与认购空头按相等名义持有，认购空头由指数多头备兑。新认购按11:30至12:00美东的成交量加权平均价视同卖出；先剔除期权价格报告机构代码为大写A至H与小写f至t的成交，再对剩余成交按成交量加权；该时段没有成交则按该时段结束前最后买价视同卖出。权利金在功能上再投资进组合。该文件其余指数为全收益，成分股股息与视同收到的权利金在功能上再投资。页面未把概述的0.30与再平衡表的0.303收成同一个未写出的阈值，本条两处都照记。未写德尔塔用哪一家波动率曲面。提出日期取指数信息表印出的Launch Date 2015-08-03，不把基日1986-06-20写成提出日。方法文件版本号v20251022。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "1.1 Index Objective中BXMD段；2.2再平衡表与脚注3；VWAP表；第5节Index Information。Launch Date August 3, 2015；Base Date June 20, 1986；文件版本v20251022"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

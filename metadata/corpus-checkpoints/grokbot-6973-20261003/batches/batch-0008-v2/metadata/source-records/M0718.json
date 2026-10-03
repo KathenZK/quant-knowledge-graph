@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0718",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 718,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ef76e611ece6fdfad0700b527879a96b7ff06d05f8a64d5a9aa2ed97ce5c03a9",
+    "rule_sha256": "3b0535c6fc0c4f786d64334b11eaf122189c3992df4749660d132700dedeafcd"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0718",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0718"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/750/Daily-VRP-on-VIX-ETNs"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Solomon Pak"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "VIX挂钩ETN日频波动率风险溢价"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-09-08"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Daily VRP on VIX ETNs"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：需要 VIX 与 VIX 期限结构，不能只凭 VIXY/SVXY/SPY 价格回测。每日再平衡、收盘前 16 分钟下 MOC 单；用 VIX² 与 SPY 日收益的 30 日已实现方差比较，eVRP = VIX² − RV30²，并结合 VIX 期限结构。期限结构 contango 且 eVRP>0 做全仓 short vol；eVRP<0 减半 short；backwardation 且 eVRP<0 做全仓 long vol；其他状态空仓。仓位可用静态 20%/10% 或按 VIX/divisor 动态缩放，最高 100%，设 2% 曝险 deadband。页面示例 short VIXY/long SVXY，另以 SPY 作为短波动时的替代持仓。与 M0167 不同：不是每月卖出SPY平值跨式。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
