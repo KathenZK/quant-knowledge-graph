@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1825",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1825,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8e59ecaa9f751ef348cd7a6f8ce13e58c18031862ae0a181c5f87ab3e7946642",
+    "rule_sha256": "feef1da50e16590d5a755ef94e80162c18e5ab42f23115281693f3ab1d192011"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1825",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1825"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Maro4hMacdSd/Maro4hMacdSd.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Maro4hMacdSd.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Maro4hMacdSd：5m，MACD柱%为负且呈V形反转、波动STDDEV(28)>其MA做多；对称正柱倒V且波动低于均值平多；止损约−21.6%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Maro4hMacdSd；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Maro4hMacdSd：5m，MACD柱%为负且呈V形反转、波动STDDEV(28)>其MA做多；对称正柱倒V且波动低于均值平多；止损约−21.6%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写davidzr仓strategies/Maro4hMacdSd/Maro4hMacdSd.py默认。timeframe=5m；stoploss=−0.21611；trailing_stop=False。macdhist=100×MACD(12,26,9)柱/收盘；corr=STDDEV(28)，corr_mean=MA(corr,28)。做多：macdhist<0，且前2根柱>前1根柱，且当前柱>前2根柱，且corr>corr_mean。平多：macdhist>0，且前2根柱<前1根柱，且当前柱<前2根柱，且corr_sell<corr_mean_sell（同28期构造）。提出日期未知。 不是纯MACD金叉：本条是5m Maro4hMacdSd，MACD柱%为负且呈V形反转且STDDEV(28)>其MA做多，对称正柱倒V平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
