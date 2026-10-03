@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0399",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 399,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a4450e70d43b3676d169fe612d54d240cb94b9818c08f08d29128996fdcfa474",
+    "rule_sha256": "735ce596cbaddca45df9ea61aa40b715a4e9676d850415cd8a2e18a5b3cdcba5"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0399",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0399"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/EarningsConsistency.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Alwathainani (2009, BAR)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://openassetpricing.com/SignalDoc-Browser.html"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Earnings consistency（EarningsConsistency）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美国股票（CRSP/Compustat；Chen-Zimmermann 复制）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2009"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Earnings consistency"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "信号（Signal Browser Definition）：Average earnings growth over previous 48 months. Earnings growth is defined as EPS (epspx) minus EPS 12 months ago divided by average EPS 12 and 24 months ago. Exclude if price less than 5, absolute value of 12 month earnings growth greater 600%, or earnings growth and earnings growth 12 months ago have different signs. 组合规则（该页字段）：StockWeight=EW；LSQuantile=未写；PortfolioPeriod=12.0个月；StartMonth=6.0；Sign=1.0；TestInOP=LS port。股票池/过滤：abs(prc)>1。 Notes：Could not access OP, so we used the Alwathainani's dissertation from VCU. We follow MP, which is simpler than OP.。 基线为原论文分组的多空组合（FAQ：baseline follows the original paper split；数据页写 monthly long-short following OPs）。未在该行写出的细节不补。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "signalname=EarningsConsistency; KeyTable=11A CLG-CHG"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
