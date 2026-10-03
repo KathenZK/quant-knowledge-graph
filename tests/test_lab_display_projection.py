@@ -198,3 +198,24 @@ def test_future_explicit_adapted_id_needs_no_pilot_expansion(tmp_path):
     root,e,_=source(tmp_path,'M0260')
     record,detail=project(e,verified_source(root,e))
     assert record['id']=='M0260' and detail['fidelity_class']=='ADAPTED'
+
+
+@pytest.mark.parametrize('identical',[False,True])
+def test_pinned_orphan_implementation_is_immutable_without_index(tmp_path,identical):
+    _,e,b=source(tmp_path);record,detail=project(e,b)
+    root,receipt,shard=active(tmp_path,record,detail)
+    key=digest((detail['run_id']+'\n'+detail['variant_id']).encode())[:24]
+    path='/data/implementations/'+key+'.json.gz'
+    raw=encode_asset(detail) if identical else encode_asset({'id':e['id'],'frozen':'old orphan'})
+    p=root/'assets'/path[1:];p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
+    receipt['files'][path]=dict(sha256=digest(raw),bytes=len(raw))
+    (root/'active-snapshot.json').write_bytes(encoded(receipt))
+    if not identical:
+        with pytest.raises(ValueError,match='path has different bytes'):
+            merge_snapshot([record],[detail],root,digest(encoded(receipt)),receipt['active_batch'])
+    else:
+        assets,envelope=merge_snapshot([record],[detail],root,digest(encoded(receipt)),receipt['active_batch'])
+        assert assets[path]==raw and envelope['results'][0]['detail_sha256']==digest(raw)
+        m=json.loads(assets['/data/manifest.json'])
+        assert m['details'][detail['run_id']+'|'+detail['variant_id']]==key
+    assert p.read_bytes()==raw

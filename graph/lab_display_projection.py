@@ -1,7 +1,7 @@
 """Bounded, offline Lab display adapter; never a native corpus import or uploader.
 
 Only explicitly selected, hash-pinned approved source inventories enter this
-adapter; the committed default contains eight records. There is no repository scan.
+adapter; the committed default lists each approved record. There is no repository scan.
 An optional externally pinned current snapshot permits an additive asset draft;
 neither path activates, deploys, fetches data, or executes a strategy.
 """
@@ -289,6 +289,10 @@ def merge_snapshot(records, details, root, expected_sha256, expected_parent):
         path = '/data/implementations/'+key+'.json.gz'
         body = encode_asset(detail)
         old_key = manifest['details'].get(run+'|'+variant)
+        # A pinned orphan object is immutable even when a partial index omitted
+        # it. Re-registering identical bytes repairs navigation, never evidence.
+        if path in receipt['files'] and read(path)[1] != body:
+            raise ValueError('Existing immutable implementation path has different bytes')
         if old_key is not None:
             if old_key != key or read(path)[1] != body:
                 raise ValueError('Existing immutable implementation has different bytes')
