@@ -6,6 +6,7 @@ the single marked test lineage so the actual browser can inspect its revision.
 """
 from copy import deepcopy
 import json
+import os
 from pathlib import Path
 import shutil
 import sqlite3
@@ -17,7 +18,7 @@ from quantgraph.models.ingestion import IngestBatch
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNTIME = ROOT / '.artifacts/polish-v1/update-runtime'
-SOURCE = ROOT / '.artifacts/personal'
+SOURCE = Path(os.environ.get('QUANTGRAPH_PERSONAL_TEST_SOURCE', ROOT / '.artifacts/personal')).resolve()
 RECORD_ID = 'TEST_POLISH_M4018'
 
 
