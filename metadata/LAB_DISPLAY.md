@@ -1,6 +1,6 @@
 # 冻结 Lab 结果的显示投影
 
-`graph.lab_display_projection` 是既有详情/比较页的数据适配器，不是回测器、原生corpus导入器或Site上传器。默认 `lab-display-sources.json` 显式固定26个已获准公开的Lab来源，保留16个ADAPTED与10个HYPOTHESIS；M1358的Graph HYPOTHESIS枚举与实际研究ADAPTED单列，M1258保留未核实来源的catalog研究假设，不改变研究可信度。只有指定inventory内的ID可进入，不自动扫描Lab、catalog或全库。原M0256/M0259 pilot不变。
+`graph.lab_display_projection` 是既有详情/比较页的数据适配器，不是回测器、原生corpus导入器或Site上传器。默认 `lab-display-sources.json` 显式固定27个已获准公开的Lab来源，保留17个ADAPTED与10个HYPOTHESIS；M1358的Graph HYPOTHESIS枚举与实际研究ADAPTED单列，M1258保留未核实来源的catalog研究假设，不改变研究可信度。只有指定inventory内的ID可进入，不自动扫描Lab、catalog或全库。原M0256/M0259 pilot不变。
 
 源清单包含每个ID的Lab commit、run/variant、publication manifest和实际消费文件的路径、URL、bytes、SHA256。支持publication的repo-relative及逐策略relative文件清单；源角色必须同时通过独立hash与publication allowlist。无原文全文、行情原始文件、完整账本、private Graph detail或批注输入。
 
@@ -88,3 +88,18 @@ M1347 是25→26的单独批准追加，固定 Lab main Git pin `475ee92d451b581
 直接保留25个已归一化原单位点及其drawdown，不再次除100000、不插值、不从抽样重算731日指标。五处full与2023–2024必须类型和值深等同，成本0/20与日延迟、null/零以及全部旧结果原值保持。全量重绑定后的错误schema/kind/身份/路径、bool/float冒充整数计数、规则或资本冲突、来源升级、错误控制、曲线单位/数量/别名冲突均拒绝。未读真实active-root/entity/revision时仍为STAGED_NOT_IMPORTED/BLOCKED_CURRENT_ACTIVE_ROOT_ENTITY_REVISION_REQUIRED，不以旧seed或虚构身份补齐。
 
 新增源组参数为 `--lab-root m1347_graph_projection_v2=<Lab-475ee92d-source-root>`，可加 `--ids M1347` 仅作离线小批。增加 `tests/test_lab_display_m1347.py` 验证上述合同、确定性、不可覆盖、真实绑定门槛及既有记录/批注保留；原v1/v2和dot009合同没有放宽。
+
+
+M1266 是26→27的单独追加，固定Lab `d15ce516b56c4bc6e57ac8c6eb4dd474defef451` 中9个明确公共角色、73,206B。`graph.lab_display_m1266` 只接受 `M1266_CORRECTED_SOURCE_FIXED_QTY_ACCEPTED_LIGHT_V1` 与独立 `M1266_ACCEPTED_LIGHT_DAILY_SAMPLED_V1` profile；复用既有日频renderer形状，不能套用M1258满仓、M1358 95%notional、M1347或dot009合同。旧26 registry对象、records和gzip不变，UI与六字段transport不改。
+
+9角色仅为原record/detail/metrics、公开自撰operational-rules/report和新增coordinator acceptance/注记/两份safe review；每个完整路径、bytes、SHA256、commit URL与代码中的独立锁逐项完全一致，在任何文件读取前拒绝未知角色、跨ID/私有C0/原正文/账本。锁类型 `SELECTED_APPROVED_PUBLIC_LIGHT_SOURCE_LOCK_NOT_PUBLICATION_OR_C0` 明确不是原publication或C0清单。不会解析角色之外的链接、132个私有C0 pins或7个全量结果hash。
+
+Graph在内存生成 `M1266-public-derived-display-manifest/v1`、`PUBLIC_DERIVED_DISPLAY_MANIFEST`，仅hash批准的9项来源；完整manifest嵌入record/detail，输出自身和manifest自身不入hash清单，没有自引用。两组结果引用、detail/lineage和增量manifest.runs绑定同一派生manifest SHA；兼容字段protocol_sha256绑定公开自撰operational-rules，显式标记 `PUBLIC_SELF_AUTHORED_OPERATIONAL_RULES_NOT_ORIGINAL_C0_PROTOCOL`，不冒称读取了私有C0 protocol。
+
+原pending audit、指标status、旧related_results/coverage_history与原限制保留；current `coordinator_acceptance`单列，只绑定已公开回执SHA `05d0d1511fad0793e5582a7a4166c74f45e9f754a7799b3e52ce2cf33d019a0d` 及其两份review。原过时pending限制在派生显示中注明“原发布时状态”；不改原件，也不把父端292成员恢复说成本执行器/root下载全包或把432成员addendum并入旧回执。顶层audit.accepted仍false，coordinator_acceptance.accepted=true只指研究验收。strict0/trustedfalse/OOSfalse/PIT_UNKNOWN及原LEAN等价未证保持；Graph ADAPTED仅为coarse enum，精确 ADAPTED_SOURCE_CORRECTED_VARIANT / HYPOTHESIS_EXECUTION_PROXY 单列。
+
+原4策略配置加1个M1266自身固定数量控制；本次派生0新run/0新control。该控制按2022-12-31信号收盘价冻结q=0.9×100000/close，2023-01-01开盘按8bps费+2bps滑点执行；不是逐时90%再平衡，不是M1258/fullcash，不是M1358 95%notional。无fee0/20/delay2匹配控制，这一限制通过metrics.risk_match_note出现在现有默认full比较表旁，同时保留原限制。基础结果落后原控制；不把delay2较佳选成新策略，不推断超额能力。
+
+spec.rule_excerpt明确为自撰规则摘要，assumptions为字符串数组；EMA20/50/100、100根预热、冻结信号数量、持仓收盘峰值与严格5%判据、锁定意图/现金不足整单拒绝、费用/延迟/终端规则均来自公开rules。原base与benchmark各25单位点逐对象保留，初点是首评价开盘前资金锚点，不是Jan1收盘。curve_meta显式映射731完整观察与25显示点；不重归一化、不插值、不从样本重算指标。附加benchmark_curve保留，但不声称当前UI画了叠加线。full/0/20/lag源指标原值、0.0费用和允许Sharpe null保持；不补turnover或年度统计。所有金融数值严格拒绝bool/string，integer计数也不容float冒充。
+
+数据署名及CC BY-NC-SA 4.0只沿用源派生数据范围，不扩大原文附件、市场原始数据或第三方代码许可；不读取完整原11字段或私有输入清单指纹。新增 `tests/test_lab_display_m1266.py` 和现有ResearchDetail的合成组件测试覆盖边界与默认full可见性。源组参数是 `--lab-root m1266_display=<Lab-d15ce516-selected-public-root>`；缺真实current active实体/revision继续STAGED_NOT_IMPORTED/BLOCKED，绝不生成身份、上传或部署。
