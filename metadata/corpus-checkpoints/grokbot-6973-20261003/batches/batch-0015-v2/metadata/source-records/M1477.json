@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1477",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1477,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5fc9263b80b278bef3e1107929eb003d0ddc9fd0a85d69ee7d491ec15849ee35",
+    "rule_sha256": "b9db667f1fadf9597d8e5917548a5a8f3c4e55b74d7ba4492ccf2f8050ed3990"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1477",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1477"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/strategy/Strategy-NEW-60-40"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor（New 60/40）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/债券风险平价60/40：20日波动倒数加权；价<SMA200则该腿改现金，月末再平衡"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY/TLT/SHY；风险平价+SMA200）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/债券风险平价60/40：20日波动倒数加权；价<SMA200则该腿改现金，月末再平衡"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写Systematic Investor《New 60/40》代码中risk.w.60.40.CASH变体，不是无过滤的美元60/40，也不是目标波动缩放版。代理：STOCK=SPY/VTSMX/VFINX拼接，BOND=TLT/VUSTX，CASH=SHY/TB3Y。风险权重=1/过去20日收益标准差后行归一。若该资产价格低于SMA(200)（文称10月均线），该腿权重置0，剩余进CASH。月末前一日信号、月末收盘执行。提出日期未知。 不是M0612美国五资产12个月波动风险平价+10个月均线，也不是固定美元60/40：本条是SPY/TLT代理风险平价（20日波动倒数），价<SMA200该腿改现金，月末再平衡。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
