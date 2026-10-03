@@ -1,5 +1,36 @@
 # 逐编号知识元数据
 
+原目录首批 **M0001–M0100 共 100 条**已经可以直接阅读完整 11 字段：
+
+| 目录 | 可读原 ID 数 | 状态 |
+|---|---:|---|
+| [策略候选](strategies/README.md) | 86 | CONTENT_INFERRED / UNVERIFIED |
+| [因子候选](factors/README.md) | 9 | CONTENT_INFERRED / UNVERIFIED |
+| [待分类](unclassified/README.md) | 5 | CONTENT_INFERRED / UNVERIFIED |
+
+本轮新增已审原生定义 **0**，新增回测 **0**。既有研究审阅 JSON **2**（M0256/M0259）保持原字节；
+它们不在首批 100 个 ID 内，因此目前两类阅读材料合计 **102 个不同原 ID**，不把同号多层重复计数。
+固定来源快照 [`961e59d`](https://github.com/KathenZK/quant-knowledge-graph/tree/961e59d036652b252bf49b54eb56527f308632af/metadata/corpus-checkpoints/grokbot-6973-20261003)
+包含 600 条完整 source records，其中 **500 条尚未集成到本目录阅读视图**。checkpoint 已保存不等于目录集成或定义准入。
+本次主分支集成基线的 [checkpoint 目录](corpus-checkpoints/grokbot-6973-20261003/batches/) 有前 5 批 500 条；
+上面的 600 专指固定来源快照。本轮只集成首批 100 条阅读视图，未声称全部 6973 条已经集成。
+
+Markdown 是完整采集字段的目录阅读层；`metadata/index.json` 仍只登记原有审阅 JSON，原生 loader/API、
+用户批注和定义均未改变。[目录清单](directory-index.json) 固定每份视图、原始 JSON、行 hash 和分类证据；
+[分类裁决](directory-classification-batch-0001.json) 保留独立复核与最终口径差异。
+因子分数和因子收益允许通过多空组合构造，不能仅因存在持仓就一律归为策略。
+
+校验完整 11 字段、分类证据、目录计数和固定来源：
+
+```bash
+uv run python -m quantgraph.graph.metadata_directory --metadata metadata
+```
+
+后续小批复用 `metadata_directory`：使用绑定 `record_id/row_sha256/rule_sha256` 的明确分类列表，
+每项给出 `entity_type`（strategy/factor/unclassified）、理由及原规则的精确证据片段；名称关键词不够。
+通过 `--decisions`、`--batch-path`、`--batch-sha256`、`--commit` 和 `--output` 生成新目录供集成审阅；
+已有 ID 拒绝覆盖，原冻结批次不改写。所有缺项继续显示原值，分类不升级为来源真实性或经济有效性验证。
+
 `strategies/<原ID>.json` 保存策略；`factors/<原ID>.json` 保存因子。身份是
 `identity_namespace + entity_type + record_id`，不重编号，不把参数配置算作新策略。
 `native_source_id` 保留原编号，跨类型联系放在 `relations`，同名不自动去重。
