@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0856",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 856,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "cacef45b27e49c31980c2307af46c488fc477cb01dace890bc1755852b0b5c3b",
+    "rule_sha256": "53dd37f2f036761d273a8b2ad6a8752e662666db2ff74b0ac2957f7eb2519bc7"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0856",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0856"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/373/Dual-Momentum-Oversold-ETF-Snapback-Strategy"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Solomon Pak"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "双动量超卖ETF回撤反弹：2日RSI低于20且TSI为负并低于信号线，SPY波动率百分位对应最多持仓5/3/2、单标的18%/12%/8%；名单未印出"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-03-05"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dual-Momentum Oversold ETF Snapback Strategy"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：美国股票ETF、部分大盘股、国债ETF、黄金ETF名单页面未印出，不能把未写出的代码补成规则。本条只写该公开策略页已印出的2日RSI与仓位句，不是已收的周线RSI(2)低于20的成交额前500只，也不是十二只大盘昨收2日RSI低于20且现价低于卡玛里拉S3，也不是QQQ与SPY的Connors R3要求2日RSI连降三日且低于10。低、中、高波动的百分位分界页面未印成数字，TSI周期与信号线长度、ATR区间倍数也未印出，本条不补。每日扫描；同时满足2日RSI低于20且True Strength Index为负并低于信号线时才可交易，优先选择RSI最低的标的，波动率升高时略偏向防御标的。以SPY的已实现波动率百分位划分低、中、高波动环境，分别将最多并发持仓设为5、3、2个、单标的资本配置设为18%、12%、8%，并用ATR区间管理风险及退出。提出日期按页面原样保留2026-03-05。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。名单未印出"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

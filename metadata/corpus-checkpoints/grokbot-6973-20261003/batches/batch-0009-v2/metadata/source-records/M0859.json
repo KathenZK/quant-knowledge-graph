@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0859",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 859,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a6c4cf748bfb9af741e1205f776dd21788868c0721b3eb2f2b0f051d99754131",
+    "rule_sha256": "21d9d16514ebeb782cdcff111ac5de2525ea177bb0d57c6ca0e2981f97acf1de"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0859",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0859"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/474/VIX-Regime-Equity-Risk-Premia-Allocator-"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "braydin larson"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "VIX体制权益风险溢价配置：四只最大股票，VIX很低约90%、约50–70百分位约50%、较高约30%并加入GLD；四只代码未印出"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-04-20"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "VIX-Regime Equity Risk-Premia Allocator"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：需要VIX，不能只凭股票与GLD价格回测。按市值筛选的四只最大股票页面未点名，本条不补代码。随机森林的树数、特征全集与概率门槛页面未印出，本条不补。本条只写该公开策略页已印出的配置带，不是已收的动态VIX-SPY状态：那边波动率尖峰时买入SPY、异常低或正在上升时规避，分类器类型未印出，没有四只最大股票，也没有VIX很低约90%、约50–70百分位约50%、较高约30%并加入GLD这些配置带。每日开盘后基于VIX与SPY历史数据决策；VIX很低时将约90%配置于四只最大股票，VIX处于约50–70百分位时将目标提高至约50%，VIX较高时降至约30%并加入GLD防御配置。每月用过去20日VIX变化、SPY 50日均线和短期SPY动量训练随机森林，估计未来21个交易日SPY上涨超过2%的概率；足够看多时倾向最大股票。很低、较高与“足够看多”的数字截止页面未印全，本条不补。提出日期按页面原样保留2026-04-20。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。四只代码未印出"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

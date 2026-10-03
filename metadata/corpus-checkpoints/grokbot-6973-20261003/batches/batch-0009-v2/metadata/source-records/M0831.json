@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0831",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 831,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "afa11a5dbc6c7fc275acb0e3498439be5795b8a952c2f2c7a6bf7dcd7f5c5c67",
+    "rule_sha256": "1d52650be1e22efe14cb277ef4349f9b77ff86f3c12bdb2e5a38212fbeceb12a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0831",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0831"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/17/Asset-Class-Trend-Following"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Jing Wu"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/218/210-Day-SMA-Trend-Following-ETF-Overlay"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "五只ETF的220日均线趋势：SPY、EFA、BND、VNQ、GSG收盘高于220日SMA则等权，否则现金"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "多资产ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2018-06-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Asset Class Trend Following"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该公开策略页已印出的这一精确五只上的220日简单移动平均，不是已收的12个月动量在SPY、EFA、IEF、VNQ、GSG中选前三。也不是 M0005 的SPY、EFA、IEF、VNQ、GSG仅当价格高于10个月均线（源码210日SMA）才等权、否则现金、每月再平衡：债券仓位那边是IEF，不是本条的BND，回看也不是220日，再平衡也不是按日。每日使用220个交易日（约10个月）简单移动平均。各ETF收盘价高于其SMA时纳入等权组合，否则不做多；若没有ETF高于SMA则持有现金。同一五只上把220日换成210日、收盘高于SMA发出一天做多信号、未满足者权重为零、符合条件者等权并立即再平衡，是同一核心，不另开，来源记入本行别名。提出日期按页面原样保留2018-06-01。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

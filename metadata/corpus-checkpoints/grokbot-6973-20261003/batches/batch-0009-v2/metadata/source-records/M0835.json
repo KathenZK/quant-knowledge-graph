@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0835",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 835,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f059af972560a3ceaf990fb953563d0fe2edeb47fcba26aaebaa67e055cc5aea",
+    "rule_sha256": "290a74d284088af80e4d0320342effdec99c51c55a196cdb92791a63e02017d4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0835",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0835"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/499/Cross-Asset-Trend-Momentum-Longs"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "ray tanvar"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "跨资产21日对数价格趋势：Bitcoin/USD、GBPCHF、GBPNZD、Visa，回归t统计量大于1.5做多50%，否则清仓"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密、外汇、股票"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-05-14"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cross-Asset Trend Momentum Longs"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条计入其他，因为持仓名单里有外汇对 GBPCHF、GBPNZD，不是只在加密与美股之间切换，也不改记成美股/ETF。不是已收的四个 G10 货币对近 30 日偏度低于 -0.6 做多、高于 +0.6 做空，也不是外汇 12 个月动量。固定四只：Bitcoin/USD、GBPCHF、GBPNZD、Visa。每个交易日评估，以 21 日对数价格趋势的回归 t 统计量筛选。t 统计量大于 1.5 时做多，目标配置为组合权益 50%；信号回落至小于或等于 1.5 时完全清仓；不做空。页面未印出多只同时触发时几个 50% 目标如何合并，本条不补缩放、现金剩余或杠杆上限。提出日期按页面原样保留2026-05-14。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

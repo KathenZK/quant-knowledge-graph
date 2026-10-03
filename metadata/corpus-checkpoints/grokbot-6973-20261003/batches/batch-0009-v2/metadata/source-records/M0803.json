@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0803",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 803,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "bf3365842ab0909e007d45e9bd7fb122d2c68b53083975e106114e3e898016eb",
+    "rule_sha256": "0f960e487a300b2e85e14e207a88f3ff074ed381c081083de07c41fe7a745f61"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0803",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0803"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/20886/the-max-effect-with-vix-based-leverage-scaling/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "最低五日最大日收益：剔除不动产信托与存托凭证，股价至少5美元且市值至少10亿美元，21日均成交额至少500万美元，取过去21日五个最大日收益均值最低者，十分位且至多25只等权，VIX不高于15杠杆1.5、不低于30为1"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "The MAX Effect with VIX-Based Leverage Scaling"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该研究页已写出的五日最大日收益只做多规则，不是已收的最高五日收益除以波动后按三分位多空，也不是已收的低波动组。因子是每只股票过去21个交易日里五个最大日收益的均值。宇宙剔除不动产信托与存托凭证，须有基本面数据，股价不低于5美元，市值高于10亿美元。再平衡时只保留21日平均日成交额至少500万美元的股票。按该因子从低到高排序，买入最低的十分位，持有只数再上限为25只，等权。每月第一个交易日美东8:00再平衡。杠杆随芝加哥期权交易所波动率指数调整：波动率指数小于或等于15时杠杆1.5；大于或等于30时为1.0；介于其间则为1.5减（波动率指数减15）除以15再乘0.5。目标权重乘该杠杆后下单，并清算不在新名单中的持仓。两次月度再平衡之间，若波动率指数穿越15或30，按同一杠杆函数同比例缩放全部持仓，相对权重不变。页面未写日收益用复权价还是未复权价以外，实现段写用调整后价格更新一日收益率。未写并列如何打破25只上限。提出日期取未知；文中1998年1月至2026年6月是回测区间，不是刊出日。参考论文Bali、Cakici与Whitelaw 2011只定义最大日收益异象，不是本页的波动率指数杠杆。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "The MAX Factor；VIX-Responsive Leverage；Implementation中宇宙过滤、500万美元成交额、十分位上限25只与杠杆式。回测区间January 1998至June 2026"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

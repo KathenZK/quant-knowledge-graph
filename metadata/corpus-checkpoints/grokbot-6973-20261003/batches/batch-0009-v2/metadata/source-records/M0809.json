@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0809",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 809,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6f4de87c66a9d356d1f876da89cea2d30ad99d709ab6959bd5d5e81ed7bcf6fc",
+    "rule_sha256": "7c2c7ca8e336c2684aeba33762835a9b0f097e05de764d4ecc53440c11e55482"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0809",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0809"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/20966/filing-language-stability-as-a-selection-signal/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Emily Xinyu Sun（Rudy Osuna指导；Triton Quantitative Trading，加州大学圣迭戈分校）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "申报语言稳定度：流动性最高100只里按Brain文本相似度取最高25只，优先风险因素相似度，否则用全文，12个月日收益最大夏普只做多，每月第一个交易日美东8:00"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Filing Language Stability as a Selection Signal"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该研究页已印出的只做多选股，不是把懒价格改成论文里的多空，也不是已收的盈利意外或文本以外的质量筛选。先在有基本面数据的美国股票里，按成交额取最高100只。再读过去6个月的10-K与10-Q，相似度优先用风险因素陈述的全样本相似度，没有则用全文相似度；没有相似度的不进入排序。按最近一次读到的相似度从高到低，取最高25只。权重用过去12个月日收益，在只做多、单股权重落在0到1的约束下最大化组合夏普，页面写这迫使组合在入选股票上满仓。每个月第一个交易日美东8:00再平衡，并清算离开名单的持仓。相似度来自Brain公司申报语言指标，不是从公开价格重建。页面未写成交额字段的回看天数，未写夏普优化的无风险利率取哪一条，未写25只不足或收益历史不够时是否空仓。提出日期取未知；文中2020年1月至2026年6月是回测区间。Cohen、Malloy与Nguyen 2020是懒价格论文，不是本页刊出日。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Introduction；Implementation中100只、6个月历史、最高25只、8:00美东与12个月最大夏普。回测区间January 2020至June 2026"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
