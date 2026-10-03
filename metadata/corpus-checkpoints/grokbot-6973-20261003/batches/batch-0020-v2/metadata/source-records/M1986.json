@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1986",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1986,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e0a8aafd934064262a26107fe6c510a0674b5544725a1757035eac3c89e423fa",
+    "rule_sha256": "2f9851f6d1bfbf367df6be52782dfec82d72ef8fa4bac627aa7369032c78ea29"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1986",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1986"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://gist.github.com/traderize-com/02418e1e5c14f66547e15b9ac99d734b"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "traderize-com（公开 gist）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线SMA(10)上穿SMA(30)满仓，下穿清仓（traderize Lean/QC gist交叉核）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY；SMA10上穿/下穿SMA30；traderize gist）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线SMA(10)上穿SMA(30)满仓，下穿清仓（traderize Lean/QC gist交叉核）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写公开 gist sma_crossover.py（SMACrossoverAlgorithm）已印代码。标的 SPY，日线。sma_fast=SMA(10)，sma_slow=SMA(30)；用 previous 存上一根 fast 值。当 fast>slow 且 previous≤slow 则 SetHoldings(SPY,1)；当 fast<slow 且 previous≥slow 则 Liquidate；随后 previous=fast。不是 W178 的 10/50 状态核。提出日期未知（gist 未印策略发表日）。 不是本批W178的10/50状态核：本条是traderize gist SPY日线SMA(10)上穿SMA(30)满仓、下穿清仓的交叉瞬间核。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

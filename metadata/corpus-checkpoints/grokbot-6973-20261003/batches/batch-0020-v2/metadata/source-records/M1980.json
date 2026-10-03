@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1980",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1980,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "08e47d496d714fdc27d9de7ef3c26d35c3a32d50071aad5a5d6ed43ea4e359cc",
+    "rule_sha256": "6bc875ff0d51f4260217adcde9a1b055201acd7da42cf88b702818393ecaf80a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1980",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1980"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/SRsi/SRsi.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（SRsi.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区SRsi：1m，StochRSI之K<15且K≥D做多；K>75且D≥K平多；止损−15%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区SRsi；1m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区SRsi：1m，StochRSI之K<15且K≥D做多；K>75且D≥K平多；止损−15%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/SRsi/SRsi.py默认。timeframe=1m；stoploss=−0.15；minimal_roi={\"0\":0.012}。先 RSI(30)，再对 RSI 做滚动 min/max 归一（窗 p=14）得 srsi，K=srsi 的 3 期均×100，D=K 的 3 期均。做多：k<15 且 k≥d。平多：k>75 且 d≥k。不是 W136 RSIv2（RSI+Williams%R 双周期）。提出日期未知。 不是W136 RSIv2的RSI+Williams%R：本条是1m SRsi，StochRSI之K<15且K≥D做多，K>75且D≥K平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
