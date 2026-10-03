@@ -1,6 +1,6 @@
 # 冻结 Lab 结果的显示投影
 
-`graph.lab_display_projection` 是既有详情/比较页的数据适配器，不是回测器、原生corpus导入器或Site上传器。默认 `lab-display-sources.json` 显式固定22个已获准公开的Lab来源，保留16个ADAPTED与6个HYPOTHESIS；M1358的Graph HYPOTHESIS枚举与实际研究ADAPTED单列，M1258保留未核实来源的catalog研究假设，不改变研究可信度。只有指定inventory内的ID可进入，不自动扫描Lab、catalog或全库。原M0256/M0259 pilot不变。
+`graph.lab_display_projection` 是既有详情/比较页的数据适配器，不是回测器、原生corpus导入器或Site上传器。默认 `lab-display-sources.json` 显式固定25个已获准公开的Lab来源，保留16个ADAPTED与9个HYPOTHESIS；M1358的Graph HYPOTHESIS枚举与实际研究ADAPTED单列，M1258保留未核实来源的catalog研究假设，不改变研究可信度。只有指定inventory内的ID可进入，不自动扫描Lab、catalog或全库。原M0256/M0259 pilot不变。
 
 源清单包含每个ID的Lab commit、run/variant、publication manifest和实际消费文件的路径、URL、bytes、SHA256。支持publication的repo-relative及逐策略relative文件清单；源角色必须同时通过独立hash与publication allowlist。无原文全文、行情原始文件、完整账本、private Graph detail或批注输入。
 
@@ -15,6 +15,7 @@ python -m quantgraph.graph.lab_display_projection \
   --lab-root public_display_v2=<Lab-f6d2431b-source-root> \
   --lab-root m1258_display_v2=<Lab-54172714-source-root> \
   --lab-root catalog_pair_display_v2=<Lab-e4d5f85c-source-root> \
+  --lab-root dot009_display_v2=<Lab-297e59a6-source-root> \
   --output <new-private-preview-directory>
 ```
 
@@ -65,4 +66,12 @@ M1396/M1463 是20→22的显式追加，固定已远端读回的Lab分支提交 
 
 现有Site transport及D1 qg_result_refs只接受六字段：origin_run_id、variant_id、manifest_sha256、record_id、detail_path、detail_sha256。本适配保持该合同，不增加会被Worker拒绝的kind字段；类型通过已hash固定的detail可达。record.related_results中的类型与D1 transport字段不是同一个结构。本次不改Worker、上传协议或访问权限。
 
-测试：`pytest tests/test_lab_display_catalog_pair.py tests/test_lab_display_catalog_daily.py tests/test_lab_display_v2.py tests/test_lab_display_projection.py tests/test_metadata_pilot.py tests/test_site_sync_bulk.py`；前端历史兼容门禁为`npm exec vitest run tests/lab-display.test.ts tests/corpus-research.test.tsx tests/reading-brief.test.tsx tests/research-scope.test.tsx tests/hosted-feedback.test.tsx`及`npm run typecheck`，仅适配Python结构且未改UI时按范围选择复跑。fixture全为合成值，不在CI读取私人Lab数据；实际源预览和逐文件读回回执保持私有，不进Git。
+dot009 的22→25追加只含 M1346/M1349/M1270，固定已远端fetch及逐文件读回的Lab分支提交 `297e59a6b0d1d9c315a129f3ccd6669d99f72886`，不推断Lab main合并或Site部署，与其他暂停对象无关。每ID的 `publication-manifest.display-v1.json` 是本次新建的 `APPROVED_PUBLIC_DISPLAY_SOURCE_INVENTORY`，不是原研究publication；`previous_publication_manifest=null`、`historical_publication_manifest_existed=false` 必须保持。派生结果类型仍是 `PUBLIC_DERIVED_DISPLAY_MANIFEST`。旧22条来源对象、record与压缩detail保持原字节。
+
+新 `graph.lab_display_dot009` 只接受三个独立合同：M1346的 `CATALOG_CLOSE25_LEVEL_FULLCASH_REUSED_CONTROL_V1`、M1349的 `CATALOG_ROC25_NEG10_HOLD25_FULLCASH_REUSED_CONTROL_V1`、M1270的 `CATALOG_UTC_SUNDAY_MONDAY_RAW_CANCEL_FULLCASH_REUSED_CONTROL_V1`。它们仍使用日频25点profile。旧v1/v2的同ID与历史publication要求不变；新合同以当前选择性publication、冻结 `selected-approved-git-source-lock/v1` 及原 `08e6ab4a49a808f53f06e509f06cb2c453f007d5` Git来源链验证，不能用新inventory伪造历史清单。锁SHA256为 `4379e8c4897b9ae8d3eeaaf3a467549a71abd79600026b2da463a7f682b3d9f1`。协议身份实际绑定 `root-frozen-rules.json`，明确标注 `FROZEN_RULE_CONTRACT_NOT_INVENTED_PROTOCOL_FILE`，不添加不存在的protocol文件。
+
+每ID明确读取17角色：当前publication、4份已审展示、来源锁及11个原公开来源角色；原曲线使用 `original_curve` 角色与派生曲线分开。三ID合计51角色/43唯一路径。只有 `control_reference`、`control_projection`、`statistics`、`cases` 可跨ID目录，分别固定共享 `catalog-hypothesis-batch017-execution-20261003/payload/frozen/` 下的 `buyhold-reference-v1.json`、`reused-buyhold-projection-v1.json`、`statistics-v1.json`、`cases-v1.json`；每角色同时校验完整路径、所属合同、原pin URL、当前publication及锁定hash，不能扫描共享目录或扩大成任意同前缀文件。所选6个C0冻结指纹也逐项核对；不读取private-output-manifest正文、NAV、行情、ZIP或批注。
+
+三条保留11个原公开catalog字段、未核实研究假设、Graph HYPOTHESIS和ADAPTED_EXECUTION_PROXY。每条4原配置，共12原配置；本次0新试验/0新控制，同一个M1258满仓含费base控制复用3次，仅1个唯一控制，明确没有fee0/20匹配成本控制。保留25个原单位点与731指标观察数，不重归一化、不由采样重算；所有已有full指标须与2023–2024深等值，bool/int、0/null不混同。M1349保留25个completed closes持期，M1270 delay2保留全现金/零成交/零收益/Sharpe null。费用0/20、2bps滑点和日延迟按原值验证；策略monthly仍null，只保留已公开的基准月度投影。未知合同、错误inventory/lock类型、共享路径错配、指标别名冲突和来源升级均拒绝。UI、六字段transport与active绑定门槛不变。
+
+测试：`pytest tests/test_lab_display_dot009.py tests/test_lab_display_catalog_pair.py tests/test_lab_display_catalog_daily.py tests/test_lab_display_v2.py tests/test_lab_display_projection.py tests/test_metadata_pilot.py tests/test_site_sync_bulk.py`；前端历史兼容门禁为`npm exec vitest run tests/lab-display.test.ts tests/corpus-research.test.tsx tests/reading-brief.test.tsx tests/research-scope.test.tsx tests/hosted-feedback.test.tsx`及`npm run typecheck`，仅适配Python结构且未改UI时按范围选择复跑。fixture全为合成值，不在CI读取私人Lab数据；实际源预览和逐文件读回回执保持私有，不进Git。

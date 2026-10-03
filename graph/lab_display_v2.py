@@ -12,6 +12,7 @@ from quantgraph.graph.corpus_research import _finite, _loads
 from quantgraph.graph.metadata_pilot import digest
 from quantgraph.graph.lab_display_catalog_daily import CONTRACT as CATALOG_DAILY, validate as catalog_daily
 from quantgraph.graph.lab_display_catalog_pair import CONTRACTS as CATALOG_PAIR, validate as catalog_pair
+from quantgraph.graph import lab_display_dot009
 
 SCHEMA = 'quantgraph-public-derived-display-manifest/v2'
 KIND = 'PUBLIC_DERIVED_DISPLAY_MANIFEST'
@@ -280,6 +281,8 @@ def daily(entry, blobs, record, detail, summary, protocol, c0, card):
 
 
 def project_v2(entry, blobs):
+    if lab_display_dot009.selected(entry):
+        return lab_display_dot009.project(entry, blobs)
     values = {k: _loads(blobs[k]) for k in ['record', 'detail', 'result_manifest', 'summary', 'protocol', 'C0']}
     _finite(values)
     record, detail, origin = (values[k] for k in ['record', 'detail', 'result_manifest'])
