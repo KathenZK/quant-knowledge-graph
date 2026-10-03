@@ -116,3 +116,49 @@ uv run python -m quantgraph.graph.metadata_catalog resume \
 
 通用 validate 支持来源层及增长后的元数据；Lab `metadata_pilot prepare` 仍只选
 M0256/M0259，不因目录增长增加回测、曲线或策略配置。
+
+## 私有混合批次的安全子集（不解除拦截）
+
+已冻结 v2 批次中有少量 `PRIVATE_ONLY_BLOCKED` 条目时，可以派生独立的
+`quantgraph-csv-public-subset/v1` 检查点，保留其余记录的完整 11 列值。此操作不审批误报，
+不修改扫描规则、原计划、原批次或任何已有目录，也不读取 Site/活动库。
+
+导出器先校验原批次 manifest 的独立 hash、全部成员 hash、全部行的完整值及动态敏感扫描，
+核对原 ID、分类、计数、私有标记和精确文件清单。错 hash、路径遍历/软链接、伪造标记、
+未登记文件或登记了却不属于批次合同的额外文件都会拒绝。schema 必须与当前工具提交的
+已审阅 schema 字节相同。安全来源记录及已有策略/因子审阅记录逐字节复制，不重新释义。
+
+```bash
+# qg_batch_sha 必须来自原批次独立保存并核对的 manifest SHA-256。
+uv run python -m quantgraph.graph.metadata_catalog public-subset \
+  --checkpoint "$qg_stage_root/batch-0026-v2" --sha256 "$qg_batch_sha" \
+  --output "$qg_stage_root/batch-0026-public-subset-v1"
+```
+
+输出独立 `metadata/`、精简 `inventory.json` 和新的 `manifest.json`。新清单只引用源
+batch/plan 的 hash、原 batch ID、原表 hash，列出纳入/排除 ID 与准确数量；不复制完整私有
+清单，不含被排除记录的原字段、私有文件 hash、本机路径或 Library 引用。保留的来源记录
+仍含原有原表/行 hash，以支持恢复核验。未知类型保留 `UNREVIEWED`；同 ID 的来源层和
+审阅层只计一个 `included_original_ids`，`metadata_records` 另外报告层数。
+
+例如原批次 100 条、私有排除 1 条，则输出 `source_batch_original_ids: 100`、
+`included_original_ids: 99`、`excluded_original_ids: 1`，不得将 99 声称为 100 条公共完成。
+原 100 条私有检查点仍需完整保存于获准的私有 Library 等远端存储；子集不能替代它。
+
+```bash
+# qg_subset_sha 使用 public-subset 输出的 subset_sha256，并独立保存。
+uv run python -m quantgraph.graph.metadata_catalog check-public-subset \
+  --checkpoint "$qg_stage_root/batch-0026-public-subset-v1" --sha256 "$qg_subset_sha"
+uv run python -m quantgraph.graph.metadata_catalog restore-public-subset \
+  --checkpoint "$qg_stage_root/batch-0026-public-subset-v1" --sha256 "$qg_subset_sha" \
+  --output "$qg_stage_root/restored-subset-0026-v1"
+```
+
+校验和恢复不依赖原 CSV、计划或私有批次仍在本机。恢复输出始终是
+`private-only/restored-records.jsonl`，只包含纳入子集的 99 条完整原值，回执明确原批次并未
+完整恢复。原 `restore --kind batch` 合同保持不变，继续从原私有批次恢复全部 100 条。
+
+子集始终 `publication_status: FIELD_REVIEW_REQUIRED`、`all_fields_reviewed: false`、
+`public_sync_ready: false`。自动筛选通过仍不等于字段已获准公开；协调者继续逐字段审查、
+远端保存及读回验收，不整包自动发布。没有原私有批次时，独立子集校验只能验证子集自身及
+所记录的来源 hash，不能重新证明未随包提供的原批次内容或远端持久化状态。
