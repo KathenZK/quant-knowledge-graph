@@ -8,7 +8,7 @@ import { readable } from "./personal-data";
 import "./corpus-research.css";
 import type { Interpretation } from "./ResearchInterpretation";
 
-type Fidelity = "STANDARDIZED" | "PROXY" | "HYPOTHESIS" | "PROXY_HYPOTHESIS";
+type Fidelity = "STANDARDIZED" | "PROXY" | "HYPOTHESIS" | "PROXY_HYPOTHESIS" | "ADAPTED";
 type FidelityCounts = Partial<
   Record<Fidelity, { records: number; implementations: number }>
 >;
@@ -26,6 +26,7 @@ export const fidelityLabel = (value?: string) =>
     PROXY: "代理回测",
     HYPOTHESIS: "假设性回测",
     PROXY_HYPOTHESIS: "代理 + 假设性回测",
+    ADAPTED: "执行改编回测",
   })[value || "STANDARDIZED"] || value;
 type Metrics = {
   status?: string;
@@ -164,6 +165,7 @@ export const statusLabel = (status: string) =>
     tested: "本次标准化规则回测",
     tested_proxy_only: "仅有代理回测",
     tested_hypothesis_only: "仅有假设性回测",
+    tested_adapted_only: "仅有执行改编回测",
     tested_mixed: "含多类实验结果",
     not_evaluated_in_this_run: "本批未评估（其他批次另列）",
     not_implemented_or_data_scope_unresolved: "未实现 / 数据范围待定",

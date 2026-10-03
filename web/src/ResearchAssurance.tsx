@@ -82,7 +82,9 @@ export default function ResearchAssurance({
         </dd>
         <dt>实现忠实度</dt>
         <dd>
-          {(detail.fidelity_class === "HYPOTHESIS"
+          {(detail.fidelity_class === "ADAPTED"
+            ? "执行模型经过明确改编；不是原作者运行环境的严格复现"
+            : detail.fidelity_class === "HYPOTHESIS"
             ? "假设性实现，需要单独验证补充假设"
             : detail.fidelity_class === "PROXY"
               ? "代理实现，原方法尚待复现"
