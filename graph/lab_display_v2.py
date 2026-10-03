@@ -10,6 +10,7 @@ import re
 
 from quantgraph.graph.corpus_research import _finite, _loads
 from quantgraph.graph.metadata_pilot import digest
+from quantgraph.graph.lab_display_catalog_daily import CONTRACT as CATALOG_DAILY, validate as catalog_daily
 
 SCHEMA = 'quantgraph-public-derived-display-manifest/v2'
 KIND = 'PUBLIC_DERIVED_DISPLAY_MANIFEST'
@@ -30,6 +31,9 @@ def fingerprint(raw):
 def bindings(entry, blobs, origin, record, detail):
     rid = entry['id']
     profile = entry.get('projection_profile')
+    contract = entry.get('source_contract')
+    require(contract is None or (contract == CATALOG_DAILY and profile == DAILY and rid == 'M1258'),
+            'Unknown or incompatible explicit source contract')
     require(profile in PROFILES and origin.get('projection_profile') == profile,
             'Unsupported or conflicting explicit v2 profile')
     require(origin.get('schema_version') == SCHEMA
@@ -60,6 +64,11 @@ def bindings(entry, blobs, origin, record, detail):
                        'fee20_daily', 'delay2_daily'} if profile == NATIVE else
                       {'publication_manifest', 'summary', 'protocol', 'C0', 'source_rule_card',
                        'readme', 'report', 'original_record', 'original_detail', 'numerics', private_role})
+    if contract == CATALOG_DAILY:
+        expected_roles = {'publication_manifest', 'summary', 'protocol', 'C0', 'rules',
+                          'source_card', 'catalog_fields', 'original_record', 'original_detail'}
+        require(record.get('projection_profile') == detail.get('projection_profile') == DAILY,
+                'Catalog source record/detail profile conflict')
     require(set(refs) == expected_roles, 'Unexpected v2 source role set')
     for role, ref in refs.items():
         path = ref['path']
@@ -112,10 +121,11 @@ def bindings(entry, blobs, origin, record, detail):
             and detail['lineage'].get('definition_revision_bound') is False,
             'V2 fidelity or staging status conflict')
     require(detail['curve_meta'] == origin['curve_contract'], 'V2 curve contract conflict')
+    controls = 1 if contract == CATALOG_DAILY else 0
     require(detail['lab_counts'] == dict(strategy_ids=1, strategy_configurations=4,
-            new_control_configurations=0, reused_control_configurations=1, strict_reproductions=0)
-            and record['strategy_configurations'] == 4 and record['control_configurations'] == 0
-            and record['reused_control_configurations'] == 1,
+            new_control_configurations=controls, reused_control_configurations=1-controls, strict_reproductions=0)
+            and record['strategy_configurations'] == 4 and record['control_configurations'] == controls
+            and record['reused_control_configurations'] == 1-controls,
             'V2 frozen count mismatch')
     return profile
 
@@ -257,12 +267,17 @@ def daily(entry, blobs, record, detail, summary, protocol, c0, card):
 
 
 def project_v2(entry, blobs):
-    values = {k: _loads(blobs[k]) for k in ['record', 'detail', 'result_manifest', 'summary', 'protocol', 'C0', 'source_rule_card']}
+    values = {k: _loads(blobs[k]) for k in ['record', 'detail', 'result_manifest', 'summary', 'protocol', 'C0']}
     _finite(values)
     record, detail, origin = (values[k] for k in ['record', 'detail', 'result_manifest'])
     profile = bindings(entry, blobs, origin, record, detail)
-    (native if profile == NATIVE else daily)(entry, blobs, record, detail,
-            values['summary'], values['protocol'], values['C0'], values['source_rule_card'])
+    if entry.get('source_contract') == CATALOG_DAILY:
+        catalog_daily(entry, blobs, values)
+    else:
+        card = _loads(blobs['source_rule_card'])
+        _finite(card)
+        (native if profile == NATIVE else daily)(entry, blobs, record, detail,
+                values['summary'], values['protocol'], values['C0'], card)
     projected, result = deepcopy(record), deepcopy(detail)
     # These are approved display fields, not an entity definition or a claim
     # that a current active revision has been found.
@@ -277,6 +292,8 @@ def project_v2(entry, blobs):
     result['spec']['economic_basis'] = deepcopy(record['economic_basis'])
     result['curve_meta']['public_curve_available'] = True
     result['metrics']['additional_lag_unit'] = 'native_5m_bar' if profile == NATIVE else 'day'
+    if entry.get('source_contract') == CATALOG_DAILY:
+        projected['source_contract'] = result['lineage']['source_contract'] = CATALOG_DAILY
     if profile == DAILY:
         # Existing UI starts at "full". Alias original full-period statistics;
         # never compute them from the sampled curve or discard original keys.
