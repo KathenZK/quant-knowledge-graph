@@ -40,6 +40,8 @@ dot006 的 M0253/M0272/M0264/M0266 明确固定于已推送分支提交 `3446cfc
 
 `assets/`保存receipt中逐文件固定的真实assets；必须包含data/catalog manifest、实际catalog details、目标workscope分片及已存在的同run/variant详情。receipt的source字符串不是认证机制，不能自行填写成已核验。合并核对原生ID/实体/定义版本；更新实际workscope入口，保留非目标记录和旧audit/用户字段，以既有merge_record追加结果；同run/variant不同bytes拒绝，精确重放无新增。即使manifest.details遗漏已有实现，receipt.files已固定的路径仍不可覆盖：不同bytes拒绝；相同bytes可原样随草稿登记，以补齐索引和结果引用。已有native定义、用户批注和原8ID的16个结果引用不重写；新4ID当前Site旧引用尚待取得实际snapshot核对。新runs仅供既有详情/比较页实现读取，不冒充完整native collection运行级统计。
 
+目标run_id若已存在，manifest.runs必须只有一条匹配记录，且manifest_kind与source_manifest_sha256均精确一致；字段缺失、类型/hash冲突或重复run_id都拒绝，不推断旧记录身份、不覆盖旧元数据。完全一致时保留其所有额外字段。非目标旧run即使缺少这些字段也按原字节对应的对象保留。
+
 `site-sync-candidate.json`使用既有Sites envelope，`entities=[]`，仅追加获准显示对象与必要data索引/分片。草稿不提供授权、activation或CAS保证，`ready_for_direct_site_sync`始终false；真实权限、完整快照/统计复核及最终串行激活归sole Site writer。站点若为public，不能把既有owner-private service上传前置条件当作成立。
 
 现有Site transport及D1 qg_result_refs只接受六字段：origin_run_id、variant_id、manifest_sha256、record_id、detail_path、detail_sha256。本适配保持该合同，不增加会被Worker拒绝的kind字段；类型通过已hash固定的detail可达。record.related_results中的类型与D1 transport字段不是同一个结构。本次不改Worker、上传协议或访问权限。

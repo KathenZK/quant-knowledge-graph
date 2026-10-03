@@ -348,3 +348,33 @@ def test_legacy_projection_bytes_match_frozen_main_fixture(tmp_path):
     # JSON bytes stay stable across Python gzip header/zlib versions; actual
     # pinned-source preview receipts separately compare all twelve gzip bytes.
     assert digest(encoded(detail))=='a34989fbaa3ae63c6b03a7f35a7580f7f11a19914f44af89e60872a6beb2bbcd'
+
+
+@pytest.mark.parametrize('derived',[False,True])
+@pytest.mark.parametrize('change',['kind','hash','missing_kind','missing_hash','duplicate','identical'])
+def test_existing_target_run_requires_exact_manifest_binding(tmp_path,derived,change):
+    _,entry,blobs=derived_source(tmp_path) if derived else source(tmp_path)
+    record,detail=project(entry,blobs)
+    root,receipt,shard=active(tmp_path,record,detail)
+    p=root/'assets/data/manifest.json';m=json.loads(p.read_bytes())
+    run=dict(run_id=detail['run_id'],manifest_kind=detail['lineage']['manifest_kind'],
+             source_manifest_sha256=detail['lineage']['manifest_sha256'],retained='unchanged')
+    if change=='kind':run['manifest_kind']=MANIFEST_KIND if derived else DERIVED_MANIFEST_KIND
+    elif change=='hash':run['source_manifest_sha256']='f'*64
+    elif change=='missing_kind':run.pop('manifest_kind')
+    elif change=='missing_hash':run.pop('source_manifest_sha256')
+    m['runs'].append(run)
+    if change=='duplicate':m['runs'].append(deepcopy(run))
+    raw=encoded(m);p.write_bytes(raw)
+    receipt['files']['/data/manifest.json']=dict(sha256=digest(raw),bytes=len(raw))
+    (root/'active-snapshot.json').write_bytes(encoded(receipt))
+    before={p.relative_to(root):p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    if change=='identical':
+        assets,envelope=merge_snapshot([record],[detail],root,digest(encoded(receipt)),receipt['active_batch'])
+        actual=json.loads(assets['/data/manifest.json'])
+        assert actual['runs']==m['runs']  # Existing annotations and non-target legacy run survive.
+        assert len(envelope['results'])==1
+    else:
+        with pytest.raises(ValueError,match='run manifest kind/hash binding'):
+            merge_snapshot([record],[detail],root,digest(encoded(receipt)),receipt['active_batch'])
+    assert before=={p.relative_to(root):p.read_bytes() for p in root.rglob('*') if p.is_file()}

@@ -364,6 +364,13 @@ def merge_snapshot(records, details, root, expected_sha256, expected_parent):
                 detail.get('manifest_kind') != kind or not any(r['origin_run_id']==run and r['variant_id']==variant
                     and r.get('manifest_kind')==kind for r in record['related_results']))):
             raise ValueError('Display record/detail manifest kind mismatch')
+        existing_runs = [r for r in merged['runs'] if r['run_id']==run]
+        if existing_runs and (len(existing_runs)!=1
+                or existing_runs[0].get('manifest_kind')!=kind
+                or existing_runs[0].get('source_manifest_sha256')!=detail['lineage']['manifest_sha256']):
+            # A target legacy run missing provenance is unresolved, not an
+            # implicit match. Keep its bytes and require an explicit readback.
+            raise ValueError('Existing run manifest kind/hash binding conflicts or is incomplete')
         binding = receipt['bindings'].get(rid)
         if not binding or not binding.get('entity_id') or not binding.get('definition_revision'):
             raise ValueError('Current entity/revision binding required')
@@ -399,7 +406,7 @@ def merge_snapshot(records, details, root, expected_sha256, expected_parent):
                 detail_path=path,detail_sha256=digest(body)))
         chunks[shard][rid] = merge_record(previous, record)
         merged['details'][run+'|'+variant] = key
-        if not any(r['run_id']==run for r in merged['runs']):
+        if not existing_runs:
             merged['runs'].append(dict(run_id=run, manifest_kind=detail['lineage']['manifest_kind'],
                                       source_manifest_sha256=detail['lineage']['manifest_sha256']))
     for path, value in chunks.items():
