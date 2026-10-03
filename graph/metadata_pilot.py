@@ -14,6 +14,7 @@ import io
 import json
 import math
 from pathlib import Path
+import re
 import shutil
 import sqlite3
 import tempfile
@@ -22,6 +23,25 @@ from jsonschema import Draft202012Validator
 from quantgraph.graph.corpus_research import _finite, _loads, _read_file
 
 RESERVE = 5 * 1024**3
+
+
+def publication_screen(values):
+    """Conservative field screen; report only field names/codes, never secret values.
+
+    A clean screen still requires review of every field before public publication.
+    """
+    patterns = {
+        'CREDENTIAL_OR_SIGNED_URL': r'(?i)(?:\b(?:api[_-]?key|access[_-]?token|refresh[_-]?token|token|password|secret|authorization|signature|credential|sig|key)|[?&]x-(?:amz|goog)-(?:signature|credential|security-token))\s*[=:]|\bBearer\s+\S+|\b(?:ghp_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9_-]{20,}|AKIA[A-Z0-9]{16})',
+        'PRIVATE_LIBRARY_OR_APP_REFERENCE': r'(?i)\b(?:libfile_[a-z0-9]+|file_[0-9a-f]{16,}|appgprj_[a-z0-9]+)|sediment://|app://',
+        'LOCAL_PATH': r'(?i)(?:^|[\s\"\'(:])/(?:workspace|home|Users|tmp|private|mnt|root|Volumes)/|\b[A-Z]:\\|file://',
+        'PRIVATE_ANNOTATION': r'(?i)private[-_ ]only|confidential|私人批注|私密|个人批注|个人备注|我的备注|不要公开|不公开|仅供私人',
+        'URL_USERINFO': r'https?://[^\s/]+:[^\s/]+@',
+    }
+    hits = [(field, code) for field, value in values.items() for code, pattern in patterns.items()
+            if re.search(pattern, str(value))]
+    return dict(status='PRIVATE_ONLY_BLOCKED' if hits else 'FIELD_REVIEW_REQUIRED',
+                sensitive_fields=sorted({field for field, _ in hits}),
+                reason_codes=sorted({code for _, code in hits}), all_fields_reviewed=False)
 
 
 def encoded(value):
@@ -55,6 +75,7 @@ def validate(root):
     schema = _loads(read_below(root, 'schema.json'))
     Draft202012Validator.check_schema(schema)
     validator = Draft202012Validator(schema)
+    source_validator = None
     index = _loads(read_below(root, 'index.json'))
     if index.get('schema_version') != 'quantgraph-metadata-index/v1':
         raise ValueError('Unsupported metadata index')
@@ -64,29 +85,47 @@ def validate(root):
         if digest(raw) != ref['sha256'] or len(raw) != ref['bytes']:
             raise ValueError('Metadata index digest mismatch')
         record = _loads(raw)
-        validator.validate(record)
+        if record.get('entity_type') == 'source_record':
+            if source_validator is None:
+                source_schema = _loads(read_below(root, 'source-record.schema.json'))
+                Draft202012Validator.check_schema(source_schema)
+                source_validator = Draft202012Validator(source_schema)
+            source_validator.validate(record)
+            values = {k: v['value'] for k, v in record['reported_fields'].items()}
+            row_hash = digest(json.dumps(values, ensure_ascii=False, sort_keys=True,
+                                        separators=(',', ':'), allow_nan=False).encode())
+            if (values['id'] != record['record_id'] or row_hash != record['provenance']['row_sha256']
+                    or digest(values['规则'].encode()) != record['provenance']['rule_sha256']):
+                raise ValueError('Source record fields do not reconstruct the pinned CSV row')
+            screened_values = {**values, 'classification_reason': record['classification']['reason'],
+                'classification_evidence': json.dumps(record['classification']['evidence'], ensure_ascii=False)}
+            if (record['publication']['status'] == 'PRIVATE_ONLY_BLOCKED'
+                    or publication_screen(screened_values)['status'] == 'PRIVATE_ONLY_BLOCKED'):
+                raise ValueError('Private-only source record cannot enter public-review metadata')
+        else:
+            validator.validate(record)
         identity = (record['identity_namespace'], record['entity_type'], record['record_id'])
-        expected = f"{dict(strategy='strategies', factor='factors')[record['entity_type']]}/{record['record_id']}.json"
+        expected = f"{dict(strategy='strategies', factor='factors', source_record='source-records')[record['entity_type']]}/{record['record_id']}.json"
         if ref['path'] != expected or identity in seen or ref['path'] in paths:
             raise ValueError('Metadata filename, type or stable identity conflicts')
         if record['native_source_id'] != record['record_id']:
             raise ValueError('Original stable ID must not be renumbered')
         if any(ref[k] != record[k] for k in ['record_id', 'entity_type', 'identity_namespace']):
             raise ValueError('Metadata index identity differs from record')
-        source_ids = [s['id'] for s in record['sources']]
+        source_ids = [s['id'] for s in record.get('sources', [])]
         if len(set(source_ids)) != len(source_ids):
             raise ValueError('Duplicate source reference')
         artifacts = (record.get('lab') or {}).get('artifacts', {})
         evidence_ids = set(source_ids) | {'lab:' + role for role in artifacts}
         if record.get('catalog_origin'):
             evidence_ids.add('catalog-row')
-        for field in (record.get('strategy_fields') or record.get('factor_fields')).values():
+        for field in (record.get('strategy_fields') or record.get('factor_fields') or {}).values():
             if not set(field['evidence']) <= evidence_ids:
                 raise ValueError('Field evidence reference does not resolve')
             if field['status'] != 'MISSING' and not field['evidence']:
                 raise ValueError('Asserted metadata field requires evidence')
         seen.add(identity); paths.add(ref['path']); records.append(record)
-    actual = {str(p.relative_to(root)) for kind in ['strategies', 'factors']
+    actual = {str(p.relative_to(root)) for kind in ['strategies', 'factors', 'source-records']
               for p in (root / kind).glob('*.json')}
     if actual != paths:
         raise ValueError('Metadata index does not cover exactly the numbered records')
