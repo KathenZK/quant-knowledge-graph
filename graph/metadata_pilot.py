@@ -33,7 +33,9 @@ def digest(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
-def read_below(root, name):
+def read_below(root, name, limit=8 * 1024**2):
+    if type(limit) is not int or not 1 <= limit <= 64 * 1024**2:
+        raise ValueError('Evidence read limit must be bounded at 64 MiB')
     if not isinstance(name, str) or '\\' in name or any(p in {'', '.', '..'} for p in name.split('/')):
         raise ValueError('Unsafe relative evidence path')
     path = Path(root)
@@ -45,7 +47,7 @@ def read_below(root, name):
             raise ValueError('Evidence cannot traverse symlinks')
     if not path.resolve().is_relative_to(Path(root).resolve()):
         raise ValueError('Evidence escapes input root')
-    return _read_file(path, 8 * 1024**2)
+    return _read_file(path, limit)
 
 
 def validate(root):
@@ -76,6 +78,8 @@ def validate(root):
             raise ValueError('Duplicate source reference')
         artifacts = (record.get('lab') or {}).get('artifacts', {})
         evidence_ids = set(source_ids) | {'lab:' + role for role in artifacts}
+        if record.get('catalog_origin'):
+            evidence_ids.add('catalog-row')
         for field in (record.get('strategy_fields') or record.get('factor_fields')).values():
             if not set(field['evidence']) <= evidence_ids:
                 raise ValueError('Field evidence reference does not resolve')
@@ -308,9 +312,12 @@ def merge_record(existing, addition):
 
 
 def prepare(metadata_root, lab_root, output, catalog=None, catalog_sha256=None):
-    records = validate(metadata_root)
-    if {r['record_id'] for r in records} != {'M0256', 'M0259'} or any(r['entity_type'] != 'strategy' for r in records):
-        raise ValueError('This bounded pilot accepts only M0256 and M0259; no batch expansion')
+    # The knowledge catalog may grow; this replay projection remains a fixed two-ID pilot.
+    records = [r for r in validate(metadata_root) if r['identity_namespace'] == 'grokbot'
+               and r['entity_type'] == 'strategy' and r['record_id'] in {'M0256', 'M0259'}]
+    records.sort(key=lambda r: r['record_id'])
+    if len(records) != 2:
+        raise ValueError('This bounded pilot requires M0256 and M0259; no batch expansion')
     output = Path(output)
     if output.exists():
         raise ValueError('Use a new immutable output directory')

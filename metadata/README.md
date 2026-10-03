@@ -59,3 +59,5 @@ uv run python -m quantgraph.graph.metadata_pilot --metadata metadata \
 manifest/ref 更新。不得凭两个样本重算全库计数或覆盖旧 bundled 基线；保留原 seed 和
 活动祖先链、个人批注及现有 UI。最后 CAS 检查 active parent，验收原策略详情和比较页。
 源码提交、静态 hash 相符、临时库试导入均不等于站点已部署。
+
+原 6973 条的完整接收清单、未知分类、小批检查点和断点核验命令见 [批量准备说明](BATCH_IMPORT.md)。
