@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0485",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 485,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1bc6b0fd228c144afbcc781467c86a4ad5d9617999277c9c48387a3fd24ecad0",
+    "rule_sha256": "1dc02a436696887109660b6bc58bcc57174c49a7e6dbee4c53b9c71b9222e711"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0485",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0485"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://jkpfactors.s3.amazonaws.com/documents/Documentation.pdf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Richardson et al. (2005)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://jkpfactors.com/"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Change in current operating assets（coa_gr1a）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美国股票优先（同一规则按国家分别做；CRSP 普通股、主交易所）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2005"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Change in current operating assets"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "特征构造摘录（PDF 表格在缩写 coa gr1a 附近；双栏换行可能带上相邻行，以该缩写短语为准，未改写公式）：COA*t −COA*t−12 Current Operating Assets Change 1yr coa gr1a AT *t COL*t −COL*t−12 组合（Documentation.pdf §2）：每个特征在每个国家、每个月做持有期 1 个月的多空。先在该国非微盘股（市值大于 NYSE 第 20 百分位）上按特征分成人数相等的三分位，再用同一断点把微盘股分入三组；各三分位用市值加权、权重在 NYSE 第 80 百分位处截断（capped value weight）；因子=高组收益−低组收益，多空方向按原论文预期收益符号（Table 9 direction）。长腿和短腿至少各 5 只股票。会计数据在会计期末后 4 个月起使用最近年报或季报。股票池（§1.2 与 Table 2）：common=1（CRSP SHRCD 为 10/11/12；Compustat TPCI='0'），exch_main=1（CRSP exchcd 1/2/3），primary_sec=1，obs_main=1。该文档还给出国家内横截面秩 rVar 与 Z 变换；脚注写明 OACCRUALS_AT、BETABAB_1260d、DEBT_AT、EVOL 按降序排序，其余升序。组合收益本身是三分位多空，不是秩加权。 Table 9 direction=-1（1 表示做多高特征组）。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "§2 Factor Portfolio Construction; Table 6/8 abbr=coa gr1a; Table 9; data library https://jkpfactors.com/"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,126 @@
+{
+  "schema_version": "quantgraph-corpus-output-contract/v2",
+  "created_at_utc": "2026-10-03T11:29:38.050400+00:00",
+  "owner": "dot persist_grok_metadata_records only",
+  "coordinator": "Codex root; sole global progress and integration writer",
+  "repository": "KathenZK/quant-knowledge-graph",
+  "output_branch": "dot/grok6973-checkpoints-20261003",
+  "fixed_tool_main_commit": "4576f6a3da08c45822cfc5cfcd5422aea5bbc970",
+  "tool_commit": "f0b99c57cb959d989d0a52ac6c980589584ea5af",
+  "tool_paths": {
+    "graph/metadata_catalog.py": "e1eaa675c7c772854fa1b9df31d0cb29e5c5dfe7710b861c329eebf8aa9ec48f",
+    "graph/metadata_pilot.py": "5918ed354a47e87f525f0016adda8c2b5d8a596a486b927c8d40bf9fd70f2cf5",
+    "metadata/source-record.schema.json": "712d6227ce12fb647ab6735131ef399c85cc0797e190c13aa1672112ed4be52b"
+  },
+  "supersedes_contract": "OUTPUT-CONTRACT.json",
+  "previous_contract_commit": "8904dc83233bcf8a629289261b1286115f11ad01",
+  "previous_evidence_policy": "v1 hash-only plans/checkpoints remain immutable audit evidence; never use them as complete knowledge preservation or feed them to v2. Recreate a new v2 plan from the verified original CSV.",
+  "source_contract": {
+    "bytes": 6470637,
+    "sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "md5": "f3c60e61bedfd0434c339cb4c16a7e4a",
+    "unique_original_ids": 6973,
+    "min_id": "M0001",
+    "max_id": "M7019",
+    "gaps": 46,
+    "authoritative_type_column": false
+  },
+  "exclusive_allowed_output_root": "metadata/corpus-checkpoints/grokbot-6973-20261003",
+  "allowed_new_paths": [
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/plan-reference-v2.json",
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-NNNN-v2/**",
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/receipts/batch-NNNN-v2.json",
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/receipts/complete-v2.json"
+  ],
+  "immutable_coordinator_files": [
+    "OUTPUT-CONTRACT.json",
+    "README.md",
+    "OUTPUT-CONTRACT-v2.json",
+    "README-v2.md"
+  ],
+  "forbidden_paths": [
+    "graph/**",
+    "tests/**",
+    "metadata/schema.json",
+    "metadata/source-record.schema.json",
+    "metadata/index.json",
+    "metadata/source-records/**",
+    "metadata/strategies/**",
+    "metadata/factors/**",
+    "sites/**",
+    ".github/**",
+    "AGENTS.md"
+  ],
+  "knowledge_contract": {
+    "all_original_columns": [
+      "id",
+      "名称",
+      "市场",
+      "规则",
+      "作者或机构",
+      "标题",
+      "source_url",
+      "页码或文件",
+      "可回测",
+      "别名来源",
+      "提出日期"
+    ],
+    "values": "Preserve exact decoded CSV strings including empty strings, newlines and full collected/self-authored rule summaries. No 240-character cutoff.",
+    "status": "CATALOG_REPORTED_UNVERIFIED",
+    "unknown_classification": "UNREVIEWED with null reviewed entity type; never infer verified type from keywords",
+    "record_layer": "source_record is the original knowledge layer, not an extra strategy ID",
+    "unique_id_counter": "inventory_ids / knowledge_records, never metadata_records",
+    "existing_reviewed_records": "Keep M0256/M0259 strategy files byte-identical; source layer is additive",
+    "webpage_fulltext": "Keep source links; do not fetch or reproduce full papers/webpages",
+    "recovery": "From each restored batch alone, run metadata_catalog restore --kind batch and compare all eleven values/row hashes against the verified source rows; original CSV and full plan need not be available to the recovery command.",
+    "original_csv_byte_format": "Not retained by decoded record recovery; preserve the original CSV separately in private backup."
+  },
+  "batch_contract": {
+    "size": 100,
+    "batches": 70,
+    "last_batch_ids": 73,
+    "max_additional_inflight_batches": 2,
+    "first_verified_batch_before_expansion": true,
+    "no_overwrite_or_delete": true,
+    "no_force_push_or_rebase": true,
+    "new_trial_count": 0,
+    "new_collection_intake": "paused until original corpus remote acceptance"
+  },
+  "publication_review": {
+    "repository_is_public": true,
+    "all_fields_review_required": true,
+    "public_allowed": "Complete collected catalog values and self-authored rule summaries after field review, with source links, original IDs, UNVERIFIED status and byte/hash evidence. This supersedes the old blanket prohibition on catalog rule summaries.",
+    "public_forbidden": [
+      "private Library identifiers, credentials, signed URLs, local paths or personal annotations",
+      "original CSV bytes, raw market data and full source papers/webpages",
+      "private-only records or unreviewed plan inventory"
+    ],
+    "stage_bytes": "Only a wholly reviewed batch with no private-only records may be copied in full and byte-identical into its allowed immutable batch directory. Verify manifest file list and every byte/hash. Never silently strip fields or adjust frozen manifest counts.",
+    "private_only_batch": "Preserve all exact values in private Library; report blocked IDs/counts without values. Do not publish a mixed private-only stage or claim public completeness. Other reviewed batches may continue after the first remote recovery gate; coordinator owns any later approved subset integration.",
+    "private_library": "Every validated batch needs its recoverable archive and independent manifest saved in the user private Library, read back and restored; report Library identities privately. Local scratch is not backup.",
+    "public_receipts": "Record safe commit/archive/manifest hashes and exact counts only; no private Library identifiers or machine paths."
+  },
+  "plan_reference_fields": [
+    "source_sha256",
+    "tool_commit",
+    "tool_paths",
+    "plan_sha256",
+    "base_index_sha256",
+    "inventory_sha256",
+    "batch_size",
+    "batch_ids",
+    "counts",
+    "type_decisions_sha256_or_null",
+    "private_only_record_count"
+  ],
+  "handoff_per_batch": [
+    "batch ID and original unique ID count",
+    "complete source records / classified records / UNREVIEWED / private-only counts separately",
+    "checkpoint manifest sha256 and exact files/bytes",
+    "private Library identity and successful readback/eleven-field restore receipt in private channel",
+    "Git branch commit and byte-identical readback receipt",
+    "publication blockers; never count local generation as remote acceptance"
+  ],
+  "integration_owner": "Root integrates reviewed per-ID source records and unified index serially; dot writes only this contract output root, never global progress or Site.",
+  "continue_policy": "Use dot already verified CSV; do not wait for this executor Library download. Fixed tool is tested on synthetic data only until dot verifies the real CSV."
+}

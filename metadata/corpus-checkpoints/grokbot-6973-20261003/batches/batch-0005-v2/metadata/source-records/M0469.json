@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0469",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 469,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "267eb1ceac1b0ac45395eece393368d7ecf4559a1da4317cd7cfa0b618de7ae9",
+    "rule_sha256": "c8ca166c178df92a042d144b4ea1835fa838b43c2cb6e315e63f08defef8e048"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0469",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0469"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/zerotrade6M.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Liu (2006, JFE)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://openassetpricing.com/SignalDoc-Browser.html"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Days with zero trades（zerotrade6M）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美国股票（CRSP/Compustat；Chen-Zimmermann 复制）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2006"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Days with zero trades"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "信号（Signal Browser Definition）：In each month, count the number of days with no trades. Define zerotrade as the number of days without trades plus (the sum of monthly turnover (vol/shrout) divided by 48*10$^5$), multiplied by 21/number of trading days per month. Zerotrade is the 6-month average of that variable. 组合规则（该页字段）：StockWeight=EW；LSQuantile=0.1；PortfolioPeriod=1.0个月；StartMonth=12.0；Sign=1.0；TestInOP=port sort。股票池/过滤：exchcd==1。 Notes：Table 2, fourth row (LM6, HP1m), column B. Paper has the fancy title \"the LAPM\" Also works for longer holding period of up to 2 years.。 基线为原论文分组的多空组合（FAQ：baseline follows the original paper split；数据页写 monthly long-short following OPs）。未在该行写出的细节不补。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "signalname=zerotrade6M; KeyTable=2 LM6, Hp1m"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

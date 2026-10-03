@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0451",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 451,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "32a20ebf6c5177b8e300a332d886192bb4b65863c5ef36d1916233d5e03471af",
+    "rule_sha256": "37408a12e4928d97ee0b78983704181dac97944a9c8fbf726ba89bcca5973131"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0451",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0451"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/RIO_MB.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Nagel (2005, JFE)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://openassetpricing.com/SignalDoc-Browser.html"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Inst Own and Market to Book（RIO_MB）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美国股票（CRSP/Compustat；Chen-Zimmermann 复制）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2005"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Inst Own and Market to Book"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "信号（Signal Browser Definition）：Residual institutional ownership (RIO) is defined as log(institutional ownership (instown\\_perc)/(1-institutional ownership)) + 23.6 - 2.89*log(market value of equity) +.08*log(market value of equity)$^2$. Replace instown\\_perc with 0 if it is missing, with .9999 if it's above .9999, and with .0001 if it's below .0001. Then lag RIO by 6 months. Keep only stocks with size > 20th percentile across exchcd == 1 or 2. Define MB as market cap / (ceq + txditc), where txditc = 0 if missing, and MB is replaced with missing if ceq < 0. Then sort into quintiles based on the lagged RIO, and sort into quintiles based on MB. Finally, let RIO\\_MB = lagged RIO quintile if the MB quintile = 5. 组合规则（该页字段）：StockWeight=EW；LSQuantile=未写；PortfolioPeriod=1.0个月；StartMonth=12.0；Sign=1.0；TestInOP=port sort。股票池/过滤：过滤列为空；定义/注释中写明限制：Residual institutional ownership (RIO) is defined as log(institutional ownership (instown\\_perc)/(1-institutional ownership)) + 23.6 - 2.89*log(market value of equity) +.08*log(mar。 基线为原论文分组的多空组合（FAQ：baseline follows the original paper split；数据页写 monthly long-short following OPs）。未在该行写出的细节不补。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "signalname=RIO_MB; KeyTable=2B"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

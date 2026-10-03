@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0394",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 394,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "80ba284a563756c00c1f43395214f19a0feac212a96ba6546003db2ab06d0d78",
+    "rule_sha256": "67665bc9bb6047716d2df76ef21a58e010150b9082aedcd8b221f78f39cbf510"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0394",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0394"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/DivOmit.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Michaely, Thaler and Womack (1995, JF)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://openassetpricing.com/SignalDoc-Browser.html"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dividend Omission（DivOmit）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美国股票（CRSP/Compustat；Chen-Zimmermann 复制）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "1995"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dividend Omission"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "信号（Signal Browser Definition）：Keep only distcd 2nd digit = 2 or 3. Define firms as quarterly, semi-annual, or annual payers based on payment history. Define a consistent payer as a firm that paid quarterly or semi-annual dividends for the past 18 months, or annual dividends for the past 2 years. An omission is the first month where a consistent payer failed to pay a dividend over the past quarter/6-months/year. Finally, DivOmit = 1 if there is an omission in the past 2 months and 0 otherwise 组合规则（该页字段）：StockWeight=EW；LSQuantile=未写；PortfolioPeriod=1.0个月；StartMonth=12.0；Sign=-1.0；TestInOP=event study 12 months。股票池/过滤：shrcd <= 11。 Notes：We deviate from OP in not imposing an NYSE/AMEX requirement. This allows our portfolios to have a reasonable number of stocks. OP's returns are short DivOmit and long EW crsp, which probably pushes up their t-stat. Unlike DivInit, we \"hold\" for only 2 month because Table 3 shows that the DivOmit performance is highly concentrated early in the event. Very few stocks in the omission portfolio.。 基线为原论文分组的多空组合（FAQ：baseline follows the original paper split；数据页写 monthly long-short following OPs）。未在该行写出的细节不补。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "signalname=DivOmit; KeyTable=3 omit, to Day 254"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

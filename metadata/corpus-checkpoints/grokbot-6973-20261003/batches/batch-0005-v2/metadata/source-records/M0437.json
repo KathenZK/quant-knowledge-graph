@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0437",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 437,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ddf6818189b273e56b3be85075b202f982293350519456481d520ffc22553e62",
+    "rule_sha256": "298186696e24bd9fb7896bcb41989403529d531fd6cb35f023fff482ec5773fe"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0437",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0437"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/NumEarnIncrease.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Loh and Warachka (2012, MS)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://openassetpricing.com/SignalDoc-Browser.html"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Earnings streak length（NumEarnIncrease）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美国股票（CRSP/Compustat；Chen-Zimmermann 复制）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2012"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Earnings streak length"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "信号（Signal Browser Definition）：Number if consecutive 4-quarter increases in ibq, up to 8. 组合规则（该页字段）：StockWeight=EW；LSQuantile=0.2；PortfolioPeriod=1.0个月；StartMonth=12.0；Sign=1.0；TestInOP=port sort FF3 alpha。股票池/过滤：abs(prc)>5。 Notes：This signal isn't exactly found in Loh and Warachka, but table 4 suggests that this would predict returns. GHZ have this signal and cite Barth, Elliott and Finn 1999, but Barth et al do not study predictability according to Loh and Warachka. I (Andrew) couldn't locate Barth et al online during the pandemic, but the abstract of Barth et al is consistent with Loh and Warachka's interpretation.。 基线为原论文分组的多空组合（FAQ：baseline follows the original paper split；数据页写 monthly long-short following OPs）。未在该行写出的细节不补。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "signalname=NumEarnIncrease; KeyTable=4 all together"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
