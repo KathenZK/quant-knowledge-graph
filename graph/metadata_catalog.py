@@ -426,10 +426,18 @@ def main():
     resume=sub.add_parser('resume');resume.add_argument('--plan',required=True,type=Path);resume.add_argument('--plan-sha256',required=True)
     resume.add_argument('--checkpoint',action='append',nargs=2,metavar=('DIRECTORY','SHA256'),default=[])
     restore=sub.add_parser('restore');restore.add_argument('--checkpoint',required=True,type=Path);restore.add_argument('--sha256',required=True);restore.add_argument('--kind',choices=['plan','batch'],default='plan');restore.add_argument('--output',required=True,type=Path)
+    for name in ['public-subset', 'check-public-subset', 'restore-public-subset']:
+        command=sub.add_parser(name);command.add_argument('--checkpoint',required=True,type=Path);command.add_argument('--sha256',required=True)
+        if name!='check-public-subset':command.add_argument('--output',required=True,type=Path)
     a=p.parse_args()
     if a.command=='plan':result=create_plan(a.csv,a.metadata,a.output,contract=_loads(_read_file(a.contract)) if a.contract else None,batch_size=a.batch_size,decisions_path=a.decisions,decisions_sha256=a.decisions_sha256)
     elif a.command=='stage':result=stage_batch(a.plan,a.plan_sha256,a.csv,a.batch_id,a.output)
     elif a.command=='resume':result=resume_report(a.plan,a.plan_sha256,a.checkpoint)
+    elif a.command in {'public-subset', 'check-public-subset', 'restore-public-subset'}:
+        from quantgraph.graph.metadata_public_subset import create_public_subset, check_public_subset, restore_public_subset
+        if a.command=='public-subset':result=create_public_subset(a.checkpoint,a.sha256,a.output)
+        elif a.command=='check-public-subset':result=check_public_subset(a.checkpoint,a.sha256)
+        else:result=restore_public_subset(a.checkpoint,a.sha256,a.output)
     else:
         rows=recover_rows(a.checkpoint,a.sha256,checkpoint_format=FORMAT if a.kind=='plan' else BATCH)
         raw=b''.join((json.dumps(r,ensure_ascii=False,sort_keys=True,separators=(',',':'))+'\n').encode() for r in rows)
