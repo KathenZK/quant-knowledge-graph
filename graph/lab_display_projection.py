@@ -22,6 +22,7 @@ from quantgraph.graph.metadata_pilot import (
     RESERVE, digest, encoded, merge_record, publication_screen, read_below,
 )
 from quantgraph.graph.site_feedback import canonical
+from quantgraph.graph.lab_display_v2 import SCHEMA as DISPLAY_V2_SCHEMA, project_v2
 
 REGISTRY = Path(__file__).resolve().parents[1] / 'metadata/lab-display-sources.json'
 MANIFEST_KIND = 'LAB_ORIGIN_RESULT_MANIFEST_NOT_GRAPH_COLLECTION'
@@ -148,6 +149,11 @@ def derived_manifest(entry, blobs, origin, record, protocol):
 
 
 def project(entry, blobs):
+    # V2 is an explicit, separately bounded profile. Do not reinterpret a
+    # profile-tagged source through the historical v1/default code path.
+    if entry.get('projection_profile') is not None or _loads(blobs['result_manifest']).get('schema_version') == DISPLAY_V2_SCHEMA:
+        record, detail = project_v2(entry, blobs)
+        return reviewed(record), reviewed(detail)
     rid = entry['id']
     record, summary, protocol = (_loads(blobs[k]) for k in ['record', 'summary', 'protocol'])
     _finite(summary)
