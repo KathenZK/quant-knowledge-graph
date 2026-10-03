@@ -1,0 +1,40 @@
+# 冻结 Lab 结果的显示投影
+
+`graph.lab_display_projection` 是既有详情/比较页的数据适配器，不是回测器、原生corpus导入器或Site上传器。默认 `lab-display-sources.json` 显式固定12个已获准公开的Lab来源，保留10个ADAPTED与2个HYPOTHESIS；只有指定inventory内的ID可进入，不自动扫描Lab、catalog或全库。原M0256/M0259 pilot不变。
+
+源清单包含每个ID的Lab commit、run/variant、publication manifest和实际消费文件的路径、URL、bytes、SHA256。支持publication的repo-relative及逐策略relative文件清单；源角色必须同时通过独立hash与publication allowlist。无原文全文、行情原始文件、完整账本、private Graph detail或批注输入。
+
+离线预览（替换为本执行器已物化、固定commit的本地目录）：
+
+```sh
+python -m quantgraph.graph.lab_display_projection \
+  --lab-batch009 <Lab-eca7ad8-source-root> \
+  --lab-dot004 <Lab-1f0d1e1f-source-root> \
+  --lab-root batch011=<Lab-db806c62-source-root> \
+  --output <new-private-preview-directory>
+```
+
+输出`records.json`、`implementations/<key>.json.gz`、`status.json`及独立文件hash清单。状态始终`STAGED_NOT_IMPORTED`，0新试验、0原生corpus导入、0部署。缺真实active-root/entity/revision时`active_merge_status=BLOCKED_CURRENT_ACTIVE_ROOT_ENTITY_REVISION_REQUIRED`，不产生Site envelope；绝不改用bundled seed。
+
+后续批次可添加独立批准的inventory：`--sources <inventory.json> --sources-sha256 <independently-reviewed-sha256> --lab-root <group>=<source-root> --ids <explicit-id...>`。该合同适用已声明的calendar2024/native5m、4策略配置+1新建或复用控制；其他窗口或执行结构应新增明确适配与测试，不静默补默认值。默认清单不随全库增长扩量；batch011新增4条固定于Lab main `db806c62ced6694f13f1250cb132134a83145d22` 的publication revision3，原8条pins保留。
+
+显示转换保留来源不改原件：equity用原nav或冻结初始资金100000归一化，不按首日点重置；annualized_return映射cagr、每日Sharpe映射sharpe、费用键映射协议的0/20bps，原生5m与每日观察数分开。指标保留原生最大回撤，图上回撤由每日NAV计算。M0298保留原估值时间，显示日为其午夜边界前一日；M0304公开没有曲线，输出空curve和明确原因。各执行模型的假设和差异来自公开规则/协议；ADAPTED不改称STANDARDIZED。复用基准不计新控制试验。
+
+可选`--active-root <private-readback> --active-sha256 <receipt-sha> --parent-batch <exact-active>`只生成增量**草稿**。输入`active-snapshot.json`应由sole Site writer从真实current读取并独立固定：
+
+```json
+{
+  "schema_version": "quantgraph-active-readback/v1",
+  "source": "CURRENT_SITE_READBACK",
+  "bundled_seed": false,
+  "active_batch": "batch-<actual-64-hex>",
+  "bindings": {"M0300": {"entity_id": "<actual>", "definition_revision": "<actual>"}},
+  "files": {"/data/manifest.json": {"sha256": "<actual>", "bytes": 123}}
+}
+```
+
+`assets/`保存receipt中逐文件固定的真实assets；必须包含data/catalog manifest、实际catalog details、目标workscope分片及已存在的同run/variant详情。receipt的source字符串不是认证机制，不能自行填写成已核验。合并核对原生ID/实体/定义版本；更新实际workscope入口，保留非目标记录和旧audit/用户字段，以既有merge_record追加结果；同run/variant不同bytes拒绝，精确重放无新增。即使manifest.details遗漏已有实现，receipt.files已固定的路径仍不可覆盖：不同bytes拒绝；相同bytes可原样随草稿登记，以补齐索引和结果引用。已有native定义、用户批注和原8ID的16个结果引用不重写；新4ID当前Site旧引用尚待取得实际snapshot核对。新runs仅供既有详情/比较页实现读取，不冒充完整native collection运行级统计。
+
+`site-sync-candidate.json`使用既有Sites envelope，`entities=[]`，仅追加获准显示对象与必要data索引/分片。草稿不提供授权、activation或CAS保证，`ready_for_direct_site_sync`始终false；真实权限、完整快照/统计复核及最终串行激活归sole Site writer。站点若为public，不能把既有owner-private service上传前置条件当作成立。
+
+测试：`pytest tests/test_lab_display_projection.py tests/test_metadata_pilot.py tests/test_site_sync_bulk.py`；前端`npm exec vitest run tests/lab-display.test.ts tests/corpus-research.test.tsx tests/reading-brief.test.tsx tests/research-scope.test.tsx tests/hosted-feedback.test.tsx`及`npm run typecheck`。fixture全为合成值，不在CI读取私人Lab数据；实际源预览和逐文件读回回执保持私有，不进Git。
