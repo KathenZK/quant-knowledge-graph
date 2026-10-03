@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1773",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1773,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "bee8ead3066fdcb1ae49f12309b7ef7377543440fedee9fbc70a4215e1d51053",
+    "rule_sha256": "7b6c6b996cb818af1bf05ddf1a2755487f6ca0ef2b33289d39aed01fa3e818a0"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1773",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1773"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/forum/discussion/19360/regime-based-tactical-rotation/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dibakar Sigdel / QuantConnect论坛"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股杠杆ETF：TQQQ相对200日SMA分风险开/关；开仓时QQQ的10日RSI>80则100%UVXY否则100%TQQQ；关仓时按TQQQ/UPRO超卖或20日SMA反弹选TECL/UPRO/TQQQ，否则在TLT与SQQQ中选10日RSI更低者"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（TQQQ/UVXY/TECL/UPRO/TLT/SQQQ；Regime战术轮动）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股杠杆ETF：TQQQ相对200日SMA分风险开/关；开仓时QQQ的10日RSI>80则100%UVXY否则100%TQQQ；关仓时按TQQQ/UPRO超卖或20日SMA反弹选TECL/UPRO/TQQQ，否则在TLT与SQQQ中选10日RSI更低者"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写QuantConnect论坛帖《Regime-Based Tactical Rotation》公开正文决策树（作者 Dibakar Sigdel）。主开关：TQQQ 收盘相对其200日SMA。风险开（TQQQ>SMA200）：若 QQQ 的10日 RSI>80，则清仓并100%持有 UVXY；否则100%持有 TQQQ。风险关（TQQQ<SMA200）：若 TQQQ 的10日 RSI<31，则100% TECL；否则若 UPRO 的10日 RSI<31，则100% UPRO；否则若 TQQQ>其20日SMA，则100% TQQQ；否则比较 TLT 与 SQQQ 的10日 RSI，100%持有 RSI 更低（更超卖）的一只。任意时刻只持单一标的。提出日期未知（帖内未见明确发布日）。 不是M0893体制切换纳斯达克动量防御（SPY200日+QQQ/TQQQ低于20日加UVXY等）：本条是TQQQ相对200日SMA分风险开/关，开仓时QQQ的10日RSI>80则100%UVXY否则100%TQQQ，关仓按TQQQ/UPRO超卖或20日SMA反弹选TECL/UPRO/TQQQ否则TLT与SQQQ中10日RSI更低者。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
