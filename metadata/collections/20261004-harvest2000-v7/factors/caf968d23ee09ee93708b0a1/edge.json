@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "利用开高低收之间的对数价格关系估计窗口内有效价差尺度，供流动性与交易成本研究；这是估计量，不是实时报价或已证实的收益因子。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-1b49ac2f83aa0fbc1223f13a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-1b49ac2f83aa0fbc1223f13a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "四个输入长度必须相同，否则ValueError；N<3返回NaN。源码只验证长度，正价格、同频且按时间升序和OHLC一致性由研究输入合同保证。 τ在h_t、l_t或c_(t−1)缺失时为NaN；每个开/收盘位置指示项另检查其两个比较价格是否缺失，再与τ相乘。各nanmean独立排除NaN，不使用统一的完整样本交集。 nansum(τ)<2或p_o==0或p_c==0时返回NaN；τ=1的两个时段是额外门槛，N>=3本身不足以保证可估。 d1/d3/d5的去均值项是mean(r_k)*τ/p_t，不能替换成普通r_k−mean(r_k)。v_j为总体二阶矩差，没有n−1自由度修正；有限精度可令总方差非正，此时按源码回到两估计等权。 最终默认对s²取绝对值再开方；不是把负s²截零。signed/unsigned只是同一估计量的符号呈现，同族不分别计数。来源文档将估计目标解释为样本期内均方根有效价差；本目录不验证该统计模型对任何实际市场成立。 边界：不检验正数、有限性、数组维数、high>=low或开收盘落在区间内；对0/负价格取log或Inf会产生无效运算，不能把输出包装为有效价差。 po或pc本身为NaN时==0检查不会触发，后续通常传播NaN；vt=NaN使vt>0为false，执行均权分支，但并不修复e中的NaN。 Numpy版本未锁、未运行；pyproject用numpy=\"*\"，源码语义已读不等于数值复现。rolling/expanding和其它语言实现没有另计，尤其来源说明缺失值时滚动实现可能与本edge实现不同。 不采用作者文档建议的事后把signed负值归零作为默认；该建议与固定Python函数实际输出分开。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-1b49ac2f83aa0fbc1223f13a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "利用开高低收之间的对数价格关系估计窗口内有效价差尺度，供流动性与交易成本研究；这是估计量，不是实时报价或已证实的收益因子。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-1b49ac2f83aa0fbc1223f13a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "令o,h,l,c为OHLC自然对数，m=(h+l)/2；t=2..N，r1=m_t−o_t，r2=o_t−m_(t−1)，r3=m_t−c_(t−1)，r4=c_(t−1)−m_(t−1)，r5=o_t−c_(t−1)。τ=1[h_t≠l_t或l_t≠c_(t−1)]；p_t=nanmean(τ)，p_o=nanmean(τ1[o_t≠h_t])+nanmean(τ1[o_t≠l_t])，p_c=nanmean(τ1[c_(t−1)≠h_(t−1)])+nanmean(τ1[c_(t−1)≠l_(t−1)])。d_k=r_k−nanmean(r_k)τ/p_t，k∈{1,3,5}。x1=−4d1*r2/p_o−4d3*r4/p_c，x2=−4d1*r5/p_o−4d5*r4/p_c；e_j=nanmean(x_j)，v_j=nanmean(x_j²)−e_j²。若v1+v2>0，s²=(v2 e1+v1 e2)/(v1+v2)，否则s²=(e1+e2)/2。默认返回sqrt(abs(s²))，sign=True时乘sign(s²)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-1b49ac2f83aa0fbc1223f13a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "open, high, low, close（four equal-length one-dimensional numeric array-like price vectors; N>=3）：按时间升序的同一规则时间网格OHLC；研究主合同为正、有限且价格单位一致。缺失值可保留原网格按源码独立nanmean处理，不删除后压缩时间。。参数：sign：False输出绝对平方根，True保留s²符号；范围boolean；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-1b49ac2f83aa0fbc1223f13a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "eguidotti/bidask",
+  "lab": null,
+  "missing_information": [
+    "具体市场、采样频率、窗口和PIT行情供应商未冻结",
+    "Numpy/Python运行环境未固定、未执行或做数值复现",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "EDGE 开高低收有效价差矩估计",
+  "native_source_id": "edge",
+  "one_line": "利用开高低收之间的对数价格关系估计窗口内有效价差尺度，供流动性与交易成本研究；这是估计量，不是实时报价或已证实的收益因子。",
+  "record_id": "edge",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/python/bidask/edge.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "实现：Emanuele Guidotti；EDGE方法来源：David Ardia、Emanuele Guidotti、Tim A. Kroencke (2024)，doi:10.1016/j.jfineco.2024.103916。",
+      "id": "harvest-source-1b49ac2f83aa0fbc1223f13a",
+      "license": "MIT",
+      "locator": "native function, parameters, units and sample gate:L1-L38; log returns, missing-aware indicators and probability gates:L40-L77; demeaning, inverse-variance combination and signed root:L79-L107",
+      "revision": "1caba55d63ebab6c855536be51c43bdfc48d2dec",
+      "sha256": "08305189738c2fe4b9156f23c6d8ef2c8aacd597efa415e894670aa7dc4f5f7d",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/python/bidask/edge.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Emanuele Guidotti；EDGE方法来源：David Ardia、Emanuele Guidotti、Tim A. Kroencke (2024)，doi:10.1016/j.jfineco.2024.103916。",
+      "id": "harvest-source-3aad964cd514c3d9fa5a7fc5",
+      "license": "MIT",
+      "locator": "author maintained implementation and original article attribution:L1-L11; statistical target, frequency and missing-value boundaries:L22-L58; separate code/data license scope and authorship:L68-L88",
+      "revision": "1caba55d63ebab6c855536be51c43bdfc48d2dec",
+      "sha256": "06903e0ba0e73e00a0d9ef9c9dea9c3adb0c78d0d1571568125b63de2565af35",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "实现：Emanuele Guidotti；EDGE方法来源：David Ardia、Emanuele Guidotti、Tim A. Kroencke (2024)，doi:10.1016/j.jfineco.2024.103916。",
+      "id": "harvest-source-f06f5f18598df0ceada3853a",
+      "license": "MIT",
+      "locator": "Python package identity and unpinned numpy dependency:L1-L17",
+      "revision": "1caba55d63ebab6c855536be51c43bdfc48d2dec",
+      "sha256": "10637b61af61c588e43ce1720b02f8c77da208c2d464f3d5ba1ba486aaca3eee",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/python/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "实现：Emanuele Guidotti；EDGE方法来源：David Ardia、Emanuele Guidotti、Tim A. Kroencke (2024)，doi:10.1016/j.jfineco.2024.103916。",
+      "id": "harvest-source-485e1d7876acae8efd5e1c95",
+      "license": "MIT",
+      "locator": "MIT terms and author copyright:L1-L21",
+      "revision": "1caba55d63ebab6c855536be51c43bdfc48d2dec",
+      "sha256": "7f480f8329cc38ed9799ea39067317e762b890f586335c0632b6e83a39b83ff0",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

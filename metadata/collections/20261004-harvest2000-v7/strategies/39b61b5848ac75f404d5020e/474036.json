@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说：先筛显著转折，再用转折序列中的二级极值作为突破门，可能减少一阶枢轴噪声；没有收益或风险改善证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "le/se关闭不撤销已提交订单；双边挂单并存及相反entry反转未运行；二级锚初0参与早期比较；默认无独立止损。",
+    "显著性函数在ATR或邻棒na时不置pp_ok=false，初期可能接受仅有H[2]/L[2]的枢轴。"
+  ],
+  "name": "ATR显著枢轴的二级枢轴突破挂单",
+  "native_source_id": "474036",
+  "one_line": "先确认显著高低枢轴，再从三次同类枢轴中找中间极值，持续向二级枢轴外一跳挂突破单。",
+  "record_id": "474036",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%A2%9E%E5%BC%BA%E5%9E%8B%E5%8F%8C%E9%87%8D%E6%9E%A2%E8%BD%B4%E7%82%B9%E5%8F%8D%E8%BD%AC%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5-Enhanced-Dual-Pivot-Point-Reversal-Trading-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-474036-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "69a32d9aeb9f0ec61af9c6f1fe5ed16a772fceb82db48c74646c2a44bbb2ba23",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%A2%9E%E5%BC%BA%E5%9E%8B%E5%8F%8C%E9%87%8D%E6%9E%A2%E8%BD%B4%E7%82%B9%E5%8F%8D%E8%BD%AC%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5-Enhanced-Dual-Pivot-Point-Reversal-Trading-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-474036-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-474036-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "声明按成交额佣金0.1%、滑点3跳；未冻结借贷、资金费、点差及真实撮合。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-474036-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认2018-01-01至2100-01-01时间窗内，双方向启用。le且二级高非na非0时反复提交/修改PivRevLE buy-stop=pphprice+mintick；se且二级低非0时提交PivRevSE sell-stop=pplprice−mintick。qty=equity×1/C。不是在确认枢轴的过去棒成交，也没有写互斥OCA或cancel。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-474036-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "所有枢轴至少等待右侧2棒，以确认时点计算ATR显著性及二级序列，随后本次计算提交stop订单。图形锚源于历史枢轴不意味着回到历史成交。默认无tick/成交重算声明，挂单延续及反向成交顺序未运行。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-474036-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认risk_reward_enabled=false、trail_stop_enabled=false，故两个strategy.exit块均不执行。源码无独立close；离场依赖相反方向entry请求引发净持仓反转（实际成交未核）。le/se失效或离开日期窗不会取消既有挂单，不能把“停止续发”写成已撤单。可选非默认保护不作为默认规则。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-474036-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "显式每次挂单数量equity×margin_amount/C，默认margin_amount=1；不考虑pointvalue、最小手数或止损距离。注释称杠杆不是平台保证金声明；没有显式初始资本或pyramiding。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-474036-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "二级锚点初0且只由新显著枢轴更新；第一轮尚不满三次真实枢轴时0仍参加比较。允许两边未成交单并存，不带OCA/撤单；默认无保护、持有时限或清仓日期。非默认追踪以pointvalue换算而非mintick，未核，不纳入默认可还原结论。显著性函数未显式过滤na比较，ATR/历史缺失可在初期通过pp_ok，不能默认足额预热后才开始确认。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-474036-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认left=4/right=2，a=ATR14当前值×.1。高枢轴须H[2]>=H[2+i]+a（i=1..4）且H[2]>=H[i]+a（i=0..1）；低枢轴须L[2]<=L[2+i]−a及L[2]<=L[i]−a。出现高枢轴时保存hprice，并把ph3=旧ph2、ph2=旧ph1、ph1=hprice；若ph2>ph1且ph2>ph3，保存pphprice=ph2，否则保持旧二级高。低枢轴的pl序列对称且中间值小于两旁时保存pplprice。各保存值初0。le在新高枢轴时true，否则若旧le且H>hprice则false；se在新低时true，否则旧se且L<lprice时false。显著性ATR取确认棒，不是两棒前ATR。以上不等式等价仅限比较输入有限；源码pp_ok初true，仅严格反向比较成立才置false，ATR或邻棒缺失导致na比较时不会否决，故早期只要H[2]/L[2]可用也可能返回枢轴，未显式等待14棒预热。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-474036-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称或注释中的建议周期不等于冻结交易周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-474036-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "economic_basis": {
+    "hypothesis": "先取相邻绝对收益的最小值或中位数再累积平方，减少孤立大收益对窗口方差估计的影响；Min/Med 两个最近邻截断选项与旧名称同族登记。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "冻结的已审计算合同为非空列的有限实数numeric vector/matrix，N>=3，单一完整分析时段，alignBy=NULL、alignPeriod=NULL、makeReturns=FALSE。输入已经是定义好的按时间排序的同频收益；不用价格/重采样/跨日自动包装补造输入转换。 先abs(as.matrix(rData))。C++ rollApplyMinWrapper在相邻两行取列最小值，输出N−1行；rollApplyMedianWrapper在连续三行取列中位数，输出N−2行。R按输出行数+1/+2恢复原N，再使用有限样本系数。 Min求列平方和时显式na.rm=TRUE；Med未传na.rm。两者缺失处理不同，且C++库的NaN次序统计行为未冻结，本条有限输入合同不声称支持带缺失行情。 公开函数另有xts跨日apply.daily与data.table按日期循环、可选重采样/价格转收益分支。它们存在但不属于本条已审主合同；要用于实际数据需另固定交易日、收益定义和这些helper版本。 rMedRV/rMinRV是已弃用的历史别名，不能作为新增因子；固定源码旧别名转发alignPeriod=alignBy，故本条采用rMedRVar/rMinRVar规范入口，不以别名当完整相同行为保证。 边界：Min数学最低N=2、Med最低N=3；统一研究合同N>=3。更短数据的C++无符号行数减法可能产生异常维数/分配错误，不保证返回NaN。空列亦不支持。 Min会删除聚合中的缺失项，却仍用原N修正，不能解释为有效样本数修正；Med的colSums未删NA。不能把二者统一描述为稳健缺失处理。 输出为方差而非标准差；常量零收益输出0，不代表无市场风险。连续多个大收益/微观结构噪声不会自动被排除；金融适用性未验证。 没有价格正性检查、自动时间排序、日历补齐或PIT处理；不把源码注释的预测优势当本库实证。RcppArmadillo/浮点版本未执行冻结。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "先取相邻绝对收益的最小值或中位数再累积平方，减少孤立大收益对窗口方差估计的影响；Min/Med 两个最近邻截断选项与旧名称同族登记。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入N×d收益矩阵R，每列独立。Min分支v_min=[π/(π−2)]·[N/(N−1)]·Σ_(i=1..N−1)min(|r_i|,|r_(i+1)|)²。Med分支v_med=[π/(6−4sqrt(3)+π)]·[N/(N−2)]·Σ_(i=2..N−1)median(|r_(i−1)|,|r_i|,|r_(i+1)|)²。输出积分方差尺度，不除总N、不自行开方或乘年化频率；两分支计一个最近邻截断构造族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "rData（finite real numeric vector or N-by-d matrix; N>=3, d>=1; one ordered regularly sampled return window）：已按明确价格口径算出的日内对数收益，单窗口内列对应资产；输入时序和采样日历由调用方保证。源码也可接受其他类型，本条不把那些路径算作已复现。。参数：alignBy：本条不进行重采样；范围reviewed NULL only；源码默认None；alignPeriod：本条不进行重采样；范围reviewed NULL only；源码默认None；makeReturns：输入必须已经是收益；范围reviewed FALSE only；源码默认False；estimator：不把两邻域大小或两输出作为两次新增；范围Med/Min two related estimators bundled；源码默认native rMedRVar or rMinRVar entry point"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "jonathancornelissen/highfrequency",
+  "lab": null,
+  "missing_information": [
+    "未逐公式审原始期刊论文；定义绑定维护者源码实现",
+    "R/RcppArmadillo运行、重采样/价格转换helper路径及行情PIT未冻结",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "相邻收益次序统计截断的已实现方差",
+  "native_source_id": "rMedRVar",
+  "one_line": "先取相邻绝对收益的最小值或中位数再累积平方，减少孤立大收益对窗口方差估计的影响；Min/Med 两个最近邻截断选项与旧名称同族登记。",
+  "record_id": "rMedRVar",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup等highfrequency维护者。方法出处：Torben G. Andersen、Dobrislav Dobrev、Ernst Schaumburg (2012), Jump-robust volatility estimation using nearest neighbor truncation, Journal of Econometrics 169:75–93。",
+      "id": "harvest-source-5f01e4e89a90ac43d08c6870",
+      "license": "GPL-2.0-or-later",
+      "locator": "Min native/deprecated names, formula, authors and defaults:L312-L362; Min wrappers and finite-matrix computation:L364-L417; Med native/deprecated names, formula, authors and defaults:L420-L484; Med wrappers and finite-matrix computation:L486-L543",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "47103e0f8a9f72ae6cdac845655c22a976e2aece49f7bb672302b33338354a32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup等highfrequency维护者。方法出处：Torben G. Andersen、Dobrislav Dobrev、Ernst Schaumburg (2012), Jump-robust volatility estimation using nearest neighbor truncation, Journal of Econometrics 169:75–93。",
+      "id": "harvest-source-199eefbd4c9a56cd77a78f1d",
+      "license": "GPL-2.0-or-later",
+      "locator": "RcppArmadillo dependency:L1-L3; complete rolling min and median helpers:L182-L204",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "e73731f67e6cf6c30b78a43da3efdadd95a1d38abac13bb670126e846f59c0b2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/src/internals.cpp",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup等highfrequency维护者。方法出处：Torben G. Andersen、Dobrislav Dobrev、Ernst Schaumburg (2012), Jump-robust volatility estimation using nearest neighbor truncation, Journal of Econometrics 169:75–93。",
+      "id": "harvest-source-2f821f16db9cc7f4b73af0c0",
+      "license": "GPL-2.0-or-later",
+      "locator": "generated Rcpp calls to the two compiled helpers:L74-L80",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "3930bffdcaf6ab6ef070bb1c5682be16e4907cb185db4f89f00e919361e33f4e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/RcppExports.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup等highfrequency维护者。方法出处：Torben G. Andersen、Dobrislav Dobrev、Ernst Schaumburg (2012), Jump-robust volatility estimation using nearest neighbor truncation, Journal of Econometrics 169:75–93。",
+      "id": "harvest-source-1028bcab3647a0fae74441ed",
+      "license": "GPL-2.0-or-later",
+      "locator": "package identity, maintainers, license and original package paper:L1-L24; runtime dependencies not frozen:L26-L45",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d8d98b0df5ea59c9488f6af78a6246dbbbabb593d56ef92e84eb7516dadce0b3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

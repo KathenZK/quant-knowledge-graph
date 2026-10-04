@@ -1,0 +1,103 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述一次基准显著下跌后，资产相对领先是否保留以及双方何时收复同一压力前时点的价格锚。不是收益预测、压力的外生因果识别或已证实抗跌溢价。",
+    "missing": [
+      "无金融预测、经济独立性或样本外有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-WdWFZQkn-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本函数只用日价格和基准ATR；请求gaps_on、lookahead_off，事件确认bar写入。阈值ATR取压力窗起点，避免用压力窗内新波动改变检测阈。年龄为图表bar序号差，名为days但不是自然日。终止后旧事件数值可保留在面板，不能当作新事件实时输出；缺口不补齐不当0收益。恢复时长仅在实际恢复端点才知道，未恢复/超时/缺口不能赋值0或剔除后声称无偏恢复分布。拆股调整与来源修订尚未固定历史PIT；未来使用需另行冻结行情、币种及日历。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-WdWFZQkn-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "所有事件状态只在barstate.isconfirmed更新。已有活动事件先更新年龄age=bar_index−s，再检查当根数据对齐；若不对齐则终止并记dataGaps，收益置na，但年龄保留终止当棒值。否则分别在资产/基准首次收盘>=各自锚时记录age。初始资产已在锚上记0；检测时基准必低于锚，首恢复保持na。若尚未警告且ell0>=δ而当前ell<=−δ，则记一次迟来弱势。状态优先为已警告、资产当前已恢复、资产曾恢复但又跌下、ell>=δ的抗跌、ell<=−δ的落后、否则同步。接着若当根双方同时>=各自锚，则完成；否则age>=上限则超时。因此完成优先于同棒超时，早先各自恢复过但不同步不等于完成。活动期忽略新的压力候选；终止当根也不重启。只有下一根非活动且出现新的压力上穿事件才可再开。各恢复时长、相对收益、状态及结束/超时/缺口计数作为一个完整事件算法，不拆方向/资产/输出。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-WdWFZQkn-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述一次基准显著下跌后，资产相对领先是否保留以及双方何时收复同一压力前时点的价格锚。不是收益预测、压力的外生因果识别或已证实抗跌溢价。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-WdWFZQkn-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "在t检查t−L..t每个资产/基准价格a,b均正且非缺失、收盘结束时间相等。阈T_t=max(f,m×100×ATR_b,t−L/b_(t−L)×sqrt(L))，基准窗收益R_t=100(b_t/b_(t−L)−1)。压力S_t=窗口有效且T有效且R_t<=−T_t；新候选须S_t真、S_(t−1)假，且前根窗口与前阈有效。非活动期仅确认bar遇候选才开启；固定锚A0=a_(t−L)、B0=b_(t−L)，起点s=t。活动期资产/基准累计收益rA=100(a/A0−1)、rB=100(b/B0−1)，相对领先ell=rA−rB，初始领先ell0在检测时冻结。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-WdWFZQkn-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅标准1D图表：syminfo.type为crypto的品种或USD股票；资产及基准取常规时段、拆股调整的日收盘与日结束时间，基准另取ATR。自动基准为加密BINANCE:BTCUSDT、股票AMEX:SPY，可自选；须相同时段及可比报价币种，代码只显式检查结束时间相等和价格正/非缺失。默认压力窗L=3（1..10）、最低下跌f=3%、ATR窗20、波动倍数m=1.5、最多观察30棒（1..120）、相对领先缓冲δ=0.5个百分点。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-WdWFZQkn-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为风险事件和相对恢复路径诊断输入；完整事件窗口与失败/删失状态应一起研究。无仓位、成交、开平仓或成本规则，按因子中的风险测度登记，未执行Pine或回测。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未执行Pine，无数值复现、行情或回测。",
+    "数据提供商历史修订、日历对齐和币种可比性需另行验证。",
+    "原源码未写许可通知，商业权利需单独核实。"
+  ],
+  "name": "基准压力触发的双锚恢复与迟来弱势事件",
+  "native_source_id": "WdWFZQkn",
+  "one_line": "以前窗波动确定基准下跌事件，固定压力前资产和基准价格锚，记录相对领先变化、各自首次恢复及同时恢复。",
+  "record_id": "WdWFZQkn",
+  "relations": [],
+  "rights": {
+    "derived_results": "没有运行来源代码或验证收益。",
+    "metadata": "自撰公式、状态与事实摘要；原作者归属与来源固定保留。源全文与行情不进入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/script/WdWFZQkn/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "BotTradeLab",
+      "id": "tradingview-WdWFZQkn-published-code",
+      "license": "NOASSERTION; no license notice in saved published script",
+      "locator": "原站公开Pine v6 JSON source；逐字段行段见reviews.json",
+      "revision": "PUB;6cb86999e6774e30959f58c4a2612f8c@1.0",
+      "sha256": "3e44fd29cb436ff5c7d5178c3746d033759580170134c11cbf209fa5147eaa14",
+      "supports": [
+        "计算公式、时序、状态与输出边界"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B6cb86999e6774e30959f58c4a2612f8c/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / BotTradeLab",
+      "id": "tradingview-list-4cca7fafd8dc29d9da71",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data image_url=WdWFZQkn；chart_url/user/script_id_part/version",
+      "revision": "sha256:4cca7fafd8dc29d9da71283dd63ecb8017eaf44c053a6eac042c9eab24571601",
+      "sha256": "4cca7fafd8dc29d9da71283dd63ecb8017eaf44c053a6eac042c9eab24571601",
+      "supports": [
+        "作者与原生公开脚本身份；不支持计算公式"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-40/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}
