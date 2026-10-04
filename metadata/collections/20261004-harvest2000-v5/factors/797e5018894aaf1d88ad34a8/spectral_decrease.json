@@ -1,0 +1,149 @@
+{
+  "economic_basis": {
+    "hypothesis": "按频点编号的倒数权重汇总其幅度相对直流项的变化，描述一个窗口的谱形状。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "对整段原始序列作默认长度的实数FFT，取绝对幅度；不先去均值、不乘显式窗、不平方为功率。 每个非直流频点减去直流幅度，再除频点编号k，加总后除非直流幅度总和。这里权重是索引倒数，不是对实际Hz做线性回归。 fs传入共享FFT helper生成频率轴，但该函数输出没有使用频率轴，因此有效正fs的数值单位不改变D。 边界：非直流幅度全为0时回0，包括常数输入；不能把这个兜底0当作完整谱形状证据。 该值可为负；不是衰减率百分数、收益趋势斜率或频谱时间变化率。 不去均值使直流分量参与全部分子；输入整体平移会改变结果，不能擅自中心化后称同一定义。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "按频点编号的倒数权重汇总其幅度相对直流项的变化，描述一个窗口的谱形状。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "M=floor(N/2)+1，A_k=|rFFT(x)_k|，k=0..M−1；D=Σ_(k=1..M−1)[(A_k−A_0)/k] / Σ_(k=1..M−1)A_k。若分母为0，源码返回0。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "signal（1D finite real numpy ndarray, nonempty, ordered and evenly sampled）：等时间间隔的完整观测窗口；价格/收益/其他观测绑定缺失。；fs（finite positive real scalar）：每单位时间采样次数；MFCC按Hz使用梅尔刻度，其余频率单位与fs一致。。参数：fs：采样频率；源码未统一验证；范围finite>0, required；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "fraunhoferportugal/tsfel",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "NumPy/SciPy/PyWavelets等运行环境未冻结；固定源码调用与完整数值复现是不同状态",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "相对直流幅度的频谱递减量",
+  "native_source_id": "spectral_decrease",
+  "one_line": "按频点编号的倒数权重汇总其幅度相对直流项的变化，描述一个窗口的谱形状。",
+  "record_id": "spectral_decrease",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/tsfel/feature_extraction/features.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-69aca4321017f6f302b163db",
+      "license": "BSD-3-Clause",
+      "locator": "spectral_decrease:L1082-L1119; imports and environment boundary:L1-L8",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "8b1270b22219f230648165bcadbd6c7e2a215e1c0a4ee9c0d642310e5a55c6d2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/tsfel/feature_extraction/features.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-e4e516cdc1e2597301bca76f",
+      "license": "BSD-3-Clause",
+      "locator": "calc_fft:L55-L76; imports and environment boundary:L1-L4",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "0053fc891e55939dc54aaedf34bb4de31001e302e13d1b38c3cd29fe6a2819ab",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/tsfel/feature_extraction/features_utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-307e5ae686a88bfe0114b8a0",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L29",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "b8f68990bee0d6c6cfceab3c13f4da6a74ce66db8eacdad89a12614e5f551aed",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-1e00b2abb469b52324fb2765",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_attribution:L1-L48",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "6dab75dcafe1d8f033aafbc53e75f34d47507841849d44bf5b4a5085c0345663",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/AUTHORS.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-33d9503e658fb0c6f0e9d4a7",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_attribution:L1-L177",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "d8cb28567d39a645b558e3679da1933c22441ebbee006aa3eeec035df7f98760",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}
