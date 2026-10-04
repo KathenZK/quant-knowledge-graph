@@ -1,6 +1,6 @@
 # 知识目录
 
-这是仓库中策略、因子和待分类资料的统一阅读与查询入口。来源、版本、许可、定义准入和研究状态分别保留；不会因为资料出现在目录中就获得执行或商业使用许可。
+这是仓库中策略、因子、参考资料和待分类资料的统一阅读与查询入口。来源、版本、许可、定义准入和研究状态分别保留；不会因为资料出现在目录中就获得执行或商业使用许可。
 
 [集合登记表](catalog.json)指定要读取的集合，`graph/knowledge_catalog.py`校验后生成只读视图。主 API 和 CLI 使用同一视图，保留原目录、原 ID、固定快照和全部证据版本。本次没有改写活动 Site 或运行中的旧 Catalog。
 
@@ -10,9 +10,10 @@
 
 | 分类 | 条目卡数 | 数量含义 |
 |---|---:|---|
-| 策略 | 178 | 包括内容推断的候选及已审源码说明，不都具备回测条件 |
-| 因子 | 1,586 | 包括因子候选、实现和1,570条来源变体，不都通过定义准入 |
-| 待分类 | 6,782 | 保留来源记录，尚无足够的明确分类决定 |
+| 策略 | 6,420 | 包括内容推断的候选、组成部分、选股提纲及已审源码说明，不都具备回测条件 |
+| 因子 | 2,039 | 包括候选、构造提纲、特征族、实现和1,570条来源变体，不都通过定义准入 |
+| 参考资料 | 83 | 包括研究流程、工具、目录与技术测试，不计为策略或因子 |
+| 待分类 | 4 | 正文用途仍不足以确定，保留精确缺项与原因 |
 | 合计 | 8,546 | 来源证据聚合后的条目数，不是经济独立策略或因子的数量 |
 
 用 `uv run quantgraph catalog-stats` 读取当前值；后续批次可能增加条目、版本和证据，不能仅沿用本页历史数字。
@@ -20,12 +21,15 @@
 计数按下面的规则核对：
 
 - 原 CSV 保存6,971个原ID，分70批读取；M2535、M2709仍隔离，不计入仓库目录。不能把历史5,813行导入批次或旧2,898条检查点再相加。
-- 200张分类阅读页在对应 CSV 卡中追加分类证据，其中171策略候选、12因子候选、17待分类；不新增200张卡。
+- 200张历史分类阅读页在对应 CSV 卡中保留原证据，当时为171策略候选、12因子候选、17待分类；不新增200张卡。
+- [本次正文分类批次](classifications/20261004-v1/README.md)覆盖此前待分类的6,782条：6,242策略、453因子、83参考资料、4待分类。追加类型证据，不新增条目卡或定义版本。
 - M0256、M0259两份原有审阅 JSON 通过行摘要和元数据摘要绑定原 M 卡，不新增2张卡。
 - 首批网络资料有5条策略实现、4条因子实现。4条明确源码定位匹配 M2904、M2914、M2598、M2599，计入原卡的不同证据版本；另5条增加5张卡。
 - 因子来源集合有1,570条变体，保留原 `factor_variant_id`；其中包含此前508条 Qlib 分发成员，这508条不另相加。
 
-因此当前总数为 `6,971 + (9 − 4) + 1,570 = 8,546`。底层有8,552个证据版本、200张分类阅读页、11份已审说明、14条来源定位或概念比较关系；这些数字不再加到条目卡总数上。来源行数另记为 CSV 6,971行、因子来源1,578行，同一变体可有多条来源。
+因此当前总数为 `6,971 + (9 − 4) + 1,570 = 8,546`。底层有8,552个证据版本、200张历史分类阅读页、6,782条本次正文分类决定、11份已审说明、14条来源定位或概念比较关系；这些数字不再加到条目卡总数上。来源行数另记为 CSV 6,971行、因子来源1,578行，同一变体可有多条来源。
+
+CSV的6,971条来源中，6,967条已有类型判定；剩余`M0115`、`M0176`、`M0196`、`M2122`仍待分类。类型覆盖率与来源核验、定义准入、回测准备度分开统计。本次新增原生定义0、回测0，类型状态仍为`CONTENT_INFERRED`，定义状态仍为`UNVERIFIED`。
 
 1,570条因子变体的记录类型如下，分类时不能把安慰剂或撤回记录当作有效信号：
 
@@ -39,6 +43,21 @@
 
 这些变体中1,085条属于既有 curated 定义成员。准入只证明相应定义门槛，不能代替计算语义、经济有效性、数据许可或回测准备度审核。详细原状态以 [factor-sources/index.json](factor-sources/index.json) 和逐条记录为准。
 
+## 类型怎么判断
+
+| 类型 | 正文依据 | 不能据此声称 |
+|---|---|---|
+| `strategy`：策略及组件 | 交易、持仓、风险控制、资产选择或组合配置用途已经明确 | 公式齐全、可直接回测或经济有效 |
+| `factor`：因子及定义 | 数值信号、特征或因子收益序列的构造对象 | 已通过计算语义或定义准入 |
+| `reference`：参考资料 | 工具、研究流程、文档目录、数据说明、技术接口与回归测试 | 每个含买卖动作的例子都是投资策略 |
+| `unclassified`：待分类 | 现有正文连对象用途也不足以判断，或类型证据相互冲突 | 只是缺参数、缺成本或没有研究就一定待分类 |
+
+分类与规则完整性独立。正文明确“云/QQE条件开Long、close Long”，即使条件没有展开，也可收为`strategy_component`；只列若干指标参数而未说明输出用途则仍需补证。固定权重与再平衡是组合规则；因子定义所附标准多空测试组合不自动改变其主要对象类型。
+
+技术示例逐条看目的。明确市场条件到持仓的NLP、教程或Regression实现可保留为策略；故意触发拒单、以固定历史合约检验结算、用NULL买力或对订单有效期作状态断言的记录，归为`reference/technical_demo`。标题、文件名及“策略”二字都不能单独决定类型。
+
+[分类批次索引](classifications/20261004-v1/index.json)保存目标ID与产物摘要，`decisions.jsonl`保存逐条类型、子类、理由、原文精确引文和质量标记，`overrides.json`保存人工裁决，并绑定原行与规则摘要。分页阅读材料每页最多100条；[待分类队列](classifications/20261004-v1/unclassified-queue.json)保留缺项与理由。`CONTENT_INFERRED`说明依据已收录正文判断，不代表重新打开并核验了上游网站。分类不会提升来源、定义准入、计算、经济有效性或许可状态。
+
 ## 查找与查看
 
 ```bash
@@ -46,7 +65,9 @@ uv run quantgraph catalog-stats
 uv run quantgraph catalog-search --kind strategy --source QuantConnect --limit 10
 uv run quantgraph catalog-search --kind factor --source qlib --frequency daily --limit 10
 uv run quantgraph catalog-search --kind factor --record-kind placebo --limit 10
+uv run quantgraph catalog-search --kind reference --subtype technical_demo --limit 10
 uv run quantgraph catalog-search --kind unclassified --limit 10
+uv run quantgraph catalog-search --status UNVERIFIED --limit 10
 uv run quantgraph catalog-search 'RSI' --status SOURCE_CODE_REVIEWED
 uv run quantgraph catalog-show M2904
 uv run quantgraph catalog-show 'QuantConnect/Lean:MovingAverageCrossAlgorithm'
@@ -54,9 +75,11 @@ uv run quantgraph catalog-show 'quantopian/zipline:AnnualizedVolatility'
 uv run quantgraph catalog-show 'qlib:Alpha360:VWAP2'
 ```
 
-`catalog-search` 的位置参数为关键词，空格分隔的词需全部匹配。`--kind`只接受 `strategy`、`factor`、`unclassified`；`--source`、`--market`、`--frequency`和`--record-kind`按文本包含关系筛选，忽略大小写；`--status`须匹配完整状态值，也忽略大小写，不按子串匹配。`--limit`为1–1000，`--offset`用于分页。
+`catalog-search` 的位置参数为关键词，空格分隔的词需全部匹配。`--kind`只接受 `strategy`、`factor`、`reference`、`unclassified`；`--source`、`--market`、`--frequency`、`--record-kind`和`--subtype`按文本包含关系筛选，忽略大小写；`--status`须匹配完整状态值，也忽略大小写，不按子串匹配。`--limit`为1–1000，`--offset`用于分页。
 
-市场取来源的市场或资产字段；频率取已有定义及已审说明，不从策略名称猜执行周期。方法名称可用关键词搜索，例如`EMA`或`RSI`；目前没有独立方法分类或缺项过滤参数，缺项保留在详情的`missing_information`及原证据字段中。尚未审阅不能解读为已证明缺失。
+市场取来源的市场或资产字段；频率取已有定义及已审说明，不从策略名称猜执行周期。方法名称可用关键词搜索，例如`EMA`或`RSI`；类型子类可用`--subtype`筛选，例如`technical_demo`、`research_process`或`strategy_component`。目前没有独立缺项过滤参数，缺项保留在详情的`missing_information`及原证据字段中；分类质量提示位于`classification_flags`。尚未审阅不能解读为已证明缺失。
+
+本次正文分类的定义核验状态在`statuses.definition_verification`中记录为`UNVERIFIED`，可用`--status UNVERIFIED`检索；它独立于既有定义准入、来源审阅和许可状态，不覆盖这些状态。
 
 原 M 编号、源码原生类名、因子原生 ID 和稳定`entity_id`均可定位。裸 ID 同时指向多张卡时拒绝选择，应改用`来源命名空间:原生ID`。例如上面的 M2904 和`QuantConnect/Lean:MovingAverageCrossAlgorithm`返回同一张卡，但详情中的两个版本仍分别保留原始身份。
 
@@ -70,7 +93,7 @@ uv run quantgraph serve
 
 | 路径 | 内容 |
 |---|---|
-| `GET /v1/knowledge` | 检索和分页，参数为q、kind、source、status、market、frequency、record_kind、limit、offset |
+| `GET /v1/knowledge` | 检索和分页，参数为q、kind、source、status、market、frequency、record_kind、subtype、limit、offset |
 | `GET /v1/knowledge/stats` | 统一目录计数 |
 | `GET /v1/knowledge/lookup?identity=...` | 用原ID或带来源的ID查看详情 |
 | `GET /v1/knowledge/{entity_id}` | 用稳定目录ID查看详情 |
@@ -112,7 +135,7 @@ CSV分类决定必须匹配`record_id`、`row_sha256`和`rule_sha256`。原有�
 
 ## 添加来源与验证
 
-`metadata/catalog.json`只登记集合，当前包含CSV来源、分类决定、原有审阅、网络批次、因子定义五种适配器。所有集合都投影为同一目录结构，存储路径或访问权限不决定用户看到的主分类。
+`metadata/catalog.json`只登记集合，当前包含CSV来源、历史阅读分类、正文分类批次、原有审阅、网络批次和因子定义适配器。所有集合都投影为同一目录结构，存储路径或访问权限不决定用户看到的主分类。
 
 新增同类网络批次使用`metadata/public-web/<batch>/index.json`、`manifest.json`、`source-lock.json`及`schema.json`约定。现有`reviewed_batches`适配器自动发现其子目录，无需为每批新增API或CLI路径；发布前仍须校验整个新批次。新来源格式则在登记表增加集合和适配器，并补充读取、版本和边界测试。
 
@@ -122,7 +145,7 @@ CSV分类决定必须匹配`record_id`、`row_sha256`和`rule_sha256`。原有�
 
 ```bash
 uv run quantgraph catalog-validate
-uv run pytest -q tests/test_metadata_corpus.py tests/test_public_web_metadata.py
+uv run pytest -q tests/test_metadata_corpus.py tests/test_public_web_metadata.py tests/test_classification_batch.py
 ```
 
-目录加载会检查集合身份、索引文件摘要、精确来源绑定、版本归属和关系引用。新批次自动发现、跨来源同名、跨批次版本和只读API需要保持测试覆盖；这一验证不代替`quantgraph validate-release`的完整定义发布门槛，也不代表网站已部署或经济验证通过。
+目录加载会检查集合身份、索引文件摘要、精确来源绑定、版本归属和关系引用；正文分类批次另校验目标覆盖、引文子串、分类代码摘要与离线重建一致性。新批次自动发现、跨来源同名、跨批次版本和只读API需要保持测试覆盖；这一验证不代替`quantgraph validate-release`的完整定义发布门槛，也不代表网站已部署或经济验证通过。

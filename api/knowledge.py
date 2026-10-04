@@ -20,11 +20,11 @@ def install_knowledge(app, root):
     @app.get('/v1/knowledge')
     def search(q: str | None = None, kind: str | None = None, source: str | None = None,
                status: str | None = None, market: str | None = None, frequency: str | None = None,
-               record_kind: str | None = None, limit: int = Query(50, ge=1, le=1000),
+               record_kind: str | None = None, subtype: str | None = None, limit: int = Query(50, ge=1, le=1000),
                offset: int = Query(0, ge=0)):
         try:
             return catalog().search(q, kind=kind, source=source, status=status, market=market,
-                                    frequency=frequency, record_kind=record_kind, limit=limit, offset=offset)
+                                    frequency=frequency, record_kind=record_kind, subtype=subtype, limit=limit, offset=offset)
         except ValueError as exc:
             raise HTTPException(422, str(exc)) from exc
 

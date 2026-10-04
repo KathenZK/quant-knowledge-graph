@@ -463,3 +463,47 @@ def test_real_registry_reconciles_source_rows_and_keeps_one_factor_directory():
     assert catalog.get("M2904")["entity_id"] == catalog.get("QuantConnect/Lean:MovingAverageCrossAlgorithm")["entity_id"]
     for row in catalog.search(kind="factor", source="zipline")["items"]:
         assert "REVIEW_REQUIRED" in row["statuses"]["commercial_rights"]
+
+
+def test_content_batch_keeps_identity_and_admission_separate_and_exposes_subtype(repository, monkeypatch, capsys):
+    from quantgraph.cli import main
+    from quantgraph.graph.classification_batch import build
+
+    before = KnowledgeCatalog(repository)
+    original = before.get("M9902")
+    folder = repository / "metadata/classifications/synthetic"
+    build(repository, folder, ["M9902"], [dict(record_id="M9902", kind="reference",
+        subtype="technical_demo", reason="Synthetic reviewed demo for adapter integration",
+        evidence=[dict(field="规则", quote="Synthetic rule needing review")])])
+    registry = load(repository / "metadata/catalog.json")
+    registry["collections"].append(dict(id="content", kind="classification_batch",
+        path="metadata/classifications/synthetic/index.json"))
+    write(repository / "metadata/catalog.json", registry)
+
+    catalog = KnowledgeCatalog(repository)
+    row = catalog.get("M9902")
+    assert row["kind"] == "reference" and not row["classification_conflict"]
+    assert row["entity_id"] == original["entity_id"]
+    assert row["versions"] == original["versions"]
+    assert row["content_subtypes"] == ["technical_demo"]
+    for key in original["statuses"]:
+        if key != "classification":
+            assert row["statuses"][key] == original["statuses"][key]
+    decision = next(c for c in row["classifications"] if c["status"] == "CONTENT_INFERRED")
+    assert decision["definition_status"] == "UNVERIFIED"
+    assert decision["evidence_quotes"] == [dict(field="规则", quote="Synthetic rule needing review")]
+    assert catalog.stats()["classification_decisions"] == 1
+    assert catalog.stats()["unique_entries"] == before.stats()["unique_entries"]
+    assert catalog.search(kind="reference", subtype="technical_demo")["total"] == 1
+    assert row["statuses"]["definition_verification"] == ["UNVERIFIED"]
+    assert catalog.search(status="UNVERIFIED")["total"] == 1
+    assert catalog.search(status="VERIFIED")["total"] == 0
+
+    app = FastAPI()
+    install_knowledge(app, repository)
+    response = TestClient(app).get("/v1/knowledge", params={"kind": "reference", "subtype": "technical_demo", "status": "UNVERIFIED"})
+    assert response.status_code == 200 and response.json()["total"] == 1
+    monkeypatch.setattr("sys.argv", ["quantgraph", "--root", str(repository), "catalog-search",
+        "--kind", "reference", "--subtype", "technical_demo", "--status", "UNVERIFIED"])
+    main()
+    assert json.loads(capsys.readouterr().out)["total"] == 1

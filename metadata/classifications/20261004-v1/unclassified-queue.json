@@ -1,0 +1,50 @@
+[
+  {
+    "evidence": [
+      {
+        "field": "规则",
+        "quote": "最大能源股上用一目均衡表交叉。"
+      }
+    ],
+    "quality_flags": [],
+    "reason": "仅说一目均衡交叉，未指明交叉对象，也未说明输出信号还是交易用途，保留歧义。",
+    "record_id": "M0115",
+    "subtype": "indicator_cross_without_action"
+  },
+  {
+    "evidence": [
+      {
+        "field": "规则",
+        "quote": "趋势对齐。RSI(9)加EMA(9)，阈值75/25，15分钟。"
+      }
+    ],
+    "quality_flags": [],
+    "reason": "仅列趋势对齐、两个指标及阈值，未说明计算输出或动作映射，不能补成策略或合成因子。",
+    "record_id": "M0176",
+    "subtype": "multi_indicator_without_action"
+  },
+  {
+    "evidence": [
+      {
+        "field": "规则",
+        "quote": "XBTUSD 1分钟。SuperTrend倍数2、周期14。作为公开测试，不是完整风险框架。"
+      }
+    ],
+    "quality_flags": [],
+    "reason": "只有标的、周期、指标参数和公开测试说明，无法区分指标计算测试与交易系统测试。",
+    "record_id": "M0196",
+    "subtype": "indicator_test_without_action"
+  },
+  {
+    "evidence": [
+      {
+        "field": "规则",
+        "quote": "EMA 9/21/50/100/200。MACD引擎12/26/9；HTF EMA50。第二引擎MACD12/26/9与EMA9/21/200。Max extension×ATR默认2.0；Mean EMA40。"
+      }
+    ],
+    "quality_flags": [],
+    "reason": "正文只列EMA/MACD两引擎、高时框和ATR/均值参数；没有声明输出是开平仓、持仓配置、数值因子还是可视化指标。保留待分类的原因是对象用途仍不明确，而非要求完整可执行公式。",
+    "record_id": "M2122",
+    "subtype": "insufficient_purpose"
+  }
+]

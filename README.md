@@ -1,10 +1,10 @@
 # Quant Knowledge Graph
 
-量化研究的知识目录，收集策略、因子、公式、实现和来源关系。统一按**策略、因子、待分类**查找；来源、版本、许可和审核状态保留在每条记录中。
+量化研究的知识目录，收集策略、因子、公式、实现和来源关系。统一按**策略、因子、参考资料、待分类**查找；来源、版本、许可和审核状态保留在每条记录中。
 
 统一入口是 [知识目录说明](metadata/CATALOG.md) 与 [集合登记表](metadata/catalog.json)。它将 CSV 来源记录、分类阅读页、已审源码说明和因子定义汇集到同一张条目卡；原 ID、文件和证据版本均保留。收录不代表准入、可回测、盈利或可商用。
 
-当前目录有 **8,546 张条目卡：178 策略、1,586 因子、6,782 待分类**。同卡的来源版本不重复计数；因子中保留安慰剂、撤回记录和参数模板。使用 `catalog-stats` 查询当前值。
+当前目录有 **8,546 张条目卡：6,420 策略、2,039 因子、83 参考资料、4 待分类**。同卡的来源版本不重复计数；策略包含组成部分与选股提纲，因子包含构造提纲、特征族、安慰剂、撤回记录和参数模板，各条目的成熟程度不同。使用 `catalog-stats` 查询当前值。
 
 ## 常用查询
 
@@ -18,13 +18,14 @@ uv run quantgraph catalog-validate
 uv run quantgraph catalog-stats
 uv run quantgraph catalog-search --kind strategy --source QuantConnect --limit 10
 uv run quantgraph catalog-search --kind factor --source qlib --frequency daily --limit 10
+uv run quantgraph catalog-search --kind reference --subtype technical_demo --limit 10
 uv run quantgraph catalog-search --kind unclassified --limit 10
 uv run quantgraph catalog-show M2904
 uv run quantgraph catalog-show 'QuantConnect/Lean:MovingAverageCrossAlgorithm'
 uv run quantgraph catalog-show 'qlib:Alpha360:VWAP2'
 ```
 
-`catalog-search` 支持关键词以及 `--kind`、`--source`、`--market`、`--frequency`、`--status`、`--record-kind` 筛选。状态筛选匹配各状态字段；例如 `SOURCE_CODE_REVIEWED` 只说明审过对应源码，不代表运行或经济有效性通过。同名原生 ID 有歧义时必须带来源命名空间，不能任取一条。
+`catalog-search` 支持关键词以及 `--kind`、`--source`、`--market`、`--frequency`、`--status`、`--record-kind`、`--subtype` 筛选。状态筛选匹配各状态字段；例如 `SOURCE_CODE_REVIEWED` 只说明审过对应源码，不代表运行或经济有效性通过。同名原生 ID 有歧义时必须带来源命名空间，不能任取一条。
 
 目录详情包含原始身份、分类证据、所有证据版本、缺项和许可。没有隐式“最新版”；重复版本不重复计数，同一源码路径也不会自动被认定为同一经济策略。[字段、准确计数及添加来源的方法](metadata/CATALOG.md)。
 
@@ -46,6 +47,10 @@ curl --get 'http://127.0.0.1:8000/v1/knowledge/lookup'   --data-urlencode 'ident
 [因子来源索引](metadata/factor-sources/index.json) 保存 1,570 条变体及原生编号，包含信号、安慰剂、撤回记录、参数模板和因子组合；不能全称为已准入因子。CSV 的“可回测”和历史日期是来源原标签，未经独立核实。已有阅读分类也不改变原来源记录的审核状态。
 
 新网络批次按固定版本审源码，保存哈希、许可、规则和缺项。首批9条中，4条与旧 M 记录有明确文件定位及行摘要绑定，聚合到同卡的不同证据版本；这不证明参数、执行语义或经济概念等价。其余概念近邻只保留关系。[批次记录](metadata/public-web/README.md)。
+
+剩余6,782条CSV来源已追加[正文分类批次](metadata/classifications/20261004-v1/README.md)：6,242策略、453因子、83参考资料、4待分类。全部仍是`CONTENT_INFERRED / UNVERIFIED`；没有新增回测或已准入定义。
+
+类型分类与规则完整性分开判断：已明确用于开平仓、风险控制或组合配置的记录可归为策略组件，即使还缺公式、参数或成交条件；工具流程、文档目录和订单回归测试归为参考资料。分类依据正文用途与证据片段，不凭标题中的“策略”、NLP、教程或 Demo 字样一刀切。来源原标签和原文继续保留。
 
 目录保存来源核验、定义准入、计算语义、经济有效性和商业许可等不同状态。未审核的信息保留未知；不存在的回测不补写成结果。数据访问权限和分发范围是字段及接口边界，不作为两套知识库的主分类。
 
@@ -106,6 +111,7 @@ quant-knowledge-graph → quant-research-lab → quant-runner
 metadata/catalog.json       # 统一知识目录的集合登记表
 metadata/CATALOG.md         # 目录计数、查询和版本规则
 metadata/corpus-checkpoints # 原 CSV 固定批次，保留 M 编号
+metadata/classifications   # 追加的正文类型决定、精确证据与分页阅读层
 metadata/public-web         # 固定源码版本的采集批次；存储名不决定知识分类
 metadata/factor-sources     # 因子变体元数据，保留来源原生 ID
 graph/knowledge_catalog.py  # 只读聚合、版本核对和检索

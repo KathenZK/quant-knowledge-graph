@@ -20,7 +20,7 @@ def main():
     for cmd in ('catalog-stats', 'catalog-validate'):sp.add_parser(cmd)
     s=sp.add_parser('catalog-show');s.add_argument('identity')
     s=sp.add_parser('catalog-search');s.add_argument('query',nargs='?',default=None)
-    for field in ('kind','source','status','market','frequency','record-kind'):s.add_argument('--'+field)
+    for field in ('kind','source','status','market','frequency','record-kind','subtype'):s.add_argument('--'+field)
     s.add_argument('--limit',type=int,default=50);s.add_argument('--offset',type=int,default=0)
     s=sp.add_parser('search');s.add_argument('query');s.add_argument('--profile',choices=['research','commercial'],default='research');s.add_argument('--limit',type=int,default=10)
     s=sp.add_parser('serve');s.add_argument('--profile',choices=['research','commercial'],default='commercial');s.add_argument('--port',type=int,default=8000)
@@ -51,7 +51,7 @@ def main():
         if args.command in {'catalog-stats','catalog-validate'}:result=catalog.stats()
         elif args.command=='catalog-show':result=catalog.get(args.identity)
         else:result=catalog.search(args.query,**{k:getattr(args,k) for k in
-            ['kind','source','status','market','frequency','record_kind','limit','offset']})
+            ['kind','source','status','market','frequency','record_kind','subtype','limit','offset']})
         print(json.dumps(result,ensure_ascii=False,indent=2));return
     if args.command.startswith('factor-study-'):
         from .factor_study import draft_request

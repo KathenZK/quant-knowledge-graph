@@ -1,24 +1,26 @@
 # 知识元数据
 
-统一入口是[知识目录](CATALOG.md)，由[集合登记表](catalog.json)和 `graph/knowledge_catalog.py` 读取仓库中全部已登记元数据，按策略、因子、待分类展示。来源、权限与审核状态是条目字段，不是两套知识库。
+统一入口是[知识目录](CATALOG.md)，由[集合登记表](catalog.json)和 `graph/knowledge_catalog.py` 读取仓库中全部已登记元数据，按策略、因子、参考资料、待分类展示。来源、权限与审核状态是条目字段，不是两套知识库。
 
 ```bash
 uv run quantgraph catalog-stats
 uv run quantgraph catalog-search --kind strategy --source QuantConnect
 uv run quantgraph catalog-search --kind factor --source qlib --frequency daily
+uv run quantgraph catalog-search --kind reference --subtype technical_demo
 uv run quantgraph catalog-show M2904
 uv run quantgraph catalog-show 'qlib:Alpha360:VWAP2'
 uv run quantgraph catalog-validate
 ```
 
-当前统一目录为 **8,546 张条目卡：178 策略、1,586 因子、6,782 待分类**；收录不代表全部准入。每次新增后用 `catalog-stats` 核对最新计数。
+当前统一目录为 **8,546 张条目卡：6,420 策略、2,039 因子、83 参考资料、4 待分类**；收录不代表全部准入。每次新增后用 `catalog-stats` 核对最新计数。
 
 原 M 编号、代码原生类名和因子原生 ID 都可查询。同名有歧义时带来源命名空间；稳定 `entity_id` 不随分类或证据版本改变。主 API `/v1/knowledge` 提供同一目录的检索、详情和关系，旧 `FactorDB` 与定义发布接口保持兼容。
 
 | 元数据集合 | 在统一目录中的作用 |
 |---|---|
 | [CSV来源批次](CORPUS.md) | 保存原始采集字段及 M 编号，未经审核不猜类型 |
-| [分类阅读索引](directory-index.json) | 给已绑定行与规则摘要的原记录追加分类证据 |
+| [分类阅读索引](directory-index.json) | 保留前200条阅读页及其历史分类证据 |
+| [正文分类批次](classifications/20261004-v1/README.md) | 对6,782条固定CSV正文追加类型、子类、理由、精确引文及质量标记 |
 | [原有审阅索引](index.json) | 给 M0256/M0259 追加已审规则和既有研究引用 |
 | [源码采集批次](public-web/README.md) | 追加固定源码版本的策略/因子说明、许可和缺项 |
 | [因子来源索引](factor-sources/index.json) | 保存1,570条因子变体及来源原生身份、定义准入和记录类型 |
@@ -26,6 +28,16 @@ uv run quantgraph catalog-validate
 这几类材料是同一目录的来源集合，不能把文件数相加当成策略数。9条源码资料中的4条与 CSV 有精确行摘要和文件定位绑定，在同卡保留不同证据版本，不宣称经济或实现等价。分类阅读页和旧审阅材料也不另算一张新卡。完整计数规则见 [CATALOG.md](CATALOG.md)。
 
 后续同类网络批次放入 `public-web/<batch>/`，经校验后由现有集合适配器自动发现；新格式在 `catalog.json` 登记并增加适配器和测试。原冻结来源、分类裁决、原生 ID 和版本不原地改写。本次只接入仓库、CLI和主API，未修改活动 Site 或运行中的旧 Catalog。
+
+当前CSV共6,971条，其中6,967条已有类型判定；剩余`M0115`、`M0176`、`M0196`、`M2122`保留待分类。本批6,782条追加决定包括6,242策略、453因子、83参考资料、4待分类；[批次索引](classifications/20261004-v1/index.json)绑定全部目标ID、来源、代码和人工裁决。类型判定是正文推断，策略中的选股提纲与组件、因子中的构造提纲与特征族不具有相同的规则完整度。
+
+## 类型分类与完整性
+
+类型回答“这条记录是什么”，不回答“是否可以直接回测”。策略包括交易规则、资产配置、风险控制和有明确交易用途的组件；因子包括数值信号、特征定义与因子收益构造；参考资料包括研究流程、工具、目录、数据说明和技术测试。只有对象用途仍无法确定的记录才留待分类。
+
+完整公式或执行条件缺失时仍可以判定对象类型，缺项继续保留；分类状态为`CONTENT_INFERRED`，定义状态为`UNVERIFIED`。NLP或教程正文若明确把信号映射为持仓，可以是策略；文件名含Regression也不自动排除。故意拒单、指定历史合约结算断言、NULL买力或订单有效期状态检查等记录，交易动作主要用于测试接口，按参考资料收录。
+
+每条决定绑定原`record_id`、`row_sha256`和`rule_sha256`，证据须是规则正文的精确片段；否定句与“相对已收”的比较对象不能当成本条机制。新的类型证据不会改写原CSV、已有阅读页或来源审核状态。详情的`content_subtypes`和`classification_flags`保留子类与质量提示，`--subtype`可筛选子类。
 
 ## CSV历史接收与逐编号阅读材料
 
@@ -47,7 +59,7 @@ uv run quantgraph catalog-validate
 这是供审查的采集元数据，不代表来源核实、经济有效性或商用许可通过。
 本次新增已审定义 0、回测 0；未修改原生 loader/API、Lab 结果、个人批注或 Site。
 
-分类阅读页目前仍是前两批 **M0001–M0200 共 200 条**，与来源记录的覆盖分开统计：
+分类Markdown阅读页仍是历史前两批 **M0001–M0200 共 200 条**，与来源记录的覆盖分开统计：
 
 | 目录 | 可读原 ID 数 | 状态 |
 |---|---:|---|
@@ -59,7 +71,7 @@ uv run quantgraph catalog-validate
 它们不在前两批 200 个 ID 内，因此目前两类阅读材料合计 **202 个不同原 ID**，不把同号多层重复计数。
 阅读页继续引用原固定快照，不因本次来源补齐改变分类证据。
 当前 [checkpoint 目录](corpus-checkpoints/grokbot-6973-20261003/) 覆盖 70 个原批次，
-其中第 26、28 批只在 `subsets/` 保存公开安全子集。**6,771 条已公开来源记录尚无分类 Markdown 阅读页**。
+其中第 26、28 批只在 `subsets/` 保存公开安全子集。原逐编号 Markdown 层之外另有 **6,771 条来源记录**，没有在该旧层创建单独的 `<M-ID>.md` 文件；新的正文分类批次使用分组分页，覆盖情况由其批次索引单独记录。
 来源记录已保存不等于分类阅读页完成或定义准入；2 条隔离记录也不计入公开完整性。
 
 Markdown 是完整采集字段的目录阅读层；`metadata/index.json` 仍只登记原有审阅 JSON，原生 loader/API、
@@ -75,7 +87,7 @@ uv run pytest -q tests/test_metadata_corpus.py
 uv run python -m quantgraph.graph.metadata_directory --metadata metadata
 ```
 
-后续小批复用 `metadata_directory`：使用绑定 `record_id/row_sha256/rule_sha256` 的明确分类列表，
+历史Markdown阅读层若继续小批扩展，复用 `metadata_directory`：使用绑定 `record_id/row_sha256/rule_sha256` 的明确分类列表，
 每项给出 `entity_type`（strategy/factor/unclassified）、理由及原规则的精确证据片段；名称关键词不够。
 通过 `--decisions`、`--batch-path`、`--batch-sha256`、`--commit` 和 `--output` 生成新目录供集成审阅；
 已有 ID 拒绝覆盖，原冻结批次不改写。所有缺项继续显示原值，分类不升级为来源真实性或经济有效性验证。

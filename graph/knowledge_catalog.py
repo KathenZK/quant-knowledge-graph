@@ -53,7 +53,7 @@ class KnowledgeCatalog:
             raise ValueError('Duplicate collection path')
         loaders = {'csv_corpus': self._csv, 'classification': self._classification,
                    'factor_records': self._factors, 'reviewed_metadata': self._reviewed,
-                   'reviewed_batches': self._batches}
+                   'reviewed_batches': self._batches, 'classification_batch': self._classification_batch}
         # Dependency ordering is semantic, not the order of paths in the registry.
         for kind in loaders:
             for collection in collections:
@@ -69,7 +69,8 @@ class KnowledgeCatalog:
             record['classification_conflict'] = len(choices) > 1
             record['classifications'].sort(key=lambda c: (c['kind'], c['status'], c['evidence']))
             record['versions'].sort(key=lambda v: (v['namespace'], v['native_id'], v['revision']))
-            for key in ['native_ids', 'source_names', 'markets', 'frequencies', 'missing_information']:
+            for key in ['native_ids', 'source_names', 'markets', 'frequencies', 'missing_information',
+                        'content_subtypes', 'classification_flags']:
                 record[key] = sorted(set(record[key]))
             record['statuses'] = {k: sorted(set(v)) for k, v in record['statuses'].items()}
             record['record_kinds'] = sorted(set(record['record_kinds']))
@@ -96,6 +97,7 @@ class KnowledgeCatalog:
                 identity=dict(namespace=namespace, native_id=native_id), native_ids=[],
                 classifications=[], record_kinds=[], source_names=[], markets=[], frequencies=[],
                 statuses=defaultdict(list), versions=[], missing_information=[],
+                content_subtypes=[], classification_flags=[],
                 current_version=None, current_version_policy='NO_IMPLICIT_LATEST_SELECTION')
         self._alias(eid, namespace, native_id)
         return self.entries[eid]
@@ -122,10 +124,10 @@ class KnowledgeCatalog:
             revision=revision, path=path, representation=representation, record=raw, **extra))
         self._alias(entry['entity_id'], namespace, native_id)
 
-    def _classify(self, entry, kind, status, evidence):
-        if kind not in {'strategy', 'factor', 'unclassified'}:
+    def _classify(self, entry, kind, status, evidence, **details):
+        if kind not in {'strategy', 'factor', 'reference', 'unclassified'}:
             raise ValueError('Unknown classification')
-        entry['classifications'].append(dict(kind=kind, status=status, evidence=evidence))
+        entry['classifications'].append(dict(kind=kind, status=status, evidence=evidence, **details))
         entry['statuses']['classification'].append(status)
 
     def _csv(self, path):
@@ -200,6 +202,21 @@ class KnowledgeCatalog:
             e = self.entries[self.csv_rows[rid]['entity_id']]
             self._classify(e, decision['entity_type'], 'CONTENT_INFERRED', decision['row_sha256'])
         self.counts['reading_views'] += len(seen)
+
+    def _classification_batch(self, path):
+        from quantgraph.graph.classification_batch import validate_batch
+        _, decisions = validate_batch(self.root, path, self.csv_rows)
+        for decision in decisions:
+            e = self.entries[self.csv_rows[decision['record_id']]['entity_id']]
+            self._classify(e, decision['kind'], 'CONTENT_INFERRED', decision['row_sha256'],
+                reason=decision['reason'], evidence_quotes=decision['evidence'],
+                subtype=decision['subtype'], confidence=decision['confidence'],
+                rule_id=decision['rule_id'], batch_path=path,
+                definition_status='UNVERIFIED', quality_flags=decision['quality_flags'])
+            e['content_subtypes'].append(decision['subtype'])
+            e['classification_flags'].extend(decision['quality_flags'])
+            e['statuses']['definition_verification'].append(decision['definition_status'])
+        self.counts['classification_decisions'] += len(decisions)
 
     def _factors(self, path):
         index, parent = self._json(path), Path(path).parent
@@ -382,7 +399,8 @@ class KnowledgeCatalog:
             record_kinds=dict(sorted(Counter(k for r in self.entries.values() for k in r['record_kinds']).items())),
             source_rows=dict(self.source_rows), versions=len(self._versions), relationships=len(self.edges),
             classification_conflicts=sum(r['classification_conflict'] for r in self.entries.values()),
-            **{k: self.counts[k] for k in ['reading_views', 'reviewed_representations', 'factor_variants']},
+            classified_csv=sum(self.entries[r['entity_id']]['kind'] != 'unclassified' for r in self.csv_rows.values()),
+            **{k: self.counts[k] for k in ['reading_views', 'reviewed_representations', 'factor_variants', 'classification_decisions']},
             counting_rule='Unique knowledge entries; evidence versions and source rows are not added to this count. No global economic-equivalence claim.')
 
     def _resolve(self, identity):
@@ -403,17 +421,18 @@ class KnowledgeCatalog:
         return deepcopy([r for r in self.edges.values() if eid in {r['from_id'], r['to_id']}])
 
     def search(self, query=None, *, kind=None, source=None, status=None, market=None,
-               frequency=None, record_kind=None, limit=50, offset=0):
+               frequency=None, record_kind=None, subtype=None, limit=50, offset=0):
         if not 1 <= limit <= 1000 or offset < 0:
             raise ValueError('limit must be 1..1000 and offset nonnegative')
-        if kind is not None and kind not in {'strategy', 'factor', 'unclassified'}:
+        if kind is not None and kind not in {'strategy', 'factor', 'reference', 'unclassified'}:
             raise ValueError('Unknown knowledge kind')
         rows = []
         for record in sorted(self.entries.values(), key=lambda r: r['entity_id']):
             if kind and record['kind'] != kind:
                 continue
             filters = [(source, record['source_names']), (market, record['markets']),
-                       (frequency, record['frequencies']), (record_kind, record['record_kinds'])]
+                       (frequency, record['frequencies']), (record_kind, record['record_kinds']),
+                       (subtype, record['content_subtypes'])]
             if any(value and not any(value.casefold() in s.casefold() for s in choices)
                    for value, choices in filters):
                 continue
