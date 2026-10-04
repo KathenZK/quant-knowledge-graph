@@ -1,6 +1,6 @@
 # 来源采集进度
 
-目标为在原 8,546 条目录基线上新增 **1,000 个策略、1,000 个因子与量化特征**。本轮累计通过来源与去重复核的新增项为 **82 个策略、113 个因子**，尚余 918 个策略、887 个因子。下载数量、未决候选和同族参数不计入目标。
+目标为在原 8,546 条目录基线上新增 **1,000 个策略、1,000 个因子与量化特征**。本轮累计通过来源与去重复核的新增项为 **84 个策略、118 个因子**，尚余 916 个策略、882 个因子。下载数量、未决候选和同族参数不计入目标。
 
 | 冻结批次 | 新策略 | 新因子 | 内容 |
 |---|---:|---:|---|
@@ -12,9 +12,10 @@
 | [第六批](20261004-harvest2000-v6/README.md) | 6 | 11 | 状态与组合交易规则、非线性动力学、复现结构和频带特征 |
 | [第七批](20261004-harvest2000-v7/README.md) | 7 | 9 | 状态与确认规则、事件恢复、流动性和高频风险估计 |
 | [第八批](20261004-harvest2000-v8/README.md) | 3 | 4 | 作者原站策略、预平均与核方差、慢变化与相位标度 |
-| 合计 | 82 | 113 | 195 个来源支持的不同定义或构造 |
+| [第九批](20261004-harvest2000-v9/README.md) | 2 | 5 | 历史路径与二元树预测策略、尾部风险、L矩与Gerber矩阵 |
+| 合计 | 84 | 118 | 202 个来源支持的不同定义或构造 |
 
-113 个因子分为 57 个统计特征、24 个技术指标、20 个风险测度、12 个链上指标。金融测度的具体用途另存 `method_category`，区分风险、表现归因和市场微观结构。以上是定义层数量，不是独立盈利机会的数量。
+118 个因子分为 58 个统计特征、24 个技术指标、24 个风险测度、12 个链上指标。金融测度的具体用途另存 `method_category`，区分风险、表现归因和市场微观结构。以上是定义层数量，不是独立盈利机会的数量。
 
 每批的 `index.json`、`source-lock.json`、`reviews.json`、`quality-contract.json` 都由 `manifest.json` 固定摘要。规则与公式绑定具体源码或供应商文档行段，去重比较绑定旧记录的 ID、文件与摘要。已经提交的原定义不改写，后续核准项写新批次并登记到统一 `catalog.json`。
 
@@ -25,7 +26,7 @@
 ```sh
 uv run quantgraph catalog-stats
 uv run quantgraph catalog-search --status REVIEWED_NEW_DEFINITION --limit 1000
-uv run python -m quantgraph.graph.collection_batch --directory metadata/collections/20261004-harvest2000-v8
+uv run python -m quantgraph.graph.collection_batch --directory metadata/collections/20261004-harvest2000-v9
 ```
 
 末条命令验证公开元数据；本机存在原始快照时加 `--verify-snapshots`，再核对原始字节和字段证据行段。公开克隆缺少原文时不能声称重做了正文审核。
