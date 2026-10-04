@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "用差分前后的方差比例描述序列变化速率与变化速率的复杂性。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "所有统计量使用整个已完成输入窗口；只在该窗口所有样本已观测并发布后可得，不得回填为窗口内过去时点可知特征。窗口长度、真实采样间距和PIT数据未固定。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "沿axis计算前向一阶及二阶离散差分，二者分别比原序列短1/2点。 分别在各自完整数组上计算np.var；不能把差分数组补成与原序列等长。 同时返回mobility与complexity；sf只乘最终mobility，complexity仍为未缩放比值。两个输出合记一个构造。 边界：源码只检查sf是否int/float，不拒绝非正值；应用时要求正采样频率，不能把负mobility当有意义结果。 任一方差为0或样本不足会发生0除/NaN，源码无兜底。np.var默认ddof与运行依赖未冻结。 源码没有按秒先缩放两级导数，也没有把mobility除以2π；不要宣称它等于严格物理Hz谱重心。 输出：一个算法族；多输出、轴/通道、窗口/参数及归一选项不另计数"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用差分前后的方差比例描述序列变化速率与变化速率的复杂性。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "d=diff(x)，dd=diff(d)；V0=np.var(x)，V1=np.var(d)，V2=np.var(dd)，未显式ddof；M0=sqrt(V1/V0)，C=sqrt(V2/V1)/M0；输出M=M0（sf=None）或sf*M0，以及C。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（finite real array-like convertible to numpy ndarray, at least 3 time points along axis）：等时间间隔采样、按时间排序的有限实数窗口；具体价格/收益/链上序列绑定另行固定。参数：sf：把每采样步mobility乘以采样频率；不含2π除法；范围None or positive int/float in research contract；源码只检查数值类型；源码默认None；axis：时间轴；范围valid ndarray axis；源码默认-1"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "raphaelvallat/antropy",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或金融回测",
+    "NumPy/SciPy/Numba及运行环境未冻结；来源pyproject只设依赖下限",
+    "市场输入绑定、采样周期、供应商、PIT修订与可得时间缺失",
+    "无金融收益方向/预测能力证据"
+  ],
+  "name": "一阶与二阶差分方差的 Hjorth 参数",
+  "native_source_id": "hjorth_params",
+  "one_line": "用差分前后的方差比例描述序列变化速率与变化速率的复杂性。",
+  "record_id": "hjorth_params",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/entropy.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-72ce1c194f1d762ba6062718",
+      "license": "BSD-3-Clause",
+      "locator": "hjorth_params:L1106-L1224; imports, constants and declarations:L1-L72",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "414e8de360d5cfbac43e5d58f3466032031bc9edcb417a14fa138ff2e8e47ae5",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/entropy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-d8d8e75b46b9f1696d69bd7a",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L29",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "e77f97cfd2a40e4c2e02742dfedd7957c7ed397664e93c0a7bbbaf0bb6c82caf",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-f07530fff185f4f6a34b6d57",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L287",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "07d745a1c2ed8000994c718f7eeaf385e8679c3eaa304953ce28f69b892dfb78",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-197424b14812774ea6d92020",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L111",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "ffe54c637a9c3acf704078608e505e79209e58bb449b96148efb85b1c4a4d3c1",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

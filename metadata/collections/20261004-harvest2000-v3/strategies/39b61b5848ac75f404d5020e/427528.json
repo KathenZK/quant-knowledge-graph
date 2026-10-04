@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "均线极值区间可能刻画趋势位置，盈利过滤是否改善退出没有研究证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "只做空，不能由满屏多空斐波线推断双向规则。"
+  ],
+  "name": "均线极值斐波回撤区的单向空头",
+  "native_source_id": "427528",
+  "one_line": "前棒收盘低于均线百棒高界且中EMA低于慢EMA时做空，按盈利状态与长期均线交叉或回撤水平退出。",
+  "record_id": "427528",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8EEMA%E5%92%8C%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%9B%9E%E6%92%A4%E7%9A%84%E4%B8%8B%E8%B7%8C%E8%B6%8B%E5%8A%BF%E7%AD%96%E7%95%A5Short-term-Down-Trend-Strategy-Based-on-EMA-and-Adaptive-Fibonacci-Retracement.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 CheatCode1；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-427528-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "c13f5cd9cf3514946a747793492d8cad16013460f8ea95672f081eea88329dce",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8EEMA%E5%92%8C%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%9B%9E%E6%92%A4%E7%9A%84%E4%B8%8B%E8%B7%8C%E8%B6%8B%E5%8A%BF%E7%AD%96%E7%95%A5Short-term-Down-Trend-Strategy-Based-on-EMA-and-Adaptive-Fibonacci-Retracement.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-427528-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-427528-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "明确percent佣金0.01；滑点、点差、借券和持仓费缺失。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-427528-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "C[1]<当前H且E21<E55时Short，100%权益；不是价格首次跌破H或L236，不要求空仓。仅空方向。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-427528-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5，先空entry，后盈利EMA交叉close，再回撤条件close；无显式逐tick/收盘成交/成交重算，实际成交未运行。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-427528-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前C上穿E200且strategy.openprofit>=0时close Short；或C[1]>当前L236且not shortCondition时close Short。第二条件可因E21>=E55或C[1]>=H成立，不是无条件穿回0.236即退出。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-427528-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认100%权益、初始资本10000，entry无qty覆盖；不按价格距H/L或账户止损风险定仓。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-427528-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "没有硬价格止损、保证金限制或持有上限。源码把前收盘和当前均线极值比较，不能改成所有指标均滞后一棒；盈利过滤会让部分EMA200交叉不平仓。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-427528-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "E9/E21/E55/E200均为收盘EMA。H=highest(max(E55,E9),100)，L=lowest(min(E55,E9),100)，R=H−L，L236=H−0.236R。其他绘图斐波水平不参与订单；向右offset=5仅绘图，不将其用于未来信号。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-427528-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-427528-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}
