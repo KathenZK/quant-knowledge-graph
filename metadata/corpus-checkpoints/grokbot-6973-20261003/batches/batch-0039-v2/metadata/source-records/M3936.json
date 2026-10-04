@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3936",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3890,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1dd489d1ba60d6368ac7bcc88544d4f009eec6e558a43a8f42bb2f06eb320502",
+    "rule_sha256": "8318233cbaca3cde56deab1df471e4346a941ba39cc0c3ca0304034347e36e65"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3936",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3936"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/9268/intraday-arbitrage-between-index-etfs/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect（转述 Marshall et al.）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-98/W1143"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·SPY/IVV日内套利：秒级报价；去趋势后 bid/ask 比越阈持续约3秒才多贵空便宜，窗约400（QC SPY-IVV·Arb·delay3）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·SPY/IVV日内套利：秒级报价；去趋势后 bid/ask 比越阈持续约3秒才多贵空便宜，窗约400（QC SPY-IVV·Arb·delay3）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect《Intraday Arbitrage Between Index ETFs》：宇宙 **SPY 与 IVV**；1 秒 QuoteBar；对 L1 序列减滚动均值去趋势；当一侧 bid/ask 相对调整后利差 ≥ 构造参数 **profit_pct_threshold=0.02**（实现再 **/100**）且该侧计时达到 **order_delay=3** 秒，则做多该侧、做空另一侧；历史窗 **window_size=400**。不是隔夜三 ETF（M3884）；不是无套利的双动量 SPY 腿。计入美股/ETF。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 9268 SPY/IVV delay3 window400"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

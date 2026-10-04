@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1266",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1266,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b93308c1b7d46d0fdf5ac0c88b736e21aec5a119a0cba56c777fdbedbba69ae8",
+    "rule_sha256": "d7f74bf195042fa8d1b1f7d6707da007df80540f8a2a9bab05bfc96b27615f0c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1266",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1266"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/forum/discussion/11340/btc-3-emas-strategy/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Frederik W."
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BTC 日线三EMA：20>价>50>100做多约90%；跌破50EMA或较持仓期最高价跌超5%平仓"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（BTC；日线）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2021-05-06"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BTC 日线三EMA：20>价>50>100做多约90%；跌破50EMA或较持仓期最高价跌超5%平仓"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写 QC 论坛《BTC 3-EMAs Strategy》帖述与附件主代码一致部分。日线 EMA20/50/100。空仓且 EMA20>价格>EMA50>EMA100 时做多（代码目标约组合的0.9）。持仓：价格创新高则更新最高价；若价格≤EMA50，或价格<持仓期最高价×0.95，则平仓。帖写若 EMA20<EMA50<EMA100 则视为下降趋势不做多（该账户类型不支持做空）。与 M0901（价在20下、50上且50>100）不同核。提出日期取帖 datePublished。 不是M0901价低于20日EMA但高于50日EMA且50>100的回撤加仓：本条是空仓且EMA20>价格>EMA50>EMA100做多约90%，跌破EMA50或较持仓期最高价跌超5%平仓。 计入加密。 提出日期按源文件原样保留2021-05-06。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

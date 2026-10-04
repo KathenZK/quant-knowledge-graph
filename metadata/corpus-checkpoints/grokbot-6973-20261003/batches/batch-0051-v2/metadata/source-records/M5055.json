@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5055",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5009,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "db2bdc796a32f1ccacd88cb7c9d6195aff77b6e44b43f5ff05c105600b6516ca",
+    "rule_sha256": "18917c998030b3fd87624e411b8f694a2981add03e3447221c41ed438d86761a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5055",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5055"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bestfolio.app/strategies/vitral-multi-asset-momentum"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Zambrano & Rizzolo / Vitral Advisors (via BestFolio)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-216/W2266"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BestFolio·Vitral多资产动量：月末；十三风险九信号相关调整；负信号超半剔除；Top5等权；避险比例=负广度^q（Vitral·MAM·BF·q1）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2022-09-08"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Multi-Asset Momentum (Vitral)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 BestFolio / Zambrano & Rizzolo《Multi-Asset Momentum》（SSRN #4199648）钉死核：风险宇宙 **SPY、QQQ、IWM、VGK、EWJ、EEM、VNQ、DBC、DBA、GLD、LQD、HYG、TLT**；防守池 **SHV、IEF**。每只风险资产算 **9** 信号=三种度量（总分收益、价减SMA、风险调整趋势效率）×回看 **3/6/12** 月；聚合后按 **score/(1+ρ)** 相关调整（ρ 用近 **252** 日相关）。剔除负信号占比 **>50%**（threshold=0.5）者；余者取调整分前 **5** 等权。避险权重 **=(负信号资产占风险宇宙比例)^protection_q**，**q=1**；避险配置防守池；剩余权在 Top5。月末再平衡。不是 AAA 逆波 Top5（禁）；不是 CompositeMom（M4980）。计入美股/ETF。提出日期 2022。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BestFolio Vitral MAM · 13 risk · 9 signals · corr adj · Top5 · protection_q=1 · monthly"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

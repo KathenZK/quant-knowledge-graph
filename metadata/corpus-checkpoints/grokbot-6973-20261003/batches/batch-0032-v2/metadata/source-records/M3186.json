@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3186",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3141,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7fac6f8ef0d3cce11007308ffa5389e458e5408071614ed165d615ea71457524",
+    "rule_sha256": "dc507afcb9a2c08843eb15ed733e4baa542481a5499bed5cd9df8948091aa6fc"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3186",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3186"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/Alphas/GlobalEquityMeanReversionIBSAlpha.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：全球国家/地区ETF日线；IBS=(C−L)/(H−L)最高2只发DOWN、最低2只发UP，等权（Lean GlobalEquityMeanReversionIBS）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：全球国家/地区ETF日线；IBS=(C−L)/(H−L)最高2只发DOWN、最低2只发UP，等权（Lean GlobalEquityMeanReversionIBS）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `Alphas/GlobalEquityMeanReversionIBSAlpha.py`。手工宇宙约24只（ECH/EEM/EFA/…/SPY/THD等）；日线；Alpha=`MeanReversionIBSAlphaModel`：`IBS=(close−low)/(high−low)`（开盘×波幅≠0），`number_of_stocks` 默认2且不超过宇宙一半；最高IBS发 DOWN、最低发 UP，magnitude=`|close/open−1|`，期=1日；等权+即时+空风控。不是单标的 Connors RSI2/IBS 核。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

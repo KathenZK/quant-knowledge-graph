@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1134",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1134,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "fae8a43894a68ad88a7c885eec5e9cca367e3f04303504855aebcec8677afe1a",
+    "rule_sha256": "6a2ea5a8f6945cd62fee639348d239f7aa71277dffa5fe057cccb6378056e980"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1134",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1134"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/wm/2026-03-27/doc-inhskrvx9631921.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰证券金工（徐特、何康；新浪转载《量化行业轮动的“崎岖之路”》；细节引自《行业残差动量定价能力初探》2024-02-05）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰金工改进行业残差动量（12月残差和；日波最高月残差×−1）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（中信一级/混合二级行业指数）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-03-27"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰金工改进行业残差动量（12月残差和；日波最高月残差×−1）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。用全球股债商100个月滚动PCA（同比对数收益定权重，再对环比对数收益加总）得市场因子与风格因子。各行业月频对数收益对市场/风格因子做无常数项多元回归取残差；改进：先将残差序列中日波动率最高的那个月残差乘−1，再对最近12个月残差求和得改进残差动量；截面行业轮动。 不是M0093美股残差动量：那边是NYSE/AMEX/NASDAQ本地主上市、FF三因子36月回归后12个月残差（剔最近一月）/残差标准差十分位多空；本条是A股中信行业对全球股债商PCA市场/风格因子回归残差，日波最高月残差×−1后再12月残差和做截面行业轮动。不同市场。 计入其他。 提出日期按源文件原样保留2026-03-27。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

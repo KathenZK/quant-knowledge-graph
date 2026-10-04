@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2904",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2900,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f757173031c92a30a084804a5f1a4d2860be6198bb962645b20ca587c0810cd3",
+    "rule_sha256": "4c372d0aaff9a3081db04900eb07b87a08e45793be6bb74e0deb9cd3f84ed515"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2904",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2904"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/MovingAverageCrossAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线EMA(15)/EMA(30)；快>慢×(1+0.015%)满仓，快<慢清仓（Lean MovingAverageCrossAlgorithm）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY日线EMA15/30 tolerance0.00015满仓/清仓；Lean MovingAverageCrossAlgorithm）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线EMA(15)/EMA(30)；快>慢×(1+0.015%)满仓，快<慢清仓（Lean MovingAverageCrossAlgorithm）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `MovingAverageCrossAlgorithm.py`。标的 SPY；`ema(15, Daily)` 与 `ema(30, Daily)`；`tolerance=0.00015`。每日最多一次：持仓≤0 且 fast > slow×(1+tolerance) → `set_holdings(SPY,1)`；持仓>0 且 fast < slow → `liquidate`。不是 SMA10/50（QuantScripts）核，也不是 EMA50/200+ADX（W293）核。提出日期未知。 不是SMA10/50状态核（M1984/QuantScripts），也不是EMA50/200+ADX（W293）核：本条为SPY日线EMA(15)/EMA(30)、tolerance=0.00015满仓/清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

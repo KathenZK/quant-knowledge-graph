@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4406",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4360,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "cb4150c0babf12e664e2feff6dae245b2c2d0dba6d821aa9758bc12401ff89d4",
+    "rule_sha256": "7af9b8362e7b89bd0f88dc89cf2fcbfcc8662263247bc76b6a863a7356c91802"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4406",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4406"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://usekeel.io/strategies/momentum-funding-hyperliquid"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel Research"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-150/W1616"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel·永续动量⊕资金费：日频；Hyperliquid成交额Top30永续；14日ROC截面z与资金费（取负）截面z按70/30合成；美元中性毛杠杆1×；仓位漂移>20%才再平衡（Keel MomFund·HL·Top30·70/30）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-08"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel·永续动量⊕资金费：日频；Hyperliquid成交额Top30永续；14日ROC截面z与资金费（取负）截面z按70/30合成；美元中性毛杠杆1×；仓位漂移>20%才再平衡（Keel MomFund·HL·Top30·70/30）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Keel 公开 **Momentum + Funding（Hyperliquid）** 可钉死核。宇宙：Hyperliquid 永续按成交额 **Top30**。日频（配置目标时框 1d、bar_offset 12h）：动量支路对价格做 **ROC(14)** 后截面 z-score；资金费支路加载资金费率、重采样日均值后**取负**再截面 z-score；两支路以权重 **0.7/0.3** 合成为单一预测，再缩放/封顶后归一，使组合**美元多空平衡、目标毛杠杆约 1×**。执行用相对缓冲：**仓位相对目标漂移超过约 20%** 才再平衡至边界。相对刚入库 Keel FundCarry（纯资金费截面、Top100、EWMA10、15%缓冲）：本核为**动量为主+资金费倾斜的截面多空**。计入加密。提出日期 2024-08。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel Momentum+Funding · HL perps top30 · ROC14 XS-z 70% + funding negate XS-z 30% · $neutral 1x · 20% drift buffer"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3194",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3148,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "79ed3b69ed426299954d432a18c53a409a7dfc29f6add118c8ace9e426154634",
+    "rule_sha256": "62a8277150544309f3a4bdb0419a01aa011d11cd1d6b6820a0752fd3b48d2f77"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3194",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3194"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/Alphas/GasAndCrudeOilEnergyCorrelationAlpha.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：天然气(UNG/BOIL/FCG)×原油(USO/UCO/DBO)；90日相关最高对；天然气ROCP(5)>0.75则原油UP，<−0.75则DOWN（Lean GasAndCrudeOilEnergyCorrelation）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（XLP收盘<近25日高−2×均(H−L)且IBS>0.4做多收盘>昨高离场；QuantifiedStrategies XLP MR）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：天然气(UNG/BOIL/FCG)×原油(USO/UCO/DBO)；90日相关最高对；天然气ROCP(5)>0.75则原油UP，<−0.75则DOWN（Lean GasAndCrudeOilEnergyCorrelation）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `Alphas/GasAndCrudeOilEnergyCorrelationAlpha.py`。分钟手工宇宙；`PairsAlphaModel(history_days=90, lookback=5, difference_trigger=0.75)`：每30日按历史相关选 leading×following 最高相关一对；若 leading `rate_of_return`(ROCP%) `>0.75` 对 following 发 UP，`<−0.75` 发 DOWN，magnitude=`round(ror/100,6)`，期=5×分钟；等权+自定义执行（先清旧原油再市价跟目标）。不是份额类配对核（W483）。提出日期未知。 不是SPY IBS+RSI会员墙核，也不是BB(20,2)下轨多/中轨平（W379）核：本条为XLP收盘<近25日高点−2×均(H−L)且IBS>0.4收盘做多，收盘>昨高离场。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

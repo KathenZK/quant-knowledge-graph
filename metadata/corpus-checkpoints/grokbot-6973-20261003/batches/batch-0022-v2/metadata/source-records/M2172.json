@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2172",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2172,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "244017f1d32677fea8e0987b631843691060f18f73438e6b80b45f1724f49196",
+    "rule_sha256": "06ce872c9ca2af9760530ac93166e7c378b3a3c819ed433b2eb31cc4f9a10385"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2172",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2172"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/InformativeSample/InformativeSample.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（InformativeSample.py；xmatthias）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区InformativeSample：5m，EMA20>EMA50且BTC/USDT 15m收盘>SMA20做多；EMA20<EMA50且BTC 15m收<SMA20平多；止损−10%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区InformativeSample；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区InformativeSample：5m，EMA20>EMA50且BTC/USDT 15m收盘>SMA20做多；EMA20<EMA50且BTC 15m收<SMA20平多；止损−10%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/InformativeSample/InformativeSample.py默认。timeframe=5m；stoploss=−0.10；minimal_roi约60/30/20/0分钟对应1%/3%/4%/5%；trailing_stop=False；sell_profit_only=True。informative：BTC/USDT 15m 上 rolling SMA(20) 合并为 close_15m/sma20_15m。主周期 EMA(20/50/100)。做多：ema20>ema50 且 close_15m>sma20_15m。平多：ema20<ema50 且 close_15m<sma20_15m。提出日期未知。 不是单周期双EMA：本条是5m InformativeSample，EMA20/50叠加BTC/USDT 15m收盘相对SMA20过滤。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

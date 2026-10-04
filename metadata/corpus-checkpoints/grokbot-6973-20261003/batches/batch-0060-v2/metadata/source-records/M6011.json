@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6011",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5965,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4622609b6a3a59a3c81106ce66967a928f63e373110dbd96538dd26a6a682efc",
+    "rule_sha256": "7c9c7975028df6a73ce40f333800ca218d6a0ba04b91b5d9c98801f793c3e2da"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6011",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6011"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://toslc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/C-D/CloseLocationValue"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "thinkorswim / Schwab"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-312/W3222"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "thinkorswim·收盘位置值均线正：日频；SMA14(CloseLocationValue)>0持SPY否则BIL（CLV·SMA14Pos·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Close Location Value SMA14 Positive — SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 thinkorswim《CloseLocationValue》之 **CLV短均零轴上方** 新核。CLV=((Close−Low)−(High−Close))/(High−Low)，衡量收盘在当日区间中的位置。日频：若 **SMA(14, CLV) > 0** → 满仓 SPY，否则 BIL。不是单根 CLV>0；不是 ADL/ChaikinAD；不是 III%；不是 BOP。计入美股/ETF。提出日期 未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CLV·SMA14Pos·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0793",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 793,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "15b60eb7c8f0fed2298b191bd819a13b5409be2ac3ce8a496ec808e396c4518f",
+    "rule_sha256": "f70740039b696362ad6e455fb899a37411a617ba56d9095754185b2331b26052"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0793",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0793"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.cboe.com/insights/posts/benchmark-indices-series-volatility-management-with-cboes-bfly-and-cndr-indices"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cboe（Matt Moran，Cboe Insights）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "标普500铁蝶：每月卖出平值认沽与认购，买入5%虚值认沽与认购，现金腿持一个月国库券"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2021-07-26"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Benchmark Indices Series: Volatility Management with Cboe’s BFLY and CNDR Indices"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：需要期权链（平值与5%虚值的行权价），不能只凭标普500价格回测。本条只写该文已列出的铁蝶指数规则，不是同文的铁鹰按约0.20与0.05德尔塔，也不是已收的95-110领口在买5%虚值认沽的同时卖出10%虚值认购，也不是只买5%虚值认沽的保护指数。BFLY跟踪一套假想期权策略：卖出每月平值的标普500指数认沽与认购；买入在下一标准到期、虚值5%的标普500指数认沽；买入在下一标准到期、虚值5%的标普500指数认购，用以降低风险。另持一个月期国库券的货币市场账户，在期权滚动日再平衡，用来限制指数下行。所用标普500期权为上午结算，按月滚动，各腿一张。页面未写平值是取等于或刚高于指数的第一档，也未写5%虚值如何在未上市行权价时取最接近档。提出日期取该文日期2021-07-26。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cboe S&P 500 Iron Butterfly Index (BFLY)。同文日期2021-07-26"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

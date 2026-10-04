@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3812",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3766,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b22036a164b2f30354f284affc2ab61c7b879d53e5bea47be5e4205b4a3e6d8d",
+    "rule_sha256": "ef67b0e9eeab6a4071bee22a7ac31f70e30fff129ee1ff11db5bdf3950d74fd4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3812",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3812"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.cxoadvisory.com/sentiment-indicators/combining-financial-stress-with-ai-news-sentiment-to-time-stock-markets/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO Advisory（转述 Lefort, Benhamou, Ohana, Saltiel, Guez & Jacquot）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-82/W1019"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "低"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·压力指数×GPT新闻情绪择时：日/月；仓位∝SI与10日GPT新闻情绪之积（CXO SI×News）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-09-03"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·压力指数×GPT新闻情绪择时：日/月；仓位∝SI与10日GPT新闻情绪之积（CXO SI×News）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CXO《Combining Financial Stress with AI News Sentiment to Time Stock Markets》转述 Lefort 等六策略中的 **SI News**：压力指数 **SI**（VIX、TED、CDS 与股/债/商实现波动按类标准化后均值，再缩放到 0–1）；新闻情绪为 Bloomberg 日市场摘要经 GPT-4 判正(1)/负(0) 后的 **10** 日均值；组合仓位按 **SI×News** 缩放标普（文亦测纳指与全球等权篮，本条钉 **SPX/SPY**）。摩擦按成交额 **0.2%**。不是单用 VIX>80 分位；不是动态在 SI 与 SI×News 间按 250 日夏普切换的变体（不另开）。计入美股/ETF。提出日期 2024-09-03，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "网页 SI×GPT news sentiment times SPX"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

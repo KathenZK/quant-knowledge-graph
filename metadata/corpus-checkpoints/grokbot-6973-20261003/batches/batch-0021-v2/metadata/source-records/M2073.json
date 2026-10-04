@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2073",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2073,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "091a2b393b048ca00a8812ad166544ac7ce5bcf49b57572774dc3576a94cf711",
+    "rule_sha256": "23b54e2b58a7c25f42d1c7895633fb8f79b7cfa7cef8b29459337d1a186c87eb"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2073",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2073"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/using-algorithm-warmup"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线EMA(50)高于EMA(200)满仓，低于则清仓（EasyQuant暖机金叉核）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY；EMA50/200状态满仓/清仓；EasyQuant暖机）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-11-28"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线EMA(50)高于EMA(200)满仓，低于则清仓（EasyQuant暖机金叉核）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Optimizing Algorithm Start-Up with QuantConnect's Warm-Up Period》已印 IndicatorWarmupAlgorithm 交易段。标的 SPY，日线。fast_ema=EMA(50)，slow_ema=EMA(200)；set_warm_up(200)。暖机结束后：fast>slow 且未持仓则 SetHoldings(1.0)；fast<slow 且已持仓则 Liquidate。以水平比较持仓状态，不是必须交叉瞬间。不是加密 W150 MAC 的 EMA50/200 日线交叉核（市场不同），也不是 QS 美股 10/50 SMA。提出日期取页面 Published on。 不是加密W150 MAC的EMA50/200交叉，也不是QS美股10/50 SMA：本条是EasyQuant SPY日线EMA(50)高于EMA(200)满仓、低于清仓的暖机状态核。 计入美股/ETF。 提出日期按源文件原样保留2025-11-28。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

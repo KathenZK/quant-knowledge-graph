@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1169",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1169,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0ac484ee0bcab530e4dcb29e6280780bac3c559c417a19570d60dd7c0325d6e0",
+    "rule_sha256": "ebf6425b1bf567c787bee00a53d8cfaf90a167126ea41b550ca0c3387ffead97"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1169",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1169"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/joinquant/dual-thrust-futures-strategy"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "EasyQuant/聚宽API教程转述"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "聚宽教程：Dual Thrust期货（N=5；K1=K2=0.5；IF9999分钟突破翻单）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "股指期货（例：IF9999.CCFX）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-22"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "聚宽教程：Dual Thrust期货（N=5；K1=K2=0.5；IF9999分钟突破翻单）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。过去N=5日：HH=最高价最大、HC=收盘最大、LC=收盘最小、LL=最低价最小；Range=max(HH−LC, HC−LL)。上轨=当日开盘+K1×Range，下轨=当日开盘−K2×Range（代码默认K1=K2=0.5）。价>上轨：平空开多；价<下轨：平多开空。开盘前算Range，盘中分钟用day_open。手续费示例开平万0.23、平今0.23%。 不是M0076双推力SPY（N=4，K=0.5）也不是vn.py dual_thrust（开盘±0.4/0.6×昨高低差、14:55退出）：本条是股指期货IF9999、N=5、K1=K2=0.5分钟突破翻单。不同市场与参数。 计入其他。 提出日期按源文件原样保留2025-12-22。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

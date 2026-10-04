@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6519",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6473,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ebef6d9a51af00d0e9c65172008770298ad4bada8700c0a52c09a102c53b0d2d",
+    "rule_sha256": "18d86ab1a5822b7029de744662b455a3f271f0302b27f39acd5b043d165d0e75"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6519",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6519"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/IntMom.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Robert Novy-Marx / OpenSourceAP CrossSection"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-362/W3730"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Novy-Marx·中间动量十分位多空：月末；t−12至t−7累计收益；市值加权多最高空最低持1月（NovyMarx·IntMom·DecileL/S）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2012-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Intermediate momentum univariate decile L/S (Novy-Marx 2012 Table 2 lineage)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Novy-Marx《Is momentum really momentum?》中间动量之可钉十分位多空（OpenSourceAP IntMom可执行核，非目录字段）。IntMom=股票在t−12至t−7（含）窗口的累计收益（中间层动量，不是近月Mom或12–2动量）。每月末按IntMom分十分位；市值加权做多最高十分位、做空最低十分位，持有1月。Sign为正。不是French·Mom·DecileL/S先验(2–12)（近M6462）；不是Size×Mom 5×5（近M6502）；不是ResidualMomentum（近核已回避）；不是OpenSourceAP仅信号浏览器无十分位执行的目录条。代码与SignalDoc：LSQuantile=0.1、StockWeight=VW、PortfolioPeriod=1。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "NovyMarx·IntMom·DecileL/S"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3942",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3896,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4ad1eb863cd888e95928b469ad40a26db2c36a800b87f69a8ae5efd7eb68a7d8",
+    "rule_sha256": "b885b74a3333f6787e43d85b70cfda7456eaa21e3bcc428f96f796a4717ed687"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3942",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3942"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/21331/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect 社区"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-99/W1149"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·十一ETF时序动量：月频开盘后30分；SPY/IWM/EFA/EEM/IEF/TLT/LQD/HYG/GLD/DBC/VNQ；252日收益>SHY才入选，按60日实现波倒数加权，余仓BIL（QC ETF11·TSMOM·vsSHY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·十一ETF时序动量：月频开盘后30分；SPY/IWM/EFA/EEM/IEF/TLT/LQD/HYG/GLD/DBC/VNQ；252日收益>SHY才入选，按60日实现波倒数加权，余仓BIL（QC ETF11·TSMOM·vsSHY）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect《Strategy Discussion: 747》：宇宙 **SPY、IWM、EFA、EEM、IEF、TLT、LQD、HYG、GLD、DBC、VNQ**；每月开盘后约 **30** 分钟，各资产近 **252** 日收益与 **SHY** 同窗收益比较，**仅收益超过 SHY** 者做多；权重∝ **1/(近60日实现波动)** 并归一；剩余权重进 **BIL**（早期无 BIL 时用 SHY）。不是期货多资产 AQR TSMOM（M3529）；不是无门槛的横截面 TopN。计入美股/ETF。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 21331 11ETF 252d>SHY inv60vol"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

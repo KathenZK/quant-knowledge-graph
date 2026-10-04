@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3923",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3877,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8a5f1479f8dc3468f65bb9dae073d7990937b98b2dd1626c2bf52b03f180e2d0",
+    "rule_sha256": "b3819e36f184748aee862211eab7c24b9261d0134e8dda2ec3a1dd3c64b66ed9"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3923",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3923"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/18049/reimagining-the-60-40-portfolio-in-an-era-of-ai-and-falling-rates/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-96/W1130"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·决策树60/40+BTC：月频；SPY/GLD/BND/BTCUSD；VIX×利差×利率决策树预测下月收益>0按幅度加权（BTC上限10%，总杠杆约1.5）（QC DT·60/40+BTC）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "混合"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·决策树60/40+BTC：月频；SPY/GLD/BND/BTCUSD；VIX×利差×利率决策树预测下月收益>0按幅度加权（BTC上限10%，总杠杆约1.5）（QC DT·60/40+BTC）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect《Reimagining the 60-40 Portfolio…》：资产 **SPY、GLD、BND、BTCUSD**；因子 FRED **VIXCLS、T10Y3M、DFF**；每月用近约 **4** 年数据对每资产拟合 DecisionTreeRegressor(max_depth=12) 预测下月总回报，仅保留预测 **>0** 者，权重∝预测幅度并整体约 **1.5** 倍，**BTC 单票上限 10%** 后其余再归一。不是固定 60/40（近 M3712）；不是无 ML 的风险平价。计入混合。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 18049 DT regressor 4y lookback"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

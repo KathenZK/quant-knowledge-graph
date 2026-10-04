@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0950",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 950,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1d462478d0c2de01f90eb1166eb4bb7a853abe69c5d6c3aeea81ee79d819e566",
+    "rule_sha256": "399e67b20e513ee9b6b769bddf865fdeaebea510a0cd2ed6f911ab06dc4fa287"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0950",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0950"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/426/Daily-cross-asset-momentum-winner-rotation/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Tao Yan"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "日频跨资产动量冠军轮动：QQQ、GLD、CQQQ、IBIT，约25日对数价格回归斜率×R²，每日冠军100%，仅当冠军变化才换仓，成本0.2%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-03-28"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Daily cross-asset momentum winner rotation"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该公开策略页已印出的固定4只ETF：QQQ、GLD、CQQQ、IBIT；用最近约25个交易日收盘价，对每只ETF的对数价格做线性回归并以斜率×R²评分；每日收盘后选得分最高者，次日开盘附近切换为100%单一持仓；只有冠军不同于当前持仓时卖旧买新；每笔交易成本按0.2%建模。IBIT是比特币现货ETF暴露，持仓均为美国上市ETF，计入美股/ETF，不记成混合，也不记成加密现货。主文件没有已印出的这四只、约25日斜率×R²日频冠军100%的行。不是M0835：那边是Bitcoin/USD、GBPCHF、GBPNZD、Visa的21日对数价格趋势回归t统计量大于1.5做多50%，外汇对在持仓里计入其他。不是M0849袖2的21日对数价格斜率为正过滤。计入美股/ETF。提出日期按源文件原样保留2026-03-28。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

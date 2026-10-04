@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2169",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2169,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4d3b11cc8334b54c486e15396cab0c4eddcced4bb9e3ef2a820b7f6f47f5b4ca",
+    "rule_sha256": "cd24a34d439d03b6888bcd2d95d98be2edee1ace972d8707968baf95d102720b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2169",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2169"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/using-built-in-technical-indicators"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线收盘跌破BB(20,2σ)下轨满仓，涨破上轨清仓（EasyQuant内置指标均值回归仅做多）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY；BB20·2σ仅做多满仓/清仓；EasyQuant）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-02"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线收盘跌破BB(20,2σ)下轨满仓，涨破上轨清仓（EasyQuant内置指标均值回归仅做多）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《A Guide to Using QuantConnect's Built-in Technical Indicators》已印 BollingerBandAlgorithm。标的 SPY，日线。self.bb(symbol,20,2,SIMPLE)；WarmUp=20。未持仓且 price<lower_band 则 SetHoldings(1.0)；已持仓且 price>upper_band 则 Liquidate。不是 W194 的多空对称+回到中轨平仓核，也不是 W161 仅做多下轨→中轨核。提出日期取页面 Published on。 不是W194 BB多空回中轨：本条是EasyQuant SPY日线跌破BB(20,2σ)下轨满仓、涨破上轨清仓的仅做多核。 计入美股/ETF。 提出日期按源文件原样保留2025-12-02。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

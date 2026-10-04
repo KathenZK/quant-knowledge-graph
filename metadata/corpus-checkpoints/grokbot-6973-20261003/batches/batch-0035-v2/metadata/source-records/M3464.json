@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3464",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3418,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a0ce7dfca660c9bdcc1bbf42e4f6202a083e244de4c8fc0fe92819b070819d7a",
+    "rule_sha256": "78a3324f45165f08b184127ec827459f21700987b3593ee8f13dd5f0c4a6876f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3464",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3464"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://cssanalytics.wordpress.com/2017/11/29/adaptive-volatility-a-robustness-test-using-global-risk-parity/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "David Varadi / CSS Analytics"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF：周频；VTI/DBC/EFA/IEF/ICF；仓位∝1/自适应波动再归一；自适应波动=对平方收益的EMA，α=min(exp(−10·(1−R²(价~时间,L))),SC_max)；执行延迟1日（CSSA Adaptive Vol Global Risk Parity）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2017-11-29"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF：周频；VTI/DBC/EFA/IEF/ICF；仓位∝1/自适应波动再归一；自适应波动=对平方收益的EMA，α=min(exp(−10·(1−R²(价~时间,L))),SC_max)；执行延迟1日（CSSA Adaptive Vol Global Risk Parity）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CSS Analytics《Adaptive Volatility: A Robustness Test Using Global Risk Parity》（2017-11-29）已印组合规则（承接 2017-11-15 自适应波动公式）。资产：**VTI、DBC、EFA、IEF、ICF**。简单风险平价：权重 ∝ **1/vol**，再按各资产 1/vol 之和归一；**每周**再平衡，信号到执行 **延迟 1 日**。波动用自适应估计：对价格~时间回归得 R²（回看 L，文测 10–60，原帖示意 20）；平滑常数 SC=exp(−**10**×(1−R²))，再 **min(SC, SC_max)**（文测 SC_max∈{0.1,0.5,0.9}）；对平方收益做该 α 的 EMA，年化 √(·×252)。不是固定 20/60/252 日实现波动风险平价核。提出日期取文首 November 29, 2017。CSSA五资产(VTI/DBC/EFA/IEF/ICF)自适应波动风险平价周频+1日延迟 ≠ M0945 SPY/TLT自适应波动目标。计入美股/ETF。提出日期按源文件原样保留2017-11-29。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Global Risk Parity 五资产 + weekly rebalance + 1-day delay；公式见 2017-11-15"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

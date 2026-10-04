@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4218",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4172,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b93dba40abd8225b6622cf372919131551e7e8d09904181ddb516fbc8d750fb8",
+    "rule_sha256": "959e7209244fbdd1321e8da9ad6be6b0348d411bd58f8f65235503dbd4d89bd6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4218",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4218"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://doi.org/10.1016/j.jfineco.2014.11.010"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Pedro Barroso / Pedro Santa-Clara"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-129/W1425"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Barroso·Santa-Clara·风险调整动量：月末；12−1赢家减输家WML；近126日WML实现波动年化；仓位=12%/σ̂持1月（BS RM-Mom·σ12%）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2015"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Barroso·Santa-Clara·风险调整动量：月末；12−1赢家减输家WML；近126日WML实现波动年化；仓位=12%/σ̂持1月（BS RM-Mom·σ12%）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Barroso/Santa-Clara《Momentum Has Its Moments》（JFE 2015）**常数波动缩放**风险调整动量。先按 Jegadeesh–Titman 风格构建月度 **WML**（常见实现：过去12月跳过近1月收益排序，等多最高十分位/空最低十分位，或等价赢家−输家多空）。每月用过去约 **126** 个交易日（约6个月）WML日收益计算实现方差并年化得 σ̂；下一月暴露 **w=σ_target/σ̂**，文取目标年化波动 **12%**（σ_target对应年化12%），缩放收益 r*=w·r_WML。不是不缩放的JT(6,6)（刚入库M4212，回避）；不是残差动量（近M4131）；不是AQR TSMOM资产类细拆（回避近批）。计入美股/ETF。提出日期 2015。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "JFE 2015 · scale WML by prior 6m realized vol · target 12% ann. vol"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

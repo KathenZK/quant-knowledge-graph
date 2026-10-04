@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4243",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4197,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6a728649aed0a8147c72a58a09290eb28f99fa7a4adc771969fd7e33225d8278",
+    "rule_sha256": "0bfac259d7bc9ca8caf140180d31c3bc73aad79ecb0e94800f74eed03c60ae2c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4243",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4243"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.nber.org/system/files/working_papers/w21533/w21533.pdf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Robert F. Stambaugh / Yu Yuan"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-132/W1453"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Stambaugh·Yuan·MGMT误定价：月末；MGMT复合秩（净发行/应计/NOA/资产增长/投资等）；市值中位×MGMT 20/80；多低分空高分市值加权（SY MGMT·2×3）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2017"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Stambaugh·Yuan·MGMT误定价：月末；MGMT复合秩（净发行/应计/NOA/资产增长/投资等）；市值中位×MGMT 20/80；多低分空高分市值加权（SY MGMT·2×3）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Stambaugh/Yuan《Mispricing Factors》（RFS 2017 / NBER w21533）之 **MGMT** 因子。MGMT 复合分为净股票发行、复合股权发行、应计、净营运资产、资产增长、投资/资产等**管理类**异象截面秩等权平均（方向对齐使高分=更贵/更差）。每月：剔价<$5；按 NYSE 市值中位分大小，独立按复合分 **20/80**（NYSE/AMEX/NASDAQ 全样本分位）分低/中/高；四个端点**市值加权**；**MGMT**=两低分均 − 两高分均。不是刚入库 PERF（回避M4239，同URL异核 OVERRIDE）；不是 JKP mispricing_mgmt 特征三分位（近M0511）。计入美股/ETF。提出日期 2017。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "NBER w21533 / RFS 2017 · MGMT cluster · size×score 2×3 VW · 20/80"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

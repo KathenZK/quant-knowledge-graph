@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0810",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 810,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1f77fc40e5a11a3701be2be6d2cf60260202677ecafba213a5b1543b3f8cc881",
+    "rule_sha256": "d799297b3bae9f7b723545b1a89c475db1a75432d6f59e14653bf4d3a1f0ec24"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0810",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0810"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/20937/dynamic-conversion-arbitrage-on-the-magnificent-7/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Zhaoren Deng（QuantConnect研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "七巨头转换套利：AAPL、MSFT、NVDA、AMZN、META、GOOGL、TSLA中年化收益高于5%者开最有利的一笔转换，换仓须再高出3%加平仓成本，到期7至36日且行权价在标的10%内"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dynamic Conversion Arbitrage on the Magnificent 7"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该研究页已印出的转换套利，不是已收的标普500备兑或卖出认沽，也不是亚马逊假日前卖出认沽。宇宙只这七只：AAPL、MSFT、NVDA、AMZN、META、GOOGL、TSLA。转换是买入正股、买入认沽、卖出同一行权价与同一到期的认购。期权过滤含周期权，到期落在7日至36日，行权价从低于标的30档到0。配对后只留净权利金为正、认购买价与认沽卖价都大于0、且行权价不低于标的价格90%也不高于110%的一组。年化收益等于认购买价减认沽卖价，再加行权价减正股卖价，乘100，再除以正股卖价乘以到期年数。开仓要求年化收益越过最低5。每个交易日美东开盘后1、5、10、15、20、25、30分钟各扫描一次，共7次；第一次用当日第一笔报价而不是昨收。已有持仓时，只在候选年化收益高于在持仓年化收益加平仓往返买卖价差成本再加3时才换。到期日或到期前正股腿因提前指派消失则平仓。开仓用组合市价单，每手100股正股、1张认沽、负1张认购，张数取剩余保证金95%除以组合价格的整数，不足1手不开。引言写闲置资金放在SHV，打开的实现片段没有印出买入SHV的委托，本条不补SHV权重。页面未写到期年数的日计数，未写在持仓年化与平仓成本两个函数的算式。提出日期取未知；文中2023年1月至2026年6月是回测区间。Stoll 1969是买卖权平价文献，不是本页刊出日。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "The Annualized Return Surface；Implementation中七只代码、到期7至36日、最低年化5、换仓3、开盘后扫描与95%保证金。回测区间January 2023至June 2026"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

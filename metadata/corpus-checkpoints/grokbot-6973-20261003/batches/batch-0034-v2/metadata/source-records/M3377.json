@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3377",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3331,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7fa3f145680c013a70870a53e6a3815da467315cffb3fecf506db8ed56e3f898",
+    "rule_sha256": "34caf4277842fc5d72ac369e4a0c3b8a2a676ff70fef5967df45f3d3cf1ae386"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3377",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3377"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/AddOptionContractFromUniverseRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：粗精选 6/5前TWX、之后AAPL；对新增正股加同到期2014-06-21美式CALL；价格非0买1张；2014-06-06 14:00 remove_option_contract（Lean AddOptionContractFromUniverse）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：粗精选 6/5前TWX、之后AAPL；对新增正股加同到期2014-06-21美式CALL；价格非0买1张；2014-06-06 14:00 remove_option_contract（Lean AddOptionContractFromUniverse）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `AddOptionContractFromUniverseRegressionAlgorithm.py`。分钟 RAW；`selector` 按日期返回 TWX 或 AAPL。`on_securities_changed`：对非期权新增取链上到期 2014-06-21 美式 CALL → `add_option_contract`（首个记为 `_option`）。`on_data`：期权价非0且未交易 → `buy(option,1)`；时刻恰为 `2014-06-06 14:00` → `remove_option_contract`。不是持有至到期清正股核（W570）。提出日期未知。粗精选TWX→AAPL加同到期美式Call买1并于2014-06-06 14:00 remove ≠ 持有至到期清正股（W570）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

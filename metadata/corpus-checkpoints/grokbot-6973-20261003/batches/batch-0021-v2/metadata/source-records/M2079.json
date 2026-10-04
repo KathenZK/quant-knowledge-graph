@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2079",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2079,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "cce4207388d9cae8d097994225f53437cde7ca7648e85c372a2f040a66883be9",
+    "rule_sha256": "0cbba3f00531fbaa5464828432ee5a82e905ba0f8bf9267914031c1ae88ae1e6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2079",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2079"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/ichiV1/ichiV1.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（ichiV1.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区ichiV1：5m，HA开收下云上、多尺度趋势收>开至4h、fan_magnitude>1且连升3根且增益≥1.002做多；5m趋势收下穿2h趋势收平多；止损−27.5%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区ichiV1；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区ichiV1：5m，HA开收下云上、多尺度趋势收>开至4h、fan_magnitude>1且连升3根且增益≥1.002做多；5m趋势收下穿2h趋势收平多；止损−27.5%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/ichiV1/ichiV1.py默认 buy_params/sell_params。timeframe=5m；stoploss=−0.275；minimal_roi约0/10/41/114分钟对应5.9%/3.7%/1.2%/0；trailing_stop=False。用 Heikin-Ashi 替换 open/high/low；trend_close_* 为 close 的 EMA(1/3/6/12/24/48/72/96)；fan_magnitude=trend_close_1h/trend_close_8h。ichimoku conversion=20、base=60、laggin=120、displacement=30。buy_trend_above_senkou_level=1：仅要求 trend_close_5m 高于 senkou_a/b。buy_trend_bullish_level=6：要求 5m…4h 各档 trend_close>trend_open。另须 fan_magnitude_gain≥1.002、fan_magnitude>1，且近3根 fan_magnitude 严格连升。平多：trend_close_5m 下穿 trend_close_2h。不是 W184 Senkou 交叉核，也不是 Stavix2。提出日期未知（文件注 25th july 21 为设置备注，不作发表日）。 不是卖侧注释的Ichi占位：本条是5m ichiV1，HA+多尺度趋势与fan_magnitude条件做多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

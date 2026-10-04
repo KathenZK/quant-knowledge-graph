@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3138",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3105,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5f03367893abcc15168e1fc8a2f834ec5c3ac7d95bc50e5775381495ea9a9240",
+    "rule_sha256": "660c666154c734184dfebb9b4b37b8375f0c8433cc59633472138c7f09480d72"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3138",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3138"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.fmz.com/strategy/545765"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "发明者量化FMZ社区（strategy/545765）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "FMZ：通用网格数学自适应v4.1（Kalman水平+斜率⊕RLS-OU半衰期/σ_eq定宽；auto涨→多/跌→空/震荡→双向；五闸门；宽度比∈[0.75,1.33]重建）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（合约永续；回测头示例Futures_OKX；1分钟叙述）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "FMZ：通用网格数学自适应v4.1（Kalman水平+斜率⊕RLS-OU半衰期/σ_eq定宽；auto涨→多/跌→空/震荡→双向；五闸门；宽度比∈[0.75,1.33]重建）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。页印：在线Kalman估趋势斜率与瞬时波动得z=斜率/波动；RLS-AR(1)/OU作用在协整残差估半衰期H与均衡σ_eq并决定区间宽度；方向模式含auto（体制判定：涨势做多、跌势做空、震荡双向，带迟滞+冷却）；开新仓前五道闸门——趋势闸门、净敞口硬上界、库存偏移天花板（Avellaneda-Stoikov离散）、回撤熔断、止盈衰减退出（持仓龄>k×H向现价衰减，逆势时钟×2）；无突破时宽度比偏离[0.75,1.33]且冷却过则以现价锚重建。相对已收固定百分比网格：本条为Kalman·OU自适应宽⊕五闸门核。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

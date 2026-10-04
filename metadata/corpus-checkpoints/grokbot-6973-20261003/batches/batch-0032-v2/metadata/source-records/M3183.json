@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3183",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3138,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d7bcfafa4a6431b667a62e82e5fe30e4d5395b6b2382078d9c5017f0b627a965",
+    "rule_sha256": "6940de0be9cc8e93244111e04f4ffc8eaa551c5a366330aaa0301f3ef3d28721"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3183",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3183"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateFuturesAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：ES迷你与黄金；过滤0–182日；空仓买到期>90日链上最远月1手，已投资则清仓（Lean BasicTemplateFutures）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：ES迷你与黄金；过滤0–182日；空仓买到期>90日链上最远月1手，已投资则清仓（Lean BasicTemplateFutures）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateFuturesAlgorithm.py`。`add_future(SP_500_E_MINI)` 与 `GOLD`，`set_filter(0,182)`；基准 SPY。空仓：各链过滤 `expiry > time+90日`，按到期降序取最远 `market_order(...,1)`；已投资则 `liquidate()`。不是连续期货 SMA4/10 核，也不是黄金期货期权核（W466）。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

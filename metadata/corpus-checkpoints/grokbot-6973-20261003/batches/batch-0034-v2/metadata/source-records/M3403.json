@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3403",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3357,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8cc0e4f6cdae314d9f424bbf11e34c4db4242a9ab6302c32109923dd7d2c6de3",
+    "rule_sha256": "22da79da8d5cb754ae68061980290277c03a15fad9f60f4c267d953079103345"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3403",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3403"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/testing-a-risk-premium-value-strategy/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Allocate Smartly（复测 Risk Premium Value）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/testing-a-risk-premium-value-strategy/（quant-web-harvest-36 W600；同 source_url 已存在（优先保留 W599）；同核未另开）"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；RP=长短期国债利差(TLT)、IG信用减长债利差(LQD)、标普盈利收益率减长债利差(SPY，盈利至少滞后4月)；各RP相对历史均值标准差标准化；取标准化RP最高且>0者满仓，否则现金（AllocateSmartly RPV Best Value）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2021-03-02"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；RP=长短期国债利差(TLT)、IG信用减长债利差(LQD)、标普盈利收益率减长债利差(SPY，盈利至少滞后4月)；各RP相对历史均值标准差标准化；取标准化RP最高且>0者满仓，否则现金（AllocateSmartly RPV Best Value）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 AllocateSmartly《Testing a Risk Premium Value Strategy》Strategy rules tested 中 **RPV Best Value**。每月最后交易日收盘：三类资产风险溢价 RP——美债（TLT）：长短期美债收益率之差；美 IG 公司债（LQD）：IG 公司债收益率减长期美债收益率；美股（SPY）：标普500盈利收益率减长期美债收益率（盈利至少滞后4个月）。对各 RP 用截至当日（无前视）的历史均值与标准差算标准化分数（高于均值=低估）。选标准化 RP 最高的一类；若该分数>0 → 收盘满仓对应 ETF；若 ≤0 → 现金。持有至下月末并月再平衡。不是同页 RPV Weighted 按正分比例分配核（W600），也不是 Fed Model 单缺口做多 SPY 核。提出日期取页面 Published datetime。AS RPV Best Value：TLT/LQD/SPY三类标准化RP取最高且>0满仓否则现金 ≠ 同页RPV Weighted按正分比例（W600同URL硬DROP）/Fed Model单缺口。计入美股/ETF。提出日期按源文件原样保留2021-03-02。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3226",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3180,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "bea82aec1d8c37e29beb699701f91bdfe0ceeb94ebb32f854905e950ac78dc37",
+    "rule_sha256": "a0da63bc9593757c7ade6e225ec1c02e8b7103dffcaa34e833f5219657d418b2"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3226",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3226"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateEurexFuturesAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "欧股指期货：Eurex EURO STOXX 50连续（BACKWARDS_RATIO×FIRST_DAY_MONTH）；映射变更后买旧映射合约1手持有至退市自动平（Lean BasicTemplateEurexFutures）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "欧股指期货：Eurex EURO STOXX 50连续（BACKWARDS_RATIO×FIRST_DAY_MONTH）；映射变更后买旧映射合约1手持有至退市自动平（Lean BasicTemplateEurexFutures）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateEurexFuturesAlgorithm.py`。账户币种 EUR；`add_future(EURO_STOXX_50, Minute, BACKWARDS_RATIO, FIRST_DAY_MONTH, depth=0)`，`set_filter(0,180日)`；基准指数 SX5E。收到 `symbol_changed` 后将 `_contract_to_trade` 设为变更前映射；开市且未买入则 `buy(旧映射,1)`；退市 DELISTED 后断言无持仓（引擎清算）。不是 ES 连续 SMA4/10 核（W426），也不是黄金前月 EMA 核（W411）。提出日期未知。Eurex EURO STOXX50 连续 BACKWARDS_RATIO×FIRST_DAY_MONTH 换月买旧1手 ≠ ES连续SMA4/10（W426）/黄金前月EMA（W411）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

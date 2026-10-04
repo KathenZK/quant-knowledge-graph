@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3445",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3399,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "35dee910c25f512649df476fc0b3915a7dea128bf74ba1992bda8744f4461a7a",
+    "rule_sha256": "c9cbe41b0cc0fb378f0e28786a4befc2af885e71dc80b049a219dbc1850060ba"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3445",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3445"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://cssanalytics.wordpress.com/2010/11/22/dv2-performance-in-review/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "David Varadi / CSS Analytics"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线SPY；DV2=PercentRank_250(均值(C/(H+L)_T, C/(H+L)_Y))；DV2<50满仓多，>50满仓空（收盘换仓）（CSSA DV2/DVB Binary）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2010-11-22"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线SPY；DV2=PercentRank_250(均值(C/(H+L)_T, C/(H+L)_Y))；DV2<50满仓多，>50满仓空（收盘换仓）（CSSA DV2/DVB Binary）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条合并 CSS Analytics《Differential DV2 Calculation》（2009-07-29）已印 **单资产 DV2 公式** 与《DV2 Performance In Review》（2010-11-22）作者确认的 SPY 交易规则。DV2（有界）= P( average( C/(H+L) 今日 , C/(H+L) 昨日 ) )，P=Excel PERCENTRANK，默认回看 **250** 日。交易 SPY：收盘时 **DV2/DVB < 50 做多，> 50 做空**（始终满仓多或空；同日收盘换仓，作者称约 15:58）。不是差分配对核（W644），也不是 SMA10×DVB1 反趋势入场核（W645）。提出日期取交易规则澄清所在回测文 November 22, 2010（公式文 2009-07-29）。CSSA DV2/DVB Binary：单票 PercentRank250(双日C/(H+L))<50多/>50空 ≠ 差分配对（W644）。计入美股/ETF。提出日期按源文件原样保留2010-11-22。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "作者回复 Kostas/Al（规则）+ 参见 2009-07-29 DV2 公式段"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

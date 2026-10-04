@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6114",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6068,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ca93291a2fd505c23bee17f1d739beb81534e0ffa1295de348e0014417ccd230",
+    "rule_sha256": "6fdde2e67cca9fb055442b368d3cd422a05ce47cc6978f876d104128f84ee545"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6114",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6114"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://toslc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/M-N/MovAvgAdaptive"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Perry J. Kaufman / thinkorswim"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-322/W3325"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Kaufman/thinkorswim·AMA模式自适应均线价上：日频；收盘>MovAvgAdaptive(AMA)持SPY否则BIL（AMA·PriceCross·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Adaptive MA (AMA mode) Price Cross — SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 thinkorswim《MovAvgAdaptive》之 **AMA 模式价上** 新核（非 KAMA）。AMA 模式效率比按收盘在高低区间中的位置计，再映射快慢 EMA 平滑常数。日频：若 **Close > MovAvgAdaptive(mode=AMA, eff ratio length 默认10, fast/slow 平台默认)** → 满仓 SPY，否则 BIL。不是 StockCharts KAMA·PriceCross（M5502）；不是 CongAMA；不是 VIDYA/FRAMA/VariableMA。计入美股/ETF。提出日期 未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AMA·PriceCross·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

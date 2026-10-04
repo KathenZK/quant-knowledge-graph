@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2363",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2363,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3b07dd1bfb4955dbd7e7167801982f1e05ea2e2d47777bcde1dd1ec49d42f155",
+    "rule_sha256": "5952a110ab8ae7b38acbdb0a39936bb93fcf3540af6b730094bfa5b16d35ae01"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2363",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2363"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/custom-intensive-computation-before-market-open"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：每日09:00用AAPL/MSFT/GOOG/AMZN/TSLA近30日分钟波动最大者，开盘后满仓，日终清仓（EasyQuant盘前计算）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股（盘前30日分钟波动最大者日切；EasyQuant）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-08"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：每日09:00用AAPL/MSFT/GOOG/AMZN/TSLA近30日分钟波动最大者，开盘后满仓，日终清仓（EasyQuant盘前计算）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Performing Intensive Computations Before Market Open》已印 PreMarketCalculationAlgorithm。分钟线；池 AAPL、MSFT、GOOG、AMZN、TSLA；参考 SPY。每日 9:00 perform_heavy_computation：history(30×390分钟) 对各标的 close 算 np.std，取波动最大者为 target_symbol。on_data：未持仓则对该标的 SetHoldings(1.0)。on_end_of_day：Liquidate 并清空 target。不是月末动量排名核（W257）。提出日期取页面 Published on。 不是W257月末动量排名：本条为每日09:00近30日分钟波动最大者开盘满仓、日终清仓。 计入美股/ETF。 提出日期按源文件原样保留2025-12-08。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

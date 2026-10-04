@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3137",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3104,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4d6bbdad91a44ccc5c72d63283156445e19b41b6f5bc937c850e6919e9b9dc7d",
+    "rule_sha256": "93e99964c28f3e6a8f518771cd75099430858ca549e07c60b1e42fb1d302183e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3137",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3137"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.fmz.com/strategy/545368"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "发明者量化FMZ社区（strategy/545368）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "FMZ：TabFM原始OHLCV表格预测（M15；raw_window默认15；train_rows默认100；涨跌阈0.003/代码默认0.0003；MIN_CONF=0.60；硬止损ATR×2；移动止盈启动ATR×2/回撤×1；冷却3根）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（FMZ单品种；页默认PERIOD_M15；小时整点预测）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "FMZ：TabFM原始OHLCV表格预测（M15；raw_window默认15；train_rows默认100；涨跌阈0.003/代码默认0.0003；MIN_CONF=0.60；硬止损ATR×2；移动止盈启动ATR×2/回撤×1；冷却3根）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。页印：不计算传统技术指标，将最近raw_window根OHLCV展开为表格特征，用TabFM预测下一根方向up/down/flat；RETURN_THRESHOLD表列0.003、代码load_config默认0.0003（页明示不一致，两值均收录不取舍）；MIN_CONFIDENCE=0.60；每小时整点预测、CHECK_INTERVAL_S=10监控；HARD_STOP_ATR=2.0、TRAIL_START_ATR=2.0、TRAIL_GIVEBACK_ATR=1.0；COOLDOWN_BARS=3；RISK_PCT=0.01、MAX_LEVERAGE=2；默认AUTO_TRADE=false。相对已收EMA/MACD/RSI复合：本条为原始K线表格⊕TabFM置信度门核。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3039",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3018,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "57420d7e7b32c3d96dcf2c6c2006b44eb671c2e5e4ea21883ec54741b8355128",
+    "rule_sha256": "d4575a4f4524dfd29fcf0dc19ca3c6088c4d3c4ea526a2be0626edd0b9278e12"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3039",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3039"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/IndexOptionCallCalendarSpreadAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：VIXW 行权档−2..+2、到期15–45日；空仓卖近月ATM看涨+买远月ATM看涨日历，并空VXZ100/SPY10，近月到期前2日清仓（Lean IndexOptionCallCalendarSpread）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：VIXW 行权档−2..+2、到期15–45日；空仓卖近月ATM看涨+买远月ATM看涨日历，并空VXZ100/SPY10，近月到期前2日清仓（Lean IndexOptionCallCalendarSpread）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `IndexOptionCallCalendarSpreadAlgorithm.py`。加 VXZ、SPY；`add_index_option(VIX,\"VIXW\")` 过滤 `strikes(-2,2).expiration(15,45)`。近月 `expiry < now+2日` 且腿在切片 → `liquidate`；若腿仍投资则返回。否则取 ATM 行权看涨按到期排序≥2，腿：`−1近月call、+1远月call、−100 VXZ、−10 SPY`，按权益整除组合名义 `combo_market_order(..., −quantity)`。不是 W425 VIXW 看跌日历核。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

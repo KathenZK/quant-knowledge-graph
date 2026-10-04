@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5416",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5370,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "edbcf68d8667bbbe81b01679ac24beaf2002c00fa86f12e8c3f7b59d99c9ee9f",
+    "rule_sha256": "0cf90605c81131aa6554f756d6b36d864f85cf584c1c5d34e3741c5eca59df38"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5416",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5416"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-overlays/hull-moving-average-hma"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Alan Hull / StockCharts"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-252/W2627"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Hull/StockCharts·HMA200上行：日频；HMA(200)今日>昨日则持SPY否则BIL（HMA200·Rising·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2005-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "HMA200 Rising SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 StockCharts《Hull Moving Average (HMA)》与 Alan Hull 建议的 **长周期趋势方向** 核（避免 HMA 交叉）：HMA(n)=WMA(√n, 2·WMA(n/2,Close)−WMA(n,Close))，n=**200**，非整期数按四舍五入。每个交易日收盘：若 **HMA200_t > HMA200_{t−1}**（均线上行）则满仓 **SPY**，否则满仓 **BIL**。不是价上穿 HMA；不是双 HMA 交叉；不是 SMA200。计入美股/ETF。提出日期 2005-01-01。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SC HMA200·Rising·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3459",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3413,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "2cf296fe00eb886fb9a7e93f0ad5fbb4d77d8fd4964ae6875e73941c6d2ccf94",
+    "rule_sha256": "fe16155417d06e1fb1a5038f9e93231a1c180987ddc4ef1da27be5cad178321e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3459",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3459"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.CSharp/OptionEquityProtectiveCollarRegressionAlgorithm.cs"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；空仓时取链上到期最远优先的Call（行权升序末张）与同到期行权更低的Put；市价买正股100、卖Call1、买Put1（Lean Protective Collar）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/期权"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；空仓时取链上到期最远优先的Call（行权升序末张）与同到期行权更低的Put；市价买正股100、卖Call1、买Put1（Lean Protective Collar）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `OptionEquityProtectiveCollarRegressionAlgorithm.cs`（Algorithm.CSharp）OnData 已印逻辑。未投资且期权开市：期权链按到期降序再按行权升序；Call=该序中 **最后一张 Call**；Put=同到期且行权 **< Call 行权** 的 **第一张 Put**；`MarketOrder(正股,+100)`、`MarketOrder(Call,−1)`、`MarketOrder(Put,+1)`，断言组合为 ProtectiveCollar。不是备兑开仓无领口工厂封装核。提出日期未知。Lean ProtectiveCollar：GOOG链选最远Call+更低行权Put +正股100/−Call/+Put ≠ CBOE指数领口/裸备兑。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "OnData 选腿与三腿市价"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

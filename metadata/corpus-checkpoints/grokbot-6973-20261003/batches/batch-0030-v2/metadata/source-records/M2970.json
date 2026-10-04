@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2970",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2960,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ce2a1822a985ba397fa1dad43cf4c40c3b3b2de520f8aedb48933f22bb2af0fa",
+    "rule_sha256": "1f449ce57991a5369ff2bcebf6320906cdd7091bf648fe32bbd8d2a3e8bc8669"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2970",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2970"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/IndexOptionBearCallSpreadAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：先买100股SPY；空仓时买VIXW到期15–45日熊市看涨价差1组（Lean IndexOptionBearCallSpread）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（先买100股SPY空仓买VIXW 15–45日熊市看涨价差1组；Lean IndexOptionBearCallSpread）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：先买100股SPY；空仓时买VIXW到期15–45日熊市看涨价差1组（Lean IndexOptionBearCallSpread）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `IndexOptionBearCallSpreadAlgorithm.py`。`add_equity(\"SPY\")`；`add_index_option(VIX,\"VIXW\")`，过滤 `strikes(-5,5).expiration(15,45)`。未持有 SPY → `market_order(SPY,100)`。票据仍投资则返回；最近到期 calls 排序后 `OptionStrategies.bear_call_spread(vixw, calls[0].strike, calls[-1].strike, expiry)` 再 `buy(...,1)`。不是 SPXW 牛市看涨价差（W419）核。提出日期未知。 不是W419 SPXW牛市看涨价差核：本条为先买100股SPY，空仓买VIXW到期15–45日熊市看涨价差1组。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

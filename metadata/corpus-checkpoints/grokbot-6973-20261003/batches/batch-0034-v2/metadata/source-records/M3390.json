@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3390",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3344,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9e578d6702d3a84b69438d0e3804c049eb5d63316f00a170edd4198c33863505",
+    "rule_sha256": "790c643db78a3566533349f3fbd3f990697126c88128e8997537d8f21d9693f8"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3390",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3390"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/OptionChainedUniverseSelectionModelRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：分钟宇宙 AAPL+TWX；OptionChained 标准期权行权−2..+2、到期0–180；开市空仓时对各链 ATM（最远到期优先、Call优先）买1张并挂收盘市价卖1张（Lean OptionChainedUniverseSelectionModel）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：分钟宇宙 AAPL+TWX；OptionChained 标准期权行权−2..+2、到期0–180；开市空仓时对各链 ATM（最远到期优先、Call优先）买1张并挂收盘市价卖1张（Lean OptionChainedUniverseSelectionModel）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `OptionChainedUniverseSelectionModelRegressionAlgorithm.py`。宇宙恒返回 AAPL、TWX；`OptionChainedUniverseSelectionModel(..., standards_only().strikes(-2,+2).expiration(0,180))`。`on_data`：未投资且两票开市时，对 `?AAPL`/`?TWX` 链：合约排序键依次为 |strike−标的价|升、expiry 降、right 降（Call 优先）→ `market_order(symbol,1)` 且 `market_on_close_order(symbol,−1)`。不是粗精选+期权链各配5%核（W578），也不是手动 add_option_contract 核（W570）。提出日期未知。AAPL+TWX链式期权ATM远月Call优先买1挂收盘卖1 ≠ 粗精选+期权链各5%（M3384）/手动add_option_contract。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

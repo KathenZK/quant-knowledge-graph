@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3237",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3191,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b2ad5f0211692e8112b02d39bc0bdc9c708a43a1f4b80bb4092e5ac7d2aa39fa",
+    "rule_sha256": "4f82705227a0f2d3f9aac8f1643e1ed5ec852eb60829c118b53632386511105e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3237",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3237"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/AddAlphaModelAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY/FB/IBM；三个 OneTimeAlpha 各对该标的发一次 DOWN(1日)；等权即时（Lean AddAlphaModel）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY/FB/IBM；三个 OneTimeAlpha 各对该标的发一次 DOWN(1日)；等权即时（Lean AddAlphaModel）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `AddAlphaModelAlgorithm.py`。日线手工宇宙 SPY/FB/IBM；`add_alpha(OneTimeAlphaModel)`×3：每个 Alpha 仅触发一次 `Insight.price(symbol, Daily, 1, DOWN)`；等权+即时。不是持续 ConstantAlpha UP 核（W501），也不是 Composite RSI+EMA 核（W504）。提出日期未知。SPY/FB/IBM 三路 OneTimeAlpha 各发一次 DOWN1日 ≠ 持续ConstantAlpha UP（W501）/Composite RSI+EMA（W504）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

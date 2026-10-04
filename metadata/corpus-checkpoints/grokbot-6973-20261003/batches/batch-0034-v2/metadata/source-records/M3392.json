@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3392",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3346,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "95d2ebb7118ef0b77b2b4d856fa7f18bef4a2317284d2486af8137d1e14eb43a",
+    "rule_sha256": "dc3fe8bf1570433c236aa7345359e25f7ec70d8d9628bc3ff4e551596fc3400e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3392",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3392"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FutureOptionDailyRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES 2020-03-20 日线；合约 CALL strike=3200 同到期；2020-01-07 10:00 买1张，01-08 14:00 清仓（Lean FutureOptionDaily）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES 2020-03-20 日线；合约 CALL strike=3200 同到期；2020-01-07 10:00 买1张，01-08 14:00 清仓（Lean FutureOptionDaily）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FutureOptionDailyRegressionAlgorithm.py`。`add_future_contract(ES,2020-03-20,Daily)`；链上取 `strike==3200` 且 CALL → `add_future_option_contract`（断言到期同 2020-03-20）。日程：`2020-01-07 10:00` `market_order(+1)`；`2020-01-08 14:00` `liquidate`。断言条数据时刻为 17 点（ES 日线收盘）。不是 ES ITM 卖看涨指派核，也不是小时分辨率同合约核（W596）。提出日期未知。ES日线3200Call 01-07买01-08清 ≠ 小时同合约当日正午买17点清（W596）/ES ITM卖指派。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

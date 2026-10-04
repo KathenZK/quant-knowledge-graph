@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3351",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3305,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a864338c5c4aaaa0d5202baef8a253a21a38f73eddf820a8cf700225df497536",
+    "rule_sha256": "1c2d22fbf1328822dee8384bcac522175c567264198725a318d722e3fba0026d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3351",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3351"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/IndexOptionShortPutOTMExpiryRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；2021-01链上 strike≤3200 最高行权欧式 PUT（预期3200）；次日开盘后卖1张，OTM到期收权利金清算（Lean IndexOptionShortPutOTMExpiry）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；2021-01链上 strike≤3200 最高行权欧式 PUT（预期3200）；次日开盘后卖1张，OTM到期收权利金清算（Lean IndexOptionShortPutOTMExpiry）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `IndexOptionShortPutOTMExpiryRegressionAlgorithm.py`（源文件类名有复制粘贴残留，但筛选与 expected 均为 PUT 3200）。SPX 分钟；筛 `strike≤3200` 且 PUT 且 2021-01，降序取首（预期 3200 / 2021-01-15 欧式）。次日开盘后 `market_order(option,−1)`；OTM 到期不指派、无指数仓。不是卖 OTM 看涨核（W531），也不是卖 ITM 看跌核（W533），也不是买 OTM 看跌核（W528）。提出日期未知。SPX OTM 卖看跌收权利金 ≠ 卖 OTM 看涨（M3288）/卖 ITM 看跌（M3290）/买 OTM 看跌（M3285）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3405",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3359,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5c6d9a43b647ebdb7e3de5ab3f2a94fd86913408619a43967316a5d1ace81465",
+    "rule_sha256": "5e7440440df64fcd8724ee8a02d8e47a877d0ac0e9571e756f05cbb6a878abfc"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3405",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3405"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ComboOrderTicketDemoAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；过滤标准期权行权−2..+2、到期0–180；近月Call按行权升序取前3腿数量[+1,−2,+1]；提交组合市价×2（同步+异步）、组合限价与腿限价并逐步收紧限价（Lean ComboOrderTicketDemo）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；过滤标准期权行权−2..+2、到期0–180；近月Call按行权升序取前3腿数量[+1,−2,+1]；提交组合市价×2（同步+异步）、组合限价与腿限价并逐步收紧限价（Lean ComboOrderTicketDemo）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ComboOrderTicketDemoAlgorithm.py`。`add_option(GOOG)` 过滤 `standards_only().strikes(−2,+2).expiration(0,180)`。开市取链：近月到期 CALL 按行权升序，至少3张，腿数量 `[1,−2,1]`。其后：`combo_market_order(legs,2)` 同步与异步各一组；`combo_limit_order` 在组合价+1.5 买2、+3 卖2，未成交则限价各收紧 0.01；`combo_leg_limit_order` 各腿限价=收盘×0.999 买2、×1.001 卖2，未成交同样按方向±0.01 更新；一组全成则取消另一组。不是 W572 SPY/IBM 组合填单模型核，也不是工厂 butterfly_call 核（W467）。提出日期未知。GOOG近月Call三腿[+1,−2,+1]组合市价/限价/腿限价并收紧 ≠ SPY/IBM组合填单（M3378）/工厂butterfly_call（M3103）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

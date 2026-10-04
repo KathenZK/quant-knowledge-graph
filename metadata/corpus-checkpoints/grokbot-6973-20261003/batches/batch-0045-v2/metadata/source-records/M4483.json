@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4483",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4437,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a57f82c13b7505ee04406d6a84ce25fae612f9127b65a508e64d1e9e30d6b7e6",
+    "rule_sha256": "9db31662900901d344638d1f57cb7cfda061b626a3c64c8355af1c1a6f52ef77"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4483",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4483"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://quantpedia.com/pragmatic-asset-allocation-model-for-semi-active-investors/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia / Radovan Vojtko et al."
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-159/W1693"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia·务实资产配置PAA：季频四分片；风险宇宙NDX/ACWI/EM取12月动量Top2且价>SMA12才持，否则该席对冲组合；倒挂全进对冲；对冲=金/美10Y/现金同动量+趋势；持约12月可季末止损（QP PAA·4tranche·MomTrendYC·HedgeSL）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-01-11"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia·务实资产配置PAA：季频四分片；风险宇宙NDX/ACWI/EM取12月动量Top2且价>SMA12才持，否则该席对冲组合；倒挂全进对冲；对冲=金/美10Y/现金同动量+趋势；持约12月可季末止损（QP PAA·4tranche·MomTrendYC·HedgeSL）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Quantpedia《Pragmatic Asset Allocation Model for Semi-Active Investors》（2024-01-11）之 **最终版 Mom+Trend+YC+Hedging+StopLoss** 可钉死核。宇宙：风险腿 Nasdaq100/QQQ、MSCI ACWI、MSCI EM；对冲候选 美10Y国债、黄金、现金。组合拆成 **4 个等权分片**，每季仅再平衡 **1/4**（持满约12月）。信号月末生成、**滞后约1月**执行。对每一分片：在三风险资产中取 **12月动量最强的2只**，但仅当该资产 **月收益≥近12月均值（上行趋势）** 才纳入，每只目标权约12.5%；不足席位进对冲。对冲侧对金/美10Y/现金同样做12月动量+趋势取前两。若 **3M美债利率>10Y美债利率（曲线倒挂）** 或三风险皆下行，则该分片 **100%对冲组合**。止损：仅在常规季末检查点，若已持满≥12月且趋势转空，可于下一分片再平衡日提前清仓。相对 Keller PAA广度保护（M0009）与 Faber SMA10：本核为 **季频分片+收益率曲线门+对冲袖**。计入美股/ETF。提出日期 2024-01-11。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QP 2024-01-11 · PAA final Mom+Trend+YC+Hedge+SL · 4× quarterly tranche"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

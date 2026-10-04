@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3415",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3369,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6c40c703dde5667f440c6d3593d7a7e2d9c0ca923930c4305b8f189b041a4254",
+    "rule_sha256": "80bbb58c3444e76e7e93c9c2dd1064ce7d14ff484ff9336d3128933ddec351ed"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3415",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3415"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/OnEndOfDayRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；宇宙选股：日=8返回SPY+IBM否则仅SPY；首次 OnEndOfDay(SPY) 半仓SPY并 add BAC，首次 OnEndOfDay(BAC) 半仓BAC（Lean OnEndOfDay）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；宇宙选股：日=8返回SPY+IBM否则仅SPY；首次 OnEndOfDay(SPY) 半仓SPY并 add BAC，首次 OnEndOfDay(BAC) 半仓BAC（Lean OnEndOfDay）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `OnEndOfDayRegressionAlgorithm.py`。`add_universe(..., selection)`：`time.day==8` → `[\"SPY\",\"IBM\"]`，否则 `[\"SPY\"]`。`on_end_of_day(symbol)`：若 SPY 且首次 → `set_holdings(SPY,0.5)` 且 `add_equity(\"BAC\")`；若 BAC 且首次 → `set_holdings(BAC,0.5)`；IBM 仅计数。不是 W594 工作日加减 AIG/BAC 核，也不是 W586 奇偶日三票各20%核。提出日期未知。日=8返回SPY+IBM否则仅SPY；首次EOD(SPY)半仓并加BAC，首次EOD(BAC)半仓 ≠ 工作日加减AIG/BAC（M3398）/奇偶日三票20%（M3391）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

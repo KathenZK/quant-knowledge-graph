@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0818",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 818,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d7d59fd6b84ca30f96be12cdfadeef401672bea05dd2e04a3af1f9131e2ea334",
+    "rule_sha256": "02aa2226a4e70453215a9731322ed16c7e42fdb556ca44934021691c48924853"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0818",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0818"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/gkjegan/AlgoTrading/blob/master/README.md"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "gkjegan（GitHub仓库AlgoTrading的README）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "十二只大盘：昨收高于200日指数均线，前日2日RSI低于20且现价低于卡玛里拉S3买入，RSI(2)高于80且现价高于R3卖出"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "EMA-RSI-CAMARILLA"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该README已印出的十二只与买卖句，不是已收的15分钟卡玛里拉R3同时突破前日高、跌破32均线离场，也不是已收的RSI(2)低于5且收盘高于200期均线、5期均线或RSI(2)高于95离场。样本空间按页面印出的代码原样记：MSFT、APPL、TSLA、FB、NVDA、JPM、V、JNJ、UNH、WMT、BAC、PG。页面写的是APPL与FB，本条不改成AAPL或META。条件是前一交易日收盘价高于200日指数移动平均。该条件成立时：前一交易日2日RSI低于20，且现价低于卡玛里拉S3，则买入；前一交易日2日RSI高于80，且现价高于卡玛里拉R3，则卖出。卡玛里拉用前一日最高价、最低价与收盘价：R3等于收盘加（最高减最低）乘1.2500，S3等于收盘减（最高减最低）乘1.2500。Design写指数均线用最近200日收盘，2日RSI用最近3日收盘。同节写15或30分钟批次取十二只的现价，20或40分钟批次再决定买或卖。页面没有印出每只权重、是否只做多、卖出是平多还是开空、仓位上限的具体数字，也没有印出提出日期。本条不补这些。示例数据区间未在该页写出，不以仓库提交日当作提出日。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "README的Strategy一节EMA-RSI-CAMARILLA，以及Design中Data required for technical indicators。样本空间一行写明S&P500 top 12 tickers based on market cap。"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

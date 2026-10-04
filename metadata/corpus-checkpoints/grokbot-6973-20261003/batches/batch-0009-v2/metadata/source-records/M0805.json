@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0805",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 805,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7af7f39301af1b5fc91b40a2bf4e9393f651228b6a4b1353497344aaa6bc878a",
+    "rule_sha256": "a080dbfde405fd8aa31014e5838bf4d1e7b45470cfff3e98880e04dd2f58f130"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0805",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0805"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/21050/cross-asset-etf-momentum-with-a-correlation-based-short-hedge/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect研究）；规则按Pauchlyová与Vojtko 2025"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "十三只跨资产ETF动量加相关空头：3、6、9、12个月总收益平均，每月取前四等权，20日平均两两相关高于250日才把最差一只空30%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cross-Asset ETF Momentum with a Correlation-Based Short Hedge"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该研究页已印出的十三只ETF规则，不是已收的五只资产按1、3、6、9、12个月收益平均取前三各三分之一，也不是十一只行业SPDR的12减1动量前三，也不是标普500里12减1动量约100只。固定宇宙为SPY、IWM、EFA、EEM、IYR、QQQ、LQD、IEF、TIP、GLD、USO、DBC、FXE。每月把每只ETF的3、6、9、12个月总收益取平均；写成拆分与股息调整后价格P在t相对t减k再减1，k取这四个月，再除以4。实现段把月数乘21换成交易日，用日线变动率。按该分数排序，分数最高的四只做多，每只权重四分之一；分数最低的一只为唯一空头候选。相关用这十三只日收盘收益率的皮尔逊相关。20日窗口与250日窗口各自对78对取上三角平均。20日平均高于250日平均，才视为动量有利，并把最差一只以负30%加入目标；否则只做多、合计100%。有利时毛敞口约130%、净多头约70%。相关算不出来则该次再平衡直接返回，本条不补替代仓。每个月第一个交易日美东8:00再平衡，并清算离开目标的持仓。历史取250日再加一根日线，用收盘算收益率。页面未写分数并列如何取舍，未写空头候选若与多头重叠时如何处理；按印出的排序，最低一只不在最高四只之内。提出日期取未知；文中2007年7月至2026年6月是回测区间，不是刊出日。参考文献Pauchlyová与Vojtko 2025只说明来源，不是本页刊出日。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Introduction；Cross-Asset Momentum Ranking；The Intra-Market Correlation Filter；Implementation中十三只代码、8:00美东与权重代码。回测区间July 2007至June 2026"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

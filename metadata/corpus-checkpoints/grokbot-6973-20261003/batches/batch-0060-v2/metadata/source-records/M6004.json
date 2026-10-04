@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6004",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5958,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a2bdb991ccec3bae28f3ed7eabb871ee9f3ce92b4983f93abcd36ca3c98a6aaf",
+    "rule_sha256": "815269a5e05182e64a2e7f72399d38b1afe8fa8fcdeca911e4f311a18735f283"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6004",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6004"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://toslc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/V-Z/VolumeWeightedMACD"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "thinkorswim / Schwab"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-311/W3215"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "thinkorswim·量加权MACD柱正：日频；VolumeWeightedMACD之Diff>0持SPY否则BIL（VWMACD·HistPos·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Volume Weighted MACD Histogram Positive — SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 thinkorswim《VolumeWeightedMACD》之 **量加权MACD柱（Diff）零轴上方** 新核。快/慢为成交量加权收盘均线差，Diff=Value−EMA(Value)。日频：若 **Diff(fast=12,slow=26,macd length=9) > 0** → 满仓 SPY，否则 BIL。不是普通 MACD 柱>SMA；不是 MACD-V；不是 PPO 柱。计入美股/ETF。提出日期 未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "VWMACD·HistPos·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

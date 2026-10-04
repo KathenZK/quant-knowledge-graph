@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6962",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6916,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4b137c3743554130a202f017795d9ff2273ad76234110a8a5777e62af7722235",
+    "rule_sha256": "683d1cbbe7f66d67244f76c1595b9d7813657afb8eafb2567f91910bd5c07a0f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6962",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6962"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/ZZ1_RIO_MB_RIO_Disp_RIO_Turnover_RIO_Volatility.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Nagel / OpenSourceAP CrossSection"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-407/W4173"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Nagel·高预测分歧内残差机构持股五分位多空：月末；仅Disp最高两五分位；RIO_Disp=滞后6月RIO五分位；剔市值最低五分位；等权多高空低持1月（Nagel·RIO_Disp·QuintileL/S）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2005-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Residual inst ownership among high forecast dispersion (RIO_Disp) quintile long-short"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 OpenSourceAP/CrossSection 可执行核 Nagel (2005) RIO_Disp（实现见 ZZ1_RIO_MB_RIO_Disp_RIO_Turnover_RIO_Volatility）。月末：RIO=logit(机构持股)+23.66−2.89log(ME)+0.08[log(ME)]²，滞后6月；剔NYSE/AMEX断点市值最低五分位；Disp=IBES标准差stdev/at（stdev>0）；仅Disp五分位≥4样本内，RIO_Disp=滞后RIO五分位；等权做多最高、做空最低，持1月。Sign=+1。不是RIO_MB/IO_ShortInterest/ForecastDispersion近核（本条为高预测分歧内残差机构持股首次可执行L/S）；不是目录字段；不是MomSeason/OffSeason；不是SMA200闸。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Nagel·RIO_Disp·QuintileL/S"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

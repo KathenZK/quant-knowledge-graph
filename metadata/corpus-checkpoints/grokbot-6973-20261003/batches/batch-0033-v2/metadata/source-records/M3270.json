@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3270",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3224,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "daf6b5680ce829fde627d70dd4961a74ddd9fb6c00f1c65e8c48a272a22fb819",
+    "rule_sha256": "223a7e76ba77a7caf749c7a0275676eee360261498ac27e52f042e9dfb062ee5"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3270",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3270"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FutureOptionCallITMExpiryRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES19M20分钟；链上 strike≤3200 的最高行权 CALL（预期3200）；次日开盘后买1张，ITM到期行权得期货再因到期清算（Lean FutureOptionCallITMExpiry）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES19M20分钟；链上 strike≤3200 的最高行权 CALL（预期3200）；次日开盘后买1张，ITM到期行权得期货再因到期清算（Lean FutureOptionCallITMExpiry）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FutureOptionCallITMExpiryRegressionAlgorithm.py`。添加 ES 2020-06-19；筛选 strike≤3200 且 CALL，按 strike 降序取首（断言=3200 美式）。`tomorrow`+`after_market_open(...,1)` → `market_order(es_option,1)`。持有至 ITM 到期：行权获得期货 → 期货临期清算。不是买卖双腿核（W520），也不是指数 ITM 看涨核（W523）。提出日期未知。ES ITM 看涨买单到期行权得期货再清算 ≠ 买卖双腿（W520）/指数ITM看涨（W523）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

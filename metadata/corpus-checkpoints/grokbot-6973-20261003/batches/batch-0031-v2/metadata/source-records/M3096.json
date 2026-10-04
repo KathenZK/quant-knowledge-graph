@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3096",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3063,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8fc265495bb80dd2255e3dd7cb9997e6c483ae148204280948512c4821574775",
+    "rule_sha256": "f0eaaccdda0c22713ffd06055224b47a601a1089016b332b6e749b666ddb938e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3096",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3096"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/LiquidETFUniverseFrameworkAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：LiquidETFUniverse；仅对 ENERGY.inverse 成分发UP(1日)等权，直至全部已投资（Lean LiquidETFUniverseFramework）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：LiquidETFUniverse；仅对 ENERGY.inverse 成分发UP(1日)等权，直至全部已投资（Lean LiquidETFUniverseFramework）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `LiquidETFUniverseFrameworkAlgorithm.py`。`set_universe_selection(LiquidETFUniverse())`；等权+即时执行。`on_securities_changed`：若新增符号属于 `LiquidETFUniverse.ENERGY.inverse` 则加入 `_symbols`。`on_data`：若 `_symbols` 尚未全部投资，则对价格>0 者 `emit_insights(Insight.price(...,1日,UP))`。不是行业权重构造核，也不是杠杆ETF再平衡核（W438）。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

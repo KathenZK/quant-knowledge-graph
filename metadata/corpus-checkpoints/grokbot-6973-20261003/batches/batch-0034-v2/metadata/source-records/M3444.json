@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3444",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3398,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "516d9b8acafd0b33a4c9516077a6e19cf0a376d03a146e3605b845c379385934",
+    "rule_sha256": "82b076d125017bc49e47f40821c05f0e6a8b3781370ddc2c9f38d49660fab779"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3444",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3444"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://cssanalytics.wordpress.com/2009/11/05/trend-or-mean-reversion-why-make-a-choice-the-simple-aggregate-m-indicator/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "David Varadi / CSS Analytics"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线；AggM=0.6·当日值+0.4·昨值，值=½(HLC252百分位+ (1−HLC10百分位))；AggM>0.5做多，<0.5做空（CSSA Aggregate M）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2009-11-05"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线；AggM=0.6·当日值+0.4·昨值，值=½(HLC252百分位+ (1−HLC10百分位))；AggM>0.5做多，<0.5做空（CSSA Aggregate M）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CSS Analytics《Introducing Composite Mean Reversion and Trend Following Measures: The Aggregate “M” Indicator》（2009-11-05）正文与作者确认的 HLC 数组百分位算法。rank_Long=对过去 252 日 High/Low/Close **合并数组** 中当前 Close 的 PERCENTRANK；rank_Short=对过去 10 日 HLC 合并数组的 PERCENTRANK 再取 (1−·)；Value=(rank_Long+rank_Short)/2；AggregateM=0.6·Value_today+0.4·Value_yesterday。交易：作者回复确认做空；评论区实践为 AggM 上穿/高于 0.5 做多、低于 0.5 做空（始终在场）。不是 AggZ 的 z-score 核（W641）。提出日期取文首 November 5, 2009。CSSA Aggregate M：HLC252/10百分位平滑>0.5多/<0.5空 ≠ AggZ z核（W641）。计入美股/ETF。提出日期按源文件原样保留2009-11-05。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "正文 AggM 构造 + Ramon/作者 HLC 百分位澄清 + 做空确认"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

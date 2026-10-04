@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1905",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1905,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "652f7fab625beb86e89834db261653276eaa8a6d26fe5e7c5e0fe31c90c1a3fd",
+    "rule_sha256": "1f4d4f8dd385858deb8806fb5bc9c9d31072eb5064b2473465bbda51caabc81f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1905",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1905"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/MAC/MAC.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（MAC.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区MAC：1d，EMA50上穿EMA200做多；下穿平多；止损−15%，ROI立即1000%（实质靠交叉）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区MAC；1d）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区MAC：1d，EMA50上穿EMA200做多；下穿平多；止损−15%，ROI立即1000%（实质靠交叉）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/MAC/MAC.py默认。timeframe=1d；stoploss=−0.15；minimal_roi={\"0\":10}；trailing_stop=False。指标：EMA50、EMA200（另算 RSI/MACD 未写入买卖）。做多：ema50>ema200 且前一根 ema50<ema200，且 volume>0。平多：ema50<ema200 且前一根 ema50>ema200，且 volume>0。RSI 超参声明但买卖分支内 RSI 条件被注释，本条不写。不是 EMABBRSI 三支或。提出日期未知。 不是M1355 EMABBRSI三支或：本条是1d纯EMA50上穿/下穿EMA200做多/平多，止损−15%，ROI立即1000%实质靠交叉。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

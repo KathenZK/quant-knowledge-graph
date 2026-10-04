@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5210",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5164,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "efba4605bd512780835d734d7daf3332a0ac3fb9a02a46cecdb4527f34dd740b",
+    "rule_sha256": "79cb0574f8191c36daa34647e1a7abff812e4d6c45d8b78558ec49f97a4f6b9f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5210",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5210"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://jayonthemarkets.com/2019/04/09/trend-following-in-one-minute-a-month-a-quick-update/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Jay Kaeppel / Ken Fisher"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-232/W2421"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Kaeppel·一月一分钟趋势：月末；6月高后连3月未破高则记触发低，月内跌破触发低则改现金，再创6月高回SPY（OneMinuteMonth·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2019-04-09"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "One Minute a Month – SPY 6m high / 3m trigger"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Jay Kaeppel《Trend-Following in One Minute a Month》(2019-04-09更新，Ken Fischer思路)：代理 **SPY**。**卖出警报**：先创近**6个月**新高，随后**整整3个日历月**未再破该高；**触发价**=该3个月内最低价。**卖出信号**：当月末，若本月盘中曾跌破触发价 → 改持现金（或BIL）。若在卖出前先创出新的6月高，则警报作废。**买入信号**：卖出后，当月末收盘创出新的近6月高 → 回满仓SPY。不是JTIM之21m/10m（M5121）；不是禁拆季节/TDM。计入美股/ETF。提出日期 2019-04-09。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Kaeppel OneMinuteMonth·SPY · 6mHigh→3mTrigger→cash"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

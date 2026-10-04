@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2135",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2135,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "75e24a9d00555af4432afe10fdb46c561765ef04fb9dac0eaf2c6b07fa9d3a4c",
+    "rule_sha256": "7eff69d3e1ed6dafd52a9cbebacdd9d993ee9e4c059667d5aee4650d41b7524d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2135",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2135"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/VWAP/VWAP.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（VWAP.py；@jilv220）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区VWAP：5m，收盘<VWAP下轨且4根开盘回撤>4%且CTI<−0.8且RSI(14)<35且RSI84/112均<60做多；卖出信号空，靠ROI2%/止损−15%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区VWAP；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区VWAP：5m，收盘<VWAP下轨且4根开盘回撤>4%且CTI<−0.8且RSI(14)<35且RSI84/112均<60做多；卖出信号空，靠ROI2%/止损−15%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/VWAP/VWAP.py默认。timeframe=5m；stoploss=−0.15；minimal_roi={\"0\":0.02}。VWAPB(window=20,std=1)得 vwap_low；tcp_percent_4=近4根开盘最高相对收盘涨跌幅；cti长度20。做多：close<vwap_low 且 tcp_percent_4>0.04 且 cti<−0.8 且 rsi<35 且 rsi_84<60 且 rsi_112<60 且 volume>0。populate_sell_trend 空条件。提出日期未知。 不是普通VWAP交叉：本条是5m VWAP，收盘<VWAP下轨且4根开盘回撤>4%且CTI<−0.8且RSI14<35及RSI84/112<60做多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

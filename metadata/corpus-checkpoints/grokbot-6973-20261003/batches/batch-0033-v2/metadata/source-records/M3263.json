@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3263",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3217,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c2c14e17cf85af3b3da1da93257dc0fb4eb04a9eb24b590ea66c92571c84c125",
+    "rule_sha256": "a3b9c95eacfd5f53e1cef7761831f0ade6e143ef3531bb6791ed90cd55598864"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3263",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3263"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CustomDataUniverseAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；自定义 NYSE 涨幅榜宇宙取 TopGainersRank≤2；新加入以 −25% 目标市价开盘做空，移除则清仓（Lean CustomDataUniverse）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；自定义 NYSE 涨幅榜宇宙取 TopGainersRank≤2；新加入以 −25% 目标市价开盘做空，移除则清仓（Lean CustomDataUniverse）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `CustomDataUniverseAlgorithm.py`。基准 SPY；`add_universe(NyseTopGainers, ..., nyse_top_gainers)`：返回 `TopGainersRank≤2` 的符号。`on_securities_changed`：移除且已投资→`liquidate`；新增且未投资且 close≠0→`market_on_open_order(symbol, calculate_order_quantity(..., −0.25))`。不是 Sykes 微盘做空 Alpha 核，也不是粗选成交额宇宙核。提出日期未知。NYSE涨幅榜 TopGainersRank≤2 新加入 −25% 开盘做空 ≠ 粗选成交额宇宙/Sykes微盘。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

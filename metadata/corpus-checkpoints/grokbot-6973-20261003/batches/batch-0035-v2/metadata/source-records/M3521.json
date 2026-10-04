@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3521",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3475,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e11fd0d1ca98e94f0b100758af66f3a4e02059e84b8c2304057579c480729bb5",
+    "rule_sha256": "1843cc863fc47a4cee31081de56f241ad3c8ae0f648a07e4341a9fc94228977c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3521",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3521"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Execution-Price"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股行业ETF：月末；SPY+九只SPDR行业；126日收益Top4等权（收盘成交）（SI Execution-Price·Sector Top4）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2014-11-03"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股行业ETF：月末；SPY+九只SPDR行业；126日收益Top4等权（收盘成交）（SI Execution-Price·Sector Top4）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Systematic Investor《Execution Prices》主示例排序核（成交价实验中的 Close 变体）。宇宙：`SPY,XLY,XLP,XLE,XLF,XLV,XLI,XLB,XLK,XLU`。动量分=`prices/mlag(prices, 126)`（约 6 个月）；`weight = ntop(position.score, 4)`；`frequency = month.ends` 月末再平衡。本条取收盘价同时买卖的可落地版本，不是同页 Buy Low/Sell High 非现实成交实验。不是九行业三个月收益 Top3⊕标普10月均线核（M0064）。提出日期取页头 **03 Nov 2014**。计入美股/ETF。提出日期按源文件原样保留2014-11-03。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Code Strategies（Rank on 6 month return；ntop 4；month.ends；Cl 成交）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

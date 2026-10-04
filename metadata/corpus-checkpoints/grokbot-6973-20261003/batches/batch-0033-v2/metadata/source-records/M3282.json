@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3282",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3236,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7295378a92d2de78171d3925a2096eb19d58576244ee068d9cee1ade4156799a",
+    "rule_sha256": "30aa85b468d641b3052fcb4a0296a58165949d2dd29f87dd4ba61488ead3bcd3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3282",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3282"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FutureOptionCallOTMExpiryRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES19M20分钟；链上 strike≥3300 最低行权 CALL（预期3300）；次日开盘后买1张，OTM到期作废清算（Lean FutureOptionCallOTMExpiry）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES19M20分钟；链上 strike≥3300 最低行权 CALL（预期3300）；次日开盘后买1张，OTM到期作废清算（Lean FutureOptionCallOTMExpiry）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FutureOptionCallOTMExpiryRegressionAlgorithm.py`。`add_future_contract(ES,2020-06-19,Minute)`；期权链筛 `strike≥3300` 且 CALL，按行权升序取首（预期 3300 CALL 2020-06-19）。`date_rules.tomorrow`+`after_market_open(...,1)` → `market_order(option,1)`。OTM 到期不行使、不建底层期货仓；退市警告日 2020-06-19、退市 2020-06-20。不是 ITM 买看涨核（W522），也不是卖看涨核。提出日期未知。ES OTM 买看涨到期作废 ≠ ITM 买看涨行权得期货（M3270/W522）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

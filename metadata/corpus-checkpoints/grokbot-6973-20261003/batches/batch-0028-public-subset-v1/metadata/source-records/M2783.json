@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2783",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2783,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1bd22b2ff2cbf406ddde9f9b3fa334af051eede3b8bc227c6bbcfc4be303e2e3",
+    "rule_sha256": "ec5304139fc94b7a702eded73725aeef8d94b7a01ed282ac53696a9eb364accb"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2783",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2783"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.tradingview.com/script/MLc6liRT/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "cryptrololo"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.tradingview.com/script/LxsDJCfs/（quant-tradingview-31 TV31-03；同市场+同指标组合指纹（优先保留 M2783,M2999,M3085,M3166；参数妆点不算新核）；同核未另开）"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "JMA×RSI交叉：RSI14上穿JMA(7,Phase50,Power2)开多；下穿且收>入场价平多；止损均价/1.08"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密/美股通用"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Jul 20, 2019"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "JMA×RSI交叉：RSI14上穿JMA(7,Phase50,Power2)开多；下穿且收>入场价平多；止损均价/1.08"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该TradingView脚本页已印出的规则。RSI Length14源close。JMA Length7 Phase50 Power2作用于RSI。goLong=crossover(rsi,jma)→Buy；killLong=crossunder(rsi,jma)且close>long_price→close。空：killLong且close<short_price开Sell；goLong平空。Use Initial Stop默认true：多stop=均价/1.08；空stop=均价×1.08。不是普通JMA价交叉或单RSI阈：本条为JMA×RSI交叉，RSI14上穿JMA(7,Phase50,Power2)开多，下穿且收>入场价平多，止损均价/1.08。计入加密。提出日期按源文件原样保留Jul 20, 2019。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "TradingView脚本页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

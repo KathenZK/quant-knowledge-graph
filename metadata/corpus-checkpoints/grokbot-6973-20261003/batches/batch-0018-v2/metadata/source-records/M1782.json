@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1782",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1782,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9d92d7458c6e3d725fd90ead2161374f495a6f569b3fc2e92188c75bcb92c4ea",
+    "rule_sha256": "ae64bb62c2f71a1dd646ab8f3690bf2ce256602cf0d8a28df0fc497ec5fcd0a4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1782",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1782"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/MACDRSI200/MACDRSI200.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（MACDRSI200.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区MACDRSI200：5m，近8根RSI最低<41且收盘>EMA200且MACD(24,56,6)上穿信号做多；近8根RSI最高>93且MACD>0并下穿信号平多；止损约−4.0%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区MACDRSI200；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区MACDRSI200：5m，近8根RSI最低<41且收盘>EMA200且MACD(24,56,6)上穿信号做多；近8根RSI最高>93且MACD>0并下穿信号平多；止损约−4.0%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写davidzr仓strategies/MACDRSI200/MACDRSI200.py默认。ticker_interval=5m；stoploss=−0.04032；minimal_roi多阶梯约0分钟3.024%至2113分钟归0。指标：EMA(200)；MACD(fast=24,slow=56,signal=6)；RSI默认14。做多：rsi.rolling(8).min()<41，且收盘>ema200，且macd上穿macdsignal。平多：rsi.rolling(8).max()>93，且macd>0，且macd下穿信号。提出日期未知。 不是M0259 BbandRsi或默认MACD12/26/9：本条是5m MACDRSI200，近8根RSI最低<41且收盘>EMA200且MACD(24,56,6)上穿信号做多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

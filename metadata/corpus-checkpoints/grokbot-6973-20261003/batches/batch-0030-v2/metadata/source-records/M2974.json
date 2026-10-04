@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2974",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2964,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "61b95101b943a40ada21ac0530c9672446ff13a8e308a5ec84a4db4f96628a44",
+    "rule_sha256": "8405cc41d1ba491c6e28ba86f8fb2e4b0d71c7070d0a8bcdafc5f266196ae699"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2974",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2974"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateContinuousFutureAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：ES连续合约日线SMA(4)/SMA(10)；快−慢>0.001买映射合约1张，慢−快>0.001清仓并随映射换月（Lean BasicTemplateContinuousFuture）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（ES连续日线SMA4/10阈值0.001买卖映射并换月；Lean BasicTemplateContinuousFuture）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：ES连续合约日线SMA(4)/SMA(10)；快−慢>0.001买映射合约1张，慢−快>0.001清仓并随映射换月（Lean BasicTemplateContinuousFuture）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateContinuousFutureAlgorithm.py`。`add_future(SP_500_E_MINI, BACKWARDS_RATIO, LAST_TRADING_DAY, depth=0)`；日线 `sma(4)`/`sma(10)`，`_cross_threshold=0.001`。未投资且 fast−slow>阈值 → 对 `mapped` 合约 `buy(...,1)`；已投资且 slow−fast>阈值 → `liquidate`。若持仓合约 ≠ 当前 mapped 且交易所开市：清旧仓后按原数量买新 mapped。不是 W404 SPY EMA20/60+远月ES 核，也不是 W411 黄金前月 EMA100/300 核。提出日期未知。 不是W404 SPY EMA20/60+远月ES核，也不是W411黄金前月EMA100/300核：本条为ES连续日线SMA(4)/SMA(10)阈值0.001买卖映射合约并随映射换月。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

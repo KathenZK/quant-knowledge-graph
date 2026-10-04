@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2270",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2270,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8d598cc7d7378762e53f2d1a11cffa63b5d9e3bcf55a6ddb1a561e09dc4564ae",
+    "rule_sha256": "f102e2436abf2ca2fd54912c6723a2ecd55b15ae513039bc2dd95caf9798dc68"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2270",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2270"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.tradingview.com/script/FBko9iQV/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "ROBO_Trading"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CryptoBottom：阴线且|收−SMA10|>SMA(|收−SMA10|,100)×3且最低创新低且快RSI<10开多；高点>SMA5平多"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Jan 27, 2018"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CryptoBottom：阴线且|收−SMA10|>SMA(|收−SMA10|,100)×3且最低创新低且快RSI<10开多；高点>SMA5平多"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该TradingView脚本页已印出的规则。无用户input。mac=SMA(close,10)；len=|close−mac|；sma=SMA(len,100)；fastrsi基于快涨跌。up=close<open且len>sma×3且min<min[1]且fastrsi<10。sell=SMA(close,5)；dn=high>sell。long→entry Long；dn→entry Exit short qty0（平多）。不是普通RSI超卖：本条是CryptoBottom，阴线且|收−SMA10|>SMA(len,100)×3且最低创新低且快RSI<10开多，高点>SMA5平多。计入加密。提出日期按源文件原样保留Jan 27, 2018。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "TradingView脚本页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3184",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3139,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6d6d6d395f69e1d7341a4790cedb009f37d78973e7cbc560e0109529e2d06a61",
+    "rule_sha256": "c66f7cfa1b2a3d37f41963be0df6f386061b522079fcebbb89e6d7029629b744"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3184",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3184"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateCryptoFutureAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密永续：Binance保证金；BTCUSD EMA(30)>EMA(60)分钟则买BTCUSD1+ADAUSDT1000，小时>10且快慢空头则反向卖出（Lean BasicTemplateCryptoFuture）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密货币"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密永续：Binance保证金；BTCUSD EMA(30)>EMA(60)分钟则买BTCUSD1+ADAUSDT1000，小时>10且快慢空头则反向卖出（Lean BasicTemplateCryptoFuture）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateCryptoFutureAlgorithm.py`。经纪 `BINANCE_FUTURES` MARGIN；`add_crypto_future(\"BTCUSD\")`/`(\"ADAUSDT\")`；`fast=ema(BTCUSD,30,Minute)`，`slow=ema(...,60)`。`fast>slow` 且未投资且订单数=0：尝试买50（预期因保证金失败）再 `buy(BTCUSD,1)` 与 `buy(ADAUSDT,1000)`；`else` 且 `hour>10` 且订单数=3：`sell(BTCUSD,3)`、`sell(ADAUSDT,3000)`。不是现货 BasicTemplateCrypto 核（harvest-25）。提出日期未知。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

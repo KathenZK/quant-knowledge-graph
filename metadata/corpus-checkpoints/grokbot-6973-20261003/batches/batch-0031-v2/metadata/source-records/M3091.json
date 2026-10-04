@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3091",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3058,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c4c65d0ab1d3a56edca682e012fe2fda12494cb736ba6ae0261473b84b1e873a",
+    "rule_sha256": "2bca31be714b3ad776b9d00d3f353fb8cf1e0c7d560e946febeb94417ea3ee65"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3091",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3091"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateSPXWeeklyIndexOptionsAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPXW 行权档0..+1、到期0–7日周权；空仓买最接近标的价的近月合约1张（Lean BasicTemplateSPXWeekly）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPXW 行权档0..+1、到期0–7日周权；空仓买最接近标的价的近月合约1张（Lean BasicTemplateSPXWeekly）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateSPXWeeklyIndexOptionsAlgorithm.py`。加 SPX 标准期权过滤 `strikes(0,1).expiration(0,30)`；另加 `SPXW` 过滤 `strikes(0,1).weeklys_only().expiration(0,7)`。若已投资则返回；否则在切片期权链中按 `|标的价−行权|` 再按到期排序，取最近合约 `market_order(symbol,1)`。不是 W417/W452 SPX EMA 定方向买权核，也不是铁鹰/价差族。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

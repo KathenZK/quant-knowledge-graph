@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3451",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3405,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4744dbd739c9db08f291d4e175db30a48909d545f1105e03634e030ccc5eff8b",
+    "rule_sha256": "5e0ea20e681425aaa6adc0577646401915a8e752bf5e4f9793d55bec89e40af9"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3451",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3451"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.fmz.com/strategy/452827"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "ChaoZhang / FMZ"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密永续：Binance BTC_USDT；SMA(10)上穿SMA(50)且欧洲时段(hour∈[7,14])做多，下穿做空；止损入场−1.5×ATR(14)、止盈+3×ATR（FMZ SMA×ATR Europe Session）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-05-29"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密永续：Binance BTC_USDT；SMA(10)上穿SMA(50)且欧洲时段(hour∈[7,14])做多，下穿做空；止损入场−1.5×ATR(14)、止盈+3×ATR（FMZ SMA×ATR Europe Session）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写发明者量化《Dynamic ATR Stop Loss and Take Profit Moving Average Crossover Strategy》（策略 ID 452827）Principles 与可见 Pine。回测头：Futures_Binance BTC_USDT、2h。快/慢 SMA 默认 **10/50**；ATR Length=**14**。买：`ta.crossover(fastMA,slowMA)` 且 `isEuropeanSession`（hour≥**7** 且 ≤**14**）；卖：下穿且同时段。出场：`stop=close−1.5×ATR`，`limit=close+3×ATR`（开仓当根定价）。另有伦敦/亚洲时段变量但入场条件只用欧洲。不是裸双均线无时段核。提出日期取 Created 2024-05-29。FMZ 452827：SMA10/50交叉且欧洲时段hour∈[7,14] +ATR1.5/3止损止盈 ≠ 裸双均线无时段。计入加密。提出日期按源文件原样保留2024-05-29。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Strategy Principles + Pine input/session/exit"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

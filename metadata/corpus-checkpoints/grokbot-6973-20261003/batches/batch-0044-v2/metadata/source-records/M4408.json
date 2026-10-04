@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4408",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4362,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3625fedf4d201635258bb5a93c51b1564de180b6309766aeda62102104f9004d",
+    "rule_sha256": "3292f8efc786283ddd8e8bd10ef3cef08a6014d25eee7f2236ae6af648976550"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4408",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4408"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://doi.org/10.3386/w28056"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Andrea L. Eisfeldt / Edward Kim / Dimitris Papanikolaou"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-151/W1618"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Eisfeldt·Kim·Papanikolaou·无形价值HML_INT：年6月；B_INT=BE−商誉+INT；INT=SG&A永续盘存δ≈20%、g≈10%；FF12行业内市值×B_INT/M的2×3；HML=½(SV+BV)−½(SG+BG)再按行业市值加权（EKP HML_INT·ind）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2020-11"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Eisfeldt·Kim·Papanikolaou·无形价值HML_INT：年6月；B_INT=BE−商誉+INT；INT=SG&A永续盘存δ≈20%、g≈10%；FF12行业内市值×B_INT/M的2×3；HML=½(SV+BV)−½(SG+BG)再按行业市值加权（EKP HML_INT·ind）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Eisfeldt/Kim/Papanikolaou《Intangible Value》（NBER w28056 / CFR）之 **无形价值因子 HML_INT**。宇宙：CRSP/Compustat 美股。每年 **6月** 用上年账面与上年末市值：先将 **SG&A（xsga）** 按永续盘存法累积为无形资本 **INT_t=(1−δ)INT_{t−1}+SG&A_t**，初始化 INT_0=SG&A_1/(g+δ)，取 **δ≈0.20、g≈0.10**（100% SG&A，非整篇 Peters–Taylor 30%）；**B_INT=账面权益−商誉(gdwl)+INT**。在 **Fama–French 12 行业内** 按市值中位分大小、按 **B_INT/M** 的 30/70 分价值/成长，得六个**市值加权**组合；行业内 **HML=½(小价值+大价值)−½(小成长+大成长)**，再按各行业市值加权得市场级 HML_INT。相对库内 EP 组织资本（OC/资产行业五分位，M4233）：本核为**含无形的B/M价值因子且行业内2×3**。相对 OSAP IntanBM 薄信号：本核为可执行 FF 式因子构造。计入美股/ETF。提出日期 2020-11。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "NBER w28056 · §2 · HML_INT within FF12 · B_INT=BE−GDWL+INT · PIM δ=0.2 g=0.1 · 100% SG&A"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

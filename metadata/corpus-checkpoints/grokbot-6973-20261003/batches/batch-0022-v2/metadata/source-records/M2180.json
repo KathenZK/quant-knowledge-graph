@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2180",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2180,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e94348abca34fafb3531bc3e9c181837db9d0db3994dea0b823608c6271637ee",
+    "rule_sha256": "4b04afde1c83dde7ff51966661c50bd407bc33595578f7dc3d5e9c930f063bfc"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2180",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2180"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/TEMA/TEMA.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（TEMA.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区TEMA：1m，TEMA(9)≤BB(20,2σ)中轨且上行做多；TEMA>中轨且下行平多；止损−10%（无RSI）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区TEMA；1m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区TEMA：1m，TEMA(9)≤BB(20,2σ)中轨且上行做多；TEMA>中轨且下行平多；止损−10%（无RSI）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/TEMA/TEMA.py默认。timeframe=1m；stoploss=−0.10；minimal_roi约60/30/0分钟对应1%/2%/4%；trailing_stop=False。典型价BB(20,2)；TEMA(9)。做多：tema≤bb_middleband 且 tema>tema.shift(1) 且 volume>0。平多：tema>bb_middleband 且 tema<tema.shift(1) 且 volume>0。不是官方 SampleStrategy（另需 RSI 上穿30/70）。提出日期未知。 不是TemaMaster族带RSI：本条是1m TEMA(9)≤BB中轨且上行做多、无RSI。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

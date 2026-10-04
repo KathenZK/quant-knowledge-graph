@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6101",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6055,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "72b9ee1aabcdf660e1c255a558568de791a8e0e113722bb26a0a93c2861ef24a",
+    "rule_sha256": "b772451c9de371795437e14fdb5f5928d4032743d96a6ad49f410c55340f5757"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6101",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6101"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://toslc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/T-U/TypicalPrice"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "thinkorswim"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-321/W3312"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "thinkorswim·典型价上均：日频；TypicalPrice>SMA(TypicalPrice)持SPY否则BIL（TypPrice·AboveAvg·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Typical Price Above Its SMA — SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 thinkorswim《TypicalPrice》之 **典型价高于其均线** 新核。TypPrice=(H+L+C)/3，并附 SMA。文档称典型价上穿其均线暗示升势。日频：若 **TypPrice > SMA(TypPrice, length 平台默认)** → 满仓 SPY，否则 BIL。不是收盘>当日中位价（MedianPrice·Above）；不是 WeightedClose；不是普通收盘>SMA。计入美股/ETF。提出日期 未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "TypPrice·AboveAvg·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1434",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1434,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d6bc815efa26426c3601f87c7ee285a3176f05e971d2ec16f22fc46c0943c9bf",
+    "rule_sha256": "e432de1195095500d5d514b1a9ca3372dc0ef493c84d0dc17ddcc989f96a722e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1434",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1434"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/joinquant/r-breaker-intraday-trading"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "EasyQuant/聚宽API教程转述"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "聚宽教程：R-Breaker日内六价位（昨H/L/C→Pivot；B_break/S_break趋势⊕S_setup/S_enter与B_setup/B_enter反转；14:55强平；IF示例）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "股指期货日内（例：IF9999.CCFX；分钟）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-22"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "聚宽教程：R-Breaker日内六价位（昨H/L/C→Pivot；B_break/S_break趋势⊕S_setup/S_enter与B_setup/B_enter反转；14:55强平；IF示例）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。Pivot=(H+L+C)/3。B_break=H+2(Pivot−L)；S_setup=Pivot+(H−L)；S_enter=2Pivot−L；B_enter=2Pivot−H；B_setup=Pivot−(H−L)；S_break=L−2(H−Pivot)。趋势：价>B_break开多/<S_break开空。反转：当日高>S_setup且价<S_enter开空；当日低<B_setup且价>B_enter开多。14:55强制平仓不隔夜。期货账户；例手续费开平万0.23、平今0.23%。 不是加密枢轴反转类：本条是股指期货IF的R-Breaker日内六价位（趋势突破⊕反转），14:55强平。 计入其他。 提出日期按源文件原样保留2025-12-22。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2875",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2875,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6a02abf572c9584795c6c80971ace3c3780e9b1f8d764b515efab4e513485578",
+    "rule_sha256": "4687971068b831b97cdfaae258d78bcbe6632fa60d28482e1b68a13b009cde1d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2875",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2875"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-pairs-trading-cointegration/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：KO/PEP；60日会话OLS（KO~PEP），周更系数；z<−2多价差、z>2空价差，|z|<0.5平仓（QC Documentation pairs cointegration）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（KO/PEP 60日会话OLS周更z±2开|z|<0.5平；QC Documentation pairs cointegration）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：KO/PEP；60日会话OLS（KO~PEP），周更系数；z<−2多价差、z>2空价差，|z|<0.5平仓（QC Documentation pairs cointegration）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-pairs-trading-cointegration/main.py`。分钟数据；`session.size=60`；暖机60日。每周首个交易日 09:31 `_update_model`：用会话收盘 OLS `KO = β·PEP + α`，算价差均值/标准差。每日 10:00：`z=(当前价差−均值)/标准差`；`z<−2` 且非多价差态 → `KO +0.5 / PEP −0.5`；`z>2` 且非空价差态 → `KO −0.5 / PEP +0.5`；`|z|<0.5` 则 `liquidate`。不是 W224（Y=PEP、出场阈0）核。提出日期未知。 不是W224（Y=PEP、出场阈0）核：本条为KO/PEP 60日会话OLS（KO~PEP）周更；z<−2多价差、z>2空价差，|z|<0.5平仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

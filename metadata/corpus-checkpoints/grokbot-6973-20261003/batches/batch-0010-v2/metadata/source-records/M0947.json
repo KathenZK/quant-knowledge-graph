@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0947",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 947,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b963991f180189e34d773ea54a9b764f012264ae6bbf21e6f67c5a1f13f76915",
+    "rule_sha256": "dbf962cfd164ed0e31573703797c4ea1dcd12e0ba4fcb406c463269f6a66be55"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0947",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0947"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/261/Monthly-Momentum-Rotation-with-Breadth-Defense/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Aaron Gilman"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "月度动量轮动加广度防御：SPY、QQQ、IWM、VGK、EWJ、EEM、VNQ、DBC、GLD、HYG、LQD、TLT、IEF，约4个月相对均线动量，正动量最多6只，广度恶化增IEF；广度映射与均线长度未印出"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2017-12-26"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Monthly Momentum Rotation with Breadth Defense"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：动量相对哪条移动平均线的精确长度、以及广度恶化时IEF权重如何按广度映射的公式页面未印出，不能把未写出的SMA长度或PAA式(12-n)/6补成规则。已印出的宇宙与约4个月、最多6只正动量风险资产、广度恶化时增加IEF保留。本条只写该公开策略页已印出的每月按约4个月日数据计算ETF价格相对移动平均线的动量、统计动量为正的ETF数量作为市场广度、广度恶化时增加IEF防御仓位、最多选6只最强正动量风险资产、剩余风险预算等权分配、每月开盘附近决策。印出宇宙为SPY、QQQ、IWM、VGK、EWJ、EEM、VNQ、DBC、GLD、HYG、LQD、TLT、IEF。不是M0009：那边是MOM=p0/SMA(12)-1，n≤6则全部持有IEF，n≥7时避险比例=(12-n)/6，其余等权分给MOM最高且为正的前6只；本条印出约4个月相对均线，未印出SMA(12)与该PAA公式，不把该公式补进来，也不并入。不是M0701：那边是同一套PAA广度公式，但避险仓在IEF与现金间改持MOM更高的一只。同一市场、同一12风险加IEF名单与最多6只接近，但印出核心窗口与公式不同，另开。计入美股/ETF。提出日期按源文件原样保留2017-12-26。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。广度到IEF映射与均线长度未印出"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

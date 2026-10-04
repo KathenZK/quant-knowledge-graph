@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3029",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3008,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "93c65d0ab633b7890e469efa4663d9d2e748822f0b536c1ba714f5e9793da880",
+    "rule_sha256": "f5d80a4acedd7ec28faab7e6d211e646e024163dd23a20ffad1ecf5a125badd6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3029",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3029"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/Alphas/RebalancingLeveragedETFAlpha.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：多组标的/3x多/3x空；14:15若相对昨收>+1%则对ultra_long发UP，<−1%则对ultra_short发DOWN，期105分钟（Lean RebalancingLeveragedETF）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：多组标的/3x多/3x空；14:15若相对昨收>+1%则对ultra_long发UP，<−1%则对ultra_short发DOWN，期105分钟（Lean RebalancingLeveragedETF）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `Alphas/RebalancingLeveragedETFAlpha.py`。将 underlying/ultra_long/ultra_short 三元组（如 SPY/SSO/SDS、QQQ/QLD/QID 等源码列表）成组。每日取标的昨收；在 `hour==14 and minute==15`：若 `(price−昨收)/昨收 > 0.01` → `Insight.price(ultra_long, 105min, UP, magnitude=0.0005)`；若 `< −0.01` → 对 ultra_short 发 DOWN；等权+即时执行。不是 W442 UGLD/DGLD 双空衰减核。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

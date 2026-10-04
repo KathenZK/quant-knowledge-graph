@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3372",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3326,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "44cc4df8c6cabf4f629d38d386a3df0023079d9b1a3c60f248a2af90dfd890a2",
+    "rule_sha256": "e8f9c4a785f0f5638ef4d99794b550ab3893a3f34827da8501a084e6a630fbf8"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3372",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3372"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/AllShortableSymbolsCoarseSelectionRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；粗选保留可空数量≥500的标的；对未投资活跃票市价卖出全部可空量（每日至多一次）（Lean AllShortableSymbolsCoarseSelection）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；粗选保留可空数量≥500的标的；对未投资活跃票市价卖出全部可空量（每日至多一次）（Lean AllShortableSymbolsCoarseSelection）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `AllShortableSymbolsCoarseSelectionRegressionAlgorithm.py`。现金 1e7；自定义 `LocalDiskShortableProvider`；粗选：`all_shortable_symbols` 中数量 `≥500` 的符号。`on_data`：同日已交易则返回；否则对 `active_securities` 中未投资者取 `shortable_quantity`，`market_order(symbol, −shortable_quantity)`。不是仅可空量>1000卖出核（W555），也不是订单超限拒绝演示核。提出日期未知。粗选可空≥500对未投资活跃票卖出全部可空量 ≠ CustomShortable可空>1000卖SPY（M3356）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

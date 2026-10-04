@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6851",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6805,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "559131d85caa2be4fe0287c3efa4494031d539408ec612ac84e528259f005bd9",
+    "rule_sha256": "acde830da47d272287767e195304a318f6ec8be0d8235333e7842048151a449d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6851",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6851"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/AnalystValue.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Frankel and Lee / OpenSourceAP CrossSection"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-396/W4062"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "FrankelLee·分析师估值市值比五分位多空：6月末；AnalystValue=三阶段DDM分析师估值/市值；|价|>1；等权多高空低持12月（FrankelLee·AnalystValue·QuintileL/S）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "1998-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Analyst value (AnalystValue) quintile long-short"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 OpenSourceAP/CrossSection 可执行核 Frankel and Lee (1998) AnalystValue（实现见 ZZ1_AnalystValue_AOP_PredictedFE_IntrinsicValue）。每年6月：以IBES feps1/feps2与LTG做三阶段剩余收益估值并除以市值得AnalystValue；筛ceq>0、|ROE|/|FROE1|≤1、k≤1、datadate月≥6且feps1/feps2非缺失、|prc|>1；等权五分位做多最高AnalystValue、做空最低，持12月。Sign=+1。不是目录核M0376（仅Signal Browser定义）；不是AOP/PredictedFE/FEPS近核；不是SMA200闸。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "FrankelLee·AnalystValue·QuintileL/S"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

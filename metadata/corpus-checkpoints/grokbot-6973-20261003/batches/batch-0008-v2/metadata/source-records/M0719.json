@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0719",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 719,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f55c919975a423cb9be60f1543a0edb9d616328a1055e3e41b719bd935be5a04",
+    "rule_sha256": "335769053f939b6401e5dfb027e7674ef0258ae5615884ec186038184e9aa9f9"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0719",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0719"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/749/Covered-Call-Volatility-Premium-Harvest"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Grant"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "备兑看涨波动率溢价收割"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF / 期权"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-09-08"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Covered Call Volatility Premium Harvest"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：需要期权链（隐含波动率、美式期权与 delta），不能只凭正股价格回测。约每月/每个期权到期周期；对候选按期权隐含波动率 IV 与 Yang–Zhang 已实现波动率 RV 的差排序，选 IV−RV 最大的前 5 个。买按组合价值缩放的 100 股正股，并卖每 100 股一张、30 日到期的价外 covered call；目标 delta 0.50。新合约接近目标 delta/到期时滚动；到期平仓期权、保留正股，再平衡。宇宙为 15 只广泛市场/行业 ETF（含 SPY、QQQ、DIA、IWM）及其美式期权。与 M0634 不同：不是标普500平值备兑，而是按IV减RV选前5并卖目标delta 0.50的价外看涨。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6031",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5985,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d3a56e1f55d814b650241d4e0c1c8f464dcd26971a2c9c22b2ff52177c91283d",
+    "rule_sha256": "65ef547be0a8ea25f2d18e39303a71154bcfe461260ac968672de5532abcfd9f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6031",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6031"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://toslc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/R-S/RangeIndicator"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "thinkorswim / Schwab"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-314/W3242"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "thinkorswim·区间指标低于均线：日频；RangeIndicator<SMA50(RI)持SPY否则BIL（RangeInd·BelowSMA50·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Range Indicator Below SMA50 — SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 thinkorswim《RangeIndicator》之 **区间指标低于自身均线** 新核。RI 比较 True Range 与日间收盘距；低位表示市场失衡减弱、新趋势可能萌芽。日频：若 **RangeIndicator(length=10, smoothing=10) < SMA(50, RangeIndicator)** → 满仓 SPY，否则 BIL。不是 ATR/ATRP；不是 HistoricalVolatility；不是 ChaikinVolatility；不是 BBW。计入美股/ETF。提出日期 未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "RangeInd·BelowSMA50·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

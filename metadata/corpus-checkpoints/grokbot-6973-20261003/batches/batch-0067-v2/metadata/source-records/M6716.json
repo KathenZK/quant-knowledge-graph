@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6716",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6670,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d69e4cd7ae6bb11ad725f52c4ec9b20c93d4c60508e03804844e052b2bc37fe5",
+    "rule_sha256": "3e9adae26bab47149fa9dfc1ff6ad87cb88a2968128f10f5de7e4a4478e8fc2e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6716",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6716"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/DivYieldST.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Litzenberger and Ramaswamy / OpenSourceAP CrossSection"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-382/W3927"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Litzenberger·预测股息率分档多空：月末；频率滞后预期股息/价；等权多最高正档空零档持1月（Litzenberger·DivYieldST·TercileL/S）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "1979-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Predicted dividend yield next month (DivYieldST) tercile long-short"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 OpenSourceAP/CrossSection 可执行核 Litzenberger and Ramaswamy (1979) DivYieldST。月末：用CRSP分红（cd1=1,cd2=2且cd3∈{3,4,5}）；过去12月有分红；按频率取滞后预期股息（季/未知滞后2月、半年滞后5月、年滞后11月）除以|价|得Edy1；Edy1>0者按月三分位得1–3，Edy1=0记0；等权做多最高正档、做空零档，持1月。Sign=+1。不是Keim年频Dp/股息率价值近核；不是HDV/NOBL股息产品持有；可直接跑 DivYieldST.py。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Litzenberger·DivYieldST·TercileL/S"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

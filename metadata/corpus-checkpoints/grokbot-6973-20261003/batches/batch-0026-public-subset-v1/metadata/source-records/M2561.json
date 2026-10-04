@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2561",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2561,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0375eedd0e64f72db38bb4badfd5e8bb1ef509efd0ffd00270475f96a5bf7e44",
+    "rule_sha256": "c3b000da17550f626ab568699bc6e392c0e3c6e0617cffe7dca85688ed198b98"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2561",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2561"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.tradingview.com/script/TDxSLJRA/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "timj"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "VixFix+StochRSI仅多：过滤警报（WVF曾破上轨/分位后回落且upRange等）开多；Stoch%K上穿%D且K>80平多"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密/美股通用"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "VixFix+StochRSI仅多：过滤警报（WVF曾破上轨/分位后回落且upRange等）开多；Stoch%K上穿%D且K>80平多"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该TradingView脚本页已印出的规则。Stoch lookback14 OB80 OS20；K/D平滑3。RSI14 OB70 OS30。WVF：pd22；BB长20 mult2.0；lb50 ph0.85。filtered=前棒WVF≥上轨或分位高且当前两者皆下。filteredAlert=upRange且close>close[str=3]且(close<close[ltLB=40]或<close[mtLB=14])且filtered。开多=filteredAlert或aggressiveAlert；平多=isOverBought（%K上穿%D且K>80）。权益仓3%；金字塔9。不是M2433 WVF+DEMA：本条为VixFix+StochRSI仅多，WVF破轨回落过滤警报开多，Stoch%K上穿%D且K>80平多。计入加密。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "TradingView脚本页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

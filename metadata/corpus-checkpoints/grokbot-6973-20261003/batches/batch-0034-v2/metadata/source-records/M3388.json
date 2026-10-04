@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3388",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3342,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c53eb4950f0d27d5dae25458c6729f0eefcf608bd354de5fc742f85e2ba6c453",
+    "rule_sha256": "bc5aa1c37a802dacdd081a217443e47dc3bb87f094ef4eca18dabb0bca54805f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3388",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3388"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/IndexOptionPutITMExpiryRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；链上 strike≥4200 且 2021-01 欧式PUT取最低行权（预期4200）；次日开盘后买1张，ITM到期行权（Lean IndexOptionPutITMExpiry）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；链上 strike≥4200 且 2021-01 欧式PUT取最低行权（预期4200）；次日开盘后买1张，ITM到期行权（Lean IndexOptionPutITMExpiry）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `IndexOptionPutITMExpiryRegressionAlgorithm.py`。`add_index(\"SPX\",Minute)`；`option_chain` 筛 `strike≥4200` 且 PUT 且到期年=2021 月=1，按行权升序取首（断言=4200 / 2021-01-15）。`schedule`：`tomorrow`+`after_market_open(SPX,1)` → `market_order(option,1)`。期望 ITM 行权清算。不是 SPX ITM 卖 Put 核（master ShortPutITM），也不是买 OTM Put 核。提出日期未知。SPX买ITM Put4200次日开盘到期行权 ≠ ShortPutITM卖出指派 / 买OTM Put。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

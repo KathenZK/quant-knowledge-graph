@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3376",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3330,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "66b8c471e0fce74c73049e57370aa482ccde0a5c5609f844208f9a617d4848e6",
+    "rule_sha256": "d531cda0d36e2b80d118777357854974ead0432039ac915c256c55b758236f76"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3376",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3376"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/AddOptionContractExpiresRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：宇宙仅AAPL；手动对TWX 2014-06-21美式CALL加合约，价格非0买1张；到期后若持有TWX正股则清仓（Lean AddOptionContractExpires）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：宇宙仅AAPL；手动对TWX 2014-06-21美式CALL加合约，价格非0买1张；到期后若持有TWX正股则清仓（Lean AddOptionContractExpires）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `AddOptionContractExpiresRegressionAlgorithm.py`。宇宙选择恒返回 AAPL；`option_chain(TWX)` 取到期=`2014-06-21` 且美式 CALL → `add_option_contract`；价格非0且未交易 → `buy(option,1)`；`time > expiration` 且持有 TWX → `liquidate(TWX)`。不是宇宙切换后定时 remove 核（W571），也不是仅指派回归核（W569）。提出日期未知。手动TWX 2014-06-21美式Call买1到期清正股 ≠ 宇宙切换定时remove（W571）/指派回归（W569）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

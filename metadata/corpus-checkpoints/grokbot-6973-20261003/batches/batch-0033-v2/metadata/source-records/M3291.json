@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3291",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3245,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9a3b7959edde563756c9c40bf0564c0bb6e677f087afdaf2ed262c3da10758fc",
+    "rule_sha256": "7f32e84247f0a0e3da4c5f0f12b5946e3d86b2c9482f4be370a12c7f2e20c061"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3291",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3291"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CustomModelsAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CustomPartialFillModelAlgorithm.py（quant-web-harvest-33 W545；同市场+同核：SPY小时、无未完成单时 day>10 且仓≤0 异步市价买、day>20 且仓≥0 异步市价卖；CustomPartialFillModel(每次成交±10、固定105/−100) 相对 CustomModels(约50%/50%+费/滑点/买力)为成交模型与下单量妆点，不算新核（优先保留 M3291）；同核未另开） ； https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CustomModelsPEP8Algorithm.py（quant-web-harvest-35 W590；同市场+同核：SPY小时、无未完成单时 day>10 且仓≤0 异步市价调至+50%、day>20 且仓≥0 调至−50%；CustomModelsPEP8 相对 CustomModels 仅为 PEP8 命名/模型类重写妆点，买卖/持仓核相同（优先保留 M3291）；同核未另开）"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY小时；无未完成单时 day>10 且仓≤0 则异步市价买约50%，day>20 且仓≥0 则异步市价卖约50%；自定义费/滑点/部分成交/买力（Lean CustomModels）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY小时；无未完成单时 day>10 且仓≤0 则异步市价买约50%，day>20 且仓≥0 则异步市价卖约50%；自定义费/滑点/部分成交/买力（Lean CustomModels）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `CustomModelsAlgorithm.py`。`add_equity(\"SPY\",Hour)`；挂 CustomFee/Fill/Slippage/BuyingPower。`on_data`：若该标的无 open orders：`day>10` 且 `quantity≤0` → `market_order(spy, calculate_order_quantity(...,0.5), asynchronous=True)`；`elif day>20` 且 `quantity≥0` → 对称 `−0.5`。不是恒定 Alpha 框架核，也不是仅日程清仓核（W517）。提出日期未知。day>10 异步买50%/day>20 卖50%+自定义费滑点部分成交 ≠ ConstantAlpha框架（M3234）/日程清仓（M3265）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

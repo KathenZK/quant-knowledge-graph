@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2331",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2331,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "594b70c1a2fdfb56b1f37040886855cad42d75a0be804405ba7788076df845fd",
+    "rule_sha256": "a24a515a0136eda0975745897fd10b16bcb27ff1c47e505e6ecf2e78ef9f3ca9"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2331",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2331"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/roll/2024-08-12/doc-incikrfc9178580.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "西部证券金工（冯佳睿、陈曼莲；新浪转载《另类ETF交易策略：日内动量》；对外发布2024-08-09）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "西部金工ETF日内动量初始策略（噪声区=14日同时点位移均；仅10:29/11:29/13:59开仓；对向边界或收盘平仓）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股宽基/ETF（上证50/沪深300/中证500/中证1000；分钟频；不隔夜）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-08-09"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "西部金工ETF日内动量初始策略（噪声区=14日同时点位移均；仅10:29/11:29/13:59开仓；对向边界或收盘平仓）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。噪声区：过去14日每个分钟时点相对开盘价收益率绝对值均值，结合昨收定义UpperBound/LowerBound。开仓：分钟收盘破上界做多、破下界做空，以下一分钟开盘成交；仅在10:29、11:29、13:59判断开仓。平仓：破对向边界以下一分钟开盘平，或持有至收盘；收盘前触发平仓立即下一分钟开盘平。费用叙述单边万一。相对日频动量：本条为14日噪声区⊕三时点核。 不是M0133美股ETF开盘动量抽象：本条为噪声区14日同时点位移、仅10:29/11:29/13:59开仓的A股ETF日内动量初始核。 计入其他。 提出日期按源文件原样保留2024-08-09。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

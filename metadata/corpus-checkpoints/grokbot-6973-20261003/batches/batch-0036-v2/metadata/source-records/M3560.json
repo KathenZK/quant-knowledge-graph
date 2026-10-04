@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3560",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3514,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3e7c1660fe480a88598b665c7935834878091aaea21d6a361b219f13d81c412f",
+    "rule_sha256": "991dac9979bc9f23d26362d9fc7a036d07e0a16a464219b9aebf671a056cec45"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3560",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3560"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://quantpedia.com/strategies/exploiting-term-structure-of-vix-futures/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia（源论文 EFMA VIX term structure）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": ""
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QP VIX期限：日频；最近VIX期货（距到期≥10交易日）；日展期>0.10（<−0.10）则卖（买）并持有5日；用E-mini标普期货对冲即期VIX（QP VIX Futures Term Structure）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股波动率/股指期货（VIX 期货 + E-mini S&P500 对冲）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QP VIX期限：日频；最近VIX期货（距到期≥10交易日）；日展期>0.10（<−0.10）则卖（买）并持有5日；用E-mini标普期货对冲即期VIX（QP VIX Futures Term Structure）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Quantpedia《Exploiting Term Structure of VIX Futures》。交易标的为最近月 VIX 期货（距到期至少 **10** 个交易日）。**日展期** = (近月 VIX 期货价 − 即期 VIX) / 距结算营业日数。当处于升水且日展期 **>0.10** 点则**卖出**该期货；贴水且日展期 **<−0.10** 则**买入**；持有 **5** 个交易日；并用 E-mini 标普期货多/空对冲即期 VIX 水平变动（对冲比率文称来自回归）。不是 VIX ETN 日频溢价（M0718）。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Simple trading strategy；daily roll ±0.10；5-day hold；E-mini hedge"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

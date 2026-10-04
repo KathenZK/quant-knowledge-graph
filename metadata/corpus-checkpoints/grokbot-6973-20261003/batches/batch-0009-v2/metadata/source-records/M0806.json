@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0806",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 806,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0d5ff406726b285cb8ab7b7fceaba2cede0a60ba4297a8081b81506c0b12dd5a",
+    "rule_sha256": "926cc2b4549fabdaf101644005b819e230e14bce36dac8c8e13c4bb54f9acbda"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0806",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0806"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/21132/sizing-market-exposure-with-aggregate-sales-growth/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect研究）；信号按Garfinkel、Hribar与Hsiao 2025"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "总销售增长定标普500敞口：美国非金融非房地产普通股的一年销售增长按市值加权并在1%与99%截尾，扩展窗口回归后权重夹在0到1.5，其余进BIL"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Sizing Market Exposure With Aggregate Sales Growth"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该研究页已印出的市场择时，不是已收的截面一年销售增长三分位多空，也不是个股销售增长因子。信号是合格股票一年销售增长按市值加权的平均。合格为美国、主份额、普通股类型ST00000001，晨星行业剔除金融服务与房地产。增长先按当月截面第1与第99百分位截尾，市值须为正。风险资产用SPY，无风险腿用BIL。每月把刚结束月份的SPY一个月变动率减去无风险利率除以12，记为超额收益，并送进120个月方差。用扩展窗口把本月超额收益对上月总销售增长做一次多项式回归，截距与斜率再乘本月总销售增长，得到下月超额预测。股票权重等于该预测除以3再除以该方差，再夹到0与1.5。1减该权重给BIL；权重大于1时BIL为负，表示杠杆融资。每个月第一个交易日美东8:00再平衡。预热为11乘365天。股票宇宙只用来收集基本面，方法返回空名单，不交易这些个股。页面未写一年销售增长用晨星一年营收增长以外的会计月，实现段用营收增长的一年字段。未写回归样本为空时如何下单。提出日期取未知；文中2021年7月至2026年7月是回测区间。参考文献2025年工作论文不是本页刊出日。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Aggregate Sales Growth；Return Forecast；Position Sizing；Implementation中gamma等于3、十年方差、Morningstar过滤与8:00美东。回测区间July 2021至July 2026"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0815",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 815,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1f9faab4087f3d9b054c4d6a595b595601f13e9734f8143e1368169da95402a3",
+    "rule_sha256": "86470d831c6e8f21045bf12d17c6bc10933327755a67a94dcb292c8aaffa63b4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0815",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0815"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/17886/copying-congress-trades/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "国会买入逆波动：Quiver国会交易宇宙只留买入，每周第一个交易日SPY开盘后30分钟，用180日日收盘收益率标准差的倒数加权，目标倍数1.5，单只上限10%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Copying Congress Trades"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该研究页已印出的国会买入复制，不是已收的申报语言稳定度，也不是新闻情绪选股。宇宙用Quiver Quantitative美国国会交易数据集，只保留交易方向为买入的美国股票。再平衡排在每周第一个交易日、SPY开盘后30分钟。名单为空则该次直接返回。波动用history取6乘30日、也就是180个日历日的日收盘，拆成宽表后取收益率，丢掉第一行，再算标准差。权重分子是该标准差的倒数。单只目标等于1.5乘该倒数除以全部倒数之和，再与0.1取较小值。set_holdings第二个参数为真，离开本周名单的持仓会被平掉。正文写把波动乘1.5，打开的代码乘的是逆波动份额而不是标准差本身，本条按代码照记。45日是该页对STOCK Act披露期限的说明，不是打开的选股函数里另写的回看天数，本条不把45日补成持有期。页面未写标准差为零时如何处理，未写逆波动含空值时是否跳过该股后再归一。数据集是付费源，持股名单不能只从公开价格重建。提出日期取未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Implementation步骤1至3：transaction等于BUY、week_start、after_market_open 30、timedelta(6*30)、权重min(0.1, 1.5乘逆波动份额)。Background写STOCK Act须在45日内披露"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

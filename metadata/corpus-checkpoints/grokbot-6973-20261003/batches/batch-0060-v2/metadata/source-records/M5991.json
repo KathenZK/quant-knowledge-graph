@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5991",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5945,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1dc5505d68722c861cafa5c230fe29f9a63d3bc0bf2c8f7094e0c775b1226ed8",
+    "rule_sha256": "ab188807b14dfc5a2219adc8c211f04001d2c06a9ddeee5d88793b61c65fccc1"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5991",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5991"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://toslc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/R-S/Stiffness"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Markos Katsanos / thinkorswim"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-310/W3202"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Katsanos/thinkorswim·趋势刚度九十：日频；Stiffness(60,MA100,0.2σ)≥90持SPY否则BIL（Stiff·Above90·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2018-11-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Stiffness At Least 90 — SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 thinkorswim《Stiffness》（Markos Katsanos）之 **刚度系数达强趋势阈** 新核。刚度=分析窗内收盘有效站上均线（需超出 num_dev×σ）的比例×100；平台默认强趋势参考水平 90。日频：若 **Stiffness(length=60, average length=100, num_dev=0.2) ≥ 90** → 满仓 SPY，否则 BIL。不是裸收盘>SMA100；不是 SMA200 上行；不是 ER 效率比。计入美股/ETF。提出日期 2018-11-01。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Stiff·Above90·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

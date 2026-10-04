@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3393",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3347,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3c5e259316bd4bdff5f6c42be662586cfc53a626bad0b1a4d19d77784d619766",
+    "rule_sha256": "974f13034e0b279728f64be8c2aed0305a8977d0537ab5519f14d4ef7e50af00"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3393",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3393"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/OptionExerciseAssignRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；过滤含周权、行权−2..+2、到期0–10日；空仓时对当日到期且行权<标的价的Call按行权降序取前2：买最高行权1张、卖次高1张（Lean OptionExerciseAssign）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；过滤含周权、行权−2..+2、到期0–10日；空仓时对当日到期且行权<标的价的Call按行权降序取前2：买最高行权1张、卖次高1张（Lean OptionExerciseAssign）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `OptionExerciseAssignRegressionAlgorithm.py`。`set_filter(include_weeklys().strikes(-2,2).expiration(0,10日))`。未投资：筛 `expiry.date()==today` 且 `strike<underlying` 且 CALL，按 strike 降序取最多 2 张 → `market_order(sorted[0],+1)`、`market_order(sorted[1],−1)`，持有至到期期望多头行权、空头指派。不是卖固定 800Put+600Call 核（W569），也不是仅自定义行权模型同交易核（跳过）。提出日期未知。GOOG当日到期ITM双Call多空各1 ≠ 卖固定800Put+600Call（M3375）/仅自定义行权模型。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

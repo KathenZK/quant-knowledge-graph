@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4253",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4207,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "44b9e97ea5f20a751b970842a67183057cebaa9e43b524bda0ecdab84981ba80",
+    "rule_sha256": "901d80f3827f17f0481fc82cea0c9401982a1696afba5f5547705468ad1dec6e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4253",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4253"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.nber.org/system/files/working_papers/w20439/w20439.pdf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Kent Daniel / Tobias J. Moskowitz"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-133/W1463"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Daniel·Moskowitz·动态动量：月末；WML权重∝μ̂/σ̂²；μ̂=熊市指示×近6月市场方差拟合；σ̂=GJR-GARCH与近126日实现波线性组合（DM DynMom）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2014"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Daniel·Moskowitz·动态动量：月末；WML权重∝μ̂/σ̂²；μ̂=熊市指示×近6月市场方差拟合；σ̂=GJR-GARCH与近126日实现波线性组合（DM DynMom）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Daniel/Moskowitz《Momentum Crashes》（JFE/NBER w20439）**可实施动态动量**。底层为十等分市值加权 **WML**（赢家−输家）。每月权重 w*∝ μ̂_{t−1}/σ̂²_{t−1}（文式(5)，λ 标定无条件波动，文示例年化约 **19%** 对齐CRSP市值加权）。**μ̂**：用熊市指示 I_B（近2年月市场超额为负）与近 **6** 月市场方差之交互项对未来WML的拟合预测。**σ̂**：对WML拟合 **GJR-GARCH** 前向波动，再与近 **126** 个交易日WML实现波动做线性组合。不是仅 12%/σ 常数波动缩放（回避刚入库M4218 Barroso）；不是 1/RV² 因子缩放（回避M4237 MM VolMom）；不是不缩放JT。计入美股/ETF。提出日期 2014。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "NBER w20439 · §4 eq(5) · dyn weight ∝ μ/σ² · bear×mkt-var mean · GJR+126d vol"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

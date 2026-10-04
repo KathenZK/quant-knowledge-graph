@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3406",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3360,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e95a13b09d96ae872adeb089458f76101e2a9e118ef1ccea9268053996b6810c",
+    "rule_sha256": "f1e9efc2d32d7601036da4c6e33f6ca0a46f125ab91258297da0ecc7ea446273"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3406",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3406"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FuturesAndFuturesOptionsExpiryTimeAndLiquidationRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES 2020-06-19 分钟；加同到期美式PUT strike=3400；两者有报价时空仓各市价买1，持有至到期预警/摘牌自动清算（Lean FuturesAndFuturesOptionsExpiry）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES 2020-06-19 分钟；加同到期美式PUT strike=3400；两者有报价时空仓各市价买1，持有至到期预警/摘牌自动清算（Lean FuturesAndFuturesOptionsExpiry）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FuturesAndFuturesOptionsExpiryTimeAndLiquidationRegressionAlgorithm.py`。`add_future_contract(ES,2020-06-19,Minute)`；`add_future_option_contract` 同标的美式 PUT 行权 3400、到期 2020-06-19。未投资且期货与期权均有 bar/quote → 各 `market_order(+1)`。期望摘牌警告 2020-06-19、摘牌/清算 2020-06-20；期权与期货卖出成交计入清算。不是 ES ITM 卖 Put 指派核，也不是仅买 FOP 无期货腿核。提出日期未知。ES期货+同到期PUT3400各市价买1持有至摘牌自动清算 ≠ ES ITM卖Put指派（M3287）/仅买FOP无期货腿。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

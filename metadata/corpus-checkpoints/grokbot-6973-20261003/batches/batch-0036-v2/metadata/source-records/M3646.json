@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3646",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3600,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8c69514af3967668d46d5d58379825b02f69cfd17cdbea6e9151354a3ce57009",
+    "rule_sha256": "7a5c3270592ab7e4a131ff586a0c2a1b6bb89b1800adab8e3792cd7bd116991c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3646",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3646"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/front-running-commodity-seasonality/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AllocateSmartly（独立复现 Quantpedia 商品季节性）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-61/W852"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "：高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AS·商品季节性抢跑Long Only+相关过滤：月末；DBA/DBB/DBC/DBP；短相关>长相关则现金，否则月n−11分位≥50%者各25%多、其余现金（AS Commodity FR·LO+corr）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（商品板块 ETF）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-12-20"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AS·商品季节性抢跑Long Only+相关过滤：月末；DBA/DBB/DBC/DBP；短相关>长相关则现金，否则月n−11分位≥50%者各25%多、其余现金（AS Commodity FR·LO+corr）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 AllocateSmartly《Front Running Commodity Seasonality》**Test #3**（Long-only + intra-market correlation）。宇宙 **DBA/DBB/DBC/DBP**。月末：若四者两两 **20** 日均相关 **>** **250** 日均相关 → 组合改 **现金**；否则对每只 ETF：用该品种历史上同历月（月 n−11）收益相对全样本同历月的分位，**≥50%** 则下月配 **25%** 多头，**<50%** 则该腿 **现金**（不做空）。不是 Test #4 动量/反转×相关（近 M3458）；不是 3 月 RoC Top3+SMA（M3472）。计入美股/ETF。提出日期 2024-12-20，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "网页 Test #3 long-only + correlation filter"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

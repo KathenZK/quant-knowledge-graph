@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0812",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 812,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c787ad2f649cbbc0a1d7b21b73d7649646acc5910c989a71ea2281673371b01d",
+    "rule_sha256": "cd15320a3f4974db2f2f3c30a3ec6218a6ff26d18dce66e55d1cb94bd2c26b2c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0812",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0812"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15603/head-amp-shoulders-ta-pattern-detection/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "头肩形态做空：日成交额最高500只里按相关降序名次加动态时间弯曲距离升序名次，取名次和最小的5只，每只市价空2000美元，三个自然日后市价平仓"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Head & Shoulders TA Pattern Detection"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该研究页已印出的头肩做空，不是已收的开盘区间突破，也不是缩量窄幅突破。日线粗选按成交额从高到低取500只。每只用最多50根收盘更新。扫描时从长度25起到50、步长10，把窗口下采样成25点后去均值再除以标准差，与100条参考形态比。参考在第一次构造时生成，随机种子1，条数100；谷与峰的偏移用页面印出的正态与均匀随机项，头部位高于两侧肩的1.5倍再加绝对值均匀项，共25行，然后按列去均值除以标准差并转置。匹配先对窗口做窗口3、多项式阶2的萨维茨基-戈莱滤波，再标准化，算动态时间弯曲路径与相关。相关因子取各窗口上参考形态相关均值的最大值，相似度因子取动态时间弯曲距离均值的最大值。选股把相关从高到低的名次与距离从低到高的名次相加，取和最小的5只。新进入这5只的股票市价做空，股数等于2000除以当时价格后取整再取负；取整为0则不开。持有三个自然日，到期市价买回同样股数平仓。页面把下采样函数指到未在正文印出的technical_pattern.py，本条不补下采样算式。未写五只同时持有时名义是否允许叠加超过现金。未写除权如何调整已开空单。提出日期取未知；文中2022年1月1日至2023年6月1日是回测区间。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Initialization中window_size 25、max_lookback 50、step_size 10、coarse_size 500、universe_size 5、hold_duration 3；Generating Reference Patterns中种子1与100条参考；Selecting the Universe与Placing Trades。回测区间2022-01-01至2023-06-01"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

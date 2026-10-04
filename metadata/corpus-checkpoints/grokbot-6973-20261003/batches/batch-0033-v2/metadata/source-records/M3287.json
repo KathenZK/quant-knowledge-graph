@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3287",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3241,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d46356858e5b49b7f38c2fd1dff1c39f277f999c577f44be52c553c28eaea454",
+    "rule_sha256": "1c9012f436b9345eb1e4881d0cbd0b441bb8b5fe8a9a4a651ca2f8ec34ebcc84"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3287",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3287"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FutureOptionShortPutITMExpiryRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES19M20分钟；链上 strike≤3400 最高行权 PUT（预期3400）；次日开盘后卖1张；ITM到期指派得多头期货再清算（Lean FutureOptionShortPutITMExpiry）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES19M20分钟；链上 strike≤3400 最高行权 PUT（预期3400）；次日开盘后卖1张；ITM到期指派得多头期货再清算（Lean FutureOptionShortPutITMExpiry）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FutureOptionShortPutITMExpiryRegressionAlgorithm.py`。ES 2020-06-19；筛 `strike≤3400` 且 PUT，降序取首（预期 3400）。次日开盘后 `market_order(option,−1)`；指派买入底层期货1手，期货到期卖出清算。不是买 ITM 看跌核（W524），也不是卖 ITM 看涨核（W529）。提出日期未知。ES ITM 卖看跌指派得多头期货 ≠ 买 ITM 看跌（M3272）/卖 ITM 看涨（W529）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4755",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4709,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3a47854fb2241628b502c4170841017fd4611309196c3a4dee0277bb5491b7ea",
+    "rule_sha256": "6044bdf135c45a71e0cb2c6740f98f2f3885e86c8eb83d415d5c56a37345f2ff"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4755",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4755"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://quantpedia.com/hedging-tail-risk-with-robust-vixy-models/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "David Belobrad / Radovan Vojtko / Quantpedia"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-186/W1966"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia·eVRP≤0固定20%VIXY对冲：日频滞后1日；80%SPY；仅当eVRP=VIX−年化Std(SPY,10)≤0则20%VIXY否则该袖现金（QP VIXY·eVRP≤0·20%·80/20）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-09-29"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia·eVRP≤0固定20%VIXY对冲：日频滞后1日；80%SPY；仅当eVRP=VIX−年化Std(SPY,10)≤0则20%VIXY否则该袖现金（QP VIXY·eVRP≤0·20%·80/20）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Quantpedia《Hedging Tail Risk with Robust VIXY Models》（2025-09-29）**without sizing** 简化核：eVRP≤0 即激活固定 20% VIXY（**不加** VIX>VIX3M）。日频滞后1日：eVRP=VIX−年化Std(SPY近10日对数收益)×100；若 **eVRP≤0** → **80% SPY + 20% VIXY**，否则 **80% SPY + 20% 现金**。不是 eVRP∧VIX>VIX3M（M4746）；不是 VIX% 定尺（M4670）；不是仅 VIX>VXV（M4671）。**OVERRIDE** 同 URL 异核。计入美股/ETF。提出日期 2025-09-29。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QP 2025-09-29 · without sizing · eVRP≤0 → fixed 20% VIXY · lag1d"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

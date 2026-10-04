@@ -1,0 +1,350 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "classification": {
+      "additionalProperties": false,
+      "properties": {
+        "entity_type": {
+          "enum": [
+            "strategy",
+            "factor",
+            null
+          ]
+        },
+        "evidence": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "original_classification": {
+          "type": "null"
+        },
+        "reason": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type_status": {
+          "enum": [
+            "UNREVIEWED",
+            "REVIEWED_EXPLICIT_DECISION",
+            "EXISTING_REVIEWED_METADATA"
+          ]
+        }
+      },
+      "required": [
+        "entity_type",
+        "type_status",
+        "original_classification",
+        "reason",
+        "evidence"
+      ],
+      "type": "object"
+    },
+    "entity_type": {
+      "const": "source_record"
+    },
+    "execution_permission_granted": {
+      "const": false
+    },
+    "identity_namespace": {
+      "const": "grokbot"
+    },
+    "knowledge_values_complete": {
+      "const": true
+    },
+    "native_source_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "new_execution_trials": {
+      "const": 0
+    },
+    "provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "csv_row_ordinal": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "csv_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "row_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "rule_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "csv_sha256",
+        "csv_row_ordinal",
+        "row_sha256",
+        "rule_sha256"
+      ],
+      "type": "object"
+    },
+    "publication": {
+      "additionalProperties": false,
+      "properties": {
+        "all_fields_reviewed": {
+          "const": false
+        },
+        "reason_codes": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "sensitive_fields": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "FIELD_REVIEW_REQUIRED",
+            "PRIVATE_ONLY_BLOCKED"
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "sensitive_fields",
+        "reason_codes",
+        "all_fields_reviewed"
+      ],
+      "type": "object"
+    },
+    "record_id": {
+      "pattern": "^M[0-9]{4}$",
+      "type": "string"
+    },
+    "reported_fields": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "const": "CATALOG_REPORTED_UNVERIFIED"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "status"
+          ],
+          "type": "object"
+        },
+        "source_url": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "const": "CATALOG_REPORTED_UNVERIFIED"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "status"
+          ],
+          "type": "object"
+        },
+        "作者或机构": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "const": "CATALOG_REPORTED_UNVERIFIED"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "status"
+          ],
+          "type": "object"
+        },
+        "别名来源": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "const": "CATALOG_REPORTED_UNVERIFIED"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "status"
+          ],
+          "type": "object"
+        },
+        "可回测": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "const": "CATALOG_REPORTED_UNVERIFIED"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "status"
+          ],
+          "type": "object"
+        },
+        "名称": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "const": "CATALOG_REPORTED_UNVERIFIED"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "status"
+          ],
+          "type": "object"
+        },
+        "市场": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "const": "CATALOG_REPORTED_UNVERIFIED"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "status"
+          ],
+          "type": "object"
+        },
+        "提出日期": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "const": "CATALOG_REPORTED_UNVERIFIED"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "status"
+          ],
+          "type": "object"
+        },
+        "标题": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "const": "CATALOG_REPORTED_UNVERIFIED"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "status"
+          ],
+          "type": "object"
+        },
+        "规则": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "const": "CATALOG_REPORTED_UNVERIFIED"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "status"
+          ],
+          "type": "object"
+        },
+        "页码或文件": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "const": "CATALOG_REPORTED_UNVERIFIED"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "status"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "名称",
+        "市场",
+        "规则",
+        "作者或机构",
+        "标题",
+        "source_url",
+        "页码或文件",
+        "可回测",
+        "别名来源",
+        "提出日期"
+      ],
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "quantgraph-catalog-source-record/v1"
+    },
+    "source_webpage_fulltext_fetched": {
+      "const": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "identity_namespace",
+    "record_id",
+    "native_source_id",
+    "entity_type",
+    "reported_fields",
+    "classification",
+    "provenance",
+    "publication",
+    "knowledge_values_complete",
+    "source_webpage_fulltext_fetched",
+    "new_execution_trials",
+    "execution_permission_granted"
+  ],
+  "type": "object"
+}

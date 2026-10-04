@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3348",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3302,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e861d14dbb613072c31a07865ce5af1a1dfb1f4d2596c498a0c60e4d315d3d8d",
+    "rule_sha256": "6360bf59e5e17424cbbd751de64b7892e542f199658269f009da88c19022223a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3348",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3348"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateIndiaIndexAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "印度指数+ETF：INR；NIFTY50分钟不可交易作信号，JUNIORBEES可交易；EMA(80)>EMA(200)空仓买1股，否则清仓；NSE订单属性（Lean BasicTemplateIndiaIndex）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "印度指数+ETF：INR；NIFTY50分钟不可交易作信号，JUNIORBEES可交易；EMA(80)>EMA(200)空仓买1股，否则清仓；NSE订单属性（Lean BasicTemplateIndiaIndex）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateIndiaIndexAlgorithm.py`。`set_account_currency(\"INR\")`；`add_index(\"NIFTY50\",Minute,INDIA)` + `add_equity(\"JUNIORBEES\",Minute,INDIA)`；`IndiaOrderProperties(Exchange.NSE)`；`ema(NIFTY,80)` 与 `ema(NIFTY,200)`。两标的 bar 齐全且慢线就绪：快>慢且未投资 → `market_order(JUNIORBEES,1)`；否则 `liquidate()`。断言指数无成交量。不是 YESBANK 空仓买1股核（W537），也不是自定义 NIFTY 周三突破核（W508）。提出日期未知。NIFTY50信号+JUNIORBEES EMA80/200 买卖1股+NSE属性 ≠ YESBANK空仓买1（M3294）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0969",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 969,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d5380f1b4d4f14736bdf6d3e41cca1b89a4c582c482fb5e1c1f88211b1ae66ae",
+    "rule_sha256": "40a0b1cda24b0ffb821b297a9d00b4023764206e7b97f60c23607500a472ff97"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0969",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0969"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://n2nquant.com/wiki/doc/20170303-3imEKrVq0S"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "广发证券金工（安宁宁等；N2NQuant/匡醍公开转述）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "广发证券LLT低延迟趋势线切线择时"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2017-03-03"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "广发证券LLT低延迟趋势线切线择时"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：切线窗口长度研报正文未固定披露；公开复现示例5日不记成研报原参数，不能把未写出的数字或公式补成规则。已印出部分保留。本条只写源文件已印出的规则。用二阶IIR低通构造LLT：y_t=(α−α²/4)x_t+(α²/2)x_{t−1}−(α−3α²/4)x_{t−2}+2(1−α)y_{t−1}−(1−α)²y_{t−2}；公开复现常用α=2/(d+1)。对LLT做切线：斜率k>0做多/持有多，k<0做空/持有空（交易性择时）。切线窗口长度研报正文未固定披露；公开复现页示例用5日窗口求斜率，不把该5记成研报原参数。 主文件没有已印出的广发LLT二阶IIR公式与切线斜率k>0多/k<0空的行。计入其他。提出日期按源文件原样保留2017-03-03。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则。切线窗口长度研报正文未固定披露；公开复现示例5日不记成研报原参数"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

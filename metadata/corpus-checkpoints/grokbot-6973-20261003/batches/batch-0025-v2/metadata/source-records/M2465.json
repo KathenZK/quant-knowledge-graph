@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2465",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2465,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c76592069f1e3244808e8f912613f72f2c48c9497887b8491824d09ce99a7634",
+    "rule_sha256": "b9eddaa12b9854be517dfa2c1f7c690abb058de25cec890424b427fe41fef3b3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2465",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2465"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/18312/kelly-criterion-applications-in-trading-systems/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect 研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：IBM小时SMA(1)>SMA(6)入场，Kelly(因子1.5,近40笔)定仓上限5.75，否则满仓SHY（QC Kelly Criterion）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（IBM SMA1/6 + Kelly仓位否则SHY；QC Kelly Criterion）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：IBM小时SMA(1)>SMA(6)入场，Kelly(因子1.5,近40笔)定仓上限5.75，否则满仓SHY（QC Kelly Criterion）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect 研究《Kelly Criterion Applications in Trading Systems》已印实现。风险资产 IBM、无风险资产 SHY，小时线，杠杆6；短 SMA(1)、长 SMA(6)。短上穿长 → signal=1；短下穿长 → signal=0。`KellyCriterion(1.5, 40)`：入场记价、出场记盈亏，用近40笔胜率与盈亏比算 Kelly 再×1.5。就绪后：signal=1 且未持多则 IBM 权重=`min(5.75, kelly.weight())`，若权重≤1 则余仓配 SHY；signal=0 且持多则 100% SHY。WarmUp=365日。不是无仓位缩放的纯均线核。提出日期未知。 不是固定仓位双均线：本条为IBM小时SMA(1)>SMA(6)入场，Kelly(因子1.5,近40笔)定仓上限5.75否则满仓SHY。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

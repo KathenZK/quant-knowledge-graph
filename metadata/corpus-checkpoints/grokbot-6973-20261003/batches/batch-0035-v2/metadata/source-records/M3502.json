@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3502",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3456,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "69421ee57bc6a53ccc8240c36d2d0c73ae63af6cea38e685e8ba164f2d0443c4",
+    "rule_sha256": "123e39e5e26088fb7095659a4d23968d34bca0ff7b9042adb343abdbc88299da"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3502",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3502"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://quantpedia.com/commodity-portfolio-strategy-for-a-potential-2026-inflationary-and-supply-shock-regime/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "David Mesicek / Quantpedia"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "商品ETF：同W705十只；各腿仅当收盘>各自SMA(12月)才纳入等权，否则该腿剔除（Quantpedia 商品时序均线）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（商品板块 ETF）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-04-29"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "商品ETF：同W705十只；各腿仅当收盘>各自SMA(12月)才纳入等权，否则该腿剔除（Quantpedia 商品时序均线）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写同文 Time-Series Moving Average 段。对每只 ETF **独立**用均线过滤：价格高于其移动平均则保留在组合，否则剔除；文称 **12** 个月均线在响应与稳定性间较平衡（24 个月夏普更高，本条取文称平衡的 12 个月）。存活腿等权。不是截面 Top4 核（W706）。提出日期 2026-04-29。Quantpedia 商品时序均线：各腿收盘>SMA(12月)才纳入等权 ≠ W705/W706。计入美股/ETF。提出日期按源文件原样保留2026-04-29。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Time-Series Moving Average Management（12-month MA balance 句）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

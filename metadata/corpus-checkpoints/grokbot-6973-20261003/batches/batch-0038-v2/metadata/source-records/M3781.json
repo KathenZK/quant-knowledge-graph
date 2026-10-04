@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3781",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3735,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9875c1fcb0a160556d6a6e226928e8138cf357507d0a3f2eb4270f680558c9c9",
+    "rule_sha256": "5c6e1410d0eaa2003041e521c259fd8e4aa114921a969dc1655372d5461ebf11"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3781",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3781"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.cxoadvisory.com/fundamental-valuation/when-equity-market-momentum-does-and-does-not-work/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO Advisory（转述 Suominen & Hjalmarsson）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-79/W988"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·估值边界门控股指TSMOM：月频；Boundaries低时持有25档TSMOM等权指数，高则空仓（CXO TSMOM×Boundaries）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-07-10"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·估值边界门控股指TSMOM：月频；Boundaries低时持有25档TSMOM等权指数，高则空仓（CXO TSMOM×Boundaries）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CXO《When Equity Market Momentum Does and Does Not Work》转述 Suominen & Hjalmarsson：先将 CAPE（或股息率）与期限利差各自相对过去 **10**（或 20）年区间、用 **12** 月均值归一到 **[-1,1]**；**Boundaries** = 缩放期限利差² + 缩放 CAPE²。股指 **TSMOM 指数** = 回看×持有 ∈{1,3,6,9,12} 月的 **25** 档时序动量（超额收益符号定多空）**等权**。可交易口径：Boundaries 处于历史中低区（非双极值角）时持有该 TSMOM 指数，Boundaries 高（估值与期限利差同时近历史极端）则**空仓/现金**。不是无门控裸 TSMOM（M3529 等）。计入美股/ETF。提出日期 2026-07-10，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "网页 Boundaries gate on EW-25 equity TSMOM"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

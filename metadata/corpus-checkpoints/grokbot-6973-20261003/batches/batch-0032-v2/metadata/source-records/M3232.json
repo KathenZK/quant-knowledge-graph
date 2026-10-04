@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3232",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3186,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "fb5cd156f9a2b6035f5866f063305e6e58db5a209142685d1ce31c81e3e98fc4",
+    "rule_sha256": "50c14c8872f115b6377d0dc37eba8ccb35649ab431b67d9d57db39a7450c9e04"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3232",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3232"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/SpreadExecutionModelRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：AIG/BAC/IBM/SPY；小时RSI(14) Alpha + 等权；仅当买卖价差足够紧时才下单（Lean SpreadExecutionModel）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：AIG/BAC/IBM/SPY；小时RSI(14) Alpha + 等权；仅当买卖价差足够紧时才下单（Lean SpreadExecutionModel）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `SpreadExecutionModelRegressionAlgorithm.py`。手工宇宙 AIG/BAC/IBM/SPY；Alpha=`RsiAlphaModel(14, Hour)`；等权；执行=`SpreadExecutionModel()`（仅在价差足够紧时提交订单）。不是标准差执行核（W432：价须偏离60分钟均线2σ），也不是 VolumeShare 滑点核（W461）。提出日期未知。RsiAlpha14小时+SpreadExecution（价差够紧才下单）≠ StdDev执行2σ（W432）/VolumeShare（W461）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

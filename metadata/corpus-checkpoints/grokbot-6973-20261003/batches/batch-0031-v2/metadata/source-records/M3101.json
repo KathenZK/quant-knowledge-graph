@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3101",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3068,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7aa9ed2db15f16e84c44ad8326c5f54b0788f3c4a7798c93c9aa3d0cdf5c0183",
+    "rule_sha256": "65990372806a5d315d4cfafa5e7d4316a4f694a630fddab31100fd6b16be0f30"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3101",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3101"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/Alphas/TriangleExchangeRateArbitrageAlpha.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "外汇：EURUSD/EURGBP/GBPUSD分钟；三角汇率 askA/(bidB×askC)>1.0005则A/C发UP、B发DOWN组Insight（Lean TriangleExchangeRateArbitrage）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "外汇"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "外汇：EURUSD/EURGBP/GBPUSD分钟；三角汇率 askA/(bidB×askC)>1.0005则A/C发UP、B发DOWN组Insight（Lean TriangleExchangeRateArbitrage）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `Alphas/TriangleExchangeRateArbitrageAlpha.py`。三币对分钟；`triangle_rate = bar_a.ask.close / bar_b.bid.close / bar_c.ask.close`（A=EURUSD,B=EURGBP,C=GBPUSD）。若 `triangle_rate > 1.0005` 发 Insight 组：A UP、B DOWN、C UP，magnitude=0.0001，期=5×分钟；等权+即时。数据键不足3则空。不是单一 SMA 反转核（W464）。提出日期未知。 计入其他。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

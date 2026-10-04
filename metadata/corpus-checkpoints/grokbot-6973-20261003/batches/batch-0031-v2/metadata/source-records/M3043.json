@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3043",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3022,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "afda980e61db754e19c92b7f0e95e248893a480090504eb0cd0ed12945d1ca41",
+    "rule_sha256": "9aaf21a20b5c8c2748bcd89614023e370d9a1142dbc5da47987e54cc96f358d3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3043",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3043"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateIndexOptionsAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟EMA(80)/EMA(200)；快>慢且未投资买看涨1张，快<慢买看跌1张并清反向（Lean BasicTemplateIndexOptions）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（XLP收盘<近25日高−2×均(H−L)且IBS>0.4做多收盘>昨高离场；QuantifiedStrategies XLP MR）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟EMA(80)/EMA(200)；快>慢且未投资买看涨1张，快<慢买看跌1张并清反向（Lean BasicTemplateIndexOptions）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateIndexOptionsAlgorithm.py`。`add_index(\"SPX\",Minute)`；指数期权 `calls_only()` 过滤。`ema_slow=ema(SPX,80)`，`ema_fast=ema(SPX,200)`。链上合约：若未投资且 `(fast>slow且CALL)或(fast<slow且PUT)` → 对反向期权 `liquidate(invert_option)` 后 `market_order(contract,1)`。不是 W417 指定 ITM call 满仓核，也不是 W341 ATM 穿均线核。提出日期未知。 不是SPY IBS+RSI会员墙核，也不是BB(20,2)下轨多/中轨平（W379）核：本条为XLP收盘<近25日高点−2×均(H−L)且IBS>0.4收盘做多，收盘>昨高离场。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

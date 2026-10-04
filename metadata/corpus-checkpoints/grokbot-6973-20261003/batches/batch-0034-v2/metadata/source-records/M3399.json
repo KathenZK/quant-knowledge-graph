@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3399",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3353,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d4a0f6f05cfb4f298490070831033c5b5fe7da049a39d15af89de4b6427146bc",
+    "rule_sha256": "d3f32365a6cb7a8c23ea0fc0481a5b21ac73741e859a9b2c82cee14963114daf"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3399",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3399"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/MarketOnOpenOnCloseAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY秒线（延长时段）；每个交易日先 market_on_open 买100，交易所开市后再 market_on_close 卖100（Lean MarketOnOpenOnClose）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY秒线（延长时段）；每个交易日先 market_on_open 买100，交易所开市后再 market_on_close 卖100（Lean MarketOnOpenOnClose）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `MarketOnOpenOnCloseAlgorithm.py`。`add_equity(\"SPY\",Second, fill_forward=True, extended_market_hours=True)`。每个新交易日：`market_on_open_order(SPY,+100)`；当 `equity.exchange.exchange_open` 且当日尚未提交收盘单 → `market_on_close_order(SPY,−100)`。不是追踪止损进出核（W581），也不是仅 TimeInForce 限价属性演示。提出日期未知。SPY秒线开盘买100收盘卖100 ≠ 追踪止损进出（W581）/仅TimeInForce限价属性。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

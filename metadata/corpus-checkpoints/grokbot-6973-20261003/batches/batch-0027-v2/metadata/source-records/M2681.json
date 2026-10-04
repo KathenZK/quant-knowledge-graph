@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2681",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2681,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "93cdf47a782957f83dede1be1d6f553c4d7fb56b8a2ec6419972518d07ee1f14",
+    "rule_sha256": "48d5f2423ec7d78479c79b13c5a5494e3f6ddb54eb4fc33a721bc59709a96093"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2681",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2681"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/index-options-static/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX价上穿EMA(60)买最近到期ATM call，下穿买ATM put；间隔≥10分钟（QC Documentation SPX ATM）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPX穿越EMA60买近月ATM call/put间隔≥10分钟；QC Documentation SPX ATM）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX价上穿EMA(60)买最近到期ATM call，下穿买ATM put；间隔≥10分钟（QC Documentation SPX ATM）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `index-options-static/main.py`。`add_index(\"SPX\")`；`ema(...,60)`；`updated`：距上次成交不足600秒则返回。若 spot>EMA现价且 spot>EMA前值 → 最近到期、|strike−spot|最小的 CALL，`market_order(1)`（未持该合约）；若 spot<EMA现且 spot<EMA前 → 对称买 PUT。合约链为 SPXW 规范期权。不是 W331 RUT 约0.4-delta 选约核（本条为 ATM）。提出日期未知。 不是W331 RUT约0.4-delta选约核（本条为ATM）：本条为SPX价上穿EMA(60)买最近到期ATM call，下穿买ATM put；间隔≥10分钟。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

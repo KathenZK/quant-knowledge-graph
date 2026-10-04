@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3513",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3467,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "2fde9ae4dc399e33111d79abae5099f373ed3371a77f7bd74a554abdfee7c19d",
+    "rule_sha256": "016812c0e0c982782119f7c7f2c0bae2e1ec43066725f00121365748758a63f9"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3513",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3513"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Logical-Invest-Strategy"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor（Logical Invest UIS 参数集成）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；同W717网格；对 lookback∈{50,55,…,80} 与 f∈{0.5,0.6,…,3.0} 各跑 adaptive.weight 后权重求和再归一（SI UISA 集成）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2014-12-02"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；同W717网格；对 lookback∈{50,55,…,80} 与 f∈{0.5,0.6,…,3.0} 各跑 adaptive.weight 后权重求和再归一（SI UISA 集成）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写同页 `UISA` 模型。在 W717 的 `adaptive.weight` 上，对 `lookback = seq(50,80,5)` 与 `f = seq(0.5,3,0.1)` 双重循环累加各次最优权重，再按行 `rowSums` 归一，月末再平衡。不是单组 lookback=80、f=2 的 UIS 核（W717）。提出日期 2014-12-02。SI UISA：对lookback50–80×f0.5–3累加归一权重 ≠ 单组UIS(W717)。计入美股/ETF。提出日期按源文件原样保留2014-12-02。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "models$UISA（lookback 50–80×5；f 0.5–3×0.1；归一）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

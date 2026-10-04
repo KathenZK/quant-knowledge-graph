@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2975",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2965,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0ceec8c31fd07544610b13bbfbf0cfc3bb0d2494083cc41273e94d6fc13420ba",
+    "rule_sha256": "6f95953fef902d489cb050cf9f68da544f7c77fa6611acff289701ba0f77935e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2975",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2975"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CustomDataIndicatorExtensionsAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：自定义日线；SMA(1)_SPY / SMA(1)_IBM >1 则市价买100股IBM，比值<1清仓（Lean CustomDataIndicatorExtensions）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（自定义日线SMA1_SPY/SMA1_IBM>1买100IBM否则清仓；Lean CustomDataIndicatorExtensions）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：自定义日线；SMA(1)_SPY / SMA(1)_IBM >1 则市价买100股IBM，比值<1清仓（Lean CustomDataIndicatorExtensions）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `CustomDataIndicatorExtensionsAlgorithm.py`。`add_data(CustomDataEquity,\"IBM\"/\"SPY\", Daily)`；`ibm_sma=sma(IBM,1)`，`spy_sma=sma(SPY,1)`；`ratio=IndicatorExtensions.over(spy_sma, ibm_sma)`（即 SPY收盘/IBM收盘）。三者就绪后：未投资且 ratio>1 → `market_order(IBM,100)`；ratio<1 → `liquidate`。不是 W390 KO/PEP 协整核，也不是双均线交叉核。提出日期未知。 不是W390 KO/PEP协整核，也不是双均线交叉核：本条为自定义日线SMA(1)_SPY/SMA(1)_IBM>1买100股IBM、<1清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

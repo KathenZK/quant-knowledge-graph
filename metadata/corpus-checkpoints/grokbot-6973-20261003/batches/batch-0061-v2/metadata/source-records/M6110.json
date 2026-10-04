@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6110",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6064,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "203e4b0e795b7771c1b8e39d62dc34aa67f2a2af5734660e217ab97683c10ac1",
+    "rule_sha256": "68d7e1379b24596e2413fbb3eb4596067975d8a13ff98c1e07927e1432a7e89d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6110",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6110"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://toslc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/R-S/ReverseEngineeringRSI"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Giorgos Siligardos / thinkorswim"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-322/W3321"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Siligardos/thinkorswim·反向工程RSI价上：日频；收盘>RevEngRSI(50)持SPY否则BIL（RevEngRSI50·PriceCross·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2003-06-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Reverse Engineering RSI Price Cross — SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Giorgos Siligardos《Reverse Engineering RSI》（thinkorswim ReverseEngineeringRSI；TASC 2003-06）之 **收盘在 RSI=50 对应反推价上方** 新核。由指定 RSI 目标反推使 Wilder/EMA 平滑 RSI 恰等于该值的价格水平。日频：若 **Close > RevEngRSI(length 平台默认, rsi value=50)** → 满仓 SPY，否则 BIL。不是 RSI>50；不是 RSI 超买超卖阈；不是普通收盘>SMA。计入美股/ETF。提出日期 2003-06-01。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "RevEngRSI50·PriceCross·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

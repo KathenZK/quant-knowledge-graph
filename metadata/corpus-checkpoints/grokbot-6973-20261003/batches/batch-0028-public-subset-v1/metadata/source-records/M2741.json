@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2741",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2741,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5cd0b535b3cf09a04d5f25269242897aa99e2eaa8c6b5c36fe9602bd262f9834",
+    "rule_sha256": "f1e9b4134bd7d160956687334cae663d2bc5898205acd88b9472820421d60c39"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2741",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2741"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/BBRSIS/BBRSIS.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（BBRSIS.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：Freqtrade社区BBRSIS；5m，收盘<BB(20,3σ)下轨且SMA5≥SMA75≥SMA200且本帧RSI(20)<15m重采样RSI−5做多；中轨上方且多周期RSI优势平多"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（Freqtrade社区BBRSIS；5m收盘<BB3σ下轨且SMA排列且本帧RSI<15m重采样RSI−5做多；davidzr BBRSIS）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：Freqtrade社区BBRSIS；5m，收盘<BB(20,3σ)下轨且SMA5≥SMA75≥SMA200且本帧RSI(20)<15m重采样RSI−5做多；中轨上方且多周期RSI优势平多"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓 `strategies/BBRSIS/BBRSIS.py` 默认。ticker_interval=5m；stoploss=−0.99；minimal_roi={\"0\":0.30}。典型价 BB(20,3σ)；本帧 RSI(20)；另将K线重采样×3/×6/×10（即15m/30m/50m）各算 RSI(20)。做多：`close<bb_lower` 且 `sma5≥sma75≥sma200` 且 `rsi < resample_15m_rsi − 5`。平多：`close>bb_middle` 且 `rsi > resample_15m_rsi + 5` 且 `rsi > resample_30m_rsi` 且 `rsi > resample_50m_rsi`。不是单周期 BBRSI 核。提出日期未知。 不是单周期BBRSI核：本条为Freqtrade社区BBRSIS；5m，收盘<BB(20,3σ)下轨且SMA5≥SMA75≥SMA200且本帧RSI(20)<15m重采样RSI−5做多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

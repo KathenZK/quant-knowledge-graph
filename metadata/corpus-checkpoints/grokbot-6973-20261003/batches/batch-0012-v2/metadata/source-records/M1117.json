@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1117",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1117,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "45dd9adc3bd8ab9a0e226a105343114f0544a0839f00c9c32591b2ed8f156dcf",
+    "rule_sha256": "7c202633483b9feae7bcf746dc8fbd65a81df572512c0b9c255b47f6b6cd486c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1117",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1117"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/roll/2024-10-08/doc-incrvssv0744661.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "光大证券金工（EB金工；新浪转载《因子分域初探：确定分域方式——量化选股系列报告之十四》；早盘构造引自系列之二20211023）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "光大金工早盘收益时序分域（|早盘收益|>2%取反）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-10-08"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "光大金工早盘收益时序分域（|早盘收益|>2%取反）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。早盘时段取9:30–10:30的vwap涨幅，早盘收益=早盘vwap涨幅−开盘价涨幅（一字涨停不计）。因子为过去一段天数(window)的早盘收益率之和；截面MAD去极值、市值行业中性。时序分域改进：以2%为阈值，若当日早盘收益绝对值>2%则取相反数后再累加/入库，使因子由反转转为稳定动量特征。 不是已收光大RSRS/中金QRS：本条是早盘收益时序分域，|早盘收益|>2%取反后再累加。 计入其他。提出日期按源文件原样保留2024-10-08。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

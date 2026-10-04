@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3516",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3470,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e16190e6d61b0c56015341d8ac2b126e0531586431d91db1d9f751ad9b9bb700",
+    "rule_sha256": "20589590dc7ba8bd2a71c26b084df25200185d744e2c69604c36d697403a6c48"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3516",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3516"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Thinking-SIT2"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；同W719五资产；仅按5×21日收益取Top1满仓（无SMA现金滤）（SI Thinking-SIT2·TOP1）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2015-02-24"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；同W719五资产；仅按5×21日收益取Top1满仓（无SMA现金滤）（SI Thinking-SIT2·TOP1）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写同页基础模型 `TOP1`：`position.score = prices/mlag(prices, 5*21)`，月末 `ntop(..., 1)` 满仓最强一只；**无** Modification 1 的 SMA 现金滤。宇宙同 W719（SPY/GLD/IEF/IYR/EEM）。不是 Top2+SMA 核。提出日期 2015-02-24。SI TOP1：五资产5×21仅Top1满仓无SMA现金滤 ≠ TOP2.CASH/AVG.TOP2.CASH。计入美股/ETF。提出日期按源文件原样保留2015-02-24。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Code Strategies, Top 1 based on 5 month momentum（models$TOP1）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

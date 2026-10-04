@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5410",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5364,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4ae69e7dc5e1add9369435d8c42053cc93df5d014950fe073a2b21d3fbf09463",
+    "rule_sha256": "7a336301959fda03c0301ac8cd5f4db060391f4f6f8b10ed7e6ed8d8624373c4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5410",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5410"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.cxoadvisory.com/equity-premium/benefits-of-volatility-targeting-across-asset-classes/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Campbell Harvey et al. / CXO Advisory"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-252/W2621"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Harvey/CXO·波动目标10%·仅SPY：日频；EWMA半生21日估年化σ；仓位=min(1,10%/σ)，余BIL（Harvey VT10·SPY·无杠杆）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2018-06-04"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Harvey VolTarget 10pct SPY NoLeverage"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CXO《Benefits of Volatility Targeting Across Asset Classes》(2018-06-04) 对 Harvey et al.《Working Your Tail Off》的可执行落地：**仅风险资产 SPY**、目标年化波动 **10%**、长仅不杠杆。每个交易日用 SPY 日收益的 **EWMA（半衰期21个交易日）** 估方差并年化 σ=√(EWMA_var×252)；目标仓位 w=min(**1.0**, **0.10**/σ)；持有 w·SPY + (1−w)·**BIL**；信号用 t−1 日已知波动、t 日收盘调仓（避免前视）。不是 Quantpedia 60/40 波动目标系列；不是面板国家指数 VT；不是放杠杆>100%。计入美股/ETF。提出日期 2018-06-04。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO Harvey·VT10·SPY·NoLev"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

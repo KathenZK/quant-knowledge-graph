@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3267",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3221,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6d73e514131370804adbb5999b93cfc1e742024ab85d35b3719ff0c607205687",
+    "rule_sha256": "d27f8e31907eea42781822a18d7be2479b96c52a95e971cbd28849933abb839d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3267",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3267"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/InceptionDateSelectionRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：小时；CustomUniverse 在 day%7==0 选 IBM 否则空；InceptionDate 在 start+5日加入并保留 SPY；新增各配50%，移除清仓（Lean InceptionDateSelection）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：小时；CustomUniverse 在 day%7==0 选 IBM 否则空；InceptionDate 在 start+5日加入并保留 SPY；新增各配50%，移除清仓（Lean InceptionDateSelection）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `InceptionDateSelectionRegressionAlgorithm.py`。小时；`CustomUniverseSelectionModel`：`dt.day % 7 == 0`→`[\"IBM\"]` 否则 `[]`；`InceptionDateUniverseSelectionModel(\"spy-inception\", {\"SPY\": start_date+5日})`。`on_data`：对 `changes.added_securities` 各 `set_holdings(..., 0.5)`；`on_securities_changed`：移除→`liquidate`。不是仅 day%7 IBM 核（W462），也不是 Scheduled 周一/二/四宇宙核（W500）。提出日期未知。day%7 IBM 宇宙 ⊕ InceptionDate start+5日保留SPY 各50% ≠ 仅 day%7 IBM（W462）/Scheduled周一四五（M3233）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

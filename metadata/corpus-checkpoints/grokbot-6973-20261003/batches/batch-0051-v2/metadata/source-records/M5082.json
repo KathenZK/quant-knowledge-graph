@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5082",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5036,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "99849ac6354a8c49276aaa36f27c16aa10b38f5b547ed6e5a09ce6f8e95b890c",
+    "rule_sha256": "45278b1c42b83de978fe7c756dae73f7bea4510e34281c9e19ac42a8ea5cd45e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5082",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5082"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://alvarezquanttrading.com/blog/multiple-time-frames-for-scoring-etf-rotational-strategies/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "David Weilmuenster (via Alvarez Quant Trading)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-219/W2293"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Weilmuenster·多窗加权轮动：月末；16资产；价>过去一年周收90%分位才候选；1/3/6月秩权-20/+60/−20取前3等权（MTF136·Filter90·Top3）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2015-07-22"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Multiple Time Frames for Scoring ETF Rotational Strategies (filtered Top3)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Alvarez 客座 Weilmuenster《Multiple Time Frames for Scoring ETF Rotational Strategies》之 **带过滤 Top Performer**核：宇宙 **AMJ/DBC/DJP/USO/GLD/SLV/VTI/EFA/EEM/TLT/PFF/PCY/JNK/CWB/VNQ/RWX**。月末：仅保留收盘价高于过去约 **52** 周周收盘之 **90%** 分位者；对 1/3/6 月收益分别排名（收益高者秩小=1）；综合分=**(−20)×Rank1m+(+60)×Rank3m+(−20)×Rank6m**（负权偏好高收益、正权偏好低收益，即偏高1月与6月、偏低3月）；取综合分最低前 **3** 等权；次月首开调仓。不是无过滤单窗；不是国别读者建议。计入美股/ETF。提出日期约 2015-07。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Weilmuenster · 16ETF · filter>90% weekly yr · w=-20/60/-20 · Top3 · monthly"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

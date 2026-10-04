@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1614",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1614,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3821a43e32650f938f7ca87ea96ec8a7b12710e5c692532e4dde67606ee05a43",
+    "rule_sha256": "89a0000260280aa48365d501117b6907c059f997e31bfde6e4aa4732aa122f88"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1614",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1614"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/BbandRsiRolling/BbandRsiRolling.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（BbandRsiRolling.py；Michael Fourie）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区BbandRsiRolling：5m，近8根RSI(14)最低<37且收盘低于BB(20,2)下轨做多；卖出信号空，靠ROI/止损−8%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区BbandRsiRolling；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区BbandRsiRolling：5m，近8根RSI(14)最低<37且收盘低于BB(20,2)下轨做多；卖出信号空，靠ROI/止损−8%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写davidzr仓strategies/BbandRsiRolling/BbandRsiRolling.py默认（作者注Michael Fourie）。timeframe=5m；stoploss=−0.08；minimal_roi多阶梯约0分钟3.279%至1897分钟归0。指标：RSI(14)、典型价布林window=20、stds=2。做多：rsi.rolling(8).min()<37且收盘<bb_lowerband。populate_sell_trend条件为空（不发卖出信号），离场依赖ROI与止损。不是BbandRsi的RSI<30且收下轨/RSI>70平多同核。提出日期未知。 不是M0259 BbandRsi的RSI(14)<30且收下轨/RSI>70平多：本条是5m BbandRsiRolling，近8根RSI最低<37且收盘低于BB下轨做多，卖出信号空靠ROI/止损−8%。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
