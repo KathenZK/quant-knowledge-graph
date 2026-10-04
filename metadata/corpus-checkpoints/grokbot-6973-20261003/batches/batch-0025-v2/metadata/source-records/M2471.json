@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2471",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2471,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4dbe030cc186ad2a88dceebdc175480f617e812248f104513520df035b0c648e",
+    "rule_sha256": "de5ffb09f2b992044ca21ec39a50d92721a5a7a34e27a3efd0ce5d834d206a81"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2471",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2471"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/SampleStrategyV2/SampleStrategyV2.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（SampleStrategyV2.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区SampleStrategyV2：5m，RSI上穿30且HA趋势dir>0且TEMA≤BB中轨上升做多；RSI上穿70且TEMA>中轨下行平多；止损−20%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区SampleStrategyV2；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区SampleStrategyV2：5m，RSI上穿30且HA趋势dir>0且TEMA≤BB中轨上升做多；RSI上穿70且TEMA>中轨下行平多；止损−20%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/SampleStrategyV2/SampleStrategyV2.py默认。timeframe=5m；stoploss=−0.2；buy_rsi默认30，sell_rsi默认70；buy_trend_length默认288；startup_candle_count=1000。Heikin Ashi 开/收的 SMA(288)，再对 (ha_close_sma−ha_open_sma) 做两层 SMA(5) 得 trend_dir。做多：RSI 上穿 buy_rsi，且 trend_dir>0，且 TEMA≤BB中轨且 TEMA>前值，且 volume>0。平多：RSI 上穿 sell_rsi，且 TEMA>BB中轨且 TEMA<前值，且 volume>0。不是官方 SampleStrategy（无 HA 趋势 dir/288）。提出日期未知。 不是官方SampleStrategy：本条为SampleStrategyV2（RSI上穿30且HA趋势dir>0且TEMA≤BB中轨上升做多）。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

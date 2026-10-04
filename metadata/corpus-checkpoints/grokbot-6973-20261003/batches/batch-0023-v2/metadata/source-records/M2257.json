@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2257",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2257,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "dcf1df6f58b56f2064fe62a1e52eb88a259a87edbb25faffeb68e304dd806a2f",
+    "rule_sha256": "4c1bcdde7d9a325b216f8a584ad1c719ac527c88cd3ee5c35b5f800096a5dae5"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2257",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2257"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/implementing-linear-regression-for-alpha"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：TSLA对SPY近60日收益OLS截距α>0满仓TSLA，α≤0清仓（EasyQuant线性回归Alpha）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股（TSLA对SPY 60日OLS α>0满仓；EasyQuant线性回归Alpha）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：TSLA对SPY近60日收益OLS截距α>0满仓TSLA，α≤0清仓（EasyQuant线性回归Alpha）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Implementing Linear Regression for Alpha》已印 LinearRegressionAlphaAlgorithm。benchmark=SPY，target=TSLA，日线；lookback=60。每个交易日开盘后10分钟：history 两标的 lookback 日收盘，pct_change 得收益；A=vstack([SPY收益, 1])，lstsq 得 beta 与 alpha（截距）。alpha>0 则 SetHoldings(TSLA,1.0)，否则 Liquidate(TSLA)。不是 Dow30 多股 CAPM 排名核（M0122/EasyQuant AlphaRanking）。提出日期取页面 Published on。 不是M0122 Dow30多股CAPM排名：本条是EasyQuant TSLA对SPY近60日收益OLS截距α>0满仓TSLA核。 计入美股/ETF。 提出日期按源文件原样保留2025-12-01。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

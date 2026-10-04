@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1904",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1904,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b733ec4162f3c924ccece5e0c8e3a37c48e01f62cf0fedb583947d6aac9420be",
+    "rule_sha256": "6e58c07ecaf48aed10a19d7ed4bec0a25e78e6e7719a9e7a2f1c3a710649cb71"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1904",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1904"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Combined_Indicators/Combined_Indicators.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Combined_Indicators.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Combined_Indicators：1m，BinHV45型BB(40,2σ)支或Cluc型收盘<EMA50且<0.98863×BB下轨且量<30均×34做多；收盘>BB中轨平多；止损约−6.58%，追踪止损开"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Combined_Indicators；1m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Combined_Indicators：1m，BinHV45型BB(40,2σ)支或Cluc型收盘<EMA50且<0.98863×BB下轨且量<30均×34做多；收盘>BB中轨平多；止损约−6.58%，追踪止损开"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/Combined_Indicators/Combined_Indicators.py默认，不是官方CombinedBinHAndCluc硬编码阈值。timeframe=1m；stoploss=−0.0658；minimal_roi={\"0\":0.015}；trailing_stop=True，positive=0.0198，offset=0.03082且only_offset_is_reached=True。支1（BinHV45型）：close 布林 mid/lower window=40、2σ；bbdelta=|mid−lower|，closedelta=|C−C.shift|，tail=|C−L|；上一根 lower>0，bbdelta>收盘×0.00703，closedelta>收盘×0.01476，tail<bbdelta×0.03632，收盘低于上一根 lower 且收盘≤上一根收盘。支2（Cluc型）：典型价 BB(20,2)；ema_slow=EMA(50)；volume_mean_slow=量30均；收盘<ema_slow 且收盘<0.98863×bb_lowerband 且 volume<(上一根 volume_mean_slow×34)。平多：收盘>bb_middleband。提出日期未知。 不是M0266/M1466官方CombinedBinHAndCluc硬编码阈值：本条是davidzr Combined_Indicators 1m，BinHV45型BB(40,2σ)支或Cluc型收盘<EMA50且<0.98863×BB下轨且量<30均×34，止损约−6.58%追踪开。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

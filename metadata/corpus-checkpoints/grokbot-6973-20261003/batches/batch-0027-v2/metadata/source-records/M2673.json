@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2673",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2673,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6bd448686928f739d44947cbc80c43eef631f5773cd9fb1b6d96b46da79304d9",
+    "rule_sha256": "c08f13f033e7f0c8f74354b57be9e64bd7f04cdefc47e73fae21f2fd505eb970"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2673",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2673"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equities-universe/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：市值>$100亿且EMA(100)>EMA(300)×1.01，按均线差幅取前10各配9%（QC Documentation EMA cross universe）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（市值>$100亿且EMA100>EMA300×1.01取差幅Top10各9%；QC Documentation EMA cross universe）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：市值>$100亿且EMA(100)>EMA(300)×1.01，按均线差幅取前10各配9%（QC Documentation EMA cross universe）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equities-universe/main.py`。`_count=10`；`_tolerance=0.01`；`_target_percent=0.09`；杠杆宇宙设定2。Fundamental 宇宙：对每标的维护 EMA(100)/EMA(300)；就绪且 `market_cap>10_000_000_000` 且 `fast>slow×(1+0.01)` 入选；超过10只时按 `scaled_delta=(fast−slow)/((fast+slow)/2)` 降序取前10。`on_data`：已选且有数据者各 `PortfolioTarget(..., 0.09)`，`set_holdings(..., True)`。暖机 400 日。不是 W196 单标的 EMA50/200 状态核，也不是 W241 PE 升序10只核。提出日期未知。 不是W196单标的EMA50/200状态核，也不是W241 PE升序10只核：本条为市值>$100亿且EMA(100)>EMA(300)×1.01，按均线差幅取前10各配9%。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

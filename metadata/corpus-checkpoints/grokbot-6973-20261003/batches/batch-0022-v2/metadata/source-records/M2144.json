@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2144",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2144,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ff37713f5ce1d1be4fec83785453c9a008cd81e54330a4b44db75bdf11c8522c",
+    "rule_sha256": "3a6f73f70f80e0acea9d808f2b43e3a6ab2fcc40bac6ea8508c5b0f7c7cf8b49"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2144",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2144"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/ForexSignal/ForexSignal.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（ForexSignal.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区ForexSignal：5m，1h上EMA8>EMA21且5m EMA8>13>21且最低价<EMA8做多；EMA8下行平多；止损−3%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区ForexSignal；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区ForexSignal：5m，1h上EMA8>EMA21且5m EMA8>13>21且最低价<EMA8做多；EMA8下行平多；止损−3%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/ForexSignal/ForexSignal.py默认。timeframe=5m；informative 1h；stoploss=−0.03；minimal_roi约60/30/0分钟对应1%/3%/4%；trailing_stop=False。1h：EMA(8)、EMA(21)；5m：EMA(8/13/21)。做多：ema8_1h>ema21_1h，且 ema8>ema13>ema21，且 low<ema8。平多：ema8 < ema8.shift(1)。不是单周期双均线交叉核。提出日期未知。 不是单周期双均线：本条是5m ForexSignal，1h EMA8>EMA21且5m EMA8>13>21且最低价<EMA8做多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

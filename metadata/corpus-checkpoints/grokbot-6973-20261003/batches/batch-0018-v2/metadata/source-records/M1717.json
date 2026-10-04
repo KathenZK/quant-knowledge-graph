@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1717",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1717,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4698b1b8d8d457bbad5d5812a274307788861cc5760a3dc24c35634cfc37fff2",
+    "rule_sha256": "94e8d3d9ec576f3465a3cc58c823dadb75ec66a67b3435dfd29da21bc40b5e12"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1717",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1717"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Hacklemore2/Hacklemore2.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Hacklemore2.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Hacklemore2：15m，上升趋势且RMI>55并≥3期均值、连两根收涨、SAR低于近三根收盘、量<24期均量×30做多；止损−99%，追踪止损开"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Hacklemore2；15m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Hacklemore2：15m，上升趋势且RMI>55并≥3期均值、连两根收涨、SAR低于近三根收盘、量<24期均量×30做多；止损−99%，追踪止损开"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写davidzr仓strategies/Hacklemore2/Hacklemore2.py默认新开仓支。timeframe=15m；stoploss=−0.99；minimal_roi约0/9/23/36/60/145/285分钟对应14.509%/7.666%/3.78%/1.987%/1.28%/0.467%/0；trailing_stop=True。指标：volume_mean_slow=24；technical RMI默认20/5；SAR；60期高低滚动，upper/lower标记创新高/新低，up_trend=近10根upper之和≠0。新开仓做多：up_trend为真，RMI>55且RMI≥RMI.rolling(3).mean()，收盘>昨收且昨收>前收，sar与前两根sar均低于对应收盘，volume<(volume_mean_slow.shift(1)×30)。live持仓加仓/卖出依赖订单簿与盈亏，本条不把live支写成默认离场核；回测离场主要靠ROI/止损/追踪。提出日期未知。 不是单RMI阈值：本条是15m Hacklemore2，上升趋势且RMI>55并≥3期均值、连两根收涨、SAR低于近三根收盘、量<24期均量×30做多，止损−99%追踪开。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

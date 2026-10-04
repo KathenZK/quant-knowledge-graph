@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2594",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2594,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ac963af0d7789ff06f67a9f8b42af04aedcd005ddaf82f68ff8e927236d1ccfd",
+    "rule_sha256": "84b48e7c5d67deec0eccfc379966d9d89ab94b30c9e814fc0e36f65dea7823fd"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2594",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2594"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-williams-percent-r/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：IWM分钟Williams%R(14)<−80满仓，>−20或持有满5个交易日清仓（QC Documentation Williams %R）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（IWM分钟Williams%R14 −80/−20或满5日；QC Documentation Williams %R）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：IWM分钟Williams%R(14)<−80满仓，>−20或持有满5个交易日清仓（QC Documentation Williams %R）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-williams-percent-r/main.py`。标的 IWM（分钟）；`wilr(14, MINUTE)`；买阈 −80、卖阈 −20；`_max_hold_days=5`。`on_data`：持多且 %R>−20 则清仓并重置持有日；未持多且 %R<−80 则满仓并重置。每日收盘前1分钟：若仍持多则持有日+1，≥5 则清仓。不是 M0057 SPY %R 低于−90、收盘高于昨高或 %R>−30 离场核。提出日期未知。 不是M0057 SPY %R低于−90、收盘高于昨高或%R>−30离场核：本条为IWM分钟Williams%R(14)<−80满仓，>−20或满5交易日清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

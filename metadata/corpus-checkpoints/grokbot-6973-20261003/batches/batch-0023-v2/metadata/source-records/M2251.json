@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2251",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2251,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3aac62e12952119157717aa00a282aec2d49175d6b150fdfe40b498645fc9965",
+    "rule_sha256": "3c6fcb09f19386cc54f9d876f124f892c9f13afa46c32737c905ef8bdb1ca68c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2251",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2251"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/hugo2046/QuantsPlaybook/blob/master/C-%E6%8B%A9%E6%97%B6%E7%B1%BB/%E5%9F%BA%E4%BA%8E%E9%B3%84%E9%B1%BC%E7%BA%BF%E7%9A%84%E6%8C%87%E6%95%B0%E6%8B%A9%E6%97%B6%E5%8F%8A%E8%BD%AE%E5%8A%A8%E7%AD%96%E7%95%A5/zs_timing_strategy.ipynb"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "招商证券金融工程（《基于鳄鱼线的指数择时及轮动策略》2024-05-07；QuantsPlaybook转述）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "招商金工鳄鱼线⊕AO⊕分形择时（看多=Alligator∧(AO∨Fractal)；看空=Alligator∨AO∨Fractal）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股宽基（沪深300示例；日频）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-05-07"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "招商金工鳄鱼线⊕AO⊕分形择时（看多=Alligator∧(AO∨Fractal)；看空=Alligator∨AO∨Fractal）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。分形：至少连续5根K线，上分形为中间高点高于左右各两根高点；下分形对称。分形信号：收盘向上突破最近上分形最高价→看多满仓；向下突破最近下分形最低价→看空空仓；否则维持。三信号合成：T日AND(Alligator=1, OR(AO=1, Fractal=1))→满仓；OR(Alligator=−1, AO=−1, Fractal=−1)→空仓；其余维持。相对鳄鱼⊕AO：本条为分形突破并入核。 不是鳄鱼⊕AO两信号：本条为鳄鱼⊕AO⊕分形三信号合成核。 计入其他。 提出日期按源文件原样保留2024-05-07。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

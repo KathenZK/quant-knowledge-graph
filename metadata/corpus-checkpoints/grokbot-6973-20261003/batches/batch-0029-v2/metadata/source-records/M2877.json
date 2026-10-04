@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2877",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2877,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4206a0297a0e5aea824bcc911f69ce2cf7183a497f02c62d5ea415db08905285",
+    "rule_sha256": "83541233058727e05f5a46653697153d2f4464d6385dbe1f366409d7acc07ce4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2877",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2877"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ConvertToFrameworkAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ConvertToFrameworkAlgorithm.py（quant-web-harvest-30 W503；同 source_url 已存在（优先保留 M2877）；同核未另开）"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线MACD(12,26,9)；信号差/快线 >0.25%满仓多，<−0.25%满仓空（Lean ConvertToFrameworkAlgorithm）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY日线MACD12,26,9信号差/快线>±0.25%满仓多空；Lean ConvertToFramework）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线MACD(12,26,9)；信号差/快线 >0.25%满仓多，<−0.25%满仓空（Lean ConvertToFrameworkAlgorithm）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ConvertToFrameworkAlgorithm.py`。`fast_ema_period=12`，`slow_ema_period=26`；日线 `macd(SPY,12,26,9,EXPONENTIAL)`。`signal_delta_percent=(macd−signal)/fast`；`tolerance=0.0025`。若持仓≤0且差>容差：`emit_insights(UP)` 且 `set_holdings(SPY, 1)`；若持仓≥0且差<−容差：`emit_insights(DOWN)` 且 `set_holdings(SPY, −1)`。不是 W380（SPY/QQQ/IWM 多头/清仓、无对称空头）核，也不是仅清仓的 MACDTrend 演示。提出日期未知。 不是W380（SPY/QQQ/IWM多头/清仓、无对称空头）核，也不是仅清仓的MACDTrend演示：本条为SPY日线MACD(12,26,9)信号差/快线>0.25%满仓多、<−0.25%满仓空。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2739",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2739,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "40cece987bd26a1463126a0d0f1d09b85ff6cdb260d004ad7144e3a7a4827394",
+    "rule_sha256": "c9a6beae8b7b956e569aab3a7203e7e2fdae1d921d15d78b7a64a8977ab4629c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2739",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2739"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/BBRSIv2/BBRSIv2.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（BBRSIv2.py；StrongManBR定制）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：Freqtrade社区BBRSIv2；15m，RSI上穿35且收盘<BB(20,2σ)下轨，或RSI<23且TEMA(9)在下轨上方拐头做多；RSI>70或创新高平多"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（Freqtrade社区BBRSIv2；15m RSI上穿35且收盘<BB下轨或RSI<23+TEMA拐头做多；davidzr BBRSIv2）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：Freqtrade社区BBRSIv2；15m，RSI上穿35且收盘<BB(20,2σ)下轨，或RSI<23且TEMA(9)在下轨上方拐头做多；RSI>70或创新高平多"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓 `strategies/BBRSIv2/BBRSIv2.py` 默认。timeframe=15m；stoploss=−0.99；minimal_roi={\"0\":0.3}；sell_profit_only=True，offset=0.01；use_custom_stoploss：利润>20%/10%/6%/3%时止损收至5%/3%/2%/1%。典型价 BB(20,2σ)；RSI(14)；TEMA(9)；60窗滚动高低。做多两支或：RB1=`rsi`上穿35且`close<bb_lower`；RB2=`rsi<23`且`tema<bb_lower`且`tema`上行。平多：`rsi>70` 或 `high>close_max(60)`。不是 W345/W356 单阈值核。提出日期未知。 不是W345/W356单阈值核：本条为Freqtrade社区BBRSIv2；15m，RSI上穿35且收盘<BB下轨或RSI<23且TEMA(9)在下轨上方拐头做多；RSI>70或创新高平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

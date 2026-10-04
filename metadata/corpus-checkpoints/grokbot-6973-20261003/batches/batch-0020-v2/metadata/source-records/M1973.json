@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1973",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1973,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f3f186ef9b6b1be9cb130b1eb914a2e9b06e3b8bd120f5d9e29d11dabce979ca",
+    "rule_sha256": "bd94cce5253d37168f8d631ec3f49a6c54e4d642c7f94d22ea8d48bd6e11b6cc"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1973",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1973"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/SlowPotato/SlowPotato.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（SlowPotato.py；注释 jadex）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区SlowPotato：5m，最低价≤近1440根最低价均值做多；最高价≥近1440根最高价均值平多；止损−99%，追踪止损开"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区SlowPotato；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区SlowPotato：5m，最低价≤近1440根最低价均值做多；最高价≥近1440根最高价均值平多；止损−99%，追踪止损开"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/SlowPotato/SlowPotato.py默认。timeframe=5m；stoploss=−0.99；minimal_roi={\"0\":99}（实质靠卖信号）；trailing_stop=True，positive=0.02，offset=0.03；sell_profit_only=True。注释称约5日高低均（5m×1440）。做多：low ≤ low.rolling(1440).mean() 且 volume>0。平多：high ≥ high.rolling(1440).mean() 且 volume>0。提出日期未知。 不是Donchian高低突破：本条是5m SlowPotato，最低价≤近1440根最低价均值做多、最高价≥近1440根最高价均值平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0663",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 663,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "539c2d3cf25a063fc00689e2d918881868d4a024f27c81973578c90241e6f90b",
+    "rule_sha256": "8cb2e9c5db8023c85ccc65ddd42bf003f5a39f0de33cc9a6f81b85e103d15b9d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0663",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0663"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/pragmatic-asset-allocation-from-vojtko-and-javorska-of-quantpedia/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Vojtko；Javorská / Quantpedia（Allocate Smartly实测）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "实用资产配置：四档季度换仓、收益率曲线与12个月均线"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Pragmatic Asset Allocation"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "组合分成四个互不影响的档，各25%。档分别在1、4、7、10月最后一个交易日收盘成交，信号用上一月最后一个交易日（12、3、6、9月）计算，并滞后一个月。先看收益率曲线：上一月收盘10年期美国国债收益率严格高于3个月期，则该档选风险资产，否则选防御资产。该站用月末收益率，不用FRED的TB3MS与GS10月内均值。风险资产为ACWI、QQQ、EEM。价格均按分红调整。12个月价格变化为t0/t12减1，12个月均线为t0到t11的平均，均取上一月末。按12个月价格变化从高到低，前两名若上一月收盘高于自身12个月均线，各配组合的12.5%（该档一半）。入选风险资产不足两只时，该档剩余部分改按防御规则配置。防御资产为IEF、GLD、BIL，同样排序与均线过滤；高于均线才持有，否则该部分持现金。页面写明原本给BIL的资金改为现金。若只入选一只风险资产，仍最多再选两只防御资产，该档最多可持三只。在1、4、7、10月末，对当前不交易的其他档另做止损：若某资产上一月收盘低于自身12个月均线，且持有已超过12个月，该部分改现金，直到该档下次交易。另按作者的简化假设，全部档每月再平衡到目标占比。全部月末收盘成交。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Strategy rules tested；Calculation notes（*）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

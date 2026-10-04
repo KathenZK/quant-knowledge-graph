@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2524",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2524,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b7f5138b8a3b6d6a3bd7645d44a6b0f308edef04eff978bc18f430982c52bbca",
+    "rule_sha256": "957ef821626c20fbae0e06c59bc5fb91759dcf3cdfeaa8573381534bf9acc838"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2524",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2524"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15351/leveraged-etfs-with-systematic-risk-management/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Shile Wen（QuantConnect 研究）；规则按 Gayed & Bilello 2016"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SSO收盘>日线SMA(200)满仓SSO，否则满仓SHY（QC Leveraged ETFs With Systematic Risk Management）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SSO日线SMA200否则SHY；QC Leveraged ETFs Systematic Risk）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SSO收盘>日线SMA(200)满仓SSO，否则满仓SHY（QC Leveraged ETFs With Systematic Risk Management）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect 研究《Leveraged ETFs With Systematic Risk Management》已印规则（Gayed/Bilello）。标的 SSO（2×标普）、防御 SHY。若 SSO 现价高于其 200 日 SMA 则持有 SSO；若跌破则清 SSO 并转入 SHY；若持 SHY 且 SSO 重新站上 200 日 SMA 则转回 SSO。不是 M0946：那边是 **小时** 200 周期 SMA、每个交易日最多评估一次。本条为 **日线** 200 日 SMA 状态轮动。提出日期未知。 不是M0946小时200周期SMA：本条为SSO日线SMA(200)满仓SSO否则满仓SHY。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

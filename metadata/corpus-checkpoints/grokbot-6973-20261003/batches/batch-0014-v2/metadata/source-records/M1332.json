@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1332",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1332,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b9f4b6a554d03d8da8b83c575b98f8998ec21094ea99c3eafef698b2acc70d00",
+    "rule_sha256": "a67a4aca148038303935f001bb41b4e5e2e863ceb3acb62cb3266b010c751e17"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1332",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1332"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/wm/2026-04-03/doc-inhteimm3943170.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰证券金融工程（何康、徐特；联系人孙浩然；新浪转载；人工智能103）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰金工分钟级高频特征参数化GP（四步万能公式；中位去极±5×MAD；五目标NSGA-III；mask如high_0.7）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（分钟量价→日频因子；半年滚动挖掘叙述）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-04-03"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰金工分钟级高频特征参数化GP（四步万能公式；中位去极±5×MAD；五目标NSGA-III；mask如high_0.7）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。四步：①输入切片——以slice为中心向左右各延0.5×window（window可为All/如238）；②时序掩码——按mask_field分位与mask_rule（如high_0.7/high_0.5）筛分钟；③算子降维——mode=1单变量或mode=2双变量（B_shift_lag错位；算子含Corr/R2/Euc_Dist/Intercept/Slope等）；④后处理——中位数去极值（>FM+5F1或<FM−5F1截断，F1为|Ft−FM|中位数）、行业市值中性、截面Z-Score。挖掘：五目标|IC|、IC胜率、多头绝对收益、多头夏普、多头胜率；NSGA-III+动态短板惩罚。页复盘突出成交笔数自相关、单笔成交回归截距、量价欧氏距离三类。 不是M1138华泰技术面遗传规划行业轮动：本条是分钟级高频特征参数化GP四步万能公式、中位去极±5×MAD、五目标NSGA-III、mask如high_0.7。 计入其他。 提出日期按源文件原样保留2026-04-03。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

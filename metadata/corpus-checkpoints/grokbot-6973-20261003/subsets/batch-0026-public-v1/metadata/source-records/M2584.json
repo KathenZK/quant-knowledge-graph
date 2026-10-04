@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2584",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2584,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "295a9540d76fd77e0dcf62de86aa83a5d5157623f29f9b90ef60cdf132e410f3",
+    "rule_sha256": "d13da5c91735dc4ffd16292dc5341757f9719f8a8973f9bfdae92c40a07c2c78"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2584",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2584"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-adx-trend-filter/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线EMA(50)−EMA(200)>0且ADX(14)>25满仓，否则清仓；开盘后1分钟评估（QC Documentation ADX trend filter）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY日线EMA50−EMA200且ADX14>25；QC Documentation ADX trend filter）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线EMA(50)−EMA(200)>0且ADX(14)>25满仓，否则清仓；开盘后1分钟评估（QC Documentation ADX trend filter）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-adx-trend-filter/main.py`。标的 SPY；`_adx_threshold=25`；`_trend=EMA(50)−EMA(200)`（日线）；`ADX(14)` 日线。每日开盘后1分钟：趋势就绪且 ADX 就绪后，若 `_trend>0` 且 `ADX>25` 且未持仓则 `set_holdings(1)`；否则若已持仓则 `liquidate()`。不是 W196 仅 EMA50/200 无 ADX 闸，也不是 QS SMA50/200 金叉核。提出日期未知。 不是W196仅EMA50/200无ADX闸，也不是QS SMA50/200金叉核：本条为SPY日线EMA(50)−EMA(200)>0且ADX(14)>25满仓否则清仓，开盘后1分钟。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

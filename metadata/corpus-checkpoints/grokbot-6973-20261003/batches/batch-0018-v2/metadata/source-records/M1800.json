@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1800",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1800,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "108a831a469771132b089e42ab584f55fd184bad38913baf1e4f126ecd02853d",
+    "rule_sha256": "dc2b245f7e1c35f76d8847f2d8069603eec649c8c34d55bd494b1e1adad4741f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1800",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1800"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bigquant.com/wiki/doc/GDZ6AxqpBa"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区（small_q/bqc7bj9w；教程107-股息率策略）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant教程：高股息率选股（市值截面分位>0.20∩PE分位<0.40∩PE>0∩PS_TTM<2.5；股息率降序Top50；月初等权）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（上交所/深交所；剔北交所/ST/停牌；月频）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-02-26"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant教程：高股息率选股（市值截面分位>0.20∩PE分位<0.40∩PE>0∩PS_TTM<2.5；股息率降序Top50；月初等权）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。过滤：剔ST、停牌、北交所。筛选：c_pct_rank(total_market_cap)>0.20（市值自大到小前约80%）、c_pct_rank(pe_ttm)<0.40（PE从小到大前约40%）、pe_ttm>0、ps_ttm<2.5。排序：按股息率dividend_yield_ratio（页用c_rank）降序取持仓50只等权。调仓：月度交易日第1日。相对已收中证红利股息+ROE Top10日频：本条为全A过滤⊕PS<2.5⊕Top50月初。 不是中证红利股息+ROE Top10日频：本条为高股息率选股，市值分位>0.20∩PE分位<0.40∩PE>0∩PS_TTM<2.5，股息率降序Top50月初等权。 计入其他。 提出日期按源文件原样保留2026-02-26。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

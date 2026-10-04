@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2602",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2602,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "986121a55883b8e7eb6180386947af3e0c0758261e7c776224880b2dfdf2c61e",
+    "rule_sha256": "98a22565216e224ab3f72c63540b678a04d7bf29f6a909771e7d377fabb98115"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2602",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2602"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/crypto-onchain-network-activity/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：Coinbase BTCUSD；链上日交易笔数与算力均高于各自SMA(30)则满仓，否则清仓（QC Documentation on-chain）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（Coinbase BTC链上交易笔数与算力>SMA30；QC Documentation on-chain）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：Coinbase BTCUSD；链上日交易笔数与算力均高于各自SMA(30)则满仓，否则清仓（QC Documentation on-chain）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `crypto-onchain-network-activity/main.py`。`add_crypto(\"BTCUSD\", COINBASE)`；`BitcoinMetadata`；`SMA(30)` 分别跟踪 `numberof_transactions` 与 `hash_rate`。仅在元数据新点到达且两 SMA 更新成功时：若交易笔数>交易SMA 且 算力>算力SMA 且未持仓 → `set_holdings(1)`；已持仓且条件不成立 → `liquidate()`。不是算力丝带交叉开多空核。提出日期未知。 不是算力丝带交叉开多空核：本条为Coinbase BTCUSD链上日交易笔数与算力均高于各自SMA(30)则满仓否则清仓。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

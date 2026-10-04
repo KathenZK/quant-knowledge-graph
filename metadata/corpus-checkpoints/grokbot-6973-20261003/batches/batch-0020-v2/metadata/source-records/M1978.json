@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1978",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1978,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "2b714ab8a564db9e61c3662b3e21b4675af11e0a13a9f362e4c910a75cd65611",
+    "rule_sha256": "bbf8f4185f1ad4c98e36ad0354000fd84ffb81b298d0ceed3eaef1cf395692ff"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1978",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1978"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Divergences/Divergences.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Divergences.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Divergences：1h，RSI≤40且收盘四点形态bullish_div做多；收盘四点形态bearish_div平多；止损−10%，追踪止损开"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Divergences；1h）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Divergences：1h，RSI≤40且收盘四点形态bullish_div做多；收盘四点形态bearish_div平多；止损−10%，追踪止损开"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/Divergences/Divergences.py默认。timeframe=1h；stoploss=−0.1；minimal_roi={\"0\":1}；trailing_stop=True，positive=0.05，offset=0.2且only_offset_is_reached=True。指标：RSI（默认14）。bullish_div：C.shift(4)>C.shift(2) 且 C.shift(3)>C.shift(2) 且 C.shift(2)<C.shift(1) 且 C.shift(2)<C。bearish_div：C.shift(4)<C.shift(2) 且 C.shift(3)<C.shift(2) 且 C.shift(2)>C.shift(1) 且 C.shift(2)>C。做多：rsi≤40 且 bullish_div。平多：bearish_div。提出日期未知。 不是单RSI超卖：本条是1h Divergences，RSI≤40且收盘四点形态bullish_div做多，bearish_div平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

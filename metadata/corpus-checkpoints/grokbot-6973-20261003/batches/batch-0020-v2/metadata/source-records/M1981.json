@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1981",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1981,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "00edea18eaca16d988ba01766ce909f35bfac4d17e2de19f56d1d2131641486f",
+    "rule_sha256": "9ce1084f874ee2439415f43cf5e8d67158a79cd99910c6b49d5d9f502da4db32"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1981",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1981"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/STRATEGY_RSI_BB_CROSS/STRATEGY_RSI_BB_CROSS.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（STRATEGY_RSI_BB_CROSS.py；注释 Fractate_Dev）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区STRATEGY_RSI_BB_CROSS：5m，bb_percent上穿rsi_percent且二者均<0.5且前14根bb低于rsi做多；对称下穿且二者均>0.5平多；止损−10%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区STRATEGY_RSI_BB_CROSS；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区STRATEGY_RSI_BB_CROSS：5m，bb_percent上穿rsi_percent且二者均<0.5且前14根bb低于rsi做多；对称下穿且二者均>0.5平多；止损−10%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/STRATEGY_RSI_BB_CROSS/STRATEGY_RSI_BB_CROSS.py默认（_trend_length=14）。timeframe=5m；stoploss=−0.10；minimal_roi约60/30/0分钟对应1%/2%/4%；trailing_stop=False。典型价BB(20,2)：bb_percent=(C−下轨)/(上轨−下轨)。RSI（默认14）；rsi_limit=30，rsi_percent=(RSI−30)/(100−60)。bb_below_rsi_count：近14根（含当期）bb_minus_rsi_percent 皆<0；bb_above_rsi_count 对称皆>0。做多：bb_percent 上穿 rsi_percent，且 bb_percent<0.5 且 rsi_percent<0.5，且前一根 bb_below_rsi_count 为真。平多：bb_percent 下穿 rsi_percent，且二者均>0.5，且前一根 bb_above_rsi_count 为真。提出日期未知。 不是单BB%或单RSI：本条是5m STRATEGY_RSI_BB_CROSS，bb_percent上穿rsi_percent且二者均<0.5且前14根bb低于rsi做多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

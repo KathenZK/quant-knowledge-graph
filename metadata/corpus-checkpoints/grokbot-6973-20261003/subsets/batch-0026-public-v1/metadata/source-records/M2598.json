@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2598",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2598,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7a2f85d8f77a03ea66afb496d3307b6da97d876a261a8fff60d96a314e85964d",
+    "rule_sha256": "af67579ea3bc5ba0a9f1906744a48ad1f00d7b367b4afd57cf0271d5057f0770"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2598",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2598"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-rsi-overbought-oversold/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：QQQ小时RSI(14,Wilder)<30满仓多、>50平多；>70满仓空、<50平空（QC Documentation RSI long/short）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（QQQ小时RSI14 Wilder 30/50/70多空；QC Documentation RSI long/short）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：QQQ小时RSI(14,Wilder)<30满仓多、>50平多；>70满仓空、<50平空（QC Documentation RSI long/short）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-rsi-overbought-oversold/main.py`。标的 QQQ，`Resolution.HOUR`；`rsi(...,14,WILDERS,HOUR)`。仓≤0 且 RSI<30 → 满仓多；仓>0 且 RSI>50 → 清多；仓≥0 且 RSI>70 → 满仓空；仓<0 且 RSI<50 → 平空。不是 W195 SPY 日线仅做多 30/70，也不是 QuantJourney RSI35/60。提出日期未知。 不是W195 SPY日线仅做多30/70，也不是QuantJourney RSI35/60：本条为QQQ小时RSI(14)<30满仓多、>50平多；>70满仓空、<50平空。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

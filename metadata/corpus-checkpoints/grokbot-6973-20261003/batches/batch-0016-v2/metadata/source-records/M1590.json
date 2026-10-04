@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1590",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1590,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "46c27b87eecf744177e2bdb3b6d7a4a0f9ccf0b7b3b0eec79c1df47487aa80ac",
+    "rule_sha256": "474b5e2b723653c53ba73eeda81aa0bae759749ac88ff957d56af140813eb9b6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1590",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1590"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/roll/2025-03-21/doc-ineqmfqm9578881.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "信达证券金工（于明明、周金铭；新浪转载《深度学习揭秘系列之三：用DeepSeek优化价量因子》）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "信达金工Alpha158·std20优化1（Mean(TR,%d)/$close；TR=max(高低差,高−昨收绝对,低−昨收绝对)）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（统一窗%d=20；市值行业中性；周频；VWAP成交叙述）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-03-21"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "信达金工Alpha158·std20优化1（Mean(TR,%d)/$close；TR=max(高低差,高−昨收绝对,低−昨收绝对)）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。原始std20=Std($close,%d)/$close。优化1将分子改为真实波幅TR的均值：TR=Greater($high−$low, Greater(Abs($high−Ref($close,1)), Abs($low−Ref($close,1))))，再Mean(TR,%d)/$close。页述RankIC均值约4.03%→6.18%、ICIR约0.31→0.42等（绩效非参数）。回测：2013-12-31至2024-12-31；剔上市<365日与ST；周频、下周一VWAP。相对原始收盘标准差：本条为ATR式TR均值波动。 不是原始Alpha158收盘标准差：本条为Mean(TR,%d)/$close（TR=真实波幅）窗20的std20优化1。 计入其他。 提出日期按源文件原样保留2025-03-21。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

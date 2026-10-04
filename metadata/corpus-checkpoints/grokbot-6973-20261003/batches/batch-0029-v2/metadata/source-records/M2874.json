@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2874",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2874,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a7d4877bccc45bfe5e353d79d43a8420d4c583b8530cfdd3acfb3c2faff48cf5",
+    "rule_sha256": "d99884f2da8af34b4be5c509dd29dbc99b52daca0b78c81f95116d5000d6131d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2874",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2874"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/crypto-futures/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密期货：Binance保证金；BTC/ETH/LTC 的 USDT 永续，每周初各目标权重0.3再平衡（QC Documentation crypto-futures）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（Binance保证金BTC/ETH/LTC USDT永续每周初各0.3再平衡；QC Documentation crypto-futures）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密期货：Binance保证金；BTC/ETH/LTC 的 USDT 永续，每周初各目标权重0.3再平衡（QC Documentation crypto-futures）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `crypto-futures/main.py`。账户币 `USDT`；`BrokerageName.BINANCE` + `AccountType.MARGIN`；`add_crypto_future` 三对 `BTCUSDT/ETHUSDT/LTCUSDT`；`date_rules.week_start()` + `time_rules.midnight` 调用 `_rebalance`：对 `self.securities.keys()` 各 `PortfolioTarget(s, 0.3)`，`set_holdings(..., liquidate_existing_holdings=True)`。不是现货等权Top10（W273/W327/W328）核。提出日期未知。 不是现货等权Top10（W273/W327/W328）核：本条为Binance保证金BTC/ETH/LTC USDT永续，每周初各目标权重0.3再平衡。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

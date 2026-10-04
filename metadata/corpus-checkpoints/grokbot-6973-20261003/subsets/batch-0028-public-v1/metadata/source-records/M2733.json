@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2733",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2733,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1c2e8ff73df568a2db7874714dde97611ea41e2b5081bddf772d0665259f073d",
+    "rule_sha256": "89d80169ca1a74c4946e395455d03da8db0590b51e3fe6bf3de2820f75ecd53f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2733",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2733"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/alternative-data-chain-universe-quivercnbcsuniverse/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：Quiver CNBC 当日≥2条BUY意见且成交额Top100，每日09:00单票上限10%（QC Documentation chain CNBC）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（Quiver CNBC当日≥2条BUY且成交额Top100每日09:00单票上限10%；QC Documentation chain CNBC）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：Quiver CNBC 当日≥2条BUY意见且成交额Top100，每日09:00单票上限10%（QC Documentation chain CNBC）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `alternative-data-chain-universe-quivercnbcsuniverse/main.py`。按标的汇总 `QuiverCNBCsUniverse`；保留 `direction==BUY` 条数 `≥2`；与基本面交集按成交额取前100。每日 09:00：权重=`min(1/N, 0.1)`。不是 W322（阈值≥3、无成交额Top100）核。提出日期未知。 不是W322（阈值≥3、无成交额Top100）核：本条为Quiver CNBC当日≥2条BUY意见且成交额Top100，每日09:00单票上限10%。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

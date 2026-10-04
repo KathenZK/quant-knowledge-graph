@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1998",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1998,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0c59b22e5fb45a705563ae11bf37b803354f3c42cebe38e7d7471b3c3b6df7ce",
+    "rule_sha256": "ae5306eea8010c0ad1a14e3e729085be80a14936ad41f24ff5ab64edfb7fea17"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1998",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1998"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/cryptohassle/cryptohassle.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（cryptohassle.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区cryptohassle：1h，近5根内HA-SSL上穿、HA动量上穿与HA-MACD上穿曾各发生且量>1000做多；HA-SSL上轨下穿下轨平多；止损−20%，追踪止损开"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区cryptohassle；1h）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区cryptohassle：1h，近5根内HA-SSL上穿、HA动量上穿与HA-MACD上穿曾各发生且量>1000做多；HA-SSL上轨下穿下轨平多；止损−20%，追踪止损开"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/cryptohassle/cryptohassle.py默认。timeframe=1h；stoploss=−0.20；minimal_roi={\"0\":0.50}；trailing_stop=True，positive=0.01，offset=0.07。做多须同时：ha_ssl_cross_above 近5根 rolling.any==1；ha_mom_cross_above 近5根 any==1；ha_macd_cross_above 近5根 any==1；volume>1000。平多：ha_sslUp 下穿 ha_sslDown 且 volume>0。提出日期未知。 不是单SSL或单MACD：本条是1h cryptohassle，近5根内HA-SSL/动量/MACD上穿曾各发生且量>1000做多，HA-SSL上轨下穿下轨平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

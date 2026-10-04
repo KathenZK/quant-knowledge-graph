@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2137",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2137,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "83c7df39a5a6fa4f4d9c40b77294f67c318d49a2a0d91b8081c8fbc95fbe5408",
+    "rule_sha256": "2833977513b9569b2bcdf9e135fbc97f2c0b8a1cd82b53e7c2f46bd08a5dfb76"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2137",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2137"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/ema/ema.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（ema.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区ema：5m，合成EMA差上穿其SMA(29)做多，下穿平多；止损−100%，ROI立即1000%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区ema；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区ema：5m，合成EMA差上穿其SMA(29)做多，下穿平多；止损−100%，ROI立即1000%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/ema/ema.py默认。timeframe=5m；stoploss=−1；minimal_roi={\"0\":10}；trailing_stop=False。ema6=EMA(9)，ema24=EMA(18)，ema11=EMA(32)，ema25=EMA(64)；ema=(ema6−ema24)×0.6+(ema11−ema25)×0.5；ema2=SMA(ema,29)。做多：ema 上穿 ema2。平多：ema 下穿 ema2。不是单均线交叉或 W150 MAC 的 EMA50/200。提出日期未知。 不是W150 MAC EMA50/200：本条是5m合成EMA差上穿其SMA(29)做多下穿平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1972",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1972,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "409df8828b5bb83b0dee5f5393015d4f4b0f5d5788037810c89ca9ad4e5ece0d",
+    "rule_sha256": "2fffae8cd5c5c153ff7f0c3f9631503a53b00a34c58f4e83c1bd6b8dbecf5cee"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1972",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1972"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Roth03/Roth03.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Roth03.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Roth03：5m，收盘<BB(20,2σ)下轨且fastd>37且MFI<20做多；SAR>收盘且RSI>69且MFI>86且fastd>79平多；止损约−31.9%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Roth03；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Roth03：5m，收盘<BB(20,2σ)下轨且fastd>37且MFI<20做多；SAR>收盘且RSI>69且MFI>86且fastd>79平多；止损约−31.9%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/Roth03/Roth03.py以实际 populate 条件为准（buy_params 中 trigger=bb_lower、fastd/mfi 启用；sell-trigger=sell-sar_reversal 且 sell-rsi/mfi/fastd 启用）。timeframe=5m；stoploss=−0.31939；minimal_roi约0/33/90/111分钟对应24.553%/7.203%/1.452%/0。指标：典型价BB(20,2)；STOCHF 的 fastd；MFI；RSI；SAR。做多：close<bb_low 且 fastd>37 且 mfi<20（cci 条件注释关闭）。平多：sar>close 且 rsi>69 且 mfi>86 且 fastd>79。不是 W143 Roth01（MFI<24+CCI≤−57 / 卖侧含 BB 上轨与 CCI）。提出日期未知。 不是W143/M1819 Roth01的MFI+BB+CCI组合：本条是5m Roth03，收盘<BB下轨且fastd>37且MFI<20做多，SAR>收盘且RSI>69且MFI>86且fastd>79平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

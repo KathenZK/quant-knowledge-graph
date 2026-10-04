@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2171",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2171,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "90b24d65426351cbcca9f49612bdb2a677b498e88760f704bc619277c410f66a",
+    "rule_sha256": "93594580f0fe6134e78bfe4704ce6a5ee47cd1d329f18b17c534f4aacc89fcbc"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2171",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2171"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/check-indicator-is-ready"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线价>SMA(30)满仓，价<SMA(30)清仓（EasyQuant IsReady/WarmUp示例核）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY；SMA30满仓/清仓；EasyQuant IsReady）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-04"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线价>SMA(30)满仓，价<SMA(30)清仓（EasyQuant IsReady/WarmUp示例核）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《QuantConnect Best Practices: Checking if an Indicator is Ready》已印 MovingAverageReadinessAlgorithm。标的 SPY，日线。period=30；self.sma(symbol,30)；set_warm_up(30)。sma.is_ready 后：price>sma 且未持仓则 SetHoldings(1.0)；price<sma 且已持仓则 Liquidate。不是 SMA50/200 双均线核。提出日期取页面 Published on。 不是SMA50/200或SMA200止损核：本条是EasyQuant SPY日线价>SMA(30)满仓、<SMA(30)清仓。 计入美股/ETF。 提出日期按源文件原样保留2025-12-04。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

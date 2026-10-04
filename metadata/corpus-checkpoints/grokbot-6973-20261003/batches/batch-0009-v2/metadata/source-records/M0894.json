@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0894",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 894,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b3803ef13a15b09013e0df7b7f75d079b27eb61db779e5518fdcf705b5e5e0fb",
+    "rule_sha256": "e830eb727994c5d2cb718716ddeda675768f9c21b33f4e2ed5ba073c6fe1a9c3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0894",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0894"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/195/Volatility-Scaled-Multi-Asset-Time-Series-Momentum-Rotation"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Solomon Pak"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "波动率缩放多资产时间序列动量：3/6/12个月等权合成除以约1个月已实现波动，最多8最少3，少于3个正动量则长久期美债/黄金60/40；名单与目标波动未印出"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "多资产ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-01-27"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Volatility-Scaled Multi-Asset Time-Series Momentum Rotation"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：多资产 ETF 名单页面未印出，目标市场波动率页面未印出，不能把未写出的代码或目标波动数字补成规则。已印出的 3/6/12 等权合成、约 1 个月已实现波动、最多 8、至少 3，以及少于 3 个正动量时长久期美债/黄金 60/40 保留。本条只写这组合成与回退，不是已收的 11 只 ETF 以 252 日收益超过 SHY 才做多、按 60 日已实现波动率逆权重、剩余进 BIL，也不是同一信号的未写死代码变体：那边低于现金可做空或置零、敞口归一到 1.0。也不是体制感知多袖里按 3、6、12 个月动量选前 3–5 并逆波动率、不足时回退长期国债、黄金和现金：那边没有等权合成后再除以约 1 个月波动，没有最多 8、至少 3，也没有 60/40。每日计算约 3、6、12 个月三种期限总回报动量并等权合成，再除以约 1 个月已实现波动率做风险调整；月初刷新；反波动率加权并按目标市场波动率动态缩放。计入美股/ETF。提出日期按源文件原样保留2026-01-27。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。名单与目标波动未印出"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

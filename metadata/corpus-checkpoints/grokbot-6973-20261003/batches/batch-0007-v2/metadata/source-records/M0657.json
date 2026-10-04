@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0657",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 657,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5c7d2c9017c52f5601dfccd45be00b349f8b57e9535ec6de019e219287b97b3d",
+    "rule_sha256": "e28dd4c287139f732979d53c761243c848da66a1c01b045596a6e630fec6cfb4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0657",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0657"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/predicting-us-treasury-returns/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Guido Baltussen等（Allocate Smartly策略名单；该站只实测美国IEF）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美国中期国债四信号集成仓"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Predicting Bond Returns: 70 Years of International Evidence；Predicting US Treasury Returns"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "每月最后一个交易日收盘，对四个分量各给-1到+1的信号，再取平均，最终仓位等于（平均值加1）除以2，介于0与100%之间，配置IEF，其余持现金（收益等于三个月国库券）。持有至下月末。四个分量：1）10年与13周国债利差相对过去10年的z分数，截断在-1与+1。2）IEF过去12个月收益减去BIL；大于0为+1，小于0为-1。3）标普500价格指数过去12个月收益减去BIL，相对过去10年作z分数后乘以-1，截断在-1与+1。4）DBC过去12个月收益相对过去10年作z分数后乘以-1，截断在-1与+1。z分数为该值减均值再除以标准差。页面写明1970年前不纳入商品分量。股权动量用价格指数，不含股息。该页只测美国IEF，未做原文的跨国国债篮子。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Strategy rules tested；Calculation notes（1）（2）（3）。作者名单见https://allocatesmartly.com/list-of-strategies/"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

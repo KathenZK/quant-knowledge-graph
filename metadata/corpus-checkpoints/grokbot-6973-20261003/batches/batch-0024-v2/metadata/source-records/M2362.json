@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2362",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2362,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "816ce5f17a8a3860a11162e8b85518a6ccd40a2fc0c347ba732dcba641a032a9",
+    "rule_sha256": "4101f6dc0f2cac83cdf4be223eed3ab2948637ba98fbdcce1fcf9ad83291ec32"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2362",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2362"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/scheduled-events-rebalancing"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY 60% + TLT 40%，每月首个交易日开盘后30分钟再平衡（EasyQuant固定配比）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY60%+TLT40%月再平衡；EasyQuant）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-11-27"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY 60% + TLT 40%，每月首个交易日开盘后30分钟再平衡（EasyQuant固定配比）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Scheduled Events Rebalancing》已印 MonthlyRebalanceAlgorithm。SPY、TLT 分钟。schedule：month_start(SPY) + after_market_open(SPY,30) → SetHoldings(SPY,0.60)、SetHoldings(TLT,0.40)。on_data 不交易。不是风险平价60/40+SMA200现金过滤（W050），也不是防御袖动量轮动60/40。提出日期取页面 Published on。 不是风险平价60/40+SMA200现金过滤：本条为SPY60%+TLT40%每月首个交易日开盘后30分钟再平衡。 计入美股/ETF。 提出日期按源文件原样保留2025-11-27。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
