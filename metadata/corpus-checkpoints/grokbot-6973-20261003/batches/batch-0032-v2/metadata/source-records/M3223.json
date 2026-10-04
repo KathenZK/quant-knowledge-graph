@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3223",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3177,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "31eb8d0b8a9a6c766574f0be9d414df28561f61a04ff89f0f1ec874e3bc4e2b7",
+    "rule_sha256": "27bf5b66d1921a0715c3467277d610323feb6c309b2f5b97c46cda42c8958b3e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3223",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3223"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateCryptoFutureHourlyAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密永续：Binance币本位保证金；ADAUSDT小时 EMA(3)>EMA(6)则买1000（先试100000预期拒单），快慢空头且hour>10且订单数=2则卖3000，hour≥22且订单数=3清仓（Lean BasicTemplateCryptoFutureHourly）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密货币"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密永续：Binance币本位保证金；ADAUSDT小时 EMA(3)>EMA(6)则买1000（先试100000预期拒单），快慢空头且hour>10且订单数=2则卖3000，hour≥22且订单数=3清仓（Lean BasicTemplateCryptoFutureHourly）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateCryptoFutureHourlyAlgorithm.py`。经纪 `BINANCE_COIN_FUTURES` MARGIN；`add_crypto_future(\"ADAUSDT\", Hour)`；`fast=ema(...,3,Hour)`，`slow=ema(...,6,Hour)`。`fast>slow` 且未投资且订单数=0：先 `buy(100000)`（预期 INVALID）再 `buy(1000)`；`else`：`hour>10` 且订单数=2 → `sell(3000)`；`hour≥22` 且订单数=3 → `liquidate()`。不是分钟 BTCUSD+ADAUSDT EMA30/60 核（W478），也不是现货 LTC EMA30/60 核（W410）。提出日期未知。Binance币本位 ADAUSDT 小时EMA3/6+订单态清仓 ≠ 分钟BTC+ADA EMA30/60（W478）/现货LTC EMA30/60（W410）。计入加密。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

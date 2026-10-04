@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3284",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3238,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "58290df70e90b5cdc54f627e50ed2fbd050c90eb2c762fc02ec66e801ea040b5",
+    "rule_sha256": "ea0c649d4e9071a579bdc021c7ea1fb3a3ed726c5fea73b5d0404459675e1653"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3284",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3284"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/IndexOptionCallOTMExpiryRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；2021-01链上 strike≥4250 最低行权欧式 CALL（预期4250）；次日开盘后买1张，OTM到期作废（Lean IndexOptionCallOTMExpiry）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；2021-01链上 strike≥4250 最低行权欧式 CALL（预期4250）；次日开盘后买1张，OTM到期作废（Lean IndexOptionCallOTMExpiry）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `IndexOptionCallOTMExpiryRegressionAlgorithm.py`。`add_index(\"SPX\",Minute)`；链筛 `strike≥4250` 且 CALL 且 2021-01，升序取首（预期 4250 / 2021-01-15 欧式）。次日开盘后1分钟 `market_order(...,1)`；OTM 到期不行使、无指数仓。不是 ITM 买看涨核（W523），也不是期货期权 OTM 核（W525）。提出日期未知。SPX OTM 买看涨到期作废 ≠ ITM 买看涨现金结算（M3271/W523）/期货OTM（W525）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6558",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6512,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6feec8aa80637693237cc76c61949f496080db766bab277db3fddb4b2bdd11c2",
+    "rule_sha256": "ccf238a5511bcace5c08d842abc04450ef9663b4acbca54ad2ace2488c9dd7f5"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6558",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6558"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/Illiquidity.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Amihud / OpenSourceAP CrossSection"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-366/W3769"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Amihud·非流动性十分位多空：年6月末；过去12月日|收益|/(价×量)月均再年均；NYSE且|价|>5；等权多最高空最低持12月（Amihud·Illiquidity·DecileL/S）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2002-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Amihud illiquidity univariate decile L/S (Amihud 2002 Table 2 lineage)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Amihud《Illiquidity and stock returns》（JFM 2002）非流动性之可钉十分位多空（OpenSourceAP Illiquidity可执行核，非目录字段）。Illiquidity=过去12个月（日度|ret|/(|prc|×vol)之月均值）的均值；仅NYSE（exchcd==1）且|prc|>5。每年6月末按Illiquidity分十分位；等权做多最高十分位、做空最低十分位，持有12月。Sign为正。不是French·Var/RESVAR或DolVol/ShareVol近核；不是本批CompEquIss。代码与SignalDoc：StockWeight=EW、PortfolioPeriod=12、StartMonth=6、Filter=|prc|>5∧exchcd==1；LSQuantile按十分位执行=0.1。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Amihud·Illiquidity·DecileL/S"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

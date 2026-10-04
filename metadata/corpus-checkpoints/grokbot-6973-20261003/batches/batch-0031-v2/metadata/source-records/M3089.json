@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3089",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3056,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0d43d3a375bcad9f445b20db1c0d081f76d3fecc64047dd4a1eefcbfe3669de0",
+    "rule_sha256": "ba555e5247b6b7b3091cbfd41ec6d7f7129e3dda72a83556318a6ca92f3bde25"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3089",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3089"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/WarmupAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY秒线；EMA(60)>EMA(3600)满仓多，否则满仓空；暖机3600根（Lean WarmupAlgorithm）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPX分钟EMA80>EMA200满仓指定ITM看涨否则清仓；Lean BasicTemplateIndex）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY秒线；EMA(60)>EMA(3600)满仓多，否则满仓空；暖机3600根（Lean WarmupAlgorithm）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `WarmupAlgorithm.py`。`add_equity(\"SPY\", Resolution.SECOND)`；`fast=ema(SPY,60)`，`slow=ema(SPY,3600)`；`set_warmup(3600)`。暖机后每个数据点：若 `fast.current > slow.current` → `set_holdings(SPY,1)`，否则 `set_holdings(SPY,-1)`。不是日线 EMA50/200 暖机核（W208 EasyQuant），也不是默认 EMA100/200 参数化核。提出日期未知。 不是W341 SPX ATM穿均线买call/put核，也不是W404 ES+SPY EMA20/60核：本条为SPX分钟EMA(80)>EMA(200)则满仓指定ITM看涨合约否则清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

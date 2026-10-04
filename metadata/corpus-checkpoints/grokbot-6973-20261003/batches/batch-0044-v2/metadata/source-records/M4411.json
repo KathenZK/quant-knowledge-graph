@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4411",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4365,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "95e196ecfda773a4d409edb44368e1d12c29fc0650415b90c853eae9bdbb09c7",
+    "rule_sha256": "fd2c2eb2ed22e33a4cc98ed44f9c3e5c0a4b26156659724f4ce43c1385289c6b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4411",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4411"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://doi.org/10.1111/j.1540-6261.2011.01679.x"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Zhi Da / Joseph Engelberg / Pengjie Gao"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-151/W1621"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Da·Engelberg·Gao·异常搜索量ASVI：周频；Russell3000；ASVI=log(SVI)−log(近8周SVI中位)；等高ASVI组等权做多、等低组等空；持约2周（DEG ASVI·2w）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2011-10"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Da·Engelberg·Gao·异常搜索量ASVI：周频；Russell3000；ASVI=log(SVI)−log(近8周SVI中位)；等高ASVI组等权做多、等低组等空；持约2周（DEG ASVI·2w）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Da/Engelberg/Gao《In Search of Attention》（JF 2011）之 **Google 异常搜索量注意力溢价** 可钉死核。宇宙：Russell 3000（样本内曾入指数者）；用**股票代码**在 Google Trends 取周频 SVI（稀搜截断为缺失则跳过）。**ASVI_t=log(SVI_t)−log(Med(SVI_{t−1…t−8}))**。每周按 ASVI 截面排序，等权做多高 ASVI 组、做空低 ASVI 组（论文主结果用特征调整收益；实现上可取十分位或五分位两端），持有约 **2周**（初始正压后约5–52周反转，本条只钉短期注意力买入腿）。价<$3 等微观结构过滤可按原文。相对成交量/新闻注意力代理：本核为 **搜索揭示的零售注意力**。计入美股/ETF。提出日期 2011-10。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "JF 2011 · ASVI=logSVI−log med8 · R3000 ticker SVI · long high / short low · hold ~2w"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

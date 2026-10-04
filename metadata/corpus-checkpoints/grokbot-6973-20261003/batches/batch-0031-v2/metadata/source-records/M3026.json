@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3026",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3005,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e9a4fc6076f9f6ea370908a64bc05ebdbb96509f1931ac5611d4904d53c7f282",
+    "rule_sha256": "2930257399fb604656a3a04b4638cb8929b8de5244620e8e3a12aafb86cb1932"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3026",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3026"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/Alphas/PriceGapMeanReversionAlpha.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：周更成交额Top25；分钟收盘跳空\\|ΔP\\|>3×收盘Std(100)则反向Insight等权（Lean PriceGapMeanReversion）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPX分钟EMA80>EMA200满仓指定ITM看涨否则清仓；Lean BasicTemplateIndex）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：周更成交额Top25；分钟收盘跳空\\|ΔP\\|>3×收盘Std(100)则反向Insight等权（Lean PriceGapMeanReversion）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `Alphas/PriceGapMeanReversionAlpha.py`。粗选每周按 `dollar_volume` 取前 25；分钟分辨率。Alpha：对每票维护 `StandardDeviation(lookback=100)` 与跳空 `price_jump=(close/last_close)-1`；若 `|100*price_jump| > 3*volatility` 则发 Insight：`price_jump>0`→DOWN，否则→UP，预测期=5×分辨率；等权组合+即时执行。不是 W379 BB下轨多核，也不是 W383 均值回归组合核。提出日期未知。 不是W341 SPX ATM穿均线买call/put核，也不是W404 ES+SPY EMA20/60核：本条为SPX分钟EMA(80)>EMA(200)则满仓指定ITM看涨合约否则清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

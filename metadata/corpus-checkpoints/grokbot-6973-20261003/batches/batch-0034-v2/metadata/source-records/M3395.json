@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3395",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3349,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "94e949feb767078d78cd0de23ce4d5a77bb1ac50f6aba6789077e53eb8c4793f",
+    "rule_sha256": "94cebcd451e5496e48d273a6455b6d3b862509621c23c26ff4616bac7224e44c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3395",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3395"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/MarginCallEventsAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；空仓时 set_holdings(100)（约100×杠杆）；保证金预警时把拟强平单数量再×1.1 后提交，以额外清约10%（Lean MarginCallEvents）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；空仓时 set_holdings(100)（约100×杠杆）；保证金预警时把拟强平单数量再×1.1 后提交，以额外清约10%（Lean MarginCallEvents）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `MarginCallEventsAlgorithm.py`。未投资 → `set_holdings(\"SPY\",100)`。`on_margin_call(requests)`：对每笔预警订单 `new_quantity=int(order.quantity*1.1)`，重建 `SubmitOrderRequest`（注释：额外多清约 10% 以留垫）。`on_margin_call_warning`：按净值/价计算可卖股数并 `market_order`。不是单票最大回撤风控框架核，也不是可空数量卖空核。提出日期未知。SPY约100×杠杆+保证金预警数量×1.1额外清10% ≠ 单票最大回撤框架 / 可空数量卖空。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

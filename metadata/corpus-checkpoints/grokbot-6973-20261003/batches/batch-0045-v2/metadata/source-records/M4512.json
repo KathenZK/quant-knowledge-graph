@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4512",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4466,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6327ef531fcfe617e0d3ae426e2cf884cc019226d2326c4dfeaeb9e25cc5791f",
+    "rule_sha256": "234b7513972d9a2a83fef11d10b5930c6eeb0994a6df9d68785c135c2786d2b6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4512",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4512"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://doi.org/10.1093/rfs/hhm014"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Amit Goyal / Ivo Welch"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-162/W1722"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Goyal·Welch·期限利差单变量择时：月末；递推TMS回归溢价；预测>历史均值满仓美股，否则T-bill；持1月（GW TMS·vsHA）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2008-07"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Goyal·Welch·期限利差单变量择时：月末；递推TMS回归溢价；预测>历史均值满仓美股，否则T-bill；持1月（GW TMS·vsHA）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Goyal/Welch《A Comprehensive Look at the Empirical Performance of Equity Premium Prediction》（RFS 2008）框架下 **单一期限利差（tms）** 可钉死择时核。TMS=长期国债收益率−短期国债/T-bill 收益率（文口径）。每月用扩展窗把下月股权溢价对 **滞后 TMS** 做 OLS；若 **一步预测溢价高于同期历史平均溢价** 则满仓美股指数，否则 **T-bill**；持有 **1月**。不是单变量 D/P（M4507）；不是 Rapach–Strauss–Zhou 十四变量等权合成（M4489）；不是单纯 10Y−2Y 符号三区间配置（近M3735）。计入美股/ETF。提出日期 2008-07。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "RFS 2008 · single tms forecast vs hist avg → equity/T-bill"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

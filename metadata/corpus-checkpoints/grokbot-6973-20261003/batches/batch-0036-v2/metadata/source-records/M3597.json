@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3597",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3551,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "55d42bc0897fcf6ad8f46f1c68ba251ed0525390a4b0c7b221e21d8c5bd90e57",
+    "rule_sha256": "227e645503ec203d1c5b9e9c695426879d8105c86492f38cf2e920469f8edfdc"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3597",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3597"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Robust-Asset-Allocation"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor / Michael Kapler（转述 Scott’s Investments / Alpha Architect RAA）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-54/W802"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SI稳健资产配置RAA_MOD：月末；目标股60/实物20/债20；价>SMA10且10月收益>现金12月则满配目标，仅一条则半配（SI RAA_MOD）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/多资产ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SI稳健资产配置RAA_MOD：月末；目标股60/实物20/债20；价>SMA10且10月收益>现金12月则满配目标，仅一条则半配（SI RAA_MOD）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Systematic Investor《Robust Asset Allocation》代码中的 **RAA**（注释 RAA_MOD）。目标权重：US.VAL/US.MOM/INT.VAL/INT.MOM 各 **15%**（合计股票袖 60%），REIT/COM 各 **10%**（实物 20%），US.BOND **20%**。月频：`SMA(10)`；动量=10月收益，且与现金 **12** 月收益比较。信号：若价>SMA10 **且** 10月收益>现金12月收益 → 该腿权重=目标；若仅满足其一 → 目标×**0.5**；皆不满足 → 0；剩余进 CASH。不是格雷四对各半（M0790）；不是 AA 双动量四对（M3542）。 计入美股/ETF。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "网页 RAA_MOD / weight 公式"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

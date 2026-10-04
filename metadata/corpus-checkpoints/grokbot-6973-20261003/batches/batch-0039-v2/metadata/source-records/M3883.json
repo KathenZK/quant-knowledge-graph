@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3883",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3837,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b7682a9a952703a09350f12d6e19f20b9e0336189e541b151f3346b45e3c8b89",
+    "rule_sha256": "745a5860c61efca0a6d331be3e0988ae7ea10f227053276b746c954a9163682a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3883",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3883"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15298/pairs-trading-copula-vs-cointegration/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect（Jing Wu；Stander et al.）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-91/W1090"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·Copula配对QQQ/XLK：月更AIC选Clayton/Frank/Gumbel；日频条件MI越5%/95%带则按回归β多空配对（QC Copula·QQQ-XLK）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·Copula配对QQQ/XLK：月更AIC选Clayton/Frank/Gumbel；日频条件MI越5%/95%带则按回归β多空配对（QC Copula·QQQ-XLK）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect《Pairs Trading Copula Vs Cointegration》的 Copula 腿：候选高相关 ETF 对中按 Kendall τ 选对（实现以 **QQQ–XLK** 为主）；每月用近12月对数收益拟合 Archimedean（Clayton/Frank/Gumbel）并按 AIC 选族与 θ；每日用条件误定价指数 MI，当一侧 <0.05 且另一侧 >0.95 时按回归系数 β 对两腿反向开仓。不是12月距离配对±2σ（M0114）。计入美股/ETF。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 15298 Archimedean copula MI bands"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3036",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3015,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "67db4652945811629d362257152fd1e94eb9b7fd8f52013583177f481808d8c9",
+    "rule_sha256": "3c2034ed6fa0e204a9ec31518d18056476d99e8baf78670c90d7042fffb20ca2"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3036",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3036"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/AutoRegressiveIntegratedMovingAverageRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；ARIMA(1,1,1)与ARIMA(1,1,0)窗50；\\|差\\|>1且ARIMA值>上次则买1股，否则卖1股（Lean ARIMA Regression）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；ARIMA(1,1,1)与ARIMA(1,1,0)窗50；\\|差\\|>1且ARIMA值>上次则买1股，否则卖1股（Lean ARIMA Regression）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `AutoRegressiveIntegratedMovingAverageRegressionAlgorithm.py`。`arima(\"SPY\",1,1,1,50)` 与 `arima(\"SPY\",1,1,0,50)`，`automatic_indicator_warm_up=True`。当 ARIMA 就绪且 `|arima−ar|>1`：若 `arima.current > _last` → `market_order(SPY,1)`，否则 `market_order(SPY,−1)`；然后 `_last=arima.current`。不是 W349/W418 神经网络核。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

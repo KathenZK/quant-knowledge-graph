@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3374",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3328,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3ab6c8e8cb4bdb2b8defb8dd387d9502efb89b6cc9c624bae2de6b8f2c5ae9fa",
+    "rule_sha256": "c294ac4f5e69ef9c563e910ab212fc4ff46097e208c0e18b58414c3f4aa2d318"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3374",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3374"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ETFConstituentUniverseFilterFunctionRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY小时成分宇宙；再平衡时对权重≥0.01%的成分按夹紧权重 max(1%,min(原始权重,5%)) set_holdings（Lean ETFConstituentUniverseFilterFunction）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY小时成分宇宙；再平衡时对权重≥0.01%的成分按夹紧权重 max(1%,min(原始权重,5%)) set_holdings（Lean ETFConstituentUniverseFilterFunction）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ETFConstituentUniverseFilterFunctionRegressionAlgorithm.py`。`universe.etf(SPY)` 过滤返回全部成分符号；`on_data` 在 `etf_rebalanced` 时：对 bar 对应成分若 `weight≥0.0001`，`bounded_weight=max(0.01,min(weight,0.05))` → `set_holdings(symbol,bounded_weight)`（每轮再平衡标志清零）。期望再平衡 2 次、涉及 8 只资产。不是 Top8 等权 ConstantAlpha 核（W511），也不是 RSI+成分权重 Insight 核（W413）。提出日期未知。SPY成分再平衡时权重夹紧[1%,5%] set_holdings ≠ Top8等权ConstantAlpha（M3260）/RSI+成分权重Insight（M2916）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

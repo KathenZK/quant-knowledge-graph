@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3265",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3219,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c544c0556fc9265951720a11e034b565267f2b258a90820d0f2c78a50c5533c0",
+    "rule_sha256": "4bbabc729cd39567986e8aa56c6805ab68495565787ba755d019139af6d9c220"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3265",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3265"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ScheduledEventsAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；空仓满仓买入；每10分钟若总未实现盈亏<−1000则清仓（Lean ScheduledEvents）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；空仓满仓买入；每10分钟若总未实现盈亏<−1000则清仓（Lean ScheduledEvents）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ScheduledEventsAlgorithm.py`。`add_equity(\"SPY\")`；`on_data`：未投资→`set_holdings(SPY,1)`。日程：`every_day`+`every(10分钟)`→`liquidate_unrealized_losses`：若 `total_unrealized_profit < −1000` → `liquidate()`。另有开盘后10分/收盘前10分/周三午间等日志事件；`month_start` 再平衡占位为空。不是仅日程宇宙核（W500），也不是最大回撤百分比风控模型核。提出日期未知。SPY空仓满仓买 + 每10分钟未实现盈亏<−1000清仓 ≠ 仅日程宇宙（M3233）/最大回撤%模型。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

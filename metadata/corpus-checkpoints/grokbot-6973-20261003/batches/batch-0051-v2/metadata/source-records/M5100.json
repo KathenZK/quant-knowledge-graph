@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5100",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5054,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "21317d75ec5da839ecbf2a675c83f14196da6ef22f4ba5871b240532c37dc722",
+    "rule_sha256": "e354b7a0cf255b207791d4e3bc3f0e74fc5f9572504058ddee56d0996fbc6b7f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5100",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5100"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://imarketsignals.com/2025/the-im-cape-ma35-etf-rotation-strategy-with-4-etfs/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "iMarketSignals / Georg Vrba"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-221/W2311"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "iMS·CAPE-MA35四ETF相位：月末；Shiller CAPE/MA35之6月均+10月斜率分下行/上行/成长/防御配QQQ·XLE·XLU·GLD（CAPE-MA35·4ETF）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-10-24"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "The iM CAPE-MA35 ETF Rotation Strategy with 4 ETFs"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 iMarketSignals《The iM CAPE-MA35 ETF Rotation Strategy with 4 ETFs》（2025-10-24）钉死核：月频 CAPE-MA35=Shiller CAPE÷其35年移动均；再取 CAPE-MA35 的 6 月简单均 CAPE6；对 CAPE6 做 10 月窗线性回归斜率（文要求 R²≥0.8）。分配（相位内等权）：(1) 斜率 < −0.01 → 100% GLD；(2) 否则若 CAPE6 > 其 240 月均且 CAPE6 >1.45 且斜率 > +0.01 → QQQ+XLE；(3) 否则若 CAPE6 < 240月均且 CAPE6 <1.35 → 100% QQQ；(4) 否则若 CAPE6 ≥ 240月均且 CAPE6 ≥1.45 → XLU+GLD；(5) 其余 → QQQ+XLU+GLD。公开 Yale/Shiller CAPE + yfinance ETF 复权价。不是面板广度核。计入美股/ETF。提出日期 2025-10-24。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "iMS CAPE-MA35 · phases → QQQ/XLE/XLU/GLD · monthly"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

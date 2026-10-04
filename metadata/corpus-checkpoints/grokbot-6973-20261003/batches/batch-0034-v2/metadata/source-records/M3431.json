@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3431",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3385,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "aec2952325a3654629231a5f028b10ff8058ffaa09aaf3e1705434cb50e786bc",
+    "rule_sha256": "c5f6f2b852fd31fcb252f27ab001d8567af3073f9648a13dad361969c6e8096f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3431",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3431"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://cssanalytics.wordpress.com/2014/01/28/are-simple-momentum-strategies-too-dumb-introducing-probabilistic-momentum/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "David Varadi / CSS Analytics"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线；SPY对TLT信息比率→t分布置信度；回看60日、置信度≥60%则满仓胜出方，否则保持（CSSA Probabilistic Momentum）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2014-01-28"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线；SPY对TLT信息比率→t分布置信度；回看60日、置信度≥60%则满仓胜出方，否则保持（CSSA Probabilistic Momentum）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CSS Analytics《Are Simple Momentum Strategies Too Dumb? Introducing Probabilistic Momentum》（2014-01-28）已印构造与回测设定。对资产对 A/B（文中回测 SPY 与 TLT）：算信息比率 IR=(Rp−Ri)/跟踪误差，自由度=回看期数−1，Probabilistic Momentum(A vs B)=t 分布置信度 Tconf(IR)；对称 Prob(B vs A)=1−Prob(A vs B)。作者回测：回看 60 日，置信度阈值 60%——仅当一方相对另一方的概率动量达到该阈值才切换满仓至该方，否则减少无谓换仓。不是简单比较两资产收益高低的二元动量核，也不是本轮 PAM（对现金绝对动量）核。提出日期取文首 January 28, 2014。CSSA Probabilistic Momentum：SPY×TLT IR→t置信度60日/60%切换满仓 ≠ 简单二元相对动量 / PAM绝对动量（W630）。计入美股/ETF。提出日期按源文件原样保留2014-01-28。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "IR→Tconf 段 + 60日/60% 回测句"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

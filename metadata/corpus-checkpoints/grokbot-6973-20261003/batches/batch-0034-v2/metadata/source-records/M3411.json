@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3411",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3365,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7d040648d5164728135b3a3ffa9059c611ad51feb16bd8fc974d5e4484a52f22",
+    "rule_sha256": "9f8b98b80a64d6cf0b48c9656bc61b0edba0b653728e716bd6f59bcd8c146b5d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3411",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3411"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/OptionChainFiltersRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；宇宙=仅Call、到期1–10日、行权−2..+2；空仓时对链 `strikes(0,0)` 取首张（ATM及以上最近）市价买1（Lean OptionChainFilters）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；宇宙=仅Call、到期1–10日、行权−2..+2；空仓时对链 `strikes(0,0)` 取首张（ATM及以上最近）市价买1（Lean OptionChainFilters）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `OptionChainFiltersRegressionAlgorithm.py`。`add_option(\"GOOG\")`；`set_filter(calls_only().expiration(1,10).strikes(−2,2))`。`on_data`：未交易过时取切片链，`next(iter(chain.strikes(0,0)))` → `market_order(...,1)`。断言切片链与宇宙过滤一致（仅 Call、到期1–10）。不是 W582 最高行权0–1日周权核，也不是 W456/W457 泛 ATM 买单模板核（本条显式 strikes(0,0)+calls_only+1–10日）。提出日期未知。GOOG仅Call到期1–10日行权−2..+2；空仓对strikes(0,0)首张市价买1 ≠ 周权最高行权0–1日（M3387）/泛ATM买单模板。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

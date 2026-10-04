@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3042",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3021,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "79e3018ca9b9085d85101af96fe4f11d8b0c0bfa1d6a1a28002164e410962824",
+    "rule_sha256": "82ddb83b8c9b9f9ab2046d04d77acba0b8c08f459b169a456950bbfba41ceba6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3042",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3042"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/Alphas/ContingentClaimsAnalysisDefaultPredictionAlpha.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：月更成交额偏小盘750；CCA违约概率POD≥0.25（且≠1）则30日DOWN等权（Lean ContingentClaimsAnalysisDefaultPrediction）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：月更成交额偏小盘750；CCA违约概率POD≥0.25（且≠1）则30日DOWN等权（Lean ContingentClaimsAnalysisDefaultPrediction）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `Alphas/ContingentClaimsAnalysisDefaultPredictionAlpha.py`。粗选月更按成交额取前 750（偏小盘）；精选要求总资产多期>0、流动负债/应付利息/资产增长/股息/ROA 等有效。Alpha 默认 `default_threshold=0.25`：对 `pod>=0.25 and pod!=1.0` 发 `Insight.price(..., 30日, DOWN, magnitude=pod)`；等权。不是 W449 微型票日内涨幅做空核。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4486",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4440,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8e6595b5da6cd6f4ebd410924a7bfef29697d16541cefa9aa372c3ce6bd7b4eb",
+    "rule_sha256": "558a1d23db24404a70cc32d2adca386f57a96217a3fed29556a65b7e2b86699c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4486",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4486"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://doi.org/10.1016/j.jfineco.2019.02.011"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Aleksi Pitkäjärvi / Matti Suominen / Lauri Vaittinen"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-159/W1696"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Pitkäjärvi·Suominen·Vaittinen·跨资产时序动量股：月频；K=12；股与债超额皆>0做多股指，皆<0做空股指，信号分歧持现金；持1月（PSV XTSM-Eq·K12）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2020-04"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Pitkäjärvi·Suominen·Vaittinen·跨资产时序动量股：月频；K=12；股与债超额皆>0做多股指，皆<0做空股指，信号分歧持现金；持1月（PSV XTSM-Eq·K12）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Pitkäjärvi/Suominen/Vaittinen《Cross-asset signals and time series momentum》（JFE 2020）之 **股票腿跨资产时序动量** 可钉死核。落地美股代理：SPY（或标普超额）与 IEF/美债指数超额。每月观察过去 **K=12月**（文亦报1–12；钉12）股、债超额收益符号：若 **两者皆为正** → 满仓做多股指；若 **两者皆为负** → 做空股指（或等权空头名义）；若符号不一致 → **持无风险/现金**；持有 **1月**。相对自有资产 TSMOM（仅看股）：本核要求 **债市动量同向确认** 才开股仓。文亦定义债券腿（债正且股负才多债）——本条不拆另开。计入美股/ETF。提出日期 2020-04。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "JFE 2020 · cross-asset TSMOM equity leg · K=12 · both>0 long / both<0 short / else RF"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

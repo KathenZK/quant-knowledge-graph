@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3350",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3304,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5f96d326e43bc7426a11d93f91fbcbef5e4c59c48abe3ca108c813b3622e30d5",
+    "rule_sha256": "bfb56c1908ed80a16c52af70e6a594d02b50243df0fe7b3b899cf7d4659a17df"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3350",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3350"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FutureOptionShortPutOTMExpiryRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES19M20分钟；链上 strike≤3000 最高行权 PUT（预期3000）；次日开盘后卖1张，OTM到期收权利金清算（Lean FutureOptionShortPutOTMExpiry）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES19M20分钟；链上 strike≤3000 最高行权 PUT（预期3000）；次日开盘后卖1张，OTM到期收权利金清算（Lean FutureOptionShortPutOTMExpiry）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FutureOptionShortPutOTMExpiryRegressionAlgorithm.py`。ES 2020-06-19；筛 `strike≤3000` 且 PUT，降序取首（预期 3000）。次日开盘后 `market_order(option,−1)`；OTM 到期不指派。不是卖 ITM 看跌核（W530），也不是卖 OTM 看涨核（W548）。提出日期未知。ES OTM 卖看跌收权利金 ≠ 卖 ITM 看跌（M3287）/卖 OTM 看涨（W548）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

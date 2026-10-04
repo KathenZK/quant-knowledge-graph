@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6568",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6522,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0027428301f295ce879b5d3fbd0b86a33aecfe09c9a10a096574ae126f56b257",
+    "rule_sha256": "a711942f4bd6521026614058f0f9b2f3e13598e2d9cc0b05b1e11176dd327a55"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6568",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6568"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/PctAcc.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Hafzalla / Lundholm / Van Winkle / OpenSourceAP CrossSection"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-367/W3779"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Hafzalla·百分应计十分位多空：年6月末；PctAcc=(IB−OANCF)/|IB|；|价|>5；等权多最低空最高持12月（Hafzalla·PctAcc·DecileL/S）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2011-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Percent operating accruals univariate decile L/S (Hafzalla et al. 2011 Table 4A lineage)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Hafzalla/Lundholm/Van Winkle《Percent Accruals》（AR 2011）百分营运应计之可钉十分位多空（OpenSourceAP PctAcc可执行核，非目录字段）。PctAcc=(ib−oancf)/|ib|；若oancf缺失则用资产负债表变动法：(Δact−Δche)−(Δlct−Δdlc−Δtxp−dp)再除以|ib|；ib=0时分母取0.01。|prc|>5。每年6月末按PctAcc分十分位；等权做多最低十分位、做空最高十分位，持有12月。Sign为负。不是French·Accruals十分位（近M6453）或Sloan应计目录项；不是本批hire；不是OScore/EntMult/Illiquidity/CompEquIss。代码与SignalDoc：StockWeight=EW、PortfolioPeriod=12、StartMonth=6、Filter=|prc|>5；LSQuantile按十分位执行=0.1。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Hafzalla·PctAcc·DecileL/S"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

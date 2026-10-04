@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3286",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3240,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "dceec6f7213c2ef01ba6e3bc7db5a657bb7f8b728b94b5bfa6f118fe7a6c1982",
+    "rule_sha256": "2d7ee35f0cad2d4b1587ef9fdc33cbfd84c12e9999719a5d7893d7a1a24e3f3e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3286",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3286"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FutureOptionShortCallITMExpiryRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES19M20分钟；链上 strike≤3100 最高行权 CALL（预期3100）；次日开盘后卖1张；ITM到期指派得空头期货再清算（Lean FutureOptionShortCallITMExpiry）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES19M20分钟；链上 strike≤3100 最高行权 CALL（预期3100）；次日开盘后卖1张；ITM到期指派得空头期货再清算（Lean FutureOptionShortCallITMExpiry）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FutureOptionShortCallITMExpiryRegressionAlgorithm.py`。ES 2020-06-19；筛 `strike≤3100` 且 CALL，降序取首（预期 3100）。次日开盘后 `market_order(option,−1)`；指派时以 3100 卖出底层期货1手，随后期货到期买回平仓。不是买 ITM 看涨核（W522），也不是 OTM 卖看涨核。提出日期未知。ES ITM 卖看涨指派得空头期货 ≠ 买 ITM 看涨（M3270）/OTM 买看涨（W525）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

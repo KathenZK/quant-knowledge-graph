@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3378",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3332,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "203898c124c91c07ad15e5d39581787f94f0eca1fe4098c72ab0641d474a2c59",
+    "rule_sha256": "6866a2d9e92a3c126d1779e59d3faf58ea85b8546d794e7dd48dfad556fc11e6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3378",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3378"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ComboOrdersFillModelAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY/IBM小时；空仓时提交组合市价(腿+1/−1×100)、组合限价(限价=round(SPY买一))与组合腿限价(各腿限价=round(买一)+1)；自定义部分成交量50/20/10（Lean ComboOrdersFillModel）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY/IBM小时；空仓时提交组合市价(腿+1/−1×100)、组合限价(限价=round(SPY买一))与组合腿限价(各腿限价=round(买一)+1)；自定义部分成交量50/20/10（Lean ComboOrdersFillModel）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ComboOrdersFillModelAlgorithm.py`。两票均挂 `CustomPartialFillModel`。未投资：`legs=[SPY+1,IBM−1]` → `combo_market_order(100)`、`combo_limit_order(100, round(spy.bid_price))`；再构造带腿限价的 legs → `combo_leg_limit_order(100)`。部分成交：市价每次|50|、限价|20|、腿限价|10|。不是单票部分成交日阈核（W545），也不是期权策略工厂组合核。提出日期未知。SPY/IBM组合市价/限价/腿限价+部分成交50/20/10 ≠ 单票部分成交日阈（M3291/W545）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

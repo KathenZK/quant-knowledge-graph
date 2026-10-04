@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3404",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3358,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ffc8d37afa2015bdfa93de7bcf0142e12ada8b0d8b95ead30f2e8f5927e8462d",
+    "rule_sha256": "f95d9fa1226f52c9a1daf10138359e42e640e1646aa990bd07693261bef1abd5"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3404",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3404"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ETFConstituentUniverseFrameworkRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：小时；SPY成分宇宙权重≥0.001；Alpha按成分权重≥0.01发UP否则DOWN（期限1日、insight权重=成分权重）；组合目标量=insight权重；剔除清仓（Lean ETFConstituentUniverseFramework）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：小时；SPY成分宇宙权重≥0.001；Alpha按成分权重≥0.01发UP否则DOWN（期限1日、insight权重=成分权重）；组合目标量=insight权重；剔除清仓（Lean ETFConstituentUniverseFramework）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ETFConstituentUniverseFrameworkRegressionAlgorithm.py`。`universe.etf(\"SPY\", …, filter_etf_constituents)`：保留 `weight≥0.001` 的成分。Alpha=`ETFConstituentAlphaModel`：有 bar/quote 时，`weight≥0.01` → Insight UP，否则 DOWN；期限1日；insight `weight=constituent.weight`。组合=`ETFConstituentPortfolioModel`：仅在有新增时，目标数量=insight.weight。执行=`ETFConstituentExecutionModel`：removed → `liquidate`；其余 `set_holdings(symbol, target.quantity)`。不是 W511 Top8+ConstantAlpha 核，也不是 W568 夹紧权重再平衡核，也不是 ETFConstituentUniverseRSI（W161 族）核。提出日期未知。SPY成分权重≥0.001宇宙+Alpha按≥0.01发UP/DOWN insight权重=成分权重+目标量=insight权重 ≠ Top8+ConstantAlpha（M3260）/夹紧权重再平衡（M3374）/RSI成分（M2916）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

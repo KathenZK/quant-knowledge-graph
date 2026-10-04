@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3352",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3306,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "edfd14b9ebc1b86bcb85c878a425abc531f47d725de77b3d20c5f525b6fd5ab5",
+    "rule_sha256": "63fe561c787a68a9a90268777b94c84976db4c43b151d5ed77f7c789c4f57ef5"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3352",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3352"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/RollingWindowAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；TradeBar RollingWindow(2)+SMA(5)值 RollingWindow(5)；两窗就绪且当前SMA>最旧SMA且空仓则满仓（Lean RollingWindow）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；TradeBar RollingWindow(2)+SMA(5)值 RollingWindow(5)；两窗就绪且当前SMA>最旧SMA且空仓则满仓（Lean RollingWindow）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `RollingWindowAlgorithm.py`。`add_equity(\"SPY\",Daily)`；`RollingWindow(2)` 存 TradeBar；`sma(\"SPY\",5)` 更新时写入 `RollingWindow(5)`。`on_data`：两窗就绪；`curr_sma=_sma_win[0]`，`past_sma=_sma_win[count-1]`；未投资且 `curr_sma.value > past_sma.value` → `set_holdings(\"SPY\",1)`。不是文档 RollingWindow(20) 收盘>前收满仓核（master），也不是仅日志无交易核。提出日期未知。SMA(5) RollingWindow 当前>最旧且空仓满仓 ≠ 收盘>前收 RollingWindow20（M2731）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

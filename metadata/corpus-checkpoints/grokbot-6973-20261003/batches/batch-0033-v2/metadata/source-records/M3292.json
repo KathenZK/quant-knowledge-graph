@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3292",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3246,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a7d7b7334481e36c1156e7a8eb88c3b7713ea5d3adb5b322ea45011e1cd6416d",
+    "rule_sha256": "023aeef661ad7498644519b1378a2287476b2098d0cfdc99e1efd5fb03cd4411"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3292",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3292"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/DataConsolidationAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股+外汇：SPY+EURUSD；SPY 30分钟合并棒收盘>上一根则 order(+100)，<则 order(−100)；每日结束 liquidate SPY（Lean DataConsolidation）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股+外汇：SPY+EURUSD；SPY 30分钟合并棒收盘>上一根则 order(+100)，<则 order(−100)；每日结束 liquidate SPY（Lean DataConsolidation）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `DataConsolidationAlgorithm.py`。`add_equity(\"SPY\")`+`add_forex(\"EURUSD\",Hour)`；`TradeBarConsolidator(30分钟)` 事件：若有 `__last` 且 `close>last.close` → `order(SPY,100)`；`close<last.close` → `order(SPY,−100)`；更新 `__last`。`on_end_of_day`：`liquidate(\"SPY\")` 并清空 `__last`。另有 3日/45分/小时等合并仅日志。不是 10分钟 SMA 建仓核（W518），也不是 Dual Thrust 合并核（W487）。提出日期未知。SPY 30分钟合并棒收盘相对上一根 ±100 + 日终清仓 ≠ 10分钟SMA建仓（M3266）/DualThrust合并（M3028）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

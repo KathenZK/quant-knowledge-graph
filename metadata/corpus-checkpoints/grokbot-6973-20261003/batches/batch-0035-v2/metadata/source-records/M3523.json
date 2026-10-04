@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3523",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3477,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "32591b7262fcb1fcbaceceb8b2f894c6a60c616da9c859cbd20cfb47cf0f4015",
+    "rule_sha256": "c2260e78365e362a70791da45156d0ffeb6f3eb2a8056a7977e97b23b753b51b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3523",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3523"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Adjusted-Data"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末前一日打分、月末成交；十只跨资产ETF；60日收益>0者中取Top1满仓，全负则空仓（SI Adjusted-Data·mom60）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2015-03-30"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末前一日打分、月末成交；十只跨资产ETF；60日收益>0者中取Top1满仓，全负则空仓（SI Adjusted-Data·mom60）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Systematic Investor《Adjusted Data》代码模型 `mom60`。宇宙（后赋值覆盖）：**EEM、EFA、FXI、IEF、IYR、SHY、SPY、TIP、XLV、UUP**。`frequency='months'`；信号日 `period.ends1=month.ends-1`，成交日 `period.ends0`。`return = prices/mlag(prices,60)-1`；`position.score = iif(return<0, NA, return)`；`ntop(..., 1)`。不是无绝对过滤的纯相对动量 Top1，也不是 5×21 五资产 Top1（W721）。提出日期取页头 **30 Mar 2015**。计入美股/ETF。提出日期按源文件原样保留2015-03-30。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "models$mom60（lookback 60；绝对收益>0；月末 lag 成交）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

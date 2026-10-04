@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3421",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3375,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6787a17e5001c779558f4a8336239f0e7681012f0b8bde1441656f5ed0da35f3",
+    "rule_sha256": "59b0a967d153dd0ec29837a30ffa3efdc662f5a254cab0487cdde74d035fba4a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3421",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3421"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://cssanalytics.wordpress.com/2019/11/26/adaptive-vix-moving-average/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "David Varadi / CSS Analytics"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线；VI=1/(VIX之10日OHLC均)的截至当日历史百分位；α=(VI·(0.75−0.075)+0.075)² 得自适应EMA；AMA>SMA(200)满仓SPY，否则现金（CSSA Adaptive VIX MA）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2019-11-26"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线；VI=1/(VIX之10日OHLC均)的截至当日历史百分位；α=(VI·(0.75−0.075)+0.075)² 得自适应EMA；AMA>SMA(200)满仓SPY，否则现金（CSSA Adaptive VIX MA）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CSS Analytics《Adaptive VIX Moving Average》（2019-11-26）已印公式与作者评论澄清。取 VIX 的 10 日 OHLC 均值，算 1/该均值，再对其做**截至当日全部历史**百分位得 VI；慢/快常数 SC=0.075、FC=0.75；α=(VI·(FC−SC)+SC)²，以此 α 对 SPY 收盘做指数平滑得 AMA（可用约 10 日 SMA 初始化）。交易：AMA>SMA(200) → 做多 SPY；AMA<SMA(200) → 卖出/现金（作者回复 Eva/Michael 确认）。不是价直接≷SMA(200) 核，也不是本轮 Adaptive Momentum（回撤百分位调 50/200 α）核。提出日期取文首 November 26, 2019。CSSA Adaptive VIX MA：VIX10日OHLC倒数历史百分位调 α 得 AMA>SMA200→SPY ≠ Adaptive Momentum回撤调α（W614）。计入美股/ETF。提出日期按源文件原样保留2019-11-26。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AMA 公式段 + 评论（SC/FC、信号）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

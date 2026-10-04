@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3504",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3458,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6ecd076d5cbf6ffb27563fa04ba03fdbff2db83e2e71e4c807e263459ba3929a",
+    "rule_sha256": "e2662b7a8947eb7be6ca11503c725b3e686d73d4f7289b90a8aad4af94d2ca39"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3504",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3504"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.fmz.com/strategy/482829"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "发明者量化 FMZ 社区（strategy/482829）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：2h ETH；量Z(20)≥1.5且阴后创新低阳线开多，对称开空；止损=近2根极值与ATR(14)×1.5更宽者，止盈RR=2（FMZ 482829）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（回测头：Binance ETH_USDT；2h）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-02-20"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：2h ETH；量Z(20)≥1.5且阴后创新低阳线开多，对称开空；止损=近2根极值与ATR(14)×1.5更宽者，止盈RR=2（FMZ 482829）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写发明者量化《Z-Score Momentum…ATR Stop-Loss…》（ID **482829**）公开默认。`len=20` 算成交量 Z（默认 Source=Volume）；`z1=1.5`（`z2=2.5` 为更高阈，入场用 z1）。阳=`close>=open`，阴=`close<open`。开多：已确认K且前K阴、今低<昨低、今阳，且 z≥1.5；开空对称（前阳、今高>昨高、今阴）。止损：多取 `min(近2根最低, 价−1.5×ATR(14))` 与 ATR 止损的更宽者（代码 `math.max(long_sl, long_atr_stop)` 于多头止损价）；止盈距离=止损距离×**RR=2.0**。`pyramiding=3`。不是纯 ST 或纯唐奇安核。提出日期取 Created 2025-02-20。FMZ 482829：量Z(20)≥1.5且阴后创新低阳线开多对称空；止损近2根极值与ATR14×1.5更宽、RR=2 ≠ 纯ST/唐奇安。计入加密。提出日期按源文件原样保留2025-02-20。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Strategy parameters 默认 + 源码 longSignal/z/ATR/RR 块；Created 2025-02-20"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

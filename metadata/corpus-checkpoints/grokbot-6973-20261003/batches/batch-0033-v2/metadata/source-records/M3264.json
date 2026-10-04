@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3264",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3218,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9fa280ece7866043780ebc6a6882c59c84b971e490c8ce282ddf987ce881e64b",
+    "rule_sha256": "23d8e525ed456543fc3fd2f0946f426c5c18ebd3a320dbfdfbe9c056af1ffbed"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3264",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3264"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/UserDefinedUniverseAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：小时；用户宇宙按 hour%8 在 SPY/GOOG/IBM/AAPL/MSFT/CSCO/ADBE/WMT 中轮换单票；加入等权满仓、移除清仓（Lean UserDefinedUniverse）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：小时；用户宇宙按 hour%8 在 SPY/GOOG/IBM/AAPL/MSFT/CSCO/ADBE/WMT 中轮换单票；加入等权满仓、移除清仓（Lean UserDefinedUniverse）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `UserDefinedUniverseAlgorithm.py`。小时分辨率；`add_universe(..., selection)`：`index=time.hour % len(symbols)`，返回单元素列表。`on_securities_changed`：移除已投资→`liquidate`；新增→`set_holdings(added, 1/len(added_securities))`。不是 ScheduledUniverse 周一/二/四选 SPY/IBM 核（W500），也不是 day%7==0 选 IBM 核（W462）。提出日期未知。小时 hour%8 在八票中轮换单票满仓 ≠ Scheduled 周一/二/四（M3233）/day%7 IBM（W462）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

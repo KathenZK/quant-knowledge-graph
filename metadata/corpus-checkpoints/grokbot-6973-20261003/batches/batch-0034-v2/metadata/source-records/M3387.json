@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3387",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3341,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8204888f41c03b28f7a8646c4c2fa8908accb69bfa65d8d3aba4bfe536422aa8",
+    "rule_sha256": "86b41c7c876e149e36d393d04701c7d0b284c3e9e328cb75752a4615a30aba3f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3387",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3387"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FilterUniverseRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；宇宙=周权、行权−5..+5、仅Call、到期0–1日；空仓时买链上最高行权合约1张（Lean FilterUniverseRegression）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；宇宙=周权、行权−5..+5、仅Call、到期0–1日；空仓时买链上最高行权合约1张（Lean FilterUniverseRegression）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FilterUniverseRegressionAlgorithm.py`。`add_equity/add_option(\"GOOG\")`；`set_filter`：`weeklys_only().strikes(-5,+5).calls_only().expiration(0,1)`。`on_data`：未投资时取期权链，按 `strike` 降序，对首张 `market_order(...,1)`。不是 straddle(7) 工厂核（W576），也不是 GOOG 卖 800Put+600Call 指派核（W569）。提出日期未知。GOOG周权Call到期0–1日买链上最高行权1张 ≠ straddle(7)（M3382）/卖800Put+600Call（M3375）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

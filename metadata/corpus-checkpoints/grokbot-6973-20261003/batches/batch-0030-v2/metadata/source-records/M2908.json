@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2908",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2904,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d9da0abd346a8434f2578c12783b3e1b047686a71a7c0b516cd7c22d73be9307",
+    "rule_sha256": "b55f359f22bd0ff5715e5d45f841c1452d04a6b2ccb033ad6664a194680c34b9"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2908",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2908"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ETFGlobalRotationAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：MDY/IEV/EEM/ILF/EPP(+EDV/SHY)；每30日按(100·MOM30+75·MOM90)/175取最高，分>0满仓否则清仓（Lean ETFGlobalRotation）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（MDY/IEV/EEM/ILF/EPP+EDV/SHY每30日客观分最高>0满仓否则清仓；Lean ETFGlobalRotation）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：MDY/IEV/EEM/ILF/EPP(+EDV/SHY)；每30日按(100·MOM30+75·MOM90)/175取最高，分>0满仓否则清仓（Lean ETFGlobalRotation）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ETFGlobalRotationAlgorithm.py`。增长池 MDY/IEV/EEM/ILF/EPP，安全池 EDV/SHY；各挂日线 `mom(30)` 与 `mom(90)`。每 30 日按 `objective_score=(100·1月动量+75·3月动量)/175` 降序；若最高分>0 则清仓后对该标的用剩余保证金满仓市价；否则全部 `liquidate` 持现金。不是行业 ROC(60) Top3（W283）核。提出日期未知。 不是行业ROC(60) Top3（W283）核：本条为MDY/IEV/EEM/ILF/EPP(+EDV/SHY)每30日按(100·MOM30+75·MOM90)/175取最高，分>0满仓否则清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

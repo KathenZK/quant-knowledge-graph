@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3493",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3447,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "234b05ca9080e5d1ab00637584aff6b7d20d7f2eb4379eb3342789e44d810255",
+    "rule_sha256": "b485fd3643fecc53fddf06eba403d39f74693863659fb01039958af37c99b5b3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3493",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3493"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.fmz.com/strategy/519280"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "FMZ 社区（strategy/519280）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：现货×交割；ADF窗1000、p<0.1、连败阈3；|z|>1.0开、目标0.5出；止损率1.5%、最长持仓10日（FMZ 交割现货套利 519280）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（现货与交割期货价差统计套利）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-11-28"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：现货×交割；ADF窗1000、p<0.1、连败阈3；|z|>1.0开、目标0.5出；止损率1.5%、最长持仓10日（FMZ 交割现货套利 519280）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 FMZ《交割合约现货套利策略测试版》（ID **519280**）公开 CONFIG/描述已印默认。平稳性：`adfWindow=1000`，`adfPValueThreshold=0.1`，`stationarityCheckInterval=3600000` ms，`consecutiveFailThreshold=3`。信号：`zScoreEntry=1.0`，`zScoreExitTarget=0.5`，`zScoreMaxDeviation=0.5`；z>0 正套（多现货空交割），z<0 反套。风控：`stopLossRate=0.015`，`maxHoldDays=10`；冷却 `cooldownDuration=600000`（10 分）、`opportunityLostCooldown=60000`（1 分）；`minUSDTReserve=10`；距交割不足 1 日强制平。不是永续资金费套利核。提出日期取 Created 2025-11-28。交割×现货Z-Score：ADF窗1000 p<0.1；|z|>1开目标0.5；止损1.5%最长10日 ≠ 永续资金费套利。计入加密。提出日期按源文件原样保留2025-11-28。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "全局 CONFIG 块（adf*/zScore*/stopLossRate/maxHoldDays）+ 核心逻辑段；Created 2025-11-28"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

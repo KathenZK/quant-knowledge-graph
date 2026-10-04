@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3236",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3190,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "310dfc3c9a737166293aa340a6dca85c18818c240d46f31d435372fd009b7590",
+    "rule_sha256": "3e5cecf08d0a31c3b863e9bd8f309b57831c0a109be9d3b5e7300af38e0649d1"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3236",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3236"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateTradableIndexAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数：继承 BasicTemplateIndex；强制 SPX 可交易；在父类 EMA(80/200)期权信号外另市价买 SPX 指数1单位（Lean BasicTemplateTradableIndex）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数：继承 BasicTemplateIndex；强制 SPX 可交易；在父类 EMA(80/200)期权信号外另市价买 SPX 指数1单位（Lean BasicTemplateTradableIndex）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateTradableIndexAlgorithm.py`（继承 `BasicTemplateIndexAlgorithm`）。`securities[spx].is_tradable=True`；先跑父类 `on_data`（SPX 分钟 EMA80>EMA200 则对指定欧式看涨 `set_holdings`，否则清仓——同 W417 父核）；若尚无订单票据则额外 `market_order(SPX,1)`。不是仅交易期权的 W417 核，也不是日线指定期权空仓买单核。提出日期未知。可交易SPX：父类EMA80/200期权信号外另市价买SPX指数1 ≠ 仅期权W417/日线指定期权空仓买单。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

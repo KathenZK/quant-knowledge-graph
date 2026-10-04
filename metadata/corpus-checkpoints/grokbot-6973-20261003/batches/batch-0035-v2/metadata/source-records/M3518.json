@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3518",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3472,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a86b1d6da0ce0c3b6fbafd546c209f586d0d139d55faf6d1b7c10468d594e4db",
+    "rule_sha256": "c01923ebb17c8eb9f4b3f483564b4db8ed53ee32422ce347acecfaea64cf7734"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3518",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3518"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.fmz.com/strategy/483076"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "发明者量化 FMZ 社区（strategy/483076）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：日线ETH；收盘上穿唐奇安(21)上轨且量>SMA(20)开多；默认Exit Option=3：下穿 SuperTrend(ATR10×2)平多（FMZ 483076）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（回测头：Binance ETH_USDT；1d）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-02-21"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：日线ETH；收盘上穿唐奇安(21)上轨且量>SMA(20)开多；默认Exit Option=3：下穿 SuperTrend(ATR10×2)平多（FMZ 483076）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 FMZ《动量多指标趋势跟踪：唐奇安+超级趋势+成交量过滤》（ID **483076**）公开默认源码。唐奇安 `length=21`（`ta.highest/lowest`）；`srcInput` 默认 **close**。`Enable Volume Filter=true`，`Avg Volume length=20`：开多需 `ta.crossover(src, upper[1])` 且 `volume > volumeMA`。SuperTrend：`SuperTrend Length=10`，`SuperTrend Mult=2`。`Exit Option` 默认 **3**：`ta.crossunder(close, superTrend)` 则 `strategy.close`。选项 1/2/4（下轨/中轨/百分比追踪）非本条默认。仅多。不是无量过滤的裸唐奇安，也不是双 ST 因子核。提出日期取 Created 2025-02-21。FMZ 483076：唐奇安21上穿且量>SMA20开多；默认Exit=3下穿ST(ATR10×2)平 ≠ 无量裸唐奇安/双ST。计入加密。提出日期按源文件原样保留2025-02-21。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Pine 默认 length=21、volumeMA20、ST(10,2)、exit=3；Created 2025-02-21 11:47:17"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

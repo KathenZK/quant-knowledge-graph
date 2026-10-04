@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3969",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3923,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1cbc801f9dc7d356e6f84a6e6782a8fd34b08bb871a8af9e42ca4e520ac24378",
+    "rule_sha256": "d797325e24a286dd7fbeef26cea7356864265524f4fa33dede463a8ac50a672a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3969",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3969"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/20555/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect 社区"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-102/W1176"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·三过四趋势门控杠杆轮动：日频；SPY/QQQ/SMH/SOXL相对SMA202至少3只在上为风险开；默认TQQQ50%+SOXL50%，任一只15日动能振荡>72则全仓UVIX/UVXY；风险关时仅QQQ或SMH 8日振荡过冷才满仓SOXL否则现金（QC Regime3of4·TQQQ/SOXL·UVIX）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·三过四趋势门控杠杆轮动：日频；SPY/QQQ/SMH/SOXL相对SMA202至少3只在上为风险开；默认TQQQ50%+SOXL50%，任一只15日动能振荡>72则全仓UVIX/UVXY；风险关时仅QQQ或SMH 8日振荡过冷才满仓SOXL否则现金（QC Regime3of4·TQQQ/SOXL·UVIX）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect Research **20555**：日频近收盘；以 **SPY、QQQ、SMH、SOXL** 是否收在各自 **SMA(202)** 之上做 **3/4** 门——至少 **3** 只在上为风险开，否则风险关。风险开默认 **TQQQ 50% + SOXL 50%**；若上述四只中任一只 **15** 日 Wilder 动能振荡 **>72** 则组合改为 **100% UVIX**（上市前用 **UVXY** 代理）。风险关默认现金；仅当 **QQQ** 或 **SMH** 的 **8** 日振荡分别 **<29** 或 **<31** 时临时 **100% SOXL** 博反弹。不是四模块各25%（近 M0918）。计入美股/ETF。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 20555 3of4 SMA202 TQQQ/SOXL UVIX"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

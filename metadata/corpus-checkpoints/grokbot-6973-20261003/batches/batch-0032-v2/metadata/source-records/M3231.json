@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3231",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3185,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1b5bcad307fb80edc3f69934cbb61149a2379f6359e5b799643662b2409665f4",
+    "rule_sha256": "23e8ced2c58e06c7ff985e7200b1c90ca1c2c87fafcb1127b8f514d04b012cfb"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3231",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3231"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/NullBuyingPowerOptionBullCallSpreadAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG标准期权；行权−2..+2、到期0–180日；空仓对最近到期看涨按行权升序买低行权1000张并卖次高行权1000张（Lean NullBuyingPower 牛市看涨价差）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG标准期权；行权−2..+2、到期0–180日；空仓对最近到期看涨按行权升序买低行权1000张并卖次高行权1000张（Lean NullBuyingPower 牛市看涨价差）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `NullBuyingPowerOptionBullCallSpreadAlgorithm.py`。保证金模型 NULL；标的 GOOG；过滤 `standards_only().strikes(−2,+2).expiration(0,180)`。已投资或未开市返回；取看涨，最近到期，按行权升序：`long_call=最低`，`short_call=高于long的首档`；`market_order(short,−1000)` 与 `market_order(long,+1000)`。不是指数 SPXW 牛市看涨价差核（W419），也不是工厂 covered_call 核（W472）。提出日期未知。GOOG标准期权 牛市看涨价差±2行权 NullBuyingPower ≠ SPXW牛看涨（W419）/covered_call（W472）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

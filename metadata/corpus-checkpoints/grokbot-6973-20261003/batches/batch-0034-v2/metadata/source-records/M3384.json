@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3384",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3338,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "127e08c770dec6975395e4af914c7acf0d6c289f129aed0f121f520f7d1bd4e0",
+    "rule_sha256": "e50b1fdb1729b0f36eb4a2009f78227ef753ead1e4f993e040aff7381f901852"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3384",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3384"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CoarseFineOptionUniverseChainRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：粗精选 6/5前TWX、之后AAPL；期权宇宙周权+前月取至多5合约；变更时剔除清仓、新增（正股与期权）各配5%（Lean CoarseFineOptionUniverseChain）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：粗精选 6/5前TWX、之后AAPL；期权宇宙周权+前月取至多5合约；变更时剔除清仓、新增（正股与期权）各配5%（Lean CoarseFineOptionUniverseChain）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `CoarseFineOptionUniverseChainRegressionAlgorithm.py`。分钟；粗/精选按日期返回 TWX 或 AAPL；`add_universe_options(..., include_weeklys().front_month()` 且 `contracts` 截断至 5）。`on_data`：removed 已投资则 `liquidate`；added（价非0）→ `set_holdings(symbol,0.05)`。不是仅手动 add_option_contract 核（W570/W571），也不是 ETF 成分权重夹紧核（W568）。提出日期未知。粗精选TWX→AAPL+周权前月至多5期权各配5% ≠ 手动add_option_contract（W570/W571）/ETF夹紧权重（W568）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

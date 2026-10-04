@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3375",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3329,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c4fbec65d465da30e7c0c256d28180a875eec097208a5867f879f765ad84223a",
+    "rule_sha256": "08c331b00dc3e2bef48e5d277cfe5ecfd8dee913308f94506d5a79777c4bce9d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3375",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3375"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/OptionAssignmentRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG分钟；空仓时卖出行权800最早到期PUT 1张与行权600最早到期CALL 1张（待指派/到期后再开）（Lean OptionAssignment）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG分钟；空仓时卖出行权800最早到期PUT 1张与行权600最早到期CALL 1张（待指派/到期后再开）（Lean OptionAssignment）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `OptionAssignmentRegressionAlgorithm.py`。`add_equity(\"GOOG\",Minute)`；链上筛 PUT strike=800、CALL strike=600 各取最早到期并 `add_option_contract`。`on_data`：组合未投资且正股与两期权价格非0：若未过 PUT 到期则 `market_order(put,−1)`；若未过 CALL 到期则 `market_order(call,−1)`。不是备兑/保护性结构核，也不是自定义 10% ITM 指派模型变体（同交易核跳过）。提出日期未知。GOOG卖出行权800Put+600Call各1张待指派 ≠ 备兑/保护性结构 / 自定义指派模型同交易核。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

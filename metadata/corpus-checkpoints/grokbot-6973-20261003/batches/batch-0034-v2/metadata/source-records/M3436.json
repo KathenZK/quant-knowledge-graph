@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3436",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3390,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7145c7250c37994893cd47e91e4662ecc9643f9a4ad00b9920af2f6ce2ae871b",
+    "rule_sha256": "14c5b555009f9a700ad12e90c69a7c90b2b39da1d1bfeea7ce2619a3991db364"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3436",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3436"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://cssanalytics.wordpress.com/2019/12/04/adaptive-vix-moving-average-with-ehlers-alpha-formula/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "David Varadi / CSS Analytics"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线；D=1/(VIX之10日均)的2000日滚动百分位；α=exp(−4.6·(D−1)) 得自适应EMA；AMA>SMA(200)满仓SPY否则现金（CSSA Adaptive VIX MA·Ehlers α）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2019-12-04"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线；D=1/(VIX之10日均)的2000日滚动百分位；α=exp(−4.6·(D−1)) 得自适应EMA；AMA>SMA(200)满仓SPY否则现金（CSSA Adaptive VIX MA·Ehlers α）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CSS Analytics《Adaptive VIX Moving Average with Ehlers Alpha Formula》（2019-12-04）已印公式与交易比较。相对 W618 经典 AMA（SC/FC 平方型 α）：本条用 Ehlers Fractal Adaptive 风格 α=exp(−4.6·(D−1))，其中 D=1/(VIX 的 10 日均) 在滚动 2000 日窗上的百分位（作者为便于复现改为滚动窗）。以此 α 对 SPY 做指数平滑得 AMA；规则：AMA>SMA(200) → 满仓 SPY，否则相对价≷SMA(200) 基准的现金侧（文比较 AMA>200sma vs 收盘>200sma）。评论区对 (D−1) 符号有争议，本条只采正文已印公式，不改写。不是 W618 的 VI·(FC−SC)+SC 平方 α 核。提出日期取文首 December 4, 2019。CSSA Adaptive VIX MA Ehlers α：α=exp(−4.6·(D−1))×AMA>SMA200 ≠ M3421平方型VI·(FC−SC)+SC α（W618）。计入美股/ETF。提出日期按源文件原样保留2019-12-04。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Ehlers α 段 + AMA vs 200sma 比较"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

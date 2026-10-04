@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2912",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2908,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "37a886778cdc4af41723fea971054991f55c1e820662ffeb79fae3177cfd2a03",
+    "rule_sha256": "f309df3f4b2fffe5b10ca9b7f26c162bd1d0a95f35c3ef0811045d46835eaa1b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2912",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2912"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/VolumeRenkoConsolidatorAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；成交量Renko(100万股)上SMA(10)，价>该SMA满仓否则清仓（Lean VolumeRenkoConsolidator）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY VolumeRenko100万股SMA10价>SMA满仓否则清仓；Lean VolumeRenkoConsolidator）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；成交量Renko(100万股)上SMA(10)，价>该SMA满仓否则清仓（Lean VolumeRenkoConsolidator）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `VolumeRenkoConsolidatorAlgorithm.py` 中 SPY 交易核。`VolumeRenkoConsolidator(1_000_000)` 巩固分钟 TradeBar，巩固完成后更新 `SMA(10)`；`on_data`：若 SMA 就绪且 `SMA < securities[SPY].price` 则 `set_holdings(SPY,1)`，否则 `set_holdings(SPY,0)`。不是 $2.5 ClassicRenko 双巩固器（W391）核。提出日期未知。 不是$2.5 ClassicRenko双巩固器（W391）核：本条为SPY成交量Renko(100万股)上SMA(10)，价>该SMA满仓否则清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

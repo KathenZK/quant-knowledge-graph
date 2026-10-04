@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3614",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3568,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6aedbcfaee02c488590103a1d8f98587d39bcf45d2070c03ac05d59522117158",
+    "rule_sha256": "5e82af6a78826a3317fc3951807d672942e1b4ea371380112c199724f505821a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3614",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3614"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Stock-Bond-Model"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "：Systematic Investor / Michael Kapler（转述 Don't Fear the Bear）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "：quant-web-harvest-56/W819"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "：高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SI股债配置比模型：季频映射；FRED构建投资者股票配置四季度SMA后线性映射相对比率；股票仓=比率、债券=1−比率（SI Stock-Bond Model）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股基金"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SI股债配置比模型：季频映射；FRED构建投资者股票配置四季度SMA后线性映射相对比率；股票仓=比率、债券=1−比率（SI Stock-Bond Model）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Systematic Investor《Stock Bond Model from Don't Fear the Bear》。用 FRED：(a)NCBEILQ027S (f)FBCELLQ027S（百万→除1000）与 (b)BCNSDODNS (c)CMDEBT (d)FGSDODNS (e)SLGSDODNS (g)DODFFSWCMI（十亿）构造 Investor Allocation = ((a+f)/1000)/(((a+f)/1000)+b+c+d+e+g)；再取该序列 **SMA(4)** 得 AverageRatio；RelativeAverageRatio = clip(1−(AverageRatio−0.25)/0.20, 0, 1)。交易端：股票（VFINX）权重=RelativeAverageRatio，债券（VUSTX）=1−该比率；持仓随比率更新。不是固定 60/40；不是 SPY>SMA20→HYG（M3418，同核回避）。 计入美股/ETF。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "：网页 strategy"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

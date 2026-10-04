@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3273",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3227,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b9f5bee3e74c0787fab84f42a83dd4aee4df31ca0dd775fba233e988f326e2cb",
+    "rule_sha256": "610c109bb6f3805ee2abb18f42a3ab768bc469f21ea0dfde51805beea032b512"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3273",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3273"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bigquant.com/square/ai/f8c9d633-ede1-78ea-d881-78ce248095c9"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区（square/ai《ETF行业轮动策略：复合动量评分 + 协方差收缩优化》；页更新约2026-09-10）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-cn-firms-48 C1035（拆层/腿/门关键词——禁止同页零件另开；同核/拆层未另开） ； quant-cn-firms-48 C1036（同 source_url 已存在（优先保留 C1034）；同核/拆层未另开） ； quant-cn-firms-48 C1037（拆层/腿/门关键词——禁止同页零件另开；同核/拆层未另开）"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区：ETF行业轮动（13只ETF池；25日对数价OLS年化r×R²复合动量score>0；协方差相关阵向单位阵收缩δ=0.5；均值方差γ=2、w≥0且Σw=1；每月首个交易日开盘调仓，权重偏离<1%不动；全负分空仓）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股/跨境ETF（月频轮动；均值方差权重）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区：ETF行业轮动（13只ETF池；25日对数价OLS年化r×R²复合动量score>0；协方差相关阵向单位阵收缩δ=0.5；均值方差γ=2、w≥0且Σw=1；每月首个交易日开盘调仓，权重偏离<1%不动；全负分空仓）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。页印：标的池13只ETF（黄金/豆粕/沪深300/创业板/创新药/新能车/消费/光伏/通信/计算机/军工/纳指/恒生科技）；对过去25个交易日对数收盘价OLS，年化r=exp(252×β)−1，score=r×R²且仅保留score>0；样本年化协方差→相关阵向单位阵收缩δ=0.5再重建；权重优化max w′μ−(γ/2)w′Σw，γ=2、Σw=1、w≥0；每月第一个交易日开盘调仓，权重偏离不足1%不动，全部得分为负则空仓。相对已收鲁棒ETF动量–波动混合月度等权：本条为25日OLS×R²复合动量⊕δ=0.5收缩⊕γ=2均值方差核。 不是鲁棒ETF动量–波动混合月度等权：本条为25日OLS×R²复合动量⊕δ=0.5收缩⊕γ=2均值方差⊕月频开盘调仓核。 计入其他。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

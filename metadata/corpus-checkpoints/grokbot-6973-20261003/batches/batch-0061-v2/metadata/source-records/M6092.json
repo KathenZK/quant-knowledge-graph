@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6092",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6046,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1b581c24909e5eb1fc5b782f7fa7bd1572302946576427a683d4a97f9dd4761e",
+    "rule_sha256": "6106aa036dfdedc1a86b34b0c55886b9f4ef62eb6715a290df85bb7ef2f5c932"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6092",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6092"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.incrediblecharts.com/indicators/volatility_stops.php"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "J. Welles Wilder Jr. / Incredible Charts"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-320/W3303"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Wilder/IncredibleCharts·波动止损多头持有：日频；收盘>VolatilityStop多头线持SPY否则BIL（VolStop·LongHold·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "1978-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Volatility Stops Long Hold — SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Welles Wilder《Volatility Stops》（New Concepts in Technical Trading Systems, 1978；Incredible Charts 文档）之 **多头止损线上方持有** 新核。以显著收盘与 ATR×倍数构造止损并 SAR 翻转。日频：若处于多头态且 **Close > VolatilityStop**（默认 ATR 周期/倍数按文档常用 21×3）→ 满仓 SPY，否则 BIL。不是 Chandelier；不是 ATRTrail；不是 PctTrail；不是 Parabolic SAR。计入美股/ETF。提出日期 1978-01-01。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "VolStop·LongHold·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

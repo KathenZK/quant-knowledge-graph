@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3271",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3225,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c41e441cc86e56051c988264f8611843502b9a15b4b7c651b59ba4f430faf8fd",
+    "rule_sha256": "cc10d0866381672bb43d32e61bd936556ff564705593f5bb5b3135319b40f832"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3271",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3271"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/IndexOptionCallITMExpiryRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；2021-01链上 strike≤3200 最高行权欧式 CALL（预期3200）；次日开盘后买1张，ITM到期现金结算（Lean IndexOptionCallITMExpiry）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；2021-01链上 strike≤3200 最高行权欧式 CALL（预期3200）；次日开盘后买1张，ITM到期现金结算（Lean IndexOptionCallITMExpiry）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `IndexOptionCallITMExpiryRegressionAlgorithm.py`。`add_index(\"SPX\")`；筛选 strike≤3200、CALL、2021-01，按 strike 降序取首（断言=3200 欧式 2021-01-15）。`tomorrow`+`after_market_open(SPX,1)` → `market_order(spx_option,1)`。ITM 到期行权现金结算。不是期货期权 ITM 看涨核（W522），也不是 SPX EMA 指定合约核（W417）。提出日期未知。SPX ITM 看涨买单到期现金结算 ≠ 期货期权ITM看涨（W522）/SPX EMA指定合约（W417）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

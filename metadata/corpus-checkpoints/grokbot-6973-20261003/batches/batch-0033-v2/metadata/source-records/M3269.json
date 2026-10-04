@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3269",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3223,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e22e460dcacc23b33aaa9f77fef78ce4c326d083675c6a12cf4fe7f448851df9",
+    "rule_sha256": "b739f031875549f3e215e2bae1a7e8d4608554b8c281e3625e26e2fe511baac2"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3269",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3269"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/IndexOptionBuySellCallIntradayRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；2021-01到期行权3700与3800欧式看涨；次日开盘后买3700卖3800各1张，同日午间清仓（Lean IndexOptionBuySellCallIntraday）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；2021-01到期行权3700与3800欧式看涨；次日开盘后买3700卖3800各1张，同日午间清仓（Lean IndexOptionBuySellCallIntraday）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `IndexOptionBuySellCallIntradayRegressionAlgorithm.py`。`add_index(\"SPX\", Minute)`；链上取 strike∈{3700,3800}、CALL、2021-01 到期，按行权升序。日程：明天 `after_market_open(SPX,1)` → `market_order(3700,1)` 与 `market_order(3800,-1)`；明天 noon → `liquidate()`。不是 SPXW 牛市看涨价差核（W419），也不是期货期权买卖看涨核（W520）。提出日期未知。SPX 3700/3800 欧式看涨买低卖高同日午间清仓 ≠ SPXW牛看涨（W419）/期货期权买卖看涨（W520）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

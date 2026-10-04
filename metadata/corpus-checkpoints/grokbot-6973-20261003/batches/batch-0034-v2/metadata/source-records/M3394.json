@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3394",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3348,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1a33f1e6bc203564e1d24ce3cfe7ec4b3515fcc7124f818f0ff5547a381ae0c9",
+    "rule_sha256": "4658d020bef14800bcdad17b668f4ce8f871e0b349a1aac0dec28a45be1af6d2"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3394",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3394"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/LimitIfTouchedRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；无挂单时提交 Limit-If-Touched：日<9 则数量+10、触发=价−1、限价=价−0.25；日≥9 则数量−10、触发/限价对称在价上方；其后逐次减量更新触发价（Lean LimitIfTouchedRegression）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；无挂单时提交 Limit-If-Touched：日<9 则数量+10、触发=价−1、限价=价−0.25；日≥9 则数量−10、触发/限价对称在价上方；其后逐次减量更新触发价（Lean LimitIfTouchedRegression）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `LimitIfTouchedRegressionAlgorithm.py`。`add_equity(\"SPY\")`。无开仓单：`day<9` → `negative=+1`，否则 `−1`；`SubmitOrderRequest(LIMIT_IF_TOUCHED, qty=negative*10, trigger=price−negative, limit=price−0.25*negative)`。有挂单时：若数量已为 1 则取消全部；否则数量向 0 步进 1 并 `update_trigger_price`（显著数字 5 位）。不是追踪止损核（W581），也不是止损限价 EMA 核（W561）。提出日期未知。SPY Limit-If-Touched日阈±10触发/限价 ≠ 追踪止损（W581）/止损限价EMA（M3368）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

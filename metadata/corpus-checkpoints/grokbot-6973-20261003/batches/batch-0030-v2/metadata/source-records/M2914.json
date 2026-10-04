@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2914",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2910,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ef03aeb3364e275f7da0896c8973789655d0fec02915ea4fc11ab7f090357f58",
+    "rule_sha256": "1fe4f9df43a60c01c71f40bc4c4261a5f75dccf5efb96479858f6ed7f427c555"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2914",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2914"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/EmaCrossFuturesFrontMonthAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "商品期货：黄金前月合约分钟EMA(100)/EMA(300)；快>慢×1.001配10%，否则清仓（Lean EmaCrossFuturesFrontMonth）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（黄金前月分钟EMA100/300×1.001配10%否则清仓；Lean EmaCrossFuturesFrontMonth）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "商品期货：黄金前月合约分钟EMA(100)/EMA(300)；快>慢×1.001配10%，否则清仓（Lean EmaCrossFuturesFrontMonth）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `EmaCrossFuturesFrontMonthAlgorithm.py`。`add_future(Futures.Metals.GOLD)`，过滤 `front_month().only_apply_filter_at_market_open()`；对新前月注册分钟巩固器驱动 `EMA(100)`/`EMA(300)`，`tolerance=0.001`。快 > 慢×(1+tol) 且未投资 → `set_holdings(合约, 0.1)`；否则若已投资 → `liquidate`。不是 ES+SPY 信号（W404）核。提出日期未知。 不是ES+SPY信号（W404）核：本条为黄金前月合约分钟EMA(100)/EMA(300)快>慢×1.001配10%否则清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

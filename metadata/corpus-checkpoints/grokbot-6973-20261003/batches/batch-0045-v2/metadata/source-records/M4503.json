@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4503",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4457,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "2f5dd0182b8a66186f515dd9b96559339c5e80c12a2eb7c453096d7c49d97bc2",
+    "rule_sha256": "81ac2061a993283d5e3eac2cafb83bfec09287bde28dcb3a5f42b94e6137aed4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4503",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4503"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://quantpedia.com/strategies/fed-model"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia / Paulo Maio"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-161/W1713"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia·FED模型择时：月末；YG=ln(1+E/P)−ln(1+y10)；递推OLS超额~YG；预测超额>0满仓美股，否则T-bill；持1月（QP FED·YG·Sign）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia·FED模型择时：月末；YG=ln(1+E/P)−ln(1+y10)；递推OLS超额~YG；预测超额>0满仓美股，否则T-bill；持1月（QP FED·YG·Sign）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Quantpedia《FED Model》之 **收益率缺口回归择时** 可钉死核（源论文 Maio 等对 yield gap 的投资策略表述）。每月：盈利收益率 EY≡ln(1+E/P)，国债收益率 y≡ln(1+Y_10)；**YG=EY−y**。用截至当月全部可得样本做一步超额收益对 YG 的递推/扩展窗 OLS；若 **预测超额收益>0** 则下一月 **100% 美股指数**，否则 **100% 无风险利率/T-bill**；持有 **1月**。不是 RP 三分位相对标准化轮动（近M3403）；不是盈利收益率≥2×国债则持黄金（近M3893）；不是 Campbell–Thompson 平滑E/P符号约束（近M4493）。计入美股/ETF。提出日期 未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QP FED Model · yield gap forecast >0 → equity else T-bill"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

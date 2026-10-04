@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3425",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3379,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a22c635422e5534768db93a1eeb13ffe7d872016612f3899c31c4ba53e3f647d",
+    "rule_sha256": "d1334a6a7458b13c2f1784c2515a25415e704018f8d971d217bf5932e6b96853"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3425",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3425"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/AddUniverseSelectionModelAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；先后 Manual 宇宙 SPY，再 add AAPL，再 add SPY+FB（重复SPY忽略）；ConstantAlpha UP(20分钟,mag=0.025)等权即时（Lean AddUniverseSelectionModel）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；先后 Manual 宇宙 SPY，再 add AAPL，再 add SPY+FB（重复SPY忽略）；ConstantAlpha UP(20分钟,mag=0.025)等权即时（Lean AddUniverseSelectionModel）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `AddUniverseSelectionModelAlgorithm.py`。`universe_settings.resolution=Daily`；Alpha=`ConstantAlphaModel(PRICE,UP,20分钟,0.025)`；等权+即时。宇宙：`set_universe_selection(Manual(SPY))`，再 `add_universe_selection(Manual(AAPL))`，再 `add_universe_selection(Manual(SPY,FB))`（重复 SPY 忽略）。断言结束时 universe 数=3、活跃标的=3（SPY/AAPL/FB）。不是单次 Manual 三票核，也不是 ScheduledUniverse 按星期换票核（W500）。提出日期未知。Lean AddUniverseSelectionModel：先后 Manual SPY→加AAPL→加SPY+FB（重复忽略）+ConstantAlpha20分 ≠ 单次Manual三票 / Scheduled换票。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Algorithm.Python/AddUniverseSelectionModelAlgorithm.py"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

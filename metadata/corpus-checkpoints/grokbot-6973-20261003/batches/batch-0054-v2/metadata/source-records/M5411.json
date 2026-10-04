@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5411",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5365,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "2672c91c55ab01976a77cf5bd56d457a08456b0679cce87bb54a59b224530004",
+    "rule_sha256": "3f991949f1ad0589305cd8eeb3daba7e2d4aff230ef6be2214fa9e35b6e0c3e6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5411",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5411"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://quantpedia.com/time-invariant-portfolio-protection/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Estep & Kritzman / Quantpedia"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-252/W2622"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia·TIPP时间不变组合保护：日频；地板=max(昨地板,0.85×净值)；M=4；风险名义夹在40%–120%净值；余BIL（TIPP·M4·85%·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2023-10-11"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "TIPP M4 Floor85 SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Quantpedia《Time Invariant Portfolio Protection》(2023-10-11) 可钉死核。风险腿 **SPY**、安全腿 **BIL**。初始净值 V0=100、初始地板 F0=**85**（85%保护）。每日：地板 **F_t=max(F_{t−1}, 0.85×V_t)**（只升不降）；cushion=max(V_t−F_t,0)；风险名义 E=**4**×cushion；再把 E 夹到 **[0.40×V_t, 1.20×V_t]**（文中实验上下限）；BIL=V−E（若 E>V 则记杠杆由现金融资，落地可用期货/期权近似，零售可用≤100%并保留上下限意图）。不是 Basic/NewHigh/DynMult CPPI；不是固定比例保险的线性地板。计入美股/ETF。提出日期 2023-10-11。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QP TIPP·M4·85%·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

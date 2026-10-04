@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4058",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4012,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "80e914ccde9a3b8c1d6e7c18ef20a23aff196dfd3c80bf0fa09b2f9e17d8a2fd",
+    "rule_sha256": "3fb4df8c34f4cb370c69023198a4cd73020a0526545f79e0d755447f4278633e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4058",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4058"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/QTS"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor / Michael Kapler（转述 Cliff Smith QTS）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-111/W1265"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SI·季度战术秩和打分：季频；1.01×rank(5月)+rank(20日)取Top1；价≤63日SMA改现金（SI QTS.RANK.d）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2015-02-16"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SI·季度战术秩和打分：季频；1.01×rank(5月)+rank(20日)取Top1；价≤63日SMA改现金（SI QTS.RANK.d）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写同页 **QTS.RANK.d**：宇宙同 W1264；每季对 5×21 日收益与 20 日收益分别 `bt.rank`，合成 **1.01×rank(5月)+rank(20日)** 后 `ntop(...,1)`（1.01 作五个月秩平手打破）；若冠军价 **≤SMA(3×21)** 则该席 0、余权现金。不是收益加权 0.5/0.5 的 QTS.d（近 M1353）；不是月频 SMA 现金闸（本批 W1264）。**OVERRIDE** 同 URL 异核。计入美股/ETF。提出日期 2015-02-16。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SI QTS models$QTS.RANK.d"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

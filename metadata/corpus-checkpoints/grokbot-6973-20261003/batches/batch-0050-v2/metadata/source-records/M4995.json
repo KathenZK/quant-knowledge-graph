@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4995",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4949,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d1f53f827d61155bda4c27dbc66f7a3b285bde41e3db0e8a5fc629c8ac3bc15a",
+    "rule_sha256": "15c497793de1cf1258d5ac71c02e7f02ee4db071f55c347b14dd2d7caee40866"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4995",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4995"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bestfolio.app/strategies/dms-gpmv"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Randy Harris (DMS; Keuning & Keller GPM variant)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-210/W2206"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Harris·GPMv保护动量：月末；风险IWB/QQQ/IWR/VPL/VGK/SGOL/DBC/IYR/HYG/LQD/TLT；安全BIL/VGSH/VGIT；n_pos_v=n_pos+1；safety=2×(11−n_pos_v)/11钳[0,1]（GPMv·DMS）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "GPMv (DMS)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Randy Harris / BestFolio《GPMv (DMS)》：风险 **IWB、QQQ、IWR、VPL、VGK、SGOL、DBC、IYR、HYG、LQD、TLT**（11）；安全 **BIL、VGSH、VGIT**（3）。月末对 14 只算平均动量（1/3/6/12 月）再乘 **(1−与风险等权收益的相关)** 得 z；n_positive= z>0 的风险资产数；**n_positive_v = n_positive + 1**；**safety_pct = 2×(11−n_positive_v)/11** 钳制到 [0,1]。若 n_positive_v **≥6**：safety_pct 配 z 最高安全资产，其余 (1−safety_pct) 在 z 最高的 **3** 只风险间等分；若 **<6**：100% z 最高安全资产。不是原版 GPM n≤6 全保护（M0625）。计入美股/ETF。提出日期 未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BestFolio GPMv · 11risky+3safe · n_pos_v=n_pos+1 · Top3"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

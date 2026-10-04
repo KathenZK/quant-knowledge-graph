@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3506",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3460,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "57ed8ad289755c74866035aebd91ca0821b49b7c8eb296520821ce43a20fb92b",
+    "rule_sha256": "058b3945112eb82d139a78e5cbd2b0c88a3d39acb68803a81037f3da6fc1c885"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3506",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3506"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Trading-Equity-Curve"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor（Michael Kapler）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线SPY；SMA(50)≥SMA(200)满仓多，否则满仓空（SI Trading Equity Curve·SPY.CROSS）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2014-11-11"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线SPY；SMA(50)≥SMA(200)满仓多，否则满仓空（SI Trading Equity Curve·SPY.CROSS）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Systematic Investor《Trading Equity Curve》代码主模型 `SPY.CROSS`（文首叙述曾写 SMA20 多空样例，**实际回测主模型**为快慢均线）。`sma.fast=SMA(50)`，`sma.slow=SMA(200)`；`signal = sma.fast >= sma.slow`；`weight$SPY = iif(signal, 1, -1)`（满仓多或满仓空）。不是仅 SMA20 多空叙述核，也不是下方权益曲线杠杆叠加核（W712）。提出日期取页头 11 Nov 2014。SI SPY.CROSS：SMA50≥SMA200满仓多否则满仓空 ≠ SMA20叙述样例 / 权益曲线杠杆叠加（W712）。计入美股/ETF。提出日期按源文件原样保留2014-11-11。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Code Strategies 中 SPY.CROSS（SMA 50/200；±1）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

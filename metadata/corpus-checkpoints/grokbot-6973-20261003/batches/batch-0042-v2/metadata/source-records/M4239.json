@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4239",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4193,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e62de5cd8cad7777c344ef7bbc8a4bed065f4281e08dbeb22d7a66047984cd15",
+    "rule_sha256": "877a13b03ec34da75306171fca98c3ad5357b384a628b52d43d3df00208ee90a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4239",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4239"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.nber.org/system/files/working_papers/w21533/w21533.pdf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Robert F. Stambaugh / Yu Yuan"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-131/W1448"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Stambaugh·Yuan·PERF误定价：月末；PERF复合秩（失败概率/O分/动量/毛利/ROA）；市值中位×PERF 30/70；多低分空高分市值加权（SY PERF·2×3）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2017"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Stambaugh·Yuan·PERF误定价：月末；PERF复合秩（失败概率/O分/动量/毛利/ROA）；市值中位×PERF 30/70；多低分空高分市值加权（SY PERF·2×3）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Stambaugh/Yuan《Mispricing Factors》（RFS 2017）之 **PERF** 因子（标准2×3构造）。PERF 复合分为失败概率、Ohlson O-score、动量、毛利率、ROA 等业绩类异象截面秩的等权平均（异象方向对齐使高分=更贵/更差）。每月：按 NYSE 市值中位分大小，独立按复合分 **30/70**（或文等效断点）分低/中/高；六个**市值加权**组合；**PERF**=两低分（低估）组合均 − 两高分（高估）组合均。不是 JKP mispricing_mgmt 特征三分位（近M0511）；不是刚入库CHS失败概率单核（回避M4225）。计入美股/ETF。提出日期 2017。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "NBER w21533 / RFS 2017 · PERF cluster · size×score 2×3 VW"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

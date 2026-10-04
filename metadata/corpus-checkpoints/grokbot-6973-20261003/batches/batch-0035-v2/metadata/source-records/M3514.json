@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3514",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3468,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "50b35c2047bf3ef57db8c27010f660b3fa4e7446a825988ef773abbd402572b7",
+    "rule_sha256": "8071166e2295bbce2b3f5e5c36bb821b2176e04cd7d9c75415d62b732be6c85b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3514",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3514"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Thinking-SIT2"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor（转述 Jeff Swanson 改进）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；SPY/GLD/IEF/IYR/EEM；5×21日收益Top2等权，价<SMA(5×21)该席改现金SHY（SI Thinking-SIT2·TOP2.CASH）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2015-02-24"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；SPY/GLD/IEF/IYR/EEM；5×21日收益Top2等权，价<SMA(5×21)该席改现金SHY（SI Thinking-SIT2·TOP2.CASH）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Systematic Investor《Thinking in SIT, more examples》**Modification 1** 代码 `TOP2.CASH`。宇宙代理：EQ=**SPY**、GOLD=**GLD**、GOV.10YR=**IEF**、RE=**IYR**、EM=**EEM**，现金 **SHY**（CASH 不参与打分）。`frequency='months'`。动量分=`prices/mlag(prices, 5*21)`；取 **Top2** 等权；若该资产价 < SMA(**5×21**) 则该权重置 0，剩余进 CASH。不是无均线过滤的纯 Top1/Top2，也不是 FAA/VAA。提出日期取页头 **24 Feb 2015**。SI TOP2.CASH：五资产5×21动量Top2等权，价<SMA(5×21)改SHY ≠ 无均线纯Top1/Top2/FAA/VAA。计入美股/ETF。提出日期按源文件原样保留2015-02-24。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Modification 1: Diversification and Trend Filter（models$TOP2.CASH）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3424",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3378,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8ba8cd73a0a0f8b0b25277ce7fe64ff86d2001157a4d7ea7c183f48efbc6052d",
+    "rule_sha256": "d3824b5e032e7bbb448cc08f273cd62b67a4999db1556617c6c328292badff2e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3424",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3424"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/MaximumDrawdownPercentPerSecurityFrameworkRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：小时；BaseFramework改仅AAPL；ConstantAlpha UP(31日,mag=0.025)等权即时；单票最大回撤0.4%（Lean MaximumDrawdownPercentPerSecurityFramework）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：小时；BaseFramework改仅AAPL；ConstantAlpha UP(31日,mag=0.025)等权即时；单票最大回撤0.4%（Lean MaximumDrawdownPercentPerSecurityFramework）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `MaximumDrawdownPercentPerSecurityFrameworkRegressionAlgorithm.py`。在 BaseFramework 上 `set_universe_selection(ManualUniverseSelectionModel(AAPL))`；`set_risk_management(MaximumDrawdownPercentPerSecurity(0.004))`（单票回撤 0.4%）。Alpha/组合/执行仍为父类 ConstantAlpha UP(31日,0.025)+等权+即时。不是 W577 单票最大**未实现盈利** 0.4% 核，也不是组合级 MaximumDrawdownPercentPortfolio 核（W620）。提出日期未知。Lean MaximumDrawdownPercentPerSecurityFramework：仅AAPL+单票回撤0.4% ≠ 单票最大未实现盈利0.4% / 组合级回撤（W620）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Algorithm.Python/MaximumDrawdownPercentPerSecurityFrameworkRegressionAlgorithm.py"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

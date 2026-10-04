@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3028",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3007,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0f2255999ffe3510324c6e4002e2647df1fd901df16500160b4fe71c2bf3b7c8",
+    "rule_sha256": "3dd3d17eb2024db1143e74c6e86dd8bac6a8604ea863abf51df5f371246610e5"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3028",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3028"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/Alphas/VIXDualThrustAlpha.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；DualThrust k1=k2=0.63、range窗20、合并30根；价>上轨未多则UP，价<下轨未空则DOWN；单票最大回撤3%（Lean VIXDualThrust）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；DualThrust k1=k2=0.63、range窗20、合并30根；价>上轨未多则UP，价<下轨未空则DOWN；单票最大回撤3%（Lean VIXDualThrust）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `Alphas/VIXDualThrustAlpha.py`。宇宙为 SPY（源码 `ManualUniverseSelectionModel([SPY])`，注释虽提 UVXY 以 SPY 为准）。`DualThrustAlphaModel(k1=0.63,k2=0.63,range_period=20,resolution=Minute,bars_to_consolidate=30)`：合并棒上 `range=max(HH−LC,HC−LL)`，`upper=close+k1*range`，`lower=close−k2*range`。价>上轨且非多 → UP Insight（5日到期）；价<下轨且非空 → DOWN；组合等权；风控 `MaximumDrawdownPercentPerSecurity(0.03)`。不是 W426 连续期货 SMA4/10 核。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

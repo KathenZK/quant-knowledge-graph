@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4448",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4402,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "87b6328033baa165f5770079502f7c86e0cf36e556085c46a65c8ec033586900",
+    "rule_sha256": "52d6d89a8a8ea7184f0b77bbe2674725e8d1ed30b198fffc2c199b44d05f03ff"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4448",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4448"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://doi.org/10.1093/rfs/hhu003"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Zhi Da / Umit G. Gurun / Mitch Warachka"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-155/W1658"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Da·Gurun·Warachka·蛙锅连续信息动量：月末；价>$5；PRET=12−1；ID=sgn(PRET)×(%负日−%正日)；PRET×ID五分位序贯；连续信息内多赢家空输家重叠持6月（DGW FIP·ContMom·6m）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2014-07"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Da·Gurun·Warachka·蛙锅连续信息动量：月末；价>$5；PRET=12−1；ID=sgn(PRET)×(%负日−%正日)；PRET×ID五分位序贯；连续信息内多赢家空输家重叠持6月（DGW FIP·ContMom·6m）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Da/Gurun/Warachka《Frog in the Pan: Continuous Information and Momentum》（RFS 2014）之 **连续信息动量** 可钉死核。宇宙：CRSP 普通股；形成期初价 **>$5**。**PRET**=过去 **12** 月累计收益**跳过最近 1 月**（12−1）。形成期内交易日：%pos=正收益日占比、%neg=负收益日占比；**ID=sgn(PRET)×(%neg−%pos)**（低 ID≈连续信息，高 ID≈离散冲击）。月末**序贯**双重五分位：先按 PRET 五分位，再在各档内按 ID 五分位。在**最低 ID（连续信息）**子集内，**等权**做多 PRET 赢家五分位、做空 PRET 输家五分位；持有约 **6月**（可重叠月层）。相对 AA QM 仅用正收益日占比作质量过滤（近M3559）：本核为 **ID×动量序贯多空**。不是朴素 JT 十分位；不是 Bali MAX。计入美股/ETF。提出日期 2014-07。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "RFS 2014 · ID=sgn(PRET)(%neg−%pos) · seq PRET×ID Q5 · ContMom L/S · 6m"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

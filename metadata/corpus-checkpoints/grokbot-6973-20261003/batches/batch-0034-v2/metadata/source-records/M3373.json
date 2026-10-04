@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3373",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3327,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d6ef0c3103fd69d5cd005dcc8c2340193f098239de2a53f9349ef6ee39289625",
+    "rule_sha256": "2df8ec148b054a4c042ad09642aa4a8cc0950cf77eae3b97f0a4cddea9a47114"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3373",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3373"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FineFundamentalFilteredUniverseRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；ConstituentsUniverse 后再精选总部城市=Cupertino；空仓对入选标的（断言AAPL）满仓（Lean FineFundamentalFilteredUniverse）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；ConstituentsUniverse 后再精选总部城市=Cupertino；空仓对入选标的（断言AAPL）满仓（Lean FineFundamentalFilteredUniverse）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FineFundamentalFilteredUniverseRegressionAlgorithm.py`。`ConstituentsUniverse` + `fine_selection_function`：`company_profile.headquarter_city.lower()==\"cupertino\"`。`on_data`：未投资则断言首个符号为 AAPL 后 `set_holdings(...,1)`。不是 PE/市值排序核，也不是仅 Constituents 步进持仓演示核。提出日期未知。Constituents后再精选总部Cupertino空仓满仓（断言AAPL） ≠ PE/市值排序核（M3038/M3345）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4514",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4468,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e065f4fd942e1cbef26e8adbe07b310bc9e0e15d4bccffc107dcad1d04a7bcaa",
+    "rule_sha256": "fdb3e2f42a92788d57ea00b1dbea250cea31b422173779a027be27a7922967ed"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4514",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4514"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://doi.org/10.1093/rfs/hhj020"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Evan Gatev / William N. Goetzmann / K. Geert Rouwenhorst"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-162/W1724"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Gatev·Goetzmann·Rouwenhorst·美股距离配对：12月形成期归一化价格SSD取最接近20对；偏离>±2σ开仓（多低估空高估），收敛或满6月平；等权（GGR Pairs·SSD·20）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2006-05"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Gatev·Goetzmann·Rouwenhorst·美股距离配对：12月形成期归一化价格SSD取最接近20对；偏离>±2σ开仓（多低估空高估），收敛或满6月平；等权（GGR Pairs·SSD·20）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Gatev/Goetzmann/Rouwenhorst《Pairs Trading: Performance of a Relative-Value Arbitrage Rule》（RFS 2006）之 **历史距离配对** 可钉死核。宇宙：流动性美股（文CRSP日频）。**形成期12月**：价格归一化到1，按两两累计平方距离 SSD 选 **距离最小的20对**；随后 **交易期6月**：当配对归一化价差偏离超过形成期价差 **±2个标准差** 时开仓——做多低估腿、做空高估腿；价差回归交叉或满6月平仓；对内等权、组合层等权。不是国家ETF配对（M0001）；不是协整/OU 参数配对。计入美股/ETF。提出日期 2006-05。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "RFS 2006 · SSD top20 pairs · ±2σ open · 6m trade"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

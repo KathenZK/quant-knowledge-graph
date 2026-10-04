@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3090",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3057,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6b7b752850f2a80c74e559bec6a48cf18a3a26fc0a931822d602a5f6195f94c6",
+    "rule_sha256": "22244a50ba472dce45cba831dda8547647c3d89c56a3f7be641dd7e8dd91ff49"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3090",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3090"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/AddRiskManagementAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CompositeRiskManagementModelFrameworkAlgorithm.py（quant-web-harvest-31 W514；同市场+同核：SPY分钟 ConstantAlpha UP(20分钟,mag=0.025)+等权即时+单票浮盈封顶1%风控栈；CompositeRiskManagement(浮盈1%+单票回撤1%) 相对 AddRiskManagement(组合回撤2%+单票浮盈1%) 为风控组装妆点，不算新核（优先保留 M3090）；同核未另开）"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；ConstantAlpha UP(20分钟,mag=0.025)+等权；组合最大回撤2%并叠加单票浮盈封顶1%（Lean AddRiskManagement）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；ConstantAlpha UP(20分钟,mag=0.025)+等权；组合最大回撤2%并叠加单票浮盈封顶1%（Lean AddRiskManagement）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `AddRiskManagementAlgorithm.py`。手工宇宙 SPY 分钟；Alpha=`ConstantAlphaModel(PRICE, UP, 20分钟, 0.025)`；等权组合+即时执行。风控：`set_risk_management(MaximumDrawdownPercentPortfolio(0.02))` 且 `add_risk_management(MaximumUnrealizedProfitPercentPerSecurity(0.01))`（源码另构造 Composite 演示同阈值）。不是 W414 ConfidenceWeighted 核，也不是仅单票回撤1%的 BasicTemplateFramework 演示核。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3356",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3310,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7b1035ab7e19566266f18aac05062b19bf02793bcc5d75df73a17b6e203bbb61",
+    "rule_sha256": "d89dd33827f31a1c03b38d8415ea4194d7d654769725ffd11d2c741f4cde572f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3356",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3356"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CustomShortableProviderRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；自定义可空（fee=0.0025,rebate=0.0507；16:00前可空10、之后1001）；可空量>1000则卖出全部可空量（预期−1001）（Lean CustomShortableProvider）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；自定义可空（fee=0.0025,rebate=0.0507；16:00前可空10、之后1001）；可空量>1000则卖出全部可空量（预期−1001）（Lean CustomShortableProvider）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `CustomShortableProviderRegressionAlgorithm.py`。现金 1e7；`add_security(EQUITY,\"SPY\",Daily)`；`set_shortable_provider(CustomShortableProvider)`。`on_data`：若 `shortable_quantity>1000` → `sell(\"SPY\", int(qty))`。断言仅1单且数量 −1001。不是裸卖看跌期权核，也不是 AllShortable 粗选核。提出日期未知。可空量>1000则卖出全部可空量（预期−1001） ≠ 裸卖期权/AllShortable粗选。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

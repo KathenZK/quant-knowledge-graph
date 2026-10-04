@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3412",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3366,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "40647f054123b6d55898f016c3dfdf0783c9bca8a0825a222ab8acf05d09e401",
+    "rule_sha256": "e8d5f3058df8a0a5df011b00d7f241a12f39c2d41bedd9e63770541b57943675"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3412",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3412"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/OrderTicketDemoAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；按时点轮换提交：市价±10（同步/异步）、限价收盘×0.999/+1.001 并收紧、止损市价收盘×1.0025/0.9975 并收紧、止损限价、追踪止损（trailing=0.25%百分比，每5分钟−0.01%）（Lean OrderTicketDemo）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；按时点轮换提交：市价±10（同步/异步）、限价收盘×0.999/+1.001 并收紧、止损市价收盘×1.0025/0.9975 并收紧、止损限价、追踪止损（trailing=0.25%百分比，每5分钟−0.01%）（Lean OrderTicketDemo）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `OrderTicketDemoAlgorithm.py`。标的 SPY。按内部时钟：`market_order(±10)` 同步与异步；一对 `limit_order(+10, close×0.999)` / `(−10, close×1.001)`，未成则限价各向内更新；一对 `stop_market_order(+10, close×1.0025)` / `(−10, close×0.9975)`，未成则止损价各收紧 0.01；`stop_limit_order` 多头止损 close×1.001 限价 close−0.03、空头对称；`trailing_stop_order(±10, stop=close×1.0025/0.9975, trailing_amount=0.0025, trailing_as_percentage=True)`，未成则每5分钟把 trailing 百分比减 0.0001（下限 0.0001）。一对中一方全成则取消另一方。不是 W581 固定美元追踪止损核，也不是 W561 止损限价 EMA 信号核。提出日期未知。SPY订单票据五类：市价/限价收紧/止损市价/止损限价/追踪止损0.25%每5分钟−0.01% ≠ 固定美元追踪止损（M3386）/止损限价EMA（M3368）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

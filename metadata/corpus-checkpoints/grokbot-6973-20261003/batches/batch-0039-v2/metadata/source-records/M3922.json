@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3922",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3876,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "19979135d82376c435873c6bbff9c6e9dce852c68e9740fc360907523c5c2e0b",
+    "rule_sha256": "d4f80b559f44d34e845c3ddcfe02403a134105001160882190e50e50ff73b5b7"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3922",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3922"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15344/can-crude-oil-predict-equity-returns/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect（转述 Driesprong et al.）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-96/W1129"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·原油回归择时SPY：月频；近约2年油与SPY月收益OLS，预测股收益>月化T-bill则满仓SPY否则现金（QC Oil→SPY·OLS）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·原油回归择时SPY：月频；近约2年油与SPY月收益OLS，预测股收益>月化T-bill则满仓SPY否则现金（QC Oil→SPY·OLS）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect《Can Crude Oil Predict Equity Returns》：月初用近约 **2** 年 OPEC 油价与 **SPY** 的**月**收益做 OLS（r^SPY_t=a+b r^oil_{t−1}），以最新油月收益预测下月股收益；若预测值 **大于** 当月 T-bill 利率/12 则 **满仓 SPY**，否则清仓持现金。钉死薄述库条（M0165）。计入美股/ETF。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 15344 monthly oil→SPY vs T-bill"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
