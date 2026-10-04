@@ -1,0 +1,103 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述K线实体方向反复切换的密度。它与用真实波幅总和除以高低区间再取对数的经典CHOP定义不同；不据此证明均值回归或趋势交易收益。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-byuffiUC-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "核心计算包含当前未收线O/C，盘中数值可能变化；本记录建议研究时另行约定闭合K线采样，但不将该建议冒充源码门槛。EMA初始化、首根历史引用、缺失bar和平台版本的运行行为未复现。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-byuffiUC-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先计算颜色及相邻颜色是否变化，再对变化次数滚动求和和缩放，最后平滑。默认状态为chop>=52记震荡、chop<=40记趋势，其他中性；参数窗口和阈值的变化都不单独计数。脚本另计算最多回看30根的当前连色数，表格、颜色和fade提示不构成策略订单，也不另拆为因子。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-byuffiUC-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述K线实体方向反复切换的密度。它与用真实波幅总和除以高低区间再取对数的经典CHOP定义不同；不据此证明均值回归或趋势交易收益。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-byuffiUC-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "令g_t=1(C_t>=O_t)，f_t=1(g_t不等于g_(t−1))，F_t为最近W根f的和。原始输出100×F_t/W；主输出chop为原始输出的S期EMA。辅助基线为原始输出B期SMA，辅助平均连色长度在F>0时为W/(F+1)，否则W。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-byuffiUC-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "宿主图表开盘价O和收盘价C；默认窗口W=5、EMA平滑S=2、基线窗口B=200。颜色定义C>=O，平盘计为绿色；源码没有主动调用Heikin-Ashi转换，但未限制图表类型；不能排除用户使用合成K线。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-byuffiUC-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可作为市场状态描述输入。需要另行冻结信号采样、交易和成本规则才能研究策略；本记录没有开平仓规则。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未冻结行情来源、复权与交易日历。",
+    "未执行Pine或验证缺失值及初始化行为。",
+    "视觉提示不是订单，也没有收益验证。"
+  ],
+  "name": "K线颜色翻转密度（Streak Choppiness Index）",
+  "native_source_id": "byuffiUC",
+  "one_line": "统计宿主图表K线阳阴颜色在窗口内切换的比例，再作EMA平滑；只登记一个指标族。",
+  "record_id": "byuffiUC",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "RafaelZioni",
+      "id": "tradingview-byuffiUC-published-code",
+      "license": "NOASSERTION; no license header in this saved script",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;91db8ada1412490ba0b20cb3ed3e8463@1.0",
+      "sha256": "1dfe994b0d14e03554dd8fa5b94081750a6a45fb9fa8aadf9217dfab711754fc",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B91db8ada1412490ba0b20cb3ed3e8463/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / RafaelZioni",
+      "id": "tradingview-list-de07de5cab9dabbdff91",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=byuffiUC；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:de07de5cab9dabbdff91965cc96da12a55b3214917208dcef994fccae4274787",
+      "sha256": "de07de5cab9dabbdff91965cc96da12a55b3214917208dcef994fccae4274787",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/?script_access=open&script_type=indicators&sort=latest_popular",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

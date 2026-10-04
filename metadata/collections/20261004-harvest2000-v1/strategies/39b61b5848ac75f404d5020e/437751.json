@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "下破后收复可能反映短期卖压衰减；本条尚无样本或执行研究。",
+    "missing": [
+      "没有经过核实的原始论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "作者原始发布URL、原始版本与镜像一致性尚未核实。",
+    "依赖Pine内建函数及运行时；未编译、执行、下载行情或回测。",
+    "基线近邻经正文比较，但还没有独立复核的全库机制去重结论。",
+    "实际市场、周期、价格调整、合约规格及可交易约束未冻结。",
+    "不是标准吞没条件，原始布尔表达式已逐项保留。",
+    "日期输入闲置；4%距离按信号价而非成交价计算。"
+  ],
+  "name": "下破前低后收复前实体的单bar反转多头",
+  "native_source_id": "437751",
+  "one_line": "当前低点下破前低且收盘收回本根开盘、前根开盘与前收时做多，空仓时才开仓并同时设置相对信号收盘的跳数止盈止损。",
+  "record_id": "437751",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果。未断言源码、论文、数据或商业内部使用权；没有把镜像发布权限扩展为原作者授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8EK%E7%BA%BF%E6%9E%84%E5%BB%BA%E7%9A%84%E5%A4%9A%E5%A4%B4%E7%AA%81%E7%A0%B4%E7%AD%96%E7%95%A5Long-Breakthrough-Strategy-Based-on-K-Line-Construction.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ仓库发布账号 ChaoZhang；源码署名声明 TheQuantScience；转载链与原作者发布版本未核实，不把上传者视为实现作者。",
+      "id": "fmz-437751-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "338039b85df0ab4d74fb52713cd4c8287c4c089c1647c0f713edd53c37c5cd2a",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8EK%E7%BA%BF%E6%9E%84%E5%BB%BA%E7%9A%84%E5%A4%9A%E5%A4%B4%E7%AA%81%E7%A0%B4%E7%AD%96%E7%95%A5Long-Breakthrough-Strategy-Based-on-K-Line-Construction.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-437751-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表当前标的；策略主体没有固定证券代码。FMZ回测注释的BTC_USDT配置仅是转载包装，未确认为原作者适用市场。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-437751-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "显式percent佣金0.03；未声明滑点、点差或融资费用。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-437751-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "四组条件同时成立且strategy.opentrades==0时提交Open_Long；inDateRange被硬编码true，日期输入当前未生效。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-437751-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5，当前bar形成条件，先entry再同分支exit；没有显式逐tick或收盘成交设置，未运行验证入场/保护单配对和成交。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-437751-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "在同一入口分支提交profit/loss订单：默认分别为4×信号close/100/syminfo.mintick跳，随后按成交价加减这些跳数执行；不是成交均价精确±4%。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-437751-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认100%权益，初始资本1000，账户币种EUR；没有显式qty或风险定仓。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-437751-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "止盈止损价格距离由信号收盘决定，成交跳空会改变相对成交价的百分比。无最长持有；结束日期不自动清仓。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-437751-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "low<open且low<low[1]，同时close>open、close>open[1]、close>close[1]。不要求前根为阴线，也不要求本根开盘低于前收，不能直接改名为标准看涨吞没。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-437751-published-code"
+      ],
+      "status": "MISSING",
+      "text": "计算窗口均以图表bar为单位；策略主体未强制周期。FMZ回测包装周期与原作者要求没有等价证明，原始运行周期为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-437751-published-code"
+      ],
+      "status": "MISSING",
+      "text": "没有跨资产选股或动态股票池；源码运算针对当前图表序列。具体交易品种、合约乘数、交易日历和调整规则仍须另行冻结。"
+    }
+  }
+}

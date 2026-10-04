@@ -1,0 +1,104 @@
+{
+  "economic_basis": {
+    "hypothesis": "刻画成交量相对近期水平及价格方向对归一化动量的调整。它不是横截面先筛高成交量股票再按多月动量排序，经济预测方向未被本次采集验证。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-CRjjTHRA-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "使用当前C/V，未设置收线确认门；未闭合bar会改变结果。成交量缺失、不同市场成交量单位和EMA预热的具体运行行为未验证，不能把缺失成交量补零。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-CRjjTHRA-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "计算顺序为价格动量标准化、成交量比与当期价格方向、有界压力调节、基础平滑、滚动绝对最大值归一化、双重平滑。零价差方向取0。整体作为一个原作者复合指标收录，不将信号线、柱值、阈值或参数分别扩数。后段把VMI与信号均值的一阶变化除以价格ATR来着色，且变量Up对应负斜率；不把该颜色逻辑当作主VMI的收益方向或独立因子。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-CRjjTHRA-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "刻画成交量相对近期水平及价格方向对归一化动量的调整。它不是横截面先筛高成交量股票再按多月动量排序，经济预测方向未被本次采集验证。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-CRjjTHRA-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "令d=C−C_(t−L)，m=d/max(EMA_L(|d|),epsilon)，v=V/max(EMA_L(V),epsilon)，p=sign(C−C_(t−1))×v。q=1+a×p/(1+|p|)，b=EMA_S(m×q)，z=100b/max(最近N根|b|的最大值,epsilon)。VMI=EMA_D(EMA_D(z))；辅助信号s=EMA_Q(VMI)，柱值VMI−s。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-CRjjTHRA-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前图表收盘价C、成交量V。默认动量窗L=14、基础EMA窗S=5、双重EMA窗D=5、信号窗Q=9、滚动归一化窗N=50、成交量权重a=0.75；分母下限epsilon=1e−7。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-CRjjTHRA-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可以作为单资产量价状态特征。源码另有极值区间内VMI与信号交叉提示，但未给仓位、退出或订单，不能登记成完整策略。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未冻结市场数据提供方及成交量口径。",
+    "未复现Pine初始化、缺失值和运行时。",
+    "源码着色命名与方向及量纲存在注意点，已与主输出分开。",
+    "没有回测、收益结论或交易规则。"
+  ],
+  "name": "有界成交量压力调整动量（Volume Momentum Index）",
+  "native_source_id": "CRjjTHRA",
+  "one_line": "先将价格动量除以其绝对值EMA，再用有界成交量压力调整，滚动归一化后双重EMA平滑。",
+  "record_id": "CRjjTHRA",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SMRTAlgo",
+      "id": "tradingview-CRjjTHRA-published-code",
+      "license": "MPL-2.0 source notice",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;1845a77321364d3d94565963e72599e8@1.0",
+      "sha256": "a3d0c0628e1d429c299229fc43c883da0c4a33549e7e5d3f2890e7d60a894e63",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B1845a77321364d3d94565963e72599e8/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / SMRTAlgo",
+      "id": "tradingview-list-de07de5cab9dabbdff91",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=CRjjTHRA；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:de07de5cab9dabbdff91965cc96da12a55b3214917208dcef994fccae4274787",
+      "sha256": "de07de5cab9dabbdff91965cc96da12a55b3214917208dcef994fccae4274787",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/?script_access=open&script_type=indicators&sort=latest_popular",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

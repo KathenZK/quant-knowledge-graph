@@ -1,0 +1,105 @@
+{
+  "economic_basis": {
+    "hypothesis": "统计特征可描述已观测序列；金融预测用途和收益方向尚未验证。",
+    "missing": [
+      "无收益有效性、因果识别或样本外复现证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只能在输入窗口全部样本已观测且发布后计算；若用于金融研究，窗口必须仅包含决策时已知值。 窗口/采样频率/资产域/缺失处理未指定为市场实施；这不是已能直接回测的交易策略。"
+    },
+    "calculation": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "将每个非末尾观测与其下一步变化配对。 对前值用 pd.qcut 分成 r 个分位箱，各箱分别求前值均值和变化均值。 去掉缺失箱均值，对这些箱均值点调用 np.polyfit(deg=m)。 按 coeff 选择降幂排列的拟合系数；分箱或线性代数失败输出 NaN，超出系数范围也为 NaN。 边界：完整 m+1 维系数只计一个算法族，不把各系数、次数或箱数计成新因子。 先分箱求均值再拟合，与对全部原点直接回归不同。 没有输入时间间隔 dt 除数；更换采样频率会改变漂移尺度。 源码注释联系 Langevin 模型，但本次未验证模型假设、拟合稳定性或经济收益。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用条件平均变化近似描述输入数值状态对应的下一步漂移。 这是统计序列特征，未声称解释或预测投资收益。"
+    },
+    "formula": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "用 (x_i,Δx_i=x_(i+1)-x_i)；按 x_i 的 r 个分位箱求 (mean(x),mean(Δx))；最小二乘拟合 h(z)=a_m z^m+...+a_0，输出所选系数。"
+    },
+    "inputs": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入x为按时间排序的一维有限数值样本；源码不绑定某资产或价格/收益变量。m：positive integer，多项式次数；源码默认值=无默认值，调用时传入；r：positive integer，状态分位箱数；源码默认值=无默认值，调用时传入；coeff：integer 0..m，np.polyfit 降幂系数索引；源码默认值=无默认值，调用时传入"
+    },
+    "use_cases": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可以为数值序列的描述、聚类或后续研究提供输入；市场绑定、窗口和采样频率需单独确定，不把参数或输出分量展开为新因子。"
+    }
+  },
+  "identity_namespace": "blue-yonder/tsfresh",
+  "lab": null,
+  "missing_information": [
+    "市场输入绑定、窗口与采样频率尚未选择",
+    "数据供应商、时间戳与修订政策缺失",
+    "NumPy/Pandas 等依赖环境未冻结",
+    "未执行源代码或进行数值交叉验证",
+    "没有经济收益有效性证据"
+  ],
+  "name": "按状态分箱拟合的动力漂移多项式",
+  "native_source_id": "friedrich_coefficients",
+  "one_line": "用条件平均变化近似描述输入数值状态对应的下一步漂移。",
+  "record_id": "friedrich_coefficients",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行源码，未生成行情计算或回测结果；综合商业状态REVIEW_REQUIRED。",
+    "metadata": "自撰数学定义、参数与源码定位；保留tsfresh与贡献者归属，不复制来源全文。源码MIT不扩张至引用论文或输入数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2016 Maximilian Christ, Blue Yonder GmbH; tsfresh contributors",
+      "id": "tsfresh-tsfresh-feature_extraction-feature_calculators-py",
+      "license": "MIT",
+      "locator": "friedrich_coefficients:L2082-L2130; _estimate_friedrich_coefficients:L131-L173",
+      "revision": "6af3c0030b6c9f02c3862a20e00cce87c984aa5b",
+      "sha256": "af78b02ff7d99d1e1c8fb0d56711fab00c0f84f63aeec969c091dd52fbdb228f",
+      "supports": [
+        "原生计算器定义、输入、参数与边界"
+      ],
+      "url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/tsfresh/feature_extraction/feature_calculators.py",
+      "verification": "PINNED_SOURCE_CODE_INDEPENDENTLY_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2016 Maximilian Christ, Blue Yonder GmbH; tsfresh contributors",
+      "id": "tsfresh-LICENSE-txt",
+      "license": "MIT",
+      "locator": "LICENSE.txt:L1-L16",
+      "revision": "6af3c0030b6c9f02c3862a20e00cce87c984aa5b",
+      "sha256": "1804283622c8e51a4427aaa772d5ca522f89932fd610b294055435922af1c748",
+      "supports": [
+        "源码版权和许可声明；不支持公式或经济有效性"
+      ],
+      "url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/LICENSE.txt",
+      "verification": "PINNED_LICENSE_NOTICE_READ"
+    }
+  ]
+}

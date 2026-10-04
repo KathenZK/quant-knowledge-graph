@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "周期分量经幅度归一化后可能暴露反转状态；未证明这一处理有预测力或稳定收益。",
+    "missing": [
+      "没有经过核实的原始论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "作者原始发布URL、原始版本与镜像一致性尚未核实。",
+    "依赖Pine内建函数及运行时；未编译、执行、下载行情或回测。",
+    "基线近邻经正文比较，但还没有独立复核的全库机制去重结论。",
+    "实际市场、周期、价格调整、合约规格及可交易约束未冻结。",
+    "lag输入闲置；标题中的Ehlers不是已核实脚本作者声明。",
+    "持有计数按信号重置，不保证8根风险上限。"
+  ],
+  "name": "随机化Cyber Cycle拐点反向交易",
+  "native_source_id": "439084",
+  "one_line": "对二阶递归周期分量做随机归一化，以其拐点反向开仓，亏损且超过8根无新入场信号时退出。",
+  "record_id": "439084",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果。未断言源码、论文、数据或商业内部使用权；没有把镜像发布权限扩展为原作者授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%83%E5%8B%92%E6%96%AF%E9%9A%8F%E6%9C%BA%E5%91%A8%E6%9C%9F%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Ehlers-Stochastic-Cyber-Cycle-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ仓库发布账号 ChaoZhang；源码署名声明 未明确给出；转载链与原作者发布版本未核实，不把上传者视为实现作者。",
+      "id": "fmz-439084-published-code",
+      "license": "NOASSERTION; no recognized source license notice; repository has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "a670f2f5e9ee6ca00c470c6954245a552a8173530a27eae25f71352d0939f1c7",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%83%E5%8B%92%E6%96%AF%E9%9A%8F%E6%9C%BA%E5%91%A8%E6%9C%9F%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Ehlers-Stochastic-Cyber-Cycle-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-439084-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表当前标的；策略主体没有固定证券代码。FMZ回测注释的BTC_USDT配置仅是转载包装，未确认为原作者适用市场。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-439084-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "显式percent佣金0.1；滑点、点差及持仓费用缺失。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-439084-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "oppositeTrade默认true：signal下穿自身前值时做多，上穿时做空；关闭开关改为顺向。没有极值阈值门槛。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-439084-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v3，按当前bar序列计算；先执行两侧入口条件及重置，再检查亏损时间退出。未显式逐tick/收盘成交，未测试订单执行。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-439084-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "方向相反的入口可反转；另当openprofit<0且barsSinceEntry>8时close_all。计数在空仓及每次入口信号时归零，而非只在实际新成交时归零。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-439084-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认100%权益，pyramiding=1；没有显式qty覆盖或风险预算。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-439084-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "没有价格止损；盈利仓不受亏损计时退出。随机窗口常值/初始化和实时数值行为未执行核验。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-439084-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src默认hl2，s=(src+2src[1]+2src[2]+src[3])/6，a=0.07。若cycle[7]缺失，cycle=(src−2src[1]+src[2])/4；否则cycle=(1−0.5a)²×(s−2s[1]+s[2])+2(1−a)×cycle[1]−(1−a)²×cycle[2]。v=stoch(cycle,cycle,cycle,8)/100，即(cycle−近8根最低cycle)/(近8根最高cycle−近8根最低cycle)；signal=2×((4v+3v[1]+2v[2]+v[3])/10−0.5)。lag=9输入未使用；常值窗口分母为0没有显式防护。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-439084-published-code"
+      ],
+      "status": "MISSING",
+      "text": "计算窗口均以图表bar为单位；策略主体未强制周期。FMZ回测包装周期与原作者要求没有等价证明，原始运行周期为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-439084-published-code"
+      ],
+      "status": "MISSING",
+      "text": "没有跨资产选股或动态股票池；源码运算针对当前图表序列。具体交易品种、合约乘数、交易日历和调整规则仍须另行冻结。"
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述在合约执行环节发生的原生币转移活动量。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-23622d7e7e2cf29cf840c077"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "源文间隔 1 day；须在区间结束、原件及必要价格/分类标签发布后使用，实际发布延迟/PIT快照缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-23622d7e7e2cf29cf840c077"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "识别由合约或非合约地址发起的合约代码调用。 只纳入成功调用，将其转移的原生币数量相加。 Solana按源文改用向程序派生账户转移价值的指令，排除投票账户及外部所有账户。 边界：同一笔交易可包含多次内部调用，不能把交易金额直接替代调用转移量。 不额外登记美元换算版；失败调用不纳入。 不同链的内部调用提取及Solana账户标签仍需冻结数据实现。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-23622d7e7e2cf29cf840c077"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述在合约执行环节发生的原生币转移活动量。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-23622d7e7e2cf29cf840c077"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Σ_(区间内成功的合约调用c) value_native(c)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-23622d7e7e2cf29cf840c077"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "contract invocation records：按冻结原始文档定义，原生名称/作用见公式和计算步骤；success status：按冻结原始文档定义，原生名称/作用见公式和计算步骤；native-unit value transferred：按冻结原始文档定义，原生名称/作用见公式和计算步骤。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-23622d7e7e2cf29cf840c077"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "coinmetrics/product-docs",
+  "lab": null,
+  "missing_information": [
+    "供应商数据获取与商用授权未确认",
+    "区间时间边界、发布延迟和修订历史未冻结",
+    "未获取行情/链上数据或执行任何回测",
+    "供应商内部算法/分类标签仅有文档层定义，未取得完整源码"
+  ],
+  "name": "成功合约调用转移的原生币总量",
+  "native_source_id": "TxTfrValContCallNtv",
+  "one_line": "描述在合约执行环节发生的原生币转移活动量。",
+  "record_id": "TxTfrValContCallNtv",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/transactions/transfer-value.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Coin Metrics, product-docs official repository",
+      "id": "harvest-source-23622d7e7e2cf29cf840c077",
+      "license": "NOASSERTION",
+      "locator": "Xfer'd by Contract Calls:L67-L96",
+      "revision": "8489126ae94aff995d01be44f965327f2640f51e",
+      "sha256": "211bbf1fc60a838ee8ceeee6d3d9012cb6f84799f7df0d627b9caa10761530be",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/transactions/transfer-value.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

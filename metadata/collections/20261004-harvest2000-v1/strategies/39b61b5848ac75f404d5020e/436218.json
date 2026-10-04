@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "变换后的活力指数极端拐点可能反映反转机会；该假说尚未检验。",
+    "missing": [
+      "没有经过核实的原始论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "作者原始发布URL、原始版本与镜像一致性尚未核实。",
+    "依赖Pine内建函数及运行时；未编译、执行、下载行情或回测。",
+    "基线近邻经正文比较，但还没有独立复核的全库机制去重结论。",
+    "实际市场、周期、价格调整、合约规格及可交易约束未冻结。",
+    "源码标题提Ehlers，未提供明确脚本原作者署名，不能将Ehlers当作已核实实现作者。",
+    "barsSinceEntry按信号重置而非已验证成交重置。"
+  ],
+  "name": "Fisher随机相对活力指数极值拐点反向交易",
+  "native_source_id": "436218",
+  "one_line": "对相对活力指数做随机归一化与Fisher变换，在极值区的拐点反向开仓，亏损且久未触发新信号时退出。",
+  "record_id": "436218",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果。未断言源码、论文、数据或商业内部使用权；没有把镜像发布权限扩展为原作者授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%83%E5%8B%92%E6%96%AF-%E8%B4%B9%E5%B8%8C%E5%B0%94%E7%9B%B8%E5%AF%B9%E6%B4%BB%E5%8A%9B%E6%8C%87%E6%95%B0%E7%AD%96%E7%95%A5Ehlers-Fisher-Stochastic-Relative-Vigor-Index-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ仓库发布账号 ChaoZhang；源码署名声明 未明确给出；转载链与原作者发布版本未核实，不把上传者视为实现作者。",
+      "id": "fmz-436218-published-code",
+      "license": "NOASSERTION; no recognized source license notice; repository has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "dc0434a708265638f708d3f265fff614e01e86edd9dd3e929da6153a4193b23a",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%83%E5%8B%92%E6%96%AF-%E8%B4%B9%E5%B8%8C%E5%B0%94%E7%9B%B8%E5%AF%B9%E6%B4%BB%E5%8A%9B%E6%8C%87%E6%95%B0%E7%AD%96%E7%95%A5Ehlers-Fisher-Stochastic-Relative-Vigor-Index-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-436218-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表当前标的；策略主体没有固定证券代码。FMZ回测注释的BTC_USDT配置仅是转载包装，未确认为原作者适用市场。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-436218-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "显式percent佣金0.1；滑点、点差、融资和资金费率未提供。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-436218-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "oppositeTrade默认true：signal下穿其前值且abs(signal)>2/2.64时做多；上穿且同样极值过滤时做空。关闭该开关才改为顺拐点方向。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-436218-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v3，当前bar计算信号与开仓判定；入口后先重置计数再判断亏损退出。未声明逐tick或收盘成交，未执行订单语义验证。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-436218-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "相反入口可提交反方向订单；此外strategy.openprofit<0且barsSinceEntry>8时close_all。计数在每次入口信号时重置，未必对应实际新成交，不能写成所有交易8根强退。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-436218-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认100%权益，pyramiding=1；没有显式单笔风险预算。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-436218-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "没有固定止损。亏损时间退出受信号重置影响；盈利仓没有该时间退出。随机归一化的常量窗口数值行为未执行检验。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-436218-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先按(当根+2×前1根+2×前2根+前3根)/6分别平滑CO=C−O与HL=H−L，各滚动合计10根后取比；分母为0时RVI取0。v1=stoch(RVI,RVI,RVI,10)/100；v2=(4v1+3v1[1]+2v1[2]+v1[3])/10；signal=0.5×ln((1+1.98×(v2−0.5))/(1−1.98×(v2−0.5)))/2.64；trigger=signal[1]。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-436218-published-code"
+      ],
+      "status": "MISSING",
+      "text": "计算窗口均以图表bar为单位；策略主体未强制周期。FMZ回测包装周期与原作者要求没有等价证明，原始运行周期为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-436218-published-code"
+      ],
+      "status": "MISSING",
+      "text": "没有跨资产选股或动态股票池；源码运算针对当前图表序列。具体交易品种、合约乘数、交易日历和调整规则仍须另行冻结。"
+    }
+  }
+}

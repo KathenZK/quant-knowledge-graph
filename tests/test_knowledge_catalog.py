@@ -528,7 +528,7 @@ def test_real_source_followups_resolve_three_rows_without_replacing_original_ver
     assert unknown["statuses"]["source_followup"] == ["SOURCE_UNAVAILABLE"]
     assert catalog.search(status="SOURCE_UNAVAILABLE")["total"] == 1
     assert catalog.stats()["source_reviews"] == 4
-    assert catalog.stats()["unique_entries"] == 8546
+    assert catalog.stats()["unique_entries"] == 8546 + catalog.stats()["source_collection_entries"]
     assert catalog.search("M0115", source="QuantConnect", frequency="Daily")["total"] == 1
     assert catalog.search("M0196", source="TradingView", frequency="1分钟")["total"] == 1
     assert catalog.search("M0176", frequency="15分钟")["total"] == 0

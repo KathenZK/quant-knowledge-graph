@@ -1,0 +1,103 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述一次仍未收复原峰值的回撤中，价格修复的方向、路径直接程度、相对修复幅度与耗时。高分不等于未来收益较高，也不是已验证的择时策略。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-NjulQ9lB-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "历史引用只涉及当前及过去输入，ATR特意取上一根；但当根得分和view字段可盘中预览，持久段状态在确认bar更新。实际使用应固定采样时点，不能把盘中预览等同确认事件。原数据时区、复权与依赖运行版本尚未固定。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-NjulQ9lB-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "滚动参考峰为P根最高收盘；价格低于峰值减0.5tick时开启回撤观察，锚在该回撤段固定，不能因滚动峰过期下移而重置。逐根更新最低收盘及回撤年龄，直到收盘重新达到冻结锚减0.5tick。参考峰/低点/年龄视图先参与当根得分，barstate.isconfirmed时才写入持久状态；数据无效时在确认bar清除段状态。数据门要求最近R=max(P,A+1,S+1)根全部满足C>0、H>=L、L<=C<=H，bar_index>=R，前一根ATR>0及滚动峰>0；路径绝对变动和不为正则路径效率取0。主指标与回撤深度/状态/事件共同保留一个记录，不拆辅助输出充数。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-NjulQ9lB-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述一次仍未收复原峰值的回撤中，价格修复的方向、路径直接程度、相对修复幅度与耗时。高分不等于未来收益较高，也不是已验证的择时策略。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-NjulQ9lB-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "主输出为100×clip(净移动/(S×前一根ATR×a),0,1)×clip(净移动/路径绝对变动总和,0,1)×修复比例/(1+回撤年龄/T)。净移动=C_t−C_(t−S)，路径总和=Σ|ΔC|；修复比例=clip((C−回撤低点)/max(冻结峰值锚−回撤低点,tick),0,1)。只有有效数据且回撤年龄>S时计算该乘积；有效但未成熟为0，无效为na。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-NjulQ9lB-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "图表H/L/C与最小价格跳动tick。默认滚动峰窗P=252、路径窗S=8、ATR窗A=14、持续时间尺度T=50、满分斜率a=0.25 ATR/根；深回撤阈值8%、恢复状态进入分10、最低修复比0.10。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-NjulQ9lB-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用于区分真实价格回升与滚动窗口旧峰过期造成的表观回撤缩小，可作为风险状态或恢复状态研究输入。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未执行或独立验证指标数值。",
+    "未冻结行情、交易日历、复权与Pine引擎版本。",
+    "未证明回撤恢复得分具有预测收益或控制回撤的效果。"
+  ],
+  "name": "冻结峰值锚的回撤恢复效率（Drawdown Recovery Efficiency）",
+  "native_source_id": "NjulQ9lB",
+  "one_line": "冻结回撤起点的价格峰值，将恢复斜率、路径效率、低点修复比例和回撤持续时间组合成一个恢复得分。",
+  "record_id": "NjulQ9lB",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Pineify",
+      "id": "tradingview-NjulQ9lB-published-code",
+      "license": "NOASSERTION; no license header in this saved script",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;915f9406da554717b658be34cb1f9b1e@1.0",
+      "sha256": "dca7603b15884f8cf170af4e222b95852d1ce3535d34fd20e4d052e2c9b67469",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B915f9406da554717b658be34cb1f9b1e/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / Pineify",
+      "id": "tradingview-list-6f2bd3d6a2e377cb6bab",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=NjulQ9lB；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:6f2bd3d6a2e377cb6bab7a50957f5f9527b547102651c39457276da0f7c70cb8",
+      "sha256": "6f2bd3d6a2e377cb6bab7a50957f5f9527b547102651c39457276da0f7c70cb8",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-2/?script_access=open&script_type=indicators&sort=latest_popular",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

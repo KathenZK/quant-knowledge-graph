@@ -1,0 +1,102 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述正负冲击出现时的平滑价格层级及其相对关系。冲击是输入序列变动的相对大小，不代表新闻冲击、真实订单流或因果外生事件。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-VaXi43Pc-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "用当前输入，没有收线确认门，盘中门控及状态会变化；历史只向后引用。Pine内建percentrank的预热和并列值行为尚未运行核验；输入行情及图表类型未冻结。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-VaXi43Pc-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "分别比较B、D与前根：上升记+1、下降记−1、不变保留原方向（初始0）。多状态须两方向都+1、B>D且（关中点门或C>(B+D)/2）；空状态须都−1、B<D且（关门或C<(B+D)/2）。否则允许中性时输出0，默认保留前状态；最终状态首值若尚未触发可能为na，不能补成确定多空。中点门用close，即使src另选其他序列也不改变。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-VaXi43Pc-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述正负冲击出现时的平滑价格层级及其相对关系。冲击是输入序列变动的相对大小，不代表新闻冲击、真实订单流或因果外生事件。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-VaXi43Pc-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "r=(src_t−src_(t−1))/max(|src_(t−1)|,tick)，无前值时r=0；q=percentrank_50(|r|)，E=EMA_21(src)。正门为r>0且q有效且q>20；负门为r<0且q有效且q>20。B_t在前值缺失或正门成立时取E，否则保持B_(t−1)；D_t同理用负门。主构造为两条带不同更新时点的均线及其中点(B+D)/2，作为一个指标族计数。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-VaXi43Pc-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入src默认收盘，另用实际收盘C及最小跳动tick。默认EMA长度21、冲击分位窗50、分位门20；启用价格中点门，默认不允许中性状态。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-VaXi43Pc-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可作价格状态描述或研究输入；没有仓位、出场、成本或收益证据。双线、方向及中点为一个原生组合，不分别扩数。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未执行Pine，首值和预热需运行核验。",
+    "没有市场数据和收益有效性验证。"
+  ],
+  "name": "双向冲击记忆均线（Dual Shock SPMA）",
+  "native_source_id": "VaXi43Pc",
+  "one_line": "按绝对收益的历史分位筛选冲击，正负冲击分别更新一条EMA快照，并保留各自方向记忆。",
+  "record_id": "VaXi43Pc",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NordicAlphaLab",
+      "id": "tradingview-VaXi43Pc-published-code",
+      "license": "MPL-2.0 source notice",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;8fab51dd178f451f82e510e87cece7a8@1.0",
+      "sha256": "9c3f5f13de4c9ae600c50f972f3067bb8a6dbadd77a024a3a70a8a4c0b3cf56d",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B8fab51dd178f451f82e510e87cece7a8/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / NordicAlphaLab",
+      "id": "tradingview-list-916aaf276fccdda2233a",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=VaXi43Pc；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:916aaf276fccdda2233a3efb4941cef5ea5c8f56e27dc32590ac672891ffb24d",
+      "sha256": "916aaf276fccdda2233a3efb4941cef5ea5c8f56e27dc32590ac672891ffb24d",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-61/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

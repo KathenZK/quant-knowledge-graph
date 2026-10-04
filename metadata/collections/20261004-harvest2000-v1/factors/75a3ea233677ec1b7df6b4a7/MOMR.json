@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述矿工一跳地址转出量相对当期收入的强度。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-8f6563e2d7439eff0060c05d",
+        "harvest-source-943c078d173061371a3f494d",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "源文间隔 1 day；须在区间结束、原件及必要价格/分类标签发布后使用，实际发布延迟/PIT快照缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-8f6563e2d7439eff0060c05d",
+        "harvest-source-943c078d173061371a3f494d",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "UBDM矿工为收到借记FEES或ISSUANCE账户交易的地址；one-hop包括这些矿工及其转账接收地址。汇总该集合向集合外地址转出的区间原生币量，排除转给另一one-hop集合内地址的转移。 除以同区间矿工从新发行及手续费取得的原生币收入。 边界：转账可能是冷钱包整理，不等于交易所卖出。 源文建议30日均线用于展示，本条保留日原始比率，不把平滑版另计。 同页表格名称误写为MCRC，MetricID及定义明确MOMR；分母为0的行为缺失。 RevNtv/RevUSD严格按本次供应商文档：排除创始人奖励/社区基金发行；ETH合并后只含优先费；SOL含验证者投票、质押、手续费及租金收入。该定义不等于通用的链上全部经济收入。RevUSD按PriceUSD换算，RevAllTimeUSD累计历史RevUSD。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-8f6563e2d7439eff0060c05d",
+        "harvest-source-943c078d173061371a3f494d",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述矿工一跳地址转出量相对当期收入的强度。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-8f6563e2d7439eff0060c05d",
+        "harvest-source-943c078d173061371a3f494d",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "FlowMinerOut1HopAllNtv / RevNtv。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-8f6563e2d7439eff0060c05d",
+        "harvest-source-943c078d173061371a3f494d",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "FlowMinerOut1HopAllNtv：按冻结原始文档定义，原生名称/作用见公式和计算步骤；RevNtv：按冻结原始文档定义，原生名称/作用见公式和计算步骤。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-8f6563e2d7439eff0060c05d",
+        "harvest-source-943c078d173061371a3f494d",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "coinmetrics/product-docs",
+  "lab": null,
+  "missing_information": [
+    "供应商数据获取与商用授权未确认",
+    "区间时间边界、发布延迟和修订历史未冻结",
+    "未获取行情/链上数据或执行任何回测",
+    "供应商内部算法/分类标签仅有文档层定义，未取得完整源码"
+  ],
+  "name": "矿工一跳转出与当期收入比",
+  "native_source_id": "MOMR",
+  "one_line": "描述矿工一跳地址转出量相对当期收入的强度。",
+  "record_id": "MOMR",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/economics/mining.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Coin Metrics, product-docs official repository",
+      "id": "harvest-source-8f6563e2d7439eff0060c05d",
+      "license": "NOASSERTION",
+      "locator": "Miner Outflow to Miner Revenue:L97-L141",
+      "revision": "8489126ae94aff995d01be44f965327f2640f51e",
+      "sha256": "ddd9da3416d2526f7e333ca5e637ceee54c2b1c64cb223258835eb695e67b011",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/economics/mining.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Coin Metrics, product-docs official repository",
+      "id": "harvest-source-943c078d173061371a3f494d",
+      "license": "NOASSERTION",
+      "locator": "mining/flows.md:L1-L275",
+      "revision": "8489126ae94aff995d01be44f965327f2640f51e",
+      "sha256": "badfd86a31f444d89ed6b56646e4baa5bfc9d49a4164faa0b1aac4ea2dd47802",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/mining/flows.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Coin Metrics, product-docs official repository",
+      "id": "harvest-source-343fb5fbf507e64183a4a476",
+      "license": "NOASSERTION",
+      "locator": "fees-and-revenue/revenue.md:L1-L135",
+      "revision": "8489126ae94aff995d01be44f965327f2640f51e",
+      "sha256": "75caa2f337fa2d236184f98cf2ebd0e8ada58c2ca9086eac3cc7d8d891e92dde",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/fees-and-revenue/revenue.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

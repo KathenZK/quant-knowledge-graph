@@ -1,0 +1,102 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述动量比率超出动态绝对偏差带后的方向记忆；沿用TSI基础，但定义的新增部分是偏差带和中间区间保持状态的原生组合。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-yK36778v-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前src参与双EMA及偏差阈值，未强制bar确认。Pine v6含na的比较返回false，双EMA分母缺失时T先置0；缺失预热和初始化期间状态+1可能持续，不能把暖机当成有效观测；运行语义未复現。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-yK36778v-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "M是每个历史时点相对当时滚动均值的残差绝对值再取滚动平均；不是把当前29根样本全部减去同一个当前均值，也不是中位绝对偏差。倍数参数乘M；两个状态更新if按多后空顺序，正常非负M时互斥。事件为状态相对前根改变。信号EMA、柱和着色仅辅助，不当成新增TSI定义或独立交易策略。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-yK36778v-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述动量比率超出动态绝对偏差带后的方向记忆；沿用TSI基础，但定义的新增部分是偏差带和中间区间保持状态的原生组合。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-yK36778v-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "d=src−src_(t−1)，T=100×EMA_20(EMA_1(d))/EMA_20(EMA_1(|d|))，分母为0或na时T=0；b=SMA_29(T)，M=SMA_29(|T−b|)。上阈为+M、下阈为−M；T>+M置状态+1，T<−M置−1，中间保留原状态，源码初始+1。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-yK36778v-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src默认C；动量差分滞后1，第一层EMA长1、第二层20；偏差均值窗29，倍数1；可视信号EMA长3但不参与状态门。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-yK36778v-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用于动量状态分段研究。初始+1是源码初始化，不是已观察到多头条件；没有仓位、出场与收益结论。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "没有Pine运行复现，尤其首值和预热。",
+    "组合的经济独立性和收益有效性未知。"
+  ],
+  "name": "真实强度配滚动绝对偏差滞回状态（Double Smoothed Momentum MAD Trend）",
+  "native_source_id": "yK36778v",
+  "one_line": "对双平滑动量比率计算逐期绝对偏差均值，以正负动态阈值更新保留状态。",
+  "record_id": "yK36778v",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SchizoQuant",
+      "id": "tradingview-yK36778v-published-code",
+      "license": "MPL-2.0 source notice",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;16f3773c23d74a51a85992dbbb982978@1.0",
+      "sha256": "60d08433cede0bda717649904280e68ce7ee26854b5a9f5b83ffa455f0375f77",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B16f3773c23d74a51a85992dbbb982978/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / SchizoQuant",
+      "id": "tradingview-list-e4d0781bb2f83ca53791",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=yK36778v；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:e4d0781bb2f83ca53791987c2a240903bce786aa9d8a135e3c46063cd2acd7f9",
+      "sha256": "e4d0781bb2f83ca53791987c2a240903bce786aa9d8a135e3c46063cd2acd7f9",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-45/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}
