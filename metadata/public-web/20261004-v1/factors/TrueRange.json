@@ -1,0 +1,138 @@
+{
+  "economic_basis": {
+    "hypothesis": "自撰研究假说：纳入相对前收盘价格间断的波幅可能更完整地描述近期风险，但预测能力和风险控制效果未验证。",
+    "missing": [
+      "未采集并审核支持本实现经济有效性的论文；源码仅证实计算定义。",
+      "没有回测、独立复现或样本外收益验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "zipline-zipline-pipeline-factors-technical-py"
+      ],
+      "status": "MISSING",
+      "text": "缺少行情提供方、首次可获得时间、数据加载器、交易日历与历史复权版本的固定约定。源码接收给定数组，不能单凭类定义确定当时可见的数据或交易信号可用时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "zipline-zipline-pipeline-factors-technical-py",
+        "zipline-zipline-utils-math_utils-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "分别构造当期高低差和高低价到上期收盘的绝对差，再沿这三个候选量取 nanmax。源码仅实现单期真实波幅，没有移动平均、百分比归一化或止损倍数；nanmax 来自 Bottleneck 或 NumPy。缺失值处理的具体运行行为待依赖版本冻结。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "zipline-zipline-pipeline-factors-technical-py"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "研究假设：包含相对前收盘跳空距离的波幅可补充仅看当期高低差的风险描述。它不是收益方向预测，也不是已验证的止损依据；代码仅支持真实波幅的测量定义。"
+    },
+    "formula": {
+      "evidence": [
+        "zipline-zipline-pipeline-factors-technical-py",
+        "zipline-zipline-utils-math_utils-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "TR_t = nanmax(H_t-L_t, abs(H_t-C_(t-1)), abs(L_t-C_(t-1)))；源码默认 window_length=2。"
+    },
+    "inputs": {
+      "evidence": [
+        "zipline-zipline-pipeline-factors-technical-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "EquityPricing.high、EquityPricing.low、EquityPricing.close；默认两行输入，用后一期高低价与前一期收盘计算。"
+    },
+    "use_cases": {
+      "evidence": [
+        "zipline-zipline-pipeline-factors-technical-py"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "研究用途假设：可作为波幅观察或后续平滑统计的输入。若构造 ATR、波幅百分比或止损规则，应建立独立组合定义并冻结参数，不把新增规则归于此类。"
+    }
+  },
+  "identity_namespace": "quantopian/zipline",
+  "lab": null,
+  "missing_information": [
+    "相邻两期的复权、拆股调整、缺失高低价和前收盘的处置未冻结。",
+    "没有 ATR 平滑周期、百分比归一化或交易规则；不得据类名推补。",
+    "行情提供方、授权范围、交易日历、历史成分及退市处理未冻结。",
+    "未冻结数据首次公开或可获得时间、历史复权版本及输入窗口的时点一致性。",
+    "未冻结 NumPy/Bottleneck 依赖版本；未完成计算语义复现或边界样例验证。",
+    "未给组合构造、仓位、调仓、交易成本与成交规则；本记录是因子实现，不是完整策略。",
+    "没有收益有效性、因果机制或商业行情使用许可证明；代码许可不能代替论文和市场数据授权。"
+  ],
+  "name": "Zipline 单期真实波幅实现",
+  "native_source_id": "TrueRange",
+  "one_line": "取本期高低差、本期高点到上期收盘距离、本期低点到上期收盘距离三者的 nanmax；未做 ATR 平滑。",
+  "record_id": "TrueRange",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成计算结果或收益结果，未下载行情、执行上游代码或回测；不推定未来衍生结果的市场数据许可。",
+    "metadata": "仅包含经源码核对的来源链接、摘要和自撰说明。所引 Zipline 代码声明 Apache-2.0，使用或分发仍须遵守许可及归属条件；代码许可不授权原始论文、研报或市场观测数据。综合商业用途为 REVIEW_REQUIRED。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/quantopian/zipline/blob/014f1fc339dc8b7671d29be2d85ce57d3daec343/LICENSE"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Quantopian, Inc. 与 Zipline 贡献者；具体署名见同版本 AUTHORS。",
+      "id": "zipline-zipline-pipeline-factors-technical-py",
+      "license": "Apache-2.0",
+      "locator": "zipline/pipeline/factors/technical.py:L271-L302（TrueRange）",
+      "revision": "014f1fc339dc8b7671d29be2d85ce57d3daec343",
+      "sha256": "3fa601674fc9bb6cd6405e5c0e60f3cd26282e83dae9ce753f69f44980a55fe3",
+      "supports": [
+        "因子公式、默认输入和参数",
+        "计算顺序及未定义的交易规则",
+        "经济解释与用途讨论所依据的计算边界；不支持收益或因果结论"
+      ],
+      "url": "https://github.com/quantopian/zipline/blob/014f1fc339dc8b7671d29be2d85ce57d3daec343/zipline/pipeline/factors/technical.py",
+      "verification": "固定版本公开文件已获取原始字节并核对 SHA-256；仅阅读，未导入或执行上游源码。"
+    },
+    {
+      "attribution": "Quantopian, Inc. 与 Zipline 贡献者；具体署名见同版本 AUTHORS。",
+      "id": "zipline-zipline-utils-math_utils-py",
+      "license": "Apache-2.0",
+      "locator": "zipline/utils/math_utils.py:L50-L71（Bottleneck/NumPy 数学函数绑定）",
+      "revision": "014f1fc339dc8b7671d29be2d85ce57d3daec343",
+      "sha256": "a0e41a7f65f5fc371084c085b7d6dfb068d3a420344e27569d6f8cd6f36eb70a",
+      "supports": [
+        "nanstd、nansum、nanargmax、nanargmin、nanmax 的依赖选择；不代表依赖运行环境已冻结"
+      ],
+      "url": "https://github.com/quantopian/zipline/blob/014f1fc339dc8b7671d29be2d85ce57d3daec343/zipline/utils/math_utils.py",
+      "verification": "固定版本公开文件已获取原始字节并核对 SHA-256；仅阅读，未导入或执行上游源码。"
+    },
+    {
+      "attribution": "Quantopian, Inc. 与 Zipline 贡献者；具体署名见同版本 AUTHORS。",
+      "id": "zipline-license",
+      "license": "Apache-2.0",
+      "locator": "LICENSE:L1-L202（Apache-2.0 正文及 Quantopian 声明）",
+      "revision": "014f1fc339dc8b7671d29be2d85ce57d3daec343",
+      "sha256": "e35c4578f7db4498e62e278978f6c42e0fce6f21f9993a060b08a33549cd3044",
+      "supports": [
+        "上游代码许可；不扩展到外部论文或市场数据"
+      ],
+      "url": "https://github.com/quantopian/zipline/blob/014f1fc339dc8b7671d29be2d85ce57d3daec343/LICENSE",
+      "verification": "固定版本公开文件已获取原始字节并核对 SHA-256；仅阅读，未导入或执行上游源码。"
+    },
+    {
+      "attribution": "Quantopian, Inc. 与 Zipline 贡献者；具体署名见同版本 AUTHORS。",
+      "id": "zipline-authors",
+      "license": "Apache-2.0",
+      "locator": "AUTHORS:L1-L49（上游作者及贡献者名单）",
+      "revision": "014f1fc339dc8b7671d29be2d85ce57d3daec343",
+      "sha256": "af7751d2d38e9935a014f8e421521b7252b06bad88e106899990b283f8644dd0",
+      "supports": [
+        "上游署名与贡献者来源"
+      ],
+      "url": "https://github.com/quantopian/zipline/blob/014f1fc339dc8b7671d29be2d85ce57d3daec343/AUTHORS",
+      "verification": "固定版本公开文件已获取原始字节并核对 SHA-256；仅阅读，未导入或执行上游源码。"
+    }
+  ]
+}
