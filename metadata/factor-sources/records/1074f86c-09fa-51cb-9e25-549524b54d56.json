@@ -1,0 +1,179 @@
+{
+  "admission": {
+    "membership": {
+      "curated": true,
+      "historical_public_export": false
+    },
+    "reasons": [],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "ADMITTED"
+  },
+  "category": "unclassified",
+  "definition": {
+    "content_origin": "ATTRIBUTED_SOURCE_DEFINITION_EXCERPT",
+    "definition_sha256": "c29a855a7457f1ca46910341ff2e4b4c0d21ad477bba12e10c54082ddd8b6ee0",
+    "formula": null,
+    "formula_dialect": null,
+    "formula_sha256": null,
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "filter": null,
+      "long_short_quantile": null,
+      "portfolio_period_months": 1.0,
+      "sign": 1.0,
+      "start_month": 12.0,
+      "stock_weight": "EW"
+    },
+    "required_fields": [],
+    "required_fields_status": "partial_definition_extraction",
+    "status": "DEFINITION_EXCERPT",
+    "text": "Residual institutional ownership (RIO) is defined as log(institutional ownership (instown\\_perc)/(1-institutional ownership)) + 23.6 - 2.89*log(market value of equity) +.08*log(market value of equity)$^2$. Replace instown\\_perc with 0 if it is missing, with .9999 if it's above .9999, and with .0001 if it's below .0001. Then lag RIO by 6 months.",
+    "truncated": true
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "monthly",
+    "holding_period": {
+      "scope": "OSAP original-paper portfolio configuration",
+      "unit": "months",
+      "value": 1.0
+    },
+    "lookback": null,
+    "rebalance": null,
+    "universe": "US equities; original-paper filters and licensed inputs vary by signal"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": "qkg:concept:0cd6bb54-ddd5-5205-bc6c-7f40cdb8cb10",
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:1074f86c-09fa-51cb-9e25-549524b54d56"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:0cd6bb54-ddd5-5205-bc6c-7f40cdb8cb10"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:0cd6bb54-ddd5-5205-bc6c-7f40cdb8cb10"
+    ],
+    "source_record_ids": [
+      "qkg:record:b2f7c6f5-b421-5dde-93cb-6ba17fb04a99"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "这里只保留完整开头短句摘录，原定义还有后续条件；必须回查来源才能复现。",
+    "输入字段提取不完整，不得视为完整数据需求合同。"
+  ],
+  "name": "Inst Own and Market to Book",
+  "native_source_ids": [
+    "RIO_MB"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 4892,
+        "line_ordinal": 664,
+        "line_sha256": "197b93f10504f4f0923a437a7df2d1537bfc98e1aaf42e425d506dcdf6170a65",
+        "record_id": "qkg:record:b2f7c6f5-b421-5dde-93cb-6ba17fb04a99"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "not_applicable"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "primary_definition"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:1074f86c-09fa-51cb-9e25-549524b54d56",
+  "record_kind": "signal",
+  "rights": {
+    "attribution_required": true,
+    "commercial_use": [
+      "CONDITIONAL"
+    ],
+    "derivative_allowed": [
+      "CONDITIONAL"
+    ],
+    "license_labels": [
+      "GPL-2.0"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "CONDITIONAL"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [],
+        "status": "ADMITTED"
+      },
+      "attribution": [
+        "Nagel"
+      ],
+      "code_url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/Signals/pyCode/Predictors/ZZ1_RIO_MB_RIO_Disp_RIO_Turnover_RIO_Volatility.py#L1",
+      "license": "GPL-2.0",
+      "locator": "CSV record 146; Acronym=RIO_MB",
+      "name": "Inst Own and Market to Book",
+      "native_id": "RIO_MB",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": null,
+        "url": null,
+        "year": 2005
+      },
+      "parameters": {
+        "filter": null,
+        "long_short_quantile": null,
+        "portfolio_period_months": 1.0,
+        "sign": 1.0,
+        "start_month": 12.0,
+        "stock_weight": "EW"
+      },
+      "primary_source": true,
+      "record_id": "qkg:record:b2f7c6f5-b421-5dde-93cb-6ba17fb04a99",
+      "response_sha256": "f6c055120bad7afe97c16e23e0f49bce0982269026605a955e8064bd661cf415",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": "8db892442c2c3a3779b0f1eac4370d3655be15a1",
+      "rights": {
+        "attribution_required": true,
+        "commercial_use": "CONDITIONAL",
+        "derivative_allowed": "CONDITIONAL",
+        "license": "GPL-2.0",
+        "license_id": "qkg:license:9d6cc42c-065b-5687-87f6-b1e384dea14c",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "CONDITIONAL",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "REVIEW_REQUIRED",
+        "terms_url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/LICENSE"
+      },
+      "sha256": "f6c055120bad7afe97c16e23e0f49bce0982269026605a955e8064bd661cf415",
+      "source_id": "osap",
+      "source_name": "Open Source Asset Pricing",
+      "url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/SignalDoc.csv"
+    }
+  ]
+}

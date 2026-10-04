@@ -1,0 +1,180 @@
+{
+  "admission": {
+    "membership": {
+      "curated": false,
+      "historical_public_export": false
+    },
+    "reasons": [
+      "NOT_PRIMARY_CONCRETE_DEFINITION",
+      "NOT_SIGNAL"
+    ],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "REVIEW_REQUIRED"
+  },
+  "category": "market",
+  "definition": {
+    "content_origin": "PROJECT_AUTHORED_MATHEMATICAL_SUMMARY",
+    "definition_sha256": "0cfb0c9f1699666e7b0a5e1f90f6780dbd804ff3c4742508b7135ee2671b0131",
+    "formula": "market_return - risk_free_return",
+    "formula_dialect": "portfolio",
+    "formula_sha256": "4db6766e19c55f8d8e91a02e084d2eef1bc13ad116ce3002e3b33fc0864a61b1",
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "numeric_literals": [],
+      "operators": []
+    },
+    "required_fields": [
+      "market_return",
+      "risk_free_return"
+    ],
+    "required_fields_status": "syntax_extracted_unexpanded",
+    "status": "FORMULA_AVAILABLE",
+    "text": "Market excess return in the US factor library.",
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "monthly",
+    "holding_period": {
+      "scope": "reported return interval; not annual formation schedule",
+      "unit": "month",
+      "value": 1
+    },
+    "lookback": null,
+    "rebalance": "monthly",
+    "universe": "US equities: eligible NYSE/AMEX/NASDAQ; details vary by sort"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": null,
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:4bf1a25e-d766-54e9-9132-762ac20a66d7"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:f43a58f2-0cea-5678-a4df-cf8b21c0a974"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:f43a58f2-0cea-5678-a4df-cf8b21c0a974"
+    ],
+    "source_record_ids": [
+      "qkg:record:81e6d368-17c9-5123-a4d6-23d4a62f1909"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "本条类型为 factor_portfolio，不能作为已准入的正式单因子统计。"
+  ],
+  "name": "市场超额收益",
+  "native_source_ids": [
+    "Mkt-RF"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 3914,
+        "line_ordinal": 1564,
+        "line_sha256": "2f2b073d1706b5bf999cf1dcc98538110a679d882edcd8ccc11d38646799bcc2",
+        "record_id": "qkg:record:81e6d368-17c9-5123-a4d6-23d4a62f1909"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "parsed"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "reviewed_reference"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:4bf1a25e-d766-54e9-9132-762ac20a66d7",
+  "record_kind": "factor_portfolio",
+  "rights": {
+    "attribution_required": false,
+    "commercial_use": [
+      "REVIEW_REQUIRED"
+    ],
+    "derivative_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "license_labels": [
+      "Copyright Eugene F. Fama and Kenneth R. French; no explicit open redistribution license verified"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [
+          "NOT_PRIMARY_CONCRETE_DEFINITION",
+          "NOT_SIGNAL"
+        ],
+        "status": "REVIEW_REQUIRED"
+      },
+      "attribution": [
+        "Eugene F. Fama",
+        "Kenneth R. French"
+      ],
+      "code_url": null,
+      "license": "Copyright Eugene F. Fama and Kenneth R. French; no explicit open redistribution license verified",
+      "locator": "Construction section",
+      "name": "市场超额收益",
+      "native_id": "Mkt-RF",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": "A Five-Factor Asset Pricing Model",
+        "url": null,
+        "year": 2014
+      },
+      "parameters": {
+        "numeric_literals": [],
+        "operators": []
+      },
+      "primary_source": true,
+      "record_id": "qkg:record:81e6d368-17c9-5123-a4d6-23d4a62f1909",
+      "response_sha256": "1d794afe7fb55290e7046c57fc03fd6b113954ad47c2eaec67e04bc603e7050c",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": null,
+      "rights": {
+        "attribution_required": null,
+        "commercial_use": "REVIEW_REQUIRED",
+        "derivative_allowed": "REVIEW_REQUIRED",
+        "license": "Copyright Eugene F. Fama and Kenneth R. French; no explicit open redistribution license verified",
+        "license_id": "qkg:license:a733f275-1ea0-5b8a-9613-6c7268a2790e",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "REVIEW_REQUIRED",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "REVIEW_REQUIRED",
+        "terms_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html"
+      },
+      "sha256": "88a4ff87c812b4ce53a5a41e8141cfcebc03dae653291f41af1279a7528a1982",
+      "source_id": "french",
+      "source_name": "Kenneth French Data Library",
+      "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_5_factors_2x3.html"
+    }
+  ]
+}

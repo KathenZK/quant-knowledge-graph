@@ -1,0 +1,189 @@
+{
+  "admission": {
+    "membership": {
+      "curated": false,
+      "historical_public_export": false
+    },
+    "reasons": [
+      "NOT_PRIMARY_CONCRETE_DEFINITION",
+      "NOT_SIGNAL"
+    ],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "REVIEW_REQUIRED"
+  },
+  "category": "unclassified",
+  "definition": {
+    "content_origin": "ATTRIBUTED_SOURCE_DEFINITION_EXCERPT",
+    "definition_sha256": "fce27f2becfffcf2970989e4cdc245d1a8043fcbb4c57422e2b1129563f733d4",
+    "formula": null,
+    "formula_dialect": null,
+    "formula_sha256": null,
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "filter": null,
+      "long_short_quantile": null,
+      "portfolio_period_months": 12.0,
+      "sign": -1.0,
+      "start_month": 6.0,
+      "stock_weight": "EW"
+    },
+    "required_fields": [
+      "pi",
+      "prcc_f",
+      "txt"
+    ],
+    "required_fields_status": "partial_definition_extraction",
+    "status": "DEFINITION_EXCERPT",
+    "text": "Let Tax be tax payments (txt) over pre-tax income (pi) and amortization of intangibles (am, 0 if missing). Let earnings per share be epspx/ajex. ETR if Tax minus the average of Tax over the previous three years multiplied by one-year EPS growth scaled by by price (prcc_f).",
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "monthly",
+    "holding_period": {
+      "scope": "OSAP original-paper portfolio configuration",
+      "unit": "months",
+      "value": 12.0
+    },
+    "lookback": null,
+    "rebalance": null,
+    "universe": "US equities; original-paper filters and licensed inputs vary by signal"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": null,
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:3d119cb2-166d-5a53-b22e-3988c7bd9e12"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:0997c7a0-760c-5743-ab87-e1a4fd9f8a80"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:0997c7a0-760c-5743-ab87-e1a4fd9f8a80"
+    ],
+    "source_record_ids": [
+      "qkg:record:a73a664a-fc07-59bc-9ed7-1676bb88fd06"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "本条类型为 placebo，不能作为已准入的正式单因子统计。",
+    "输入字段提取不完整，不得视为完整数据需求合同。"
+  ],
+  "name": "Effective Tax Rate",
+  "native_source_ids": [
+    "ETR"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 4082,
+        "line_ordinal": 795,
+        "line_sha256": "d8b271924d200ed389f251850fdfb5bc4febf2f20297672c8cb2e283768b193e",
+        "record_id": "qkg:record:a73a664a-fc07-59bc-9ed7-1676bb88fd06"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "not_applicable"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "reference_only"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:3d119cb2-166d-5a53-b22e-3988c7bd9e12",
+  "record_kind": "placebo",
+  "rights": {
+    "attribution_required": true,
+    "commercial_use": [
+      "CONDITIONAL"
+    ],
+    "derivative_allowed": [
+      "CONDITIONAL"
+    ],
+    "license_labels": [
+      "GPL-2.0"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "CONDITIONAL"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [
+          "NOT_PRIMARY_CONCRETE_DEFINITION",
+          "NOT_SIGNAL"
+        ],
+        "status": "REVIEW_REQUIRED"
+      },
+      "attribution": [
+        "Abarbanell and Bushee"
+      ],
+      "code_url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/Signals/pyCode/Placebos/ETR.py#L1",
+      "license": "GPL-2.0",
+      "locator": "CSV record 277; Acronym=ETR",
+      "name": "Effective Tax Rate",
+      "native_id": "ETR",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": null,
+        "url": null,
+        "year": 1998
+      },
+      "parameters": {
+        "filter": null,
+        "long_short_quantile": null,
+        "portfolio_period_months": 12.0,
+        "sign": -1.0,
+        "start_month": 6.0,
+        "stock_weight": "EW"
+      },
+      "primary_source": true,
+      "record_id": "qkg:record:a73a664a-fc07-59bc-9ed7-1676bb88fd06",
+      "response_sha256": "f6c055120bad7afe97c16e23e0f49bce0982269026605a955e8064bd661cf415",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": "8db892442c2c3a3779b0f1eac4370d3655be15a1",
+      "rights": {
+        "attribution_required": true,
+        "commercial_use": "CONDITIONAL",
+        "derivative_allowed": "CONDITIONAL",
+        "license": "GPL-2.0",
+        "license_id": "qkg:license:9d6cc42c-065b-5687-87f6-b1e384dea14c",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "CONDITIONAL",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "REVIEW_REQUIRED",
+        "terms_url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/LICENSE"
+      },
+      "sha256": "f6c055120bad7afe97c16e23e0f49bce0982269026605a955e8064bd661cf415",
+      "source_id": "osap",
+      "source_name": "Open Source Asset Pricing",
+      "url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/SignalDoc.csv"
+    }
+  ]
+}

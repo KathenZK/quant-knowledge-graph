@@ -17,6 +17,11 @@ def main():
     s=sp.add_parser('factor-study-import');s.add_argument('file',type=Path);s.add_argument('--journal',type=Path,required=True)
     s=sp.add_parser('factor-study-query');s.add_argument('entity_id');s.add_argument('--journal',type=Path,required=True);s.add_argument('--profile',choices=['research','commercial'],default='commercial')
     for cmd in ('build','verify','stats','fetch','validate-release','build-public','verify-public'):sp.add_parser(cmd)
+    for cmd in ('catalog-stats', 'catalog-validate'):sp.add_parser(cmd)
+    s=sp.add_parser('catalog-show');s.add_argument('identity')
+    s=sp.add_parser('catalog-search');s.add_argument('query',nargs='?',default=None)
+    for field in ('kind','source','status','market','frequency','record-kind'):s.add_argument('--'+field)
+    s.add_argument('--limit',type=int,default=50);s.add_argument('--offset',type=int,default=0)
     s=sp.add_parser('search');s.add_argument('query');s.add_argument('--profile',choices=['research','commercial'],default='research');s.add_argument('--limit',type=int,default=10)
     s=sp.add_parser('serve');s.add_argument('--profile',choices=['research','commercial'],default='commercial');s.add_argument('--port',type=int,default=8000)
     s=sp.add_parser('export-commercial');s.add_argument('destination',type=Path)
@@ -40,6 +45,14 @@ def main():
         result=QuantGraphClient(args.url).ingest_batch(load_batch(args.file,batch_id=args.batch_id,collector_version=args.collector_version),compress=args.gzip)
         print(json.dumps(result,ensure_ascii=False,indent=2));return
     root=project_root(args.root)
+    if args.command.startswith('catalog-'):
+        from quantgraph.graph.knowledge_catalog import KnowledgeCatalog
+        catalog=KnowledgeCatalog(root)
+        if args.command in {'catalog-stats','catalog-validate'}:result=catalog.stats()
+        elif args.command=='catalog-show':result=catalog.get(args.identity)
+        else:result=catalog.search(args.query,**{k:getattr(args,k) for k in
+            ['kind','source','status','market','frequency','record_kind','limit','offset']})
+        print(json.dumps(result,ensure_ascii=False,indent=2));return
     if args.command.startswith('factor-study-'):
         from .factor_study import draft_request
         from quantgraph.graph.factor_study_store import FactorStudyRepository

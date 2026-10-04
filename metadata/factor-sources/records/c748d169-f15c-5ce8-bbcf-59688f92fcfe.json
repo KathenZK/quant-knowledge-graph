@@ -1,0 +1,172 @@
+{
+  "admission": {
+    "membership": {
+      "curated": false,
+      "historical_public_export": false
+    },
+    "reasons": [
+      "MISSING_DEFINITION",
+      "NOT_PRIMARY_CONCRETE_DEFINITION",
+      "NOT_SIGNAL"
+    ],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "REVIEW_REQUIRED"
+  },
+  "category": "value",
+  "definition": {
+    "content_origin": "REFERENCE_METADATA_ONLY",
+    "definition_sha256": null,
+    "formula": null,
+    "formula_dialect": null,
+    "formula_sha256": null,
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {},
+    "required_fields": [],
+    "required_fields_status": "not_extracted",
+    "status": "MISSING",
+    "text": null,
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "multi_asset",
+    "frequency": "monthly",
+    "holding_period": null,
+    "lookback": null,
+    "rebalance": null,
+    "universe": null
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": null,
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:c748d169-f15c-5ce8-bbcf-59688f92fcfe"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:5400c3ef-df52-5f7a-8f3c-6962390b45d0"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:5400c3ef-df52-5f7a-8f3c-6962390b45d0"
+    ],
+    "source_record_ids": [
+      "qkg:record:7d11643d-b300-5ee9-8ff7-39a4387474c4"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "没有可在本条完整展示的定义；保留来源定位，不能补造公式。",
+    "本条类型为 factor_portfolio，不能作为已准入的正式单因子统计。",
+    "输入字段提取不完整，不得视为完整数据需求合同。"
+  ],
+  "name": "Value and Momentum Everywhere: Value",
+  "native_source_ids": [
+    "ValueEverywhere"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 3218,
+        "line_ordinal": 1575,
+        "line_sha256": "6c8e4233b25e01b4d7db0a31f51f509911b4e5644434646eafab90a7584ec785",
+        "record_id": "qkg:record:7d11643d-b300-5ee9-8ff7-39a4387474c4"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "not_applicable"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "metadata_only"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:c748d169-f15c-5ce8-bbcf-59688f92fcfe",
+  "record_kind": "factor_portfolio",
+  "rights": {
+    "attribution_required": false,
+    "commercial_use": [
+      "REVIEW_REQUIRED"
+    ],
+    "derivative_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "license_labels": [
+      "AQR Terms of Use; copyright; no blanket redistribution permission"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [
+          "NOT_PRIMARY_CONCRETE_DEFINITION",
+          "NOT_SIGNAL",
+          "MISSING_DEFINITION"
+        ],
+        "status": "REVIEW_REQUIRED"
+      },
+      "attribution": [
+        "Clifford S. Asness",
+        "Tobias J. Moskowitz",
+        "Lasse Heje Pedersen"
+      ],
+      "code_url": null,
+      "license": "AQR Terms of Use; copyright; no blanket redistribution permission",
+      "locator": "dataset title and bibliographic reference",
+      "name": "Value and Momentum Everywhere: Value",
+      "native_id": "ValueEverywhere",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": "Value and Momentum Everywhere",
+        "url": null,
+        "year": 2013
+      },
+      "parameters": {},
+      "primary_source": true,
+      "record_id": "qkg:record:7d11643d-b300-5ee9-8ff7-39a4387474c4",
+      "response_sha256": "04fcf9511bef829ba2e91c061cebc1d50cc4a8ec9193f9d87b692f1d4371109d",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": null,
+      "rights": {
+        "attribution_required": null,
+        "commercial_use": "REVIEW_REQUIRED",
+        "derivative_allowed": "REVIEW_REQUIRED",
+        "license": "AQR Terms of Use; copyright; no blanket redistribution permission",
+        "license_id": "qkg:license:a5813582-0d29-57ea-acfc-c22323c523de",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "REVIEW_REQUIRED",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "REVIEW_REQUIRED",
+        "terms_url": "https://www.aqr.com/Terms-of-Use"
+      },
+      "sha256": "106e982fe2635ff067f6b8d8caf35ae361e764b45d6417a8da0edeb60d988e1a",
+      "source_id": "aqr",
+      "source_name": "AQR Data Library",
+      "url": "https://www.aqr.com/Insights/Datasets/Value-and-Momentum-Everywhere-Factors-Monthly"
+    }
+  ]
+}

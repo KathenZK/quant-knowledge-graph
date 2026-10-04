@@ -1,0 +1,180 @@
+{
+  "admission": {
+    "membership": {
+      "curated": true,
+      "historical_public_export": true
+    },
+    "reasons": [],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "ADMITTED"
+  },
+  "category": "technical_price_volume",
+  "definition": {
+    "content_origin": "OFFICIAL_GENERATED_CONFIGURATION",
+    "definition_sha256": "42052fff778ee0aac4bc49153b669d6242f8d5b0e3a5b9693b8ceb466bb29795",
+    "formula": "Min($low, 20)/$close",
+    "formula_dialect": "qlib",
+    "formula_sha256": "42052fff778ee0aac4bc49153b669d6242f8d5b0e3a5b9693b8ceb466bb29795",
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "generator_default_config": true,
+      "numeric_literals": [
+        "20"
+      ],
+      "operators": [
+        "qlib:ts_min"
+      ],
+      "unit": "trading_bars",
+      "window_or_lag": 20
+    },
+    "required_fields": [
+      "close",
+      "low"
+    ],
+    "required_fields_status": "syntax_extracted_unexpanded",
+    "status": "FORMULA_AVAILABLE",
+    "text": "由已采集的 Qlib 官方配置展开而来；输入字段、窗口和算子按来源记录保留。",
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "daily",
+    "holding_period": null,
+    "lookback": null,
+    "rebalance": null,
+    "universe": "configurable equity universe; no fixed market assumed"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": "qkg:concept:280b1b61-df9b-5d1d-ac23-4cd2f0cc1a47",
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:4236bd2e-b377-50e4-84ff-7ae8c3d332ad"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:280b1b61-df9b-5d1d-ac23-4cd2f0cc1a47"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:280b1b61-df9b-5d1d-ac23-4cd2f0cc1a47"
+    ],
+    "source_record_ids": [
+      "qkg:record:b4d1d2f5-5b98-5a54-a1f8-af5b8a7e3f17"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。"
+  ],
+  "name": "MIN20",
+  "native_source_ids": [
+    "Alpha158:MIN20"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 3568,
+        "line_ordinal": 411,
+        "line_sha256": "c450c6efc03a6583cb956519f1dd5817962d2f2135967c0247f7009493906c0d",
+        "record_id": "qkg:record:b4d1d2f5-5b98-5a54-a1f8-af5b8a7e3f17"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "parsed"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "primary_definition"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:4236bd2e-b377-50e4-84ff-7ae8c3d332ad",
+  "record_kind": "signal",
+  "rights": {
+    "attribution_required": true,
+    "commercial_use": [
+      "ALLOWED"
+    ],
+    "derivative_allowed": [
+      "ALLOWED"
+    ],
+    "license_labels": [
+      "MIT"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "ALLOWED"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [],
+        "status": "ADMITTED"
+      },
+      "attribution": [],
+      "code_url": "https://github.com/microsoft/qlib/blob/be725493eb1a6bbb42bf11b37aa7669f59610ff1/qlib/contrib/data/loader.py#L73",
+      "license": "MIT",
+      "locator": "Alpha158DL.get_feature_config; feature=MIN20",
+      "name": "MIN20",
+      "native_id": "Alpha158:MIN20",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": null,
+        "url": null,
+        "year": null
+      },
+      "parameters": {
+        "generator_default_config": true,
+        "numeric_literals": [
+          "20"
+        ],
+        "operators": [
+          "qlib:ts_min"
+        ],
+        "unit": "trading_bars",
+        "window_or_lag": 20
+      },
+      "primary_source": true,
+      "record_id": "qkg:record:b4d1d2f5-5b98-5a54-a1f8-af5b8a7e3f17",
+      "response_sha256": "814b7f7ab3d418ae3c87ce352220080b239eba2670eac9e38376b794be4075cb",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": "be725493eb1a6bbb42bf11b37aa7669f59610ff1",
+      "rights": {
+        "attribution_required": true,
+        "commercial_use": "ALLOWED",
+        "derivative_allowed": "ALLOWED",
+        "license": "MIT",
+        "license_id": "qkg:license:4fbc3e79-18c4-529e-80f1-306fda5c1b93",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "ALLOWED",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "ATTRIBUTION_REQUIRED",
+        "terms_url": "https://github.com/microsoft/qlib/blob/be725493eb1a6bbb42bf11b37aa7669f59610ff1/LICENSE"
+      },
+      "sha256": "814b7f7ab3d418ae3c87ce352220080b239eba2670eac9e38376b794be4075cb",
+      "source_id": "qlib",
+      "source_name": "Microsoft Qlib",
+      "url": "https://github.com/microsoft/qlib/blob/be725493eb1a6bbb42bf11b37aa7669f59610ff1/qlib/contrib/data/loader.py"
+    }
+  ]
+}

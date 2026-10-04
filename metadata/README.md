@@ -1,8 +1,35 @@
-# 逐编号知识元数据
+# 知识元数据
 
-另有 [公开网络采集层](public-web/README.md)：首批从固定版本源码核对 **5 条策略实现、4 条因子实现**，
-保存来源哈希、许可及缺项。它与下面的 CSV 接收批次分开统计，未增加回测或原生 curated 定义。
-下文“本次”及“本轮”的计数均指 CSV 补录批次。
+统一入口是[知识目录](CATALOG.md)，由[集合登记表](catalog.json)和 `graph/knowledge_catalog.py` 读取仓库中全部已登记元数据，按策略、因子、待分类展示。来源、权限与审核状态是条目字段，不是两套知识库。
+
+```bash
+uv run quantgraph catalog-stats
+uv run quantgraph catalog-search --kind strategy --source QuantConnect
+uv run quantgraph catalog-search --kind factor --source qlib --frequency daily
+uv run quantgraph catalog-show M2904
+uv run quantgraph catalog-show 'qlib:Alpha360:VWAP2'
+uv run quantgraph catalog-validate
+```
+
+当前统一目录为 **8,546 张条目卡：178 策略、1,586 因子、6,782 待分类**；收录不代表全部准入。每次新增后用 `catalog-stats` 核对最新计数。
+
+原 M 编号、代码原生类名和因子原生 ID 都可查询。同名有歧义时带来源命名空间；稳定 `entity_id` 不随分类或证据版本改变。主 API `/v1/knowledge` 提供同一目录的检索、详情和关系，旧 `FactorDB` 与定义发布接口保持兼容。
+
+| 元数据集合 | 在统一目录中的作用 |
+|---|---|
+| [CSV来源批次](CORPUS.md) | 保存原始采集字段及 M 编号，未经审核不猜类型 |
+| [分类阅读索引](directory-index.json) | 给已绑定行与规则摘要的原记录追加分类证据 |
+| [原有审阅索引](index.json) | 给 M0256/M0259 追加已审规则和既有研究引用 |
+| [源码采集批次](public-web/README.md) | 追加固定源码版本的策略/因子说明、许可和缺项 |
+| [因子来源索引](factor-sources/index.json) | 保存1,570条因子变体及来源原生身份、定义准入和记录类型 |
+
+这几类材料是同一目录的来源集合，不能把文件数相加当成策略数。9条源码资料中的4条与 CSV 有精确行摘要和文件定位绑定，在同卡保留不同证据版本，不宣称经济或实现等价。分类阅读页和旧审阅材料也不另算一张新卡。完整计数规则见 [CATALOG.md](CATALOG.md)。
+
+后续同类网络批次放入 `public-web/<batch>/`，经校验后由现有集合适配器自动发现；新格式在 `catalog.json` 登记并增加适配器和测试。原冻结来源、分类裁决、原生 ID 和版本不原地改写。本次只接入仓库、CLI和主API，未修改活动 Site 或运行中的旧 Catalog。
+
+## CSV历史接收与逐编号阅读材料
+
+以下“本次”“本轮”均指此前 CSV 补录及阅读页整理的历史范围，其数量不能作为统一知识目录总数。
 
 原 CSV 的 **6,973 个原 ID** 已完成逐条提取：仓库保存 **6,971 条完整来源 JSON**，
 另有 **M2535、M2709 共 2 条**触发现有敏感字段检查，原值仅保存在本地隔离检查点，未公开。

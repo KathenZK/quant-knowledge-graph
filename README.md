@@ -1,94 +1,95 @@
 # Quant Knowledge Graph
 
-面向量化研究的因子、策略、论文、公式、实现和研究结果关系库。
+量化研究的知识目录，收集策略、因子、公式、实现和来源关系。统一按**策略、因子、待分类**查找；来源、版本、许可和审核状态保留在每条记录中。
 
-本公开仓库包含可运行的采集/标准化程序、Python SDK、只读 API，以及 **508 个通过定义准入的 Qlib 信号变体**。每条记录保留原始公式、AST、来源版本、文件摘要和许可信息。它们归入 43 个特征族，不代表 508 个独立盈利因子。
+统一入口是 [知识目录说明](metadata/CATALOG.md) 与 [集合登记表](metadata/catalog.json)。它将 CSV 来源记录、分类阅读页、已审源码说明和因子定义汇集到同一张条目卡；原 ID、文件和证据版本均保留。收录不代表准入、可回测、盈利或可商用。
 
-> 完整本地研究目录曾接入 1,578 条来源记录、形成 1,085 个 curated 定义变体。该混合许可研究包没有上传到此公开仓库；这里发布的是经过筛选的 Qlib 数据及其关联实体。
+当前目录有 **8,546 张条目卡：178 策略、1,586 因子、6,782 待分类**。同卡的来源版本不重复计数；因子中保留安慰剂、撤回记录和参数模板。使用 `catalog-stats` 查询当前值。
 
-## 原目录阅读入口
+## 常用查询
 
-原目录前两批 200 条完整 11 字段已整理到 [171 条策略候选](metadata/strategies/README.md)、
-[12 条因子候选](metadata/factors/README.md) 与 [17 条待分类](metadata/unclassified/README.md)。
-它们是 CONTENT_INFERRED / UNVERIFIED 的目录阅读层，不增加下文 Qlib 已审定义或回测数量。
-[完整计数、固定来源与分类证据](metadata/README.md)。
-
-## 个人知识工作台
-
-个人模式使用显式选择的本机完整 Catalog，提供策略/因子阅读、中文检索、方法族、关系、2–4 项比较，以及服务端持久笔记和研究清单。未解析规则和未准入公式仍可阅读；来源事实、整理解释与个人判断分开保存。它不运行研究，不连接交易执行系统，也不改变公开 API 的可见性或许可边界。
-
-已初始化 `.artifacts/personal` 后，日常只需这一条命令；页面缺失或源码变化时自动重建，失败时停止启动：
-
-```sh
-bash scripts/start_personal.sh
-```
-
-访问 `http://127.0.0.1:8791`。没有完整 Catalog 时页面明确提示初始化，绝不静默退回 Qlib-only。[首次初始化、增量更新、备份恢复与验收](docs/product/personal-workbench.md)。
-
-## 快速运行
-
-需要 Python 3.11+ 和 [uv](https://docs.astral.sh/uv/)。
+需要 Python 3.11+ 和 [uv](https://docs.astral.sh/uv/)。在仓库根目录运行：
 
 ```sh
 git clone https://github.com/KathenZK/quant-knowledge-graph.git
 cd quant-knowledge-graph
 uv sync --frozen --extra test
-uv run quantgraph verify-public
-uv run quantgraph build-public
-uv run pytest tests/test_formula.py tests/test_public.py -q
-uv run quantgraph serve
+uv run quantgraph catalog-validate
+uv run quantgraph catalog-stats
+uv run quantgraph catalog-search --kind strategy --source QuantConnect --limit 10
+uv run quantgraph catalog-search --kind factor --source qlib --frequency daily --limit 10
+uv run quantgraph catalog-search --kind unclassified --limit 10
+uv run quantgraph catalog-show M2904
+uv run quantgraph catalog-show 'QuantConnect/Lean:MovingAverageCrossAlgorithm'
+uv run quantgraph catalog-show 'qlib:Alpha360:VWAP2'
 ```
 
-API 默认监听 `127.0.0.1:8000`，交互文档位于 `/docs`。无须市场数据账号，公开批次可以完全离线重建。它不执行上游交易代码，不连接券商或交易所。
+`catalog-search` 支持关键词以及 `--kind`、`--source`、`--market`、`--frequency`、`--status`、`--record-kind` 筛选。状态筛选匹配各状态字段；例如 `SOURCE_CODE_REVIEWED` 只说明审过对应源码，不代表运行或经济有效性通过。同名原生 ID 有歧义时必须带来源命名空间，不能任取一条。
 
-## 本地知识工作台
+目录详情包含原始身份、分类证据、所有证据版本、缺项和许可。没有隐式“最新版”；重复版本不重复计数，同一源码路径也不会自动被认定为同一经济策略。[字段、准确计数及添加来源的方法](metadata/CATALOG.md)。
 
-需要 Node.js 22+；`bash web/start.sh` 会优先启动本机已导入的持久化 Catalog，
-提供真实策略/因子目录、2–4 项比较、可点击关系图、研究清单与鉴权管理后台。
-没有挂载业务语料时仍可显式运行 Qlib-only 分发场景；Git 附带的公开快照不是整个产品数据库。
+## 只读 API
 
-完整本机配置用 `bash scripts/start_platform.sh /absolute/operator/config.json` 同时启动 API
-和已登记的 Lab worker。策略、因子和演化请求复用 `research-request/v1`，在原条目读回对应结果。
-业务条目默认 PUBLIC，第三方全文、代码、行情与研究数值仍按字段分别执行许可规则。
-匿名访客不能修改资料或无限启动计算，DRAFT 导出不代表研究已执行。
+```sh
+uv run quantgraph serve
+curl 'http://127.0.0.1:8000/v1/knowledge/stats'
+curl 'http://127.0.0.1:8000/v1/knowledge?kind=strategy&source=QuantConnect&limit=10'
+curl --get 'http://127.0.0.1:8000/v1/knowledge/lookup'   --data-urlencode 'identity=QuantConnect/Lean:MovingAverageCrossAlgorithm'
+```
 
-详见[当前产品范围](docs/product/platform-delivery.md)、[启动与运维](docs/product/platform-operations.md)、
-[真实数据验收与截图](docs/product/platform-acceptance.md)。
+主 API 默认监听 `127.0.0.1:8000`，交互文档位于 `/docs`。`/v1/knowledge` 检索，`/v1/knowledge/stats` 统计，`/v1/knowledge/lookup?identity=...` 按原 ID 查找；详情返回的 `entity_id` 可用于 `/v1/knowledge/{entity_id}` 与 `/v1/knowledge/{entity_id}/relations`。
 
-## Python SDK
+目录读取仓库中登记的元数据，不执行上游代码，不运行回测，也不连接交易系统。服务首次访问时建立只读快照；接受新批次后重启服务以加载更新。本次集成完成的是仓库、CLI 和主 API，未更新活动 Site 或旧的运行中 Catalog。
 
-公开因子研究桥接的正式契约见 [factor-study/v1](contracts/factor-study/v1/README.md)。
-Lab 计算与研究完成后可写入独立私有 FactorStudy journal，并从因子详情的 studies
-入口查询。DRAFT 不是运行/晋级授权；公开默认不展示私有研究结果，不改变已有定义准入。
+## 收录和审核
+
+[因子来源索引](metadata/factor-sources/index.json) 保存 1,570 条变体及原生编号，包含信号、安慰剂、撤回记录、参数模板和因子组合；不能全称为已准入因子。CSV 的“可回测”和历史日期是来源原标签，未经独立核实。已有阅读分类也不改变原来源记录的审核状态。
+
+新网络批次按固定版本审源码，保存哈希、许可、规则和缺项。首批9条中，4条与旧 M 记录有明确文件定位及行摘要绑定，聚合到同卡的不同证据版本；这不证明参数、执行语义或经济概念等价。其余概念近邻只保留关系。[批次记录](metadata/public-web/README.md)。
+
+目录保存来源核验、定义准入、计算语义、经济有效性和商业许可等不同状态。未审核的信息保留未知；不存在的回测不补写成结果。数据访问权限和分发范围是字段及接口边界，不作为两套知识库的主分类。
+
+## Python 查询
+
+```python
+from quantgraph.graph.knowledge_catalog import KnowledgeCatalog
+
+catalog = KnowledgeCatalog("/path/to/quant-knowledge-graph")
+print(catalog.stats())
+print(catalog.search("RSI", kind="strategy", source="QuantConnect"))
+record = catalog.get("grokbot:M2904")
+print(record["versions"])
+print(catalog.relations(record["entity_id"]))
+```
+
+原 `FactorDB`、`search`、`stats` 及 `/v1/factors` 等接口继续服务既有定义发布，保持数据形状和许可筛选兼容；其计数不是统一知识目录总数。需要完整收录视图时使用 `catalog-*` 或 `/v1/knowledge`。
 
 ```python
 from quantgraph import FactorDB
 
-db = FactorDB()  # 干净 clone 自动读取公开 Qlib 发布；stats 标明 public_qlib
+db = FactorDB(root="/path/to/quant-knowledge-graph")
 rows = db.search_factors(category="momentum", asset_class="equity")
 variant = rows[0]
 factor = db.get_factor(variant["canonical_factor_id"])
 related = db.find_related_factors(variant["factor_variant_id"])
-print(db.stats())
-print(db.find_strategies(factor="momentum"))  # 公开 Qlib 批次不含私有策略，返回 []
 ```
 
-在其他项目使用时安装本包，并设置 `QUANTGRAPH_ROOT` 指向克隆目录，或传入 `FactorDB(root="/path/to/quant-knowledge-graph")`。wheel 不捆绑数据。
+在其他项目使用时安装本包，并设置 `QUANTGRAPH_ROOT` 或传入仓库路径；wheel 不捆绑数据。API 的 commercial profile 默认值保持不变。research profile 是显式参考模式，不代表取得商业内部研究许可。
 
-## 已交付
+## 原有界面与研究接口
 
-| 内容 | 公开批次 |
-|---|---:|
-| Qlib Alpha158/Alpha360 原始输入列 | 518 |
-| 完全相同表达式的重复来源记录 | 8 |
-| 排除的常数/近常数特征 | 2 |
-| curated 信号变体 / 唯一公式 | 508 |
-| 当前特征族 | 43 |
-| Strategy / BacktestResult 实际记录 | 0 / 0 |
+已初始化工作台后可继续使用：
 
-覆盖原始文件与 SHA-256、带方言的公式解析、名称和别名、概念与参数变体区分、Paper/Author/Implementation 等独立实体，以及带证据的关系。SQLite、JSONL、CSV、Parquet 均可使用。
+```sh
+bash scripts/start_personal.sh
+bash web/start.sh
+# 已有平台运维配置时：
+bash scripts/start_platform.sh /absolute/operator/config.json
+```
 
-`backtest_ready` 全部为 false。定义准入不代表计算语义已认证，更不代表收益或 OOS 验证通过。当前是股票特征来源，不会自动把记录标记为适用于 crypto。
+这些命令保留原有运行时配置与 Catalog 导入约定，本次不会替换其活动数据或宣称已部署。个人工作台默认地址为 `http://127.0.0.1:8791`；Node.js 22+ 用于网页构建。参见[个人工作台](docs/product/personal-workbench.md)、[产品范围](docs/product/platform-delivery.md)、[启动与运维](docs/product/platform-operations.md)。
+
+研究请求沿用 [factor-study/v1](contracts/factor-study/v1/README.md) 和 [研究接入契约](docs/RESEARCH_INTEGRATION.md)。Lab 结果、个人笔记和研究状态保留各自证据与权限，DRAFT 不代表研究已运行或策略已晋级。
 
 ## 三项目分工
 
@@ -97,80 +98,60 @@ quant-knowledge-graph → quant-research-lab → quant-runner
     知识与来源             研究与验证           交易与风控
 ```
 
-研究层仓库为 [quant-research-lab](https://github.com/KathenZK/quant-research-lab)，Python 包 `strategy_lab` 兼容保留；参见 [命名迁移](docs/REPOSITORY_NAME_MIGRATION.md)。
-
-知识库不包含既有研究项目的研究引擎，也没有向 runner 发布策略的接口。GrokBot 策略候选和旧筛选结果通过独立私有发布接入；研究验证和实盘执行仍分别属于下游两个项目。
+研究仓库为 [quant-research-lab](https://github.com/KathenZK/quant-research-lab)，Python 包 `strategy_lab` 兼容保留；参见[命名迁移](docs/REPOSITORY_NAME_MIGRATION.md)。本项目不迁入回测引擎，不添加向 runner 发布策略或下单的接口。
 
 ## 仓库结构
 
 ```text
-collectors/          # OSAP / JKP / French / AQR / WorldQuant / GTJA / Qlib 等采集器
-models/              # 独立实体、JSON Schema、稳定 ID 注册表
-normalize/           # aliases / formula / dedup / taxonomy / rights
-graph/               # 本体、关系、存储、准入和校验
-api/                 # 只读 HTTP API
-sdk/quantgraph/      # Python SDK 和 CLI
-datasets/
-  raw/source_lock.json    # 来源 URL、版本及摘要索引
-  raw/sources/qlib/       # 公开分发的固定版本 MIT 源文件
-  public/CURRENT         # 公开发布版本指针
-  public/releases/       # 可校验的 Qlib 数据与关系图
+metadata/catalog.json       # 统一知识目录的集合登记表
+metadata/CATALOG.md         # 目录计数、查询和版本规则
+metadata/corpus-checkpoints # 原 CSV 固定批次，保留 M 编号
+metadata/public-web         # 固定源码版本的采集批次；存储名不决定知识分类
+metadata/factor-sources     # 因子变体元数据，保留来源原生 ID
+graph/knowledge_catalog.py  # 只读聚合、版本核对和检索
+collectors/                 # 来源采集器
+models/ normalize/ graph/   # 定义、公式、关系、准入和校验
+api/ sdk/quantgraph/        # 主 API、Python SDK 和 CLI
+datasets/                  # 原始来源锁及定义发布产物
 tests/ docs/ reports/
 ```
 
-本地的 `datasets/normalized`、`datasets/curated` 和其他来源原文由 `.gitignore` 排除，不能直接提交。`build-public` 只读取三个锁定的 Qlib 文件，写新的公开发布并原子切换 CURRENT，不修改完整研究发布。
+只读聚合保留既有目录和文件。不同来源的同名记录靠命名空间区分；同一原生身份的新版本追加证据，不用覆盖旧快照。后续同类网络批次放入已登记集合，校验通过后由适配器自动发现；新的集合格式需新增适配器和测试。
 
-## 数据许可与代码许可
+## 定义发布兼容与验证
 
-Qlib 源文件和衍生表达式保留微软 MIT 声明；这不包含底层市场数据授权。公开包附有 `THIRD_PARTY_LICENSE.txt` 和修改说明。
+现有 Qlib 定义发布保留：518 个原始输入列，经8条重复表达式合并、2条常数/近常数排除后，形成508个准入信号变体、43个特征族。这个历史发布范围不是知识目录总量，也不表示508个独立盈利因子。其 Strategy/BacktestResult 表为0/0，不能据此推断全目录没有策略或既有研究记录。
 
-项目公开可见不代表整库拥有统一的开放许可。自写采集组件的原 MIT 声明继续保留；其余新代码尚未选定统一开源许可证，见 [LICENSE](LICENSE)。受限来源的许可不会因为标准化而改变。
+```sh
+uv run quantgraph verify-public
+uv run quantgraph build-public
+uv run pytest tests/test_formula.py tests/test_public.py -q
+uv run quantgraph catalog-validate
+```
 
-OSAP、JKP、French、AQR、WorldQuant/GTJA 的采集逻辑和来源索引可供审阅；它们的原始材料及衍生研究数据未随本公开发布分发。不能用社区代码的许可证推定原论文、研报或数据的再分发权。
+`build-public` 保留原行为：只读取锁定的 Qlib 原文件并生成分发产物，不会把全部收录记录提升为可分发定义。完整私有数据的发布继续执行 `quantgraph validate-release`；源码提交、定义准入和经济有效性是不同验收。
 
-## 文档
+## 历史导入兼容
 
-- [公开发布范围与验证](reports/PUBLIC_RELEASE.md)
-- [实体、关系与 ID](docs/DATA_MODEL.md)
-- [公式 DSL](docs/FORMULA_DSL.md)
-- [来源许可](docs/RIGHTS.md)
-- [研究项目接入契约](docs/RESEARCH_INTEGRATION.md)
-- [长期维护](docs/MAINTENANCE.md)
-
-下一阶段优先审核规则语义、来源与许可，再由研究项目完成独立复现。
-
-
-## GrokBot Strategy Corpus V1
-
-GrokBot 数据按 **raw → normalized → curated** 导入。5,813 行是来源候选记录，不是 5,813 个独立策略。公开仓库不分发这批完整语料；真实导入统计见 [汇总报告](reports/grok_strategy_import_v1.md) 和 [机器可读统计](reports/grok_strategy_import_v1.json)。
+原 GrokBot V1 的5,813行是独立历史接收批次，不能与当前 CSV 数量直接相加。原导入命令和接口仍保留：
 
 ```sh
 uv run quantgraph import-grokbot /private/path/quant-handoff-minimal-2026-09-24.tar.gz
 uv run quantgraph verify-grokbot
 ```
 
-导入器保留原始压缩包字节、原生 ID、规则全文、市场原文和历史日期字段。来源支持的指标/方法与 GrokBot 生成的阈值、ETF 配置分开标注；RSI 指标定义不会被冒充为原作者发布的 ETF 切换策略。解析失败的规则保留为 REVIEW，不生成猜测的 AST。日期没有独立证据时保持为空。
+导入器保留来源字节、原生 ID、历史字段和版本，解析失败不补猜 AST。历史筛选结果 `LEGACY_GROKBOT_SCREEN` 不算独立复现或有效性证明。详见[历史导入报告](reports/grok_strategy_import_v1.md)、[增量接入](docs/INGESTION.md)、[架构说明](ARCHITECTURE.md)。
 
-策略族、模板、变体和引用关系进入独立的私有图谱；现有 `Strategy` 查询保持兼容：
+## 许可和文档
 
-```python
-from pathlib import Path
-from quantgraph import FactorDB
+软件许可证不自动覆盖原论文、研报、底层行情及其他第三方材料。公开可见也不代表整库拥有统一的商用许可；不确定的商业使用保留 `REVIEW_REQUIRED`。记录的已收录、定义准入和商业许可分开判断。
 
-corpus = Path("datasets/curated/grokbot")
-release = (corpus / "CURRENT").read_text().strip()
-db = FactorDB(database=corpus / "releases" / release / "quantgraph.sqlite")
-strategies = db.find_strategies()
-links = db.get_strategy_factors(strategies[0]["strategy_id"])
-# 所有关联均为 RULE_LINK_ONLY；信号定义不代表收益归因。
-```
+完整 normalized/curated、非 Qlib 来源原文及本机验收日志仍由 `.gitignore` 隔离，不直接加入 Git。元数据保存定义、注明来源的摘录、自撰说明及定位；许可范围按字段保留，不确定的授权不因收录而视为通过。原始材料和数据的范围按来源单独审核。
 
-私有定义准入、可执行性和许可是三个独立检查。所有记录目前均需许可和执行合约复核；`PARSED` 不等于可交易，`executable` 全为 false。已有回测仅作为 `LEGACY_GROKBOT_SCREEN`，不算研究复现或有效性证明。默认公开 API 和商业导出不包含这些私有规则。详见 [ARCHITECTURE](ARCHITECTURE.md)。
-
-新增测试使用人工构造的样例；维护者可用 `GROKBOT_TEST_ARCHIVE=/private/path/input.tar.gz uv run pytest -q` 额外验证真实 5,813 条批次。公开 CI 没有私有语料时会明确跳过这一条测试。
-
-## 增量 GrokBot 与研究联通
-
-[Ingestion API / Python SDK / CLI / 部署](docs/INGESTION.md) ·
-[规则和本体进度](docs/ONTOLOGY_PROGRESS.md) · [实际联通验证](docs/ingestion-validation.json)。
-私有原始记录只追加；公开商业接口继续使用许可安全 release。知识层不直接对接 runner。
+- [知识目录与准确计数](metadata/CATALOG.md)
+- [元数据格式与历史接收](metadata/README.md)
+- [实体、关系与 ID](docs/DATA_MODEL.md)
+- [公式 DSL](docs/FORMULA_DSL.md)
+- [来源许可](docs/RIGHTS.md)与[项目许可](LICENSE)
+- [定义分发范围与验证](reports/PUBLIC_RELEASE.md)
+- [长期维护](docs/MAINTENANCE.md)
