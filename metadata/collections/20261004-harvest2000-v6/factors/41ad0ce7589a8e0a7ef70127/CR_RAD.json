@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "比较中位数两侧的离散程度倒数差，并用滞后增量波动重标度；原临界性用途不能直接移植成金融预警结论。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-be68145bf4e5078946c78afe"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-be68145bf4e5078946c78afe"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先用整个x的中位数居中并取绝对值（默认），再截成前/后滞后对；用截后u的中位数重新分半。两个中位数的样本范围不同。 源码直接计算上下组std倒数差与增量std乘积，没有加eps、没有分位数平滑或winsorize。 本条冻结默认/显式数值tau合同。字符串tau/ac1e/mi会根据已变换z选延迟，未把它们当本条已审全部自适应实现。 源码署名Brendan Harris于2023提出、Ben Fulcher整合，引用Harris/Gollo/Fulcher的2024 PRX论文。只记录计算及归属，原神经/动力系统实证不当成金融临界性验证。 边界：大量中位数并列导致下半空或上下组规模严重不均；任一std为0或空集合可输出Inf/NaN，源码无统一退化检查。 MATLAB std的默认分母及数值环境未冻结；不得以numpy默认分母替换后声称逐字复现。 只由代码归属引用得知原用途；没有证据表明该单值能预测金融危机、收益或真实市场临界点。 此文件无独立GPL页首声明；根README只声明特征计算代码为GPL版本3。本条按该目录范围登记GPL-3.0且保留缺失单文件声明，不擅自增加or-later。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-be68145bf4e5078946c78afe"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "比较中位数两侧的离散程度倒数差，并用滞后增量波动重标度；原临界性用途不能直接移植成金融预警结论。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-be68145bf4e5078946c78afe"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "doAbs默认true：z_t=|x_t−median_(1..N)(x)|；false时z=x。默认数值τ=1，u=z_(1..N−τ)，v=z_(1+τ..N)，h=median(u)，L={u_i<h}，U={u_i>=h}。RAD=std(v−u)*[1/std(U)−1/std(L)]。中位数并列值全部进入U，非强制等数量两半。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-be68145bf4e5078946c78afe"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（finite real time-ordered evenly sampled vector）：完整窗口；研究使用前须检查tau<N、上下分组非空且各有正方差，来源函数本身没有兜底。。参数：tau：形成延迟对；范围research positive integer <N; numeric branch reviewed；源码默认1；doAbs：全窗中位数居中后取绝对值，false是同一构造开关；范围bool；源码默认True"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-be68145bf4e5078946c78afe"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "绝对偏离分半的重标度自密度",
+  "native_source_id": "CR_RAD",
+  "one_line": "比较中位数两侧的离散程度倒数差，并用滞后增量波动重标度；原临界性用途不能直接移植成金融预警结论。",
+  "record_id": "CR_RAD",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/CR_RAD.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Brendan Harris (devised/authored 2023); Ben D. Fulcher (hctsa integration); algorithm paper: Harris, Gollo and Fulcher, Physical Review X 14, 031021 (2024).",
+      "id": "harvest-source-be68145bf4e5078946c78afe",
+      "license": "GPL-3.0",
+      "locator": "author identity, paper citation and algorithm purpose:L1-L34; defaults, median absolute preprocessing and exact formula:L36-L86",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "02913e1dd9e0bb6e73ecd1116551e9e9f355b3b5d12d477c763599831eab3c14",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/CR_RAD.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Brendan Harris (devised/authored 2023); Ben D. Fulcher (hctsa integration); algorithm paper: Harris, Gollo and Fulcher, Physical Review X 14, 031021 (2024).",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Brendan Harris (devised/authored 2023); Ben D. Fulcher (hctsa integration); algorithm paper: Harris, Gollo and Fulcher, Physical Review X 14, 031021 (2024).",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

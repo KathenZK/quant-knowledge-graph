@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "按较低频带的相位把较高频带振幅分组，描述振幅是否集中于某些相位区间。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-f9750b074510bd3e558f5e3c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-f9750b074510bd3e558f5e3c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认nBands5、maxNfull、nPhaseBins18；指定maxN时裁最早点。没有先减输入均值；但FFT构造把DC清零。 可用频点少于2*nBands时返回单一NaN；分带由整数round边界形成，bin数可能相差1，并非每段总能精确等长。 逐带构造仅正频非零的复数解析信号；不保留负频共轭，不做两端修剪，IFFT是整窗循环滤波。 较慢带取相位、较快带取幅度，反向不另计算/另计。每个相位箱用幅度条件均值，不是箱内幅度总和，空箱固定0。 边界：某高频带全无振幅时u全0→p全NaN，再被p>0筛成空数组，H=0，从而MI可被算成1；全零序列甚至得到maxMI1。必须把无能量带判为无效输入，不能将此结果称强耦合。 相位未覆盖某些箱时那些箱均值置0，也会推高MI；源码未做最小箱占用数/偏差校正/随机基准。 频带对只有一个时entropyMI分母ln1=0；全部MI=0时正MI集合为空，entropyMI为NaN。 FFT整窗滤波无因果流式保证，信号内部早期相位也会受整窗后半影响；只在完整窗口结束时提取摘要。当前频带是按每样本频率划分，不自动对应金融周期。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-f9750b074510bd3e558f5e3c"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "按较低频带的相位把较高频带振幅分组，描述振幅是否集中于某些相位区间。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-f9750b074510bd3e558f5e3c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Y=FFT(y)。保留正频整数bin，排除DC与偶数N的Nyquist；B个频带由round(linspace(1,正频bin数+1,B+1))分界。各带z_b=IFFT(仅该带置2Y、其他频点为0)，φ_b=angle(z_b)，A_b=|z_b|。对i<j，把φ_i分成P个[−π,π]等宽箱（π并入末箱），u_l=对应样本A_j均值，空箱置0；p_l=u_l/Σu，H=−Σ_(p_l>0)p_l ln p_l，MI_ij=(lnP−H)/lnP。输出maxMI=max(MI)及正MI按总和归一后相对于ln(频带对数)的Shannon熵；整个频带对面计一族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-f9750b074510bd3e558f5e3c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（finite real evenly sampled vector; analysis bands require positive amplitude mass）：完整窗口；输入有效性需额外核验各带能量与相位箱覆盖，源码本身未拒绝退化高值。。参数：nBands：频带数，同族参数；范围research integer>=2；源码默认5；maxN：可裁最早样本；范围full or positive integer；源码默认full；nPhaseBins：相位分箱数量；范围research integer>=2；源码默认18"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-f9750b074510bd3e558f5e3c"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "跨频带相位分组的幅度调制",
+  "native_source_id": "SP_PhaseAmpCoupling",
+  "one_line": "按较低频带的相位把较高频带振幅分组，描述振幅是否集中于某些相位区间。",
+  "record_id": "SP_PhaseAmpCoupling",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SP_PhaseAmpCoupling.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-f9750b074510bd3e558f5e3c",
+      "license": "GPL-3.0-or-later",
+      "locator": "native construct, Tort attribution and GPL:L1-L89; defaults, positive-frequency bands, analytic signal and MI summaries:L93-L196",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "9a57eb149e73ec0e3062edc0155aced54b6bbaa08b53571940be40f449c4f81e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SP_PhaseAmpCoupling.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述整窗解析信号幅度包络及主频附近包络的波动、形状和去相关时间，同时量化主频相位增量离散程度。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-b27893f3c6b1870ab96c818d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-b27893f3c6b1870ab96c818d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N<50、任一非有限值或std(y)=0时所有8个字段保持NaN。默认powerFrac.5、trimFrac.05；最少每端删除1点，所以trimFrac0也不代表完全不裁边。 主频带以最大功率bin为中心，半宽从2开始；在频域边缘截断，未必两侧各含2个点，也不等于任意位置的全局最窄半功率带。 包络方差用总体分母n，不调用std默认；均值<=0直接保持NaN。对近常量包络，通过w平滑靠近偏度0、峰度3、τ上界，不把这些约定当成实测高斯或长记忆证据。 包络ACF使用2^nextpow2(2n)零填充FFT绝对值平方的IFFT，除零阶，截取滞后0..floor(n/2)。若无1/e越过，原τ为NaN。 shrinkToLimit若原值为NaN，仅当w<1e−6才返回约定值，否则仍NaN；有限原值总做limit+w*(value−limit)。主带频率离散度在同一裁边段unwrap相位后差分，单位每样本周期。 边界：主频带选择与FFT解析信号依赖完整窗口，裁边不能把该处理变成因果实时滤波；所有摘要只在窗口结束后可得。 近常量包络的偏度/峰度/τ收缩是实现约定，不是算法识别出高斯分布；无能量包络保持NaN。 powerFrac/trimFrac未被源码全面校验；过大裁边可变成空窗口，相关输出无效。主带太窄时有效独立幅度变化很少，窗口长度本身影响统计。 phase unwrap、round、FFT及并列主峰的选择依赖数值环境未执行锁定；八个全频/主频摘要与参数变体只算一个完整算法族。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-b27893f3c6b1870ab96c818d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述整窗解析信号幅度包络及主频附近包络的波动、形状和去相关时间，同时量化主频相位增量离散程度。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-b27893f3c6b1870ab96c818d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y先减全窗均值，Y=FFT(y)，U为除DC和偶数Nyquist外的正频bin。全频z_F=IFFT(仅U置2Y)。主频p为|Y_U|²最大位置；选最小半宽h∈{2,...,|U|}使[p−h,p+h]裁到U后的功率>=powerFrac*Σ|Y_U|²；无合格h则h=|U|。该主带也只置2Y后IFFT得z_D。两端各删nTrim=max(1,round(trimFrac*N))点。各包络e=|z|：μ=mean(e)，v=mean((e−μ)²)，CV=√v/μ，原偏度s=mean((e−μ)^3)/v^1.5、原峰度k=mean((e−μ)^4)/v²。w=CV²/(CV²+1e−20)，输出偏度0+w*s、峰度3+w*(k−3)，CV不收缩；全频不返回偏度。原τ为包络去均值ACF在0..floor(n/2)内首次严格低于1/e的线性插值滞后；输出τ=floor(n/2)+w*(原τ−floor(n/2))。主带还返回1.4826*median(|diff(unwrap(angle(z_D)))/(2π)−其中位数|)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-b27893f3c6b1870ab96c818d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（finite real time-ordered evenly sampled vector with N>=50 and positive variance）：完整窗口；具体市场输入、采样Hz与时间发布约定缺失。。参数：powerFrac：主频附近所需功率比例；范围research real in (0,1]；源码默认0.5；trimFrac：每侧裁边比例；默认至少各1点；范围research real>=0 with 2*max(1,round(trimFrac*N))<N；源码默认0.05"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-b27893f3c6b1870ab96c818d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "全频及主频解析包络的变化形状",
+  "native_source_id": "SP_EnvelopeStats",
+  "one_line": "描述整窗解析信号幅度包络及主频附近包络的波动、形状和去相关时间，同时量化主频相位增量离散程度。",
+  "record_id": "SP_EnvelopeStats",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SP_EnvelopeStats.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-b27893f3c6b1870ab96c818d",
+      "license": "GPL-3.0-or-later",
+      "locator": "native output family, conventions, paper and GPL:L1-L124; defaults, input guard, band selection, trim and phase dispersion:L128-L203; exact envelope moments, FFT ACF, interpolation and shrinkage:L206-L263",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "e00f58864d123d14619a674e8934182db94714ea7f86293ab8ab2f6ba2e58d67",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SP_EnvelopeStats.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

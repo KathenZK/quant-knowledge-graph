@@ -1,0 +1,155 @@
+{
+  "economic_basis": {
+    "hypothesis": "把相邻序数模式之间出现过的转移建成有向网络，描述转移结构而不是重新计算排列熵。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-0b93c3ab70769670398a2d19",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-52f0afa3edb6930274713f9a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-0b93c3ab70769670398a2d19",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-52f0afa3edb6930274713f9a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认d3、tau1；采用数值tau合同，延迟模板少于30行或嵌入失败返回单一NaN。 BF_OrdinalPatternRank按每行sort所得坐标索引π，通过Lehmer编码1+Σ_(j=1..d−1)#{k>j:π_k<π_j}*(d−j)!标识模式，再仅把实际出现模式压成连续节点标签。 相邻模板的符号之间建立唯一有向边；重复转移只为权重计数，不重复增加入/出度。自环也保留，并会在互惠比例中算作有反边。 NFP为未观测模式数量；有限样本未出现不等于动力学上永远禁止，不能改写为已证实不可能模式。 边界：MATLAB sort对于同值的坐标排列影响符号；源码不主动加噪或特殊剔除ties。本条数值依赖未锁，使用有重复幅度的市场序列需固定并列排序约定。 同一个模式有序列可形成单节点自环：meanDegree1、互惠1并不代表复杂。所有输出是同一图的摘要，禁止按出入方向拆因子。 factorial(d)很大时可溢出或精度不足；函数没有完整资源/整数验证；不得把有限样本NFP当熵或可预测性证明。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-0b93c3ab70769670398a2d19",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-52f0afa3edb6930274713f9a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把相邻序数模式之间出现过的转移建成有向网络，描述转移结构而不是重新计算排列熵。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-0b93c3ab70769670398a2d19",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-52f0afa3edb6930274713f9a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X_ij=y_(i+(j−1)τ)，每行按升序的坐标索引排列π_i编码成符号s_i。观测节点V={s_i}、边E={(s_i,s_(i+1))}只保留唯一有向边（含自环）；n=|V|,e=|E|。meanDegree=e/n；NFP=d!−n；另返回入/出度的max与std、reciprocity=#{(a,b)∈E:(b,a)∈E}/e、maxEdgeWeight=max_(a,b)转移次数/(模板数−1)。一整组网络摘要计一族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-0b93c3ab70769670398a2d19",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-52f0afa3edb6930274713f9a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（finite real time-ordered evenly sampled vector）：完整窗口，至少30个d维延迟模板；建议初次复现使用无并列值输入以明确序数模式。。参数：d：模板维度；范围research integer>=2；源码默认3；tau：延迟，ac/ac1e/mi支路不纳入本条合同；范围research positive integer; numeric path reviewed；源码默认1"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-0b93c3ab70769670398a2d19",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-52f0afa3edb6930274713f9a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "序数模板的有向转移网络特征",
+  "native_source_id": "NW_OrdinalPartitionNetwork",
+  "one_line": "把相邻序数模式之间出现过的转移建成有向网络，描述转移结构而不是重新计算排列熵。",
+  "record_id": "NW_OrdinalPartitionNetwork",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/NW_OrdinalPartitionNetwork.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-0b93c3ab70769670398a2d19",
+      "license": "GPL-3.0-or-later",
+      "locator": "native interface, attribution and GPL:L1-L89; embedding, node compaction, edges and full outputs:L93-L179",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "aaa8ac5f5450d7d2d777ec38dfbec7280654ffa2dd641740fb3b66d9c1cb5f7f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/NW_OrdinalPartitionNetwork.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-feec739939d9575d8c13fe84",
+      "license": "GPL-3.0-or-later",
+      "locator": "native contract and GPL notice:L1-L56; input and numeric/default ac delay:L58-L104; numeric dimension and embedding matrix:L110-L200",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "dd7d80d452cd8349e9b94bea4ed4bed9ab50f9183bc867c22ffc9af71adfd26e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/PeripheryFunctions/BF_Embed.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-52f0afa3edb6930274713f9a",
+      "license": "GPL-3.0-or-later",
+      "locator": "GPL, row sort and exact Lehmer coding:L1-L64",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "fdd43b417315be62050ff8eb1756a17804630eec6be63b17d24e656ea53a3d19",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/PeripheryFunctions/BF_OrdinalPatternRank.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

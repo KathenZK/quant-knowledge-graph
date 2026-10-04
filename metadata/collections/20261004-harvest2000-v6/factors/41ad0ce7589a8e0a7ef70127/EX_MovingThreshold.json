@@ -1,0 +1,136 @@
+{
+  "economic_basis": {
+    "hypothesis": "用遇到极端观测时跳升、其余时刻衰减的阈值，描述极端事件间隔和阈值路径。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ae877e06c09056b6852e6ba4",
+        "harvest-source-6af21055c483bae9da315fb7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ae877e06c09056b6852e6ba4",
+        "harvest-source-6af21055c483bae9da315fb7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码仅用BF_iszscored检查abs(mean(y))<100eps且abs(std(y)−1)<100eps，不通过时发警告；它不会替输入去均值/标准化。 本条固定列向量合同。首点只初始化q1=1，y1不触发跳升；从第二点开始按严格大于比较。阈值等于观测仍进入衰减分支。 a默认1，b默认.1；只显式校验b位于[0,1]。本条研究合同限制a>=0，避免负跳幅产生与极端事件计数不同的解释。 汇总全阈值路径；事件索引由非零kick值确定，不是另存布尔触发标志；无事件或少于两个事件时部分均值/间隔输出为缺失。 边界：q按列创建；若传行向量，在支持隐式扩展的MATLAB中q−abs(y)可生成矩阵，meanqover变成行向量；不能宣称该路径与列向量标量合同一致。 N=1导致pkick分母0；本条要求N>=2、有限非退化标准化窗口，不把无事件统计的NaN替为0。 标准化使用整个输入窗口时，q虽递推也只有窗口结束后才能得到本条已标准化路径；不可把全窗均值方差偷用到窗内早期时点。 同一输出族各a/b或阈值摘要不另计。IQR/std/eps数值默认和运行环境未冻结。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ae877e06c09056b6852e6ba4",
+        "harvest-source-6af21055c483bae9da315fb7"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用遇到极端观测时跳升、其余时刻衰减的阈值，描述极端事件间隔和阈值路径。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ae877e06c09056b6852e6ba4",
+        "harvest-source-6af21055c483bae9da315fb7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入y已由外部按窗口标准化，z_i=|y_i|；q_1=1。i=2..N：若z_i>q_(i−1)，q_i=(1+a)z_i，kick_i=q_i−q_(i−1)；否则q_i=(1−b)q_(i−1)，kick_i=0。返回q路径的mean/median/IQR/max/min/std、mean(q−z)；J=find(kick≠0)，pkick=|J|/(N−1)、mean(kick_J)，以及diff(J)的mean/median/std。整组统计计一个构造。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ae877e06c09056b6852e6ba4",
+        "harvest-source-6af21055c483bae9da315fb7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（finite real MATLAB column vector; externally z-scored; N>=2）：完整等时距已观测窗口；不自动标准化，市场输入和窗口固定另行进行。。参数：a：触发后阈值高于当前绝对值的比例；范围research finite>=0; upstream not explicitly bounded；源码默认1；b：未触发时的逐步衰减比例；范围finite in [0,1]；源码默认0.1"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ae877e06c09056b6852e6ba4",
+        "harvest-source-6af21055c483bae9da315fb7"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "极端观测触发的跳升衰减阈值",
+  "native_source_id": "EX_MovingThreshold",
+  "one_line": "用遇到极端观测时跳升、其余时刻衰减的阈值，描述极端事件间隔和阈值路径。",
+  "record_id": "EX_MovingThreshold",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/EX_MovingThreshold.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (C) 2013-2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-ae877e06c09056b6852e6ba4",
+      "license": "GPL-3.0-or-later",
+      "locator": "native authors, model and GPL:L1-L68; warning-only standardization, defaults and recurrence:L70-L114; all output summaries:L124-L146",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "78d4da94d80635c69660b602ea8c467ab032ccb26d7712d46f6b9ac900dd6ee1",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/EX_MovingThreshold.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-6af21055c483bae9da315fb7",
+      "license": "GPL-3.0-or-later",
+      "locator": "GPL and warning-only mean/std check:L1-L47",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "9e60f10371c85f8f3b7289c2391970f9ede83d3e5cf70b3af478ca19ffd4fb61",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/PeripheryFunctions/BF_iszscored.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}
