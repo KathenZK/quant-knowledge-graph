@@ -1,0 +1,219 @@
+{
+  "economic_basis": {
+    "hypothesis": "将简单收益和对数收益的累计差与已实现方差比较，再按双幂方差和四项乘积六次变差标准化，描述价格窗口偏离连续模型的程度。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-e12081c525a57fbef8cca6b9",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-e12081c525a57fbef8cca6b9",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅审有限正numeric价格向量单资产单窗；alignBy=alignPeriod=NULL，power=4、alpha原默认.975。传入M=N+1个价格；不是已经计算好的收益。 simre和makeReturns分别按同一价格计算简单与自然对数收益，两者都把第一项设0并保留；随后as.zoo包装。因此内部收益长度仍为M，N却明确取length(pData)−1，不删首零或擅改N。 RBPVar在含首零的整序列上计算相邻绝对乘积；rRVar平方和同样包含首零。SwV按简单减对数收益求和后乘2，不用近似的Σr²替代。 rollApplyProdWrapper(r,4)对完整M行按连续4项相乘，产生M−3=N−2个乘积；abs后取3/2次幂。首个乘积含r_0=0，其余按原序，尺度分母严格N−5，不改成滚动输出长度。 主函数用N·BV/√A乘(1−RV/SwV)形成z，再产生标准正态双侧尾面积和临界区间。四次乘积、p值和power=6另一路径是同族选项，不分别计数；power=6未纳入已审公式。 边界：源文档行385与执行行502存在乘除差异，本条保留固定实现，不默默修程序、不声称原Jiang–Oomen论文完整复现；原论文全文尚未逐式核。 SwV及A的sum用na.rm=TRUE，而RV/BV不统一跳过缺失，所以不能把局部na.rm描述为全算法缺值安全；本合同完全排除缺失输入。 常价序列产生SwV=0和A=0；仅孤立跳变而缺四个连续非零收益也可A=0。没有统一回退/截断；N<=5使尺度分母无效，短向量还会触发滚动helper维度问题。 正价在精确实数下保证每个R−r非负，但浮点简单收益与对数差的相消可能损坏极小SwV；不把数学不等式当执行稳定性证明。z可正可负，源码不截负，不推断上涨/下跌跳跃。 内部首零影响滚动计数合同；不得用长度N的删零序列套入本公式后宣称逐字复现。单资产z的维度不年化，也不包含交易成本。 源码返回原生统计量、双侧标准正态尾面积和上下临界点；它们是同一诊断构造的输出，不按方向、p值、样本窗口或参数选项另计。没有交易入出场、仓位或收益方向。 alpha虽然文档称显著性水平，实际用于qnorm(1−alpha,alpha)：原生默认0.975对应中央95%临界区间，双侧拒绝阈值为0.05。本文要求0.5<alpha<1；源入口没有统一检查该研究约束。 标准正态近似来自无跳跃的连续价格过程假设及高频极限，有限样本/非同步/微观结构噪声下的校准没有在本库验证。输出不是某根收益发生真实跳跃的标签，也不是价格方向预测。 缺失/无穷值、跨日拆分、data.table/xts批处理、重采样和非默认估计器分支不在本次已审合同内；这些分支存在不代表已完成逐项语义验证。R/zoo/RcppArmadillo及基础数学函数的运行环境未冻结执行。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-e12081c525a57fbef8cca6b9",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "将简单收益和对数收益的累计差与已实现方差比较，再按双幂方差和四项乘积六次变差标准化，描述价格窗口偏离连续模型的程度。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-e12081c525a57fbef8cca6b9",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "价格P_0..P_N有限且正，N>=6，等时距且只有一资产。实现保留首零：r_0=R_0=0；i=1..N时r_i=ln(P_i/P_(i−1))，R_i=P_i/P_(i−1)−1。BV=(π/2)Σ_(i=1..N)|r_(i−1)r_i|，RV=Σ_(i=0..N)r_i²，SwV=2Σ_(i=0..N)(R_i−r_i)。令μ_a=2^(a/2)Γ((a+1)/2)/Γ(1/2)，μ_6=15，Q_i=|r_i r_(i+1) r_(i+2) r_(i+3)|，i=0..N−3。已审power=4：A=(μ_6/9)N³ μ_(3/2)^(-4)/(N−5) · Σ_(i=0..N−3)Q_i^(3/2)；z=[N·BV/√A]·(1−RV/SwV)。临界点[Φ^(-1)(1−alpha),Φ^(-1)(alpha)]，p=2Φ(−|z|)。要求A>0、SwV>0且所有中间值有限。源码是乘(1−RV/SwV)，文档公式行385把该项置于分母，本条按实际代码。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-e12081c525a57fbef8cca6b9",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "pData（finite positive real numeric vector of M=N+1>=7 ordered equally spaced intraday prices, one asset and one complete window）：同单位正价格，不是对数价格或收益；平复权/停牌与报价有效时点另行冻结。；nondegenerate_swap_and_sexticity（SwV>0, A>0 and all intermediate arithmetic finite）：至少存在非零四项收益乘积；有限正价格仍可能产生浮点相消或退化，必须检查实际中间量。研究有效域不是源码保护。。参数：power：四项连续收益乘积估计标准化尺度；范围only source default4 reviewed；源码默认4；alignBy：不重采样；范围only NULL reviewed；源码默认None；alignPeriod：不重采样；范围only NULL reviewed；源码默认None；alpha：正态临界区间上端概率；范围research scalar .5<alpha<1；源码默认0.975；...：不使用内部额外参数；范围not set; source internal arguments excluded；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-e12081c525a57fbef8cca6b9",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "jonathancornelissen/highfrequency",
+  "lab": null,
+  "missing_information": [
+    "原论文与代码/文档乘除差异未由全文逐式裁定",
+    "市场正价、采样网格、复权/异常报价和PIT合同未冻结",
+    "标准正态校准、浮点相消及R/zoo/Rcpp环境未执行验证",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "简单与对数收益差的互换方差跳跃诊断",
+  "native_source_id": "JOjumpTest",
+  "one_line": "将简单收益和对数收益的累计差与已实现方差比较，再按双幂方差和四项乘积六次变差标准化，描述价格窗口偏离连续模型的程度。",
+  "record_id": "JOjumpTest",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Jiang/Oomen (2008), Testing for jumps when asset prices are observed with noise—a swap variance approach。这里是维护者实现，不称论文作者本人代码或论文精确复现。",
+      "id": "harvest-source-1028bcab3647a0fae74441ed",
+      "license": "GPL-2.0-or-later",
+      "locator": "package identity, maintainers, GPL >=2 and original package paper:L1-L24; unfrozen runtime dependencies:L26-L45",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d8d98b0df5ea59c9488f6af78a6246dbbbabb593d56ef92e84eb7516dadce0b3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Jiang/Oomen (2008), Testing for jumps when asset prices are observed with noise—a swap variance approach。这里是维护者实现，不称论文作者本人代码或论文精确复现。",
+      "id": "harvest-source-5f01e4e89a90ac43d08c6870",
+      "license": "GPL-2.0-or-later",
+      "locator": "RV defaults and branch gates:L2667-L2673; complete finite numeric/zoo RV square sum:L2705-L2722",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "47103e0f8a9f72ae6cdac845655c22a976e2aece49f7bb672302b33338354a32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Jiang/Oomen (2008), Testing for jumps when asset prices are observed with noise—a swap variance approach。这里是维护者实现，不称论文作者本人代码或论文精确复现。",
+      "id": "harvest-source-b5a2f57468a7eff5e05fd791",
+      "license": "GPL-2.0-or-later",
+      "locator": "complete bipower helper without finite-sample correction:L256-L262",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "5f38e15d48ae103a5e9db0715647b0dbc053e7d08ce67aa8b4e620799989d4e2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/internalRealizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Jiang/Oomen (2008), Testing for jumps when asset prices are observed with noise—a swap variance approach。这里是维护者实现，不称论文作者本人代码或论文精确复现。",
+      "id": "harvest-source-199eefbd4c9a56cd77a78f1d",
+      "license": "GPL-2.0-or-later",
+      "locator": "native matrix runtime dependency:L1-L3; complete rolling product helper:L206-L216",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "e73731f67e6cf6c30b78a43da3efdadd95a1d38abac13bb670126e846f59c0b2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/src/internals.cpp",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Jiang/Oomen (2008), Testing for jumps when asset prices are observed with noise—a swap variance approach。这里是维护者实现，不称论文作者本人代码或论文精确复现。",
+      "id": "harvest-source-2f821f16db9cc7f4b73af0c0",
+      "license": "GPL-2.0-or-later",
+      "locator": "generated native rolling-product call:L82-L84",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "3930bffdcaf6ab6ef070bb1c5682be16e4907cb185db4f89f00e919361e33f4e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/RcppExports.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Jiang/Oomen (2008), Testing for jumps when asset prices are observed with noise—a swap variance approach。这里是维护者实现，不称论文作者本人代码或论文精确复现。",
+      "id": "harvest-source-07223db91ef76f7502caf5a2",
+      "license": "GPL-2.0-or-later",
+      "locator": "native equal-spacing inputs source attribution and documented formula discrepancy:L370-L437; signature defaults and xts gate:L446-L448; data.table gate:L463-L463; complete numeric price and reviewed power4 path:L482-L509",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d18ba87aeb1ef932e6c74921d3891f0a4b7e6717548ca5a4a6573bc03d68231e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/jumpTests.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Jiang/Oomen (2008), Testing for jumps when asset prices are observed with noise—a swap variance approach。这里是维护者实现，不称论文作者本人代码或论文精确复现。",
+      "id": "harvest-source-e12081c525a57fbef8cca6b9",
+      "license": "GPL-2.0-or-later",
+      "locator": "complete simple-return helper retaining first zero:L77-L101",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "f8fce8bc5d626f76d11534b275cd8641530f9433f967eda4cbe082d18e8358c1",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/internalJumpTests.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Jiang/Oomen (2008), Testing for jumps when asset prices are observed with noise—a swap variance approach。这里是维护者实现，不称论文作者本人代码或论文精确复现。",
+      "id": "harvest-source-3e5fa2fa2037090eea1dfd5e",
+      "license": "GPL-2.0-or-later",
+      "locator": "complete log-return helper retaining first zero:L912-L936",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "96d0708297f7b3fe2c7e07379c0fc064834fd5a738734b42dfdc22ee38147b0f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/dataHandling.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

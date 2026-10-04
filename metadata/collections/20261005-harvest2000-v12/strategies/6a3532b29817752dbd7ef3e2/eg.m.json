@@ -1,0 +1,276 @@
+{
+  "economic_basis": {
+    "hypothesis": "按相对组合表现递推资产份额可能持续适应资产收益差异；这是在线财富增长假说，不是已证明收益驱动。",
+    "missing": [
+      "未把论文报道、代码许可证或静态公式审查当经济有效性、运行一致性与数据授权。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "OLPS/OLPS",
+  "lab": null,
+  "missing_information": [
+    "仅静态逐行核对维护者代码，没有运行、导入 MATLAB/Octave 或做行情回测；不证明经济有效性。",
+    "按外部输入矩阵列定义固定资产宇宙，未冻结可交易证券名单、退市/公司行动、历史样本时点或行情授权。",
+    "模型把已知上一期收盘信息用于下一期持仓并按相邻收盘比计收益，实际下单时点、成交价、最小股数、流动性及同步报价缺失。",
+    "原示例 tc=0 只是来源参数，不是实际无手续费；报价、滑点、税费与实现成本未提供。",
+    "没有数值稳定化、权重下限或缺失数据处理；不把归一化公式的静态检查当运行验证。"
+  ],
+  "name": "OLPS 归一化收益梯度指数配权",
+  "native_source_id": "eg.m",
+  "one_line": "以上期目标权重乘收益梯度的指数并归一，逐期递推长多组合。",
+  "record_id": "eg.m",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；没有运行代码或计算收益。",
+    "metadata": "自撰实现规则与来源定位；上游源码、PDF全文及行情数据不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/LICENSE"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-credits-txt",
+      "license": "Apache-2.0 applies to repository code per LICENSE/NOTICE. Paper, market data, trademarks and commercial investment-product permissions are separate, REVIEW_REQUIRED.",
+      "locator": "CREDITS.txt; implementation dispatch, author identity, dependency or bibliographic provenance",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "ce8dec8b8a2bd6741b29a696feebbce964d87ed0444d44860b72b1cf7f67ab2a",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/CREDITS.txt",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    },
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-documentation-olps_manual-pdf",
+      "license": "Publisher/author PDF retained in the source repository; repository code license alone is not asserted to grant document, underlying paper or market-data reuse rights, REVIEW_REQUIRED.",
+      "locator": "Documentation/OLPS_manual.pdf; L138–152",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "f78d2ff3ab974bedd742f0af28412638a1fb99a932566c8e2872e203ee3eeb50",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/Documentation/OLPS_manual.pdf",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    },
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-documentation-olps_toolbox-pdf",
+      "license": "Publisher/author PDF retained in the source repository; repository code license alone is not asserted to grant document, underlying paper or market-data reuse rights, REVIEW_REQUIRED.",
+      "locator": "Documentation/OLPS_toolbox.pdf; L93–96",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "c31c150d68b89d43600dd43c321b0b2d21e8bc7980734d5e48a7df81637954b9",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/Documentation/OLPS_toolbox.pdf",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    },
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-license",
+      "license": "Apache-2.0 applies to repository code per LICENSE/NOTICE. Paper, market data, trademarks and commercial investment-product permissions are separate, REVIEW_REQUIRED.",
+      "locator": "LICENSE; license and original copyright/attribution",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/LICENSE",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    },
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-notice-txt",
+      "license": "Apache-2.0 applies to repository code per LICENSE/NOTICE. Paper, market data, trademarks and commercial investment-product permissions are separate, REVIEW_REQUIRED.",
+      "locator": "NOTICE.txt; license and original copyright/attribution",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "1ab83323b489a9714617a21bf3e9a349f9ae509eb9874e026a5265cac305d596",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/NOTICE.txt",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    },
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-olps_cli-m",
+      "license": "Apache-2.0 applies to repository code per LICENSE/NOTICE. Paper, market data, trademarks and commercial investment-product permissions are separate, REVIEW_REQUIRED.",
+      "locator": "OLPS_cli.m; L8–14, L31–33, L41–44",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "9cf9096cd8d709608c71a805a973d929ccfe1a5f660dedfd3f3e7e1ba629d809",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/OLPS_cli.m",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    },
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-readme-md",
+      "license": "Apache-2.0 applies to repository code per LICENSE/NOTICE. Paper, market data, trademarks and commercial investment-product permissions are separate, REVIEW_REQUIRED.",
+      "locator": "README.md; implementation dispatch, author identity, dependency or bibliographic provenance",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "dfe4b2aac05c4e6599a530d702005b6be096426df0628657c91a237ee5a59f8e",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/README.md",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    },
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-strategy-eg-m",
+      "license": "Apache-2.0 applies to repository code per LICENSE/NOTICE. Paper, market data, trademarks and commercial investment-product permissions are separate, REVIEW_REQUIRED.",
+      "locator": "Strategy/eg.m; implementation dispatch, author identity, dependency or bibliographic provenance",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "62844798d348a00034852726ba34c4ff36aa8ecca0fb3aa9ab63947f96633bcd",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/Strategy/eg.m",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    },
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-strategy-eg_expert-m",
+      "license": "Apache-2.0 applies to repository code per LICENSE/NOTICE. Paper, market data, trademarks and commercial investment-product permissions are separate, REVIEW_REQUIRED.",
+      "locator": "Strategy/eg_expert.m; L23–31, L29–31",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "2655efdc3e0fdbce9bb665ac1574fa575832263cfe5fdf6d63d8ec6dc594954b",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/Strategy/eg_expert.m",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    },
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-strategy-eg_kernel-m",
+      "license": "Apache-2.0 applies to repository code per LICENSE/NOTICE. Paper, market data, trademarks and commercial investment-product permissions are separate, REVIEW_REQUIRED.",
+      "locator": "Strategy/eg_kernel.m; L22–22",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "5036ff5ba0fdcf76e1f06ae5348f1ccbe2ece4cd18f8f1e5e8fc6229dfc2ee65",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/Strategy/eg_kernel.m",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    },
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-strategy-eg_run-m",
+      "license": "Apache-2.0 applies to repository code per LICENSE/NOTICE. Paper, market data, trademarks and commercial investment-product permissions are separate, REVIEW_REQUIRED.",
+      "locator": "Strategy/eg_run.m; L30–38, L53–61, L53–69",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "252ab608b1da7f016bf84bd17e35d2afe67ec686618959f212e8ba73c268615f",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/Strategy/eg_run.m",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    },
+    {
+      "attribution": "OLPS maintenance team: Bin Li, Doyen Sahoo, Steven C.H. Hoi; code headers individually retain named contributors. Theory authors separately cited in toolbox Table2.",
+      "id": "olps-strategy-manager-m",
+      "license": "Apache-2.0 applies to repository code per LICENSE/NOTICE. Paper, market data, trademarks and commercial investment-product permissions are separate, REVIEW_REQUIRED.",
+      "locator": "Strategy/manager.m; L39–46",
+      "revision": "9120783cd59a7966b0f78e2b5668030a4378b8af",
+      "sha256": "e42ced21a0a0aaa54e9bcc4172767f7b3073d07c2dc27ccb05d1d6a55d602841",
+      "supports": [
+        "固定维护者实现、输入语义及其依赖/出处，依本文件范围"
+      ],
+      "url": "https://github.com/OLPS/OLPS/blob/9120783cd59a7966b0f78e2b5668030a4378b8af/Strategy/manager.m",
+      "verification": "FETCHED_PINNED_GIT_BLOB_AND_BYTE_HASH"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "olps-documentation-olps_manual-pdf",
+        "olps-documentation-olps_toolbox-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入为 n 期×m 资产的正价格比矩阵，x[t,i]=第t期收盘价/上期收盘价；对各列资产配置财富份额。代码可接调用方给定的矩阵，示例面向股票/全球指数，不据示例数据名冻结某份证券名单。"
+    },
+    "cost": {
+      "evidence": [
+        "olps-olps_cli-m",
+        "olps-strategy-eg_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "CLI tc=0。r_t=(x_t·b_t)×[1−tc/2×Σ|b_t−d_{t−1}|]；d_0=0，d_t=b_t⊙x_t/r_t。源码在非零费用时用净收益分母，漂移份额和可>1；该 d 只进入下一次成本差额，不进入EG指数更新。未提供实际佣金、冲击、买卖差价或资金成本。"
+    },
+    "entry": {
+      "evidence": [
+        "olps-strategy-eg_run-m",
+        "olps-strategy-eg_kernel-m",
+        "olps-strategy-eg_expert-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "t=1 用1/m等权目标。此后每期先调用 eg_kernel→eg_expert，以前一目标和上一期价格比算新目标，重新归一后记录；权重增大对应增持。没有独立开仓触发、固定止盈或阈值过滤。"
+    },
+    "execution_time": {
+      "evidence": [
+        "olps-strategy-eg_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每期 t 的目标在 data[t,:] 收益计入之前形成，只输入过去 data[1:t−1] 和上一目标；随后计算本期组合收益并保存成本漂移。收盘比模型没有实盘同收盘成交保证，未执行代码或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "olps-strategy-eg_run-m",
+        "olps-strategy-eg_expert-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每期直接再平衡到新目标，没有止损、持有期限或信号退出。对有限正输入和正初始权重，指数递推保持正权，理论构造不会主动清零资产；数值下溢/溢出不作为设计的退出规则。没有持现金的额外分支。"
+    },
+    "position": {
+      "evidence": [
+        "olps-strategy-eg_run-m",
+        "olps-strategy-eg_expert-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始每资产1/m；每步指数权重除以总和，run再归一。有限正输入下为长多、总权重1，无保证金、空头或单票上限。状态 b_{t−1} 是之前的目标，并非上一期收益后的市值占比。组合规模、可交易证券份额、最小委托没有规定。"
+    },
+    "risk": {
+      "evidence": [
+        "olps-strategy-eg_expert-m",
+        "olps-strategy-eg_run-m",
+        "olps-olps_cli-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "无损失或回撤约束，无法保证分散度；递推可能高度集中。若 x·b=0、输入非有限或 exp 上溢/下溢，没有有效性检查/稳定化或零和退路；来源未给异常市场、退市等处理。eta只作为来源固定示例，不声明0.05有经济最优性。"
+    },
+    "signal": {
+      "evidence": [
+        "olps-strategy-eg_expert-m",
+        "olps-strategy-eg_run-m",
+        "olps-olps_cli-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "设 b 为上一期已经归一的目标权重，x 为上一期价格比。逐资产 u_i=b_i×exp(eta×x_i/(x·b))，再 b_new_i=u_i/Σu；CLI eta=0.05。run 传的是上一次计算目标 day_weight，不是经价格漂移的 day_weight_o。因此需保留该状态递推，不能改成按当期市值漂移再指数加权，也不是按累积收益直接指数打分。"
+    },
+    "timeframe": {
+      "evidence": [
+        "olps-strategy-eg_run-m",
+        "olps-strategy-eg_expert-m",
+        "olps-olps_cli-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每输入期重配。第一期等权；t≥2只读 data[1:t−1]，但 expert 实际只用最后一行 x_{t−1}。CLI 学习率 eta=0.05；未从样本拟合/搜索eta。示例日频不决定所有输入矩阵的物理频率。"
+    },
+    "universe": {
+      "evidence": [
+        "olps-olps_cli-m",
+        "olps-strategy-manager-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条保留参数化资产列宇宙；CLI 无参数时选 djia，也列出 MSCI、NYSE、S&P500、TSE 样本。manager 直接加载同名 .mat 的 data，没有动态选股、入退样本或缺失值清洗。本次只取得定义文件，未取得或核验行情矩阵。"
+    }
+  }
+}
