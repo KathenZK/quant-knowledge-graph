@@ -1,0 +1,122 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者利用对数支付与标的价格增量之间的二次变差关系，将方差敞口与方向性价格风险分开。这里只登记其连续模型下的复制构造；没有检验该复制能否实际低成本成交、产生溢价或取得正收益。",
+    "missing": [
+      "未执行、未回测，未证明现实融资后的账户复制或经济收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "emanuelderman.com",
+  "lab": null,
+  "missing_information": [
+    "仅§II连续正价格、零股息、常数无风险利率模型；未将无限期权谱变成实际上市档位、整张数量、市场和数据合同。",
+    "动态腿记录Eq20的增益积分，不自动把它写成股票与有息现金的完整自融资净值；实际现金、融资、保证金和逐笔结算账户仍缺失。",
+    "T按同一时间单位，V为σ²的时间平均；示例的波动率点/方差点、名义本金与交易所乘数不可默认为百分数或100倍。",
+    "有限行权价、价格跳跃、离散调仓都会造成复制误差；连续V并不等于任意频率的日收益平方和。",
+    "完整摩擦成本、观测/成交时钟、流动性、极端S接近0、提前终止、数据缺失和不可成交处理未闭合；没有运行定价器、源码、模拟或回测。",
+    "作者网页标题称The Journal of Derivatives，但实际链接文件封面为Goldman Sachs March1999研究报告，本条只按这个PDF版本；©Goldman Sachs1999，不继承作者网页可访问性为开放许可。",
+    "Carr–Lee2009原件另留私有阅读证据，§4针对每日对数收益的近似及期货折现数量，与本条连续标的模型不拼成同一执行公式；只计完整复制家族1条，不新增方差/互换方差统计因子。"
+  ],
+  "name": "DDKZ Variance Replication：对数支付期权篮子与恒金额动态持仓",
+  "native_source_id": "gs-volatility_swaps.pdf",
+  "one_line": "按行权价平方倒数持有同到期期权，并以反价格份额持续调整标的，构造连续路径已实现方差的复制增益。",
+  "record_id": "gs-volatility_swaps.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；没有运行来源代码、定价器、模拟或回测。",
+    "metadata": "来源原生文件身份、定位及自撰中文规则；不发布来源原文/图像/源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://emanuelderman.com/wp-content/uploads/1999/02/gs-volatility_swaps.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Kresimir Demeterfi, Emanuel Derman, Michael Kamal, Joseph Zou. More Than You Ever Wanted To Know About Volatility Swaps, Goldman Sachs Quantitative Strategies Research Notes, March1999. Author webpage links this research-note PDF; its page title naming The Journal of Derivatives is not adopted as this PDF edition. Prior log-contract/replication work is cited in the paper; no exclusive invention claim. Chinese paraphrase by curator.",
+      "id": "ddkz-gs-variance-replication-pdf",
+      "license": "Copyright1999 Goldman,Sachs & Co., all rights reserved. Author-hosted public reading does not establish redistribution, market-data or commercial permission; REVIEW_REQUIRED. Only Chinese definition metadata is proposed for publication; raw PDF and rendered pages remain ignored.",
+      "locator": "Physicalpp19–23,printed15–19: §II Eq13–26; p17 finite strikes; pp31/33/34,printed27/29/30: practical limits and discrete jump comparison Eq35–40. pp1–2 edition and copyright. Lines refer to pinned pdftotext derivative.",
+      "revision": "Goldman Sachs Quantitative Strategies Research Notes,March1999,author-linked PDF sha256:ad289770b42f89cd0046f1e20ae42e4ecc2f15c419e1cd2705576739f762223e",
+      "sha256": "ad289770b42f89cd0046f1e20ae42e4ecc2f15c419e1cd2705576739f762223e",
+      "supports": [
+        "连续方差增益、对数支付的期权和远期拆分、份额缩放、无套利价格以及离散和跳跃边界"
+      ],
+      "url": "https://emanuelderman.com/wp-content/uploads/1999/02/gs-volatility_swaps.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_HOSTED_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "ddkz-gs-variance-replication-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "交易构件为标的股票动态份额、交割T且执行价S*的远期空头、到期T的认沽/认购多头谱，以及确定性支付调整。数学期权支付是max(K−S_T,0)或max(S_T−K,0)；不借入美式提前行权规则。目标是一单位连续已实现方差V=(1/T)∫σ_t²dt，不是波动率sqrt(V)，也不是本条自行卖出某个方差swap。若用于对冲swap负债，负债必须另列。"
+    },
+    "cost": {
+      "evidence": [
+        "ddkz-gs-variance-replication-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：Eq21–26的复制成本为无套利模型下的风险中性价格，包括rT与期权现价的到期换算；这不是佣金/滑点/保证金融资等现实摩擦合同。报告明确有限档位与流动性会破坏理想策略，未给本条统一费率、冲击、借贷、税或逐笔现金账本；不能把公平价格公式或模型理想化记成零实盘成本。"
+    },
+    "entry": {
+      "evidence": [
+        "ddkz-gs-variance-replication-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定要复制的[0,T]方差敞口，在起始建立position中的静态期权/远期，并开始动态股票增益；不等待价格交叉、VIX高低或隐含方差与历史方差出现价差。源Eq20–25的构件说明决定份额。常数支付调整需要另作资金安排，本条不假定起始零投入或已有免费抵押。若外部需求为卖swap后对冲，其卖出条件、名义额和成交价仍不是本定义自动提供。"
+    },
+    "execution_time": {
+      "evidence": [
+        "ddkz-gs-variance-replication-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：理论顺序为起始静态组篮、期间依据当时S_t保持q_t、同到期T结算，但没有可执行的跨腿委托、报价采样、部分成交、现金融资/保证金、闭市跳空或整张清算安排。§V展示在新观察价格到来时才调整的离散版本并讨论误差，本条不借该版本宣称连续成交已核。没有执行任何源码、定价器或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "ddkz-gs-variance-replication-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "动态增益累计到T后停止；静态认沽、认购及远期均在T结算，确定性调整也按T支付口径。到期组合的目标为V，若另有固定交割腿K则完整swap支付为V−K。没有障碍触发提前平仓、止盈止损或固定月度续作；T以前清盘的交易合同未给出，不把反向开同样数量当成已定义退出。"
+    },
+    "position": {
+      "evidence": [
+        "ddkz-gs-variance-replication-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "以一单位Eq14的V为尺度，Eq20动态股票增益的被积份额q_t=2/(T S_t)，因而瞬时股票名义为2/T；这里只指∫q_t dS_t，未把现金融资收益并入。静态远期为−2/(T S*)单位、执行价S*、到期T。对0<K<S*持认沽密度2/(T K²)dK，对K>S*持认购相同密度，全部多头；另有到期确定项−(2/T)ln(S*/S_0)。这些比例由Eq20/24/25共同缩放，并非每一挂牌档位简单买2/(T K²)张。S*任意正拆分点不是交易信号；实际ΔK、合约乘数、整张和账户预算未指定，不能写成权益满仓或无杠杆。"
+    },
+    "risk": {
+      "evidence": [
+        "ddkz-gs-variance-replication-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "精确恒等式依赖正且连续的价格路径与完整对数支付谱；有限档位、粗间距、流动性及跳跃破坏实际复制，S接近0时q_t会变大。不得把连续V当任意离散样本方差：§V单次向下相对跳跃J的简单收益平方贡献为J²/T，而该离散复制增益为(2/T)[−J−ln(1−J)]，二者一般不同；原文该段讨论短swap配长复制篮子的误差，不能移作收益保证。本条只核§II构造，不采用后文有限档位近似、波动率swap凸性交易或风险中性估值作实际盈利验证。无额外资金上限、停止交易或异常处理合同。"
+    },
+    "signal": {
+      "evidence": [
+        "ddkz-gs-variance-replication-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "这是支付复制规则，不是方向预测阈值。V=(1/T)∫_0^Tσ_t²dt=(2/T)[∫_0^T dS_t/S_t−ln(S_T/S_0)]。令I_P=∫_0^{S*}P(K)/K²dK、I_C=∫_{S*}^∞C(K)/K²dK，P/C为当前同到期普通期权价格。Eq25把−ln(S_T/S*)拆成−(S_T−S*)/S*与两段正期权支付积分；再保留常数−ln(S*/S_0)。Eq26给公平交割方差Kvar=(2/T)[rT−(S_0e^{rT}/S*−1)−ln(S*/S_0)+e^{rT}(I_P+I_C)]，对应风险中性现值E[e^{−rT}(V−Kvar)]=0。e^{rT}把期权现价换成到期口径，不能删去；Kvar不是可实现超额收益，也不新增独立方差信号。"
+    },
+    "timeframe": {
+      "evidence": [
+        "ddkz-gs-variance-replication-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在0时刻确定T和S*、装配静态腿；[0,T]连续调整股票份额，所有静态期权/远期同到期T。T为给定目标期限，不把三个月示例定为通用默认。这里的连续监控/连续调仓是模型条件；实际分钟或每日采样是另一离散合同，不能直接等同。"
+    },
+    "universe": {
+      "evidence": [
+        "ddkz-gs-variance-replication-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入正价格标的S_t、起始S_0、给定到期T>0、拆分点S*>0，以及同标的同到期各行权价K>0的普通认沽/认购。采用§II：dS_t/S_t=μ(t,…)dt+σ(t,…)dZ_t，连续无跳跃、无股息；μ和σ可随时间/状态变化，不固定为Black–Scholes常波动率。估值另要求常数无风险率r，并在风险中性模型令漂移为r。全谱期权及积分有限为理论输入合同，未指定交易所或上市股票池。"
+    }
+  }
+}

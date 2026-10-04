@@ -1,0 +1,229 @@
+{
+  "economic_basis": {
+    "hypothesis": "对预先固定关系图上的一列节点属性，计算整体居中乘积关联和邻边平方差异。两种原生统计量保留在同一空间相关构造族，不能按图、节点、权重或输出坐标拆成新因子。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-3900e4f04bd9c26e6bc6c609",
+        "harvest-source-c3cb9a89033612e59904ae42",
+        "harvest-source-40369a55c22d3cb93989e2cd",
+        "harvest-source-cc34e48bca8872aac336825b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "必须在全部节点标量、节点全集及图边/权重均已发布后计算；图若由同窗价格估计，则窗口结束前不可提前使用。节点映射、市场构图规则、供应商、关系生效/修订与PIT时间均MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-3900e4f04bd9c26e6bc6c609",
+        "harvest-source-c3cb9a89033612e59904ae42",
+        "harvest-source-40369a55c22d3cb93989e2cd",
+        "harvest-source-cc34e48bca8872aac336825b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条审固定esda与libpysal两个commit的静态组合合同；不是声明某个历史运行环境恰好安装了这两版。y限定普通一维有限float64数组，N>=4且非常数。W由固定W构造器显式neighbors、weights、id_order=list(range(N))、silence_warnings=True建立；节点0..N−1、邻居无重复、无自身、每条边正且有限、两方向原权相等、无孤立点，外部字典此后不修改。这些是额外研究域，不冒充入口完整验证。 W构造器保存原权O，按id_order将邻居映射到稀疏矩阵列；行、列索引与y的位置严格一致。R变换从O逐行除原行和，并缓存变换后的字典；本次对同一个W对象会改变其当前transform/weights。即使A对称，行归一W在不等加权度图上通常不对称。 Moran入口np.asarray(y).flatten()，取完整节点样本均值并居中z。_slag在W路径调用lag_spatial，后者直接返回w.sparse @ z；随后Σ_i z_i(Wz)_i除Q并乘N/S0。没有对两端分别重算边端加权均值或相关标准差。 Geary以w.sparse.nonzero()获取两个端点索引，以w.sparse.data取对应权重，对每个存储非零项累计W_ij(y_i−y_j)²，乘N−1并除2S0Q。本合同明确排除显式存储零权/重复邻居，并要求行归一后所有已列边权仍有限严格正，避免下溢到零导致nonzero索引长度与data长度不一致；也不把CSR聚合非法重复输入的行为当成已审核的图定义。 原生两个构造器会先计算正态/随机化假设矩，再返回I/C。它们使用S1=.5Σ_ij(W_ij+W_ji)²、S2=Σ_i(Σ_j W_ij+Σ_j W_ji)²及k=mean(z⁴)/mean(z²)²。为了使所审普通构造过程保持有限，本研究域另要求四个原生方差VI_norm/VI_rand/VC_norm/VC_rand均有限且严格正、均值/幂/乘除无溢出。相关矩分支已阅读并定位，但本条定义输出只覆盖I/C，不把未经零假设校准的z/p字段当有效显著性。 permutations显式0，跳过原默认999次随机置换，不含局部指标、模拟p值、绘图、Graph替代接口或表格包装。Moran之后把self.z再除y.std()成为标准化数组；这发生在I之后，不改变前述以居中z计算的公式。Geary不做这一步公开数组标准化。 两统计量虽不在所有图上等价，但合记一个保守整族。若W行和与列和同为1，则Σ_ijW_ij(z_i−z_j)²=2Q−2zᵀWz，从而C=(N−1)/N·(1−I)。该关系由固定公式推导，非运行测试。一般不规则图列和不等1，Geary另有按列和加权的平方项，不能一概套此仿射关系。 Moran与时间自相关共享居中乘积核心；在特定时间链权矩阵上可以退化为某个滞后相关归一形式。本条保留独立给定、可不规则的关系图与节点标量这一输入/输出构造边界，不宣称全数学域与自相关互不相交，也不将同一时间链换接口计新。 正权图上的C非负是精确算术性质；I或C的大/小值只描述当前输入和权图的排列关联。它们不自动给出股票相互影响、行业因果、未来收益或交易方向。源码的正态/随机化矩不是市场数据有效性证明。 边界：缺值/常数/孤立点/显式零存储/自环/重复邻居/外部缓存修改不在所审输入域；源无统一缺值删除或图校验，不能把有限数学公式当完整输入验证。 N>=4是为构造器随机化矩分母(N−2)(N−3)排除小样本；正有限四方差进一步限制退化图/样本。该域没有执行数值测试或证明所有浮点平台安全。 W行标准化会突变传入对象的当前权重；原O缓存是浅层字典copy，不能在调用期间或之后修改共享列表而假定快照不变。 Geary源p字段是一侧小尾，Moran默认two_tailed=True会双倍尾概率；本条仅I/C，未审核这些检验在时间依赖/选择图数据中的校准，不按p输出新计数。 当前审W+R+permutations=0分支；Graph、其它变换、孤立/负权及置换未宣称复现。行归一因度不同改变边端权；不把它简化成普通无权邻接相关。 SciPy/NumPy与CSR操作的具体安装、排序/舍入环境未冻结；两个PySAL快照只锁源码。依赖声明的最低版本不等于已复现环境。 输出：同一个构造族的两个原生标量属性Moran.I与Geary.C；对象附带矩、z/p、模拟、局部或图形结果未作为新定义准入"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-3900e4f04bd9c26e6bc6c609",
+        "harvest-source-c3cb9a89033612e59904ae42",
+        "harvest-source-40369a55c22d3cb93989e2cd",
+        "harvest-source-cc34e48bca8872aac336825b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对预先固定关系图上的一列节点属性，计算整体居中乘积关联和邻边平方差异。两种原生统计量保留在同一空间相关构造族，不能按图、节点、权重或输出坐标拆成新因子。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-3900e4f04bd9c26e6bc6c609",
+        "harvest-source-c3cb9a89033612e59904ae42",
+        "harvest-source-40369a55c22d3cb93989e2cd",
+        "harvest-source-cc34e48bca8872aac336825b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "选定原生Moran(y,w,transformation=\"r\",permutations=0,two_tailed=True)和Geary(y,w,transformation=\"r\",permutations=0)的统计量I、C。原图A为对称无自环正边权，d_i=Σ_j A_ij>0，W_ij=A_ij/d_i。N>=4，z_i=y_i−mean(y)，Q=Σ_i z_i²>0，S0=Σ_ij W_ij。I=(N/S0)·[Σ_ij W_ij z_i z_j]/Q；C=(N−1)·[Σ_ij W_ij(y_i−y_j)²]/(2 S0 Q)。双向存储的两条弧都按各自行归一权累计；不是将无向边只算一次。精确算术下S0=N；实现实际取稀疏矩阵sum而非硬编码N。输出无量纲；I无源码[-1,1]裁剪。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-3900e4f04bd9c26e6bc6c609",
+        "harvest-source-c3cb9a89033612e59904ae42",
+        "harvest-source-40369a55c22d3cb93989e2cd",
+        "harvest-source-cc34e48bca8872aac336825b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（ordinary 1-D finite numpy.float64 array; N>=4; nonconstant; finite intermediate means/powers/products/quotients）：顺序严格对应w.id_order的已完整观察节点属性；不是未声明邻接关系的普通价格时序。金融变量、节点全集、缺失处理和发布时点MISSING。；w（fixed libpysal.weights.W, IDs 0..N-1 and explicit id_order; positive symmetric simple loop-free initial adjacency; no isolates or duplicate neighbors; finite positive original weights; no external mutation; all listed row-standardized weights remain finite strictly positive）：显式给定的关系权图，构造器silence_warnings=True；列表长度/顺序互相一致。行标准化会改变当前W对象。另要求构造器四个解析方差有限且>0，排除完整图等可能退化情况；该限制由本研究提出，不是源自动保障。。参数：transformation：行标准化；其它O/B/D/V、图定义与权重调整不拆新增；范围reviewed fixed r；源码默认r；permutations：原默认999，本合同关闭置换；置换/局部/包装同族其它输出不另计；范围reviewed explicit 0；源码默认999；two_tailed：保持源默认以界定构造路径，I不依赖此参数；范围Moran only; kept default True; inferential output not nominated；源码默认True"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-3900e4f04bd9c26e6bc6c609",
+        "harvest-source-c3cb9a89033612e59904ae42",
+        "harvest-source-40369a55c22d3cb93989e2cd",
+        "harvest-source-cc34e48bca8872aac336825b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "pysal/esda",
+  "lab": null,
+  "missing_information": [
+    "金融节点/标量/关系图和权重如何取得、市场数据许可与PIT生效/修订时间未定义",
+    "原始方法文献许可未由代码BSD授权，未逐篇论文复核",
+    "所选源码组合对应的安装依赖/硬件与数值测试缺失",
+    "解析/随机化显著性及随机置换/局部/Graph替代路径不在I/C准入合同",
+    "实际市场用途、时间依赖校准、交易方向与经济有效性均未建立",
+    "经济用途为RESEARCH_ASSUMPTION；未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予原论文/书籍、输入数据或其他第三方素材权利"
+  ],
+  "name": "图上节点属性的全局空间相关：Moran 与 Geary",
+  "native_source_id": "Moran",
+  "one_line": "对预先固定关系图上的一列节点属性，计算整体居中乘积关联和邻边平方差异。两种原生统计量保留在同一空间相关构造族，不能按图、节点、权重或输出坐标拆成新因子。",
+  "record_id": "Moran",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/pysal/esda/blob/dcd9c74bb2b78563c45d4f4a7977da9315d45c56/esda/moran.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "PySAL esda与libpysal官方维护者实现；Moran/Geary原方法与源码所列空间统计文献分别保留归属，不声称采集了原始论文全文或证明其数值等价。",
+      "id": "harvest-source-3900e4f04bd9c26e6bc6c609",
+      "license": "BSD-3-Clause",
+      "locator": "source authors imports W type and default permutations constant:L1-L40; W dispatch and in-place transformation:L42-L56; native parameters attributes and original methodological references:L59-L145; nonpermutation constructor and permutation gate:L182-L206; post-I z normalization moments and exact I calculation:L226-L271",
+      "revision": "dcd9c74bb2b78563c45d4f4a7977da9315d45c56",
+      "sha256": "4db95c4cd81a154dd2be0d6970cb8e2449370c0b7272b0a9328c01d8470229c1",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pysal/esda/blob/dcd9c74bb2b78563c45d4f4a7977da9315d45c56/esda/moran.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PySAL esda与libpysal官方维护者实现；Moran/Geary原方法与源码所列空间统计文献分别保留归属，不声称采集了原始论文全文或证明其数值等价。",
+      "id": "harvest-source-c3cb9a89033612e59904ae42",
+      "license": "BSD-3-Clause",
+      "locator": "module attribution imports and native W:L1-L10; native parameters attributes and original references:L13-L89; complete constructor W indices denominator statistic and analytic diagnostics:L102-L139; complete moments and C calculation:L157-L188",
+      "revision": "dcd9c74bb2b78563c45d4f4a7977da9315d45c56",
+      "sha256": "f33967b41e0d6dcfa3deb05c9ebe9b333d57bfaf9a55c1fde36a347fe113f0ec",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pysal/esda/blob/dcd9c74bb2b78563c45d4f4a7977da9315d45c56/esda/geary.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PySAL esda与libpysal官方维护者实现；Moran/Geary原方法与源码所列空间统计文献分别保留归属，不声称采集了原始论文全文或证明其数值等价。",
+      "id": "harvest-source-40369a55c22d3cb93989e2cd",
+      "license": "BSD-3-Clause",
+      "locator": "complete numeric W lag helper; CSR matrix vector product:L1-L88",
+      "revision": "b808e7c0df8ddf6b62fb4f92d4ec0e39f9ec32e5",
+      "sha256": "b75362e46fe007e3f6944a9efff73aaebbfe83a39f8d26f2144853118e9e20d8",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pysal/libpysal/blob/b808e7c0df8ddf6b62fb4f92d4ec0e39f9ec32e5/libpysal/weights/spatial_lag.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PySAL esda与libpysal官方维护者实现；Moran/Geary原方法与源码所列空间统计文献分别保留归属，不声称采集了原始论文全文或证明其数值等价。",
+      "id": "harvest-source-cc34e48bca8872aac336825b",
+      "license": "BSD-3-Clause",
+      "locator": "W constructor explicit order original cache and silence-warnings branch:L134-L201; sparse cache getter:L474-L482; CSR construction ID order N S0 S1 S2 helpers:L571-L667; neighbor cardinality helper:L747-L756; neighbor IDs to array offsets and transform getter:L1007-L1072; transform selection cached O and row normalization:L1074-L1129; transformation property binding:L1181-L1184",
+      "revision": "b808e7c0df8ddf6b62fb4f92d4ec0e39f9ec32e5",
+      "sha256": "fac36cd10139b18746ba0c65c78d62dde22b8dabbdab040ca68854c27a963a0d",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pysal/libpysal/blob/b808e7c0df8ddf6b62fb4f92d4ec0e39f9ec32e5/libpysal/weights/weights.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PySAL esda与libpysal官方维护者实现；Moran/Geary原方法与源码所列空间统计文献分别保留归属，不声称采集了原始论文全文或证明其数值等价。",
+      "id": "harvest-source-200a3bf84c75d3e3bdfd6bf9",
+      "license": "BSD-3-Clause",
+      "locator": "package authors license and dependency minima:L7-L40",
+      "revision": "dcd9c74bb2b78563c45d4f4a7977da9315d45c56",
+      "sha256": "eaa1b713f34ef2bdfda97bdb34ae856d5121570fe839a5bdba0d86bd605a96fd",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pysal/esda/blob/dcd9c74bb2b78563c45d4f4a7977da9315d45c56/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PySAL esda与libpysal官方维护者实现；Moran/Geary原方法与源码所列空间统计文献分别保留归属，不声称采集了原始论文全文或证明其数值等价。",
+      "id": "harvest-source-6a27f18a6aa450be756373eb",
+      "license": "BSD-3-Clause",
+      "locator": "package authors license and dependency minima:L7-L39",
+      "revision": "b808e7c0df8ddf6b62fb4f92d4ec0e39f9ec32e5",
+      "sha256": "82f1d0707e4324299e9a84ea9bce3ea57149d1e96c6a9350ce18bba9f9f1beef",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pysal/libpysal/blob/b808e7c0df8ddf6b62fb4f92d4ec0e39f9ec32e5/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PySAL esda与libpysal官方维护者实现；Moran/Geary原方法与源码所列空间统计文献分别保留归属，不声称采集了原始论文全文或证明其数值等价。",
+      "id": "harvest-source-28b5b164cd2afd7eb0e0d14a",
+      "license": "BSD-3-Clause",
+      "locator": "official spatial statistics scope:L8-L29; maintainer citation and license attribution:L80-L133",
+      "revision": "dcd9c74bb2b78563c45d4f4a7977da9315d45c56",
+      "sha256": "86c354ee3df921c8963f5b6d2b2333331183f6108dc2480aae239f7177a8464d",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pysal/esda/blob/dcd9c74bb2b78563c45d4f4a7977da9315d45c56/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PySAL esda与libpysal官方维护者实现；Moran/Geary原方法与源码所列空间统计文献分别保留归属，不声称采集了原始论文全文或证明其数值等价。",
+      "id": "harvest-source-8cf52b7a4c7e618b20e54f35",
+      "license": "BSD-3-Clause",
+      "locator": "official library and W module scope:L11-L25; method library citation and license:L45-L72",
+      "revision": "b808e7c0df8ddf6b62fb4f92d4ec0e39f9ec32e5",
+      "sha256": "4c503d3f984818a8c20bda0e60314e4e93905da59c48c86ca647371db6d35ad0",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pysal/libpysal/blob/b808e7c0df8ddf6b62fb4f92d4ec0e39f9ec32e5/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PySAL esda与libpysal官方维护者实现；Moran/Geary原方法与源码所列空间统计文献分别保留归属，不声称采集了原始论文全文或证明其数值等价。",
+      "id": "harvest-source-1867b5efdc1b5bae6ffbc990",
+      "license": "BSD-3-Clause",
+      "locator": "complete BSD3 notice:L1-L13",
+      "revision": "dcd9c74bb2b78563c45d4f4a7977da9315d45c56",
+      "sha256": "b5f17b86e14ff6648be9c7ce217ae9934f6f17ddf60fa5315f4998ab83297d6b",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pysal/esda/blob/dcd9c74bb2b78563c45d4f4a7977da9315d45c56/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PySAL esda与libpysal官方维护者实现；Moran/Geary原方法与源码所列空间统计文献分别保留归属，不声称采集了原始论文全文或证明其数值等价。",
+      "id": "harvest-source-e790406a114f1e57d39f18cc",
+      "license": "BSD-3-Clause",
+      "locator": "complete BSD3 notice:L1-L30",
+      "revision": "b808e7c0df8ddf6b62fb4f92d4ec0e39f9ec32e5",
+      "sha256": "37acaa309d703b28061ef237b0bb010e16b1306a64ed53f0b208f4c5545fd024",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pysal/libpysal/blob/b808e7c0df8ddf6b62fb4f92d4ec0e39f9ec32e5/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

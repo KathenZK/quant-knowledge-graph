@@ -1,0 +1,122 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者用回撤路径的深度与持续时间来配置资本，期望在相同尾部回撤预算下选择更高的累计收益。这里只记录条件于给定路径和概率的优化构造；没有验证情景估计、证明、最优权重稳定性、交易成本或未来经济收益。",
+    "missing": [
+      "未运行、未回测；论文模型最优性和实证不是仓库验收结论。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "math.columbia.edu/~chekhlov",
+  "lab": null,
+  "missing_information": [
+    "输入情景/概率、投资宇宙、线性可行集X、风险水平α与混合权χ、预算γ、路径长度和实际采样频率须外部事先给定；不补唯一生产默认。",
+    "Eq5.1/6.2只对i=1…m风险资产求和；不从前面一般财富框架借入现金利率、sumx=1或融资账本。",
+    "模型用单期收益相加而非复利净值；绝对回撤相对于累计收益峰值、含起点0，不能直接等同实盘峰值百分比回撤。",
+    "§7的32期货案例输入已给趋势子策略收益路径，内部进出场未公布；0.2–0.8的子策略规模对应总杠杆6.4–25.6，不是32只资产各20%–80%的无杠杆现金组合。",
+    "原文Example3.3与Corollary6.1对MaxDD/AvDD风险profile的顺序相反；保留冲突，本条限定有限α的Eq6.3，不替作者修两处端点文字。",
+    "无可验证交易费用、滑点、借贷/融资、保证金追缴、最小交易单位、不可行/多解处理、固定滚动更新日或终止清算合同；未执行优化器或回测。",
+    "原PDF为WorldScientific版权期刊版，作者网页链接不授予论文、行情或商用许可；全文/图像仅本机取证。"
+  ],
+  "name": "CUZ CDD：多情景累计回撤尾部预算下的静态组合配置",
+  "native_source_id": "ChekhlovUryasevZabarankin--03-2004.pdf",
+  "one_line": "对给定资产收益路径，用逐时回撤递推和尾部平均预算约束，求使未复利期末期望收益最大的固定配置。",
+  "record_id": "ChekhlovUryasevZabarankin--03-2004.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、优化器或回测。",
+    "metadata": "作者原生文件/DOI身份、定位及自撰中文规则；不发布论文原文、图像、源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.math.columbia.edu/~chekhlov/ChekhlovUryasevZabarankin--03-2004.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Alexei Chekhlov, Stanislav Uryasev, Michael Zabarankin, Drawdown Measure in Portfolio Optimization, International Journal of Theoretical and Applied Finance8(1)(2005),13–58. Columbia author-linked journal PDF; Chinese paraphrase by curator.",
+      "id": "chekhlov-uryasev-zabarankin-cdd-pdf",
+      "license": "Copyright World Scientific Publishing Company, journal frontmatter. Author university page links this edition; public accessibility is not permission to redistribute the paper or market data. No open commercial license established; REVIEW_REQUIRED. Fulltext/images are retained only as ignored evidence.",
+      "locator": "Physicalpp1/3/7 source identity and uncompounded path; pp16/20/21/23/24 Eq3.18,5.1–5.13,6.1–6.3; p25 Cor6.1 endpoint label conflict; pp29/30/32 proprietary futures example and leverage limits. Field lines refer to byte-locked pdftotext derivative.",
+      "revision": "IJTAF8(1),2005,pp13–58; author-linked journal PDF sha256:f87a95d160c343970f5c09dbac32b5b8fabf985003dd6c19abc6f970aee6eea9",
+      "sha256": "f87a95d160c343970f5c09dbac32b5b8fabf985003dd6c19abc6f970aee6eea9",
+      "supports": [
+        "多情景未复利累计收益、回撤递推、混合尾部回撤预算和静态配置线性规划"
+      ],
+      "url": "https://www.math.columbia.edu/~chekhlov/ChekhlovUryasevZabarankin--03-2004.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_UNIVERSITY_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "chekhlov-uryasev-zabarankin-cdd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "配置对象是m个可提供联合收益路径的风险资产或子策略；r为单期收益率、x为对应资本暴露系数。论文实例涉及股指、政府债、货币/外汇和金属期货/远期，但本条未冻结可交易合约清单、到期替换与展期。内部趋势系统可多/空/空仓，不表示优化器x_i的符号由这些交易方向直接决定；也不把示例市场当今日仍存续合约。"
+    },
+    "cost": {
+      "evidence": [
+        "chekhlov-uryasev-zabarankin-cdd-pdf"
+      ],
+      "status": "MISSING",
+      "text": "缺可实施成本合同。所选目标仅为未复利期末期望收益，风险预算也只用r路径；没有显式交易费/滑点/融资项。原例的收益流是否已经逐笔扣全成本、现金/融资怎么计、各步恢复x的交易摩擦均未在所选构造中闭合，不能记为0或自行补固定费率。"
+    },
+    "entry": {
+      "evidence": [
+        "chekhlov-uryasev-zabarankin-cdd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在给定情景、概率、风险参数及X后求上述静态配置；输出x是资产/子策略的目标暴露，正负及上限由X定义。没有另设价格交叉或逐资产阈值开仓；决策是完整组合共同满足回撤预算后的最优解。这里收的是条件于输入的配置方法，未声称论文的某组历史样本就是当时可得的实时信号。"
+    },
+    "execution_time": {
+      "evidence": [
+        "chekhlov-uryasev-zabarankin-cdd-pdf"
+      ],
+      "status": "MISSING",
+      "text": "模型定义各t_k维持x，但没有信号可得时点到订单、收盘/开盘撮合、部分成交、市场休市和期货展期的实施规则。本文是配置优化定义，不是可直接下单的交易脚本；没有运行来源代码或求解器。"
+    },
+    "exit": {
+      "evidence": [
+        "chekhlov-uryasev-zabarankin-cdd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在整个所设区间[0,T]维持相同目标x；目标为零的项不配置，实际比例偏离后恢复x可产生减持或增持。原文说可在各t_k再平衡达到静态权重，但未定义到T强平、按实际净值跌破γ止损、滚动重新求x的日历或下一窗口规则；不能把预算γ写成遇损立即清仓的命令。"
+    },
+    "position": {
+      "evidence": [
+        "chekhlov-uryasev-zabarankin-cdd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "仓位取完整LP的解x∈X，X作为输入保留一般线性限制；所选Eq6.3未统一要求x>=0或Σx=1，也不自动添加现金。§2一般财富叙述中的含现金预算与§6的风险资产求和不能混用。§7.3具体期货配置只给0.2<=x_i<=0.8，i=1…32，并明说总暴露最少6.4、最多25.6；这是子策略规模/杠杆的例子，不是本条通用默认。x在整段保持不变；不是合约张数固定的完整自融资账户合同。"
+    },
+    "risk": {
+      "evidence": [
+        "chekhlov-uryasev-zabarankin-cdd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "γ是按初始资本比例解释的未复利累计路径回撤预算；有限α约束的是尾部平均，不是每个时点的最大回撤硬上限，更不是未来亏损保证。模型保留各条路径时间顺序，w_0=0参与峰值；若改变复利/峰值分母就变了定义。X不当或γ过严可不可行，原文没有固定多解择优、容差及失败退路。Example3.3写MaxDD对应I{α>=1}、AvDD对应I{α>0}，Corollary6.1却按反顺序配名；此处不修原文，只采0<=α_i<1的Eq6.3。参数/情景估计及样本内配置稳定性未验证，不采论文表格业绩为验收证据。"
+    },
+    "signal": {
+      "evidence": [
+        "chekhlov-uryasev-zabarankin-cdd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "固定权重x下，r^p_{j,k}(x)=Σ_{a=1}^m r_{a,j}(t_k)x_a，w_{j,0}=0，w_{j,k}=Σ_{l=1}^k r^p_{j,l}(x)。真实回撤ξ_{j,k}=max_{0<=l<=k}w_{j,l}−w_{j,k}>=0。取L个风险水平0<=α_i<1、χ_i>=0且Σχ_i=1，给定γ∈[0,1]与线性可行集X。联合求x∈X、自由阈值y_i、辅助u_{j,k}/z_{i,j,k}，最大化Σ_j p_j w_{j,N}(x)，满足Σ_iχ_i[y_i+Σ_{k=1}^NΣ_{j=1}^K p_j z_{i,j,k}/((1−α_i)N)]<=γ；z_{i,j,k}>=u_{j,k}−y_i且z>=0；u_{j,k}>=u_{j,k−1}−r^p_{j,k}(x)、u>=0、u_{j,0}=0。这是Eq6.3的全部优化核。辅助u/z可以有松弛，不能断言任一最优解每个u都恰为真实ξ。采用正回撤损失的尾部均值表述，含阈值处的概率质量，不能以把所有同分位点一律纳入的简单均值替代。"
+    },
+    "timeframe": {
+      "evidence": [
+        "chekhlov-uryasev-zabarankin-cdd-pdf"
+      ],
+      "status": "MISSING",
+      "text": "给定离散t_0=0<t_1<…<t_N=T及N；模型每个观察点等权进入时间维风险平均，情景维用p_j。原案例用日收益和1076日样本、100日同步分块重采样，但这只是该实证设置，不是通用配置的固定形成期、实际调仓时钟或样本外训练合同，因此这些生产频率仍缺失。"
+    },
+    "universe": {
+      "evidence": [
+        "chekhlov-uryasev-zabarankin-cdd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入为m个资产或既有子策略的联合单期收益路径r_{a,j}(t_k)，j=1…K个情景，各p_j>=0且Σp_j=1；每条路径共N个有序时间点。数学构造不固定交易所、股票池或合约。§7用途为全球32个期货/外汇市场上既有趋势系统的收益流，系统可多/空/空仓且单次合约数固定；其内部交易规则没有在这里展开，不能改成直接持有32期货。"
+    }
+  }
+}

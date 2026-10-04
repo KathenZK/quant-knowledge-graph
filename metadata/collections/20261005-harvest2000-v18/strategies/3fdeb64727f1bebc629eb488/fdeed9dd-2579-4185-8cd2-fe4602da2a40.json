@@ -1,0 +1,136 @@
+{
+  "economic_basis": {
+    "hypothesis": "相对既定基准同时限制各收益门槛下的平均短缺，可能比只用波动率或一个尾概率更完整地表达风险厌恶偏好。这里只核原文条件配置定义；没有求解、回测或验证其对真实市场的保护和收益。",
+    "missing": [
+      "未运行、未回测；论文模型最优性和实证不是仓库验收结论。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi:10.18452/8306",
+  "lab": null,
+  "missing_information": [
+    "固定的是HU Berlin机构仓储2003/24原始eprint，PDF封面May12,2003；书目issued2003-09-30，另有created2006-03-01等归档字段，保留不同字段，不将其认作后续期刊排版版本。",
+    "只收期望收益目标、只多满仓、有限情景、弱SSD约束的完整配置族；不按不同基准、市场、节点数、对偶效用、求解器或做空扩展拆新增。",
+    "本次是来源描述审核，非源码审核；未解LP、验证对偶证明、运行作者实验或检验经济收益。",
+    "形成期、实际再平衡周期、执行和全部现实费用均MISSING；条件于给定有效输入的配置公式不等于完整可回测策略。",
+    "基准的每个离散节点均须比较；不是单个VaR/ES分位、路径保险或一定严格超额收益。m和T可不同，两个边际/联合概率合同不可混淆。",
+    "示例按1990–2002全样本收益选表现最好资产构成参考，明确是回顾性对照；不继承为实际选股，也不采用其表格表现作为有效性证据。",
+    "任意参考可能不可行，多解、容差、数据异常和分布漂移未给生产处置；无自动全现金或等权退路。",
+    "机构条目dc.rights.uri为InC/1.0（In Copyright）；公开可读不等于开放再分发或商业许可。仅自撰规则元数据入候选，原PDF/HTML/图片不进Git，商业REVIEW_REQUIRED。"
+  ],
+  "name": "Dentcheva–Ruszczyński：相对基准二阶随机占优约束的期望收益配置",
+  "native_source_id": "fdeed9dd-2579-4185-8cd2-fe4602da2a40",
+  "one_line": "在基准每个离散收益节点上限制组合的平均下偏损失，再求期望收益最大的只多满仓权重。",
+  "record_id": "fdeed9dd-2579-4185-8cd2-fe4602da2a40",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、优化器或回测。",
+    "metadata": "作者原生文件/DOI身份、定位及自撰中文规则；不发布论文原文、图像、源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://edoc.hu-berlin.de/items/fdeed9dd-2579-4185-8cd2-fe4602da2a40"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Darinka Dentcheva and Andrzej Ruszczyński, Portfolio Optimization with Stochastic Dominance Constraints, May12,2003 PDF; HU Berlin SP E-Print Series2003,24, DOI10.18452/8306. Chinese paraphrase by curator.",
+      "id": "dentcheva-ruszczynski-ssd-pdf",
+      "license": "Institutional repository matching item dc.rights.uri=http://rightsstatements.org/vocab/InC/1.0/ (In Copyright). No open redistribution or commercial permission established. Metadata date fields differ from cover; not a later journal edition. Source fulltext/images not distributed, commercialuse REVIEW_REQUIRED.",
+      "locator": "Physicalp3 Eq1+simplex; p5 Eq4 weakSSD; pp6–9 §4 Eq6–14; p11 benchmark F2 expansion; p20 retrospectivefullperiod reference selection. Coverp1 May12,2003 authors. Finite scenario primal selected, no claimed full dual-proof verification.",
+      "revision": "HU Berlin SP2003-24 eprint,PDF coverMay12,2003,24pages; sha256:37806947c0b5a7e64e67a3fdbf4dccd4c5564695749b487af31212f73ddabe93",
+      "sha256": "37806947c0b5a7e64e67a3fdbf4dccd4c5564695749b487af31212f73ddabe93",
+      "supports": [
+        "全部基准节点的平均下偏损失约束与期望收益配置"
+      ],
+      "url": "https://edoc.hu-berlin.de/bitstreams/6b96e372-be9a-411e-9139-92fc1924d943/download",
+      "verification": "FETCHED_PINNED_AUTHOR_UNIVERSITY_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Humboldt-Universität zu Berlin institutional repository item record.",
+      "id": "ssd-hu-eprint-record",
+      "license": "Publisher/institution page; no permission inferred from public accessibility. Fulltext not redistributed.",
+      "locator": "HTML lines7/12 visible title and direct PDF; line18 embedded NGRX_STATE/core/cache/object item API/data/metadata, exactitemUUID fdeed9dd-2579-4185-8cd2-fe4602da2a40: authors, issued2003-09-30, DOI10.18452/8306 and dc.rights.uri InC/1.0. PDFcoverMay12 distinguished; no script execution.",
+      "revision": "HTTP snapshot 2026-10-04T22:16:33.865263+00:00; sha256:400682bdbd3c724aac7ca44632a0402e8fb4ecda07875d4aae71f5e13d75e971",
+      "sha256": "400682bdbd3c724aac7ca44632a0402e8fb4ecda07875d4aae71f5e13d75e971",
+      "supports": [
+        "机构条目原生ID、作者、题名、归档日期与InC权利声明"
+      ],
+      "url": "https://edoc.hu-berlin.de/items/fdeed9dd-2579-4185-8cd2-fe4602da2a40",
+      "verification": "FETCHED_PINNED_AUTHOR_AFFILIATED_BIBLIOGRAPHIC_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "dentcheva-ruszczynski-ssd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对象为n个给定资产的收益R_j，以及新组合收益R(x)=Σ_j x_jR_j；x_j为初始资本分配比例。本条选§2最基本的只多满仓X={x≥0,Σx=1}。论文可以应用于不同金融资产，但没有在定义中冻结证券代码、交易所或可交易指数代理；不把§6的719项历史数据当成本次真实资产清单。"
+    },
+    "cost": {
+      "evidence": [
+        "dentcheva-ruszczynski-ssd-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：所选目标与约束只使用资产收益、概率、资本权重和基准下偏矩，未指定手续费、买卖价差、冲击、税费、现金利息或再平衡损耗。本条不把示例计算时间或求解器迭代成本当交易费用，也不默认费用为零。"
+    },
+    "entry": {
+      "evidence": [
+        "dentcheva-ruszczynski-ssd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定资产联合分布和参考Y后，解上述线性规划并以所得x作为新组合的资本目标；x_j>0表示配置该资产。原文目标是在风险厌恶意义下使新组合不劣于参考，不是见到某根K线/预测指标后开仓；不得在看见待交易期间实现收益后才用同一期情景选择权重。如何在真实账户执行这些目标仍缺项。"
+    },
+    "execution_time": {
+      "evidence": [
+        "dentcheva-ruszczynski-ssd-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：原文给从已知情景与基准到目标权重的数学映射，没有市场数据可得时点、PIT训练/滚动更新、开收盘成交、订单种类、延迟和部分成交账本。§6使用整段历史等概率场景及事后选出的参考，不能直接改述成过去窗口信号、下一根成交的回测。这里只读原文和核公式，没有运行优化器、作者代码、行情回测或下单。"
+    },
+    "exit": {
+      "evidence": [
+        "dentcheva-ruszczynski-ssd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "x_j=0的资产不纳入新目标；若拿当前组合作为参考并重新求解，降低或归零目标只是新配置的结果。没有单独止损、止盈、到期平仓、尾损触发清仓或完整动态调仓递推；模型也没有规定解不可行时全现金。此字段仅解释组合权重输出，不补仓位持有路径。"
+    },
+    "position": {
+      "evidence": [
+        "dentcheva-ruszczynski-ssd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "所选X只多且权重和为1，无借贷杠杆和单票额外上限。源文提到可扩展做空、上限和相对现有配置的距离，但本条没有采用那些未钉参数的扩展。基准Y不是必须持有的一条对冲腿；s_it也不是交易头寸。优化输出可能集中，原文未给全部输入下唯一解、并列选择、整数份额或最小委托规则。"
+    },
+    "risk": {
+      "evidence": [
+        "dentcheva-ruszczynski-ssd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "所有基准节点的平均下偏损失限制仅对输入分布成立，不等于逐路径跑赢基准、硬性亏损地板或未来收益保证，也不同于只约束一个置信水平的CVaR。若Y本就在X中，其对应组合给出弱约束可行对照；任意外部Y则不保证可行。未补不可行、数值容差、多解和分布变化的生产退路。§6刻意按整个样本期间平均收益最高的26/54/82/200项构造等权参考，属于事后对照；不能当成样本外选股或本候选已验证的收益证据。"
+    },
+    "signal": {
+      "evidence": [
+        "dentcheva-ruszczynski-ssd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先令R_t(x)=Σ_j x_j r_jt；基准每个节点的预算C_i=Σ_k π_k max(y_i−y_k,0)。求max Σ_t p_tR_t(x)，约束x_j≥0、Σx=1，以及对全部i=1…m、t=1…T引入s_it≥0并要求R_t(x)+s_it≥y_i、Σ_t p_t s_it≤C_i。这与各节点E[(y_i−R(x))_+]≤E[(y_i−Y)_+]等价，是弱二阶随机占优约束；允许等号，不要求至少一节点严格更优。s是可行性松弛变量，约束只保证其不小于真实短缺，不声称任一最优解内s一定恰等于max式。目标选原文f=E[R]，没有加收益率阈值、方差正则或尾概率α。"
+    },
+    "timeframe": {
+      "evidence": [
+        "dentcheva-ruszczynski-ssd-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：本条是给定收益分布后的一次条件权重构造，没有固定形成窗口、持有时长、更新概率或再平衡日历。资产与基准收益须采用同一比较口径和期限，但原文未把模型钉为周频。§6用1990年春到2002年春的616周收益作为等概率情景，这是回顾性示例，不能据此补成每周重新优化。"
+    },
+    "universe": {
+      "evidence": [
+        "dentcheva-ruszczynski-ssd-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "调用方给定资产的有限联合情景r_jt及概率p_t（t=1…T），同一t是全部资产共同结果；还给定基准Y的有限离散收益y_1<…<y_m及概率π_i。两组概率各非负且和为1；Y可来自指数、原组合或其他参考组合。m与T不必相同，也不必逐行情景配对；不要自行把各资产边际分布当独立联合分布。原文没有历史成分、缺价、退市或预测分布估计合同。"
+    }
+  }
+}

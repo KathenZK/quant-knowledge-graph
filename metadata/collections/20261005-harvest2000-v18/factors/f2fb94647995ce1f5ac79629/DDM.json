@@ -1,0 +1,142 @@
+{
+  "economic_basis": {
+    "hypothesis": "逐个接收已确认的0/1事件，跟踪累计事件比例及其二项标准误，把当前比例加标准误与本段历史最低点比较，发出警告或变化状态。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-15bdb1b1c5870b0a718bd26e",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "必须等真实事件或预测标签已发布后才输入；模型预测训练窗口、标签延迟、采样间隔、供应商、金融含义均MISSING。在线形式不能消除输入前视。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-15bdb1b1c5870b0a718bd26e",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审直接DDM实例逐点update(bool)和两个公开属性；m正整数，1<=w<d，全部有限。默认m=30,w=2,d=3。这些额外域约束不等于原构造函数主动验证；不审mutate/clone/revert/包装器或外改私有状态。 二项比例由Mean的当前点单位权重递推得到；s是比例的二项标准误sqrt(p(1−p)/n)，不是逐点二元样本标准差，不使用n−1。先算当前p/s，再判断严格n>warm_start，故默认从第31点才记最小界限/判断。 保存的是p+s取得最小值当时的p与s，两者成对更新，不能分别取历史各自最小。相同p+s也更新，警告/变化用严格>，与文档不严格比较写法不同。 每次合格更新先设warning为本次比较结果；若达到更高变化阈值，再把warning清False、drift置True。因此这条有效参数合同下变化与警告不会同True。drift后的下一次update才整体重置，该新点成为新段第1点。 p_min=s_min=0后，只要随后出现使p+s>0的事件就可触发，不强行补最小方差、置信下限或epsilon。阈值倍数不直接给现实市场的95%/99%误报概率；相关性、模型更新与重复检测未校准。 固定维护者实现归引Gama等2004论文；本条不宣称论文所有证明/版本复现，也不把变化标志解释为真实经济制度改变。 边界：没有错误的前缀会给p=s=0；这不是可用的正方差区间，后续一次事件可能立即触发。恒为1则p=1,s=0，没有上升空间。 Mean计数存float，要求每段n<2**53且0<=p<=1和根号/所有中间算术有限；源码不全面验证这些域。 变更输入符号将改变监测方向，阈值倍数/窗口或方向变体合为一族；输出不含p值、置信区间或交易仓位。 必须等真实事件或预测标签已发布后才输入；模型预测训练窗口、标签延迟、采样间隔、供应商、金融含义均MISSING。在线形式不能消除输入前视。 未执行源码、未采行情、未回测；参数或语言移植不新增，变化检测状态不等于收益预测或因果证据。 输出：同一检测器的drift/warning状态、阈值参数、暖机及事件统计整组合为一族，不拆单标志或窗口"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-15bdb1b1c5870b0a718bd26e",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "逐个接收已确认的0/1事件，跟踪累计事件比例及其二项标准误，把当前比例加标准误与本段历史最低点比较，发出警告或变化状态。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-15bdb1b1c5870b0a718bd26e",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每段初始化n=0、p=0、p_min=s_min=b_min=+∞、drift=warning=False。新x∈{0,1}到达时，若上次drift=True先重置；n←n+1，p←p+(x−p)/n，s=sqrt[p(1−p)/n]。仅n>m时：若p+s<=b_min，令(p_min,s_min,b_min)=(p,s,p+s)；warning←[p+s>p_min+w*s_min]；若p+s>p_min+d*s_min，令drift=True且warning=False。n<=m保持两状态False。update返回None，通过属性读取状态。暖机m、两个倍数及流输入变换不拆新增。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-15bdb1b1c5870b0a718bd26e",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（one Python bool per update, fixed arrival order and parameters; each segment n<2**53; finite real intermediate arithmetic under stated domain）：True表示事先明确定义且已确认的事件/错误，False表示其余有效观察；不将缺失、未到达标签或任意非零浮点自动当作True。市场字段和事件生成规则另定。。参数：warm_start：严格n>m后才比较并保存最小界限；范围positive integer m；源码默认30；warning_threshold：历史最小点标准误的警告倍数；范围finite w>=1；源码默认2.0；drift_threshold：变化倍数；触发后下次输入前重置；范围finite d>w；源码默认3.0"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-15bdb1b1c5870b0a718bd26e",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "online-ml/river",
+  "lab": null,
+  "missing_information": [
+    "具体市场输入、固定单位/采样、阈值误报与经济状态解释未研究",
+    "Python及依赖实际运行环境未冻结，未执行数值验证",
+    "经济用途为RESEARCH_ASSUMPTION；未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予原论文/书籍、输入数据或其他第三方素材权利"
+  ],
+  "name": "按二项错误率与历史最小界限比较的 DDM 状态",
+  "native_source_id": "DDM",
+  "one_line": "逐个接收已确认的0/1事件，跟踪累计事件比例及其二项标准误，把当前比例加标准误与本段历史最低点比较，发出警告或变化状态。",
+  "record_id": "DDM",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/drift/binary/ddm.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "River社区维护的固定实现；DDM归引Gama等2004，EDDM归引Baena-Garcia等2006。辅助Mean/Var的West/Welford等归属保留；代码不是原论文作者发布版本的证明。",
+      "id": "harvest-source-15bdb1b1c5870b0a718bd26e",
+      "license": "BSD-3-Clause",
+      "locator": "native class intention parameters and formula description:L1-L68; attribution and complete constructor reset update:L94-L147",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "8c6d5b9475f00c6a4c76acb90d9888d4f704739440834f28a433a4a98fcbb822",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/drift/binary/ddm.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "River社区维护的固定实现；DDM归引Gama等2004，EDDM归引Baena-Garcia等2006。辅助Mean/Var的West/Welford等归属保留；代码不是原论文作者发布版本的证明。",
+      "id": "harvest-source-3989767f7bc74ce08db4520c",
+      "license": "BSD-3-Clause",
+      "locator": "full base initialization reset and flag properties:L1-L54; binary abstract update and warning inheritance:L75-L92",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "0747f5410fe3998075fd572f85f1677d37ca0e4d0d8503d133c6023ac1c87995",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/base/drift_detector.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "River社区维护的固定实现；DDM归引Gama等2004，EDDM归引Baena-Garcia等2006。辅助Mean/Var的West/Welford等归属保留；代码不是原论文作者发布版本的证明。",
+      "id": "harvest-source-346008edd6c2eae8b647e5fc",
+      "license": "BSD-3-Clause",
+      "locator": "mean identity and count meaning:L1-L17; complete unit-weight initialization and mean update:L61-L67; mean getter:L84-L85",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "aac63673e4dda4a96e8380466fa80cf9fa631aef37ae3775896bf53ce3858c32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/stats/mean.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "River社区维护的固定实现；DDM归引Gama等2004，EDDM归引Baena-Garcia等2006。辅助Mean/Var的West/Welford等归属保留；代码不是原论文作者发布版本的证明。",
+      "id": "harvest-source-6ce3661632a351443efcc654",
+      "license": "BSD-3-Clause",
+      "locator": "complete BSD3 attribution conditions and disclaimer:L1-L29",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "e87f2c8f1ba611702af10cba745e6ceb773d32310135ed55aa2722c55dd0d077",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}
