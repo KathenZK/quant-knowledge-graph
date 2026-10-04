@@ -1,6 +1,6 @@
 # CSV 来源记录总目录
 
-本次追加 6,471 条，连同原有 500 条，公开仓库共保存 **6,971 条完整来源记录**。
+本次追加 4,073 条，连同合并后 main 已有的 2,898 条，公开仓库共保存 **6,971 条完整来源记录**。
 原表共 6,973 条；M2535、M2709 的规则字段触发现有 `CREDENTIAL_OR_SIGNED_URL` 检查，
 整条原值保存在本地隔离检查点，不裁字段、不放宽检查器，也不计为已公开。命中检查不代表已经确认存在真实凭证。
 
@@ -15,24 +15,28 @@
 
 ## 已有分支核对
 
-`main` 基线 [`103b2dd`](https://github.com/KathenZK/quant-knowledge-graph/commit/103b2dd15d57ddaf78a299a337e1c2ba03b8cb1a) 有 500 条；
+最初 `main` 的 [`103b2dd`](https://github.com/KathenZK/quant-knowledge-graph/commit/103b2dd15d57ddaf78a299a337e1c2ba03b8cb1a) 有 500 条；
 `dot/grok6973-checkpoints-20261003` 的 [`ccd868c`](https://github.com/KathenZK/quant-knowledge-graph/commit/ccd868c371fe9761cd018f8d2156e89d98a273b0) 有 2,898 条。
 后者覆盖前 29 个原批次，包含第 26、28 批各 99 条的子集。该分支的 2,898 条来源记录和全部
 3,045 个检查点文件（包括 schema、index、inventory、manifest 和已有审阅层）与本次对应文件逐字节一致。
 没有遗漏、冲突或重复计数；本次沿用该分支原有的 `subsets/batch-0026-public-v1/` 和
 `subsets/batch-0028-public-v1/` 路径。固定提交和计数见总索引 `prior_branch_overlap`。
 
+旧分支已通过 [PR #32](https://github.com/KathenZK/quant-knowledge-graph/pull/32) 合入 main，
+本次基线为 [`eb7618d`](https://github.com/KathenZK/quant-knowledge-graph/commit/eb7618d72337d264654c75cdb091b2403902be1c)。
+新增录入仅为第 30–70 批 4,073 条，已有 2,898 条不重复计入增量。
+
 | 比较基线 | 已有公开来源记录 | 本次增加 | 本次合计 |
 |---|---:|---:|---:|
-| main | 500 | 6,471 | 6,971 |
-| dot 检查点分支 | 2,898 | 4,073 | 6,971 |
+| 合并前 main（历史对账） | 500 | 6,471 | 6,971 |
+| 合并后 main（本次基线） | 2,898 | 4,073 | 6,971 |
 
 ## 固定输入与复核
 
 - 文件：`quant-master-draft.csv`，6,470,637 字节，6,973 个唯一原 ID。
 - SHA-256：`15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415`。
 - ID 范围：M0001–M7019，46 个缺口列在 [corpus-index.json](corpus-index.json)。
-- 原有 5 个批次保留原 manifest、schema、index、inventory 和来源记录字节；第 6–70 批为本次新增。
+- 已合入 main 的前 29 批（含两份子集）保留原 manifest、schema、index、inventory 和来源记录字节；第 30–70 批为本次新增。
 - 每批 manifest 固定所有文件的字节数和 SHA-256；总索引再固定每批 manifest SHA-256。
 
 使用现有 `metadata_catalog plan/stage` 从上述固定 CSV 生成，每批按 CSV 记录序号取 100 条，

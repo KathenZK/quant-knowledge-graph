@@ -16,7 +16,7 @@ def test_committed_corpus_covers_original_ids_and_retains_all_field_evidence():
     assert index['excluded_record_ids'] == ['M2535', 'M2709']
     assert index['counts'] == dict(
         source_original_ids=6973, public_source_records=6971, excluded_original_ids=2,
-        batches=70, previously_committed_source_records=500, added_source_records=6471,
+        batches=70, previously_committed_source_records=2898, added_source_records=4073,
         classified_reading_views=200, reviewed_native_records=2,
         new_native_definitions=0, new_execution_trials=0,
     )
