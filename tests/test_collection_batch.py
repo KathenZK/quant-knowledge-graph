@@ -168,6 +168,157 @@ def test_raw_and_span_tampering_are_detected_separately(collection):
         validate_collection(collection, DIRECTORY, verify_snapshots=True)
 
 
+@pytest.fixture
+def pdf_collection(collection, monkeypatch):
+    from quantgraph.graph import collection_batch as module
+
+    base = collection / DIRECTORY
+    original = b'%PDF-1.4\nsynthetic PDF input for mocked converter\n'
+    text = b'inputs = close, volume\noutput = mean(close * volume)\n'
+    pdf_path = 'datasets/raw/sources/synthetic/definition.pdf'
+    text_path = 'datasets/raw/sources/synthetic/definition.layout.txt'
+    save(collection / pdf_path, original)
+    save(collection / text_path, text)
+    lock = load(base / 'source-lock.json')
+    source = lock['sources'][0]
+    source.update(url='https://example.test/definition.pdf', revision='document-v1',
+                  revision_kind='content_snapshot', sha256=digest(original), bytes=len(original),
+                  snapshot_path=pdf_path, role='author_document', extraction=module.PDF_EXTRACTION,
+                  derived_text=dict(parent_pdf_sha256=digest(original), sha256=digest(text),
+                      bytes=len(text), snapshot_path=text_path,
+                      generator=dict(name='pdftotext', version='pdftotext version 24.04.0',
+                                     arguments=module.PDF_ARGUMENTS.copy())))
+    save(base / 'source-lock.json', lock)
+    path = base / 'factors/SyntheticVolume.json'
+    record = load(path)
+    record['sources'][0].update({key: source[key] for key in ['url', 'revision', 'sha256']})
+    record['sources'][0]['verification'] = 'PINNED_DOCUMENT_REVIEWED'
+    for field in record['factor_fields'].values():
+        field['status'] = 'SOURCE_DESCRIPTION_REVIEWED'
+    save(path, record); refresh(collection)
+
+    def rebuild(raw, version):
+        assert raw == original and version == 'pdftotext version 24.04.0'
+        return text
+
+    monkeypatch.setattr(module, '_pdf_layout_bytes', rebuild)
+    return collection
+
+
+def test_pdf_parent_and_text_are_separate_verified_objects(pdf_collection, monkeypatch):
+    from quantgraph.graph import collection_batch as module
+
+    assert validate_collection(pdf_collection, DIRECTORY, verify_snapshots=True)['raw_evidence_verified']
+    # Public clones need neither the private originals nor the converter.
+    def forbidden(*args):
+        raise AssertionError('Public validation must not run a PDF converter')
+
+    monkeypatch.setattr(module, '_pdf_layout_bytes', forbidden)
+    for path in (pdf_collection / 'datasets/raw/sources/synthetic').iterdir():
+        path.unlink()
+    assert validate_collection(pdf_collection, DIRECTORY)['raw_evidence_verified'] is False
+
+
+@pytest.mark.parametrize('mutation', ['parent_hash', 'derived_path', 'same_path', 'generator',
+                                      'null_generator', 'list_generator', 'arguments',
+                                      'version', 'code_role', 'extraction'])
+def test_pdf_derivation_contract_cannot_mislabel_evidence(pdf_collection, mutation):
+    base = pdf_collection / DIRECTORY
+    lock = load(base / 'source-lock.json'); source = lock['sources'][0]
+    derived = source['derived_text']
+    if mutation == 'parent_hash': derived['parent_pdf_sha256'] = '0' * 64
+    elif mutation == 'derived_path': derived['snapshot_path'] = 'datasets/raw/sources/../outside.txt'
+    elif mutation == 'same_path': derived['snapshot_path'] = source['snapshot_path']
+    elif mutation == 'generator': derived['generator']['name'] = 'python'
+    elif mutation == 'null_generator': derived['generator'] = None
+    elif mutation == 'list_generator': derived['generator'] = []
+    elif mutation == 'arguments': derived['generator']['arguments'] = ['-raw', '-', '-']
+    elif mutation == 'version': derived['generator']['version'] = 'unknown'
+    elif mutation == 'code_role': source['role'] = 'source_code'
+    else: source['extraction'] = 'utf8'
+    save(base / 'source-lock.json', lock); refresh(pdf_collection)
+    with pytest.raises(ValueError):
+        validate_collection(pdf_collection, DIRECTORY)
+
+
+@pytest.mark.parametrize('object_name', ['definition.pdf', 'definition.layout.txt'])
+def test_pdf_original_and_derivative_tampering_are_detected(pdf_collection, object_name):
+    path = pdf_collection / 'datasets/raw/sources/synthetic' / object_name
+    path.write_bytes(path.read_bytes() + b'changed')
+    with pytest.raises(ValueError, match='byte pin mismatch'):
+        validate_collection(pdf_collection, DIRECTORY, verify_snapshots=True)
+
+
+def test_repinning_forged_pdf_text_still_requires_reconstruction(pdf_collection):
+    base = pdf_collection / DIRECTORY
+    lock = load(base / 'source-lock.json'); derived = lock['sources'][0]['derived_text']
+    raw = b'inputs = forged\noutput = forged\n'
+    derived.update(save(pdf_collection / derived['snapshot_path'], raw))
+    save(base / 'source-lock.json', lock)
+    review = load(base / 'reviews.json')
+    for spans in review['records'][0]['field_spans'].values():
+        spans[0]['sha256'] = digest(raw.rstrip(b'\n'))
+    save(base / 'reviews.json', review); refresh(pdf_collection)
+    with pytest.raises(ValueError, match='does not reconstruct'):
+        validate_collection(pdf_collection, DIRECTORY, verify_snapshots=True)
+
+
+def test_pdf_conversion_uses_fixed_arguments_and_checks_version(monkeypatch):
+    from types import SimpleNamespace
+    from quantgraph.graph import collection_batch as module
+
+    calls = []
+    raw = b'%PDF-1.4\nsynthetic'
+
+    def run(command, **kwargs):
+        calls.append((command, kwargs))
+        if command == ['pdftotext', '-v']:
+            return SimpleNamespace(stderr=b'pdftotext version 24.04.0\nCopyright\n', stdout=b'')
+        assert command == ['pdftotext', '-layout', '-enc', 'UTF-8', '-', '-']
+        assert kwargs['input'] == raw
+        return SimpleNamespace(stdout=b'reviewed text\n', stderr=b'')
+
+    monkeypatch.setattr(module.subprocess, 'run', run)
+    assert module.source_text(raw, module.PDF_EXTRACTION,
+                              extractor_version='pdftotext version 24.04.0') == 'reviewed text\n'
+    assert all(k['check'] and k['timeout'] == 30 and not k.get('shell') for _, k in calls)
+    calls.clear()
+    with pytest.raises(ValueError, match='version differs'):
+        module.source_text(raw, module.PDF_EXTRACTION, extractor_version='pdftotext version 25.0.0')
+    assert len(calls) == 1
+    with pytest.raises(ValueError, match='original PDF bytes'):
+        module.source_text(b'not a PDF', module.PDF_EXTRACTION,
+                           extractor_version='pdftotext version 24.04.0')
+    with pytest.raises(ValueError, match='pinned extractor version'):
+        module.source_text(raw, module.PDF_EXTRACTION)
+
+
+def test_missing_pdf_converter_does_not_claim_source_verification(monkeypatch):
+    from quantgraph.graph import collection_batch as module
+
+    def unavailable(*args, **kwargs):
+        raise FileNotFoundError('pdftotext')
+
+    monkeypatch.setattr(module.subprocess, 'run', unavailable)
+    with pytest.raises(ValueError, match='requires the recorded pdftotext'):
+        module.source_text(b'%PDF-1.4\n', module.PDF_EXTRACTION,
+                           extractor_version='pdftotext version 24.04.0')
+
+
+def test_empty_pdf_version_output_fails_with_a_useful_diagnostic(monkeypatch):
+    from types import SimpleNamespace
+    from quantgraph.graph import collection_batch as module
+
+    def empty(command, **kwargs):
+        assert command == ['pdftotext', '-v']
+        return SimpleNamespace(stderr=b'', stdout=b'')
+
+    monkeypatch.setattr(module.subprocess, 'run', empty)
+    with pytest.raises(ValueError, match='version differs'):
+        module.source_text(b'%PDF-1.4\n', module.PDF_EXTRACTION,
+                           extractor_version='pdftotext version 24.04.0')
+
+
 def test_deferred_definition_gets_no_quota(collection):
     base = collection / DIRECTORY
     doc = load(base / 'reviews.json'); doc['records'][0]['dedup']['outcome'] = 'AMBIGUOUS'

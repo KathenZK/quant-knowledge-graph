@@ -1,0 +1,181 @@
+{
+  "economic_basis": {
+    "hypothesis": "从无入边节点出发给有向关系图确定递推层级，再衡量各条边跨越层级的差异；图中营养级命名来自原领域，不当作金融传播已验证。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-6c472abd147147d27ee032da",
+        "harvest-source-0b2c658313bfdade3aa60303",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图方式、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-6c472abd147147d27ee032da",
+        "harvest-source-0b2c658313bfdade3aa60303",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "trophic_incoherence_parameter的默认cannibalism=False仅在存在自环时复制G并删除自环，不改调用者图；True使用原图，仍须满足基底节点可达合同。本条不审MultiDiGraph。 trophic_levels使用G.in_degree的拓扑入度（不是传入weight的加权入度）找基底，并用bfs_layers从全部基底沿出边遍历检查可达性；无基底或某节点不可达即NetworkXError。 adjacency_matrix按原图节点顺序取矩阵后转置，所以行表示进入该节点的权重。取rowsum!=0对应的非基底子矩阵，再用原完整行权重和逐行归一，基底列虽删除仍保留在归一分母。 用np.linalg.inv(I−P)的行和再加1得到非基底层级，按原非基底节点顺序赋值；奇异求逆异常包装为NetworkXError。不是求最短路径距离，也不是对图做拓扑排序后整数编号。 trophic_differences逐边计算终点层级减起点层级。最后np.std(list(diffs.values()))使用默认总体标准差；weight只影响层级解，最终边差汇总不加权。 这些递推/求逆定义只在完整已观察图可得后计算；节点/边坐标、cannibalism与权重参数不拆新增。 边界：拓扑入度零与加权行和零在存在零/正负相消权时可能不一致；源码没有统一检查，后续行筛选与节点赋值可能错位或失败。研究合同限制严格正权。 若删自环后无剩余边，边差列表为空，std会退化NaN；全孤立节点并不能返回有意义q=0，本条至少一条边。 最终是std(d)而非固定均值为1的理论简式；加权层级下按边等权平均差不保证1，因此不能省掉这一区别。 np.linalg.inv未作数值条件数/残差检查；可达性通过不代表机器求逆稳定。矩阵依赖版本与实际浮点结果未运行冻结。 层级或q与系统风险、传播强弱之间没有验证；命名的原生态学解释不自动移植为金融因果。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-6c472abd147147d27ee032da",
+        "harvest-source-0b2c658313bfdade3aa60303",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "从无入边节点出发给有向关系图确定递推层级，再衡量各条边跨越层级的差异；图中营养级命名来自原领域，不当作金融传播已验证。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-6c472abd147147d27ee032da",
+        "harvest-source-0b2c658313bfdade3aa60303",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "按cannibalism=False默认先删自环得到G′。本条简单DiGraph及全部选定边权有限正值。A_ij为G′中j→i的权重，r_i=Σ_j A_ij。B为拓扑入度0节点，要求B非空且每节点从B可沿有向边到达；令Q=V减B，P_ij=A_ij/r_i，i,j∈Q。源码计算s_B=1，s_Q=(I−P)^(-1)1+1；等价s_i=1+Σ_j(A_ij/r_i)s_j对非B节点。对每条边u→v取d_uv=s_v−s_u；最终q=sqrt(mean_e[(d_e−mean_f d_f)²])，按边等权总体标准差，不按原权重加权，也不直接替换成sqrt(mean(d²)−1)。所有节点/边差与最终q为一族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-6c472abd147147d27ee032da",
+        "harvest-source-0b2c658313bfdade3aa60303",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in networkx.DiGraph; after selected loop policy at least1 edge, at least1 zero topological in-degree node, every node reachable from such nodes; positive finite selected weights）：已观察关系图；上游没有金融构图、节点匹配、采样时间或PIT规则。零/负权可能破坏拓扑基底与rowsum零行一致性，本合同排除。。参数：weight：进入每个节点的关系强度；不是最终q的权重；范围None or edge attribute with finite positive values; absent value1；源码默认weight；cannibalism：保留/去除自环的原生选项，合在同族；范围boolean; default removes self-loops before all level calculation；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-6c472abd147147d27ee032da",
+        "harvest-source-0b2c658313bfdade3aa60303",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融图的节点、边、方向、权重构建方法及数据时间版本均缺失",
+    "Python/NumPy/SciPy/NetworkX backend实际运行环境未冻结",
+    "原论文全文复现、经济有效性、预测收益或实际金融应用没有验证",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "入边递推层级的边差分散度",
+  "native_source_id": "trophic_incoherence_parameter",
+  "one_line": "从无入边节点出发给有向关系图确定递推层级，再衡量各条边跨越层级的差异；图中营养级命名来自原领域，不当作金融传播已验证。",
+  "record_id": "trophic_incoherence_parameter",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers维护的内置实现，许可归属按LICENSE保留；各算法原论文在固定源码References列明。仅整理自撰数学定义和实现事实，不称原论文作者本人代码或完整论文复现。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的内置实现，许可归属按LICENSE保留；各算法原论文在固定源码References列明。仅整理自撰数学定义和实现事实，不称原论文作者本人代码或完整论文复现。",
+      "id": "harvest-source-ee984db19528f53267982e96",
+      "license": "BSD-3-Clause",
+      "locator": "adjacency input, weights and directed convention:L496-L568; exact sparse adjacency construction and default weight1:L666-L718",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "704777808d7ebe0dcc09412066d25a1564e5ac4a83f8ecac3c78ccea0b82570e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/convert_matrix.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的内置实现，许可归属按LICENSE保留；各算法原论文在固定源码References列明。仅整理自撰数学定义和实现事实，不称原论文作者本人代码或完整论文复现。",
+      "id": "harvest-source-6c472abd147147d27ee032da",
+      "license": "BSD-3-Clause",
+      "locator": "all three native functions and exact default self-loop policy:L1-L181",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "ee6a45ae98108703f701dd6996926ed56cd3191d585ab229fd25213340fc670c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/centrality/trophic.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的内置实现，许可归属按LICENSE保留；各算法原论文在固定源码References列明。仅整理自撰数学定义和实现事实，不称原论文作者本人代码或完整论文复现。",
+      "id": "harvest-source-0b2c658313bfdade3aa60303",
+      "license": "BSD-3-Clause",
+      "locator": "multi-source forward BFS reachability:L430-L479",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "fe45bf02a09e0317a3253649656820a6f53b6871df9aa552562d30d604c02342",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/traversal/breadth_first_search.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的内置实现，许可归属按LICENSE保留；各算法原论文在固定源码References列明。仅整理自撰数学定义和实现事实，不称原论文作者本人代码或完整论文复现。",
+      "id": "harvest-source-00157c5666cd480cf4081cdf",
+      "license": "BSD-3-Clause",
+      "locator": "adjacency direction, missing weight behavior and sparse wrapper:L108-L174",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "a4ca932bb1d66341b8a44578de52eb58d5942beea7e1f634dfe866666f906ccf",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/linalg/graphmatrix.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的内置实现，许可归属按LICENSE保留；各算法原论文在固定源码References列明。仅整理自撰数学定义和实现事实，不称原论文作者本人代码或完整论文复现。",
+      "id": "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+      "license": "BSD-3-Clause",
+      "locator": "topological in_degree view and default unweighted meaning:L1123-L1167",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "212a06e63ba05bfbf2ce48f038acd4cf1057ed26ce49342b3e586427892e58a2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/digraph.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

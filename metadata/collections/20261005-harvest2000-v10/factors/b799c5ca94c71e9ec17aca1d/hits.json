@@ -1,0 +1,143 @@
+{
+  "economic_basis": {
+    "hypothesis": "给每个图节点同时描述其指向高权威节点的枢纽强度和被高枢纽节点指向的权威强度；两个输出属于同一关系构造，不拆成两个因子。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-eb22ef896c70f1922d4c43b0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图方式、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-eb22ef896c70f1922d4c43b0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "公共hits默认method=power_iteration，选择_hits_power_iteration；本条不把历史版本默认SVD记忆代入，也不审当前method=svd的随机/迭代求解器合同，变求解器不增加族。 空图先返回两个空dict。按list(G)构建浮点稀疏邻接矩阵，读取默认weight而非行归一；无向图也能运行，但本条研究有向关系合同，不宣称无向特征与其它特征向量算法独立。 nstart=None用均匀h。否则要求每个图节点都有键，取值按nodelist排列，sum==0明确报NetworkXError；非图键不参与向量，源码未主动拒绝负值，本条要求每个图节点初值严格正。 每轮用同一A先a=h@A，再h=A@a，以新h最大项归一后检查绝对L1增量<tol；和PageRank不同，这里不乘N。若在max_iter内没break抛PowerIterationFailedConvergence。 只看hub变化、不另检查authority增量或特征方程残差。True在结束分别按sum归一；False仅再把authority按max归一，h已在循环max归一。返回节点dict双元组。 重根/不连通结构可能使极限不唯一或依赖nstart；不会自动补图连通、加入重启、裁零或给统计显著性。所有节点、两向量、初值和归一开关只算一族。 边界：非空无边图使新h全0再除max0，出现NaN，迭代通常达上限报错；本条正常研究合同要求至少一条正权边，不把空边图错误当权重全0定义。 h/a值可能上溢；没有对中间数组统一finite检查。高精度求解或残差验证未执行，不能将源码目标说成已精确求得。 若最大特征子空间多维，正初值与图结构会决定结果；源码没有唯一性检查。normalized=False不赋予不同经济信息，属于同族。 与SVD熵的奇异值分布取熵不同：这里输出图节点左右强化方向，不取全部奇异值归一熵；即使底层可用SVD求解也不等价。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-eb22ef896c70f1922d4c43b0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "给每个图节点同时描述其指向高权威节点的枢纽强度和被高枢纽节点指向的权威强度；两个输出属于同一关系构造，不拆成两个因子。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-eb22ef896c70f1922d4c43b0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条明确审固定commit默认method=\"power_iteration\"；A_ij为i→j权重（默认边属性weight，缺失为1）。h0为均匀1/N或正nstart除sum。每轮a_(t+1)=Aᵀ h_t，u=A a_(t+1)，h_(t+1)=u/max(u)；在Σ|h_(t+1)−h_t|<tol时停止。默认max_iter100、tol1e−8。若normalized=True（默认），分别返回h/Σh、a/Σa；False返回当前max归一h和a/max(a)。注意a来自最后一轮的旧h，不再用新h重算。收敛目标对应AAᵀ枢纽主方向及AᵀA权威方向；实际输出保留有限容差和初值依赖。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-eb22ef896c70f1922d4c43b0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in simple networkx.DiGraph, loop-free, at least one edge; finite positive weight attributes or missing=>1）：冻结有向关系图；没有金融构图或PIT，传入其他名称权重不会被hits选用，默认读取weight。。参数：method：固定版本原生默认，与旧版本可能不同；范围only power_iteration reviewed; svd alternative outside audited runtime path；源码默认power_iteration；max_iter：最大交替迭代数；范围research positive integer；源码默认100；tol：hub L1变化阈值，不乘N；范围research finite positive；源码默认1e-08；nstart：hub初值，指定时必须覆盖所有图节点；范围None=>uniform; research complete finite strictly positive mapping；源码默认None；normalized：True各向量sum归一；False各向量max归一；范围bool；源码默认True"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-00157c5666cd480cf4081cdf",
+        "harvest-source-eb22ef896c70f1922d4c43b0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/边/权重/方向及阈值构图、节点宇宙和PIT缺失",
+    "数值依赖/NetworkX backend版本与浮点输出未执行冻结",
+    "没有金融收益、风险有效性或因果传播证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "交替强化枢纽与权威的 HITS 双向量",
+  "native_source_id": "hits",
+  "one_line": "给每个图节点同时描述其指向高权威节点的枢纽强度和被高枢纽节点指向的权威强度；两个输出属于同一关系构造，不拆成两个因子。",
+  "record_id": "hits",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers固定内置实现，原文献归属按源码References保留；只公开自撰定义与精确来源定位，没有取得或复制原论文全文。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现，原文献归属按源码References保留；只公开自撰定义与精确来源定位，没有取得或复制原论文全文。",
+      "id": "harvest-source-ee984db19528f53267982e96",
+      "license": "BSD-3-Clause",
+      "locator": "adjacency input, weights and directed convention:L496-L568; exact sparse adjacency construction and default weight1:L666-L718",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "704777808d7ebe0dcc09412066d25a1564e5ac4a83f8ecac3c78ccea0b82570e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/convert_matrix.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现，原文献归属按源码References保留；只公开自撰定义与精确来源定位，没有取得或复制原论文全文。",
+      "id": "harvest-source-00157c5666cd480cf4081cdf",
+      "license": "BSD-3-Clause",
+      "locator": "sparse adjacency convention weight default and wrapper:L108-L174",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "a4ca932bb1d66341b8a44578de52eb58d5942beea7e1f634dfe866666f906ccf",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/linalg/graphmatrix.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现，原文献归属按源码References保留；只公开自撰定义与精确来源定位，没有取得或复制原论文全文。",
+      "id": "harvest-source-eb22ef896c70f1922d4c43b0",
+      "license": "BSD-3-Clause",
+      "locator": "native method defaults, references, power helper and asymmetric final normalization:L1-L142",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "188bcad9dd12652da63759183ff47bbc58edf11be4c6f82cc0fd0299f8f1add3",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/link_analysis/hits_alg.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

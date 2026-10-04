@@ -8,6 +8,7 @@ from datetime import datetime
 import json
 from pathlib import Path
 import re
+import subprocess
 from urllib.parse import unquote, urlsplit
 
 from quantgraph.graph.collection_dedup import collection_source_keys
@@ -45,7 +46,30 @@ def _identity(record):
     return tuple(record[key] for key in ('identity_namespace', 'entity_type', 'record_id'))
 
 
-def source_text(raw, extraction):
+PDF_EXTRACTION = 'pdf.pdftotext-layout'
+PDF_ARGUMENTS = ['-layout', '-enc', 'UTF-8', '-', '-']
+
+
+def _pdf_layout_bytes(raw, expected_version):
+    """Rebuild a pinned text derivative from the original PDF, without a shell."""
+    if not raw.startswith(b'%PDF-'):
+        raise ValueError('PDF extraction requires original PDF bytes')
+    try:
+        version = subprocess.run(['pdftotext', '-v'], capture_output=True, check=True,
+                                 timeout=30)
+        lines = (version.stderr or version.stdout).decode('utf-8').splitlines()
+        if not lines or lines[0] != expected_version:
+            raise ValueError('PDF text extractor version differs from the retained derivative')
+        result = subprocess.run(['pdftotext', *PDF_ARGUMENTS], input=raw,
+                                capture_output=True, check=True, timeout=30)
+    except (OSError, subprocess.SubprocessError) as error:
+        raise ValueError('Pinned PDF extraction requires the recorded pdftotext tool') from error
+    if not result.stdout.strip():
+        raise ValueError('PDF extraction returned no text; visual/OCR review is separate')
+    return result.stdout
+
+
+def source_text(raw, extraction, *, extractor_version=None):
     """Decode explicitly declared representations; never evaluate source code."""
     if extraction == 'utf8':
         return raw.decode('utf-8-sig')
@@ -54,7 +78,33 @@ def source_text(raw, extraction):
         if not isinstance(value, str) or not value.strip():
             raise ValueError('Published source response has no source text')
         return value
+    if extraction == PDF_EXTRACTION:
+        if not extractor_version:
+            raise ValueError('PDF extraction requires a pinned extractor version')
+        return _pdf_layout_bytes(raw, extractor_version).decode('utf-8')
     raise ValueError('Unsupported source-text extraction')
+
+
+def _pdf_derivative(source):
+    """Check the public parent/derivative contract without requiring private files."""
+    derived = source.get('derived_text')
+    if (source['role'] == 'source_code' or not isinstance(derived, dict)
+            or derived.get('parent_pdf_sha256') != source['sha256']
+            or not isinstance(derived.get('sha256'), str)
+            or not re.fullmatch(r'[0-9a-f]{64}', derived['sha256'])
+            or type(derived.get('bytes')) is not int or derived['bytes'] <= 0):
+        raise ValueError('Invalid PDF parent or derived-text identity')
+    path = derived.get('snapshot_path')
+    if (not _relative(path) or not path.startswith('datasets/raw/sources/')
+            or path == source['snapshot_path']):
+        raise ValueError('Unsafe PDF derived-text snapshot path')
+    generator = derived.get('generator', {})
+    if (not isinstance(generator, dict)
+            or generator.get('name') != 'pdftotext' or generator.get('arguments') != PDF_ARGUMENTS
+            or not isinstance(generator.get('version'), str)
+            or not re.fullmatch(r'pdftotext version [0-9][0-9A-Za-z.+_-]*', generator['version'])):
+        raise ValueError('PDF derivative requires an explicit supported generator')
+    return derived
 
 
 def record_schema(root):
@@ -189,11 +239,21 @@ def validate_collection(root, directory, *, verify_snapshots=False):
                 raise ValueError('Git source must pin the same full commit in its URL')
         elif source['revision_kind'] != 'content_snapshot' or not source['revision']:
             raise ValueError('Unsupported collection source revision')
-        if source['extraction'] not in {'utf8', 'json.source'}:
+        if source['extraction'] not in {'utf8', 'json.source', PDF_EXTRACTION}:
             raise ValueError('Unsupported source extraction')
+        derived = _pdf_derivative(source) if source['extraction'] == PDF_EXTRACTION else None
+        if derived is None and 'derived_text' in source:
+            raise ValueError('Derived text requires PDF extraction')
         if verify_snapshots:
             raw = _pin(root, snapshot, source)
-            texts[sid] = source_text(raw, source['extraction']).splitlines()
+            if derived:
+                saved = _pin(root, derived['snapshot_path'], derived)
+                rebuilt = _pdf_layout_bytes(raw, derived['generator']['version'])
+                if rebuilt != saved:
+                    raise ValueError('PDF text derivative does not reconstruct from its parent')
+                texts[sid] = saved.decode('utf-8').splitlines()
+            else:
+                texts[sid] = source_text(raw, source['extraction']).splitlines()
     refs = {_identity(ref): ref for ref in index['records']}
     decisions = {_identity(review): review for review in reviews['records']}
     if len(decisions) != len(reviews['records']) or set(decisions) != set(refs):

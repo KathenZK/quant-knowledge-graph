@@ -1,0 +1,124 @@
+{
+  "economic_basis": {
+    "hypothesis": "衡量一个已给定节点分区中的内部连接，比按节点度数形成的基准多多少；这是分区质量分数，不是自动寻找社区或给资产配权的算法。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-d6987b865d7ea6e8cee1d19d",
+        "harvest-source-ee18364f4e1e2b1ca4349ce2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图方式、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-d6987b865d7ea6e8cee1d19d",
+        "harvest-source-ee18364f4e1e2b1ca4349ce2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "communities不是list则先耗尽转list。is_partition以图内节点并集大小、图大小及各社区长度和检查是否为分区；失败抛NotAPartition。不会自动拟合聚类或修复重叠社区。 有向路径分别建立出/入加权度表，以全部出度和为m、norm=1/m²；无向路径共用度表，deg_sum=2m，norm=1/deg_sum²。任一路m==0直接0，无需进一步对分区贡献相除。 逐社区转set，G.edges(comm,data=weight,default=1)中仅保留另一端也在comm的边求L_c，再按全图度表汇总社区节点度。跨社区边不在L_c，但影响节点度和总m。 以resolution调节基准项后对社区求和。原函数不验证γ范围，本条研究合同取有限γ>=0；改变γ或分区是同一构造的输入，不是新因子。 不把Q正、高或局部最高当成已找到真实经济行业，也不附加Louvain、聚类稳定性或交易规则。分区的形成与可用时点独立缺失。 边界：m==0返回0是源实现约定，不表明无边图的社区质量已被证明；空图是否通过由实际communities分区检查决定。 权重负数、相消、NaN/Inf或非法γ没有统一校验，研究正权/有限参数合同不等于源主动拒绝这些输入。 无向Q内部基准度仍包含跨社区边；若只在各社区子图内算度会变成不同公式。 分区可按未来数据选择造成研究泄漏；本条仅要求计算时分区已经冻结可得，未提供实际金融构图或分区样本。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-d6987b865d7ea6e8cee1d19d",
+        "harvest-source-ee18364f4e1e2b1ca4349ce2"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "衡量一个已给定节点分区中的内部连接，比按节点度数形成的基准多多少；这是分区质量分数，不是自动寻找社区或给资产配权的算法。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-d6987b865d7ea6e8cee1d19d",
+        "harvest-source-ee18364f4e1e2b1ca4349ce2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "无向图边权总和m，社区c内部边权L_c（每条无向边计一次），社区节点加权度和k_c，γ=resolution默认1：Q=Σ_c[L_c/m−γ(k_c/(2m))²]。有向图m为全部出边权和，k_c^out、k_c^in分别为社区节点出/入度权和：Q=Σ_c[L_c/m−γ k_c^out k_c^in/m²]。本条审有限简单Graph/DiGraph、无自环、正边权和给定互不重叠覆盖全部节点的社区sets；函数对m==0直接返回0。weight=None按边数，否则缺属性按1。γ、方向和社区数不拆成多个构造。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-d6987b865d7ea6e8cee1d19d",
+        "harvest-source-ee18364f4e1e2b1ca4349ce2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in simple networkx.Graph or DiGraph, loop-free, finite positive selected edge weights）：已观察关系图；本条不定义金融节点/边/权重构建或PIT。；communities（list or finite iterable of pairwise disjoint sets covering exactly G nodes）：预先给定分区；分区方法、标签生效时间和未来信息隔离缺失，不由本函数估计。。参数：weight：构造边权及节点度；范围None or positive finite edge attribute; missing attribute1；源码默认weight；resolution：度数基准项的强度；不是数据驱动选参已经完成；范围research finite gamma>=0; source no range guard；源码默认1"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-d6987b865d7ea6e8cee1d19d",
+        "harvest-source-ee18364f4e1e2b1ca4349ce2"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点、边、权重/阈值、节点宇宙及数据PIT构图缺失",
+    "实际Python/NetworkX backend/依赖版本及数值执行未冻结",
+    "没有金融回测、显著性或经济有效性证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "给定分区内部边相对度数基准的模块度",
+  "native_source_id": "modularity",
+  "one_line": "衡量一个已给定节点分区中的内部连接，比按节点度数形成的基准多多少；这是分区质量分数，不是自动寻找社区或给资产配权的算法。",
+  "record_id": "modularity",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers的固定内置实现；原算法论文归属见对应源码References，本条只整理自撰数学定义与实现事实。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers的固定内置实现；原算法论文归属见对应源码References，本条只整理自撰数学定义与实现事实。",
+      "id": "harvest-source-d6987b865d7ea6e8cee1d19d",
+      "license": "BSD-3-Clause",
+      "locator": "exact weighted undirected/directed formulas partition guard and zero-edge branch:L150-L264",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "3419b4841f83b66892e6d5e5f28e78e7174d97b6ded6bf9dfc91fb8375bd9218",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/community/quality.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers的固定内置实现；原算法论文归属见对应源码References，本条只整理自撰数学定义与实现事实。",
+      "id": "harvest-source-ee18364f4e1e2b1ca4349ce2",
+      "license": "BSD-3-Clause",
+      "locator": "exact disjoint complete partition check:L1-L30",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "2a1a7c072292bbedc5d1ee316db96b6754bcef7eecb26f680c901f41fd521014",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/community/community_utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

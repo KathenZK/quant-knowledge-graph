@@ -1,0 +1,174 @@
+{
+  "economic_basis": {
+    "hypothesis": "以两个已观测样本的合并秩平方偏差描述整体分布差异。本条的特征合同是statistic；检验p值没有作为已完整审核的可计算输出纳入。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "全部输入样本已观测并发布之后才能得到整窗输出；不得回填为窗内早期实时值。若y绑定未来标签，仅能在标签完全实现后做诊断。上游是静态估计函数，无自动滚动、排序或PIT保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "两个样本分别排序后合并求平均秩，索引i、j各从1开始；样本无需等长，也不是按行配对的相关系数。 分别以本组大小n、m加权本组的秩偏移平方和，按公式缩放并扣除有限样本项。来源没有对T额外作max(T,0)裁剪。 原API会同时计算p值，method=auto在两个样本都<=20时走exact，否则asymptotic。这里仅静态审核T的定义与分支入口，未把p值底层枚举或渐近CDF实现纳入公式合同；不能声称整个API运行已复现。 一/两样本、参考分布、不同检验尾或输出包装不得借此拆成新增数量；本条已登记Cramér–von Mises构造族中的两样本合同。 边界：样本过少由装饰器返回NaN并警告；内层仍有长度<=1的ValueError保护。非法method抛ValueError。 并列数据仍用平均秩，连续零假设下的p值校准不能直接当离散数据校准。p值底层不在本次语义合同中。 合并经验秩主要刻画分布形状/位置差异，并不保留原始单位上的数值距离；共同严格单调变换保持秩，与Euclidean energy距离不同。 若T受浮点舍入出现异常，当前来源无额外截零承诺；未执行数值重现。 这是整个窗口结束后的诊断，不能用后来完整窗口输出回填早期时点。 输出：一个完整统计构造族；以定义中审核的统计量为准，原生方向、参数和伴随p值不拆新增数量"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "以两个已观测样本的合并秩平方偏差描述整体分布差异。本条的特征合同是statistic；检验p值没有作为已完整审核的可计算输出纳入。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x有n>=2个点、y有m>=2个点。分别升序得到x_(i)、y_(j)，再取在合并样本中的平均秩r_i、s_j（并列占据的名次取均值）。U=n Σ_(i=1..n)(r_i−i)^2 +m Σ_(j=1..m)(s_j−j)^2，T=U/[nm(n+m)]−(4nm−1)/[6(n+m)]。只将T作为本条量化特征，不另造标准化或p值条目。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（finite 1D numeric array, n>=2）：第一经验分布样本，时间范围与单位需固定；y（finite 1D numeric array, m>=2）：第二经验分布样本，须与x有可比单位；非配对样本。参数：method：只选择原API的p值路径；不改变本文T，p值完整计算未审核；范围auto/exact/asymptotic；源码默认auto；axis：样本轴；范围本合同一维有限数组；源码默认0；nan_policy：本合同有限输入；范围propagate/omit/raise via decorator；源码默认propagate；keepdims：输出形状；范围bool；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "scipy/scipy",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "NumPy/array API backend及special函数运行环境未冻结，固定源码不代表平台数值已重现",
+    "金融输入绑定、窗口/频率、市场PIT/供应商/发布时间缺失",
+    "无收益方向、样本外预测能力与经济有效性证据"
+  ],
+  "name": "两个经验分布合并秩的 Cramér–von Mises 统计量",
+  "native_source_id": "cramervonmises_2samp",
+  "one_line": "以两个已观测样本的合并秩平方偏差描述整体分布差异。本条的特征合同是statistic；检验p值没有作为已完整审核的可计算输出纳入。",
+  "record_id": "cramervonmises_2samp",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_hypotests.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文",
+      "id": "harvest-source-54c1579ccfb5d53208dfa426",
+      "license": "BSD-3-Clause",
+      "locator": "public definition signature and sample minimum:L1673-L1727; method and ties caveats:L1738-L1760; sample guards, method dispatch, sort rank statistic and return:L1797-L1853",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "dd177c500f0d8ab3a4da0c6b4bf7ffd87bb30ef63437902ed5887616b80b504b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_hypotests.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文",
+      "id": "harvest-source-dcaa4b2ca5e08690e90c3e75",
+      "license": "BSD-3-Clause",
+      "locator": "public average-rank dispatcher:L10372-L10402; rank restoration, sorting and tie-count helpers:L10404-L10528",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "f83fbd7a76afa61a865820917184eabd67d5ebc04cde4db102ba1ba86e94d0cb",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文",
+      "id": "harvest-source-bbbecde791dfaaebacee469f",
+      "license": "BSD-3-Clause",
+      "locator": "axis/NaN defaults and paired handling:L530-L620",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "a1650feb6cfcf6f9a1c764c824e725b39f039a2e19001fb60f48f88c354d102f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_axis_nan_policy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文",
+      "id": "harvest-source-8b75a55d87853f7f61280e73",
+      "license": "BSD-3-Clause",
+      "locator": "sample count and shared masks:L677-L693",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "14dbc9a53b4f6bb8dffe8fb302574fed5a522b619ce15696b1e29766d81b238c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_array_api.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文",
+      "id": "harvest-source-088c1d9c7042eaaa4ba39300",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_scope:L1-L81",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "6a4d55e53007e0d509dc30f5a8d460c280f0f5bcf2567c910948e7eb23047b10",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}
