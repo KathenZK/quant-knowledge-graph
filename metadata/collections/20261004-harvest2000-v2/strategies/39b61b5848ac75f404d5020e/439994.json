@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "强下行中的RSI极端或可能反弹，但逆势风险与成本完全未评估。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "按源码保留固定止损，不称为盈利追踪止损。"
+  ],
+  "name": "强定向波动中RSI极端逆势开仓",
+  "native_source_id": "439994",
+  "one_line": "ADX较高且负向移动占优时逢RSI超卖做多，正向占优且超买时做空，仅按持仓均价设置固定百分比止损。",
+  "record_id": "439994",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8EDMI%E5%92%8CRSI%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%B7%9F%E9%9A%8F%E7%AD%96%E7%95%A5Trend-Following-Strategy-Based-on-DMI-and-RSI.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 YingYangJPN；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-439994-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "eb76147e611f84fa971510d55a2fa030ea170f24a2a3643052e51c06010180e4",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8EDMI%E5%92%8CRSI%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%B7%9F%E9%9A%8F%E7%AD%96%E7%95%A5Trend-Following-Strategy-Based-on-DMI-and-RSI.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-439994-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-439994-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未显式佣金、滑点、点差和持仓费用，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-439994-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "三项多状态同时满足Long，三项空状态同时满足Short；未等RSI回穿或均线确认，不要求空仓或首次触发。方向与占优DI相反。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-439994-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5，先多entry后空entry，再按可见持仓更新相应stop；未声明收盘成交/逐tick/成交重算，未执行。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-439994-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "可见多仓时stop=position_avg_price×0.995，空仓stop=均价×1.005，分别绑定Long/Short；无止盈或指标平仓，反向入口可反转。变量叫Trailing但未取持仓极值，也未随盈利收紧，是固定均价百分比止损。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-439994-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认10%权益、初始资本10000，入口无qty覆盖；0.5%是价格距均价，不是0.5%账户风险。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-439994-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "保护只在脚本检测到持仓后提交，成交后首次保护时点未核。没有RSI回中位清仓；趋势延续中可能多次逆势受损，未给冷却或日损限额。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-439994-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "up=H−H[1]，down=L[1]−L；若up为na则+DM=na，否则在up>down且up>0时取up、其余0；若down为na则−DM=na，否则在down>up且down>0时取down、其余0。TR用ta.tr；+DI/−DI=fixnan(100×RMA14(对应DM)/RMA14(TR))。ADX=100RMA14(abs(+DI−−DI)/(两DI之和，和为0则分母1))。RSI14(C)；多RSI<30且ADX>20且−DI>+DI，空RSI>70且ADX>20且+DI>−DI。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-439994-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-439994-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

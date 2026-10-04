@@ -13,7 +13,7 @@ uv run quantgraph catalog-show 'qlib:Alpha360:VWAP2'
 uv run quantgraph catalog-validate
 ```
 
-当前统一目录为 **8,604 张条目卡：6,437 策略、2,083 因子、83 参考资料、1 待分类**；收录不代表全部准入。每次新增后用 `catalog-stats` 核对最新计数。
+当前统一目录为 **8,635 张条目卡：6,453 策略、2,098 因子、83 参考资料、1 待分类**；收录不代表全部准入。每次新增后用 `catalog-stats` 核对最新计数。
 
 原 M 编号、代码原生类名和因子原生 ID 都可查询。同名有歧义时带来源命名空间；稳定 `entity_id` 不随分类或证据版本改变。主 API `/v1/knowledge` 提供同一目录的检索、详情和关系，旧 `FactorDB` 与定义发布接口保持兼容。
 
@@ -25,7 +25,7 @@ uv run quantgraph catalog-validate
 | [来源核查批次](source-reviews/20261004-v1/README.md) | 对4条原记录追加3条源码核查与1条来源不可得证据 |
 | [原有审阅索引](index.json) | 给 M0256/M0259 追加已审规则和既有研究引用 |
 | [源码采集批次](public-web/README.md) | 追加固定源码版本的策略/因子说明、许可和缺项 |
-| [新增来源采集（进行中）](collections/20261004-harvest2000-v1/README.md) | 逐条固定规则、来源、旧库比较和独立复核；目标为新增1000策略及1000因子 |
+| [新增来源采集（进行中）](collections/README.md) | 逐条固定规则、来源、旧库比较和独立复核；目标为新增1000策略及1000因子 |
 | [因子来源索引](factor-sources/index.json) | 保存1,570条因子变体及来源原生身份、定义准入和记录类型 |
 
 这几类材料是同一目录的来源集合，不能把文件数相加当成策略数。9条源码资料中的4条与 CSV 有精确行摘要和文件定位绑定，在同卡保留不同证据版本，不宣称经济或实现等价。分类阅读页和旧审阅材料也不另算一张新卡。完整计数规则见 [CATALOG.md](CATALOG.md)。
@@ -34,7 +34,7 @@ uv run quantgraph catalog-validate
 
 当前CSV共6,971条，其中6,970条已有类型判定，仅[M0176](source-reviews/20261004-v1/README.md#m0176来源不可得)待分类。历史[正文分类批次](classifications/20261004-v1/index.json)冻结时的6,782条决定仍是6,242策略、453因子、83参考资料、4待分类；原批次及其队列不改写，不能将历史队列当作当前待分类集合。当前结果用`catalog-search --kind unclassified`查询。
 
-新的[来源核查索引](source-reviews/20261004-v1/index.json)为M0115、M0196、M2122追加`SOURCE_CODE_REVIEWED`策略证据；M0176的原仓库与main/master README返回404，记录`SOURCE_UNAVAILABLE`而不补猜规则。集合适配器为`source_followups`，版本表示为`SOURCE_FOLLOWUP`，结果在`statuses.source_followup`中保留，可用`--status SOURCE_UNAVAILABLE`筛选。本批共4份核查记录，只增加4个证据版本，不增加条目卡；连同本轮来源采集后，当前共8,614个证据版本；历史已审说明14份，新增采集说明另记58份。未执行源码或回测，原文和源码快照不进入Git。
+新的[来源核查索引](source-reviews/20261004-v1/index.json)为M0115、M0196、M2122追加`SOURCE_CODE_REVIEWED`策略证据；M0176的原仓库与main/master README返回404，记录`SOURCE_UNAVAILABLE`而不补猜规则。集合适配器为`source_followups`，版本表示为`SOURCE_FOLLOWUP`，结果在`statuses.source_followup`中保留，可用`--status SOURCE_UNAVAILABLE`筛选。本批共4份核查记录，只增加4个证据版本，不增加条目卡；连同本轮来源采集后，当前共8,645个证据版本；历史已审说明14份，新增采集说明另记89份。未执行源码或回测，原文和源码快照不进入Git。
 
 正文推断、来源源码核查与规则完整性各自保留。策略中的选股提纲与组件、因子中的构造提纲与特征族不具有相同的成熟程度。
 

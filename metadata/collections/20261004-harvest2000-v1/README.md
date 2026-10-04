@@ -16,9 +16,9 @@ uv run python -m quantgraph.graph.collection_batch --directory metadata/collecti
 uv run quantgraph catalog-search --status REVIEWED_NEW_DEFINITION --limit 1000
 ```
 
-第一条命令检查公开元数据完整性；第二条还核对本机保存的原始字节和每个源码片段。公开克隆没有 raw 时不能声称重新核实了来源正文。自动相似性匹配只产生候选，不自动判定公式等价或新颖。
+各批累计进度见[采集总览](../README.md)。第一条命令检查公开元数据完整性；第二条还核对本机保存的原始字节和每个源码片段。公开克隆没有 raw 时不能声称重新核实了来源正文。自动相似性匹配只产生候选，不自动判定公式等价或新颖。
 
-## 当前进度
+## 第一批检查点
 
 | 类型 | 合格新增 | 目标 |
 |---|---:|---:|
