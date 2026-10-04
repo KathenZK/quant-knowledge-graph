@@ -1,0 +1,148 @@
+{
+  "economic_basis": {
+    "hypothesis": "若信号持续性及成本/协方差估计可靠，对衰减快的预期收益减少配置并逐步调整头寸，可能在风险、预测收益和交易费用之间改善取舍。只记录模型下的配置构造；论文最优性与实证表现不作为本仓库验证结果。",
+    "missing": [
+      "未运行、未回测；论文模型最优性和实证不是仓库验收结论。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi:10.1111/jofi.12080",
+  "lab": null,
+  "missing_information": [
+    "只审§II–III Assumption1及Eq9/10/14配置构造，未运行源码、优化器、模拟或回测；不据论文标题的optimal宣称真实市场最优或盈利。",
+    "股票池、预测信号定义、估计样本、B/Phi/Sigma/lambda/gamma/rho校准、日历周期与初始份额均需下游冻结；本记录不是完整回测任务。",
+    "份额与超额价格变动必须配对，不能把百分比收益协方差及资本权重直接代入；模型风险与交易成本单位也需一致。",
+    "闭式式限定Lambda=lambda*Sigma、lambda>0、gamma>0、rho∈(0,1)、正定Sigma及所需逆存在；一般Lambda及持久冲击没有作为新变体计数。",
+    "无仅多/杠杆/保证金/借券/容量约束或硬回撤保护；实际费用、订单时点、末期平仓均未闭合。",
+    "同族对角Phi、纯标的/参数替换和经验窗口不会单独新增；指数平滑表达不能抹掉aim的信号衰减/成本联合构造。",
+    "作者机构公开PDF与论文DOI可定位，未找到适用于该PDF的开放再分发许可；CBS另挂accepted manuscript并标Licence Unspecified，不能把该状态伪装成当前PDF许可。仅发布自撰中文规则与定位，商用REVIEW_REQUIRED。"
+  ],
+  "name": "Gârleanu–Pedersen：信号衰减调整目标与成本决定部分调仓",
+  "native_source_id": "DynamicTrading",
+  "one_line": "在二次交易成本与风险协方差成比例的模型中，按各预测信号的衰减调整目标份额，再按成本、风险偏好和贴现率确定的比例向目标调仓。",
+  "record_id": "DynamicTrading",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、优化器或回测。",
+    "metadata": "作者原生文件/DOI身份、定位及自撰中文规则；不发布论文原文、图像、源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://research.cbs.dk/en/publications/dynamic-trading-with-predictable-returns-and-transaction-costs-2/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Nicolae Gârleanu and Lasse Heje Pedersen, Dynamic Trading with Predictable Returns and Transaction Costs, Journal of Finance 68(6), 2013, 2309–2340, DOI10.1111/jofi.12080; PDF in Pedersen NYU faculty directory. Chinese paraphrase by catalog curator.",
+      "id": "garleanu-pedersen-dynamictrading-pdf",
+      "license": "Author university hosts this typeset article publicly; no open redistribution license located for these bytes. CBS lists a different accepted manuscript and Licence Unspecified, not a license grant for this PDF. No source fulltext or images distributed; commercial use REVIEW_REQUIRED.",
+      "locator": "Physical pp6–11 §II–III, Assumption1 and Eq9/10/14; p1 authors/DOI. Temporary quadratic-cost closed-form scope; persistent-impact §IV is excluded. Lines use derived pdftotext and visual formulas.",
+      "revision": "Journal of Finance 68(6), December 2013, pp2309–2340; author-hosted PDF sha256:b9b01f48bd7ff0ce0431615d88b76f8a076b6593cc1d7765bd6ec2eb617473ab",
+      "sha256": "b9b01f48bd7ff0ce0431615d88b76f8a076b6593cc1d7765bd6ec2eb617473ab",
+      "supports": [
+        "预测信号动态、暂时二次成本、信号衰减调整目标和份额递推"
+      ],
+      "url": "https://w4.stern.nyu.edu/facdir/lpederse/papers/DynamicTrading.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_UNIVERSITY_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Author-affiliated AQR research page.",
+      "id": "gpdt-aqr-author-affiliation-page",
+      "license": "Publisher/institution page; no permission inferred from public accessibility. Fulltext not redistributed.",
+      "locator": "HTML L419–426 title, December1 2013, authors; L519 onward article description.",
+      "revision": "HTTP snapshot 2026-10-04T20:46:42.827512+00:00; sha256:b2d8457f8bdb23e41be69e796d9a6fce5406bc77b7916c13a82f9b61994b8f07",
+      "sha256": "b2d8457f8bdb23e41be69e796d9a6fce5406bc77b7916c13a82f9b61994b8f07",
+      "supports": [
+        "作者、题名、期刊版本及许可缺项定位"
+      ],
+      "url": "https://www.aqr.com/insights/research/journal-article/dynamic-trading-with-predictable-returns-and-transactions-costs",
+      "verification": "FETCHED_PINNED_AUTHOR_AFFILIATED_BIBLIOGRAPHIC_PAGE"
+    },
+    {
+      "attribution": "Copenhagen Business School institutional publication record.",
+      "id": "gpdt-cbs-author-institution-page",
+      "license": "Publisher/institution page; no permission inferred from public accessibility. Fulltext not redistributed.",
+      "locator": "HTML L74 bibliographic metadata; L358 publication; L372 DOI and different accepted-manuscript link marked Licence Unspecified; L440 citation; L560 rights.",
+      "revision": "HTTP snapshot 2026-10-04T20:46:41.599338+00:00; sha256:d0546b5a3ec67d97c35ee1006b178db7dd5b34dbe9b645acd0e4004afb2321d9",
+      "sha256": "d0546b5a3ec67d97c35ee1006b178db7dd5b34dbe9b645acd0e4004afb2321d9",
+      "supports": [
+        "作者、题名、期刊版本及许可缺项定位"
+      ],
+      "url": "https://research.cbs.dk/en/publications/dynamic-trading-with-predictable-returns-and-transaction-costs-2/",
+      "verification": "FETCHED_PINNED_AUTHOR_AFFILIATED_BIBLIOGRAPHIC_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "garleanu-pedersen-dynamictrading-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一般S维证券模型，持仓x_t的单位是证券份额，交易量Delta_x_t=x_t-x_(t-1)。r_(t+1)=p_(t+1)-(1+r_f)*p_t是每份证券的超额价格变动，不能直接替换为百分比收益或对数收益；因此x_t转置乘r_(t+1)才是对应金额的超额盈亏。本条不把论文另章商品期货演示的资产清单或频率冻结为通用构造。"
+    },
+    "cost": {
+      "evidence": [
+        "garleanu-pedersen-dynamictrading-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每期模型交易成本TC(Delta_x_t)=0.5*Delta_x_t转置*Lambda*Delta_x_t，Lambda对称正定且本条取lambda*Sigma。是以份额变动为输入的暂时二次冲击金额，不是按总持仓、成交额固定费率或单边bp计费；允许不同证券间交叉项。目标Eq4以(1-rho)^t折现当前交易成本，以(1-rho)^(t+1)折现下一期超额盈亏减gamma/2*x_t转置*Sigma*x_t风险罚。实际佣金、价差、税、融资/借券、非线性容量与末期清仓费用未闭合。"
+    },
+    "entry": {
+      "evidence": [
+        "garleanu-pedersen-dynamictrading-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每期Delta_x_t=kappa*(aim_t-x_(t-1))，某证券为正则增持/买入、为负则减持/卖出，最终目标可多可空；没有额外RSI、均线或突破条件，也没有给定总量执行完成即停止的任务。方向来自整个目标与已有份额之差；做空能否成交不在模型中保证。Eq12/13的未来目标是条件期望，不允许偷读未来已实现价格或因子。"
+    },
+    "execution_time": {
+      "evidence": [
+        "garleanu-pedersen-dynamictrading-pdf"
+      ],
+      "status": "MISSING",
+      "text": "模型先读t时点可用f_t与x_(t-1)，按Eq10/14生成x_t，成本由这次份额变动决定，再承受t到t+1收益。原文未给本条通用构造的交易时钟、收盘或次开盘成交价、订单类别、可成交量、资金约束或报价延迟；实际成交时点与执行可行性为MISSING。正文的限价单类比不等于定义限价订单接口。"
+    },
+    "exit": {
+      "evidence": [
+        "garleanu-pedersen-dynamictrading-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "卖出、减仓或由多转空均由同一Delta_x递推产生，不另设止盈、止损、持有期限或到期全平。若当前aim=0而已有仓位非零，x_t仍保留(1-kappa)倍旧份额，不是立刻清仓；下一期继续用新aim更新。模型为无限期配置，未规定终止日清算、清算成本或特殊事件退出。"
+    },
+    "position": {
+      "evidence": [
+        "garleanu-pedersen-dynamictrading-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "x为未归一化份额，不是和为1的资本权重；本条没有仅多、单资产上限、现金下限或杠杆帽。gamma正值调风险规模，kappa在选定非退化假设下介于0与1。无摩擦参照Markowitz_t=(gamma*Sigma)^(-1)*B*f_t；aim还通过Phi调整各信号，因此并非只给当前Markowitz加经验平滑。Eq17的无限历史指数加权表示附带从负无穷跟随策略的条件；不能据此默设有限回测的初始x=0或丢掉初始仓位。"
+    },
+    "risk": {
+      "evidence": [
+        "garleanu-pedersen-dynamictrading-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "主要模型限制是线性可预测价格变动、稳定的信号转移、正定协方差/成本矩阵及Lambda=lambda*Sigma。需要[ I_K+(a/gamma)*Phi ]可逆；不把奇异输入、gamma=0或lambda=0代入本条闭式式。绝对风险厌恶和无限期目标未给硬性回撤、保证金或最大杠杆限制。估计误差、非平稳、错误份额/百分比单位与真实成本不满足二次式都可能使目标失真；未验证最优性证明、经济效果或成交能力。持久价格冲击属于§IV另一扩展，不纳入本条已审规则。"
+    },
+    "signal": {
+      "evidence": [
+        "garleanu-pedersen-dynamictrading-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "本条限定Lambda=lambda*Sigma，lambda>0、Sigma正定，采用gamma>0、rho∈(0,1)的非退化风险厌恶范围。令h=gamma*(1-rho)+lambda*rho，a=(-h+sqrt(h*h+4*gamma*lambda*(1-rho)^2))/(2*(1-rho))，kappa=a/lambda。目标aim_t=(gamma*Sigma)^(-1)*B*[I_K+(a/gamma)*Phi]^(-1)*f_t；实际份额x_t=(1-kappa)*x_(t-1)+kappa*aim_t。若Phi对角，第k个信号等价乘1/(1+phi_k*a/gamma)，不是另一个策略。参数B、Phi、Sigma、gamma、rho、lambda及初始份额均外部给定，未在本条套用经验默认值。"
+    },
+    "timeframe": {
+      "evidence": [
+        "garleanu-pedersen-dynamictrading-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个抽象离散时点t重复计算，先观察t时点信号与已有份额，再产生新目标x_t，承受t到t+1的价格变动。选定§II–III模型未固定分钟/日/月日历；参数Phi、Sigma、lambda和贴现rho必须与所选一期单位一致。日历周期、估计样本长度和滚动重新估计计划是缺项。"
+    },
+    "universe": {
+      "evidence": [
+        "garleanu-pedersen-dynamictrading-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "外部给定S只证券与K维预测信号f_t，B为S×K载荷矩阵，Sigma为不可预测价格变动u的条件协方差。信号在t已知且Delta_f_(t+1)=-Phi*f_t+epsilon_(t+1)，Phi为K×K均值回复矩阵，原文要求使f平稳的通常条件；脚注允许确定性常数信号捕捉无条件均值。没有股票池筛选、流动性、做空可得性、成分生效时间或数据清洗规则。"
+    }
+  }
+}
