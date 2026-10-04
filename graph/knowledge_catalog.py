@@ -42,6 +42,7 @@ class KnowledgeCatalog:
         self.edges, self._versions, self._identity_targets = {}, {}, {}
         self._used_overlays = set()
         self._factor_entries, self._factor_source_rows = set(), set()
+        self._source_review_versions = set()
         self.counts = Counter()
         self.source_rows = Counter()
         collections = self.registry['collections']
@@ -53,7 +54,8 @@ class KnowledgeCatalog:
             raise ValueError('Duplicate collection path')
         loaders = {'csv_corpus': self._csv, 'classification': self._classification,
                    'factor_records': self._factors, 'reviewed_metadata': self._reviewed,
-                   'reviewed_batches': self._batches, 'classification_batch': self._classification_batch}
+                   'reviewed_batches': self._batches, 'classification_batch': self._classification_batch,
+                   'source_followups': self._source_followups}
         # Dependency ordering is semantic, not the order of paths in the registry.
         for kind in loaders:
             for collection in collections:
@@ -285,6 +287,42 @@ class KnowledgeCatalog:
         self.source_rows['factor_sources'] = len(self._factor_source_rows)
         self.counts['factor_variants'] = len(self._factor_entries)
 
+    def _source_followups(self, path):
+        from quantgraph.graph.source_review import validate as validate_review
+        index, records = validate_review(self.root, path, self.csv_rows)
+        refs = {r['record_id']: r for r in index['records']}
+        for record in records:
+            rid = record['record_id']
+            version = (rid, digest(encoded(record)))
+            if version in self._source_review_versions:
+                continue
+            self._source_review_versions.add(version)
+            entry = self.entries[self.csv_rows[rid]['entity_id']]
+            classification = record['classification']
+            relative = str(Path(path).parent / refs[rid]['path'])
+            self._classify(entry, classification['kind'], record['outcome'], refs[rid]['sha256'],
+                subtype=classification['subtype'], reason=classification['reason'],
+                source_evidence=classification['evidence'], review_path=relative)
+            entry['content_subtypes'].append(classification['subtype'])
+            entry['statuses']['source_followup'].append(record['outcome'])
+            entry['statuses']['computation_semantics'].append(record['computation_semantics'])
+            entry['statuses']['economic_validity'].append(record['economic_validity'])
+            entry['statuses']['commercial_rights'].append(record['commercial_use'])
+            entry['missing_information'].extend(record['missing_information'])
+            for source in record['sources']:
+                if source['kind'] != 'license':
+                    entry['source_names'].extend([source['attribution'], urlsplit(source['url']).hostname])
+            timeframe = record['fields']['timeframe']
+            if timeframe['status'] in {'SOURCE_CODE_REVIEWED', 'SOURCE_DESCRIPTION_REVIEWED'}:
+                entry['frequencies'].append(timeframe['text'])
+            self._version(entry, entry['identity']['namespace'], rid, record, relative, 'SOURCE_FOLLOWUP')
+            self.counts['source_reviews'] += 1
+            if record['outcome'] != 'SOURCE_UNAVAILABLE':
+                entry['statuses']['source_verification'].append(record['outcome'])
+                self.counts['reviewed_representations'] += 1
+            if record['outcome'] == 'SOURCE_CODE_REVIEWED':
+                entry['record_kinds'].append('source_implementation')
+
     def _batches(self, path):
         root = self.root / path
         read_below(self.root, path + '/README.md')  # reject traversal and symlink roots
@@ -400,7 +438,7 @@ class KnowledgeCatalog:
             source_rows=dict(self.source_rows), versions=len(self._versions), relationships=len(self.edges),
             classification_conflicts=sum(r['classification_conflict'] for r in self.entries.values()),
             classified_csv=sum(self.entries[r['entity_id']]['kind'] != 'unclassified' for r in self.csv_rows.values()),
-            **{k: self.counts[k] for k in ['reading_views', 'reviewed_representations', 'factor_variants', 'classification_decisions']},
+            **{k: self.counts[k] for k in ['reading_views', 'reviewed_representations', 'factor_variants', 'classification_decisions', 'source_reviews']},
             counting_rule='Unique knowledge entries; evidence versions and source rows are not added to this count. No global economic-equivalence claim.')
 
     def _resolve(self, identity):

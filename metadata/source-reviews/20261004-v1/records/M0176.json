@@ -1,0 +1,221 @@
+{
+  "classification": {
+    "evidence": [
+      "repository-api-json"
+    ],
+    "kind": "unclassified",
+    "reason": "原仓库/API/main与master README均404，无法取得确切变体正文；仍不能判定为交易策略或指标。",
+    "subtype": "source_unavailable"
+  },
+  "commercial_use": "REVIEW_REQUIRED",
+  "computation_semantics": "NOT_EXECUTED",
+  "corrections": [
+    "已实查原仓库、作者公开仓库及fork搜索；原来源本次不可公开读取。",
+    "本机指定原始快照与研究目录检索未命中；搜索范围有限，不证明历史来源不存在。",
+    "Internet Archive接口本次503/429，无法判断历史快照是否存在。",
+    "原CSV的可回测=高保持为未核验标签。"
+  ],
+  "economic_validity": "NOT_TESTED",
+  "fields": {
+    "assets": {
+      "evidence": [],
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "text": "原CSV标为加密市场，未从原来源验证。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原来源不可得，未补证。"
+    },
+    "entry": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原来源不可得，未补证。"
+    },
+    "execution_time": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原来源不可得，未补证。"
+    },
+    "exit": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原来源不可得，未补证。"
+    },
+    "position": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原来源不可得，未补证。"
+    },
+    "risk": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原来源不可得，未补证。"
+    },
+    "signal": {
+      "evidence": [],
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "text": "仅CSV报告RSI(9)、EMA(9)、75/25、趋势对齐；EMA作用于价格还是RSI、阈值穿越方向与交易映射均未知。"
+    },
+    "timeframe": {
+      "evidence": [],
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "text": "15分钟仅为CSV原标签，未从原来源验证。"
+    },
+    "universe": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原来源不可得，未补证。"
+    }
+  },
+  "identity_match": {
+    "evidence": [
+      "repository-api-json",
+      "author-related-readme"
+    ],
+    "reason": "同作者其他README确实引用原URL，但没有本条参数和规则；同仓库的M0191/M0193也是不同变体，不能替代。404不能区分删除、私有化或迁移。",
+    "status": "UNRESOLVED"
+  },
+  "missing_information": [
+    "原README/源码内容及commit",
+    "原文件路径或README锚点",
+    "精确变体身份",
+    "RSI输入与平滑语义",
+    "EMA输入对象与计算语义",
+    "75/25比较方向与穿越/状态判定",
+    "趋势对齐定义",
+    "长短仓入场和出场",
+    "时间止损及风险控制",
+    "仓位、费用、滑点",
+    "15分钟周期的原来源验证",
+    "可用时点及收盘确认",
+    "源码/正文许可证"
+  ],
+  "name": "15分钟RSI(9)加EMA(9)",
+  "origin": {
+    "bytes": 2220,
+    "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0176.json",
+    "row_sha256": "e6d7dea93024a700a03c7b932d7d6c316cba828e01407ad73c7a54276c83b163",
+    "rule_sha256": "7bcd7541c677795a8dd702d4317f7ea868418b7cfe226320661d663fbf22f97d",
+    "sha256": "7b6c1a61a83f5b04cd1146fd7aaa9ef5dabd9ec90e718974ff5867e7a4f25523"
+  },
+  "outcome": "SOURCE_UNAVAILABLE",
+  "record_id": "M0176",
+  "reviewed_at": "2026-10-04T11:24:47.542821+00:00",
+  "schema_version": "quantgraph-source-review/v1",
+  "source_fulltext_included": false,
+  "sources": [
+    {
+      "attribution": "GitHub / Internet Archive",
+      "bytes": 118,
+      "http_status": 404,
+      "id": "repository-api-json",
+      "kind": "availability_check",
+      "license": "REVIEW_REQUIRED",
+      "locator": "HTTP状态及响应正文；仅作来源可访问性检查",
+      "retrieved_at": "2026-10-04T11:06:19.790723+00:00",
+      "revision": "snapshot:2026-10-04T11:06:19.790723+00:00",
+      "sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0176/repository-api.json",
+      "url": "https://api.github.com/repos/visioneth/V33X-Pine-Scripts"
+    },
+    {
+      "attribution": "GitHub / Internet Archive",
+      "bytes": 43568,
+      "http_status": 200,
+      "id": "user-repos-api-json",
+      "kind": "availability_check",
+      "license": "REVIEW_REQUIRED",
+      "locator": "HTTP状态及响应正文；仅作来源可访问性检查",
+      "retrieved_at": "2026-10-04T11:06:20.997429+00:00",
+      "revision": "snapshot:2026-10-04T11:06:20.997429+00:00",
+      "sha256": "1d9d58652dd324095f4d69d4280a3761f9ddf063df9a7c0ee0afd92e7475e6bd",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0176/user-repos-api.json",
+      "url": "https://api.github.com/users/visioneth/repos?per_page=100"
+    },
+    {
+      "attribution": "GitHub / Internet Archive",
+      "bytes": 14,
+      "http_status": 404,
+      "id": "readme-main-md",
+      "kind": "availability_check",
+      "license": "REVIEW_REQUIRED",
+      "locator": "HTTP状态及响应正文；仅作来源可访问性检查",
+      "retrieved_at": "2026-10-04T11:06:21.894491+00:00",
+      "revision": "snapshot:2026-10-04T11:06:21.894491+00:00",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0176/readme-main.md",
+      "url": "https://raw.githubusercontent.com/visioneth/V33X-Pine-Scripts/main/README.md"
+    },
+    {
+      "attribution": "GitHub / Internet Archive",
+      "bytes": 55,
+      "http_status": 200,
+      "id": "fork-search-api-json",
+      "kind": "availability_check",
+      "license": "REVIEW_REQUIRED",
+      "locator": "HTTP状态及响应正文；仅作来源可访问性检查",
+      "retrieved_at": "2026-10-04T11:06:55.176376+00:00",
+      "revision": "snapshot:2026-10-04T11:06:55.176376+00:00",
+      "sha256": "4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0176/fork-search-api.json",
+      "url": "https://api.github.com/search/repositories?q=V33X-Pine-Scripts+fork%3Atrue&per_page=100"
+    },
+    {
+      "attribution": "GitHub / Internet Archive",
+      "bytes": 14,
+      "http_status": 404,
+      "id": "readme-master-md",
+      "kind": "availability_check",
+      "license": "REVIEW_REQUIRED",
+      "locator": "HTTP状态及响应正文；仅作来源可访问性检查",
+      "retrieved_at": "2026-10-04T11:06:56.090935+00:00",
+      "revision": "snapshot:2026-10-04T11:06:56.090935+00:00",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0176/readme-master.md",
+      "url": "https://raw.githubusercontent.com/visioneth/V33X-Pine-Scripts/master/README.md"
+    },
+    {
+      "attribution": "GitHub / Internet Archive",
+      "bytes": 11832,
+      "http_status": 503,
+      "id": "archive-cdx-json",
+      "kind": "availability_check",
+      "license": "REVIEW_REQUIRED",
+      "locator": "HTTP状态及响应正文；仅作来源可访问性检查",
+      "retrieved_at": "2026-10-04T11:07:02.145626+00:00",
+      "revision": "snapshot:2026-10-04T11:07:02.145626+00:00",
+      "sha256": "e084d527921708642a79724e9f0210da659bbc0905c6ce9a3a1f416e4628091c",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0176/archive-cdx.json",
+      "url": "https://web.archive.org/cdx/search/cdx?url=github.com%2Fvisioneth%2FV33X-Pine-Scripts%2A&output=json&filter=statuscode%3A200&filter=mimetype%3Atext%2Fhtml&collapse=timestamp%3A8"
+    },
+    {
+      "attribution": "GitHub / Internet Archive",
+      "bytes": 117,
+      "http_status": 429,
+      "id": "archive-availability-json",
+      "kind": "availability_check",
+      "license": "REVIEW_REQUIRED",
+      "locator": "HTTP状态及响应正文；仅作来源可访问性检查",
+      "retrieved_at": "2026-10-04T11:09:31.713844+00:00",
+      "revision": "snapshot:2026-10-04T11:09:31.713844+00:00",
+      "sha256": "ae138caf8767f7be2fe6f47f1663b0e2e28d903264707aa9b6f73bb7b223902c",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0176/archive-availability.json",
+      "url": "https://archive.org/wayback/available?url=https%3A%2F%2Fgithub.com%2Fvisioneth%2FV33X-Pine-Scripts"
+    },
+    {
+      "attribution": "visioneth",
+      "bytes": 6651,
+      "http_status": 200,
+      "id": "author-related-readme",
+      "kind": "source_page",
+      "license": "REVIEW_REQUIRED",
+      "locator": "README L154引用原仓库；L72–80描述不同的1小时RSI时间窗口规则",
+      "retrieved_at": "2026-10-04T11:07:48.755523+00:00",
+      "revision": "9a19d42c5857df5f9af5fbc4f2e9f8c551e6fe43",
+      "sha256": "497eb1b8dde60d5cbaccd1cd04ae2fb19d7615a8fb50639498d85fa3b7f2f277",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0176/related-README.md",
+      "url": "https://github.com/visioneth/crypto-kill-zones/blob/9a19d42c5857df5f9af5fbc4f2e9f8c551e6fe43/README.md"
+    }
+  ]
+}

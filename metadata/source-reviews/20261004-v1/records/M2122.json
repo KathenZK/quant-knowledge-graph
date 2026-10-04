@@ -1,0 +1,145 @@
+{
+  "classification": {
+    "evidence": [
+      "tv-pine-v2"
+    ],
+    "kind": "strategy",
+    "reason": "原页明确为回测策略，直接关联公开Pine脚本含strategy声明与entry/exit/close订单调用，可确定为策略。",
+    "subtype": "dual_engine_trading_strategy"
+  },
+  "commercial_use": "REVIEW_REQUIRED",
+  "computation_semantics": "NOT_EXECUTED",
+  "corrections": [
+    "补全策略身份、Auto周期切换、默认开平仓/仓位/费用配置。",
+    "区分图表BUY/SELL标签、前瞻可视化与实际下单门；不把页面作者的validated表述当成本仓库已验证。"
+  ],
+  "economic_validity": "NOT_TESTED",
+  "fields": {
+    "assets": {
+      "evidence": [
+        "tv-pine-v2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "使用当前图表标的syminfo.tickerid，没有固定为某个币或股票。"
+    },
+    "cost": {
+      "evidence": [
+        "tv-pine-v2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码配置佣金0%、滑点1个最小报价跳动；这是脚本设置，不是特定市场真实费用或资金费证明。"
+    },
+    "entry": {
+      "evidence": [
+        "tv-pine-v2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "动量默认评分由低于5进入>=5时尝试做多，并要求close>EMA200、ADX>=20、距EMA9不超过2ATR、RSI14<72；日线EMA可用时要求同向趋势，htfEma缺失时该门槛放行。均值回归多头要求close<EMA40−0.5ATR且RSI2<15，并保留趋势门。空头须显式开启，动量使用负分与对称过滤；均值回归空头要求close>EMA40+0.5ATR、RSI2>85。实际下单还通过交易时间和日内限制门。"
+    },
+    "execution_time": {
+      "evidence": [
+        "tv-pine-v2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v6，calc_on_every_tick=true；高周期request.security未显式使用上一根[1]。信号标签与实际订单过滤不同。历史/实时一致性、收线可用时点和模拟成交语义尚未运行验证。"
+    },
+    "exit": {
+      "evidence": [
+        "tv-pine-v2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认ATR止损：动量3ATR、均值回归2ATR；动量目标为止损距离的0.3倍，均值回归目标逐根更新至EMA40。默认计时退出门为动量5根、均值回归至少12根；动量可因相反Strong信号退出。分批止盈、保本和跟踪默认关闭。"
+    },
+    "position": {
+      "evidence": [
+        "tv-pine-v2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认权益25%，初始资金2000，pyramiding=0，默认只做多；可选按止损距离计算风险仓位，但默认关闭。"
+    },
+    "risk": {
+      "evidence": [
+        "tv-pine-v2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码含ATR止损及时间门。每次longEntry/shortEntry为真都会重设参考价、止损和计时，即使未新成交；不能把配置值直接解读为严格持仓最长12根。日损、日交易数、时段平仓等可选限制默认关闭或不限制。"
+    },
+    "signal": {
+      "evidence": [
+        "tv-pine-v2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认Auto：图表周期<=900秒用均值回归，其他周期用EMA-MACD。动量分使用EMA9/21/50/200、MACD12/26/9、RSI14、DMI/ADX14、成交量SMA20及日线EMA50，阈值±5；EMA100仅计算和绘图，不参与该评分。可选BuySell振荡分阈值±6。均值回归用EMA40、RSI2、ATR14。"
+    },
+    "timeframe": {
+      "evidence": [
+        "tv-pine-v2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Auto使用<=15分钟和>15分钟的分界；默认高周期趋势参数为D。页面另有适用周期建议，但源码不禁止30分钟或1小时。"
+    },
+    "universe": {
+      "evidence": [
+        "tv-pine-v2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "单图表标的运行，无横截面选池或跨标的组合。"
+    }
+  },
+  "identity_match": {
+    "evidence": [
+      "tv-page",
+      "tv-pine-v2"
+    ],
+    "reason": "原CSV短链f9xLZqpF重定向到同一脚本；作者patelanishp一致。页面ssrIdeaData.script直接给出PUB ID及version_maj=2，与公开源码响应version2.0绑定；不使用图表叠加指标的USER ID冒充发布源码。",
+    "status": "EXACT_URL"
+  },
+  "missing_information": [
+    "CSV只列参数；本次补入2026-09-04发布源码2.0，不宣称重建CSV采集时未保存的网页字节。",
+    "源码已审阅但未执行或回测；高周期数据、每tick计算、重复信号重置止损/计时及订单成交行为需重现。",
+    "行情、资金费、具体合约规格及商业使用许可未核验。"
+  ],
+  "name": "EMA+MACD双引擎：EMA9/21/50/100/200；双MACD12/26/9；HTF EMA50；扩展限ATR×2.0；均值回归EMA40",
+  "origin": {
+    "bytes": 2749,
+    "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0022-v2/metadata/source-records/M2122.json",
+    "row_sha256": "c69bc75ec034db31aa1dcab882d6784e05bbfd19fe4836144b9cba2d0706614e",
+    "rule_sha256": "fd6ee791a2c5951a378b867362c83a59953a9376c56a5804c4c0804d84ab0ebc",
+    "sha256": "27e44b903d4ebb3b0b7c4a1e5fcfb5c3f6dad22132cd5be5f38ed29c340b262e"
+  },
+  "outcome": "SOURCE_CODE_REVIEWED",
+  "record_id": "M2122",
+  "reviewed_at": "2026-10-04T11:24:47.542821+00:00",
+  "schema_version": "quantgraph-source-review/v1",
+  "source_fulltext_included": false,
+  "sources": [
+    {
+      "attribution": "patelanishp",
+      "bytes": 713777,
+      "http_status": 200,
+      "id": "tv-page",
+      "kind": "source_page",
+      "license": "REVIEW_REQUIRED",
+      "locator": "ssrIdeaData.script / chart_url / user；页面说明与2026-09-04更新说明",
+      "retrieved_at": "2026-10-04T11:06:10.316722+00:00",
+      "revision": "snapshot:2026-10-04",
+      "sha256": "5843360071b7f5ec9517cf95ed281731cb168766714c93a4896ec869dd6fca8f",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M2122/tradingview-page.html",
+      "url": "https://www.tradingview.com/script/f9xLZqpF-Adaptive-Dual-Engine-Strategy-Momentum-Mean-Reversion-BT/"
+    },
+    {
+      "attribution": "patelanishp",
+      "bytes": 74630,
+      "http_status": 200,
+      "id": "tv-pine-v2",
+      "kind": "public_code",
+      "license": "MPL-2.0（源码L1声明；不扩展至行情或平台资料）",
+      "locator": "JSON source字段（Pine v6），created/updated=2026-09-04T21:12:00.607898Z；源码L1许可、L19–31配置、L262–525信号与订单",
+      "retrieved_at": "2026-10-04T11:08:36.079711+00:00",
+      "revision": "PUB;8b1216ea6b4f4c568d914e2138731c24@2.0",
+      "sha256": "6663de78424e54dfa9e8ef5ac6b7aabc7d9888e2497663c865fa07a67a7c810b",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M2122/published-source-response.json",
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B8b1216ea6b4f4c568d914e2138731c24/2"
+    }
+  ]
+}

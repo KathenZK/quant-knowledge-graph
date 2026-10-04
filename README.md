@@ -4,7 +4,7 @@
 
 统一入口是 [知识目录说明](metadata/CATALOG.md) 与 [集合登记表](metadata/catalog.json)。它将 CSV 来源记录、分类阅读页、已审源码说明和因子定义汇集到同一张条目卡；原 ID、文件和证据版本均保留。收录不代表准入、可回测、盈利或可商用。
 
-当前目录有 **8,546 张条目卡：6,420 策略、2,039 因子、83 参考资料、4 待分类**。同卡的来源版本不重复计数；策略包含组成部分与选股提纲，因子包含构造提纲、特征族、安慰剂、撤回记录和参数模板，各条目的成熟程度不同。使用 `catalog-stats` 查询当前值。
+当前目录有 **8,546 张条目卡：6,423 策略、2,039 因子、83 参考资料、1 待分类**。同卡的来源版本不重复计数；策略包含组成部分与选股提纲，因子包含构造提纲、特征族、安慰剂、撤回记录和参数模板，各条目的成熟程度不同。使用 `catalog-stats` 查询当前值。
 
 ## 常用查询
 
@@ -20,6 +20,7 @@ uv run quantgraph catalog-search --kind strategy --source QuantConnect --limit 1
 uv run quantgraph catalog-search --kind factor --source qlib --frequency daily --limit 10
 uv run quantgraph catalog-search --kind reference --subtype technical_demo --limit 10
 uv run quantgraph catalog-search --kind unclassified --limit 10
+uv run quantgraph catalog-search --status SOURCE_UNAVAILABLE --limit 10
 uv run quantgraph catalog-show M2904
 uv run quantgraph catalog-show 'QuantConnect/Lean:MovingAverageCrossAlgorithm'
 uv run quantgraph catalog-show 'qlib:Alpha360:VWAP2'
@@ -48,7 +49,9 @@ curl --get 'http://127.0.0.1:8000/v1/knowledge/lookup'   --data-urlencode 'ident
 
 新网络批次按固定版本审源码，保存哈希、许可、规则和缺项。首批9条中，4条与旧 M 记录有明确文件定位及行摘要绑定，聚合到同卡的不同证据版本；这不证明参数、执行语义或经济概念等价。其余概念近邻只保留关系。[批次记录](metadata/public-web/README.md)。
 
-剩余6,782条CSV来源已追加[正文分类批次](metadata/classifications/20261004-v1/README.md)：6,242策略、453因子、83参考资料、4待分类。全部仍是`CONTENT_INFERRED / UNVERIFIED`；没有新增回测或已准入定义。
+[历史正文分类批次](metadata/classifications/20261004-v1/README.md)冻结时覆盖6,782条：6,242策略、453因子、83参考资料、4待分类，状态为`CONTENT_INFERRED / UNVERIFIED`。这一历史批次不原地改写。
+
+随后对4条待分类记录追加[来源核查](metadata/source-reviews/20261004-v1/README.md)：M0115、M0196、M2122取得原来源关联的源码，补为策略；M0176原仓库及README返回404，保留`SOURCE_UNAVAILABLE`。当前CSV已分类6,970/6,971条。新增证据与原CSV在同卡保留，本次未执行源码或回测。
 
 类型分类与规则完整性分开判断：已明确用于开平仓、风险控制或组合配置的记录可归为策略组件，即使还缺公式、参数或成交条件；工具流程、文档目录和订单回归测试归为参考资料。分类依据正文用途与证据片段，不凭标题中的“策略”、NLP、教程或 Demo 字样一刀切。来源原标签和原文继续保留。
 
@@ -111,7 +114,8 @@ quant-knowledge-graph → quant-research-lab → quant-runner
 metadata/catalog.json       # 统一知识目录的集合登记表
 metadata/CATALOG.md         # 目录计数、查询和版本规则
 metadata/corpus-checkpoints # 原 CSV 固定批次，保留 M 编号
-metadata/classifications   # 追加的正文类型决定、精确证据与分页阅读层
+metadata/classifications   # 冻结的正文类型决定、精确证据与分页阅读层
+metadata/source-reviews    # 追索原来源的补证版本与不可得原因
 metadata/public-web         # 固定源码版本的采集批次；存储名不决定知识分类
 metadata/factor-sources     # 因子变体元数据，保留来源原生 ID
 graph/knowledge_catalog.py  # 只读聚合、版本核对和检索

@@ -12,7 +12,7 @@ import pytest
 from quantgraph.api.app import create_app
 from quantgraph.api.knowledge import install_knowledge
 from quantgraph.db import AmbiguousAliasError
-from quantgraph.graph.knowledge_catalog import KnowledgeCatalog
+from quantgraph.graph.knowledge_catalog import KnowledgeCatalog, stable_id
 from quantgraph.graph.metadata_catalog import canonical_hash
 from quantgraph.graph.metadata_pilot import digest, encoded
 
@@ -507,3 +507,55 @@ def test_content_batch_keeps_identity_and_admission_separate_and_exposes_subtype
         "--kind", "reference", "--subtype", "technical_demo", "--status", "UNVERIFIED"])
     main()
     assert json.loads(capsys.readouterr().out)["total"] == 1
+
+
+def test_real_source_followups_resolve_three_rows_without_replacing_original_versions():
+    catalog = KnowledgeCatalog(ROOT)
+    for rid in ("M0115", "M0196", "M2122"):
+        row = catalog.get(rid)
+        assert row["entity_id"] == stable_id("grokbot", rid)
+        assert row["kind"] == "strategy" and not row["classification_conflict"]
+        assert row["statuses"]["source_followup"] == ["SOURCE_CODE_REVIEWED"]
+        reviews = [v for v in row["versions"] if v["representation"] == "SOURCE_FOLLOWUP"]
+        assert len(reviews) == 1 and reviews[0]["record"]["record_id"] == rid
+        assert any(v["representation"] == "SOURCE_RECORD" for v in row["versions"])
+        assert reviews[0]["record"]["computation_semantics"] == "NOT_EXECUTED"
+        assert reviews[0]["record"]["economic_validity"] == "NOT_TESTED"
+        assert reviews[0]["record"]["commercial_use"] == "REVIEW_REQUIRED"
+        assert any(c["kind"] == "unclassified" for c in row["classifications"])
+    unknown = catalog.get("M0176")
+    assert unknown["kind"] == "unclassified"
+    assert unknown["statuses"]["source_followup"] == ["SOURCE_UNAVAILABLE"]
+    assert catalog.search(status="SOURCE_UNAVAILABLE")["total"] == 1
+    assert catalog.stats()["source_reviews"] == 4
+    assert catalog.stats()["unique_entries"] == 8546
+    assert catalog.search("M0115", source="QuantConnect", frequency="Daily")["total"] == 1
+    assert catalog.search("M0196", source="TradingView", frequency="1分钟")["total"] == 1
+    assert catalog.search("M0176", frequency="15分钟")["total"] == 0
+
+
+def test_mirrored_followup_does_not_inflate_counts_or_duplicate_versions(repository):
+    from quantgraph.graph.source_review import INDEX_FORMAT, schema
+    original = load(repository / "metadata/corpus/first/metadata/source-records/M9902.json")
+    row = load(ROOT / "metadata/source-reviews/20261004-v1/records/M2122.json")
+    row.update(record_id="M9902", name="Synthetic reviewed strategy")
+    origin_path = "metadata/corpus/first/metadata/source-records/M9902.json"
+    raw = (repository / origin_path).read_bytes()
+    row["origin"] = dict(path=origin_path, sha256=digest(raw), bytes=len(raw),
+        **{k: original["provenance"][k] for k in ("row_sha256", "rule_sha256")})
+    folder = repository / "metadata/followup"
+    schema_pin = write(folder / "schema.json", schema())
+    ref = dict(path="records/M9902.json", record_id="M9902", **write(folder / "records/M9902.json", row))
+    write(folder / "index.json", dict(schema_version=INDEX_FORMAT,
+        schema=dict(path="schema.json", **schema_pin), records=[ref]))
+    registry = load(repository / "metadata/catalog.json")
+    registry["collections"].append(dict(id="source-followup", kind="source_followups", path="metadata/followup/index.json"))
+    write(repository / "metadata/catalog.json", registry)
+    before = KnowledgeCatalog(repository)
+    assert before.get("M9902")["kind"] == "strategy"
+    copytree(folder, repository / "metadata/followup-mirror")
+    registry["collections"].append(dict(id="source-followup-mirror", kind="source_followups", path="metadata/followup-mirror/index.json"))
+    write(repository / "metadata/catalog.json", registry)
+    mirrored = KnowledgeCatalog(repository)
+    assert mirrored.stats() == before.stats()
+    assert mirrored.get("M9902") == before.get("M9902")

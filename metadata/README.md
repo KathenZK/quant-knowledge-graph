@@ -7,12 +7,13 @@ uv run quantgraph catalog-stats
 uv run quantgraph catalog-search --kind strategy --source QuantConnect
 uv run quantgraph catalog-search --kind factor --source qlib --frequency daily
 uv run quantgraph catalog-search --kind reference --subtype technical_demo
+uv run quantgraph catalog-search --status SOURCE_UNAVAILABLE
 uv run quantgraph catalog-show M2904
 uv run quantgraph catalog-show 'qlib:Alpha360:VWAP2'
 uv run quantgraph catalog-validate
 ```
 
-当前统一目录为 **8,546 张条目卡：6,420 策略、2,039 因子、83 参考资料、4 待分类**；收录不代表全部准入。每次新增后用 `catalog-stats` 核对最新计数。
+当前统一目录为 **8,546 张条目卡：6,423 策略、2,039 因子、83 参考资料、1 待分类**；收录不代表全部准入。每次新增后用 `catalog-stats` 核对最新计数。
 
 原 M 编号、代码原生类名和因子原生 ID 都可查询。同名有歧义时带来源命名空间；稳定 `entity_id` 不随分类或证据版本改变。主 API `/v1/knowledge` 提供同一目录的检索、详情和关系，旧 `FactorDB` 与定义发布接口保持兼容。
 
@@ -21,6 +22,7 @@ uv run quantgraph catalog-validate
 | [CSV来源批次](CORPUS.md) | 保存原始采集字段及 M 编号，未经审核不猜类型 |
 | [分类阅读索引](directory-index.json) | 保留前200条阅读页及其历史分类证据 |
 | [正文分类批次](classifications/20261004-v1/README.md) | 对6,782条固定CSV正文追加类型、子类、理由、精确引文及质量标记 |
+| [来源核查批次](source-reviews/20261004-v1/README.md) | 对4条原记录追加3条源码核查与1条来源不可得证据 |
 | [原有审阅索引](index.json) | 给 M0256/M0259 追加已审规则和既有研究引用 |
 | [源码采集批次](public-web/README.md) | 追加固定源码版本的策略/因子说明、许可和缺项 |
 | [因子来源索引](factor-sources/index.json) | 保存1,570条因子变体及来源原生身份、定义准入和记录类型 |
@@ -29,7 +31,11 @@ uv run quantgraph catalog-validate
 
 后续同类网络批次放入 `public-web/<batch>/`，经校验后由现有集合适配器自动发现；新格式在 `catalog.json` 登记并增加适配器和测试。原冻结来源、分类裁决、原生 ID 和版本不原地改写。本次只接入仓库、CLI和主API，未修改活动 Site 或运行中的旧 Catalog。
 
-当前CSV共6,971条，其中6,967条已有类型判定；剩余`M0115`、`M0176`、`M0196`、`M2122`保留待分类。本批6,782条追加决定包括6,242策略、453因子、83参考资料、4待分类；[批次索引](classifications/20261004-v1/index.json)绑定全部目标ID、来源、代码和人工裁决。类型判定是正文推断，策略中的选股提纲与组件、因子中的构造提纲与特征族不具有相同的规则完整度。
+当前CSV共6,971条，其中6,970条已有类型判定，仅[M0176](source-reviews/20261004-v1/README.md#m0176来源不可得)待分类。历史[正文分类批次](classifications/20261004-v1/index.json)冻结时的6,782条决定仍是6,242策略、453因子、83参考资料、4待分类；原批次及其队列不改写，不能将历史队列当作当前待分类集合。当前结果用`catalog-search --kind unclassified`查询。
+
+新的[来源核查索引](source-reviews/20261004-v1/index.json)为M0115、M0196、M2122追加`SOURCE_CODE_REVIEWED`策略证据；M0176的原仓库与main/master README返回404，记录`SOURCE_UNAVAILABLE`而不补猜规则。集合适配器为`source_followups`，版本表示为`SOURCE_FOLLOWUP`，结果在`statuses.source_followup`中保留，可用`--status SOURCE_UNAVAILABLE`筛选。本批共4份核查记录，只增加4个证据版本，不增加条目卡；当前共8,556个证据版本、14份已审说明。未执行源码或回测，原文和源码快照不进入Git。
+
+正文推断、来源源码核查与规则完整性各自保留。策略中的选股提纲与组件、因子中的构造提纲与特征族不具有相同的成熟程度。
 
 ## 类型分类与完整性
 
@@ -38,6 +44,16 @@ uv run quantgraph catalog-validate
 完整公式或执行条件缺失时仍可以判定对象类型，缺项继续保留；分类状态为`CONTENT_INFERRED`，定义状态为`UNVERIFIED`。NLP或教程正文若明确把信号映射为持仓，可以是策略；文件名含Regression也不自动排除。故意拒单、指定历史合约结算断言、NULL买力或订单有效期状态检查等记录，交易动作主要用于测试接口，按参考资料收录。
 
 每条决定绑定原`record_id`、`row_sha256`和`rule_sha256`，证据须是规则正文的精确片段；否定句与“相对已收”的比较对象不能当成本条机制。新的类型证据不会改写原CSV、已有阅读页或来源审核状态。详情的`content_subtypes`和`classification_flags`保留子类与质量提示，`--subtype`可筛选子类。
+
+## 来源核查校验
+
+```bash
+uv run python -m quantgraph.graph.source_review --index metadata/source-reviews/20261004-v1/index.json
+# 仅在本机拥有被Git忽略的原始快照时使用：
+uv run python -m quantgraph.graph.source_review --index metadata/source-reviews/20261004-v1/index.json --verify-snapshots
+```
+
+普通校验核对已提交的记录、schema、摘要、原CSV绑定及来源定位；`--verify-snapshots`另核本机原始文件的字节与摘要。源码与网页原文保留在忽略目录，Git只保存自撰规则、定位、版本摘要、许可状态和缺项。
 
 ## CSV历史接收与逐编号阅读材料
 

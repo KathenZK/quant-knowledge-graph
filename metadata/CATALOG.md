@@ -10,10 +10,10 @@
 
 | 分类 | 条目卡数 | 数量含义 |
 |---|---:|---|
-| 策略 | 6,420 | 包括内容推断的候选、组成部分、选股提纲及已审源码说明，不都具备回测条件 |
+| 策略 | 6,423 | 包括内容推断的候选、组成部分、选股提纲及已审源码说明，不都具备回测条件 |
 | 因子 | 2,039 | 包括候选、构造提纲、特征族、实现和1,570条来源变体，不都通过定义准入 |
 | 参考资料 | 83 | 包括研究流程、工具、目录与技术测试，不计为策略或因子 |
-| 待分类 | 4 | 正文用途仍不足以确定，保留精确缺项与原因 |
+| 待分类 | 1 | M0176原来源不可得，现有参数摘要不足以确定用途 |
 | 合计 | 8,546 | 来源证据聚合后的条目数，不是经济独立策略或因子的数量 |
 
 用 `uv run quantgraph catalog-stats` 读取当前值；后续批次可能增加条目、版本和证据，不能仅沿用本页历史数字。
@@ -22,14 +22,15 @@
 
 - 原 CSV 保存6,971个原ID，分70批读取；M2535、M2709仍隔离，不计入仓库目录。不能把历史5,813行导入批次或旧2,898条检查点再相加。
 - 200张历史分类阅读页在对应 CSV 卡中保留原证据，当时为171策略候选、12因子候选、17待分类；不新增200张卡。
-- [本次正文分类批次](classifications/20261004-v1/README.md)覆盖此前待分类的6,782条：6,242策略、453因子、83参考资料、4待分类。追加类型证据，不新增条目卡或定义版本。
+- [历史正文分类批次](classifications/20261004-v1/README.md)冻结时覆盖6,782条：6,242策略、453因子、83参考资料、4待分类。决定与历史队列保持原样；不新增条目卡或定义版本。
+- [来源核查批次](source-reviews/20261004-v1/README.md)对上述4条追加来源证据：3条取得关联源码后补为策略，1条来源不可得。增加4个`SOURCE_FOLLOWUP`版本，不增加条目卡。
 - M0256、M0259两份原有审阅 JSON 通过行摘要和元数据摘要绑定原 M 卡，不新增2张卡。
 - 首批网络资料有5条策略实现、4条因子实现。4条明确源码定位匹配 M2904、M2914、M2598、M2599，计入原卡的不同证据版本；另5条增加5张卡。
 - 因子来源集合有1,570条变体，保留原 `factor_variant_id`；其中包含此前508条 Qlib 分发成员，这508条不另相加。
 
-因此当前总数为 `6,971 + (9 − 4) + 1,570 = 8,546`。底层有8,552个证据版本、200张历史分类阅读页、6,782条本次正文分类决定、11份已审说明、14条来源定位或概念比较关系；这些数字不再加到条目卡总数上。来源行数另记为 CSV 6,971行、因子来源1,578行，同一变体可有多条来源。
+因此当前总数为 `6,971 + (9 − 4) + 1,570 = 8,546`。底层有8,556个证据版本、200张历史分类阅读页、6,782条历史正文分类决定、14份已审说明、4份来源核查记录（`source_reviews`）、14条来源定位或概念比较关系；这些数字不再加到条目卡总数上。来源行数另记为 CSV 6,971行、因子来源1,578行，同一变体可有多条来源。
 
-CSV的6,971条来源中，6,967条已有类型判定；剩余`M0115`、`M0176`、`M0196`、`M2122`仍待分类。类型覆盖率与来源核验、定义准入、回测准备度分开统计。本次新增原生定义0、回测0，类型状态仍为`CONTENT_INFERRED`，定义状态仍为`UNVERIFIED`。
+CSV的6,971条来源中，6,970条已有类型判定；当前仅[M0176](source-reviews/20261004-v1/README.md#m0176来源不可得)待分类。原6,782条内容决定保持`CONTENT_INFERRED / UNVERIFIED`；三条后续源码核查单独记录`SOURCE_CODE_REVIEWED`，不会改写原CSV或历史决定。本次未执行源码或回测，也不把新增来源证据算作定义准入。
 
 1,570条因子变体的记录类型如下，分类时不能把安慰剂或撤回记录当作有效信号：
 
@@ -56,7 +57,7 @@ CSV的6,971条来源中，6,967条已有类型判定；剩余`M0115`、`M0176`�
 
 技术示例逐条看目的。明确市场条件到持仓的NLP、教程或Regression实现可保留为策略；故意触发拒单、以固定历史合约检验结算、用NULL买力或对订单有效期作状态断言的记录，归为`reference/technical_demo`。标题、文件名及“策略”二字都不能单独决定类型。
 
-[分类批次索引](classifications/20261004-v1/index.json)保存目标ID与产物摘要，`decisions.jsonl`保存逐条类型、子类、理由、原文精确引文和质量标记，`overrides.json`保存人工裁决，并绑定原行与规则摘要。分页阅读材料每页最多100条；[待分类队列](classifications/20261004-v1/unclassified-queue.json)保留缺项与理由。`CONTENT_INFERRED`说明依据已收录正文判断，不代表重新打开并核验了上游网站。分类不会提升来源、定义准入、计算、经济有效性或许可状态。
+[分类批次索引](classifications/20261004-v1/index.json)保存目标ID与产物摘要，`decisions.jsonl`保存逐条类型、子类、理由、原文精确引文和质量标记，`overrides.json`保存人工裁决，并绑定原行与规则摘要。分页阅读材料每页最多100条；[历史待分类队列](classifications/20261004-v1/unclassified-queue.json)保留批次冻结时的4条及其理由。它不是当前队列；后续来源补证后的结果使用`catalog-search --kind unclassified`查询。`CONTENT_INFERRED`说明依据已收录正文判断，不代表重新打开并核验了上游网站。分类不会提升来源、定义准入、计算、经济有效性或许可状态。
 
 ## 查找与查看
 
@@ -67,6 +68,7 @@ uv run quantgraph catalog-search --kind factor --source qlib --frequency daily -
 uv run quantgraph catalog-search --kind factor --record-kind placebo --limit 10
 uv run quantgraph catalog-search --kind reference --subtype technical_demo --limit 10
 uv run quantgraph catalog-search --kind unclassified --limit 10
+uv run quantgraph catalog-search --status SOURCE_UNAVAILABLE --limit 10
 uv run quantgraph catalog-search --status UNVERIFIED --limit 10
 uv run quantgraph catalog-search 'RSI' --status SOURCE_CODE_REVIEWED
 uv run quantgraph catalog-show M2904
@@ -116,6 +118,8 @@ curl --get 'http://127.0.0.1:8000/v1/knowledge/lookup' \
 
 CSV分类决定必须匹配`record_id`、`row_sha256`和`rule_sha256`。原有审阅覆盖同时核对CSV行摘要及审阅JSON摘要。网络补证只有在批次明确声明`SAME_SOURCE_PATH`、绑定精确CSV行和源文件路径后才进入同卡；不能只凭URL、名称或指标相同自动合并。
 
+原来源追索使用`source_followups`集合，把[核查记录](source-reviews/20261004-v1/index.json)绑定到精确原CSV行及规则摘要。每条以`SOURCE_FOLLOWUP`表示保留新版本；原ID与原文不变。`statuses.source_followup`记录`SOURCE_CODE_REVIEWED`或`SOURCE_UNAVAILABLE`，核查失败也保留证据与明确缺项。
+
 `SOURCE_EVIDENCE_AGGREGATION_NOT_EQUIVALENCE`表示同卡汇集来源证据，不声明规则参数、源码版本或经济概念等价。`POSSIBLE_CONCEPT_OVERLAP`仅建立比较关系，不合卡、不减少计数，也不冒充策略使用该因子的证据。
 
 详情保留所有`versions`，`current_version`默认为空，策略为`NO_IMPLICIT_LATEST_SELECTION`。跨批次的新版本不隐式覆盖旧版本；同一来源身份被重新绑定到另一张卡会拒绝加载。非空分类决定相互冲突时，目录返回待分类并标记`classification_conflict`，不任取一个结论。
@@ -126,6 +130,7 @@ CSV分类决定必须匹配`record_id`、`row_sha256`和`rule_sha256`。原有�
 |---|---|
 | 分类 | `UNREVIEWED`尚未判断；`CONTENT_INFERRED`依据原摘要推断；`REVIEWED_TYPE`已审对象类型 |
 | 来源核验 | `CATALOG_REPORTED_UNVERIFIED`只是采集原值；`SOURCE_CODE_REVIEWED`审查过所列源码 |
+| 来源追索 | `statuses.source_followup`：`SOURCE_CODE_REVIEWED`已审所列源码；`SOURCE_UNAVAILABLE`本次未能取得对应原文/源码 |
 | 定义准入 | 保留因子原有`ADMITTED`及其他准入状态，不能由收录动作自动升级 |
 | 计算语义 | 未运行或未完成核验时保留`NOT_VERIFIED`等限制 |
 | 经济有效性 | `NOT_ESTABLISHED_BY_COLLECTION`表示此次收录没有建立经济有效性 |
@@ -135,7 +140,7 @@ CSV分类决定必须匹配`record_id`、`row_sha256`和`rule_sha256`。原有�
 
 ## 添加来源与验证
 
-`metadata/catalog.json`只登记集合，当前包含CSV来源、历史阅读分类、正文分类批次、原有审阅、网络批次和因子定义适配器。所有集合都投影为同一目录结构，存储路径或访问权限不决定用户看到的主分类。
+`metadata/catalog.json`只登记集合，当前包含CSV来源、历史阅读分类、正文分类批次、来源核查、原有审阅、网络批次和因子定义适配器。所有集合都投影为同一目录结构，存储路径或访问权限不决定用户看到的主分类。
 
 新增同类网络批次使用`metadata/public-web/<batch>/index.json`、`manifest.json`、`source-lock.json`及`schema.json`约定。现有`reviewed_batches`适配器自动发现其子目录，无需为每批新增API或CLI路径；发布前仍须校验整个新批次。新来源格式则在登记表增加集合和适配器，并补充读取、版本和边界测试。
 
@@ -145,7 +150,12 @@ CSV分类决定必须匹配`record_id`、`row_sha256`和`rule_sha256`。原有�
 
 ```bash
 uv run quantgraph catalog-validate
+uv run python -m quantgraph.graph.source_review --index metadata/source-reviews/20261004-v1/index.json
+# 仅在本机存在原始快照时：
+uv run python -m quantgraph.graph.source_review --index metadata/source-reviews/20261004-v1/index.json --verify-snapshots
 uv run pytest -q tests/test_metadata_corpus.py tests/test_public_web_metadata.py tests/test_classification_batch.py
 ```
+
+来源核查的普通校验不要求Git包含网页或源码原文；`--verify-snapshots`另核本机忽略目录中的快照字节和摘要。
 
 目录加载会检查集合身份、索引文件摘要、精确来源绑定、版本归属和关系引用；正文分类批次另校验目标覆盖、引文子串、分类代码摘要与离线重建一致性。新批次自动发现、跨来源同名、跨批次版本和只读API需要保持测试覆盖；这一验证不代替`quantgraph validate-release`的完整定义发布门槛，也不代表网站已部署或经济验证通过。
