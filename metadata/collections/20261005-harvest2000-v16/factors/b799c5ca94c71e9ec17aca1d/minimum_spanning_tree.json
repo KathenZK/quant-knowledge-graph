@@ -1,0 +1,124 @@
+{
+  "economic_basis": {
+    "hypothesis": "从给定无向关系图中选择无环边集，在保留每个连通分量连通性的前提下使总边权最小。原生输出森林图和原边属性；可用于描述稀疏连接骨架，具体金融距离/成本与标量汇总时点仍需另定。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-2c3663e26e531ad56df69060",
+        "harvest-source-bf09a0087c6e61d0b0db3be8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-2c3663e26e531ad56df69060",
+        "harvest-source-bf09a0087c6e61d0b0db3be8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "明确minimum_spanning_tree(...,algorithm=\"kruskal\",weight=\"weight\",ignore_nan=False)内置无向简单Graph路径。所有边权显式Python整数且绝对值<=2^53−1（排除bool）；调用期间图固定；边属性不得存在None键，这是额外合同。 minimum_spanning_edges的directed guard拒绝有向图，ALGORITHMS表选kruskal_mst_edges并传minimum=True。不沿用Returns docstring一处误写maximum；真实排序为升序。Prim/Borůvka和多重边未逐支路审，但未来也不是新族。 核心读取wt=d.get(weight,1)，NaN默认抛异常；研究合同用显式整数不进入缺失权1与ignore_nan过滤路径。即使partition参数为None，核心仍d.get(partition)检查EdgePartition INCLUDED/EXCLUDED，故排除None键才能保证所有边按标准无约束Kruskal处理。 Python sorted只用wt为key，等权保留原边迭代顺序。UnionFind对首次出现节点建singleton，用父指针查根并路径压缩，union按集合规模把小根挂到大根。只在两端根不同才yield边，故不会形成环。 达到len(G)−1已选边可提前结束；图不连通时没有这个边数，扫描全部边后自然返回各分量森林。wrapper创建G.__class__，复制graph属性、所有node属性和选中edge属性；孤立节点仍保留，原图未原地删除边。 原函数只返回T。所写Σw_e是源文最低总权重目标，可据T汇总，但不伪称原函数另返回标量风险或收益。未定义金融相关转距离、容量或连接强度映射；不可把正相关越大直接当低成本假设。 边界：等权可有多棵同成本森林；原边插入/迭代顺序影响返回哪棵，不能声称节点重排后选边逐字不变。总目标相同也不证明数值/运行已实测。 无边图返回保留全部节点的空边森林；负权允许且不意味着负环问题，因为可行集强制无环。原自环可被并查集跳过，但本合同排除输入自环。 有向图、多重图、约束partition、随机生成树、树计数和外部backend未审；原包装支持程度不作为本条完整承诺。 None属性键可能被当作默认partition内容，不遵守本研究合同会改变升序边集合并结果，不能继续用标准MST公式解释。 输入层次聚类树/Mapper图和MST是不同对象；M0866原代码使用PCA/UMAP投影后的Mapper+DBSCAN簇/links分组再归一配置，没有将最小成本全覆盖森林作为规则输出。其未冻结外部依赖内部是否借MST初始化未知，不宣称全链无MST。 最小生成树与单链接聚类可能共享计算子步骤，但HRP旧规则登记的是聚类/准对角化/递归风险权重；本条明确是给定原图的最低总成本森林输出，未把换图窗口/资产或Kruskal/Prim换实现当新。 输出：原生Graph T，含全部输入节点及一份最小总边权森林；目标Σw_e是自撰数学定义，不声称函数直接返回标量。整个结构与成本目标同族。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-2c3663e26e531ad56df69060",
+        "harvest-source-bf09a0087c6e61d0b0db3be8"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "从给定无向关系图中选择无环边集，在保留每个连通分量连通性的前提下使总边权最小。原生输出森林图和原边属性；可用于描述稀疏连接骨架，具体金融距离/成本与标量汇总时点仍需另定。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-2c3663e26e531ad56df69060",
+        "harvest-source-bf09a0087c6e61d0b0db3be8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "设无向简单无自环图G=(V,E)，各连通分量C_j；w_e为显式Python整数边权，|w_e|<=2^53−1，允许负值。求F*∈argmin_(F⊆E) Σ_(e∈F)w_e，要求(V,F)无环且对每个C_j在F中的诱导子图连通，所以每个分量选|C_j|−1边、孤立节点0边。原生Kruskal从空并查集开始，按w_e稳定升序遍历原边；仅当两端在不同当前连通集合时纳入并合并集合。函数返回保留全部V和选中原边属性的同类Graph T，不直接返回Σw_e。总权重是目标值、边集/森林是原生输出，同族不按求解器、权重取反的最大生成树或节点/边坐标另计。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-2c3663e26e531ad56df69060",
+        "harvest-source-bf09a0087c6e61d0b0db3be8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in undirected simple loop-free networkx.Graph, N>=1, possibly disconnected; stable during call）：完整已观察节点与允许连接边；森林可保留孤立节点。金融构图/节点全集/发布时间未锁。；edge weights and attributes（each edge explicit weight is Python int excluding bool, abs<=2^53-1 and signed values allowed; None not in any edge attribute dictionary）：目标总成本用同一单位；排除None键是避免隐藏partition命中，非原函数主动保护。。参数：weight：边成本/距离，不推定金融相关性转换；范围reviewed literal attribute weight; every edge has Python int with abs<=2^53-1; no None-key attributes；源码默认weight；algorithm：默认维护者实现；Prim/Boruvka同目标不另计；范围only kruskal reviewed；源码默认kruskal；ignore_nan：NaN默认报错；跳过NaN会改变输入图，不默认为缺失处理；范围reviewed False, finite integer input；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-2c3663e26e531ad56df69060",
+        "harvest-source-bf09a0087c6e61d0b0db3be8"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/关系/边权或容量的定义、数据供应商、观察发布时点与PIT均MISSING",
+    "完整Python/NetworkX后端运行环境未冻结，未执行上游或数值验证",
+    "原始论文全文及其许可未审；未证明金融应用的收益或风险有效性",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "覆盖全部连通分量的最小总权重森林",
+  "native_source_id": "minimum_spanning_tree",
+  "one_line": "从给定无向关系图中选择无环边集，在保留每个连通分量连通性的前提下使总边权最小。原生输出森林图和原边属性；可用于描述稀疏连接骨架，具体金融距离/成本与标量汇总时点仍需另定。",
+  "record_id": "minimum_spanning_tree",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。Edmonds–Karp按原函数名保留算法归属；生成树源码注明David Eppstein修改，UnionFind注明Josiah Carlson原代码与D. Eppstein修改。仅审当前仓库字节，不称已核原始论文或外部历史原件。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。Edmonds–Karp按原函数名保留算法归属；生成树源码注明David Eppstein修改，UnionFind注明Josiah Carlson原代码与D. Eppstein修改。仅审当前仓库字节，不称已核原始论文或外部历史原件。",
+      "id": "harvest-source-2c3663e26e531ad56df69060",
+      "license": "BSD-3-Clause",
+      "locator": "imports and EdgePartition enum:L1-L42; complete Kruskal input interpretation sorting and forest merging:L143-L260; native minimum edge wrapper algorithm selection and original attribution:L368-L468; full minimum spanning tree graph-return wrapper:L565-L622",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "96522defb0a8e5aa86b53cd171868547444d9da1eea1271c0fe50fb415332d90",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/tree/mst.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。Edmonds–Karp按原函数名保留算法归属；生成树源码注明David Eppstein修改，UnionFind注明Josiah Carlson原代码与D. Eppstein修改。仅审当前仓库字节，不称已核原始论文或外部历史原件。",
+      "id": "harvest-source-bf09a0087c6e61d0b0db3be8",
+      "license": "BSD-3-Clause",
+      "locator": "original authors, constructor and exact root/path compression:L1-L66; union by set weight:L91-L106",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "3712a5065c92ef50355a59eddbc2fec3266823d13166f26d87fd1ed97495ae2b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/utils/union_find.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}
