@@ -1,0 +1,143 @@
+{
+  "economic_basis": {
+    "hypothesis": "将向上/向下吸附的两条指数平滑边界按离散状态混合，并可反馈上一输出；本条固定零初始化的Pine v6实现。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-d2c759f0bb545dbddc60dd9d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "递推仅访问当前src与先前持久状态；源码没有闭bar条件，当前bar内可变，研究须保存收盘后的值并固定初始历史。第一根前状态为0，短前史与不同起始点可改变结果。只是一条滤波线，源码不下单。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-d2c759f0bb545dbddc60dd9d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "以mihakralj固定commit的Pine v6函数为唯一计算定义；alpha的分子是浮点字面量2.0。原作者v4代码只作归属和版本对照，不把其2/(length+1)的未明确整数除法行为当作已核实的浮点公式。 b、c、os、ts均用var初始化为0并持续递推；0不是na，第一根不会由nz换成src。feedback开启时第一根a=z*src，其余历史不足不会自动得到原作者初始化。 上带不低于有限输入，下带不高于有限输入；当输入碰到更新后的上带时状态先置1，只有未碰上带且碰下带才置0，两者都相等时上侧优先。 状态决定β偏向哪一条带；β、反馈、窗口和移植版本共同属于一个算法家族，不拆不同设置或原作者版本另计。 边界：零初始化是具体实现合同：若首根src>0且feedback关闭，则B=src、C=αsrc、状态为1；不能说首根两带都等于输入。 若feedback开启，初始ts=0有效，所以第一根反馈混合a=fbWeight*src，而不是src。 源码未统一拒绝NaN/Inf；三元比较和nz的无效值路径不等同数学max/min，有限数值合同外未运行验证。 β=0时上状态选下带、下状态选上带；β=1反之，不能把作者功能标签当成已定义的止损下单规则。 原作者06pNDfyd v2.0使用Pine v4且alpha分子为整数2；未确认该版本输入整数除法语义。其历史nz初始化和默认200亦不同，不宣称逐值等价。 输出：一条滤波序列；参数、移植、状态和输出方向不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-d2c759f0bb545dbddc60dd9d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "将向上/向下吸附的两条指数平滑边界按离散状态混合，并可反馈上一输出；本条固定零初始化的Pine v6实现。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-d2c759f0bb545dbddc60dd9d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "采用固定 Miha Pine v6 实现：α=2.0/(L+1)。计算第一根前 B=C=o=y=0。若feedback关则a_t=x_t，开则a_t=z x_t+(1−z)nz(y_(t−1),x_t)。B_t=max(a_t,α a_t+(1−α)nz(B_(t−1),a_t))，C_t=min(a_t,α a_t+(1−α)nz(C_(t−1),a_t))（max/min表述限有限输入）。若a_t=B_t则o_t=1，否则若a_t=C_t则o_t=0，否则保持o_(t−1)。U_t=β B_t+(1−β)C_t，D_t=β C_t+(1−β)B_t；y_t=o_t U_t+(1−o_t)D_t。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-d2c759f0bb545dbddc60dd9d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src（ordered finite real Pine series float）：默认close；不要求特定市场或周期。参数：period：平滑长度；源码明确浮点alpha；范围UI integer>=2；源码默认14；beta：上/下带混合；范围0..1；源码默认0.8；src：输入；范围Pine series float；源码默认close；feedback：用上一输出参与输入；范围bool；源码默认False；fbWeight：反馈时当前源权重；范围.01..1；源码默认0.5"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-d2c759f0bb545dbddc60dd9d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "mihakralj/pinescript",
+  "lab": null,
+  "missing_information": [
+    "Pine运行环境未冻结；未执行、未回测",
+    "实际市场/周期/数据PIT缺失",
+    "无收益方向与经济有效性证据",
+    "原作者v4 alpha整数除法语义未确认；本条仅采用Miha v6定义"
+  ],
+  "name": "双侧吸附平滑与状态切换的 Modular 滤波（零初始化实现）",
+  "native_source_id": "modf",
+  "one_line": "将向上/向下吸附的两条指数平滑边界按离散状态混合，并可反馈上一输出；本条固定零初始化的Pine v6实现。",
+  "record_id": "modf",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/modf.pine"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "mihakralj；源码明确归属算法作者 alexgrover",
+      "id": "harvest-source-d2c759f0bb545dbddc60dd9d",
+      "license": "MIT",
+      "locator": "MIT, maintainer, original-author attribution and explicit floating alpha:L1-L18; zero initialization, dual bands, state and output recursion:L19-L46; input defaults and function call:L50-L58",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "ae1f45062118271f3638b35ea618603513c356e9171376fdb428f493b3c5618e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/modf.pine",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "mihakralj；源码明确归属算法作者 alexgrover",
+      "id": "harvest-source-09e3d7dd1083f0fc94331481",
+      "license": "MIT",
+      "locator": "license:L1-L21",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "19436752dbc325b6013c778a438efa521d0fefe0eb53aebf83d7753543052936",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "mihakralj；源码明确归属算法作者 alexgrover",
+      "id": "harvest-source-ba25544c6555f6fbc5f26c2b",
+      "license": "MIT",
+      "locator": "maintainer and scope:L1-L64",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "78d3686264db24dcfdebcc72f243e29460d7f2c11a8404f3e4793f45f9f5f64b",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "mihakralj；源码明确归属算法作者 alexgrover",
+      "id": "harvest-source-1a51adaef3c037d106b1114e",
+      "license": "NOT_DECLARED_IN_SOURCE_HEADER",
+      "locator": "original author attribution and version comparison only; Pine v4 division semantics unresolved:L1-L19",
+      "revision": "PUB;XEzqeha6N91LTRqdMcIMFhRQdKPP1MrV@2.0",
+      "sha256": "5719cbfa66ff3af5d0092b7a6b302ed0ed6435ae5ea0ea64cce3ec207b52b378",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3BXEzqeha6N91LTRqdMcIMFhRQdKPP1MrV/2",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "mihakralj；源码明确归属算法作者 alexgrover",
+      "id": "harvest-source-9c25dd95a7561b2f452e7f36",
+      "license": "NOT_ESTABLISHED",
+      "locator": "Pinned author publication or identity listing",
+      "revision": "content-sha256:1dd15f17c1259562d4a083ae5855751ba48910f76c3513ea649a627fe051774e",
+      "sha256": "1dd15f17c1259562d4a083ae5855751ba48910f76c3513ea649a627fe051774e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://www.tradingview.com/script/06pNDfyd-Modular-Filter-Spot-Trends-And-Smooth-Price/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "economic_basis": {
+    "hypothesis": "把窗口偏度和超额峰度的偏离合成一个非正态形状诊断量，而不把它当作独立收益预测依据。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "全部输入样本已观测并发布之后才能得到整窗输出；不得回填为窗内早期实时值。若y绑定未来标签，仅能在标签完全实现后做诊断。上游是静态估计函数，无自动滚动、排序或PIT保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认axis=None先展平输入，计算整窗均值并去均值；内部skew/kurtosis再中心化，按除以n的有偏矩计算，不使用n−1或无偏高阶矩校正。 把偏度平方和四分之一超额峰度平方乘以n/6；统计量与其附属p值只合计一个构造。 helper以方差相对机器精度的退化检查处理常数/近常数数据；会输出NaN而不自动填0。χ²上尾是统计分布调用，未运行数值验证。 边界：源码文档提示渐近χ²校准需要大样本（举>2000）；这不是函数强制最小样本，也不保证金融相关序列在2001点就满足零假设。 常量/退化方差导致skew或kurtosis为NaN；NaN/Inf和数值消减不作良性填补。 非拒绝正态不证明正态；拒绝也不说明可获利、正负方向或尾风险概率大小。 不同窗口n会直接放大统计量，不能不作样本量约束就横截面比较；p值不是新因子条目。 输出：一个算法构造；斜率/截距/区间、统计量/p值、轴/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把窗口偏度和超额峰度的偏离合成一个非正态形状诊断量，而不把它当作独立收益预测依据。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "n为样本数，μ=mean(x)，m_k=mean[(x−μ)^k]；s=m3/m2^(3/2)，k=m4/m2²−3。JB=n/6*(s²+k²/4)。实现先对x去均值，再由skew/kurtosis helper重新计算中心矩，二者均使用bias=True且kurtosis的fisher=True。同时返回χ²(df=2)的上尾概率p作为渐近检验结果。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（1D finite nonconstant real array-like, n>=2 for meaningful shape moments）：已完成窗口观测；若为收益，收益定义和样本频率另固定。检验校准的样本量/分布假设独立判断。参数：axis：实际signature默认None；源码doc参数段写0与签名不一致，遵循签名；范围None or valid array axis；源码默认None；nan_policy：默认缺值传播；范围propagate/omit/raise via decorator；源码默认propagate；keepdims：输出形状；范围bool；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "scipy/scipy",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "NumPy/array API backend及special函数运行环境未冻结，固定源码不代表平台数值已重现",
+    "金融输入绑定、窗口/频率、市场PIT/供应商/发布时间缺失",
+    "无收益方向、样本外预测能力与经济有效性证据"
+  ],
+  "name": "联合偏度与超额峰度的 Jarque–Bera 统计量",
+  "native_source_id": "jarque_bera",
+  "one_line": "把窗口偏度和超额峰度的偏离合成一个非正态形状诊断量，而不把它当作独立收益预测依据。",
+  "record_id": "jarque_bera",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文",
+      "id": "harvest-source-dcaa4b2ca5e08690e90c3e75",
+      "license": "BSD-3-Clause",
+      "locator": "public signature and asymptotic caveat:L1875-L1899; JB core:L1934-L1952; central moment helper:L1206-L1225; skew bias default:L1240-L1245; skew moment calculation:L1319-L1340; kurtosis defaults:L1341-L1346; kurtosis calculation:L1427-L1445; pvalue greater branch:L1559-L1575; unweighted mean helper:L11117-L11169; Chi2 helper:L11246-L11259",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "f83fbd7a76afa61a865820917184eabd67d5ebc04cde4db102ba1ba86e94d0cb",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文",
+      "id": "harvest-source-bbbecde791dfaaebacee469f",
+      "license": "BSD-3-Clause",
+      "locator": "axis/NaN defaults and paired handling:L530-L620",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "a1650feb6cfcf6f9a1c764c824e725b39f039a2e19001fb60f48f88c354d102f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_axis_nan_policy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文",
+      "id": "harvest-source-8b75a55d87853f7f61280e73",
+      "license": "BSD-3-Clause",
+      "locator": "sample count and shared masks:L677-L693",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "14dbc9a53b4f6bb8dffe8fb302574fed5a522b619ce15696b1e29766d81b238c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_array_api.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文",
+      "id": "harvest-source-088c1d9c7042eaaa4ba39300",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_scope:L1-L81",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "6a4d55e53007e0d509dc30f5a8d460c280f0f5bcf2567c910948e7eb23047b10",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

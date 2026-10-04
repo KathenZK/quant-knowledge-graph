@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "分阶段确认可能筛去首次趋势反转噪声，但等待时间、旧锚失效和错过行情的代价尚无经济证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "旧锚止损未验证位于新入场下方；状态没有过期，也没有成交确认回调。"
+  ],
+  "name": "均线反转后两次MACD金叉的事件顺序多头",
+  "native_source_id": "482803",
+  "one_line": "先记录价穿EMA的K线，再等待MACD首金叉、线值超过首金叉值和后续金叉，按最初K线设置退出。",
+  "record_id": "482803",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8EGranville%E4%B8%8EMACD%E5%A4%9A%E9%87%8D%E4%BF%A1%E5%8F%B7%E7%A1%AE%E8%AE%A4%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5-Trend-Following-Trading-Strategy-Based-on-Granville-and-MACD-Multiple-Signal-Confirmation.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ianzeng123；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-482803-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "7ba667069f5bb31f223874b79200d01cf938ea7f3987b8db56b164b4b4f1d73e",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8EGranville%E4%B8%8EMACD%E5%A4%9A%E9%87%8D%E4%BF%A1%E5%8F%B7%E7%A1%AE%E8%AE%A4%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5-Trend-Following-Trading-Strategy-Based-on-Granville-and-MACD-Multiple-Signal-Confirmation.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-482803-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-482803-published-code"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：源码未明确佣金、滑点、借贷、资金费及冲击成本。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-482803-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅多：三个状态granvilleDone、macdGC_done、breakoutDone均true，bar_index>b0且M再次上穿S才entry Long；同分支提交退出后重置三个布尔及M0/b0。没有显式空仓判断或事件过期上限。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-482803-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5，仅当前图表历史序列；按价反转→首金叉→线值突破→再次金叉的顺序计算并请求市价入场和括号，未显式逐tick/收盘成交/成交重算。成交价及同bar订单行为未执行核验。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-482803-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "入场信号bar同时提交Exit Long括号：stop=最初价穿EMA那根保存的L，limit=本次信号C+1.618×最初那根(H−L)。没有其他反向平仓条件；后续新序列在持仓时触发可再次提交同ID括号，不能当永久固定初始退出。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-482803-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始资本100000；default_qty_type=percent_of_equity，值10；entry未覆盖qty。未显式声明pyramiding或保证金参数，不补数。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-482803-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "没有单笔风险百分比或最大持有时间；价跌破E不自动取消序列，再次上穿E才覆盖原事件。保存的旧L未校验低于最新入场C，范围也未校验大于0；状态重置依据订单请求而非成交确认。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-482803-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "E=EMA20(C)，M=EMA12(C)−EMA26(C)，S=EMA9(M)。价上穿E时granvilleDone=true，保存该根L及H−L，并重置macdGC_done/breakoutDone=false、initialMacdHigh/goldenCrossBar=na。已记录反转且尚无首金叉时，M上穿S记录M0=M及b0=bar_index；其后M>M0把breakoutDone置true。各if按此顺序执行，首金叉可与价格反转同bar。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-482803-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-482803-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

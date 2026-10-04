@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述近期短路径的方向效率在不同价格区域如何分布；保留位移归一、覆盖聚合和样本成熟度。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ce8039d35edab96c479fcaa3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "是当前最后bar的窗口快照，源码不生成完整历史逐bar序列；当前OHLC与最后一条路径包含未完成bar，需收盘再保存快照。任意未来时点的剖面不许向过去回填。真实采样时钟、ATR运行语义/PIT行情未冻结。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ce8039d35edab96c479fcaa3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码只在barstate.islast重算快照：先清空价格箱，范围包含当前bar。路径i=p的终点也是当前bar；注释称只用完成窗但代码未要求isconfirmed。 价格箱下/上索引为floor((路径最低/最高−lo)/Δ)，夹至[0,R−1]；两者之间全部箱各收一份相同观测权重，没有逐笔路径或逐价成交量。 每箱cnt_r=Σw_i，e_r=Σw_i e_i/cnt_r，d_r类似。默认平滑时将相邻有效箱原始加权和按0.35加入本箱分子/分母，不递归使用已平滑结果；无有效本箱则跳过。 q_r=min(cnt_r/(.35×max_s cnt_s),1)。效率得分E_r=e_r(.55+.45d_r)(.55+.45q_r)；折返得分C_r=(1−e_r)(.70+.30(1−d_r))(.55+.45q_r)。各选严格最大值的最小索引箱，中心lo+(r+.5)Δ作为两个核心价格。 globalEff=Σ e_r cnt_r/Σcnt_r，globalDisp类似，globalChurn=1−globalEff；e,d为可选相邻平滑后值，cnt为本箱原始计数。globalEff>=.58标方向，<=.38标折返，否则过渡。路径会投给多箱，因此全局均值按覆盖箱数再加权，不是每路径一票。 边界：usable>=p+10才聚合，但没有全窗有限性或ATR非na的显式检查；早期ATR缺失可能令权重与得分失效。 无有效权重时全局指标/核心价保持na，默认WAITING；空箱不能等同零效率。 价箱范围随当前窗口变化；不能把今天某箱与昨天同索引当相同价格区间。 源码仅以路径内最高最低覆盖箱，未证明真实成交逐一穿越全部价格，也不是成交量分布、订单簿或概率。 多个箱、两个核心价、全局统计及颜色状态为同一复合构造，不按输出坐标充数。 输出：一个完整构造；多方向/价格箱/状态/参数/输出坐标均不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ce8039d35edab96c479fcaa3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述近期短路径的方向效率在不同价格区域如何分布；保留位移归一、覆盖聚合和样本成熟度。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ce8039d35edab96c479fcaa3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "在最近L根高低范围[lo,hi]中设R个价格箱，Δ=max(hi−lo,tick×R)/R。对i=p..min(L−1,bar_index)的路径（i根前→i−p根前）：A_i=Σ_(h=0..p−1)|C[i−h]−C[i−h−1]|，B_i=|C[i−p]−C[i]|；e_i=A_i>tick?min(B_i/A_i,1):0，d_i=min(B_i/(max(ATR[i],tick)√p),2)/2，w_i=.35+.65d_i。把w_i、w_ie_i、w_id_i分别加到该路径p+1根OHLC最高与最低覆盖的每个价格箱。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ce8039d35edab96c479fcaa3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "high,low,close（ordered aligned Pine series floats）：近期OHLC和路径；价格穿行覆盖以最高最低区间代理；syminfo.mintick（positive finite scalar）：箱宽及路径分母保护；bar_index（nonnegative integer）：可用历史长度上限。参数：lookback：观察窗口；范围80..400；源码默认180；rows：价格箱数；范围16..40；源码默认28；pathLen：每条路径步数；范围2..12；源码默认5；atrLen：路径起点ATR归一；范围5..100；源码默认14；smoothRows：相邻箱0.35权重平滑；范围bool；源码默认True"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ce8039d35edab96c479fcaa3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "tradingview/public-script",
+  "lab": null,
+  "missing_information": [
+    "未运行Pine源码或金融回测",
+    "Pine内建/外部依赖的具体运行构建未冻结",
+    "数据供应商/PIT修订/跨市场时钟/实际标的采样周期未固定",
+    "没有收益方向/经济有效性证据"
+  ],
+  "name": "按价格区域聚合的路径效率剖面",
+  "native_source_id": "9hSpUEb3",
+  "one_line": "描述近期短路径的方向效率在不同价格区域如何分布；保留位移归一、覆盖聚合和样本成熟度。",
+  "record_id": "9hSpUEb3",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B1d595c6901d34aabae2625af0cee63a3/1"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Kelly_Carter12",
+      "id": "harvest-source-ce8039d35edab96c479fcaa3",
+      "license": "NOT_DECLARED_IN_SOURCE_HEADER",
+      "locator": "identity, scope and parameters:L1-L17; time-series precomputations:L38-L42; per-evaluation output initialization:L67-L74; price bins, path weights, neighboring smoothing and core scores:L82-L204",
+      "revision": "PUB;1d595c6901d34aabae2625af0cee63a3@1.0",
+      "sha256": "4bc1f7573c263969f82df3acb31f5d430c2daae2233c584edc32747149e45439",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B1d595c6901d34aabae2625af0cee63a3/1",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Kelly_Carter12",
+      "id": "harvest-source-c0ae53794696d86eff899f1d",
+      "license": "NOT_ESTABLISHED",
+      "locator": "Pinned author publication or identity listing",
+      "revision": "content-sha256:8f9d4a5e1d27bf3623b620782092f930ce5e6f97e8cc342a3c3aea62aae5fe37",
+      "sha256": "8f9d4a5e1d27bf3623b620782092f930ce5e6f97e8cc342a3c3aea62aae5fe37",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://www.tradingview.com/script/9hSpUEb3-Adaptive-Path-Efficiency-Profile/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Kelly_Carter12",
+      "id": "harvest-source-cfb919666a9c4b1297df8e29",
+      "license": "NOT_ESTABLISHED",
+      "locator": "Pinned author publication or identity listing",
+      "revision": "content-sha256:df8095d575c933be15165a54bb8ca523a6893fb5adfed00bb1c3b07acebacd47",
+      "sha256": "df8095d575c933be15165a54bb8ca523a6893fb5adfed00bb1c3b07acebacd47",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-24/?script_access=open&script_type=indicators&sort=latest_popular",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "将趋势动量与随机RSI放在相同尺度上可能提供互补拐点信息，但归一窗口不稳定和OR条件冗余须研究，未证明经济有效。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "不能把每bar变化的ATR止损描述为入场固定或只向有利方向移动。"
+  ],
+  "name": "随机RSI与归一MACD差分合流的极值反弹多头",
+  "native_source_id": "482816",
+  "one_line": "把MACD映射到随机RSI的滚动范围，再与K/D差分合流，在低位回升时做多、高位转弱或动态ATR括号退出。",
+  "record_id": "482816",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%8A%A8%E6%80%81%E8%87%AA%E9%80%82%E5%BA%94%E5%A4%9A%E6%8C%87%E6%A0%87%E4%BA%A4%E5%8F%89%E7%AD%96%E7%95%A5%E7%BB%93%E5%90%88SRSI%E5%92%8CMACD%E7%9A%84%E6%99%BA%E8%83%BD%E9%A3%8E%E6%8E%A7%E7%B3%BB%E7%BB%9F-Dynamic-Adaptive-Multi-Indicator-Crossing-Strategy-with-SRSI-MACD-Smart-Risk-Control-System.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ianzeng123；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-482816-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "d809ee1366f2902c077a49154d183890e9164aee21c706a7b374f0b1e6211343",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%8A%A8%E6%80%81%E8%87%AA%E9%80%82%E5%BA%94%E5%A4%9A%E6%8C%87%E6%A0%87%E4%BA%A4%E5%8F%89%E7%AD%96%E7%95%A5%E7%BB%93%E5%90%88SRSI%E5%92%8CMACD%E7%9A%84%E6%99%BA%E8%83%BD%E9%A3%8E%E6%8E%A7%E7%B3%BB%E7%BB%9F-Dynamic-Adaptive-Multi-Indicator-Crossing-Strategy-with-SRSI-MACD-Smart-Risk-Control-System.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-482816-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-482816-published-code"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：未显式设置佣金、滑点、融资、资金费和冲击。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-482816-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅当空仓且K<20，(z>0或a>0)，以及(K上升或M上升)同时成立，entry Buy长。不是单纯K/D金叉，也不要求两条差值都正或二者都上升。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-482816-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v6，无外部周期/品种依赖；先空仓入场请求，再对可见多仓更新括号，最后条件平仓。绘图differenceTotal的伪K线不用于价格输入；未设逐tick/收盘成交/成交重算，实际执行未核。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-482816-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "持有多仓时，每bar重算stop=position_avg_price−2.5ATR14、limit=position_avg_price+2.5ATR14，默认两者都启用。另当K>80且(z<=0或a<=0)且(K下降或M下降)时close Buy。ATR取当前值、未冻结入场值，也非单调收紧的跟踪止损。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-482816-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "10%权益；entry不覆盖qty且要求position_size==0。初始资本、保证金和单笔风险额度未声明；2.5ATR并非风险预算仓位公式。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-482816-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "归一分母hiM−loM可为0且源码没有后备值；Stoch的零振幅和早期缺值依Pine内建语义，未运行核验。当前ATR增大可扩大括号距离；初次可见持仓前尚未请求括号保护。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-482816-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "R=RSI16(C)，K=SMA3(stoch(R,R,R,16))，D=SMA3(K)；M=EMA12(C)−EMA26(C)，MACD信号EMA9被计算但不参与入口。loK/hiK分别为K的16棒最低/最高，loM/hiM同理。N=(M−loM)/(hiM−loM)×(hiK−loK)+loK；a=K−D，b=K−N，z=(a+b)/2。up为rising(x,1)，down为falling(x,1)。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-482816-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-482816-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

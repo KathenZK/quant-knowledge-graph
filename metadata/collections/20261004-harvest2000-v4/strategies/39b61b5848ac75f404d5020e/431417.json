@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "滚动成交量加权成本与价格趋势的相对位置可能识别回调；分批退出和追加风险的收益作用尚未检验。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "默认20%被显式qty覆盖，实际每次默认权益名义100%；不是组合最大20%。",
+    "默认LONG被完整摘要，SHORT分支存在负qty等未审风险，不扩计。",
+    "M3158旧资料不完整，暂只能保留邻近来源，不能凭标题断言无重复。"
+  ],
+  "name": "价格 EMA 与滚动量价均价 EMA 交叉、回调加仓及 RSI 分批退出",
+  "native_source_id": "431417",
+  "one_line": "默认只做多：价格EMA上穿滚动量价均价EMA入场，均线排列下回调再穿慢线加仓；RSI回落分批，反穿或均价损失门清仓。",
+  "record_id": "431417",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%8A%A8%E9%87%8F%E8%B6%8B%E5%8A%BF%E8%BF%BD%E8%B8%AA%E7%AD%96%E7%95%A5Momentum-Trend-Tracking-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 mohanee；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-431417-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "de7b244b92ceac6b2acf9e42a045aa0e8defbc18e0d811c5e2244571af17f116",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%8A%A8%E9%87%8F%E8%B6%8B%E5%8A%BF%E8%BF%BD%E8%B8%AA%E7%AD%96%E7%95%A5Momentum-Trend-Tracking-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-431417-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-431417-published-code"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：手续费、滑点、资金费及借贷费均无显式定义，不能因策略声明没写就称零费用。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-431417-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "position_size==0且E上穿F且LONG时entry(\"LE\",qty1)；已有净多数量>1且上述加仓门时再entry同ID。不是任意仓位>0即可追加，合约单位1是实际阈值。SHORT可选分支不作为本条默认规则。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-431417-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "未声明逐tick、成交后重算或收盘处理。顺序为首次/追加entry，再分批close，再交叉close，再价格门close；同bar多退出与entry相遇、份额保留和实际成交时点未运行验证。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-431417-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当position_size>=1时stop=avg_price×0.92，profit=avg_price×1.01；否则stop=0、profit=2C[1]。默认takePartialProfits=true：LONG且C>=profit且RSI5下穿90，close(\"LE\",qty=position_size/3)。另E下穿F则close全仓；C<stop也close全仓。均为条件市价请求，8%线不是挂单式硬止损；1%仅分批门，仍需RSI回落。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-431417-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始资本10000、pyramiding=5、声明默认权益20%，但entry均用qty1覆盖：q=(equity×10/100)/(C×8/100)，再若qC>=equity则q=equity/C。默认化简为每次请求整份权益名义，而非20%；有加仓时不能把每单资金上限当组合敞口上限。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-431417-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "数量<1时stop为0且profit门改2C[1]，因此分数合约不能直接套常见8%保护描述；C穿stop后的市价成交可能更差。SHORT分支用负position_size/3作qty且其价格止损已注释，本记录不覆盖其正确性或当成独立策略。成交量和为0时V分母边界未补值。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-431417-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只覆盖tradeDirection=LONG默认。V=sum100(hlc3×volume)/sum100(volume)，E=EMA25(C)，F=EMA25(V)，G=EMA50(V)，R=RSI5(C)。H=EMA25(V[25])仅用于绘图和已注释的第二加仓分支，不控制订单。首入场用E上穿F；唯一启用加仓条件为position_size>1且E>F且F>G且C上穿G且C>O。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-431417-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-431417-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}
