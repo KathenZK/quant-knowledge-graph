@@ -7,6 +7,7 @@ from quantgraph.graph.collection_dedup import (
     STATUS,
     baseline_candidates,
     code_fingerprints,
+    collection_source_keys,
     fingerprint_clusters,
     normalize_source_url,
     source_key,
@@ -22,6 +23,108 @@ from quantgraph.graph.collection_dedup import (
 def test_tradingview_locales_and_slugs_keep_case_sensitive_script_id(url):
     assert normalize_source_url(url) == 'tradingview:aB12Cd34'
     assert normalize_source_url(url) != normalize_source_url(url.replace('aB12Cd34', 'ab12cd34'))
+
+
+def test_tradingview_facade_native_id_is_a_source_location_not_a_version_or_title():
+    url = 'https://pine-facade.tradingview.com/pine-facade/get/PUB%3B' + 'a' * 32 + '/1'
+    expected = 'tradingview-pub:PUB;' + 'a' * 32
+    assert normalize_source_url(url) == expected
+    assert normalize_source_url(url + '.0?utm_source=ignored') == expected
+    assert normalize_source_url(url.replace('/1', '/2')) == expected
+    for invalid in [url.replace('/1', '/-1.0'), url.replace('PUB%3B', 'USER%3B'),
+                    url.replace('a' * 32, 'a' * 31)]:
+        assert normalize_source_url(invalid) is None
+
+
+def test_legacy_tradingview_native_tokens_are_opaque_and_case_sensitive():
+    token = 'AuVCpaVo2YGf4cxsVqp0LxAeJTWNB3yx'
+    url = 'https://pine-facade.tradingview.com/pine-facade/get/PUB%3B' + token + '/1'
+    assert normalize_source_url(url) == 'tradingview-pub:PUB;' + token
+    assert normalize_source_url(url) != normalize_source_url(url.replace(token, token.lower()))
+    row, review, sources = code_review()
+    sources['code']['url'] = row['sources'][0]['url'] = url
+    assert 'tradingview-native:PUB;' + token + '@1' in collection_source_keys(row, review, sources)
+
+
+def code_review(*, native='9KcWvaBf', namespace='TradingView', publication=True):
+    url = ('https://pine-facade.tradingview.com/pine-facade/get/PUB%3B' + 'a' * 32 + '/1'
+           if publication else 'https://github.com/example/library/blob/' + 'b' * 40 + '/algorithms.py')
+    sources = {'code': dict(role='source_code', url=url, sha256='c' * 64, extraction='json.source' if publication else 'utf8')}
+    record = dict(entity_type='factor', identity_namespace=namespace, record_id=native, native_source_id=native,
+                  sources=[dict(id='code', url=url)], factor_fields={field: dict(evidence=['code'])
+                  for field in ('formula', 'inputs', 'calculation')},
+                  rights=dict(terms_url='https://www.tradingview.com/script/9KcWvaBf-Original-title/'))
+    review = dict(definition_signature='editorial signature', field_spans={field: [dict(source_id='code',
+                  first_line=1, last_line=5, sha256='d' * 64)] for field in record['factor_fields']})
+    return record, review, sources
+
+
+@pytest.mark.parametrize('match', ['native_version', 'publication_version', 'exact_script_bytes'])
+def test_whole_script_repeats_survive_namespace_names_and_editorial_span_changes(match):
+    old, before, old_sources = code_review()
+    new, after, new_sources = deepcopy((old, before, old_sources))
+    new.update(identity_namespace='another namespace', name='Renamed summary')
+    after['definition_signature'] = 'unrelated signature'
+    for spans in after['field_spans'].values():
+        spans[0].update(first_line=2, last_line=6, sha256='e' * 64)
+    if match == 'native_version':
+        new.update(record_id='aB12Cd34', native_source_id='aB12Cd34')
+        new['rights']['terms_url'] = 'https://cn.tradingview.com/script/aB12Cd34-Other-name/'
+        # Different response-container bytes cannot disguise the same PUB@1.
+        new_sources['code'].update(url=new_sources['code']['url'] + '.0', sha256='f' * 64)
+    elif match == 'publication_version':
+        new_sources['code'].update(url=new_sources['code']['url'].replace('a' * 32, 'f' * 32), sha256='f' * 64)
+        new['rights']['terms_url'] = 'https://cn.tradingview.com/script/9KcWvaBf-Renamed/'
+    else:
+        new.update(record_id='aB12Cd34', native_source_id='aB12Cd34')
+        new['rights']['terms_url'] = 'https://cn.tradingview.com/script/aB12Cd34/'
+        new_sources['code']['url'] = new_sources['code']['url'].replace('a' * 32, 'f' * 32)
+    new['sources'][0]['url'] = new_sources['code']['url']
+    assert collection_source_keys(old, before, old_sources) & collection_source_keys(new, after, new_sources)
+
+
+def test_a_new_script_version_is_not_automatically_the_same_definition():
+    old, before, old_sources = code_review()
+    new, after, new_sources = deepcopy((old, before, old_sources))
+    new_sources['code'].update(url=new_sources['code']['url'].removesuffix('/1') + '/2', sha256='e' * 64)
+    new['sources'][0]['url'] = new_sources['code']['url']
+    assert not collection_source_keys(old, before, old_sources) & collection_source_keys(new, after, new_sources)
+
+
+def test_same_library_file_different_core_spans_are_not_a_duplicate():
+    first, review, sources = code_review(native='algorithm_one', publication=False)
+    second, other_review = deepcopy((first, review))
+    second.update(record_id='algorithm_two', native_source_id='algorithm_two')
+    # The shared input line remains; the algorithm definitions occupy different
+    # parts of the very same file. Its byte hash alone cannot merge them.
+    for field in ('formula', 'calculation'):
+        other_review['field_spans'][field][0].update(first_line=20, last_line=30, sha256='e' * 64)
+    assert not collection_source_keys(first, review, sources) & collection_source_keys(second, other_review, sources)
+    second['identity_namespace'] = 'mirror'
+    assert collection_source_keys(first, review, sources) == collection_source_keys(second, review, sources)
+
+
+def test_a_shared_helper_or_published_script_reference_is_not_a_whole_definition():
+    first, review, sources = code_review(native='algorithm_one', publication=False)
+    sources['helper'] = dict(role='source_code', url='https://example.org/helper.py', sha256='e' * 64, extraction='utf8')
+    first['sources'].append(dict(id='helper', url=sources['helper']['url']))
+    for field in first['factor_fields']:
+        first['factor_fields'][field]['evidence'].append('helper')
+        review['field_spans'][field].append(dict(source_id='helper', first_line=1, last_line=10, sha256='f' * 64))
+    second, second_sources = deepcopy((first, sources))
+    second_sources['code']['sha256'] = '0' * 64
+    assert not collection_source_keys(first, review, sources) & collection_source_keys(second, review, second_sources)
+    # A TV library function is not the whole publication: its native algorithm
+    # ID must not inherit a page-only record's whole-script identity shortcut.
+    function, function_review, function_sources = code_review(native='algorithm_one')
+    assert all(key.startswith('scoped-code:') for key in collection_source_keys(function, function_review, function_sources))
+
+
+@pytest.mark.parametrize('role', ['license', 'attribution', 'source_index', 'published_definition'])
+def test_noncode_snapshots_do_not_create_code_duplicate_keys(role):
+    row, review, sources = code_review()
+    sources['code']['role'] = role
+    assert collection_source_keys(row, review, sources) == frozenset()
 
 
 @pytest.mark.parametrize('url', [

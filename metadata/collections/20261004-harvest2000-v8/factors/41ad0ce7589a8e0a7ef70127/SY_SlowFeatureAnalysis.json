@@ -1,0 +1,136 @@
+{
+  "economic_basis": {
+    "hypothesis": "将一个完整窗口内的五种分段统计白化后，寻找相邻段变化最慢的线性方向，并描述该方向与原统计的关系。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5e6f67287c5c27b1e19da062",
+        "harvest-source-73d2de861382cc78a1172a49"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5e6f67287c5c27b1e19da062",
+        "harvest-source-73d2de861382cc78a1172a49"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "W默认20，W<10直接报错；L<20警告后返回单一NaN。剩余不足一段的尾部点被丢弃，不补齐也不滚动重叠。 AC1在每段调用CO_AutoCorr的Fourier分支：对该段去均值，FFT长度2^(nextpow2(L)+1)，功率谱IFFT除以零阶值，返回滞后1；没有按L−1修正非零滞后分母。源码持久缓存按完全相同输入匹配，仅复用同一结果。 X五列只中心化，没有先按各列标准差作单位化。保留特征方向的阈值严格为大于最大特征值的1%，等于不保留。保留不足两维返回NaN。 白化实际是Xc V_keep diag(1/sqrt(λ_keep))的降维PCA投影；虽然注释写symmetric/ZCA，代码没有再右乘V_keepᵀ，按实际乘法记录。随后对一阶差分再去均值计算样本协方差，不是直接DᵀD/(W−1)。 返回10个汇总字段，不返回实时逐棒信号。源码没有依据收益标签选择方向；不过均值、协方差、白化和慢方向都使用全分析窗口，只能在窗口完整结束后提取，不能将窗内慢分数回填为当时已知。 MathWorks当前官方文档字节补证skewness默认flag1未作偏置修正、cov默认观测数减一并包含NaN；该文档只支持静态语义说明，未固定hctsa实际安装的MATLAB版本或数值库。 边界：输入不先z-score；改变y的量纲会以不同尺度改变均值/方差列相对其它列的权重，进而影响特征值门槛及保留维度，不声称尺度不变。 常量段会导致偏度、ACF或Trev分母为0；函数没有统一有限性检查，NaN/Inf可能令eig报错，不能把所有退化情况描述为优雅返回NaN。 未强制所有五列相关有效；某个原统计列恒定时相应corr可为NaN。多个近似相同的特征值允许特征方向不唯一，相关输出受数值版本与基选择影响。 窗口全局白化和方向拟合属于窗末统计；不是已完成样本外学习，不输出收益预测能力。源码对噪声η约2的说明不作为本库实测结果。 保留维度、十个输出、不同W及同一构造换语言均不另计因子。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5e6f67287c5c27b1e19da062",
+        "harvest-source-73d2de861382cc78a1172a49"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "将一个完整窗口内的五种分段统计白化后，寻找相邻段变化最慢的线性方向，并描述该方向与原统计的关系。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5e6f67287c5c27b1e19da062",
+        "harvest-source-73d2de861382cc78a1172a49"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "设W=numWindows、L=floor(N/W)，只取最早LW点，切成W个不重叠L长段。每段计算均值μ、样本方差Σ(z−μ)²/(L−1)、未校正偏度mean((z−μ)³)/mean((z−μ)²)^1.5、AC1=Σ_(i=1..L−1)(z_i−μ)(z_(i+1)−μ)/Σ_(i=1..L)(z_i−μ)²、Trev=mean(diff(z)³)/mean(diff(z)²)^1.5，组成X∈R^(W×5)。Xc=X−列均值；Cx=XcᵀXc/(W−1)，特征值λ降序、方向V。保留λ_j>.01λ_1的q>=2列，Z=Xc V_keep diag(λ_keep^(−1/2))。令D=diff(Z)，Dc=D−列均值，Cd=DcᵀDc/(W−2)；其特征值η升序、方向U，慢分数S=ZU。输出η最小/最大/样本标准差、λ_1/Σλ、|corr(S_1,(XcV)_1)|和S_1对X五列各自的绝对Pearson相关。全部输出为一个族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5e6f67287c5c27b1e19da062",
+        "harvest-source-73d2de861382cc78a1172a49"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（finite real ordered evenly sampled vector; W>=10 and at least20 samples per segment）：完整观察窗口；每段需正方差以避免ACF/偏度/Trev退化，统计协方差还须保留至少两维。未绑定金融变量或市场频率。。参数：numWindows：分段数，同族参数；范围research integer>=10 with floor(N/W)>=20；源码默认20；relative_eigenvalue_floor：保留协方差方向门槛；范围source constant; strictly greater；源码默认0.01"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5e6f67287c5c27b1e19da062",
+        "harvest-source-73d2de861382cc78a1172a49"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "分窗统计的白化慢变化方向",
+  "native_source_id": "SY_SlowFeatureAnalysis",
+  "one_line": "将一个完整窗口内的五种分段统计白化后，寻找相邻段变化最慢的线性方向，并描述该方向与原统计的关系。",
+  "record_id": "SY_SlowFeatureAnalysis",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SY_SlowFeatureAnalysis.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5e6f67287c5c27b1e19da062",
+      "license": "GPL-3.0-or-later",
+      "locator": "native contract, algorithm attribution and GPL:L1-L105; window checks, segmentation and five statistics:L111-L151; PCA whitening, differenced sample covariance and output family:L156-L200",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "afebfcd1d7e73194d0830d6faeb4b539a821e57f3e1814ad7f0d096536fd731e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SY_SlowFeatureAnalysis.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-73d2de861382cc78a1172a49",
+      "license": "GPL-3.0-or-later",
+      "locator": "native contract, GPL and defaults:L1-L76; Fourier ACF normalization and exact-match cache:L91-L159",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "80d88552c6092c1b5a31207985a98bc20d70f99045659f30a4f6316a9a63afa6",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/CO_AutoCorr.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

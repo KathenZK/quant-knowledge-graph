@@ -45,6 +45,7 @@ class KnowledgeCatalog:
         self._source_review_versions = set()
         self._collection_review_versions = set()
         self._collection_definition_signatures = set()
+        self._collection_source_owners = {}
         self.counts = Counter()
         self.source_rows = Counter()
         collections = self.registry['collections']
@@ -452,11 +453,17 @@ class KnowledgeCatalog:
             signature = review['definition_signature']
             if signature in self._collection_definition_signatures:
                 raise ValueError('Repeated collection definition across batches')
+            source_keys = result['source_keys'][(ns, kind, rid)]
+            for source_key in sorted(source_keys):
+                if source_key in self._collection_source_owners:
+                    raise ValueError(f'Repeated collection source definition across batches: {ns}:{rid} and '
+                                     f'{self._collection_source_owners[source_key]} share {source_key}')
             eid = stable_id(ns, rid)
             if eid in self.entries:
                 raise ValueError('New collection definition collides with an existing knowledge identity')
             self._collection_review_versions.add(identity)
             self._collection_definition_signatures.add(signature)
+            self._collection_source_owners.update((source_key, ns + ':' + rid) for source_key in source_keys)
             entry = self._entry(ns, rid, record['name'])
             self._classify(entry, kind, 'SOURCE_DEFINITION_REVIEWED', revision)
             entry['record_kinds'].append('source_definition')

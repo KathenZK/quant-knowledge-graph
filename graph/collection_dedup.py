@@ -1,8 +1,10 @@
-"""Offline duplicate *candidate* retrieval, never an equivalence/admission rule.
+"""Offline source-identity checks and duplicate candidate retrieval.
 
 URL keys describe source locations, not definitions: one file/paper may contain
 many definitions. Callers retain symbols/locators with ``source_key``. No source
 code is executed. Fingerprints are deliberately conservative and incomplete.
+``collection_source_keys`` additionally detects repeated, precisely scoped code
+evidence in validated collections; it does not establish economic equivalence.
 """
 import ast
 from collections import defaultdict
@@ -20,6 +22,26 @@ _DOI = re.compile(r'10\.\d{4,9}/[^\s<>"?#]+', re.I)
 _TRACKING = {'fbclid', 'gclid', 'dclid', 'msclkid', 'mc_cid', 'mc_eid', '_ga'}
 _DIRECTORIES = {'', 'scripts', 'script', 'strategies', 'strategy', 'strategy-library',
                 'indicators', 'indicator', 'library', 'collections', 'search', 'topics'}
+
+
+def _tradingview_published_version(url):
+    """A pinned facade script/version, not a title or arbitrary PUB-like text."""
+    if not isinstance(url, str):
+        return None
+    try:
+        parsed = urlsplit(url)
+        if (parsed.scheme not in {'https', 'http'} or parsed.hostname != 'pine-facade.tradingview.com'
+                or parsed.username or parsed.password or parsed.port not in {None, 80, 443}):
+            return None
+    except ValueError:
+        return None
+    match = re.fullmatch(r'/pine-facade/get/(PUB;[A-Za-z0-9]{32})/([0-9]+(?:\.[0-9]+)*)/?', unquote(parsed.path))
+    if not match:
+        return None
+    parts = [int(part) for part in match[2].split('.')]
+    while len(parts) > 1 and parts[-1] == 0:
+        parts.pop()
+    return match[1], '.'.join(map(str, parts))
 
 
 def normalize_source_url(url, *, ref=None):
@@ -80,6 +102,8 @@ def normalize_source_url(url, *, ref=None):
             return None
         return f'github:{owner.casefold()}/{repo.casefold()}/{file_path}'
     if host == 'tradingview.com' or host.endswith('.tradingview.com'):
+        if published := _tradingview_published_version(value):
+            return 'tradingview-pub:' + published[0]
         match = re.fullmatch(r'/(?:[a-z]{2}(?:-[a-z]{2})?/)?script/([A-Za-z0-9]{8})(?:-[^/]+)?/?', path, re.I)
         return 'tradingview:' + match[1] if match else None
     if host in {'fmz.com', 'www.fmz.com'}:
@@ -106,6 +130,56 @@ def source_key(url, *, symbol=None, locator=None, ref=None):
 
 def _hash(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
+
+
+def collection_source_keys(record, review, sources):
+    """Return objective repeat-evidence keys for an already validated review.
+
+    ``sources`` is its validated source-lock mapping. Namespace, display names
+    and the reviewer's definition_signature deliberately do not participate.
+    Generic code requires the complete core-field span sets, not just a file
+    hash or a shared helper. Separate functions in one library can coexist.
+
+    A record whose native ID is its original TradingView publication short ID,
+    backed by one facade code source for all core fields, describes a whole
+    published script. Its PUB/version, original page/version and code bytes are
+    also checked irrespective of editorial span boundaries. Do not apply that
+    whole-script shortcut to arbitrary library functions or citation sources.
+    Empty keys do not establish novelty; semantic duplicate review is separate.
+    """
+    core = {'factor': ('formula', 'inputs', 'calculation'),
+            'strategy': ('signal', 'entry', 'exit', 'position')}[record['entity_type']]
+    fields = record.get('strategy_fields') or record['factor_fields']
+    declared = {source['id']: source for source in record['sources']}
+    scopes, core_ids = [], set()
+    for field in core:
+        spans = review['field_spans'].get(field, [])
+        # The caller has checked membership, source roles and hash syntax. Do
+        # not silently turn a document/code mixture into a full code identity.
+        if (not spans or any(span['source_id'] not in declared
+                or span['source_id'] not in fields[field]['evidence']
+                or sources[span['source_id']]['role'] != 'source_code' for span in spans)):
+            return frozenset()
+        core_ids.update(span['source_id'] for span in spans)
+        scopes.append((field, sorted({(sources[span['source_id']]['sha256'],
+            sources[span['source_id']]['extraction'], span['first_line'], span['last_line'], span['sha256'])
+            for span in spans})))
+    keys = {'scoped-code:' + _hash([record['entity_type'], scopes])}
+    if len(core_ids) != 1:
+        return frozenset(keys)
+    source = sources[next(iter(core_ids))]
+    published = _tradingview_published_version(source['url'])
+    native = record['native_source_id']
+    urls = [s['url'] for s in declared.values()]
+    urls.append(record.get('rights', {}).get('terms_url'))
+    urls.append(review.get('source_identity', {}).get('author_page_url'))
+    if (published and re.fullmatch(r'[A-Za-z0-9]{8}', native)
+            and 'tradingview:' + native in {normalize_source_url(url) for url in urls}):
+        script, version = published
+        keys.update({'tradingview-publication:' + native + '@' + version,
+                     'tradingview-native:' + script + '@' + version,
+                     'tradingview-script-bytes:' + source['extraction'] + ':' + source['sha256']})
+    return frozenset(keys)
 
 
 def _literal(node):

@@ -10,6 +10,7 @@ from pathlib import Path
 import re
 from urllib.parse import unquote, urlsplit
 
+from quantgraph.graph.collection_dedup import collection_source_keys
 from quantgraph.graph.metadata_pilot import digest, encoded, read_below, validate
 
 
@@ -198,6 +199,7 @@ def validate_collection(root, directory, *, verify_snapshots=False):
     if len(decisions) != len(reviews['records']) or set(decisions) != set(refs):
         raise ValueError('Collection review membership mismatch')
     accepted, seen_definitions, used_sources = Counter(), set(), set()
+    source_keys, source_owners = {}, {}
     for record in records:
         key, kind = _identity(record), record['entity_type']
         review, ref = decisions[key], refs[key]
@@ -261,6 +263,13 @@ def validate_collection(root, directory, *, verify_snapshots=False):
             if (not isinstance(review['definition_signature'], str) or not review['definition_signature'].strip()
                     or review['definition_signature'] in seen_definitions):
                 raise ValueError('Repeated definition cannot increase collection quota')
+            keys = collection_source_keys(record, review, sources)
+            for source_key in sorted(keys):
+                if source_key in source_owners:
+                    raise ValueError(f'Repeated collection source definition: {key} and '
+                                     f'{source_owners[source_key]} share {source_key}')
+            source_owners.update((source_key, key) for source_key in keys)
+            source_keys[key] = keys
             seen_definitions.add(review['definition_signature'])
             accepted[kind] += 1
     if used_sources != set(sources):
@@ -268,7 +277,7 @@ def validate_collection(root, directory, *, verify_snapshots=False):
     counts = dict(records=len(records), strategy=accepted['strategy'], factor=accepted['factor'], execution_trials=0)
     if manifest['counts'] != counts:
         raise ValueError('Collection counts differ from reviewed definitions')
-    return dict(records=records, reviews=decisions, manifest=manifest, counts=counts,
+    return dict(records=records, reviews=decisions, manifest=manifest, counts=counts, source_keys=source_keys,
                 raw_evidence_verified=bool(verify_snapshots))
 
 

@@ -314,3 +314,100 @@ def test_same_definition_cannot_gain_quota_through_a_second_batch(collection, ne
     from quantgraph.graph.knowledge_catalog import KnowledgeCatalog
     with pytest.raises(ValueError, match='Repeated collection definition across batches'):
         KnowledgeCatalog(collection)
+
+
+def add_library_algorithm(root, *, different_spans):
+    """Two algorithms in one file, or an editorially renamed copy of one."""
+    base = root / DIRECTORY
+    row = load(base / 'factors/SyntheticVolume.json')
+    row.update(identity_namespace='Another/Library', record_id='OtherAlgorithm', native_source_id='OtherAlgorithm')
+    ref = dict(path='factors/OtherAlgorithm.json', entity_type='factor', identity_namespace=row['identity_namespace'],
+               record_id=row['record_id'], **save(base / 'factors/OtherAlgorithm.json', row))
+    index = load(base / 'index.json'); index['records'].append(ref); save(base / 'index.json', index)
+    reviews = load(base / 'reviews.json'); other = deepcopy(reviews['records'][0])
+    other.update(identity_namespace=row['identity_namespace'], record_id=row['record_id'], definition_signature='different-signature')
+    if different_spans:
+        # Same source bytes/input; the second formula occupies a distinct line.
+        for name in ('formula', 'calculation'):
+            other['field_spans'][name][0].update(first_line=2, last_line=2,
+                                               sha256=digest(b'output = mean(close * volume)'))
+    reviews['records'].append(other); save(base / 'reviews.json', reviews)
+    manifest = load(base / 'manifest.json'); manifest['counts'].update(records=2, factor=2)
+    save(base / 'manifest.json', manifest); refresh(root)
+
+
+def test_renamed_signature_and_namespace_cannot_repeat_same_core_code_in_one_batch(collection):
+    add_library_algorithm(collection, different_spans=False)
+    with pytest.raises(ValueError, match='Repeated collection source definition'):
+        validate_collection(collection, DIRECTORY)
+
+
+def test_different_algorithms_in_same_source_file_keep_separate_quota(collection):
+    add_library_algorithm(collection, different_spans=True)
+    result = validate_collection(collection, DIRECTORY, verify_snapshots=True)
+    assert result['counts']['factor'] == 2
+    from quantgraph.graph.knowledge_catalog import KnowledgeCatalog
+    save(collection / 'metadata/catalog.json', dict(schema_version='quantgraph-catalog-registry/v1', overlays=[],
+        collections=[dict(id='first', kind='source_collection', path=DIRECTORY)]))
+    assert KnowledgeCatalog(collection).stats()['collected_factor'] == 2
+
+
+def make_tradingview_collection(root):
+    """Synthetic Pine bytes with the real duplicate's public/native identities."""
+    base = root / DIRECTORY
+    row = load(base / 'factors/SyntheticVolume.json')
+    row.update(identity_namespace='tradingview/public-script', record_id='9KcWvaBf', native_source_id='9KcWvaBf')
+    code = '//@version=6\nindicator("Synthetic review fixture")\nplot(close)\n'
+    raw = encoded(dict(source=code, version='1.0'))
+    url = 'https://pine-facade.tradingview.com/pine-facade/get/PUB%3B9410078a82ee4673b180a5633bcb016b/1'
+    source = row['sources'][0]
+    source.update(url=url, revision='PUB;9410078a82ee4673b180a5633bcb016b@1.0', sha256=digest(raw))
+    row['rights']['terms_url'] = 'https://www.tradingview.com/script/9KcWvaBf-Original-title/'
+    (base / 'factors/SyntheticVolume.json').unlink()
+    save(base / 'factors/9KcWvaBf.json', row)
+    index = load(base / 'index.json')
+    index['records'][0].update(path='factors/9KcWvaBf.json', identity_namespace=row['identity_namespace'], record_id=row['record_id'])
+    save(base / 'index.json', index)
+    locks = load(base / 'source-lock.json'); lock = locks['sources'][0]
+    lock.update(url=url, revision=source['revision'], sha256=source['sha256'], revision_kind='content_snapshot',
+                extraction='json.source', bytes=len(raw), snapshot_path='datasets/raw/sources/synthetic/script.json')
+    save(root / lock['snapshot_path'], raw); save(base / 'source-lock.json', locks)
+    reviews = load(base / 'reviews.json'); review = reviews['records'][0]
+    review.update(identity_namespace=row['identity_namespace'], record_id=row['record_id'])
+    for spans in review['field_spans'].values():
+        spans[0]['sha256'] = digest('\n'.join(code.splitlines()[:2]).encode())
+    save(base / 'reviews.json', reviews); refresh(root)
+
+
+@pytest.mark.parametrize('same_review_mirror', [False, True])
+def test_tradingview_duplicate_across_batches_ignores_namespace_and_changed_summary(collection, same_review_mirror):
+    from quantgraph.graph.knowledge_catalog import KnowledgeCatalog
+    make_tradingview_collection(collection)
+    second = 'metadata/mirror/test-batch'
+    base = collection / second
+    copytree(collection / DIRECTORY, base)
+    if not same_review_mirror:
+        row = load(base / 'factors/9KcWvaBf.json')
+        row.update(identity_namespace='TradingView', name='A newly worded summary')
+        row['factor_fields']['formula']['text'] = 'Another description of precisely the same script'
+        row['rights']['terms_url'] = 'https://cn.tradingview.com/script/9KcWvaBf-New-slug/'
+        save(base / 'factors/9KcWvaBf.json', row)
+        index = load(base / 'index.json'); index['records'][0]['identity_namespace'] = 'TradingView'
+        save(base / 'index.json', index)
+        reviews = load(base / 'reviews.json'); review = reviews['records'][0]
+        review.update(identity_namespace='TradingView', definition_signature='renamed-signature-not-proof')
+        # Different editorial ranges defeat an exact span-set comparison, but
+        # not the same native PUB/version and code identity.
+        for spans in review['field_spans'].values():
+            spans[0].update(first_line=2, last_line=3,
+                           sha256=digest(b'indicator("Synthetic review fixture")\nplot(close)'))
+        save(base / 'reviews.json', reviews); refresh(collection, second)
+    assert validate_collection(collection, second, verify_snapshots=True)['counts']['factor'] == 1
+    save(collection / 'metadata/catalog.json', dict(schema_version='quantgraph-catalog-registry/v1', overlays=[],
+        collections=[dict(id='first', kind='source_collection', path=DIRECTORY),
+                     dict(id='second', kind='source_collection', path=second)]))
+    if same_review_mirror:
+        assert KnowledgeCatalog(collection).stats()['collected_factor'] == 1
+    else:
+        with pytest.raises(ValueError, match='Repeated collection source definition across batches'):
+            KnowledgeCatalog(collection)
