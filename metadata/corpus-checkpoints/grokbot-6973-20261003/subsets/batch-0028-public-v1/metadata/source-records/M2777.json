@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2777",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2777,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a5d5608859c9c01ba9377e807f6866ab3852fc1687c7557b04f702f2aa260c56",
+    "rule_sha256": "25e004cedd058d17d5325669bf615965421ff9a31d962df59058e93515294632"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2777",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2777"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.tradingview.com/script/oDnkONvx/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "eemani123"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.tradingview.com/script/D94ChhXj/（quant-tradingview-33 TV33-03；同市场+同指标组合指纹（优先保留 M2777,M2992；参数妆点不算新核）；同核未另开） ； https://www.tradingview.com/script/hlAZd4Ot/（quant-tradingview-36 TV36-22；同市场+同指标组合指纹（优先保留 M2777,M2992；参数妆点不算新核）；同核未另开）"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "VWAP+RSI仅多：EMA50>200且开收均>VWAP且近10棒RSI3曾<15开多；RSI3下穿90止盈或跌破均价×(1−5%)止损"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密/美股通用"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Sep 18, 2020"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "VWAP+RSI仅多：EMA50>200且开收均>VWAP且近10棒RSI3曾<15开多；RSI3下穿90止盈或跌破均价×(1−5%)止损"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该TradingView脚本页已印出的规则。Long EMA200 Short EMA50。RSI Period3 Buy Line15 Sell Line90。Stop Loss%5。rsiDipped=近10棒任一rsiVal<15。longCondition=短EMA>长EMA且close>open且close>vwap且open>vwap且rsiDipped→VWAP_RSI LE。TP：crossunder(rsiVal,90)；SL：close<均价×(1−5%)。可选RSI背离加仓。无空头。不是TV22-23 VWAP动量回调或普通VWAP交叉：本条为VWAP+RSI仅多，EMA50>200且开收均>VWAP且近10棒RSI3曾<15开多，RSI3下穿90止盈。计入加密。提出日期按源文件原样保留Sep 18, 2020。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "TradingView脚本页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2879",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2879,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "deb647f8973fab67bca9cb6298504a00e7eb3b8aa0cbed8e9269e6aa19862f09",
+    "rule_sha256": "1f6acd9f96dfbac93702487fc08d3d2f9bb7e7c4fbb3fd4ba8e9be194052d3ec"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2879",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2879"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/PortfolioRebalanceOnCustomFuncRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/PortfolioRebalanceOnDateRulesRegressionAlgorithm.py（quant-web-harvest-32 W540；同市场+同核：ConstantAlpha UP(20分钟,mag=0.025)+等权组合+关闭洞察/证券变更触发再平衡；PortfolioRebalanceOnDateRules(every WEDNESDAY) 相对 PortfolioRebalanceOnCustomFunc(仅周一且偏离总和≥1.5%) 为再平衡日程妆点，不算新核（优先保留 M2879）；同核未另开）"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：AAPL/IBM/FB/SPY/AIG/BAC/BNO；常量向上Insight；仅周一且权重偏离总和≥1.5%才等权再平衡（Lean PortfolioRebalanceOnCustomFunc）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（7票常量向上Insight仅周一偏离总和≥1.5%等权再平衡；Lean PortfolioRebalanceOnCustomFunc）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：AAPL/IBM/FB/SPY/AIG/BAC/BNO；常量向上Insight；仅周一且权重偏离总和≥1.5%才等权再平衡（Lean PortfolioRebalanceOnCustomFunc）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `PortfolioRebalanceOnCustomFuncRegressionAlgorithm.py`。宇宙固定上述7票；`rebalance_portfolio_on_insight_changes/security_changes=False`；Alpha=`ConstantAlphaModel(PRICE, UP, 20分钟, 0.025)`；组合=`EqualWeightingPortfolioConstructionModel(rebalance_function)`。`rebalance_function`：非周一返回 None；周一计算已投资标的相对等权份额的偏离之和，若 `deviation >= 0.015` 则触发再平衡。不是漂移阈5%的60/40季度核（W287）。提出日期未知。 不是漂移阈5%的60/40季度核（W287）：本条为7票常量向上Insight；仅周一且权重偏离总和≥1.5%才等权再平衡。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

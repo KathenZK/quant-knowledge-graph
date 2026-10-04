@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2683",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2683,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a672e206d6489eadee6b89f17f921083fb3db2f2fdb4664c7ebc74a72ef003c2",
+    "rule_sha256": "a23a8b7ee484c566eef68748aa5d51fe9501f4a4121c2c3abd0499a04cc7018f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2683",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2683"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/warmup-template-consolidator/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY 30分钟棒 EMA(10)与RSI(12)；价>EMA且RSI>50满仓，价<EMA或RSI<50清仓（QC Documentation warmup consolidator）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY 30分钟EMA10+RSI12价>EMA且RSI>50满仓；QC Documentation warmup consolidator）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY 30分钟棒 EMA(10)与RSI(12)；价>EMA且RSI>50满仓，价<EMA或RSI<50清仓（QC Documentation warmup consolidator）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `warmup-template-consolidator/main.py`。`add_equity(\"SPY\", MINUTE)`；30分钟 consolidator；`EMA(10)` 与 `RSI(12)` 注册于 consolidator。合并棒回调（市场开盘且指标就绪）：未持仓且 `close>EMA` 且 `RSI>50` → `set_holdings(1)`；已持仓且 (`close<EMA` 或 `RSI<50`) → `liquidate`。不是 W344/W346 日线暖机变体，也不是 W195 RSI30/70 日线核。提出日期未知。 不是W344/W346日线暖机变体，也不是W195 RSI30/70日线核：本条为SPY 30分钟棒EMA(10)与RSI(12)；价>EMA且RSI>50满仓，价<EMA或RSI<50清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

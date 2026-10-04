@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2693",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2693,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0ab6f9923f81ac16a58cdf9883a9847cd8997ea58c0e9fc57698ee0406fcc36b",
+    "rule_sha256": "6d04faf3a08a6f180e2f9a9afc8c9520c1b69e53b80dddbe77e37bfe348665d4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2693",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2693"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.cnblogs.com/bigquant/p/17870423.html"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant量化（博客园《小市值选股策略代码分享（附python源码）》；2023-12-01）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant博客：小市值（list_days≥365；pe_ttm≥0；换手排名≤0.4；市值升序Top10；每5交易日；目标仓0.025）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（博客示范全市场过滤后小市值；约周频）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2023-12-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant博客：小市值（list_days≥365；pe_ttm≥0；换手排名≤0.4；市值升序Top10；每5交易日；目标仓0.025）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。过滤：list_days≥365；pe_ttm≥0；换手排名≤0.4。按市值升序取Top10为target_list。调仓：context.trading_day_index % 5（未到调仓期直接返回）。买入：order_target_percent(ins, 0.025)（页代码原样）。相对已收C434经典小市值（仅list_days>365、持仓1日开盘换、无换手/PE过滤）与C418 WFA网格：本条为换手排名≤0.4⊕pe≥0⊕%5⊕0.025目标仓核。 不是C434经典小市值（无换手/PE）：本条为换手排名≤0.4⊕pe≥0⊕%5⊕0.025目标仓核。 计入其他。 提出日期按源文件原样保留2023-12-01。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

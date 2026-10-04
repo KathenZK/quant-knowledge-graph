@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2730",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2730,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "2ac69a629c3c711376d78d13acb8bef468f3818348d18976b34856d7a69f3c48",
+    "rule_sha256": "758824160bd9aca2bb0571f25393efb36870dc6b3818ce6153b9369011cae83c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2730",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2730"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/ai/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；5阶差价特征训练3层MLP，预测下一差价>0满仓多，≤0满仓空；每周一08:00重训（QC Documentation TensorFlow）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY日线5阶差价MLP预测下一差价>0满仓多否则满仓空周一重训；QC Documentation TensorFlow）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；5阶差价特征训练3层MLP，预测下一差价>0满仓多，≤0满仓空；每周一08:00重训（QC Documentation TensorFlow）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `ai/main.py`。标的 SPY；会话窗500日暖机；特征为收盘1..5阶差分（`lookback=5`），标签为下一根差分；MLP Dense(10,10,5,1) ReLU，Adam lr=0.0001，每轮训练 epochs=100。`on_data`：用最新特征预测，`prediction>0` → `set_holdings(1)`，否则 `set_holdings(−1)`。`date_rules.week_start` + `time_rules.at(8,0)` 重训。不是 W346 EMA/RSI 上行闸核。提出日期未知。 不是W346 EMA/RSI上行闸核：本条为SPY日线5阶差价特征训练3层MLP，预测下一差价>0满仓多≤0满仓空，每周一08:00重训。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

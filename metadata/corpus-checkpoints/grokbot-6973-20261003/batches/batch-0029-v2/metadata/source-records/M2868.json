@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2868",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2868,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5552dab95f8dbf4a7aa52ff4a7c52e0e37a99ca134476ce1fe2944f850a997df",
+    "rule_sha256": "4b4fbcd0ce723df1da47867770c191eae49caf6eb9519633e4eed838b6bb825c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2868",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2868"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/MeanReversionPortfolioAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY+AAPL；恒向上Insight + MeanReversionPortfolioConstructionModel（窗20、回归阈1，日频）（Lean MeanReversionPortfolioAlgorithm）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY+AAPL恒向上Insight+MeanReversionPortfolio窗20回归阈1日频；Lean MeanReversionPortfolio）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY+AAPL；恒向上Insight + MeanReversionPortfolioConstructionModel（窗20、回归阈1，日频）（Lean MeanReversionPortfolioAlgorithm）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `Algorithm.Python/MeanReversionPortfolioAlgorithm.py` + 默认 `MeanReversionPortfolioConstructionModel`。宇宙手工 `SPY`、`AAPL` 日线；Alpha=`ConstantAlphaModel(PRICE, UP, 1日)`；组合=`MeanReversionPortfolioConstructionModel()` 默认：`rebalance=Daily`，`portfolioBias=LongShort`，`reversion_threshold=1`，`window_size=20`，`resolution=Daily`（注释：windowSize=1 为 PAMR；默认20为移动均价回归/OLMAR族）。不是简单价相对SMA均值回归单票核。提出日期未知。 不是简单价相对SMA均值回归单票核：本条为SPY+AAPL恒向上Insight + MeanReversionPortfolioConstructionModel（窗20、回归阈1、日频OLMAR族）。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

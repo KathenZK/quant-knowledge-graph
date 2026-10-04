@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2876",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2876,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "eb851561a432f5920660c97aa93863c93af5d776e30d0fb3d4a9409d262b6033",
+    "rule_sha256": "0db414a51d77a403a4753fd9c40ef460d7c3016fdd769c53504c69d2e55b30b2"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2876",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2876"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ClassicRenkoConsolidatorAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；$2.5 ClassicRenko 收盘砖未持仓则满仓，加权七价砖则清仓（Lean ClassicRenkoConsolidatorAlgorithm）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY $2.5 ClassicRenko收盘砖满仓加权七价砖清仓；Lean ClassicRenkoConsolidator）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；$2.5 ClassicRenko 收盘砖未持仓则满仓，加权七价砖则清仓（Lean ClassicRenkoConsolidatorAlgorithm）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ClassicRenkoConsolidatorAlgorithm.py`。标的 SPY。巩固器1：`ClassicRenkoConsolidator(2.5)` 绑定 `handle_renko_close`：若未持仓则 `set_holdings(symbol, 1)`。巩固器2：`ClassicRenkoConsolidator(2.5, selector=(2·O+H+L+3·C)/7, volume)` 绑定 `handle_renko7_bar`：若已持仓则 `liquidate`。不是固定美元网格或 ATR 网格（W378）核。提出日期未知。 不是固定美元网格或ATR网格（W378）核：本条为SPY $2.5 ClassicRenko收盘砖未持仓满仓，加权七价砖则清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

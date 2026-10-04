@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2677",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2677,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f248a3aec68e171a98ec86b651c746d106612f4c06f3bf1f1a607b12d5c650b3",
+    "rule_sha256": "0b5544fe3862db8854e8c0b87d8be4ba85bc7ff2707d62d33a36b03d5d172827"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2677",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2677"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/trade-management/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY相对日线EMA(14)；价下EMA做多75%并挂−5%止损/+5%限价止盈OCO，价上EMA做空75%对称（QC Documentation OCO）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY相对日线EMA14做多/空75%配±5% OCO；QC Documentation OCO）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY相对日线EMA(14)；价下EMA做多75%并挂−5%止损/+5%限价止盈OCO，价上EMA做空75%对称（QC Documentation OCO）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `trade-management/main.py`。`add_equity(\"SPY\")`；日线 `EMA(14)`。无未完成 OCO 时：`weight=0.75 if ema>price else −0.75`；`stop=close×(0.95 if ema>price else 1.05)`；`limit=close×(1.05 if ema>price else 0.95)`；市价开仓后挂等量反向止损市价单与限价单，`has_oco=True`。止损或止盈成交则取消另一侧并清 OCO 标志。不是 W208 多标的 ATR×2/×4 括号核。提出日期未知。 不是W208多标的ATR×2/×4括号核：本条为SPY相对日线EMA(14)；价下EMA做多75%并挂−5%止损/+5%限价止盈OCO，价上EMA做空75%对称。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
