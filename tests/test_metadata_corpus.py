@@ -26,6 +26,15 @@ def test_committed_corpus_covers_original_ids_and_retains_all_field_evidence():
     assert index['publication_status'] == 'FIELD_REVIEW_REQUIRED'
     assert index['source_verification_status'] == 'CATALOG_REPORTED_UNVERIFIED'
     assert index['commercial_use'] == 'REVIEW_REQUIRED'
+    overlap = index['prior_branch_overlap']
+    assert overlap == dict(
+        branch='dot/grok6973-checkpoints-20261003',
+        commit='ccd868c371fe9761cd018f8d2156e89d98a273b0',
+        public_source_records=2898, identical_source_records=2898,
+        missing_source_records=0, different_source_records=0,
+        identical_checkpoint_files=3045, different_checkpoint_files=0,
+        additional_public_source_records=4073,
+    )
 
     sources = {}
     excluded = []
@@ -36,10 +45,10 @@ def test_committed_corpus_covers_original_ids_and_retains_all_field_evidence():
         assert ref['batch_id'] == bid
         assert ref['csv_row_start'] == (number - 1) * 100 + 1
         assert ref['csv_row_end'] == min(number * 100, SOURCE['rows'])
-        suffix = '-public-subset-v1' if ref['excluded_record_ids'] else '-v2'
-        assert ref['path'] == f'corpus-checkpoints/grokbot-6973-20261003/batches/{bid}{suffix}'
+        member = f'subsets/{bid}-public-v1' if ref['excluded_record_ids'] else f'batches/{bid}-v2'
+        assert ref['path'] == f'corpus-checkpoints/grokbot-6973-20261003/{member}'
         path = ROOT / ref['path']
-        paths.append(path.name)
+        paths.append(member)
         if ref['schema_version'] == BATCH:
             manifest, inventory, blocked, _, _ = _batch_input(path, ref['manifest_sha256'])
             assert manifest['source'] == SOURCE
@@ -86,9 +95,15 @@ def test_committed_corpus_covers_original_ids_and_retains_all_field_evidence():
     all_ids = {f'M{i:04d}' for i in range(SOURCE['min_id'], SOURCE['max_id'] + 1)}
     assert sorted(all_ids - sources.keys() - set(excluded)) == index['stable_id_gaps']
     assert len(index['stable_id_gaps']) == SOURCE['gaps']
-    batch_root = ROOT / 'corpus-checkpoints/grokbot-6973-20261003/batches'
-    assert sorted(p.name for p in batch_root.iterdir()) == sorted(paths)
-    assert not any(batch_root.rglob('private-only'))
+    corpus_root = ROOT / 'corpus-checkpoints/grokbot-6973-20261003'
+    actual_paths = [f'{folder}/{p.name}' for folder in ['batches', 'subsets']
+                    for p in (corpus_root / folder).iterdir()]
+    assert sorted(actual_paths) == sorted(paths)
+    assert not any(corpus_root.rglob('private-only'))
+    prior = index['batches'][:29]
+    assert sum(ref['record_count'] for ref in prior) == overlap['public_source_records']
+    assert sum(len(json.loads((ROOT / ref['path'] / 'manifest.json').read_bytes())['files']) + 1
+               for ref in prior) == overlap['identical_checkpoint_files']
 
     reading = json.loads((ROOT / 'directory-index.json').read_bytes())
     assert len(reading['records']) == index['counts']['classified_reading_views']

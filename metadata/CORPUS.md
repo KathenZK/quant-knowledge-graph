@@ -13,6 +13,20 @@
 现有 200 页分类阅读页和 2 份审阅 JSON 保持原字节。新增已审定义 0、回测 0；
 本次只补充 Git 中的来源记录，没有将这些记录导入活动数据库或部署到 Site。
 
+## 已有分支核对
+
+`main` 基线 [`103b2dd`](https://github.com/KathenZK/quant-knowledge-graph/commit/103b2dd15d57ddaf78a299a337e1c2ba03b8cb1a) 有 500 条；
+`dot/grok6973-checkpoints-20261003` 的 [`ccd868c`](https://github.com/KathenZK/quant-knowledge-graph/commit/ccd868c371fe9761cd018f8d2156e89d98a273b0) 有 2,898 条。
+后者覆盖前 29 个原批次，包含第 26、28 批各 99 条的子集。该分支的 2,898 条来源记录和全部
+3,045 个检查点文件（包括 schema、index、inventory、manifest 和已有审阅层）与本次对应文件逐字节一致。
+没有遗漏、冲突或重复计数；本次沿用该分支原有的 `subsets/batch-0026-public-v1/` 和
+`subsets/batch-0028-public-v1/` 路径。固定提交和计数见总索引 `prior_branch_overlap`。
+
+| 比较基线 | 已有公开来源记录 | 本次增加 | 本次合计 |
+|---|---:|---:|---:|
+| main | 500 | 6,471 | 6,971 |
+| dot 检查点分支 | 2,898 | 4,073 | 6,971 |
+
 ## 固定输入与复核
 
 - 文件：`quant-master-draft.csv`，6,470,637 字节，6,973 个唯一原 ID。
@@ -66,9 +80,9 @@ CSV 行号是数据记录序号；带引号的字段内换行不增加记录数�
 | [batch-0023](corpus-checkpoints/grokbot-6973-20261003/batches/batch-0023-v2/metadata/source-records/) | 2201–2300 | M2201–M2300 | 100 | 无 |
 | [batch-0024](corpus-checkpoints/grokbot-6973-20261003/batches/batch-0024-v2/metadata/source-records/) | 2301–2400 | M2301–M2400 | 100 | 无 |
 | [batch-0025](corpus-checkpoints/grokbot-6973-20261003/batches/batch-0025-v2/metadata/source-records/) | 2401–2500 | M2401–M2500 | 100 | 无 |
-| [batch-0026（子集）](corpus-checkpoints/grokbot-6973-20261003/batches/batch-0026-public-subset-v1/metadata/source-records/) | 2501–2600 | M2501–M2600 | 99 | M2535 |
+| [batch-0026（子集）](corpus-checkpoints/grokbot-6973-20261003/subsets/batch-0026-public-v1/metadata/source-records/) | 2501–2600 | M2501–M2600 | 99 | M2535 |
 | [batch-0027](corpus-checkpoints/grokbot-6973-20261003/batches/batch-0027-v2/metadata/source-records/) | 2601–2700 | M2601–M2700 | 100 | 无 |
-| [batch-0028（子集）](corpus-checkpoints/grokbot-6973-20261003/batches/batch-0028-public-subset-v1/metadata/source-records/) | 2701–2800 | M2701–M2800 | 99 | M2709 |
+| [batch-0028（子集）](corpus-checkpoints/grokbot-6973-20261003/subsets/batch-0028-public-v1/metadata/source-records/) | 2701–2800 | M2701–M2800 | 99 | M2709 |
 | [batch-0029](corpus-checkpoints/grokbot-6973-20261003/batches/batch-0029-v2/metadata/source-records/) | 2801–2900 | M2801–M2904 | 100 | 无 |
 | [batch-0030](corpus-checkpoints/grokbot-6973-20261003/batches/batch-0030-v2/metadata/source-records/) | 2901–3000 | M2905–M3010 | 100 | 无 |
 | [batch-0031](corpus-checkpoints/grokbot-6973-20261003/batches/batch-0031-v2/metadata/source-records/) | 3001–3100 | M3011–M3133 | 100 | 无 |
