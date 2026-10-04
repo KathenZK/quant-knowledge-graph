@@ -13,7 +13,7 @@ uv run quantgraph catalog-show 'qlib:Alpha360:VWAP2'
 uv run quantgraph catalog-validate
 ```
 
-当前统一目录为 **8,787 张条目卡：6,519 策略、2,184 因子、83 参考资料、1 待分类**；收录不代表全部准入。每次新增后用 `catalog-stats` 核对最新计数。
+当前统一目录为 **8,797 张条目卡：6,522 策略、2,191 因子、83 参考资料、1 待分类**；收录不代表全部准入。每次新增后用 `catalog-stats` 核对最新计数。
 
 原 M 编号、代码原生类名和因子原生 ID 都可查询。同名有歧义时带来源命名空间；稳定 `entity_id` 不随分类或证据版本改变。主 API `/v1/knowledge` 提供同一目录的检索、详情和关系，旧 `FactorDB` 与定义发布接口保持兼容。
 
@@ -34,7 +34,7 @@ uv run quantgraph catalog-validate
 
 当前CSV共6,971条，其中6,970条已有类型判定，仅[M0176](source-reviews/20261004-v1/README.md#m0176来源不可得)待分类。历史[正文分类批次](classifications/20261004-v1/index.json)冻结时的6,782条决定仍是6,242策略、453因子、83参考资料、4待分类；原批次及其队列不改写，不能将历史队列当作当前待分类集合。当前结果用`catalog-search --kind unclassified`查询。
 
-新的[来源核查索引](source-reviews/20261004-v1/index.json)为M0115、M0196、M2122追加`SOURCE_CODE_REVIEWED`策略证据；M0176的原仓库与main/master README返回404，记录`SOURCE_UNAVAILABLE`而不补猜规则。集合适配器为`source_followups`，版本表示为`SOURCE_FOLLOWUP`，结果在`statuses.source_followup`中保留，可用`--status SOURCE_UNAVAILABLE`筛选。本批共4份核查记录，只增加4个证据版本，不增加条目卡；连同本轮来源采集后，当前共8,797个证据版本；历史已审说明14份，新增采集说明另记241份。未执行源码或回测，原文和源码快照不进入Git。
+新的[来源核查索引](source-reviews/20261004-v1/index.json)为M0115、M0196、M2122追加`SOURCE_CODE_REVIEWED`策略证据；M0176的原仓库与main/master README返回404，记录`SOURCE_UNAVAILABLE`而不补猜规则。集合适配器为`source_followups`，版本表示为`SOURCE_FOLLOWUP`，结果在`statuses.source_followup`中保留，可用`--status SOURCE_UNAVAILABLE`筛选。本批共4份核查记录，只增加4个证据版本，不增加条目卡；连同本轮来源采集后，当前共8,807个证据版本；历史已审说明14份，新增采集说明另记251份。未执行源码或回测，原文和源码快照不进入Git。
 
 正文推断、来源源码核查与规则完整性各自保留。策略中的选股提纲与组件、因子中的构造提纲与特征族不具有相同的成熟程度。
 

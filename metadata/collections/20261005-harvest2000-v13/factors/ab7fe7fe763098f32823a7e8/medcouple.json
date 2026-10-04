@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "将中位数两侧样本配对，比较各对上下尾距离的不对称程度，再取所有配对值的中位数，提供区别于三阶矩的分布形状描述。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-93c6bf86703a66c62e4926b3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-93c6bf86703a66c62e4926b3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "原生medcouple默认use_fast=True，但本条明确选择文档推荐用于精确/含并列样本的legacy路径use_fast=False；它是同一原生函数的已审子合同，不声称覆盖fast近似算法。axis=None将一维输入ravel，转np.double后传legacy helper。 legacy helper squeeze成一维并排序，按奇偶N计算中位数。以中位数为中心拆<=0与>=0两侧，因此每个等于中位数的观测在两边都出现，保留全部重复值，不去重。 广播生成上、下侧全部配对的差分母和和分子。双零先把分母设Inf避免0/0，再用k×k反对角线为0、其上为−1、其下为+1的固定块覆盖；其它核值不改。 对整个核矩阵的全部元素取普通中位数。没有绝对值、截尾比例、矩估计偏差校正、样本权重或收益窗口默认；函数只返回一个形状估计，不产生交易规则。 边界：原生当前默认fast=True的近似计算、误差及小样本/大量并列的警告均保留为未审分支；不能把legacy源码公式标成默认fast输出已验证。参数和实现切换仍同族，不新增第二条。 全常数样本形成对称反对角核块，中位数为0；数学上是样本对称值，不代表市场分布稳定。包含NaN时legacy可能因布尔分组选取而返回一个数，本条明确排除缺失输入，不称自动缺失安全。 正常有限算术下核在[−1,1]，但极大双精度数的中位数加法/去中心可能溢出，源码未缩放或作有限性保护；要求中间量有限。 显式生成|U|×|L|矩阵需平方级内存；源码文档提醒N>10000可能无法分配，这不是固定硬长度门槛，也不是对更小样本内存的保证。 名称稳健属于方法定位，不是本库在异常金融数据上的实证。该定义不使用三阶矩；金融收益方向、经济有效性和商用市场数据许可仍未验证。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-93c6bf86703a66c62e4926b3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "将中位数两侧样本配对，比较各对上下尾距离的不对称程度，再取所有配对值的中位数，提供区别于三阶矩的分布形状描述。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-93c6bf86703a66c62e4926b3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条显式选use_fast=FALSE、axis=None且输入一维N>=3有限实数。升序y，m为样本中位数（偶数时两个中心值平均）。L为所有y_i−m<=0值升序，U为所有y_i−m>=0值升序，0可在两侧各出现。对每对u∈U,l∈L，非双零时H(u,l)=(u+l)/(u−l)。若有k个y_i=m，双零k×k块以0起局部索引a,b赋H_ab=sign(a+b−(k−1))，a随U中零值升序位置、b随L末尾零值位置。返回median(全部|U|·|L|个H)，偶数核数量时取两个中央值平均。双零核按反对角线替代，不能统一赋0。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-93c6bf86703a66c62e4926b3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（finite real one-dimensional numeric array-like, N>=3; intermediate centering and kernels finite）：可为窗口收益、成交量或其它同口径数值；计算先排序，不使用原时间次序。仅收盘/发布后完整窗口可得，具体金融变量未冻结。。参数：axis：默认axis0存在，本条用None只为一维平铺直接helper路径；范围reviewed explicit None only, with one-dimensional input；源码默认0；use_fast：原生默认True是近似快算法；本条冻结精确legacy支路，不把两个实现分别计数；范围reviewed explicit False only；源码默认True"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-93c6bf86703a66c62e4926b3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "statsmodels/statsmodels",
+  "lab": null,
+  "missing_information": [
+    "金融输入变量、尾随窗口、供应商/修订时点和PIT未冻结",
+    "fast近似路径未审核，原论文完整等价性未核",
+    "NumPy数值环境、内存可行性与实际金融稳健性未执行验证",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "中位数两侧配对核的稳健偏度",
+  "native_source_id": "medcouple",
+  "one_line": "将中位数两侧样本配对，比较各对上下尾距离的不对称程度，再取所有配对值的中位数，提供区别于三阶矩的分布形状描述。",
+  "record_id": "medcouple",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "statsmodels维护者实现；文档归因Guy Brys、Mia Hubert、Anja Struyf (2004), A Robust Measure of Skewness；并列Hubert/Vandervieren (2008)。仅审固定legacy实现，不冒称论文作者本人源码。",
+      "id": "harvest-source-c42f2a259c3bd67e2e7d65e6",
+      "license": "BSD-3-Clause",
+      "locator": "copyright attribution and complete BSD3 redistribution terms:L1-L34",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "1ca78e1dec9dcebc55f3b96a862317f23e76422c5fc943568d955aad1f6b5fad",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；文档归因Guy Brys、Mia Hubert、Anja Struyf (2004), A Robust Measure of Skewness；并列Hubert/Vandervieren (2008)。仅审固定legacy实现，不冒称论文作者本人源码。",
+      "id": "harvest-source-be0109a36a3ea6ee8a8a3ee3",
+      "license": "BSD-3-Clause",
+      "locator": "official statistical library scope and documentation:L16-L30",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "d430fa04083d240c9f0e75aa90bc73c13cb1a874f4c7b4ce29bddbb6366c4a42",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；文档归因Guy Brys、Mia Hubert、Anja Struyf (2004), A Robust Measure of Skewness；并列Hubert/Vandervieren (2008)。仅审固定legacy实现，不冒称论文作者本人源码。",
+      "id": "harvest-source-93c6bf86703a66c62e4926b3",
+      "license": "BSD-3-Clause",
+      "locator": "complete exact legacy median pair kernel and zero-tie override:L411-L477; dispatch to selected legacy implementation:L838-L861; public defaults, explicit fast/legacy caveats, attribution and axis conversion:L864-L920",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "8b8e373bd60701460141cdb661e0681236a97bb011fcafb0196638a2a92c9075",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/stats/stattools.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

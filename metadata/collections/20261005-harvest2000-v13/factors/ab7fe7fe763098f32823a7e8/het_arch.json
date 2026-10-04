@@ -1,0 +1,213 @@
+{
+  "economic_basis": {
+    "hypothesis": "检验当前平方残差能否由过去若干期平方残差联合解释，作为波动聚集的模型诊断；它不拟合或输出未来GARCH波动预测。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-6ae622302db5df9729104500",
+        "harvest-source-ff4552f6a0f21f7762ccd0c0",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-8a58b1878db7cf8f6f4cb678"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-6ae622302db5df9729104500",
+        "harvest-source-ff4552f6a0f21f7762ccd0c0",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-8a58b1878db7cf8f6f4cb678"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "入口直接计算resid**2再调用acorr_lm，因此冻结resid为一维有限NumPy实数数组，不能笼统称原生支持Python list。平方后须仍有限；输入可以是已冻结模型残差，函数本身不估计该原模型或去残差均值。 仅审非稳健OLS的原生转发：period默认None、cov_type=\"nonrobust\"、cov_kwds=None。q为正整数或原生None规则。lagmat(...,trim=\"both\",original=\"ex\")去掉最早q项，把滞后1..q对齐到当前平方残差，生成n=N−q行，再加常数列。 设计矩阵含显式1，OLS常数检测确定k_constant=1；OLS白化为恒等，不加权、不做正则化。默认SVD伪逆门槛1e−15，模型秩还由matrix_rank原奇异值表独立判断。本合同要求两个判定都保留满列秩，以免把截断解误写成普通满秩公式。 用截短后的响应Y的中心化总平方和计算R²，不能用原r的方差或未截短y的方差。LM乘数是截短n减ddof，卡方自由度仍q；ddof不是从X删掉几列。 同次拟合的F使用解释均方除残差均方。固定store=False、result_object=False，返回LM、LM的p、F、F的p四元组；不额外保存原模型，不把四个字段拆族。 边界：若所有残差绝对值相同，平方响应为常数，TSS=0；若完全拟合SSE=0，F分母0。未提供统一良性回退，不把NaN/Inf当“无异方差”。 秩亏/接近秩亏时源仍可用伪逆拟合，F自由度依据识别秩变化，但LM的卡方自由度仍用请求q；本条明确排除此范围，不扩写为已可靠支持任意退化回归。 入口不检验原残差模型是否因果、是否耗用样本和ddof设置是否恰当。用全样本拟合的残差再计算只能作同窗诊断，不能回填为当时已知预测特征。 这检验平方残差的序列可解释性，不证明特定ARCH/GARCH模型正确、经济收益或波动预测能力。单个窗口的LM/F不是独立收益因子。NumPy/SciPy的SVD、秩阈及分布数值未执行冻结。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-6ae622302db5df9729104500",
+        "harvest-source-ff4552f6a0f21f7762ccd0c0",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-8a58b1878db7cf8f6f4cb678"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "检验当前平方残差能否由过去若干期平方残差联合解释，作为波动聚集的模型诊断；它不拟合或输出未来GARCH波动预测。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-6ae622302db5df9729104500",
+        "harvest-source-ff4552f6a0f21f7762ccd0c0",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-8a58b1878db7cf8f6f4cb678"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N项一维残差r，y_t=r_t²。q=nlags；None时q=min(10,floor(N/5))。保留t=q+1..N，共n=N−q行；设计矩阵X_t=(1,y_(t−1),...,y_(t−q))，响应Y_t=y_t。源码默认OLS用SVD伪逆：X=U diag(s) Vᵀ，s_i>1e−15 max(s)时取倒数，否则0，β=X⁺Y；e=Y−Xβ，SSE=Σe²，TSS=Σ(Y−mean(Y))²，R²=1−SSE/TSS。在本文满列秩q+1、n>q+1、SSE/TSS均正的有效域：LM=(n−ddof)R²，p_LM为χ²_q上尾；F=[(TSS−SSE)/q]/[SSE/(n−q−1)]，p_F为F_(q,n−q−1)上尾。ddof只改LM乘数，不改OLS样本或F自由度。LM/F/p值同族，非四个新增因子。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-6ae622302db5df9729104500",
+        "harvest-source-ff4552f6a0f21f7762ccd0c0",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-8a58b1878db7cf8f6f4cb678"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "resid（finite real NumPy ndarray shape(N,), N>=5; resid**2 finite; fixed equally spaced order）：原模型残差或数值序列，估计过程和可得时点外部冻结；调用不中心化resid，而是在平方序列回归中加截距。；valid_auxiliary_regression（q>=1, n=N−q>q+1, full column rank X under matrix_rank and SVD cutoff; TSS>0,SSE>0; all arithmetic finite）：保证正文的满秩自由度与有限F合同；源可对秩亏仅warning或退化数值输出，不自动满足该约束。。参数：nlags：None按min(10,N//5)；不做信息准则选阶；范围None or positive integer q, N>2q+1 required；源码默认None；store：不返回中间结果容器；范围only False reviewed；源码默认False；ddof：仅修正LM样本乘数，来源不主动核定原模型自由度；范围research integer0<=ddof<n；源码默认0；result_object：固定四元组返回形式，统计公式不变；范围reviewed explicit False；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-6ae622302db5df9729104500",
+        "harvest-source-ff4552f6a0f21f7762ccd0c0",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-8a58b1878db7cf8f6f4cb678"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "statsmodels/statsmodels",
+  "lab": null,
+  "missing_information": [
+    "原残差模型、原估计耗用自由度与PIT未冻结",
+    "秩亏、其它稳健协方差、季节路径和额外结果对象未审核",
+    "金融有限样本检验大小/功效、NumPy/SciPy数值运行与原论文全文等价未验证",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "平方残差滞后回归的 ARCH 条件异方差诊断",
+  "native_source_id": "het_arch",
+  "one_line": "检验当前平方残差能否由过去若干期平方残差联合解释，作为波动聚集的模型诊断；它不拟合或输出未来GARCH波动预测。",
+  "record_id": "het_arch",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "statsmodels维护者实现，原生函数名与docstring归于Engle ARCH检验；源码注明与R FinTS ArchTest核对的历史说明，本采集未重复执行该核验，也不借此保证当前结果。",
+      "id": "harvest-source-c42f2a259c3bd67e2e7d65e6",
+      "license": "BSD-3-Clause",
+      "locator": "copyright attribution and complete BSD3 redistribution terms:L1-L34",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "1ca78e1dec9dcebc55f3b96a862317f23e76422c5fc943568d955aad1f6b5fad",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现，原生函数名与docstring归于Engle ARCH检验；源码注明与R FinTS ArchTest核对的历史说明，本采集未重复执行该核验，也不借此保证当前结果。",
+      "id": "harvest-source-be0109a36a3ea6ee8a8a3ee3",
+      "license": "BSD-3-Clause",
+      "locator": "official statistical library scope and documentation:L16-L30",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "d430fa04083d240c9f0e75aa90bc73c13cb1a874f4c7b4ce29bddbb6366c4a42",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现，原生函数名与docstring归于Engle ARCH检验；源码注明与R FinTS ArchTest核对的历史说明，本采集未重复执行该核验，也不借此保证当前结果。",
+      "id": "harvest-source-95eec514513ea721429660bb",
+      "license": "BSD-3-Clause",
+      "locator": "right singleton squeeze helper:L13-L39; numeric conversion defaults:L42-L55; complete numeric conversion path:L145-L181",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "862d8b1cf1411aaae0b397e2421109fa5e33c32efe7dcacdb88ae2eeca55fa5b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tools/validation/validation.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现，原生函数名与docstring归于Engle ARCH检验；源码注明与R FinTS ArchTest核对的历史说明，本采集未重复执行该核验，也不借此保证当前结果。",
+      "id": "harvest-source-a16eeb5c7d35bdd4bc271363",
+      "license": "BSD-3-Clause",
+      "locator": "internal LM defaults:L811-L821; complete nonrobust auxiliary-regression computation and fixed output:L900-L960; ARCH public signature attribution and resid-square delegation:L963-L1026",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "74cd47732a5d77363ba46265f64d6ec71464c44e3982fc27e4a11ceb1b18ee5e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/stats/diagnostic.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现，原生函数名与docstring归于Engle ARCH检验；源码注明与R FinTS ArchTest核对的历史说明，本采集未重复执行该核验，也不借此保证当前结果。",
+      "id": "harvest-source-6ae622302db5df9729104500",
+      "license": "BSD-3-Clause",
+      "locator": "lag matrix defaults:L329-L337; integer lag expansion:L432-L437; array conversion and both-side trimming:L456-L497; numeric branch excludes original and returns lag design:L519-L531",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "4d6da478e1d8a2d4b0bb44b1e9dd9964ff5ab4e882747047265d338edaef071a",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tsa/tsatools.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现，原生函数名与docstring归于Engle ARCH检验；源码注明与R FinTS ArchTest核对的历史说明，本采集未重复执行该核验，也不借此保证当前结果。",
+      "id": "harvest-source-ff4552f6a0f21f7762ccd0c0",
+      "license": "BSD-3-Clause",
+      "locator": "OLS initialized whitened arrays:L245-L255; default pinv and nonrobust fit:L309-L329; SVD coefficient solution rank and degrees of freedom:L382-L426; fitted model return and linear prediction:L437-L466; inherited unit weights:L829-L856; OLS default initialization:L1033-L1045; identity OLS whitening:L1080-L1099; residual square sum and unit-weight centered TSS:L1936-L1985; explained sum and R-squared:L1998-L2024; model and residual mean squares:L2040-L2060; nonrobust F and F upper-tail probability:L2078-L2120",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "b4d89f81983bced18723e71ebbb023d066016b07b345265a7084bef5174fcfe6",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/regression/linear_model.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现，原生函数名与docstring归于Engle ARCH检验；源码注明与R FinTS ArchTest核对的历史说明，本采集未重复执行该核验，也不借此保证当前结果。",
+      "id": "harvest-source-f0bf86ae6286de8eba745796",
+      "license": "BSD-3-Clause",
+      "locator": "complete pinv_extended SVD threshold helper:L188-L224",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "915504844ecaf378b3d529ae4b596abd877aba7cf825fb6dff0c0e0daf2b7776",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tools/tools.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现，原生函数名与docstring归于Engle ARCH检验；源码注明与R FinTS ArchTest核对的历史说明，本采集未重复执行该核验，也不借此保证当前结果。",
+      "id": "harvest-source-8a58b1878db7cf8f6f4cb678",
+      "license": "BSD-3-Clause",
+      "locator": "explicit constant-column detection:L130-L159",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "621841854889013bb7ddda040f9e573aaf9324ff6ae061c1a9e45c7cf64fbd50",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/base/data.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

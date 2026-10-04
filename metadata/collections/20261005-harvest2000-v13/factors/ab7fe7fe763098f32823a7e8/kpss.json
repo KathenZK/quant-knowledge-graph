@@ -1,0 +1,137 @@
+{
+  "economic_basis": {
+    "hypothesis": "比较去均值后累计路径的能量与序列长期方差，诊断整个窗口是否偏离围绕固定水平平稳的模型；不把未拒绝解释为交易可预测或均值回复盈利。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入一维有限数值序列N>=3，保留顺序；固定regression=\"c\"只减全窗均值，不进入含趋势OLS的ct路径。本条nlags允许默认auto或显式整数，legacy选项不在已审合同。 主函数现在明确检查np.isfinite(x).all()并拒绝NaN/Inf。显式滞后L会检查非负且小于N；nlags=None非法，并不代表自动。 auto helper先用floor(N^(2/9))项未经核加权的自协方差和求s0/s1，再按上式floor出lag、主函数clip到N−1；不能把s0当最终Bartlett长期方差v_L。 用累计残差平方和除N²得到η；_sigma_est_kpss按Bartlett权重1−j/(L+1)对残差交叉积加权并除N。两个全窗量相除，没有再开方或年化。 固定水平分支用四个表格点线性插值p；无外推精确尾概率。p等于任一边界.10或.01就触发提示，因此恰落端点也会提示，不仅严格超表。本合同store=False、result_object=False，返回统计量、p、lag及临界值字典。 边界：常数序列使残差全0：auto的s1/s0为0/0，整数lag转换可能报错；显式L也产生η/v=0/0。不得填为统计量0或判平稳通过。 p范围只有[.01,.10]，低端意味着实际尾概率可能更小，高端可能更大；夹到.01/.10并不意味着精确概率等于该值。没有按样本长度重新估计临界值。 零假设是水平平稳，与ADF单位根零假设方向不同；本条不是把ADF的p值反向。同样未验证有限样本、结构断点、异方差或金融时序下的校准。 既用全窗均值又用全窗自协方差选择L，只能在完整窗口可得后计算。未冻结输入数据、供应商PIT、参数预注册或NumPy数值环境。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "比较去均值后累计路径的能量与序列长期方差，诊断整个窗口是否偏离围绕固定水平平稳的模型；不把未拒绝解释为交易可预测或均值回复盈利。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条审regression=\"c\"。e_t=x_t−mean(x)，t=1..N，S_t=Σ_(i=1..t)e_i；η=N^(−2)Σ_t S_t²。给定整数0<=L<N：v_L=[Σ_t e_t²+2Σ_(j=1..L)(1−j/(L+1))Σ_(t=j+1..N)e_t e_(t−j)]/N，KPSS=η/v_L。默认nlags=\"auto\"：b=floor(N^(2/9))，s0=Σe²/N+(2/N)Σ_(j=1..b)Σ_(t=j+1..N)e_t e_(t−j)，s1=(2/N)Σ_(j=1..b)jΣ_(t=j+1..N)e_t e_(t−j)，L=min(N−1,floor[1.1447·((s1/s0)²)^(1/3)·N^(1/3)])。要求auto中s0≠0且v_L>0和全部中间值有限。固定水平临界统计量[.347,.463,.574,.739]对应p=[.10,.05,.025,.01]；返回p在这些点之间线性插值，超出范围夹到端点。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（finite real one-dimensional numeric array-like, N>=3, ordered equally spaced observations）：完整窗口；不是任意拼接的不等距事件；源码没有主动验证采样间隔或金融市场时间。；nondegenerate_variance（v_L>0; if auto: s0!=0 and finite computed lag; all arithmetic finite）：排除全零/全常数与数值退化；有效域约束不是源码已提供完整fallback。。参数：regression：常数水平平稳；ct趋势平稳未审核；范围only c reviewed；源码默认c；nlags：默认显式按数据公式确定HAC带宽；legacy不纳入；范围auto or integer0<=L<N only reviewed；源码默认auto；store：不附额外结果容器；范围only False reviewed；源码默认False；result_object：固定旧元组布局，避免默认未来返回形态警告；统计公式不变；范围reviewed explicit False；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "statsmodels/statsmodels",
+  "lab": null,
+  "missing_information": [
+    "原论文全文、趋势ct/legacy带宽分支未逐式审核",
+    "行情采样、结构变化处理、发布/修订时点及PIT未冻结",
+    "有限样本校准与NumPy数值执行未验证",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "累计去均值路径能量的 KPSS 平稳性诊断",
+  "native_source_id": "kpss",
+  "one_line": "比较去均值后累计路径的能量与序列长期方差，诊断整个窗口是否偏离围绕固定水平平稳的模型；不把未拒绝解释为交易可预测或均值回复盈利。",
+  "record_id": "kpss",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "statsmodels维护者实现；原始检验归因Kwiatkowski、Phillips、Schmidt、Shin (1992)，自动带宽引用Hobijn等及Newey–West。仅核该固定实现及其嵌入的表格，不将源码许可扩到论文。",
+      "id": "harvest-source-c42f2a259c3bd67e2e7d65e6",
+      "license": "BSD-3-Clause",
+      "locator": "copyright attribution and complete BSD3 redistribution terms:L1-L34",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "1ca78e1dec9dcebc55f3b96a862317f23e76422c5fc943568d955aad1f6b5fad",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；原始检验归因Kwiatkowski、Phillips、Schmidt、Shin (1992)，自动带宽引用Hobijn等及Newey–West。仅核该固定实现及其嵌入的表格，不将源码许可扩到论文。",
+      "id": "harvest-source-be0109a36a3ea6ee8a8a3ee3",
+      "license": "BSD-3-Clause",
+      "locator": "official statistical library scope and documentation:L16-L30",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "d430fa04083d240c9f0e75aa90bc73c13cb1a874f4c7b4ce29bddbb6366c4a42",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；原始检验归因Kwiatkowski、Phillips、Schmidt、Shin (1992)，自动带宽引用Hobijn等及Newey–West。仅核该固定实现及其嵌入的表格，不将源码许可扩到论文。",
+      "id": "harvest-source-95eec514513ea721429660bb",
+      "license": "BSD-3-Clause",
+      "locator": "right singleton squeeze helper:L13-L39; numeric conversion defaults:L42-L55; complete numeric conversion path:L145-L181",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "862d8b1cf1411aaae0b397e2421109fa5e33c32efe7dcacdb88ae2eeca55fa5b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tools/validation/validation.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；原始检验归因Kwiatkowski、Phillips、Schmidt、Shin (1992)，自动带宽引用Hobijn等及Newey–West。仅核该固定实现及其嵌入的表格，不将源码许可扩到论文。",
+      "id": "harvest-source-c10cd2e93be9b0ea6ea9719d",
+      "license": "BSD-3-Clause",
+      "locator": "public defaults:L3087-L3098; hypothesis and lag alternatives:L3100-L3119; p-table boundaries and original papers:L3145-L3199; finite-input checks and selected constant branch:L3201-L3228; lag selection, statistic, interpolation and boundary messages:L3230-L3280; fixed store/result_object return path:L3282-L3310; complete Bartlett long-run variance helper:L3313-L3337; complete automatic lag helper:L3340-L3371",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "5f0ea18331381af17c3c55a00bd32c66ec384693aef013dd58c4c5d5219cd020",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tsa/stattools/_stattools.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}
