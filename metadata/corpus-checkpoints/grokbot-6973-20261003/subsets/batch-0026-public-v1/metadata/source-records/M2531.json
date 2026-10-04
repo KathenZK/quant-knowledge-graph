@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2531",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2531,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "852b0905d4b7572f7a90c3c68b65fa0651d4dc7b282458ac2d9fb0ff3b3b28bc",
+    "rule_sha256": "1afaa703004daa5846e4da415a47ab6bcb794547f214826ec2ca8c11876b3dfc"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2531",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2531"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-turn-of-month-effect/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY仅在当月交易日序列的前3日与后4日满仓，其余交易日清仓（QC Documentation turn-of-month）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY月末效应前3后4交易日；QC Documentation turn-of-month）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY仅在当月交易日序列的前3日与后4日满仓，其余交易日清仓（QC Documentation turn-of-month）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-turn-of-month-effect/main.py`。每日开盘后1分钟：用交易日历生成当月全部交易日列表；`is_hold = today in days[:3] or today in days[-4:]`；需持有且未持仓则 `set_holdings(SPY,1)`；不需持有且已持仓则 `liquidate(SPY)`。不是“月末最后交易日开盘买、次月第3个交易日收盘卖”的跨月窗口核（QC Strategies/候选 Turn-of-Month），本条为 **同一日历月** 内前3+后4个交易日。提出日期未知。 不是跨月Turn-of-Month窗口核：本条为同一日历月前3+后4个交易日满仓SPY。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

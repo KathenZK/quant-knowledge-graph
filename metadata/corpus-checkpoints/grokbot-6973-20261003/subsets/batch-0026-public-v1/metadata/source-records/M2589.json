@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2589",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2589,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b04e8a10ac8a3c73f70210e10667ca31559f3f1e0ab753c8917ffe5ca5731382",
+    "rule_sha256": "f4176ae82d11763f95a883bf2c4cb03c779f4f6a30825762f46a503d39350d5d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2589",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2589"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-ichimoku-cloud/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：QQQ日线一目均衡；Tenkan上穿Kijun且价>云顶满仓，Tenkan下穿Kijun清仓；每日08:00（QC Documentation Ichimoku）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（QQQ日线一目Tenkan/Kijun与云顶；QC Documentation Ichimoku）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：QQQ日线一目均衡；Tenkan上穿Kijun且价>云顶满仓，Tenkan下穿Kijun清仓；每日08:00（QC Documentation Ichimoku）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-ichimoku-cloud/main.py`。标的 QQQ；`ichimoku(..., 9,26,52,26,26,52, DAILY)`。每日 08:00：`crossed_above`=当期 Tenkan>Kijun 且前期非；`crossed_below` 对称；`cloud_top=max(SenkouA,SenkouB)`。未投资且上穿且 `price>cloud_top` → `set_holdings(1)`；已投资且下穿 → `liquidate()`。不是加密社区 Obelisk/Ichimoku_v* 核。提出日期未知。 不是加密社区Obelisk/Ichimoku_v*核：本条为QQQ日线一目Tenkan上穿Kijun且价>云顶满仓，下穿清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

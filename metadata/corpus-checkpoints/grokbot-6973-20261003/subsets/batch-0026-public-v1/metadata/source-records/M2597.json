@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2597",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2597,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b6bf2f436c921499d54da336ba871ecabe0a453ae2fb1989224122e69869d537",
+    "rule_sha256": "b28e4793741c633072080d630ed4bc9215fcb31647ddacafb8f326c16e77f6ed"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2597",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2597"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/option-iron-condor-spy/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：周一开盘后卖出SPY约10-delta短肢、外侧3档长肢的当周铁鹰，周五收盘前清仓（QC Documentation iron condor）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY当周10-delta铁鹰周一开周五平；QC Documentation iron condor）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：周一开盘后卖出SPY约10-delta短肢、外侧3档长肢的当周铁鹰，周五收盘前清仓（QC Documentation iron condor）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `option-iron-condor-spy/main.py`。`add_option(\"SPY\")`，`filter strikes(−10,10).expiration(0,7)`。周一开盘后1分钟：目标到期=当日+4日之周五；链上按行权价排序；短 call 取 delta 最接近 +0.10，短 put 取 delta 最接近 −0.10；长 call/put 各为短肢外侧第3档行权价；四腿须有买卖报价；`OptionStrategies.iron_condor(...)` 后 `buy(...,1)`。周五收盘前5分钟 `liquidate()`。不是 W256 EasyQuant ±5/±10 点、30–45 日到期铁鹰。提出日期未知。 不是W256 EasyQuant ±5/±10点、30–45日到期铁鹰：本条为周一卖出SPY约10-delta短肢外侧3档长肢当周铁鹰，周五清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2600",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2600,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "61171f965810d847a1e77ca0b5d6fa6ef87c2742410c3977314dfb6516f3386f",
+    "rule_sha256": "7b58adfa1518deaee0567148d18a805e20c5dbdc71a2cdb6fcf621943e52b570"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2600",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2600"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-value-pe-pb-quality/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：市值>100亿且成交额>1000万且价>5，按−PE/−PB/+ROE 的z均分取前20只等权，月初09:35再平衡（QC Documentation value quality）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（−PE/−PB/+ROE z均分Top20月初等权；QC Documentation value quality）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：市值>100亿且成交额>1000万且价>5，按−PE/−PB/+ROE 的z均分取前20只等权，月初09:35再平衡（QC Documentation value quality）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-value-pe-pb-quality/main.py`。粗选：`market_cap>1e10`、`dollar_volume>1e7`、`price>5`，且 PE/PB/ROE 有限。对候选：`z(−PE)`、`z(−PB)`、`z(ROE)` 三者平均为综合分，降序取前20；不足20只则宇宙不变。月初 09:35 等权 `set_holdings`，`liquidate_existing_holdings=True`。不是魔法公式或仅 PE 十分位核。提出日期未知。 不是魔法公式或仅PE十分位核：本条为市值>100亿等过滤后按−PE/−PB/+ROE的z均分取前20只等权月初再平衡。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

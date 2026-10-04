@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2525",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2525,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b4fce00559c81aca12907c1eeee53f7e46acb9431c5ad6e18863d67339e282ed",
+    "rule_sha256": "f833265f2f2fa8915dbd92d0fec2bb6404cddf25e7be76e81cf9ef66b9fb41ed"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2525",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2525"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15309/sector-rotation-based-on-news-sentiment/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect 研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：25只行业/主题ETF，成分股权重×Brain 30日情绪加权得板块分，月初午夜等权持有情绪最高3只（QC News Sentiment Sector Rotation）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（25只行业ETF Brain情绪Top3；QC News Sentiment Sector Rotation）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：25只行业/主题ETF，成分股权重×Brain 30日情绪加权得板块分，月初午夜等权持有情绪最高3只（QC News Sentiment Sector Rotation）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect 研究《Sector Rotation Based On News Sentiment》已印加权平均主策略。静态宇宙25只：XLE、XLF、XLU、XLI、GDX、XLK、XLV、XLY、XLP、XLB、XOP、IYR、XHB、ITB、VNQ、GDXJ、IYE、OIH、XME、XRT、SMH、IBB、KBE、KRE、XTL。对各 ETF 做成分宇宙；BrainSentimentIndicatorUniverse 日频。板块分=Σ(成分 sentiment30_days × ETF权重)。`_numEtfs=3`；按分数降序取前3，等权各 `1/3`；不在目标内的已持仓清零。再平衡：`month_start` + midnight（参数可测第1/5/12个交易日，默认0即月初）。同页另列简单平均、仅前50%权重成分平均等变体，本条只收已印主表加权平均核。不是十二个月价格动量行业轮动。提出日期未知。 不是十二个月价格动量行业轮动：本条为25只行业/主题ETF按Brain 30日情绪加权取Top3月初等权。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}
