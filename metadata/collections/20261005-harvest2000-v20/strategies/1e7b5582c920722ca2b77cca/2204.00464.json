@@ -1,0 +1,140 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者假设给定的价格路径分布不随本次流动性配置变化，尝试在获取交易费与承担代币组合偏移损失之间选择不同价格区间的配置。风险厌恶效用只是决策偏好；这里只核配置定义，不证明真实订单流、融资与费用足以带来盈利，也不验证论文实验。",
+    "missing": [
+      "未运行优化器、合约或回测；论文仿真不充作本仓库经济验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "arxiv.org",
+  "lab": null,
+  "missing_information": [
+    "路径分布是开仓前给定的信念；本条未补行情估计器、样本窗或样本外更新。不能把事后实际整条价格路径当作开仓已知输入。",
+    "净损益以终点的代币B计价，需扣初始借入代币组合的终点等值；不是未融资LP本金加收益，也不是美元收益率。借款利息、抵押、强平及真实归还安排未给。",
+    "桶份额ell是流动性单位，预算为Σell_i w_i≤D；不能替换成Σell=1或强制满投。零配置可行，未用完预算的收益未建模。",
+    "手续费收入按模型价格段计算；条件于给定路径时与其他LP总流动性抵消，不代表真实市场增配不会影响价格和订单流。",
+    "原文风险中性单桶捷径没有写全α_i/w_i为负时的零配置分支；本条采用原式4.4/4.7的不等式预算优化，不采用无条件满投单桶捷径。",
+    "原文将D=1称为WLOG，也把效用凹性表述为任意a；本条保留给定D与a≥0，不声称改变D而不调整a仍有相同比例最优解，也不扩至a<0。",
+    "求解器、样本数N、随机种子、容差、停止规则、失败/多解选择没有冻结；没有运行优化、代码、模拟或回测。",
+    "原文及数据未获商业再使用授权；arXiv非排他分发声明只是平台权利信息，商业许可REVIEW_REQUIRED。"
+  ],
+  "name": "Uniswap v3：借币净损益下的静态分桶流动性配置",
+  "native_source_id": "2204.00464",
+  "one_line": "给定开仓前价格路径分布，以逐桶手续费减归还初始代币组合的损失为收益，求预算内的固定流动性份额。",
+  "record_id": "2204.00464",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行来源实现、优化器、仿真或回测。",
+    "metadata": "来源原生身份、精确定位及自撰中文规则；不发布原论文、图像、代码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Zhou Fan, Francisco Marmolejo-Cossío, Ben Altschuler, He Sun, Xintong Wang, David C. Parkes, Differential Liquidity Provision in Uniswap v3 and Implications for Contract Design, arXiv:2204.00464v2. Chinese paraphrase by curator.",
+      "id": "arxiv-2204-00464v2-pdf",
+      "license": "Versioned arXiv abstract links nonexclusive-distrib/1.0; this is not a general commercial or fulltext redistribution license. Underlying paper/data rights remain REVIEW_REQUIRED. Only source identity, locators and original Chinese definition metadata are proposed for publication.",
+      "locator": "PDF pp7–8 Eq2.4/2.5 token bundle; pp11–14 Eq3.2–3.9 fees and borrowed-token net PnL; pp14–17 liquidity-independent beliefs, Eq4.4/4.7 CARA allocation; lines refer to pinned pdftotext derivative. Empirical results and contract-design optimization not imported.",
+      "revision": "arXiv:2204.00464v2, revised 2022-08-25; sha256:cb9df0abb035533307da83add1d6aeb7390bb52a2266b775187a0892978e6449",
+      "sha256": "cb9df0abb035533307da83add1d6aeb7390bb52a2266b775187a0892978e6449",
+      "supports": [
+        "逐桶初始代币组合与预算",
+        "分段双币手续费",
+        "终点偿还借币组合的净损益",
+        "静态风险厌恶配置约束"
+      ],
+      "url": "https://arxiv.org/pdf/2204.00464v2",
+      "verification": "FETCHED_PINNED_AUTHOR_SUBMITTED_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "arXiv versioned abstract for Zhou Fan, Francisco Marmolejo-Cossío, Ben Altschuler, He Sun, Xintong Wang, David C. Parkes",
+      "id": "arxiv-2204-00464v2-abstract",
+      "license": "Versioned arXiv abstract links nonexclusive-distrib/1.0; this is not a general commercial or fulltext redistribution license. Underlying paper/data rights remain REVIEW_REQUIRED. Only source identity, locators and original Chinese definition metadata are proposed for publication.",
+      "locator": "HTML title/authors, v2 date2022-08-25, abs-license link nonexclusive-distrib/1.0; identity and rights only.",
+      "revision": "arXiv:2204.00464v2 abstract HTTP snapshot sha256:1eb00d46c2dac1d5c9ce503d4d8a45823635a299bd1909e08d0eb3e3ceae66c1",
+      "sha256": "1eb00d46c2dac1d5c9ce503d4d8a45823635a299bd1909e08d0eb3e3ceae66c1",
+      "supports": [
+        "原始版本与署名",
+        "非排他展示权利链接"
+      ],
+      "url": "https://arxiv.org/abs/2204.00464v2",
+      "verification": "FETCHED_PINNED_VERSIONED_ABSTRACT"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "arxiv-2204-00464v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "A、B为两种代币，B为记账单位，P_c是池内A/B合约价，P_m是池外市场价，二者可以不同。LP持有各桶的流动性份额ell_i，而非限价单或另一家交易所对冲仓；初始借入创建这些份额所需的A/B组合，终点需归还原组合的等值。代币A数量按终点P_m换算成B，B不必是稳定币；借币不表示已经完成市场中性对冲。"
+    },
+    "cost": {
+      "evidence": [
+        "arxiv-2204-00464v2-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：γ/(1−γ)在此是LP赚得的交易费，不是LP自己每次交易缴纳的账户成本。所选PnL=费用−初始借币组合的等值损失，没有借款利息、抵押资本、LP开撤仓gas、滑点及换币成本。§4.5的GAS是交易者跨活跃桶端点的相对计算开销，不可拿来冒充LP账户费用。上述缺项不能默设为0，论文的净损益是限定模型内的净值口径。"
+    },
+    "entry": {
+      "evidence": [
+        "arxiv-2204-00464v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在预定起点，已知桶集、正价格初值、费用比例γ∈(0,1)、预算D、a及路径信念后，求预算约束下的ell。对每个ell_i>0的桶，借入ell_i·v_i(P_c,0)所需的A/B代币组合并将其加入合约；ell_i=0不配置。没有回撤、均线、预测涨跌阈值或等待出区间后才首次入场的条件。预算为上限，不能从作者风险中性单桶文字捷径推成不论预测净损益都满投。"
+    },
+    "execution_time": {
+      "evidence": [
+        "arxiv-2204-00464v2-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：源给出0时借币并加入流动性、沿路径计费用、T时撤出并归还的抽象顺序，但没有链上区块时点、确认延迟、mint/burn/collect的交易先后、合约价与外部价取样同步、实际换币成交价及失败重试合同。不从已知路径优化定义推补未来可见、零延迟或同价完成融资与还款。"
+    },
+    "exit": {
+      "evidence": [
+        "arxiv-2204-00464v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "到预先选定的T移除全部ell，按P_c,T收到各桶对应的A/B代币组合，加上累计手续费，再按P_m,T口径扣除初始借入组合的终点等值。期间ell保持固定，跨出桶只改变该桶的代币构成/是否赚取该段费用，不自动烧毁份额、重新选范围或止损。没有滚动续作、止盈止损或峰值恢复状态；若债务需现物归还，实际换币/融资执行仍未定义。"
+    },
+    "position": {
+      "evidence": [
+        "arxiv-2204-00464v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "ell_i≥0是桶i的流动性单位。单位份额v_i(c)为：c<a_i时(1/√a_i−1/√b_i,0)；c>b_i时(0,√b_i−√a_i)；c∈[a_i,b_i]时(1/√c−1/√b_i,√c−√a_i)。各分量依次为A、B数量，边界连续，外侧0/∞按原模型极限理解。w_i=P_m,0 v_i,A(P_c,0)+v_i,B(P_c,0)为初始每单位的B价值；约束Σ_i ell_i w_i≤D，而非Σell_i=1。借入总组合Σell_i v_i(P_c,0)，固定持有ell至T，不把累计费用中途自动复投。零配置可行，无单桶额外占比帽；D和a联合决定解，不声称固定a时任意D只按比例缩放。"
+    },
+    "risk": {
+      "evidence": [
+        "arxiv-2204-00464v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只在给定正价格路径及流动性独立信念下，费用和借币损益对ell线性；真实增配会改变池价格/订单流的耦合被原文主动省略。价格离开桶后该桶可能不再收取费用，仍保留被动代币库存和归还初始组合的风险；不设止损或保证盈利。a≥0为本条范围，原文“任意a均凹”不扩用到a<0；原文D=1的WLOG文字也不等于固定风险参数下任意资金规模权重不变。预算不等式允许0，故风险中性全负期望时不能照单桶捷径强制满投。路径估计、N、求解容差/多解/失败、借贷及执行缺项尚未闭合；只审定义，不证明优化器、真实合约或经济表现。"
+    },
+    "signal": {
+      "evidence": [
+        "arxiv-2204-00464v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "这是一套配置优化而非价格交叉信号。先给定开仓前的路径分布𝒫及a≥0。每条路径上，把价格移动按桶分段：若该段c→c′上行，则桶i产生B费用ell_i·γ/(1−γ)·(√c′−√c)，A费为0；若下行，则产生A费用ell_i·γ/(1−γ)·(1/√c′−1/√c)，B费为0；不动则均0。汇总两币费用F_A,F_B后，F=P_m,T F_A+F_B。设单位流动性代币组合为v_i(c)，则IL=Σ_i ell_i{P_m,T[v_i,A(P_c,0)−v_i,A(P_c,T)]+v_i,B(P_c,0)−v_i,B(P_c,T)}，PnL=F−IL。求ell使−E_𝒫[u_a(PnL)]最小；a>0时u_a(z)=(1−e^(−az))/a，a=0时u_0(z)=z。来源有限样本版以开仓前从𝒫独立抽取的N条路径，把期望换为(1/N)Σ_q u_a(PnL(ell,P^q))；不是使用已经发生的未来实际路径做当时配置，也不是指数加权上一期收益。"
+    },
+    "timeframe": {
+      "evidence": [
+        "arxiv-2204-00464v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一个预先给定的有限路径P=(P_0,…,P_T)，P_t=(P_c,t,P_m,t)，初始P_0=(1,1)。在0时形成一次固定ell，期间不重新选择桶宽或重置中心，到T撤出。跨多个桶的一段价格变化按桶边界分拆计算费用；t是路径事件索引，没有绑定日线或固定秒频。具体T及路径采样间隔需作为输入，论文仿真中的时间规模不是本条通用生产默认。"
+    },
+    "universe": {
+      "evidence": [
+        "arxiv-2204-00464v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定一个Uniswap v3双代币合约及其有限桶集μ={B_−m,…,B_n}。各B_i=[a_i,b_i]首尾相接，最外两桶为(0,b_−m]及[a_n,∞)，合起来覆盖正价格；初始平价1位于B_0内部。这里选择可配置的价格桶，不按代币涨幅排名，也未给具体链、合约地址、币对筛选、流动性门槛或现时池名单。外侧0/∞为论文模型端点，不补成交易所可下单数值。"
+    }
+  }
+}
