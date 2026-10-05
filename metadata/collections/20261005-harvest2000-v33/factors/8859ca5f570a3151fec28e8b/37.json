@@ -1,0 +1,105 @@
+{
+  "economic_basis": {
+    "hypothesis": "在指定危机和债务均值假设下，规模、杠杆与市场共同下跌暴露可能放大资本补足需求。模型可用于压力排序，但有符号均值和正部顺序受后文批评；不证明实际救助成本、收益风险溢价或违约概率。",
+    "missing": [
+      "仅审知识定义；计算、PIT、数据授权和经济有效性未验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-f6d7428d0c2ef522fb34251f"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "t时已知市值权益和已发表账面债务，与仅利用t时信息给定的条件分布；h为前瞻目标不是可事后回填观测。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-c22fc51efb94a02f7a30caad",
+        "harvest-source-f6d7428d0c2ef522fb34251f"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源为Brownlees和Engle在ESRB WorkingPaper37、March2017的49页版本，文末DOI10.2849/814038。仅采用§2.1有符号条件资本缺口及系统汇总，不据其他期刊年份或V-Lab网页推定该版本默认相同。 以当前市值权益W_i>0、账面债务D_i>=0和审慎资本比例0<k<1定义quasiassets D_i+W_i；当前CS_i=k(D_i+W_i)−W_i。这里D/W分别是账面/市场口径，不能把两者无条件换为账面总资产和净资产。 给定时点t的信息下、覆盖同一h的企业累计算术收益R_i及市场累计算术收益R_m的联合条件分布F_t。市场危机事件B={R_m<C}是严格小于；要求P_t(B)>0且企业收益在B上绝对可积，否则条件均值未定义。分布与模型事先给定，不使用事后一次已实现收益代替。 先求LRMES_i=−E_t[R_i|B]。若F_t由有限场景π_s,r_ms,r_is给定，则为−Σ_sπ_s r_is1(r_ms<C)/Σ_sπ_s1(r_ms<C)；这是条件期望的直接有限分布写法，不是新采的模拟器或历史估计方法。 原定义E_t[CS_i,t+h|B]=kE_t[D_i,t+h|B]−(1−k)E_t[W_i,t+h|B]。采用源明确的危机期债务不重新协商假设E_t[D_future|B]=D_i，以及W_future=W_i(1+R_i)，得到SRISK_i=kD_i−(1−k)W_i(1−LRMES_i)。 等价地LVG_i=(D_i+W_i)/W_i，SRISK_i=W_i[kLVG_i+(1−k)LRMES_i−1]。既有D/W杠杆与条件尾均值是组成，不把它们各自重新收为新族；本提名对象为来源完整资本目标。 SRISK_i可正、零或负；负值表示该来源平均资本过剩。系统SRISK_total=Σ_i max(SRISK_i,0)，不得先抵消不同企业过剩，也不得把每一情景的max放进期望后声称仍是原式。 份额share_i仅当SRISK_i>0时为SRISK_i/SRISK_total，否则0。存在正项则total>0；若无正项，逐条走else均为0，不预先计算0/0。全向量、系统总量、份额和LRMES/LVG中间量保守同族。 该文实证明确k=.08,h=22交易日(一月),C=−.10；它们是这份论文的例设，通用数学合同不固定，只给显式输入。不得换写常见六个月/−40%或2020Fed说明的120天/−20%。 原§2.2另拟合GARCH-DCC并通过模拟估LRMES，但本条仅审§2.1给定条件分布的精确定义；模型训练、创新分布、模拟次数/种子/参数/历史软件并未闭合。预测区间Eq2、显著性或经验危机预测不属于选定输出。 2020Fednote提出SRISKv2=E[max(CS_future,0)|B]，与本条max(E[CS_future|B],0)一般不同；保留该方法批评和顺序差别，不默修原SRISK也不按v2加名额。 公司池及t时可得的账面债务/市值权益/条件分布同时冻结；会计发布时间、并表口径、市场指数与退市处理尚缺。正资本缺口是模型压力描述，不等于实际救助成本、违约概率或可直接交易收益因子。 边界：W>0,D>=0,0<k<1；统一货币和时点，非正市值/缺失债务不以0补齐。 危机事件用R_m<C严格不等式；零事件概率或不可积收益时不返回估计值，不用无危机样本默认0。 给定分布的算术收益域R_i,R_m>=−1；有限条件均值下LRMES<=1，但LRMES可为负，不强制[0,1]裁剪。 SRISK_i有符号，系统聚合才取正部；E正部与正部E的非线性不能互换。 无正SRISK公司时total0，按原份额piecewise的else全0；不能把全0解读成真实系统无风险。 当前债务条件均值不变是明确模型假设，不代表实际危机融资/债务重组恒定。 k/h/C及市场/企业坐标/份额不同只一族；原研究例不冒称当前监管要求或默认配置。 公式已知不等于F_t已估得；GARCH-DCC/MC、置信区间、PIT和收益验证未核。 输出：企业有符号SRISK完整向量、同一公司池正部总量和piecewise份额；LRMES/LVG是同族中间量，无交易仓位。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-f6d7428d0c2ef522fb34251f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在指定危机和债务均值假设下，规模、杠杆与市场共同下跌暴露可能放大资本补足需求。模型可用于压力排序，但有符号均值和正部顺序受后文批评；不证明实际救助成本、收益风险溢价或违约概率。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-f6d7428d0c2ef522fb34251f"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给N>=1公司，W_i>0、D_i>=0有限，0<k<1，正整数预测期h与−1<C<0。给t时已指定的同h累计算术收益(R_1..R_N,R_m)条件分布F_t，R>=−1，B={R_m<C}，P_t(B)>0且E_t[|R_i|1_B]<∞。LRMES_i=−E_t[R_i|B]。在源假设E_t[D_i,t+h|B]=D_i和W_i,t+h=W_i(1+R_i)下，SRISK_i=E_t[k(D_i,t+h+W_i,t+h)−W_i,t+h|B]=kD_i−(1−k)W_i(1−LRMES_i)=W_i[kLVG_i+(1−k)LRMES_i−1]，LVG_i=(D_i+W_i)/W_i。系统S=Σ_i max(SRISK_i,0)；share_i=SRISK_i/S若SRISK_i>0，否则0（全无正项时全部0）。整个有符号向量/正部总量/份额及中间条件均值为一族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-f6d7428d0c2ef522fb34251f"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "W（lengthN finite positive current marketequity;N>=1）：公司当期权益市值，币种与D一致；不是未来已实现资本。；D（lengthN finite nonnegative current bookdebt）：账面债务，需真实公布时间/版本，不和市场权益口径混淆。；F_t（given conditional probabilitylaw forNfirmreturns andmarketreturn over sameh;support>=−1;positivecrisisprobability andintegrablefirmreturns）：t时信息集下的联合未来累计算术收益法则；可有离散原子，不能把尚未拟合模型当已知实证数据。。参数：k：资本目标比例；2017例设非当前监管规则。；范围prudentialcapitalfraction0<k<1；来源默认值None；本条选定explicit real0<k<1;paperempiricalexample.08；h：条件危机的累计回报窗口；窗口变体不另计。；范围positiveinteger;allreturnvariables sharethehorizon；来源默认值None；本条选定explicit positiveinteger in declaredreturnperiod;paperexample22tradingdays；C：事件严格R_m<C，不改为分位阈值或单公司尾部。；范围negativecumulativemarketreturnthreshold；来源默认值None；本条选定explicit threshold−1<C<0;paperexample−.10；conditionaldebt_assumption：债务在危机期间不重新协商的源假设，不能由数据缺失自动成立。；范围sourcefixedconditionaldebtmean representative；来源默认值None；本条选定E_t[D_i,t+h|B]=currentD_i"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-f6d7428d0c2ef522fb34251f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "给定条件分布的资本压力度量；不声称已实现论文的估计/模拟流水线。 仅知识定义：实际资产负债数据、条件分布/PIT、数值验证及金融用途须另行固定；没有计算或经济有效性晋级。"
+    }
+  },
+  "identity_namespace": "esrb/working-papers",
+  "lab": null,
+  "missing_information": [
+    "条件分布估计/校准、GARCH-DCC、模拟器、软件和精度MISSING。",
+    "会计公布/修订时点、公司池、指数、币种和真实PIT输入MISSING。",
+    "经济有效性/金融回测未验证；不是直接交易规则。",
+    "输入数据与商用授权REVIEW_REQUIRED。"
+  ],
+  "name": "市场危机条件下的企业资本缺口",
+  "native_source_id": "37",
+  "one_line": "将危机场景中的企业条件收益与当前账面债务、市值权益及资本比例结合，得到有符号资本缺口及系统正部汇总。",
+  "record_id": "37",
+  "relations": [],
+  "rights": {
+    "derived_results": "来源忠实不代表计算或经济验证；逐来源权利、数据许可与商业用途分别审核，REVIEW_REQUIRED。",
+    "metadata": "自撰中文来源、规则和边界摘要；原论文/网页/派生文本/页图不公开。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.esrb.europa.eu/pub/pdf/wp/esrbwp37.en.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "ChristianBrownlees andRobertEngle,ESRB WorkingPaper37,March2017,DOI10.2849/814038;separatecomparisonMarcoMigueis andAlexanderJiron,FEDSNotes2020-09-18. 中文定义自撰。",
+      "id": "harvest-source-f6d7428d0c2ef522fb34251f",
+      "license": "ALL_RIGHTS_RESERVED_NONCOMMERCIAL_EDUCATIONAL_REPRODUCTION_WITH_ACKNOWLEDGEMENT",
+      "locator": "ESRB WP37/March2017/Brownlees–Engle identity:physical p1-1; abstract and scope,not validation:physical p2-2; printed6 §2.1 capitalshortfall identity:physical p7-7; printed7 Eq1,debt assumption,h22/C−.10/k.08:physical p8-8; printed8 LRMES and aggregate positive part;Eq2 intervals excluded:physical p9-9; printed9 positive shares and estimator boundary §2.2:physical p10-10; ESRB2017 copyright,noncommercial reproduction notice,DOI10.2849/814038:physical p49-49",
+      "revision": "ESRB WorkingPaper37;March2017;exact49-pagePDF;DOI10.2849/814038",
+      "sha256": "bdd92b2ca84c6742c644668ce68842a0e98975615c1f61e2c3bb7e24221fd9fb",
+      "supports": [
+        "SELECTED_DEFINITION_AND_BOUNDARIES"
+      ],
+      "url": "https://www.esrb.europa.eu/pub/pdf/wp/esrbwp37.en.pdf",
+      "verification": "PINNED_SOURCE_DESCRIPTION_OR_EXPLICIT_REFERENCE_REVIEWED"
+    },
+    {
+      "attribution": "ChristianBrownlees andRobertEngle,ESRB WorkingPaper37,March2017,DOI10.2849/814038;separatecomparisonMarcoMigueis andAlexanderJiron,FEDSNotes2020-09-18. 中文定义自撰。",
+      "id": "harvest-source-c22fc51efb94a02f7a30caad",
+      "license": "UNKNOWN_NO_LICENSE_INFERRED_FROM_GOVERNMENT_HOST",
+      "locator": "separate2020note identity,inside/outside expectation max distinction and different120day/−20% example:L1410-1439",
+      "revision": "Migueis–Jiron;FEDSNotes2020-09-18;exactHTML;SRISKv2comparison only",
+      "sha256": "c544617402ea1b40bc1b0bfeae8caa550dd54c17015144a8a2c3f30c4cf87359",
+      "supports": [
+        "SUBSEQUENT_CRITIQUE_NOT_SELECTED_FORMULA"
+      ],
+      "url": "https://www.federalreserve.gov/econres/notes/feds-notes/sriskv2-a-note-20200918.html",
+      "verification": "PINNED_SOURCE_DESCRIPTION_OR_EXPLICIT_REFERENCE_REVIEWED"
+    }
+  ]
+}

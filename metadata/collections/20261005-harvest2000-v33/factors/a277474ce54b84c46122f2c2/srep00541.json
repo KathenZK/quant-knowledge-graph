@@ -1,0 +1,162 @@
+{
+  "economic_basis": {
+    "hypothesis": "在敞口按对手受损比例重估且资本吸收损失的假设下，一次冲击可能沿网络扩大；R可作该情景的结构压力诊断。来源定义不证明真实违约、收益预测或监管适用性。",
+    "missing": [
+      "仅审知识定义；计算、PIT、数据授权和经济有效性未验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-8c72f762108adf5d68fa5d2c",
+        "harvest-source-a1bb3b3bdad71fe18800151c"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "A/E和节点标签在同一已知as-of冻结，场景S/ψ事先给定；传播t为模型轮次，不能按未来网络/修订资本回填过去。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-8c72f762108adf5d68fa5d2c",
+        "harvest-source-a1bb3b3bdad71fe18800151c",
+        "harvest-source-b3b47d00e2d71b277203b19b",
+        "harvest-source-c5fd4302ad64d37600286555"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原生归属为Battiston等2012 srep00541，输入方向与R汇总取原Methods；后续原合作者Bardoscia等2015明确以Eq11称originalDebtRank，提供无重叠的一次传播集合。本条显式采用这份后文界定的代表，而非声称2012印刷Eq4无歧义或两份PDF相同。 采用有限封闭节点集合、正初始资本E和非负双边债权A。A_ij是i借出/投资于j，对应损失从j传回i。选定无自债A_ii=0和ΣA>0的金融网络域；这些是已声明数学输入合同，不是某个未采集程序主动验证。 2012写W_ij=min(1,A_ji/E_j)，描述i对j的冲击；本条使用接收者为行的B_ij=min(1,A_ij/E_i)=W_ji，与2015 Eq11的W相同方向。只换索引约定，不能把旧W_ij直接填入新接收行求和。 经济价值权重选原2012给出的v_i=Σ_jA_ij/Σ_(l,j)A_lj，孤立零资产行可v_i=0。它是资产权重而非资本E权重；2015另文系统权益损失汇总不替换原R。总A=0时此权重未定义，不默补均匀值。 设h(0)=0，给种子集合S和ψ∈[0,1]，h_i(1)=ψ·1(i∈S)。初始损失是场景输入，不通过未来观测推断；ψ=1为全损，ψ<1允许未违约的受损状态传播。 每一轮先用旧h(t)、h(t−1)形成D_t={j:h_j(t)>0且h_j(t−1)=0}，只让首次出现正受损的节点发送。按同一旧向量同时更新所有接收者h_i(t+1)=min(1,h_i(t)+Σ_(j∈D_t)B_ij h_j(t))，不能原地逐节点更新或把当轮新损失立刻再发。 节点传播一次后不再进入D，但仍可接受后续冲击并增加h；它新收到的损失不继续传出。原补充Fig5明确表现这一点。不能把inactive误成冻结数值，也不能把本条换成2015 Eq4逐次新增损失多轮传播。 当D_t为空，输出该时点h*=h(t)；非负增量和上限使h单调且每节点最多一次首次激活，有限N下最多N个非空传播轮。这是定义的有限性说明，不是执行结果或浮点容差承诺。空种子或ψ=0从始至终h=0。 按2012 Eq5输出R=Σ_i v_i(h_i*−h_i(1))，剔除的是初始受损金额，不是无条件删除种子节点。ψ<1的种子后来继续受损时，其额外部分仍计入；ψ=1时自然无额外空间。h*、每节点贡献、各单种子/群体场景均保守同族，不拆名额。 原2012正文Eq4的D条件与I条件对旧D状态相交；补充Eq2又漏I分支。正文/补充文字和Fig5描述once-only，2015 Eq11另以首次正h集合给明确定义。本条保留三处差异与证据，不私拟旧式if/elif优先级。 2015 Correction e0134888更正Fig1/2和Data重构公式第二行下标，未更正Eq11或2012状态式；只据完整所读更正页说明范围，不借它声称旧印刷冲突已由官方勘误修复。 资本缓冲、网络敞口、节点合并和估值假设需同时点可得；轮次t是模型传播步，不是市场分钟/交易日。该构造不是实际概率、清算支付、自动违约名单或投资头寸；现实回收率、未知敞口、估计误差及验证均未采。 边界：输入有限非负A、正E、A对角0、总A>0；资本<=0/负敞口/全零总资产不在所选合同，不修补、不宣称金融系统数据已满足。 权重方向区分2012 W_ij与2015接收行B_ij，B不保证行和/列和1；可多条邻边累计并饱和。 ψ0/空种子输出0；ψ1初始节点h饱和但其它节点仍可受损。 inactive节点仍可接收且增加h，但不会再次发送；非同步实现会改变路径，不属于本纸面合同。 原式状态冲突保留，代表合同依赖2015明确后文，不倒写成2012原字节一致。 0<=R<=1−Σv_i h_i(1)是非负权重下直接边界；不能由R较小推定实际破产/流动性风险小。 只收原once-only；2015重复增量/不同权重/节点分数/种子扫描不单计新增，未批准后者数值或实现。 网络数据与资本发布时点/修订未知；无实证危机预测、收益有效或金融交易可运行声明。 输出：终端相对受损h*、v加权额外损失贡献与R；所有节点/场景/聚合保守一族，无交易指令。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-a1bb3b3bdad71fe18800151c"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在敞口按对手受损比例重估且资本吸收损失的假设下，一次冲击可能沿网络扩大；R可作该情景的结构压力诊断。来源定义不证明真实违约、收益预测或监管适用性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-8c72f762108adf5d68fa5d2c",
+        "harvest-source-a1bb3b3bdad71fe18800151c"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给N>=2个固定节点，A∈R_+^(N×N)有限、A_ii=0、a=Σ_(i,j)A_ij>0，E_i>0有限。A_ij为债权人i对债务人j的敞口。B_ij=min(1,A_ij/E_i)，v_i=Σ_jA_ij/a。给S⊆{1..N},ψ∈[0,1]，h(0)=0，h_i(1)=ψ·1(i∈S)。D_t={j:h_j(t)>0且h_j(t−1)=0}；同步h_i(t+1)=min(1,h_i(t)+Σ_(j∈D_t) B_ij h_j(t))。在首个D_t为空的t取h*=h(t)，R=Σ_i v_i[h_i*−h_i(1)]。输出整个h*/贡献/R作为一个once-only DebtRank族。2012原W_ij=min(1,A_ji/E_j)，故此B_ij=W_ji；状态代表采用2015 Eq11，保留2012 Eq4和补充Eq2冲突。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-8c72f762108adf5d68fa5d2c",
+        "harvest-source-a1bb3b3bdad71fe18800151c"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "A（finite nonnegative real N-by-N exposure matrix,N>=2,diagonal0,sum>0）：行i债权人、列j债务人，统一货币/估值时点；同节点映射。；E（lengthN finite strictlypositive initial capital buffers,same unit asA）：受损接收者i的初始资本分母，不是债务人j资本；具体tier1/权益供应商及发布时点缺。。参数：S：外生冲击种子；单节点/多节点只是同族场景。；范围any subset of N unique node indices；来源默认值None；本条选定explicit set of original node labels;empty set allowed；psi：种子初始相对受损幅度；1为完全受损，不把示例值当全局默认。；范围0<=psi<=1；来源默认值None；本条选定explicit real in[0,1]；value_weights：原R使用资产价值份额；未换成2015系统权益权重。；范围2012 stated asset-based representative;otherproxies excluded from this exactcontract；来源默认值None；本条选定v_i=row_sum(A)_i/sum(A)；propagation_variant：处理早期状态排印冲突的明确后文来源，不由采集者创造状态优先级。；范围originalonce-onlyfamily;not2015newEq4incrementrepropagation；来源默认值None；本条选定2015Eq11 explicitly labelled originalDebtRank: first-positive-h only"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-a1bb3b3bdad71fe18800151c"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "一个来源原生的敞口/资本受损传播族；原状态排印冲突单列，不声称已闭合软件复现。 仅知识定义：实际资产负债数据、条件分布/PIT、数值验证及金融用途须另行固定；没有计算或经济有效性晋级。"
+    }
+  },
+  "identity_namespace": "nature/scientific-reports",
+  "lab": null,
+  "missing_information": [
+    "真实双边敞口/资本供应商、发布时点、修订和同节点映射MISSING。",
+    "数值实现/精度/原状态式执行语义未核，未运行任何传播算法。",
+    "真实违约回收、退出/外部节点、场景概率与经济有效性MISSING。",
+    "商业使用及输入数据许可REVIEW_REQUIRED。"
+  ],
+  "name": "债权网络的一次受损传播与额外损失份额",
+  "native_source_id": "srep00541",
+  "one_line": "用债权相对资本的损失权重，让每个节点首次受损时传播一次，再汇总初始冲击以外的资产加权损失。",
+  "record_id": "srep00541",
+  "relations": [],
+  "rights": {
+    "derived_results": "来源忠实不代表计算或经济验证；逐来源权利、数据许可与商业用途分别审核，REVIEW_REQUIRED。",
+    "metadata": "自撰中文来源、规则和边界摘要；原论文/网页/派生文本/页图不公开。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nature.com/articles/srep00541.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "StefanoBattiston,MichelangeloPuliga,RahulKaushik,PaoloTasca,GuidoCaldarelli(2012);MarcoBardoscia,StefanoBattiston,FabioCaccioli,GuidoCaldarelli(2015). 中文定义为自撰。",
+      "id": "harvest-source-a1bb3b3bdad71fe18800151c",
+      "license": "CC-BY-NC-SA-3.0",
+      "locator": "original identity/authors/2012-08-02:physical p1-1; A creditor to debtor,W transpose,capitalbuffer and value weights:physical p5-5; original Eq3–5;overlapping Eq4;seed and net impact;copyright:physical p6-6",
+      "revision": "ScientificReports2:541;2012-08-02;exact6-pagePDF",
+      "sha256": "89f7e6deab753c5ea961d8046745a117b535499333fcd0c9014a4be4120c0f18",
+      "supports": [
+        "SELECTED_DEFINITION_AND_BOUNDARIES"
+      ],
+      "url": "https://www.nature.com/articles/srep00541.pdf",
+      "verification": "PINNED_SOURCE_DESCRIPTION_OR_EXPLICIT_REFERENCE_REVIEWED"
+    },
+    {
+      "attribution": "StefanoBattiston,MichelangeloPuliga,RahulKaushik,PaoloTasca,GuidoCaldarelli(2012);MarcoBardoscia,StefanoBattiston,FabioCaccioli,GuidoCaldarelli(2015). 中文定义为自撰。",
+      "id": "harvest-source-dfd6226f63ba1340ed33b180",
+      "license": "CC-BY-NC-SA-3.0",
+      "locator": "original bibliographic identity:L290-323; publisher exact supplementaryPDF link and CC-BY-NC-SA3 notice:L1019-1021",
+      "revision": "Nature exactHTML snapshot2026-10-05;2012paperidentity",
+      "sha256": "a380a0fde8b539f2a8ec4c60e77d66181e62bfdb956775b94390c4a20842f747",
+      "supports": [
+        "IDENTITY_LICENSE_LINKS_ONLY"
+      ],
+      "url": "https://www.nature.com/articles/srep00541",
+      "verification": "PINNED_SOURCE_DESCRIPTION_OR_EXPLICIT_REFERENCE_REVIEWED"
+    },
+    {
+      "attribution": "StefanoBattiston,MichelangeloPuliga,RahulKaushik,PaoloTasca,GuidoCaldarelli(2012);MarcoBardoscia,StefanoBattiston,FabioCaccioli,GuidoCaldarelli(2015). 中文定义为自撰。",
+      "id": "harvest-source-b3b47d00e2d71b277203b19b",
+      "license": "CC-BY-NC-SA-3.0_MAIN_ARTICLE_NOTICE_SCOPE",
+      "locator": "supplement Eq1–3;missing inactive branch and explanatory prose:physical p10-10; Fig5 once-only propagation and inactive nodes receive later losses:physical p11-11; Fig6 edge direction,impact weights and PageRank comparison:physical p12-12",
+      "revision": "Exact Nature-linked2012 supplement;36physicalpages",
+      "sha256": "887a809ab2eb0299ec06f9529092aad513369a6cb8bed31d01dd81f332f61bc3",
+      "supports": [
+        "SELECTED_DEFINITION_AND_BOUNDARIES"
+      ],
+      "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fsrep00541/MediaObjects/41598_2012_BFsrep00541_MOESM1_ESM.pdf",
+      "verification": "PINNED_SOURCE_DESCRIPTION_OR_EXPLICIT_REFERENCE_REVIEWED"
+    },
+    {
+      "attribution": "StefanoBattiston,MichelangeloPuliga,RahulKaushik,PaoloTasca,GuidoCaldarelli(2012);MarcoBardoscia,StefanoBattiston,FabioCaccioli,GuidoCaldarelli(2015). 中文定义为自撰。",
+      "id": "harvest-source-8c72f762108adf5d68fa5d2c",
+      "license": "CC-BY-4.0",
+      "locator": "authors/date/CCBY/data notice:physical p1-1; A lender row,liability transpose and mark-to-market assumptions;not selected Eq3:physical p3-3; Lambda index conventions and Eq6–10 context:physical p8-8; Methods Eq11 explicit original DebtRank once-only active set and capped weight:physical p9-9; h0=0 initial shock;multiple-propagation contrast,not selected Eq13:physical p10-10",
+      "revision": "PLOSONE10(6)e0130406;2015-06-19;exact13-pagePDF;MethodsEq11originalDebtRank",
+      "sha256": "a127d707b33ffe6cced1f69c82483ca6b33d2bc44472565ed6acf7b4e3cd67ae",
+      "supports": [
+        "SELECTED_DEFINITION_AND_BOUNDARIES"
+      ],
+      "url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0130406&type=printable",
+      "verification": "PINNED_SOURCE_DESCRIPTION_OR_EXPLICIT_REFERENCE_REVIEWED"
+    },
+    {
+      "attribution": "StefanoBattiston,MichelangeloPuliga,RahulKaushik,PaoloTasca,GuidoCaldarelli(2012);MarcoBardoscia,StefanoBattiston,FabioCaccioli,GuidoCaldarelli(2015). 中文定义为自撰。",
+      "id": "harvest-source-179beca6ef43543c7372f28f",
+      "license": "CC-BY-4.0",
+      "locator": "published correction DOI identity/link:L980-1006; article attribution,published2015-06-19,CCBY4 and Bankscope separate data:L1060-1068",
+      "revision": "PLOSONE e0130406 exactHTML snapshot2026-10-05",
+      "sha256": "0a9262e358caa3ec39dd28acdcd9d4c42e50a733a4bf7888b7a479ba851f75fc",
+      "supports": [
+        "IDENTITY_LICENSE_LINKS_ONLY"
+      ],
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0130406",
+      "verification": "PINNED_SOURCE_DESCRIPTION_OR_EXPLICIT_REFERENCE_REVIEWED"
+    },
+    {
+      "attribution": "StefanoBattiston,MichelangeloPuliga,RahulKaushik,PaoloTasca,GuidoCaldarelli(2012);MarcoBardoscia,StefanoBattiston,FabioCaccioli,GuidoCaldarelli(2015). 中文定义为自撰。",
+      "id": "harvest-source-c5fd4302ad64d37600286555",
+      "license": "CC-BY-4.0",
+      "locator": "correction covers Fig1/Fig2 and Data equation second-line subscript:L923-934; corrected article identity and correction date/license:L938-949",
+      "revision": "PLOSONE10(7)e0134888;2015-07-31;exactHTML;figures/data-subscript correction",
+      "sha256": "4868e9ed172491e5ca1530d53b6827b3f0460ae21e3ced862f38eab67ea9e7cf",
+      "supports": [
+        "CORRECTION_SCOPE_ONLY_NOT_A_REPAIR_OF_2012"
+      ],
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0134888",
+      "verification": "PINNED_SOURCE_DESCRIPTION_OR_EXPLICIT_REFERENCE_REVIEWED"
+    }
+  ]
+}
