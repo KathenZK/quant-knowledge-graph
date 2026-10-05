@@ -1,6 +1,8 @@
 # 来源采集进度
 
-目标为在原 8,546 条目录基线上新增 **1,000 个策略、1,000 个因子与量化特征**。本轮累计通过来源与去重复核的新增项为 **142 个策略、223 个因子**，尚余 858 个策略、777 个因子。下载数量、未决候选和同族参数不计入目标。
+目标为在原 8,546 条目录基线上新增 **1,000 个策略、1,000 个因子与量化特征**。本轮累计通过来源与去重复核的新增项为 **146 个策略、225 个因子**，尚余 854 个策略、775 个因子。下载数量、未决候选和同族参数不计入目标。
+
+按用户要求，本轮在第三十四批收尾后暂停；1,000 + 1,000 目标尚未完成。未完成筛查留有私有检查点，恢复后再继续审核。
 
 | 冻结批次 | 新策略 | 新因子 | 内容 |
 |---|---:|---:|---|
@@ -37,9 +39,10 @@
 | [第三十一批](20261005-harvest2000-v31/README.md) | 2 | 1 | 自适应预测与核加权组合、Cox 精确风险集条件似然 |
 | [第三十二批](20261005-harvest2000-v32/README.md) | 1 | 3 | 费后虚拟组合配置、频谱残差、LOCI 和动态模型连接度 |
 | [第三十三批](20261005-harvest2000-v33/README.md) | 2 | 3 | 双聚类卖沽、整数仓位配置、持久图像、DebtRank 和 SRISK |
-| 合计 | 142 | 223 | 365 个来源支持的不同定义或构造 |
+| [第三十四批](20261005-harvest2000-v34/README.md) | 4 | 2 | TWAMM、StableSwap、HBL、LPPLS、双样本游程及 TwoNN |
+| 合计 | 146 | 225 | 371 个来源支持的不同定义或构造 |
 
-223 个因子分为 153 个统计特征、24 个技术指标、34 个风险测度、12 个链上指标。金融测度的具体用途另存 `method_category`，区分风险、表现归因和市场微观结构。以上是定义层数量，不是独立盈利机会的数量。
+225 个因子分为 155 个统计特征、24 个技术指标、34 个风险测度、12 个链上指标。金融测度的具体用途另存 `method_category`，区分风险、表现归因和市场微观结构。以上是定义层数量，不是独立盈利机会的数量。
 
 每批的 `index.json`、`source-lock.json`、`reviews.json`、`quality-contract.json` 都由 `manifest.json` 固定摘要。规则与公式绑定具体源码或供应商文档行段，去重比较绑定旧记录的 ID、文件与摘要。已经提交的原定义不改写，后续核准项写新批次并登记到统一 `catalog.json`。
 
@@ -50,7 +53,7 @@
 ```sh
 uv run quantgraph catalog-stats
 uv run quantgraph catalog-search --status REVIEWED_NEW_DEFINITION --limit 1000
-uv run python -m quantgraph.graph.collection_batch --directory metadata/collections/20261005-harvest2000-v33
+uv run python -m quantgraph.graph.collection_batch --directory metadata/collections/20261005-harvest2000-v34
 ```
 
 末条命令验证公开元数据；本机存在原始快照时加 `--verify-snapshots`，再核对原始字节和字段证据行段。公开克隆缺少原文时不能声称重做了正文审核。

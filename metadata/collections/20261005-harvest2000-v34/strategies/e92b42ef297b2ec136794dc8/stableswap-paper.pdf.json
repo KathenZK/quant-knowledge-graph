@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "来源定义的执行/报价构造；改善价格冲击或流动性是作者研究主张，本次不验证收益或最优性。",
+    "missing": [
+      "未执行来源算法、撮合、回测或经济验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "curve.finance/whitepapers",
+  "lab": null,
+  "missing_information": [
+    "来源定义及实现/描述状态分开；费用、历史运行依赖、账户可行性与商用许可各自待核。",
+    "未用未知旧组件不存在作为新增证据；整族构造待独立审查。"
+  ],
+  "name": "StableSwap：随库存失衡改变曲率的多币换币做市",
+  "native_source_id": "stableswap-paper.pdf",
+  "one_line": "以初始库存求不变量D，每次交换在动态放大系数构造的隐式曲线上决定对向支付数量。",
+  "record_id": "stableswap-paper.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED",
+    "metadata": "原生ID、固定版本来源、定位及自撰规则。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://classic.curve.fi/files/stableswap-paper.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Michael Egorov; original 2019-11-10 paper, six actual physical pages.",
+      "id": "curve-stableswap-2019-pdf",
+      "license": "NOASSERTION: original source contains no explicit grant reviewed here; article/PDF/source/market-data rights separate. Commercial REVIEW_REQUIRED.",
+      "locator": "original source; field_spans and visual evidence",
+      "revision": "Michael Egorov 2019-11-10 six-page paper; sha256 302aa3092a541cd14296dda0ba9ef8df881e8ccbd24726fe524cf2883856fb70",
+      "sha256": "302aa3092a541cd14296dda0ba9ef8df881e8ccbd24726fe524cf2883856fb70",
+      "supports": [
+        "Selected original rule or source identity; not execution or profitability"
+      ],
+      "url": "https://classic.curve.fi/files/stableswap-paper.pdf",
+      "verification": "PINNED_ORIGINAL_BYTES_STATIC_REVIEW_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "curve-stableswap-2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定n≥2种理想兑换价格相同的资产及正库存x_i，原文以同美元面值稳定币作例，状态是各币数量，不是百分比组合权重。只采2019六页原论文的池运营者隐式换币规则；不挪用后来的NG、CryptoSwap、利息资产换算或代码整数算法。真实币种、链和地址不冻结，等面值坐标/decimals转换仍需外部说明。"
+    },
+    "cost": {
+      "evidence": [
+        "curve-stableswap-2019-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：论文只报告特定2019样本优化的0.06%每笔费率，没有说明费用按输入或输出扣、是否留池/分配、如何影响D、整数舍入及LP赎回成本。该数不当通用费率；这里核心方程是未另加费用规则的数学交换，不代表真实成本零。gas、资金、失败交易、脱锚对冲和退出费用均未闭合。"
+    },
+    "entry": {
+      "evidence": [
+        "curve-stableswap-2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "运营者先加载外部给定正库存并求D。客户卖入币i数量后，以新的x_i及其余不变库存解目标x_j，再从池中支付旧x_j−新x_j；客户输入/输出改变的是池库存，不是按价格突破主动建立多空。给入数量、最小收取量、实际余额到账以及是否允许拒绝交易由具体实现另定；本条只保留论文方程可定义的正库存分支。"
+    },
+    "execution_time": {
+      "evidence": [
+        "curve-stableswap-2019-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：来源只给加载库存求D、客户交换时求未知x_j并维持等式的数学顺序，以及Vyper整数迭代实现的存在说明。没有固定源码/区块时间、外部输入生效、代币转账回执、最小收取/滑点限额、交易排序或失败回滚合同；未运行迭代或交易。"
+    },
+    "exit": {
+      "evidence": [
+        "curve-stableswap-2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "反向客户交换沿同一不变量减少一种币并增加另一种币，不规定回到初始库存或每笔盈利后退出。所选做市过程没有固定终点、止盈止损或脱锚自动撤资；论文未印LP赎回、按比例移除/单币取出或运营者终止算法，故账户退出合同缺失，不从第6页Withdraw按钮补出规则。"
+    },
+    "position": {
+      "evidence": [
+        "curve-stableswap-2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "池持仓就是当前x向量，初始规模外部给定，客户请求决定交换规模；D表示各币等价时对应的总币量，通常不能简单把它视为当前Σx。χ在完全均衡时为A、失衡时下降。参数改变是同族；A→0的恒定乘积极限不是另一计数。没有权益权重目标、融资、保证金或回撤帽，A的leverage类比不授权真实100倍杠杆。"
+    },
+    "risk": {
+      "evidence": [
+        "curve-stableswap-2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "正库存和有限A范围内使用所印隐式公式；迭代初值、收敛容差、根选择、极端值/零库存、整数精度和异常回退未印，不声称数值实现已验。脱锚时曲线仍供给报价不等于保本；初始估值、资产信用与真实可兑换性仍外部风险。原摘要说省略不变量，但本固定六页的p4–5确实印出构造及最终式，按实际页而非摘要省略。历史样本所称APR不作本库经济证据。"
+    },
+    "signal": {
+      "evidence": [
+        "curve-stableswap-2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "核心不变量为A*n^n*Σ_i x_i + D = A*D*n^n + D^(n+1)/(n^n*Π_i x_i)。来源先构造χ*D^(n−1)*Σx_i+Πx_i=χ*D^n+(D/n)^n，再令χ=A*Πx_i/(D/n)^n；χ随库存不平衡变化，不是固定常数加权的和/乘积曲线。初始加载库存时解D；交换i→j时更新给入的x_i、保持其他币及D不变，再解x_j使等式成立，支付库存减少量。它是库存驱动报价构造，无未来价格、方向预测或外部价格oracle输入；A是曲率/放大系数，不是实际借款杠杆。"
+    },
+    "timeframe": {
+      "evidence": [
+        "curve-stableswap-2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每次客户提出币i换币j的数量时，保持当前交易不变量D计算交易后库存并更新状态；没有K线形成期、每日/月度再平衡或预期收益训练。本描述限单个给定资金池的连续交换序列；扩资/减资后如何计算LP股份及重新设D没有在论文中闭合，不能从界面截图推造日程。"
+    },
+    "universe": {
+      "evidence": [
+        "curve-stableswap-2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "开始前给定固定有限A>0与各正库存，以共同理想价格坐标表述；先由所印不变量求D。实际资产筛选、储备计量、精度、共同面值转换和脱锚识别未给。论文的A=100图例、A=85回看优化与0.06%样本费率不是本条默认，也不按A或稳定币名单拆新策略。"
+    }
+  }
+}
