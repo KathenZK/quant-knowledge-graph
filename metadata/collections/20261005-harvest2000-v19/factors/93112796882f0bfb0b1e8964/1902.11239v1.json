@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "给定有限离散联合分布，组合整体、各单变量及逐一剔除变量后的熵，描述多变量信息依赖的净平衡。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ce8060d69a3f3dc0df1a3ae0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "联合分布及其估计所用全部观测已经发布后可计算；若来自历史窗口，输出只能用于窗口结束且全部数据可得之后。金融发布/修订时点、估计训练截止和状态划分尚未冻结。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ce8060d69a3f3dc0df1a3ae0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入为同一有限离散联合分布p，n>=3。各坐标状态有固定含义，所有概率非负、有限且和为1。边缘概率必须从同一p求和得到，不允许把不同窗口或不同样本分别估的边缘任意拼接。 对完整变量集合、每个单变量和每个去一变量子集求边缘分布，再按H=-sum(p log2 p)求熵；0log0按连续极限记0。本条不选任何软件实现或浮点容差，不自动归一坏概率、不加伪计数。 先算C=sum_j H(Xj)-H(X)，B=sum_j H(X_except_j)-(n-1)H(X)，再求Omega=C-B。两中间量和所有维数、子集、对数单位、方向/窗口重包装保守只算一个构造族。 n=2时恒为0；n=3时等于三变量交互信息；n>3一般不等于遍历所有子集的交互信息。这里收一个完整n变量对称构造，不把从3变4维当额外新因子。 符号描述的是给定分布的净信息结构；0可以来自正负结构抵消，不等于独立。只包含两两因子也不必为0，因为相互重叠的两两相互作用可能给非零值。 论文音乐例以同窗同步离散状态的经验频数估p，并另用底数13展示；本条采用正文一般定义的base2。未指定金融状态离散化、样本窗口、概率估计偏差修正或显著性检验，不能直接对原始连续价格逐值建巨大状态空间后宣称可靠。 本条仅登记原文式5与其定义域。dit实现只作检索入口，未用于此合同或声称已审执行链；不采集连续高斯扩展、局部信息网络或音乐结论作金融证据。 边界：非负概率归一、边缘一致性是数学输入前提，不等于已有校验程序。 有限离散域之外的连续微分熵、密度估计、缺失插补和金融数据变换不在本条已核范围。 有限样本误差可能改变符号；未提供交易阈值、收益方向或因果关系。 Omega=0不充分说明变量独立或没有高阶依赖；正負构造可抵消。 共享Shannon熵与条件互信息代数；并不声称数学或经济独立。TC/DTC/S-information及正负/单位等线性输出不在本目标另拆计数。 原文PDF页首March1,2019与arXiv提交Feb28,2019均原样保留，未把v1当出版最终版。 输出：一个有符号实标量Omega；以及定义它的同族中间量不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ce8060d69a3f3dc0df1a3ae0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "给定有限离散联合分布，组合整体、各单变量及逐一剔除变量后的熵，描述多变量信息依赖的净平衡。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ce8060d69a3f3dc0df1a3ae0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "有限离散X=(X1,...,Xn)，给定p(x)>=0且sum_x p(x)=1，n>=3。对任意所需子集A令p_A(x_A)=sum_(x_except_A)p(x)，H(X_A)=-sum_(p_A>0)p_A log2 p_A。C=sum_j H(Xj)-H(X)，B=sum_j H(X_except_j)-(n-1)H(X)。Omega=C-B=(n-2)H(X)+sum_j[H(Xj)-H(X_except_j)]，单位bits。C/B仅中间量，整个Omega构造按一族计数。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ce8060d69a3f3dc0df1a3ae0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "p and finite alphabets（one finite discrete n-variate joint PMF, n>=3, nonnegative finite entries summing exactly to1）：完整联合状态与概率。各边缘由同一p计算；金融变量、状态划分、采样及估计方法缺失。。参数：n：联合变量数，由p的坐标合同给出；各维数不拆计数；范围integer>=3; n2 is identically zero, not nominated output；来源默认值None；log_base：本条单位bits；不按底数增加因子；范围selected2 from general definition; paper musical example13 is a unit change；来源默认值2；本条选定2"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ce8060d69a3f3dc0df1a3ae0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "arxiv",
+  "lab": null,
+  "missing_information": [
+    "金融变量与PIT数据合同MISSING",
+    "离散状态划分、概率估计、窗口及有限样本误差处理MISSING",
+    "浮点算法/运行环境与统计显著性未验证",
+    "经济有效性及商业授权未验证"
+  ],
+  "name": "总相关与对偶总相关之差的 O 信息量",
+  "native_source_id": "1902.11239v1",
+  "one_line": "给定有限离散联合分布，组合整体、各单变量及逐一剔除变量后的熵，描述多变量信息依赖的净平衡。",
+  "record_id": "1902.11239v1",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://arxiv.org/pdf/1902.11239v1"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Fernando Rosas, Pedro A. M. Mediano, Michael Gastpar, Henrik J. Jensen; Quantifying High-order Interdependencies via Multivariate Extensions of the Mutual Information; arXiv:1902.11239v1, submitted2019-02-28, PDFdated2019-03-01, Eq2/3/5. Self-authored Chinese mathematical metadata.",
+      "id": "harvest-source-ce8060d69a3f3dc0df1a3ae0",
+      "license": "arXiv-nonexclusive-distrib-1.0-NOT-GENERAL-REUSE-GRANT",
+      "locator": "title authors and manuscript date; not publisher final edition: physical PDF p1-p1; finite alphabet Shannon entropy, total and dual correlation, Eq5 definition and n2/n3 boundaries: physical PDF p2-p4; zero can reflect cancellation; overlapping pairwise interactions need not vanish: physical PDF p8-p8; empirical joint-frequency illustration; no market estimator: physical PDF p10-p10; illustration uses log13; continuous extension left to separate publication: physical PDF p12-p13",
+      "revision": "arXiv:1902.11239v1",
+      "sha256": "592364820feb12e94ff87d32ac8c09a751f445d6bf26653f340985919f6cc91d",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://arxiv.org/pdf/1902.11239v1",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Fernando Rosas, Pedro A. M. Mediano, Michael Gastpar, Henrik J. Jensen; Quantifying High-order Interdependencies via Multivariate Extensions of the Mutual Information; arXiv:1902.11239v1, submitted2019-02-28, PDFdated2019-03-01, Eq2/3/5. Self-authored Chinese mathematical metadata.",
+      "id": "harvest-source-098fe577ca9a36c010732bcc",
+      "license": "UNKNOWN_PAGE_SHELL_RIGHTS_NOT_ASSERTED",
+      "locator": "original title authors abstract and fixed-version PDF link:L118-L130; exact version identity:L138-L146; v1 submission date and linked nonexclusive distribution license:L188-L202",
+      "revision": "arXiv:1902.11239v1",
+      "sha256": "9e3b653297b77acfdc14db8921840ffc51435fe3de4a8f4deca6632331c393fd",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://arxiv.org/abs/1902.11239v1",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Fernando Rosas, Pedro A. M. Mediano, Michael Gastpar, Henrik J. Jensen; Quantifying High-order Interdependencies via Multivariate Extensions of the Mutual Information; arXiv:1902.11239v1, submitted2019-02-28, PDFdated2019-03-01, Eq2/3/5. Self-authored Chinese mathematical metadata.",
+      "id": "harvest-source-c4b3cfa063bb6bd2aa3e03cb",
+      "license": "UNKNOWN_PAGE_SHELL_RIGHTS_NOT_ASSERTED",
+      "locator": "grant to arXiv for distribution; not a general reader commercial license:L11-L25",
+      "revision": "nonexclusive-distrib/1.0",
+      "sha256": "1991765e2079370736d4dedf217375799ad19aab6700ebdf42ae3dd84690067a",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://arxiv.org/licenses/nonexclusive-distrib/1.0/license.html",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

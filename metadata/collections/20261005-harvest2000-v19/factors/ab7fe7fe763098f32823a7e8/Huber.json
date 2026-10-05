@@ -1,0 +1,155 @@
+{
+  "economic_basis": {
+    "hypothesis": "完整窗口的稳健位置与分散尺度估计，不是策略、回归系数或已验证风险模型。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅在整个预先固定尾随窗口全部输入已发布后可得；全窗中位数/MAD与迭代不能回填为窗内早时点值。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅审普通有限一维NumPy float64数组，N>=2，初始MAD严格正且核心运算可表示。源码入口np.asarray并不统一强制float64/有限性，这些是额外研究合同；不将整数溢出或NaN路径理想化。 位置从中位数起、尺度从除Φ⁻¹(.75)的MAD起。mu=None使尺度分母的自由度为N−1；不是每轮有效未截断点数，也不是N。tools.unsqueeze只将标量reshape成长度1方便广播，最终squeeze回标量数组。 norm=None每次只做一次位置固定点更新，而不是先把给定尺度下位置内层迭代完全收敛。它对原始a按旧μ±cσ夹取后求完整N项均值。 决定subset的标准化偏差以旧μ、旧σ计算，等号保留；尺度分子中未截断观测到新μ的残差平方，与其余观测按旧cσ平方混合。不可把全部项换成新标准化残差，也不可把subset重新按新μ判定。 gamma按固定c用标准正态CDF/PDF校准，与数据没有重估关系。尺度更新开方后，两项停止阈值都乘新尺度；位置误差不是相对位置大小。任一测试未过就更新，不能只看尺度变化。 达到双阈值返回该轮新位置及新尺度；30轮耗尽会抛ValueError，没有带警告返回最后迭代值。该定义不保证所有有限样本成功收敛。 入口docstring中有“最小化sum psi²”描述，本条不把它当联合全局最优定理，而按可核对实际递推定义。也没有回归设计矩阵、预测变量系数或标准误输出。 位置、尺度和原生全局huber单例保守同计一族；不拆HuberScale、其它norm/参数/初始化/窗口/平方尺度成新增。已审范围不自动覆盖另一个HuberScale回归残差类。 边界：MAD=0可以由多数相同而非完全常量造成；本合同排除。源码不统一防止零尺度、NaN/Inf传播或极值溢出，不能填0后仍称原算法。 正初值和有限输入不构成数值稳定或30轮收敛保证。中途非有限通常使比较为False、最终失败，具体依赖语义未运行验证。 固定默认c/tol/maxiter合同，无参数扫描或自动择优。norm非None会调用另一套位置估计，本条未审该分支。 Phi/PDF/PPF使用源SciPy调用；这里只冻结数学定义和调用，实际NumPy/SciPy版本、硬件、浮点舍入未冻结，不声称逐位复现。 样本排列不影响理想数学定义；作为时序特征使用完整尾随窗口，不能据其稳健名称推定厚尾样本风险已控制。 输出：联合位置μ与尺度σ两个原生标量数组，或按原定义未收敛ValueError；整族1，不按两个输出拆数"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "完整窗口的稳健位置与分散尺度估计，不是策略、回归系数或已验证风险模型。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定Huber(c=1.5,tol=1e−8,maxiter=30,norm=None)(a,mu=None,initscale=None,axis=0)。N>=2，μ₀=median(a)，σ₀=median|a−μ₀|/Φ⁻¹(.75)>0。令g=2Φ(c)−1，γ=g+c²(1−g)−2cφ(c)。每轮k：μₖ₊₁=N⁻¹Σclip(aᵢ,μₖ−cσₖ,μₖ+cσₖ)；Iᵢ=1(|(aᵢ−μₖ)/σₖ|<=c)；σₖ₊₁=sqrt{Σ[Iᵢ(aᵢ−μₖ₊₁)²+(1−Iᵢ)(cσₖ)²]/[(N−1)γ]}。若|σₖ−σₖ₊₁|<=tol·σₖ₊₁且|μₖ−μₖ₊₁|<=tol·σₖ₊₁则返回新一对；否则更新并继续，30轮仍未满足则抛ValueError。Φ、φ为标准正态CDF/PDF。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "a（ordinary finite NumPy float64 one-dimensional ndarray, N>=2; strictly positive initial standardized MAD; finite representable core arithmetic）：完整已观测样本。金融字段、采样频率、调整方式、发布时点与供应商MISSING；源本身不统一验证这些条件。。参数：c：截断标准差倍数，不按c变化新增；范围reviewed fixed default 1.5；源码默认1.5；tol：位置与尺度都相对新尺度检查收敛；范围reviewed fixed default 1e-8；源码默认1e-08；maxiter：最多30轮，未收敛抛ValueError；范围reviewed fixed default 30；源码默认30；norm：用一步固定点位置更新；自定义RobustNorm不在已审合同；范围reviewed None only；源码默认None；mu：联合估计位置而非外给固定中心；范围reviewed None only；源码默认None；initscale：由标准化MAD初始化；范围reviewed None only；源码默认None；axis：不审广播多轴；范围reviewed 0 for1D array；源码默认0"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-f0bf86ae6286de8eba745796",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "statsmodels/statsmodels",
+  "lab": null,
+  "missing_information": [
+    "实际金融输入、市场时点/PIT与数据许可",
+    "源码对应运行依赖和数值/收敛验证",
+    "经济用途仅RESEARCH_ASSUMPTION；没有交易方向/收益有效性或回测",
+    "原书籍/论文许可独立未建立"
+  ],
+  "name": "Huber 联合稳健位置与尺度的迭代估计",
+  "native_source_id": "Huber",
+  "one_line": "按旧位置和尺度截断极端样本，交替更新位置及校准尺度，在两项误差同时足够小时返回；位置与尺度作为同一完整构造族。",
+  "record_id": "Huber",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/robust/scale.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "statsmodels维护者的Huber proposal2实现；PJ Huber、Venables与Ripley原方法文献按源归属保留。",
+      "id": "harvest-source-2e09bf535b5d9c8a2930a68f",
+      "license": "BSD-3-Clause",
+      "locator": "original algorithm attribution imports and normal calibration:L1-L29; complete standardized MAD helper:L32-L77; Huber native defaults and gamma:L204-L243; one-dimensional entry initialization and degree count:L245-L297; complete joint recurrence stopping rule and singleton:L299-L379",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "49c8c09800fabe71a0bb6a2bdb7fbf8634b43fad3edec4a1d46fbccd98ccbf37",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/robust/scale.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者的Huber proposal2实现；PJ Huber、Venables与Ripley原方法文献按源归属保留。",
+      "id": "harvest-source-f0bf86ae6286de8eba745796",
+      "license": "BSD-3-Clause",
+      "locator": "complete reshape-only unsqueeze helper:L329-L363",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "915504844ecaf378b3d529ae4b596abd877aba7cf825fb6dff0c0e0daf2b7776",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tools/tools.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者的Huber proposal2实现；PJ Huber、Venables与Ripley原方法文献按源归属保留。",
+      "id": "harvest-source-95eec514513ea721429660bb",
+      "license": "BSD-3-Clause",
+      "locator": "array conversion signature:L42-L55; np.require and dimensional checks:L145-L181; float_like conversion:L375-L422",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "862d8b1cf1411aaae0b397e2421109fa5e33c32efe7dcacdb88ae2eeca55fa5b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tools/validation/validation.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者的Huber proposal2实现；PJ Huber、Venables与Ripley原方法文献按源归属保留。",
+      "id": "harvest-source-c42f2a259c3bd67e2e7d65e6",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 attributions and conditions:L1-L34",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "1ca78e1dec9dcebc55f3b96a862317f23e76422c5fc943568d955aad1f6b5fad",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者的Huber proposal2实现；PJ Huber、Venables与Ripley原方法文献按源归属保留。",
+      "id": "harvest-source-6e63435ca23d4d69f63a6da6",
+      "license": "BSD-3-Clause",
+      "locator": "official project identity:L1-L37",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "d430fa04083d240c9f0e75aa90bc73c13cb1a874f4c7b4ce29bddbb6366c4a42",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

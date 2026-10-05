@@ -1,0 +1,232 @@
+{
+  "economic_basis": {
+    "hypothesis": "把每个生灭区间变成三角函数，在训练样本确定的网格上逐点取第k大高度，形成按同调维度与层排列的完整量化特征。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-b7b42403be4d824f4b19a1dd",
+        "harvest-source-f9a2de4a04663899523f4b09",
+        "harvest-source-ad8a1011509736931e0b7cd7",
+        "harvest-source-796133466825ac43793540fc",
+        "harvest-source-871660624b1930fb49d0b6ae"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "训练图及其训练范围已形成后冻结网格；待转换图的全部输入信息已公布后计算。禁止把测试期/未来图混入fit。金融原始变量、图生成、发布日期和修订/PIT规则MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-b7b42403be4d824f4b19a1dd",
+        "harvest-source-f9a2de4a04663899523f4b09",
+        "harvest-source-ad8a1011509736931e0b7cd7",
+        "harvest-source-796133466825ac43793540fc",
+        "harvest-source-871660624b1930fb49d0b6ae"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入已给定的生灭维度三元组[b,d,q]，不是原始价格或自动得到的金融拓扑。所审为非空普通float64数组(N,P,3)，所有值有限、b<=d、q为非负整数；每个批次内每个q的点数在所有样本相同且>=1，fit和transform的q集合一致。两批每维点数可以不同。fit每个q至少有一个b<d，并要求中间加减/网格和结果有限。这些额外研究域不等于源码完整验证。 调用fit只用训练期图。check_diagrams允许Inf但不允许NaN，维度合法性只检查第0个图；_subdiagrams布尔选行后按第0个样本的计数reshape，不能保证总数凑巧相同但每图错位的坏输入被正确识别。研究合同排除无穷寿命/堆叠q=Inf和样本间维度数量错配，不自行替换成finite数或重分组。 fit用第0图的np.unique(q)再排序成整数元组。对每个q，_bin取全部训练样本所有出生和死亡的最小/最大，因b<=d等于min birth和max death；linspace包含两端共B=n_bins个点。每个q单独网格，不能把不同q的同一列当成同一过滤阈值。若最小=最大，源码把最大替成全维全局最大；本研究域排除此退化，不悄悄替换原规则。 transform沿fit保存的q顺序取子图、删除q坐标。对每个区间中点m=(b+d)/2、高h=(d−b)/2，在每个网格t计算max(h−abs(t−m),0)。b=d的对角点给零高度，但fit时仍参与端点范围；添加远处对角填充会改变网格，不能笼统说填充不影响全部输出。 每个样本/网格位置沿点轴partition全部末尾min(L,Pq)个位置，取末尾L项并flip得从大到小的层；L>点数时补零层。所有q、层与网格坐标是一个完整输出族，不拆成多个因子。研究参数L>=1、B>=2；源B>=1合法支保留为未提名退化，改变B或L不计新。 输出shape(N,D*L,B)，按源码reshape(D,N,L,B)→transpose(1,0,2,3)→reshape得到第j个q、第k层的索引j*L+k（零基）。transform说明L391写D*j+k，与实际代码在D!=L时不一致，合同保留代码顺序并明确文档差异。所有样本使用同一训练网格，测试图可能有训练区间外的结构但不会自动扩展网格。 原生n_jobs=None受joblib上下文影响；本研究选择n_jobs=1，只审直接fit→transform数值构造，不声称验证并行调度/安装/序列化。_docs装饰器只包装fit_transform并修改文档，原函数被原样调用；绘图、VietorisRips生成器、Betti/entropy/heat/image等其它类不计入本条。 项目requirements固定sklearn==1.3.2并声明NumPy>=1.19.1、SciPy>=1.5.0、joblib>=.16，README另写较宽sklearn>=.23.1，以setup读取requirements的声明为准；都不是已复现的历史运行环境。未安装或运行giotto/上游依赖，未做数值稳定性或金融收益检验。 边界：特征只编码已给定持久图；行情到点云、距离、过滤复形、生灭图的生成、稳定性证明和金融意义均未完成。 全训练集范围参与fit，不能用未来/测试图拟合网格再回填历史；实盘重拟合时输出坐标会变。 每个同调维度单独网格；不足层补0不等于缺失值；无穷寿命、NaN、错配维度和空样本不在所审合同。 源输出坐标文档与代码有冲突；以上按代码j*L+k，不偷改raw。 源码通过一般NumPy广播和partition计算；溢出、底层版本、计算资源与安装兼容未执行核验。 AGPL只为该项目代码/材料声明；不授权行情、其它实现或原算法论文的商用。 输出：完整(N,D*L,B)持久景观张量；维度和层坐标合计1"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-b7b42403be4d824f4b19a1dd",
+        "harvest-source-f9a2de4a04663899523f4b09",
+        "harvest-source-ad8a1011509736931e0b7cd7",
+        "harvest-source-796133466825ac43793540fc",
+        "harvest-source-871660624b1930fb49d0b6ae"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把每个生灭区间变成三角函数，在训练样本确定的网格上逐点取第k大高度，形成按同调维度与层排列的完整量化特征。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-b7b42403be4d824f4b19a1dd",
+        "harvest-source-f9a2de4a04663899523f4b09",
+        "harvest-source-ad8a1011509736931e0b7cd7",
+        "harvest-source-796133466825ac43793540fc",
+        "harvest-source-871660624b1930fb49d0b6ae"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "训练图集合对每个q取a_q=min b、z_q=max d，固定t_q,r=a_q+r(z_q−a_q)/(B−1)，r=0..B−1，B>=2。对待转换样本i的第q维每个生灭点p定义f_iqp(t)=max(0,(d_iqp−b_iqp)/2−abs(t−(b_iqp+d_iqp)/2))。λ_iqk(t)为{f_iqp(t)}中的第k大值，k=1..L；k超过该q的点数时为0。输出Y[i,j*L+(k−1),r]=λ_i,q_j,k(t_qj,r)，q_j按升序；整体shape(N,D*L,B)。全部维度/层/网格合计一个构造族；生灭点的对角填充不去除，仍参与训练网格范围。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-b7b42403be4d824f4b19a1dd",
+        "harvest-source-f9a2de4a04663899523f4b09",
+        "harvest-source-ad8a1011509736931e0b7cd7",
+        "harvest-source-796133466825ac43793540fc",
+        "harvest-source-871660624b1930fb49d0b6ae"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X_fit and X_transform（finite ordinary float64 ndarray (N,P,3), N>=1, P>=1, b<=d, q nonnegative integer; per-q counts consistent within each batch; matching q sets; each fit q has some positive lifespan; finite arithmetic）：每个样本的持久图；源不包含金融持久图生成和历史PIT合同。训练与转换批次的每维点数可不同。。参数：n_layers：每个同调维度保留的高度阶次，超出点数补零；范围positive integer; all layer counts one family；源码默认1；n_bins：每维训练范围上的含端点等间隔采样数；范围research integer>=2; source allows>=1；源码默认100；n_jobs：并行配置，不是新特征；范围reviewed explicit1; source None context dependent；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-b7b42403be4d824f4b19a1dd",
+        "harvest-source-f9a2de4a04663899523f4b09",
+        "harvest-source-ad8a1011509736931e0b7cd7",
+        "harvest-source-796133466825ac43793540fc",
+        "harvest-source-871660624b1930fb49d0b6ae"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "giotto-ai/giotto-tda",
+  "lab": null,
+  "missing_information": [
+    "金融变量、点云/距离/过滤复形与持久图生成MISSING",
+    "训练窗口、fit重估时点、行情许可与PIT合同MISSING",
+    "实际依赖环境、数值结果、稳定性及经济有效性未验证",
+    "其它来源论文与市场数据授权另审"
+  ],
+  "name": "持久图的分层三角函数景观",
+  "native_source_id": "PersistenceLandscape",
+  "one_line": "把每个生灭区间变成三角函数，在训练样本确定的网格上逐点取第k大高度，形成按同调维度与层排列的完整量化特征。",
+  "record_id": "PersistenceLandscape",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/giotto-ai/giotto-tda/blob/6f896531b7c59216fd292018bf73728dea40b7e6/gtda/diagrams/representations.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "giotto-tda / L2F SA及项目贡献者；setup列维护者Umberto Lupo、Wojciech Reise，README列EPFL与HEIG-VD协作机构。这里核固定实现，未审核原理论论文全文/许可。",
+      "id": "harvest-source-b7b42403be4d824f4b19a1dd",
+      "license": "AGPL-3.0",
+      "locator": "imports and source license:L1-L23; class documentation parameter ranges and constructor:L252-L315; complete fit contract dimension extraction and training grid:L317-L363; complete transform contract and actual output coordinate order:L365-L409",
+      "revision": "6f896531b7c59216fd292018bf73728dea40b7e6",
+      "sha256": "134484292ee165837e6f0795c8f4b12de4d38db22c8b353d16eed4293de840d4",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/giotto-ai/giotto-tda/blob/6f896531b7c59216fd292018bf73728dea40b7e6/gtda/diagrams/representations.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "giotto-tda / L2F SA及项目贡献者；setup列维护者Umberto Lupo、Wojciech Reise，README列EPFL与HEIG-VD协作机构。这里核固定实现，未审核原理论论文全文/许可。",
+      "id": "harvest-source-f9a2de4a04663899523f4b09",
+      "license": "AGPL-3.0",
+      "locator": "dimension sorting and equal-count subdiagram extraction:L1-L52; complete shared binning and degenerate-grid fallback:L125-L167",
+      "revision": "6f896531b7c59216fd292018bf73728dea40b7e6",
+      "sha256": "6f589856e4f7f642932c4cd115a900a29af4df231f3262b8630d6e53b762212e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/giotto-ai/giotto-tda/blob/6f896531b7c59216fd292018bf73728dea40b7e6/gtda/diagrams/_utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "giotto-tda / L2F SA及项目贡献者；setup列维护者Umberto Lupo、Wojciech Reise，README列EPFL与HEIG-VD协作机构。这里核固定实现，未审核原理论论文全文/许可。",
+      "id": "harvest-source-ad8a1011509736931e0b7cd7",
+      "license": "AGPL-3.0",
+      "locator": "imports and source license:L1-L19; complete tent-height order-statistic kernel and zero padding:L71-L82",
+      "revision": "6f896531b7c59216fd292018bf73728dea40b7e6",
+      "sha256": "bbc54cecbe51fa71f7d120921a565cdcbaf49afd726eded7013b5f498f5b607d",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/giotto-ai/giotto-tda/blob/6f896531b7c59216fd292018bf73728dea40b7e6/gtda/diagrams/_metrics.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "giotto-tda / L2F SA及项目贡献者；setup列维护者Umberto Lupo、Wojciech Reise，README列EPFL与HEIG-VD协作机构。这里核固定实现，未审核原理论论文全文/许可。",
+      "id": "harvest-source-796133466825ac43793540fc",
+      "license": "AGPL-3.0",
+      "locator": "complete finite/shape/first-diagram dimension and diagonal checks:L1-L87; parameter type and interval membership:L95-L149; parameter exclusion and validation dispatch:L152-L202",
+      "revision": "6f896531b7c59216fd292018bf73728dea40b7e6",
+      "sha256": "2a1715b94a00837a56fc2394ab9f625e541451769254f209fac97aaaf168e221",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/giotto-ai/giotto-tda/blob/6f896531b7c59216fd292018bf73728dea40b7e6/gtda/utils/validation.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "giotto-tda / L2F SA及项目贡献者；setup列维护者Umberto Lupo、Wojciech Reise，README列EPFL与HEIG-VD协作机构。这里核固定实现，未审核原理论论文全文/许可。",
+      "id": "harvest-source-871660624b1930fb49d0b6ae",
+      "license": "AGPL-3.0",
+      "locator": "interval construction and open endpoint semantics:L1-L81; interval membership:L107-L111",
+      "revision": "6f896531b7c59216fd292018bf73728dea40b7e6",
+      "sha256": "d5c84fe86bf40f9cad70188b4519e2af08e1ac3ef6b6e2a945bc69aff9eb9bcd",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/giotto-ai/giotto-tda/blob/6f896531b7c59216fd292018bf73728dea40b7e6/gtda/utils/intervals.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "giotto-tda / L2F SA及项目贡献者；setup列维护者Umberto Lupo、Wojciech Reise，README列EPFL与HEIG-VD协作机构。这里核固定实现，未审核原理论论文全文/许可。",
+      "id": "harvest-source-b5afb55a1950869d3a57ad96",
+      "license": "AGPL-3.0",
+      "locator": "fit_transform docstring adapter delegates unchanged computation:L73-L114",
+      "revision": "6f896531b7c59216fd292018bf73728dea40b7e6",
+      "sha256": "bec9c5f35d42600e7badf49b9b02d777ca891f6f248668d5272dde66a72b227b",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/giotto-ai/giotto-tda/blob/6f896531b7c59216fd292018bf73728dea40b7e6/gtda/utils/_docs.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "giotto-tda / L2F SA及项目贡献者；setup列维护者Umberto Lupo、Wojciech Reise，README列EPFL与HEIG-VD协作机构。这里核固定实现，未审核原理论论文全文/许可。",
+      "id": "harvest-source-36077ef4be02bbf5e1d7bb9e",
+      "license": "AGPL-3.0",
+      "locator": "declared dependency requirements; not a historical installed environment:L1-L9",
+      "revision": "6f896531b7c59216fd292018bf73728dea40b7e6",
+      "sha256": "73cf29efaf0423376f46b8f2e8ff6932b07940787e52b2d8b99551b9dc6caef0",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/giotto-ai/giotto-tda/blob/6f896531b7c59216fd292018bf73728dea40b7e6/requirements.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "giotto-tda / L2F SA及项目贡献者；setup列维护者Umberto Lupo、Wojciech Reise，README列EPFL与HEIG-VD协作机构。这里核固定实现，未审核原理论论文全文/许可。",
+      "id": "harvest-source-691a6a327e9f358e20358c16",
+      "license": "AGPL-3.0",
+      "locator": "dependency loading maintainers repository and AGPL license:L16-L53",
+      "revision": "6f896531b7c59216fd292018bf73728dea40b7e6",
+      "sha256": "a3c445160cb974c7a590661f82e97e416b98ef7d70a36a4e1a124634c3fb1f44",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/giotto-ai/giotto-tda/blob/6f896531b7c59216fd292018bf73728dea40b7e6/setup.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "giotto-tda / L2F SA及项目贡献者；setup列维护者Umberto Lupo、Wojciech Reise，README列EPFL与HEIG-VD协作机构。这里核固定实现，未审核原理论论文全文/许可。",
+      "id": "harvest-source-7c85dcf81048033dd2157683",
+      "license": "AGPL-3.0",
+      "locator": "project authorship institutions and AGPL declaration:L28-L47",
+      "revision": "6f896531b7c59216fd292018bf73728dea40b7e6",
+      "sha256": "77410249ad97892d299327b9dba8dc4e8023cfc04b81d80ce1244de912098344",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/giotto-ai/giotto-tda/blob/6f896531b7c59216fd292018bf73728dea40b7e6/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "giotto-tda / L2F SA及项目贡献者；setup列维护者Umberto Lupo、Wojciech Reise，README列EPFL与HEIG-VD协作机构。这里核固定实现，未审核原理论论文全文/许可。",
+      "id": "harvest-source-b548bac86d29e51f6e0a46e1",
+      "license": "AGPL-3.0",
+      "locator": "license notice and retained AGPL3 identity; full text retained not legal approval:L1-L15",
+      "revision": "6f896531b7c59216fd292018bf73728dea40b7e6",
+      "sha256": "c22bfd03688c708627151f41d91d1ff4c72e5a7418047c50e732e1de3ee63788",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/giotto-ai/giotto-tda/blob/6f896531b7c59216fd292018bf73728dea40b7e6/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,259 @@
+{
+  "economic_basis": {
+    "hypothesis": "固定完整分析窗口的多尺度两序列依赖曲线；并非单独收益因子或交易规则。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-47caea1cc18fdee7d1744ae0",
+        "harvest-source-cbe0110c985187aaf7f1d8b5",
+        "harvest-source-3034992f17e905c67b56a524",
+        "harvest-source-5e867009617ca9b4818ba843",
+        "harvest-source-2e99b67b239cda9c5aad1d1f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整预设尾随窗口所有成对原始观测均已发布后才可得；全窗去均值/累计/拟合不能回填为窗内早期实时特征。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-47caea1cc18fdee7d1744ae0",
+        "harvest-source-cbe0110c985187aaf7f1d8b5",
+        "harvest-source-3034992f17e905c67b56a524",
+        "harvest-source-5e867009617ca9b4818ba843",
+        "harvest-source-2e99b67b239cda9c5aad1d1f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "显式调用toAggregated分别构造两条去均值累积路径，再用DCCA(X,Y).computeRho(wins,polOrd=1,verbose=False,overlap=False,revSeg=False)。官方示例支持这一预处理链；computeRho没有isComputed门槛，不依赖先拟合Hurst或调用computeFlucVec。只登记系数曲线，不审拟合指数、随机置信阈值或pickle载入。 原toAggregated用nanmean和nancumsum；constructor还会对两输入各自删除NaN并截短长边。这不是按共同时间戳成对删除，会破坏原配对。本条额外要求原始输入有限、等长、对齐、等间隔，明确排除这些缺失处理路径，不把缺失当0。 computeRho只检查polOrd>=1、末尺度不大于N、首尺度>=polOrd+2、多尺度时末项大于首项；未检查非空和中间尺度。本条额外限制非空严格递增连续np.int64数组、每项3<=s<=floor(N/2)、N及尺度数<2^31。每尺度至少两段是研究合同，不声称源代码如此限制。 nRho转换为ctypes.c_int，C核心用整数N/s向下取整，从开头只取M个完整段；剩余末尾点不参与该尺度残差汇总。但预处理mean与累计路径使用全N点，因此不可当末尾从未影响预处理，也不可偷换成各段独立原序列去均值。 C核心polynomialFit构造[1,t]两列，t为1..N的全局序号，调用gsl_multifit_linear。当前官方GSL2.8文档把该调用定义为无权最小二乘和列缩放SVD；该文档是数学补证，不是固定历史链接环境。数学满秩时全局与段内平移时间基张成同一线性空间，但实际数值条件仍按原全局t保留。 交叉分子明确传absVals=False：原C函数直接均值Σu v，没有取绝对值或平方根；两自项走abs核心，把同一序列残差相乘再取绝对值、均值及开方，得到RMS。因此不能把Fxy也开方或把Fxx误写成方差后再次开方。 三个量对同一尺度采用相同M*s分母，不用每段s−2自由度修正、样本协方差分母或重叠段权重；源码最后直接相除，无eps、截到[-1,1]或零方差保护。本条有效数值输出域还要求两边汇总残差能量正，非有限运算与GSL错误未验证。 不同s、polOrd、overlap/revSeg、DCCA原生类及computeRho输出坐标保守只计一个算法族；本次只审明示默认分支，不把未审参数路径、置信区间、原波动函数或DFA语言实现计作额外新增。 边界：常量、分段完全线性累计路径等可使残差能量为0，代码直接除法而无专门返回合同；不写成自动返回0或强行修复。理论Cauchy界不代表浮点结果被截断。 数组非空/有限/共同时间对齐、尺度全部合法、至少两段及32位C整型长度边界是额外研究合同，源码只做较弱首尾检查。不要把空wins越界或负中间尺度视为良性NaN。 全局时间基的OLS可能数值病态，有限输入也不能保证累加/平方/乘积不溢出；GSL实际版本、SVD容差、错误处理器、Cython/NumPy/OpenMP和平台未运行冻结。核心未检查malloc和GSL返回状态。 预处理使用全窗均值与完整累计值；用于金融尾随窗口时只能在全部输入发布后使用。没有资产对选择、行情字段、复权、交易日历、发布/修订时点或可回测PIT合同。 DFA单序列局部线性去趋势RMS与本条共享边缘计算核，本条跨两序列保留残差乘积的符号和尺度结构；这不证明收益或经济概念独立性。 输出：nRho尺度数组及rho同长曲线；全部尺度一个构造族，不拆坐标"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-47caea1cc18fdee7d1744ae0",
+        "harvest-source-cbe0110c985187aaf7f1d8b5",
+        "harvest-source-3034992f17e905c67b56a524",
+        "harvest-source-5e867009617ca9b4818ba843",
+        "harvest-source-2e99b67b239cda9c5aad1d1f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "固定完整分析窗口的多尺度两序列依赖曲线；并非单独收益因子或交易规则。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-47caea1cc18fdee7d1744ae0",
+        "harvest-source-cbe0110c985187aaf7f1d8b5",
+        "harvest-source-3034992f17e905c67b56a524",
+        "harvest-source-5e867009617ca9b4818ba843",
+        "harvest-source-2e99b67b239cda9c5aad1d1f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入为同长度N的已对齐有限序列x、y。先X_t=Σ_(i=1..t)(x_i−mean(x))、Y_t=Σ_(i=1..t)(y_i−mean(y))。固定polOrd=1、overlap=False、revSeg=False。对每个预选尺度s，M=floor(N/s)，取前Ms点分M个不重叠段；各段以全局t=b·s+j+1作含截距的普通最小二乘直线拟合X和Y，残差为u_bj、v_bj。C_s=(Ms)⁻¹Σ_bΣ_j u_bj v_bj；F_x,s=sqrt[(Ms)⁻¹Σu_bj²]，F_y,s同理；ρ_DCCA(s)=C_s/(F_x,s F_y,s)。返回尺度数组与ρ曲线，一个完整族。此式是所有保留残差的汇总归一化乘积，不是各段Pearson系数再平均。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-47caea1cc18fdee7d1744ae0",
+        "harvest-source-cbe0110c985187aaf7f1d8b5",
+        "harvest-source-3034992f17e905c67b56a524",
+        "harvest-source-5e867009617ca9b4818ba843",
+        "harvest-source-2e99b67b239cda9c5aad1d1f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "raw_x, raw_y（two aligned finite ordinary NumPy float64 one-dimensional arrays, same N>=6 and N<2^31, evenly sampled; finite representable core arithmetic; positive pooled residual energy for both profiles at every chosen scale）：原始配对观测；先按显式toAggregated链构造累计路径，不得把已累计输入再次累计。市场字段、数据许可、频率、资产选择和PIT仍MISSING；额外研究输入约束不冒称源主动验证。。参数：winSizes：预先指定尺度集合；没有源码默认值，每个尺度不拆计数；范围explicit nonempty strictly increasing C-contiguous np.int64 vector; every3<=s<=floor(N/2), length<2^31；源码默认None；polOrd：含截距的一阶时间趋势；范围reviewed default1 only；源码默认1；verbose：关闭打印，不改变数学定义；范围reviewed False only；源码默认False；overlap：前向不重叠完整段；范围reviewed False only；源码默认False；revSeg：不从末尾追加逆向分段；范围reviewed False only；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-47caea1cc18fdee7d1744ae0",
+        "harvest-source-cbe0110c985187aaf7f1d8b5",
+        "harvest-source-3034992f17e905c67b56a524",
+        "harvest-source-5e867009617ca9b4818ba843",
+        "harvest-source-2e99b67b239cda9c5aad1d1f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "stfbnc/fathon",
+  "lab": null,
+  "missing_information": [
+    "金融输入字段/资产对选择、发布/修订PIT与数据许可",
+    "fathon实际链接GSL/NumPy/Cython/OpenMP版本及数值复现",
+    "原方法论文与补充GSL手册文档授权独立未建立",
+    "经济解释仅RESEARCH_ASSUMPTION；无收益方向、稳定alpha或回测结论",
+    "Comomentum最终出版版本未取得，已保留作者版本和403证据差异"
+  ],
+  "name": "分尺度累计路径去趋势交叉相关",
+  "native_source_id": "DCCA",
+  "one_line": "对两条序列的累计路径分段去除直线趋势，再按同尺度残差能量归一化交叉乘积，描述不同尺度的共变结构。",
+  "record_id": "DCCA",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/fathon/dcca.pyx"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-47caea1cc18fdee7d1744ae0",
+      "license": "GPL-3.0-or-later",
+      "locator": "copyright imports native class constructor NaN deletion and truncation:L1-L96; signed numerator path and global time design:L98-L129; same-series RMS helper dispatch:L179-L206; complete computeRho defaults checks and signed normalization:L304-L366",
+      "revision": "80d0a9841747add0c1f8d78e669b7b61d9e5bd00",
+      "sha256": "2651a812fca4ac1dccfd22802527acafd7742b6ff8e64d88822831d4ff13f74b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/fathon/dcca.pyx",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-cbe0110c985187aaf7f1d8b5",
+      "license": "GPL-3.0-or-later",
+      "locator": "copyright and include chain:L1-L19; complete forward non-overlap absolute fluctuation core used for self energies:L485-L532; complete forward non-overlap signed cross fluctuation core:L603-L650",
+      "revision": "80d0a9841747add0c1f8d78e669b7b61d9e5bd00",
+      "sha256": "12e4e71976b3ca39d63838dd4b51b27071937a9fad0a69dbeb41bc5a4864e4be",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/fathon/cLoops.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-3034992f17e905c67b56a524",
+      "license": "GPL-3.0-or-later",
+      "locator": "complete polynomialFit design GSL library call coefficient copy and cleanup:L1-L53",
+      "revision": "80d0a9841747add0c1f8d78e669b7b61d9e5bd00",
+      "sha256": "31fe15ed5ee3d65b0f7bde22ffc6e6901726e650e367e833cffd6bf53a3b6838",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/fathon/cFuncs.h",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-5e867009617ca9b4818ba843",
+      "license": "GPL-3.0-or-later",
+      "locator": "copyright and native declarations:L1-L31",
+      "revision": "80d0a9841747add0c1f8d78e669b7b61d9e5bd00",
+      "sha256": "8518a6125ceeb0fccbde642c02fc8cf10a34aaecdb110085b6a54d118cf780f9",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/fathon/cLoops.h",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-2e99b67b239cda9c5aad1d1f",
+      "license": "GPL-3.0-or-later",
+      "locator": "copyright imports:L1-L18; complete toAggregated preprocessing:L35-L48",
+      "revision": "80d0a9841747add0c1f8d78e669b7b61d9e5bd00",
+      "sha256": "215054e88f8a04692e79c587d69590162475a9637784966651ac5ec84e06be55",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/fathon/fathonUtils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-0d99eda6d1b4182372a24f78",
+      "license": "GPL-3.0-or-later",
+      "locator": "public DCCA import package version and author:L1-L32",
+      "revision": "80d0a9841747add0c1f8d78e669b7b61d9e5bd00",
+      "sha256": "1bf17b622dc21d79e7ab713d5473ed5c7f138260ab0cb0d5eb95f109d1a707e8",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/fathon/__init__.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-8b648109486b2ab28256b842",
+      "license": "GPL-3.0-only",
+      "locator": "native API and explicit aggregate-first coefficient workflow:L1-L46",
+      "revision": "80d0a9841747add0c1f8d78e669b7b61d9e5bd00",
+      "sha256": "85890a05af144bb201528910f301f3b7697cdb7065e4d26bac237de0c6deec1e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/docs/fun_class/fathon.DCCA.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-c19746dbdb2ba82638491c11",
+      "license": "GPL-3.0-only",
+      "locator": "extension native sources and GSL linkage:L32-L68; version attribution license and runtime requirements:L82-L115",
+      "revision": "80d0a9841747add0c1f8d78e669b7b61d9e5bd00",
+      "sha256": "a9021d679af244bb79befdf236001436ad93b5fa8cd99ed620062999518fff38",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/setup.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-5cdaa13f0e652cbcdcd9d982",
+      "license": "GPL-3.0-only",
+      "locator": "build dependencies without exact historical environment lock:L1-L10",
+      "revision": "80d0a9841747add0c1f8d78e669b7b61d9e5bd00",
+      "sha256": "ac9a42f78aa3ad9c3b2a003ce4ad628067a2d7491b3935b463ddddb4badb5d54",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-23ba74c18e9fec5535c760bd",
+      "license": "GPL-3.0-only",
+      "locator": "DCCA method and coefficient identity:L10-L24; maintainer JOSS citation:L57-L61; author and project plus GSL license notices:L112-L121",
+      "revision": "80d0a9841747add0c1f8d78e669b7b61d9e5bd00",
+      "sha256": "06ac2343713a37d5590def1707ee49728f6f0a189d8c8ad79c82a39a8af8e4a7",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-3f3b13f82fd006841e251ea9",
+      "license": "GPL-3.0-only",
+      "locator": "complete GPLv3 license text:L1-L674",
+      "revision": "80d0a9841747add0c1f8d78e669b7b61d9e5bd00",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/stfbnc/fathon/blob/80d0a9841747add0c1f8d78e669b7b61d9e5bd00/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Stefano Bianchi维护的fathon DCCA实现；保留README所列Bianchi2020 JOSS归属。GSL仅是实现依赖的数学说明，不声称是DCCA原创论文。",
+      "id": "harvest-source-96be92a5fad67965d3a9fabc",
+      "license": "UNKNOWN",
+      "locator": "official least squares mathematical objective and unweighted convention:L412-L445; gsl_multifit_linear least-squares fit SVD and rank handling:L483-L502; manual copyright footer not an established document redistribution grant:L2754-L2765",
+      "revision": "GSL2.8 rolling manual captured 2026-10-04T23:40:23.381065+00:00",
+      "sha256": "0c94db03ddfcbe641bc8e58b891713b6740e328e7fa94fa296fd497211a55229",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://www.gnu.org/software/gsl/doc/html/lls.html",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}
