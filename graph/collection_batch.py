@@ -3,8 +3,10 @@
 Collection review is independent of formula execution, economic validation and
 commercial rights. Public-clone validation cannot re-fetch private raw evidence.
 """
+from bisect import bisect_right
 from collections import Counter
 from datetime import datetime
+from html.parser import HTMLParser
 from io import BytesIO
 import json
 import math
@@ -15,7 +17,7 @@ import struct
 import subprocess
 import tarfile
 from tempfile import TemporaryFile
-from urllib.parse import unquote, urlsplit
+from urllib.parse import unquote, urljoin, urlsplit
 import zlib
 
 from quantgraph.graph.collection_dedup import collection_source_keys
@@ -60,6 +62,204 @@ PDF_VISUAL_ARGUMENTS = ['-singlefile', '-png']
 PDF_VISUAL_MAX_BYTES = 8 * 1024 * 1024
 PDF_VISUAL_MAX_PIXELS = 16_000_000
 TAR_EXTRACTION = 'tar.members-utf8/v1'
+IMAGE_EXTRACTION = 'image.visual-page/v1'
+IMAGE_MAX_BYTES = 8 * 1024 * 1024
+IMAGE_MAX_PIXELS = 16_000_000
+
+
+def _image_contract(source):
+    """Original HTTP images have an HTML identity link, never a PDF parent."""
+    image = source.get('original_image')
+    if (source['role'] not in {'author_document', 'published_definition'}
+            or source['revision_kind'] != 'content_snapshot'
+            or not 67 <= source['bytes'] <= IMAGE_MAX_BYTES
+            or not _visual_snapshot(source['snapshot_path'])
+            or not source['snapshot_path'].endswith('.png')
+            or {'derived_text', 'visual_pages', 'archive_members', 'parent_pdf_sha256',
+                'renderer', 'generator'} & source.keys()
+            or not isinstance(image, dict)
+            or set(image) != {'format', 'width', 'height', 'bit_depth', 'color_type',
+                              'printed_page', 'identity_link'}):
+        raise ValueError('Invalid original image source contract')
+    if (image['format'] != 'PNG' or type(image['bit_depth']) is not int or image['bit_depth'] != 4
+            or type(image['color_type']) is not int or image['color_type'] != 0
+            or any(type(image[k]) is not int or not 1 <= image[k] <= 10_000 for k in ('width', 'height'))
+            or image['width'] * image['height'] > IMAGE_MAX_PIXELS
+            or not isinstance(image['printed_page'], str)
+            or not re.fullmatch(r'[0-9A-Za-z][0-9A-Za-z ._-]{0,63}', image['printed_page'])):
+        raise ValueError('Unsupported original image dimensions, format or printed page')
+    link = image['identity_link']
+    if (not isinstance(link, dict)
+            or set(link) != {'source_id', 'source_sha256', 'first_line', 'last_line',
+                             'sha256', 'tag', 'attribute', 'url', 'attributes'}
+            or not isinstance(link['source_id'], str) or not link['source_id']
+            or any(not isinstance(link[k], str) or not re.fullmatch(r'[0-9a-f]{64}', link[k])
+                   for k in ('source_sha256', 'sha256'))
+            or type(link['first_line']) is not int or type(link['last_line']) is not int
+            or not 1 <= link['first_line'] <= link['last_line']
+            or link['tag'] != 'img' or link['attribute'] != 'src' or link['url'] != source['url']
+            or link['attributes'] != dict(alt=image['printed_page'], width=str(image['width']),
+                                          height=str(image['height']))):
+        raise ValueError('Invalid original image HTML identity link')
+    return image
+
+
+def _verify_original_png(raw, image):
+    """Decode only bounded, noninterlaced gray4 scanlines, without an image library.
+
+    This is deliberately narrower than the PDF renderer's PNG checker. Ancillary
+    data is never decompressed; IDAT must be exactly one bounded zlib stream.
+    """
+    if not raw.startswith(b'\x89PNG\r\n\x1a\n') or len(raw) > IMAGE_MAX_BYTES:
+        raise ValueError('Original image is not a bounded PNG')
+    offset, header, ended, data_closed = 8, None, False, False
+    seen, compressed = set(), bytearray()
+    while offset + 12 <= len(raw):
+        length = int.from_bytes(raw[offset:offset + 4], 'big')
+        kind = raw[offset + 4:offset + 8]
+        end = offset + 12 + length
+        if end > len(raw) or zlib.crc32(raw[offset + 4:end - 4]) != int.from_bytes(raw[end - 4:end], 'big'):
+            raise ValueError('Original PNG chunk is truncated or corrupt')
+        data = raw[offset + 8:end - 4]
+        if header is None:
+            if kind != b'IHDR' or length != 13:
+                raise ValueError('Original PNG requires an initial IHDR')
+            header = struct.unpack('>IIBBBBB', data)
+            width, height, depth, color, compression, filtering, interlace = header
+            if (not 1 <= width <= 10_000 or not 1 <= height <= 10_000
+                    or width * height > IMAGE_MAX_PIXELS
+                    or (width, height) != (image['width'], image['height'])
+                    or (depth, color, compression, filtering, interlace) != (4, 0, 0, 0, 0)):
+                raise ValueError('Original PNG IHDR differs from the supported image contract')
+        elif kind == b'IDAT':
+            if data_closed:
+                raise ValueError('Original PNG IDAT chunks must be consecutive')
+            compressed.extend(data)
+        elif kind == b'IEND':
+            if length or b'IDAT' not in seen or end != len(raw):
+                raise ValueError('Invalid original PNG end or trailing bytes')
+            ended = True
+            break
+        elif kind in {b'gAMA', b'bKGD', b'pHYs', b'tIME', b'tEXt'}:
+            if kind != b'tEXt' and kind in seen:
+                raise ValueError('Repeated original PNG ancillary chunk')
+            if kind in {b'gAMA', b'bKGD', b'pHYs'} and b'IDAT' in seen:
+                raise ValueError('Original PNG ancillary chunk appears after image data')
+            valid = True
+            if kind == b'gAMA': valid = length == 4 and int.from_bytes(data, 'big') > 0
+            elif kind == b'bKGD': valid = length == 2 and int.from_bytes(data, 'big') <= 15
+            elif kind == b'pHYs': valid = length == 9 and data[-1] in {0, 1}
+            elif kind == b'tIME':
+                valid = (length == 7 and int.from_bytes(data[:2], 'big') > 0
+                         and 1 <= data[2] <= 12 and 1 <= data[3] <= 31
+                         and data[4] < 24 and data[5] < 60 and data[6] <= 60)
+                if valid:
+                    try:
+                        datetime(int.from_bytes(data[:2], 'big'), data[2], data[3])
+                    except ValueError:
+                        valid = False
+            elif kind == b'tEXt':
+                keyword, separator, value = data.partition(b'\0')
+                valid = (bool(separator) and 1 <= len(keyword) <= 79 and b'\0' not in value
+                         and not keyword.startswith(b' ') and not keyword.endswith(b' ') and b'  ' not in keyword
+                         and all(32 <= c <= 126 or 161 <= c <= 255 for c in keyword))
+            if not valid:
+                raise ValueError('Malformed original PNG ancillary chunk')
+        else:
+            raise ValueError('Unsupported or repeated original PNG chunk')
+        if kind != b'IDAT' and b'IDAT' in seen:
+            data_closed = True
+        seen.add(kind)
+        offset = end
+    if not ended or header is None:
+        raise ValueError('Original PNG lacks complete image data and IEND')
+    stride = 1 + (header[0] + 1) // 2
+    expected = stride * header[1]
+    try:
+        inflater = zlib.decompressobj()
+        decoded = inflater.decompress(compressed, expected + 1)
+    except zlib.error as error:
+        raise ValueError('Invalid original PNG compressed image data') from error
+    if (len(decoded) != expected or not inflater.eof or inflater.unconsumed_tail or inflater.unused_data
+            or any(decoded[start] > 4 for start in range(0, expected, stride))):
+        raise ValueError('Original PNG scanlines or compressed stream violate the bounded contract')
+
+
+class _ImageHTML(HTMLParser):
+    """Read full HTML context; selected lines cannot turn inert text into an img.
+
+    This is a conservative source-link reader, not a browser or HTML executor.
+    Raw-text elements and nonactive templates never contribute image identity.
+    """
+    CDATA_CONTENT_ELEMENTS = ('script', 'style', 'textarea', 'title', 'xmp', 'iframe',
+                              'noembed', 'noframes', 'noscript', 'plaintext')
+    INACTIVE = {'template', 'svg', 'math'}
+
+    def __init__(self, text):
+        super().__init__(convert_charrefs=True)
+        self.images, self.inactive = [], []
+        self.plaintext = False
+        self.lf_starts = [0] + [m.end() for m in re.finditer('\n', text)]
+        self.line_starts = [0]
+        for line in text.splitlines(keepends=True):
+            self.line_starts.append(self.line_starts[-1] + len(line))
+        self.feed(text)
+        self.close()
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'plaintext':
+            self.plaintext = True
+        if tag in self.INACTIVE:
+            self.inactive.append(tag)
+        if self.plaintext or self.inactive or tag != 'img':
+            if tag == 'base' and not self.plaintext and not self.inactive:
+                raise ValueError('Image identity does not support an HTML base override')
+            return
+        values = dict(attrs)
+        if len(values) != len(attrs):
+            raise ValueError('Duplicate attributes in HTML image tag')
+        line, column = self.getpos()
+        start = self.lf_starts[line - 1] + column
+        end = start + len(self.get_starttag_text()) - 1
+        self.images.append((bisect_right(self.line_starts, start),
+                            bisect_right(self.line_starts, end), values))
+
+    def handle_startendtag(self, tag, attrs):
+        if tag in self.CDATA_CONTENT_ELEMENTS or tag in self.INACTIVE:
+            raise ValueError('Ambiguous self-closing nonactive HTML context')
+        self.handle_starttag(tag, attrs)
+
+    def handle_endtag(self, tag):
+        if tag in self.INACTIVE and self.inactive:
+            # Do not recover malformed nesting by activating formerly inert text.
+            if self.inactive[-1] != tag:
+                raise ValueError('Ambiguous nonactive HTML context nesting')
+            self.inactive.pop()
+
+
+def _image_html(raw):
+    if len(raw) > IMAGE_MAX_BYTES:
+        raise ValueError('Original image identity HTML exceeds its byte limit')
+    try:
+        text = raw.decode('utf-8-sig')
+        return text.splitlines(), _ImageHTML(text).images
+    except (UnicodeError, AssertionError) as error:
+        raise ValueError('Invalid UTF-8 HTML image identity source') from error
+
+
+def _verify_image_identity(source, parent, parsed):
+    link = source['original_image']['identity_link']
+    lines, images = parsed
+    first, last = link['first_line'], link['last_line']
+    if last > len(lines) or digest('\n'.join(lines[first - 1:last]).encode()) != link['sha256']:
+        raise ValueError('Image identity HTML line pin mismatch')
+    matches = [attrs for start, end, attrs in images if first <= start <= end <= last
+               and isinstance(attrs.get('src'), str)
+               and not any(ord(c) <= 32 for c in attrs['src'])
+               and urljoin(parent['url'], attrs['src']) == link['url']]
+    if (len(matches) != 1
+            or any(matches[0].get(key) != value for key, value in link['attributes'].items())):
+        raise ValueError('Image identity needs one real complete HTML img with matching attributes')
 
 
 def _archive_members(value):
@@ -437,7 +637,7 @@ def validate_collection(root, directory, *, verify_snapshots=False):
     sources = {source['id']: source for source in lock['sources']}
     if len(sources) != len(lock['sources']):
         raise ValueError('Duplicate collection source ID')
-    texts, visual_sources, visual_paths = {}, {}, set()
+    texts, visual_sources, visual_paths, image_sources = {}, {}, set(), {}
     # A visual derivative cannot reuse any original/derived-text path, even
     # under another source ID. Existing text collections keep their contracts.
     reserved_paths = {s['snapshot_path'] for s in sources.values()}
@@ -464,7 +664,8 @@ def validate_collection(root, directory, *, verify_snapshots=False):
                 raise ValueError('Git source must pin the same full commit in its URL')
         elif source['revision_kind'] != 'content_snapshot' or not source['revision']:
             raise ValueError('Unsupported collection source revision')
-        if source['extraction'] not in {'utf8', 'json.source', PDF_EXTRACTION, PDF_VISUAL_EXTRACTION, TAR_EXTRACTION}:
+        if source['extraction'] not in {'utf8', 'json.source', PDF_EXTRACTION, PDF_VISUAL_EXTRACTION,
+                                        TAR_EXTRACTION, IMAGE_EXTRACTION}:
             raise ValueError('Unsupported source extraction')
         if source['extraction'] == TAR_EXTRACTION:
             _archive_members(source.get('archive_members'))
@@ -482,11 +683,42 @@ def validate_collection(root, directory, *, verify_snapshots=False):
                 raise ValueError('Visual PDF derivative snapshot paths must be unique')
             visual_paths.update(paths)
             visual_sources[sid] = {page['physical_page']: page for page in visual['pages']}
-        if verify_snapshots:
+        if source['extraction'] == IMAGE_EXTRACTION:
+            image_sources[sid] = _image_contract(source)
+        elif 'original_image' in source:
+            raise ValueError('Original image contract requires original image extraction')
+    # Finish all public image bounds and provenance checks before inflating any
+    # image. HTML source order in the lock does not affect its identity link.
+    snapshot_counts = Counter(s['snapshot_path'] for s in sources.values())
+    snapshot_counts.update(s['derived_text']['snapshot_path'] for s in sources.values()
+                           if isinstance(s.get('derived_text'), dict) and 'snapshot_path' in s['derived_text'])
+    if (len(image_sources) > 64 or sum(sources[sid]['bytes'] for sid in image_sources) > 128 * 1024 * 1024
+            or sum(image['width'] * image['height'] for image in image_sources.values()) > 256_000_000):
+        raise ValueError('Original image collection exceeds its resource limits')
+    image_parents = set()
+    for sid, image in image_sources.items():
+        link = image['identity_link']
+        parent = sources.get(link['source_id'])
+        if (parent is None or parent['role'] not in {'attribution', 'source_index'}
+                or parent['extraction'] != 'utf8' or parent['sha256'] != link['source_sha256']
+                or parent['bytes'] > IMAGE_MAX_BYTES or not _visual_snapshot(parent['snapshot_path'])):
+            raise ValueError('Original image requires a pinned HTML identity source')
+        if snapshot_counts[sources[sid]['snapshot_path']] != 1 or sources[sid]['snapshot_path'] in visual_paths:
+            raise ValueError('Original image snapshot paths must be unique')
+        image_parents.add(link['source_id'])
+    if verify_snapshots:
+        parsed_html = {}
+        for sid, source in sources.items():
+            snapshot = source['snapshot_path']
             raw = _pin(root, snapshot, source)
-            if visual:
-                _verify_pdf_visual(root, raw, visual)
-            elif derived:
+            if sid in image_parents:
+                parsed_html[sid] = _image_html(raw)
+            if sid in image_sources:
+                _verify_original_png(raw, image_sources[sid])
+            elif sid in visual_sources:
+                _verify_pdf_visual(root, raw, source['visual_pages'])
+            elif source['extraction'] == PDF_EXTRACTION:
+                derived = source['derived_text']
                 saved = _pin(root, derived['snapshot_path'], derived)
                 rebuilt = _pdf_layout_bytes(raw, derived['generator']['version'])
                 if rebuilt != saved:
@@ -495,6 +727,9 @@ def validate_collection(root, directory, *, verify_snapshots=False):
             else:
                 texts[sid] = source_text(raw, source['extraction'],
                                          archive_members=source.get('archive_members')).splitlines()
+        for sid, image in image_sources.items():
+            parent_id = image['identity_link']['source_id']
+            _verify_image_identity(sources[sid], sources[parent_id], parsed_html[parent_id])
     refs = {_identity(ref): ref for ref in index['records']}
     decisions = {_identity(review): review for review in reviews['records']}
     if len(decisions) != len(reviews['records']) or set(decisions) != set(refs):
@@ -516,6 +751,8 @@ def validate_collection(root, directory, *, verify_snapshots=False):
         for sid, source in declared.items():
             if any(source[field] != sources[sid][field] for field in ('url', 'revision', 'sha256')):
                 raise ValueError('Collection source reference differs from its lock')
+            if sid in image_sources and image_sources[sid]['identity_link']['source_id'] not in declared:
+                raise ValueError('Record image source must declare its HTML identity source')
         if (record['lab'] is not None or record['rights']['source_fulltext_included'] is not False
                 or record['rights']['raw_data_included'] is not False):
             raise ValueError('Collection cannot include source fulltext, data or Lab results')
@@ -525,20 +762,22 @@ def validate_collection(root, directory, *, verify_snapshots=False):
         fields = record.get('strategy_fields') or record['factor_fields']
         spans = review['field_spans']
         field_pages = review.get('field_pages', {})
-        if (not isinstance(spans, dict) or not isinstance(field_pages, dict)
-                or not set(spans) <= set(fields) or not set(field_pages) <= set(fields)):
+        field_images = review.get('field_images', {})
+        if (not isinstance(spans, dict) or not isinstance(field_pages, dict) or not isinstance(field_images, dict)
+                or not set(spans) <= set(fields) or not set(field_pages) <= set(fields)
+                or not set(field_images) <= set(fields)):
             raise ValueError('Review references an unknown metadata field')
         for field in fields.values():
-            if (set(field['evidence']) & set(visual_sources)
+            if (set(field['evidence']) & (set(visual_sources) | set(image_sources))
                     and field['status'] == 'SOURCE_CODE_REVIEWED'):
-                raise ValueError('Visual PDF evidence cannot establish a code-reviewed field')
+                raise ValueError('Visual PDF or original image evidence cannot establish a code-reviewed field')
         for field_name, locations in spans.items():
             for location in locations:
                 sid = location['source_id']
                 start, end = location['first_line'], location['last_line']
                 if sid not in declared or sid not in fields[field_name]['evidence']:
                     raise ValueError('Review span is not field evidence')
-                if sid in visual_sources:
+                if sid in visual_sources or sid in image_sources:
                     raise ValueError('Visual PDF pages cannot masquerade as text line spans')
                 if sources[sid]['role'] not in CONTENT_ROLES:
                     raise ValueError('License or directory cannot establish a definition')
@@ -572,6 +811,25 @@ def validate_collection(root, directory, *, verify_snapshots=False):
                 if identity in seen_pages:
                     raise ValueError('Repeated visual page reference in a field')
                 seen_pages.add(identity)
+        for field_name, locations in field_images.items():
+            if not isinstance(locations, list) or not locations:
+                raise ValueError('Original image field evidence requires a nonempty reference list')
+            seen_images = set()
+            for location in locations:
+                if (not isinstance(location, dict)
+                        or set(location) != {'source_id', 'sha256', 'printed_page'}
+                        or not isinstance(location.get('source_id'), str)):
+                    raise ValueError('Invalid original image field reference')
+                sid = location['source_id']
+                image = image_sources.get(sid)
+                if (sid not in declared or sid not in fields[field_name]['evidence'] or image is None
+                        or fields[field_name]['status'] != 'SOURCE_DESCRIPTION_REVIEWED'
+                        or location['sha256'] != sources[sid]['sha256']
+                        or location['printed_page'] != image['printed_page']):
+                    raise ValueError('Original image is not declared description-reviewed field evidence')
+                if location['sha256'] in seen_images:
+                    raise ValueError('Repeated original image reference in a field')
+                seen_images.add(location['sha256'])
         outcome = review['dedup']['outcome']
         if outcome not in NO_CREDIT | {'REVIEWED_DISTINCT_CONSTRUCTION'}:
             raise ValueError('Unknown collection duplicate decision')
@@ -587,7 +845,7 @@ def validate_collection(root, directory, *, verify_snapshots=False):
             for field_name in CORE[kind]:
                 if fields[field_name]['status'] not in {'SOURCE_CODE_REVIEWED', 'SOURCE_DESCRIPTION_REVIEWED'}:
                     raise ValueError('Core rule is not source reviewed')
-                if not spans.get(field_name) and not field_pages.get(field_name):
+                if not spans.get(field_name) and not field_pages.get(field_name) and not field_images.get(field_name):
                     raise ValueError('Core rule needs precise source evidence')
             if (not isinstance(review['definition_signature'], str) or not review['definition_signature'].strip()
                     or review['definition_signature'] in seen_definitions):

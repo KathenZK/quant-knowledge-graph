@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "1999原文完整未校正h-subset MCD数学目标及全体最优位置/散布集合；不是已执行FAST-MCD软件返回。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5e309eee86f637dcbd9f3977"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "全部参考样本及其修订信息已发布且h预先固定后才可计算；不得用未来整窗筛样本后回填历史分数。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5e309eee86f637dcbd9f3977"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "固定完整样本X及h。按观测下标而不是唯一坐标生成所有大小h的组合；相同坐标的多次观测仍各占一个名额，不预先去极值/去重/标准化。 每个H用本子集均值μ_H中心化，按原1999 p3 Theorem1计算S_H，分母明确h。不是h−1、n或全样本均值；输出为原生未校正scatter矩阵。 比较所有子集的det并保留全部全局最小者；有限个子集所以最小值必达，不承诺唯一。行列式是非负实数，exact arithmetic中的0是合法最低值，不把奇异样本加epsilon强修为正定。 1999 p6允许h=n，此时退化全样本均值/协方差；本研究选择h<n与d>=2，避免仅此退化作为新增。原默认floor((n+d+1)/2)记录为来源默认，h仍由调用者事先明确，不从收益表现反选。 1999 p3–4 C-step从一个正定S起，取最小的h个马氏距离样本再重估使det不增；p4明确其稳定不是全局最小充分条件。本条不把随机多起点/选择迭代/嵌套子样本FAST-MCD返回当精确H*证书，也没有执行这些程序。 原p7第6步用全样本马氏距离平方中位数/chi-square中位数作正态一致性调整；第7步二元cutoff重加权另用sumw−1分母。2018 review把raw scatter写成子集协方差×c0，并给渐近正态c0公式。这些不同输出层次明确区分，不将未校正S_H冒称所有软件默认最终MCD返回。 返回位置/散布集合可供后续风险几何描述，既不是异常点标签、已校准概率、p值或收益信号；若要单一数值实现必须另外固定精确/近似求解、平局裁定、浮点精度和容差。 边界：重复观测按下标保留；h个样本仿射秩不足d时S_H奇异且det0。允许此几何结果，不自动输出inverse、Mahalanobis距离或置信椭球；选择多个0det子集可能得到不同中心与矩阵。 1999§5对exact-fit实现有特殊逻辑并可能报告超出h个共面点的均值/协方差；当前明确只固定§2精确h-subset目标集合，不声称与该程序奇异分支返回逐值相同。 有限值指数学实输入，不保证浮点det、求逆或组合枚举在机器上无溢出。没有执行来源算法、计算任何市场样本或证明运行资源可行。 只返回全体最优解集合，不能悄悄按原行顺序选第一H；两集合成员是否相等的数值容差与tie-break MISSING。 任意共同非奇异仿射变换x→Ax+b使μ→Aμ+b、S→ASAᵀ，所有det乘det(A)²，所以最优下标集合对应不变；singularA不能据此保持优化集合。尺度s会令S乘s²，并不靠这个区别认定与Tyler新族。 在所有候选S_H正定时，同一目标也可写成对H、μ、Σ的trimmed Gaussian负log-likelihood全局最优；det与logdet只是单调等价。硬筛选权的C-step驻点联系不代表本全局目标等同任意截断M估计器，未来不能以改权函数/换求解器另计。 原1999 h默认值和参数域与2018 review的n/2<=h<=n层次分别标明。review p3从h>p写成need n>2p，不能对任意h据此给必要条件：例如d2,n4,h3满足原算法h范围且一般位置可正定；这里只采用显式h域，不搬用这一过宽推断。 2018 review对consistency/reweighted输出及分母的不同叙述属于补充范围；本文不把二者当已核相同版本实现。paper1999核心只有扫描页图，native pdftotext恰12FF，无OCR/手工伪装原文行段。 MCD的鲁棒性、breakdown、有效率与数据分布/一般位置及h有关；原模拟和非金融案例不作为收益、数据污染比例或通用真实异常判别保证。 金融变量、收益/水平、单位、样本窗口、h选择、缺失规则、供应商、发布时间/PIT均MISSING；不能用全窗最优子集回填早期实时信息。 原1999版权属于ASA/ASQ且未见开放授权；2018作者review印CC Attribution-NonCommercial-NoDerivs但未核版本，不能覆盖1999原文、第三方图或行情。原件/文本/页图留ignored，公开仅自撰事实与pin；commercial REVIEW_REQUIRED。 输出：v*与全部最优(H,μ_H,S_H)集合，共一族；不附任意单一解、逆矩阵或异常概率。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5e309eee86f637dcbd9f3977"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "1999原文完整未校正h-subset MCD数学目标及全体最优位置/散布集合；不是已执行FAST-MCD软件返回。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5e309eee86f637dcbd9f3977"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给n个有限实d维观测x_i，d>=2、n>=d+2。显式整数h满足floor((n+d+1)/2)<=h<n；每个观测下标独立保留。对任意H⊆{1,..,n},|H|=h，μ_H=(1/h)Σ_(i∈H)x_i，S_H=(1/h)Σ_(i∈H)(x_i−μ_H)(x_i−μ_H)ᵀ。令v*=min_(|H|=h)det(S_H)，H*=argmin_(|H|=h)det(S_H)。输出整个{(H,μ_H,S_H):H∈H*}及同一v*；允许并列和奇异S_H，未任意挑一个解。所选为1999原文§2的未校正几何核心，不乘§4第6步一致性校正，不做第7步重加权；所有h/维度/坐标/实现与这类修正仍同族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5e309eee86f637dcbd9f3977"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X（n-by-d finite real observation array, d>=2,n>=d+2; duplicate rows and singular candidate scatters allowed）：完整同坐标样本、每原观测下标等质量；不要求满秩、不自动插补或删异常，变量和PIT未固定。。参数：h：选择的观测行数；不同h不拆家族。；范围floor((n+d+1)/2)<=h<n；来源默认值floor((n+d+1)/2) in original1999 Section4 algorithm；本条选定explicit integer fixed before analysis；output_scope：不是软件默认；未来一致性/重加权/算法实现仍整族。；范围original1999 Section2 mathematical core, excluding Section4 steps6/7 corrections and runtime solver；来源默认值None；本条选定exact unscaled h-subset global argmin set"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5e309eee86f637dcbd9f3977"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "wis.kuleuven.be",
+  "lab": null,
+  "missing_information": [
+    "金融变量/数据/单位/采样/窗口/h选择与PIT MISSING",
+    "未固定精确或近似solver、global证书、容差、平局裁定、资源限制/环境",
+    "原始软件的修正与重加权返回不在本合同；无异常标签/收益/执行结论",
+    "原1999再分发与商用许可未确认；review许可版本未核定"
+  ],
+  "name": "固定子样本规模的最小协方差行列式估计",
+  "native_source_id": "rousseeuwvandriessen-fastalgorithmformcd-technomet.pdf",
+  "one_line": "在全部h个观测的子集中寻找协方差行列式最小者，联合给出其均值和散布；精确目标与快速近似求解、后续校正分别记录。",
+  "record_id": "rousseeuwvandriessen-fastalgorithmformcd-technomet.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://wis.kuleuven.be/stat/robust/papers/1999/rousseeuwvandriessen-fastalgorithmformcd-technomet.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Peter J. Rousseeuw and Katrien Van Driessen, A Fast Algorithm for the Minimum Covariance Determinant Estimator, Technometrics41(3),212–223, August1999. They attribute MCD origin to Rousseeuw1984/1985. Supplement: Mia Hubert, Michiel Debruyne, Peter J. Rousseeuw, Minimum covariance determinant and extensions, WIREs Computational Statistics2018;10:e1421, copyright2017.",
+      "id": "harvest-source-5e309eee86f637dcbd9f3977",
+      "license": "COPYRIGHT_ASA_ASQ_1999; NO_OPEN_LICENSE_VERIFIED",
+      "locator": "Title/authors, objective and copyright ASA/ASQ1999; historical Rousseeuw1984/1985 attribution: physical PDF p1-1; MCD finite h-observation covariance-determinant objective and subset-mean/scatter definition: physical PDF p2-2; Section2 Theorem1 explicit mean and covariance normalization1/h, C-step distance/order and singular minimum0: physical PDF p3-3; C-step convergence not sufficient for global optimum; ellipsoid separation and MVE distinction: physical PDF p4-4; Random starts, two-step selective iteration and nested approximate search are not exact certificate: physical PDF p5-5; Section4 h default floor((n+p+1)/2), allowed h throughn; h=n sample-mean/covariance; full FAST pseudocode: physical PDF p6-6; Steps6/7 consistency adjustment/reweighting are separate; exact-fit singular situations handled outside inverse formula: physical PDF p7-7; Empirical algorithm comparisons and exchange-step competitor, not a general exactness guarantee: physical PDF p8-8; I-step local stability not sufficient for global optimum; illustrative application: physical PDF p9-9; Distance-distance plot and sample applications, not financial evidence: physical PDF p10-10; Conclusion and Appendix covariance trace identity for Theorem1: physical PDF p11-11; Appendix proof completion, Received1997/Revised1999 and references: physical PDF p12-12",
+      "revision": "Technometrics41(3)212-223; August1999; author-university-hosted scan HTTP snapshot2026-10-05",
+      "sha256": "9cfc1c11d2512e37b5e90a9514f4ded4c69d541a4843f0ad04c9e80426c5cf34",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://wis.kuleuven.be/stat/robust/papers/1999/rousseeuwvandriessen-fastalgorithmformcd-technomet.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Peter J. Rousseeuw and Katrien Van Driessen, A Fast Algorithm for the Minimum Covariance Determinant Estimator, Technometrics41(3),212–223, August1999. They attribute MCD origin to Rousseeuw1984/1985. Supplement: Mia Hubert, Michiel Debruyne, Peter J. Rousseeuw, Minimum covariance determinant and extensions, WIREs Computational Statistics2018;10:e1421, copyright2017.",
+      "id": "harvest-source-0178b12aa8814185f9bd41a1",
+      "license": "WEBSITE_NOTICE_ONLY; PAPER_RIGHTS_SEPARATE",
+      "locator": "1999 exact authors/title/journal/page range and exact PDF href:L159-L164",
+      "revision": "KU Leuven robust group author bibliography HTTP snapshot2026-10-05",
+      "sha256": "6a22479c250da77246a98cd6612f897eefc4d8c0c283fe8b8323df584b0ee45f",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://wis.kuleuven.be/statdatascience/robust/papers-1990-1999",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Peter J. Rousseeuw and Katrien Van Driessen, A Fast Algorithm for the Minimum Covariance Determinant Estimator, Technometrics41(3),212–223, August1999. They attribute MCD origin to Rousseeuw1984/1985. Supplement: Mia Hubert, Michiel Debruyne, Peter J. Rousseeuw, Minimum covariance determinant and extensions, WIREs Computational Statistics2018;10:e1421, copyright2017.",
+      "id": "harvest-source-f06ff3e68f6685bd54599272",
+      "license": "CC-BY-NC-ND; version not identified in reviewed printed license notice",
+      "locator": "Same-origin author review identity and printed CC Attribution-NonCommercial-NoDerivs conditions: physical PDF p1-p1; Section2.2 raw covariance times c0 and reweighted version; h>p and n>2p sentence requires scope qualification: physical PDF p3-p3",
+      "revision": "WIREs Computational Statistics2018;10:e1421; copyright2017; author-university PDF snapshot2026-10-05",
+      "sha256": "20fb6e7381d0859213aa161dff07a180f742dfcb622da409a097decec523f10c",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://wis.kuleuven.be/statdatascience/robust/papers/publications-2018/hubertdebruynerousseeuw-mcdext-wires-2018.pdf",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

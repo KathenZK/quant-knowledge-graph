@@ -1077,3 +1077,456 @@ def test_visual_review_remains_a_read_only_catalog_definition(visual_collection)
     assert record['review']['field_spans'] == {}
     assert record['review']['field_pages']['formula'][0]['physical_page'] == 1
     assert record['review']['states']['computation_semantics'] == 'NOT_EXECUTED'
+
+
+def gray_png(*, width=3, height=2, pixels=None, compressed=None, chunks=None, header=None):
+    """Synthetic gray4 image bytes; no executable source or external renderer."""
+    import struct
+    import zlib
+    if header is None:
+        header = struct.pack('>IIBBBBB', width, height, 4, 0, 0, 0, 0)
+    if pixels is None:
+        pixels = (b'\0' + b'\x12' * ((width + 1) // 2)) * height
+    if compressed is None:
+        compressed = zlib.compress(pixels)
+    if chunks is None:
+        chunks = [(b'IHDR', header), (b'IDAT', compressed), (b'IEND', b'')]
+    return b'\x89PNG\r\n\x1a\n' + b''.join(
+        struct.pack('>I', len(data)) + kind + data + struct.pack('>I', zlib.crc32(kind + data))
+        for kind, data in chunks)
+
+
+IMAGE_TAG = '<img src="https://example.test/page.png" alt="1732" width="3" height="2">'
+
+
+def sync_image_fixture(root):
+    base = root / DIRECTORY
+    lock = load(base / 'source-lock.json')
+    sources = {s['id']: s for s in lock['sources']}
+    record_path = base / 'factors/SyntheticVolume.json'
+    record = load(record_path)
+    for source in record['sources']:
+        source.update({key: sources[source['id']][key] for key in ['url', 'revision', 'sha256']})
+    save(record_path, record)
+    refresh(root)
+
+
+def replace_image_html(root, html, *, first=2, last=2):
+    base = root / DIRECTORY
+    lock = load(base / 'source-lock.json')
+    image, parent = lock['sources'][:2]
+    parent.update(save(root / parent['snapshot_path'], html.encode()))
+    image['original_image']['identity_link'].update(source_sha256=parent['sha256'],
+        first_line=first, last_line=last, sha256=digest('\n'.join(html.splitlines()[first - 1:last]).encode()))
+    save(base / 'source-lock.json', lock)
+    sync_image_fixture(root)
+
+
+@pytest.fixture
+def image_collection(collection):
+    from quantgraph.graph import collection_batch as module
+    base = collection / DIRECTORY
+    lock = load(base / 'source-lock.json')
+    image = lock['sources'][0]
+    image.update(id='page', url='https://example.test/page.png', revision='image-content',
+                 revision_kind='content_snapshot', snapshot_path='datasets/raw/sources/synthetic/page.png',
+                 role='published_definition', extraction=module.IMAGE_EXTRACTION)
+    image.update(save(collection / image['snapshot_path'], gray_png()))
+    parent = dict(image, id='html', url='https://example.test/article/', role='source_index',
+                  extraction='utf8', snapshot_path='datasets/raw/sources/synthetic/article.html')
+    parent.update(save(collection / parent['snapshot_path'], ('<!doctype html>\n' + IMAGE_TAG + '\n').encode()))
+    image['original_image'] = dict(format='PNG', width=3, height=2, bit_depth=4, color_type=0,
+        printed_page='1732', identity_link=dict(source_id='html', source_sha256=parent['sha256'],
+            first_line=2, last_line=2, sha256=digest(IMAGE_TAG.encode()), tag='img', attribute='src',
+            url=image['url'], attributes=dict(alt='1732', width='3', height='2')))
+    lock['sources'] = [image, parent]
+    save(base / 'source-lock.json', lock)
+    path = base / 'factors/SyntheticVolume.json'
+    record = load(path)
+    template = record['sources'][0]
+    record['sources'] = [dict(template, **{key: s[key] for key in ['id', 'url', 'revision', 'sha256']},
+                             verification='PINNED_DOCUMENT_REVIEWED') for s in lock['sources']]
+    for field in record['factor_fields'].values():
+        field.update(status='SOURCE_DESCRIPTION_REVIEWED', evidence=['page'])
+    save(path, record)
+    reviews = load(base / 'reviews.json')
+    reviews['records'][0].update(field_spans={}, field_images={name: [dict(source_id='page',
+        sha256=image['sha256'], printed_page='1732')] for name in ['formula', 'inputs', 'calculation']})
+    save(base / 'reviews.json', reviews)
+    refresh(collection)
+    return collection
+
+
+def test_original_image_is_verified_without_tools_and_public_clone_only_claims_structure(image_collection, monkeypatch):
+    from quantgraph.graph import collection_batch as module
+    def forbidden(*args, **kwargs):
+        raise AssertionError('Original PNG validation must not execute tools')
+    monkeypatch.setattr(module.subprocess, 'run', forbidden)
+    private = validate_collection(image_collection, DIRECTORY, verify_snapshots=True)
+    assert private['counts']['factor'] == 1 and private['raw_evidence_verified'] is True
+    assert private['source_keys'][('Synthetic/Library', 'factor', 'SyntheticVolume')] == set()
+    for source in load(image_collection / DIRECTORY / 'source-lock.json')['sources']:
+        (image_collection / source['snapshot_path']).unlink()
+    assert validate_collection(image_collection, DIRECTORY)['raw_evidence_verified'] is False
+    with pytest.raises((ValueError, FileNotFoundError)):
+        validate_collection(image_collection, DIRECTORY, verify_snapshots=True)
+
+
+@pytest.mark.parametrize('mutation', [
+    'role_code', 'role_license', 'role_index', 'role_attribution', 'git', 'missing_image',
+    'extra_key', 'pdf_parent', 'renderer', 'derived_text', 'visual_pages', 'archive_members',
+    'wrong_extraction', 'width_bool', 'height_zero', 'dimensions', 'pixels', 'depth', 'color_bool',
+    'format', 'printed_page', 'huge_bytes', 'unsafe_path', 'control_path', 'extension',
+    'parent_missing', 'parent_hash', 'parent_role', 'parent_extraction', 'parent_bytes',
+    'line_bool', 'line_zero', 'reversed_lines', 'line_hash', 'tag', 'attribute', 'url', 'attrs'])
+def test_original_image_public_contract_fails_closed(image_collection, mutation):
+    root = image_collection; base = root / DIRECTORY
+    lock = load(base / 'source-lock.json'); source, parent = lock['sources']
+    image = source['original_image']; link = image['identity_link']
+    if mutation.startswith('role_'):
+        source['role'] = {'code': 'source_code', 'license': 'license', 'index': 'source_index',
+                          'attribution': 'attribution'}[mutation[5:]]
+    elif mutation == 'git':
+        source.update(revision_kind='git_commit', revision='a' * 40,
+                      url='https://github.com/a/b/blob/' + 'a' * 40 + '/p.png')
+        link['url'] = source['url']
+    elif mutation == 'missing_image': source.pop('original_image')
+    elif mutation == 'extra_key': image['renderer'] = 'not an original'
+    elif mutation == 'pdf_parent': source['parent_pdf_sha256'] = 'a' * 64
+    elif mutation in {'renderer', 'derived_text', 'visual_pages', 'archive_members'}: source[mutation] = {}
+    elif mutation == 'wrong_extraction': source['extraction'] = 'utf8'
+    elif mutation == 'width_bool': image['width'] = True
+    elif mutation == 'height_zero': image['height'] = 0
+    elif mutation == 'dimensions': image['width'] = 10_001
+    elif mutation == 'pixels': image.update(width=5000, height=5000)
+    elif mutation == 'depth': image['bit_depth'] = 8
+    elif mutation == 'color_bool': image['color_type'] = False
+    elif mutation == 'format': image['format'] = 'JPEG'
+    elif mutation == 'printed_page': image['printed_page'] = '1732\n1733'
+    elif mutation == 'huge_bytes': source['bytes'] = 8 * 1024 * 1024 + 1
+    elif mutation == 'unsafe_path': source['snapshot_path'] = 'datasets/raw/sources/../page.png'
+    elif mutation == 'control_path': source['snapshot_path'] = 'datasets/raw/sources/pa\nge.png'
+    elif mutation == 'extension': source['snapshot_path'] = 'datasets/raw/sources/page.pdf'
+    elif mutation == 'parent_missing': link['source_id'] = 'absent'
+    elif mutation == 'parent_hash': link['source_sha256'] = 'f' * 64
+    elif mutation == 'parent_role': parent['role'] = 'license'
+    elif mutation == 'parent_extraction': parent['extraction'] = 'json.source'
+    elif mutation == 'parent_bytes': parent['bytes'] = 8 * 1024 * 1024 + 1
+    elif mutation == 'line_bool': link['first_line'] = True
+    elif mutation == 'line_zero': link['first_line'] = 0
+    elif mutation == 'reversed_lines': link.update(first_line=3, last_line=2)
+    elif mutation == 'line_hash': link['sha256'] = 'unknown'
+    elif mutation == 'tag': link['tag'] = 'a'
+    elif mutation == 'attribute': link['attribute'] = 'href'
+    elif mutation == 'url': link['url'] = 'https://example.test/other.png'
+    elif mutation == 'attrs': link['attributes']['alt'] = '1733'
+    save(base / 'source-lock.json', lock); sync_image_fixture(root)
+    with pytest.raises(ValueError):
+        validate_collection(root, DIRECTORY)
+
+
+@pytest.mark.parametrize('before,after', [
+    ('<!--\n', '\n-->'), ('<script>\nconst x = "', '";\n</script>'),
+    ('<style>\n', '\n</style>'), ('<textarea>\n', '\n</textarea>'),
+    ('<title>\n', '\n</title>'), ('<xmp>\n', '\n</xmp>'),
+    ('<iframe>\n', '\n</iframe>'), ('<noembed>\n', '\n</noembed>'),
+    ('<noframes>\n', '\n</noframes>'), ('<noscript>\n', '\n</noscript>'),
+    ('<template>\n', '\n</template>'), ('<template><template>\n', '\n</template></template>'),
+    ('<plaintext>\n', '\n</plaintext>'), ('<svg>\n', '\n</svg>'), ('<math>\n', '\n</math>'),
+    ('<textarea>\n</template>', '\n</textarea>'),
+])
+def test_original_image_full_html_context_excludes_inert_content(image_collection, before, after):
+    html = before + IMAGE_TAG + after
+    replace_image_html(image_collection, html)
+    # Correct pins and a selected line that looks like an img still cannot make
+    # an element in a previous-line raw-text/comment/template context active.
+    validate_collection(image_collection, DIRECTORY)
+    with pytest.raises(ValueError, match='one real complete HTML img'):
+        validate_collection(image_collection, DIRECTORY, verify_snapshots=True)
+
+
+@pytest.mark.parametrize('html', [
+    '&lt;img src="https://example.test/page.png" alt="1732" width="3" height="2"&gt;',
+    IMAGE_TAG.replace('src=', 'src="https://wrong.test/p" src='),
+    IMAGE_TAG.replace('src=', 'SRC="https://wrong.test/p" src='),
+    IMAGE_TAG.replace('alt="1732"', 'alt="1733"'),
+    IMAGE_TAG.replace('width="3"', 'width="4"'),
+    IMAGE_TAG.replace('src=', 'data-src='),
+    IMAGE_TAG + IMAGE_TAG,
+    '<base href="https://other.test/">' + IMAGE_TAG,
+    '<textarea/>' + IMAGE_TAG,
+    '<template/>' + IMAGE_TAG,
+    '<plaintext></plaintext>' + IMAGE_TAG,
+])
+def test_original_image_rejects_escaped_ambiguous_or_nonmatching_html(image_collection, html):
+    replace_image_html(image_collection, '<!doctype html>\n' + html)
+    with pytest.raises(ValueError):
+        validate_collection(image_collection, DIRECTORY, verify_snapshots=True)
+
+
+def test_original_image_tag_must_be_wholly_inside_pinned_lines(image_collection):
+    html = '<!-- harmless -->\n' + IMAGE_TAG.replace(' alt=', '\n alt=') + '\n'
+    replace_image_html(image_collection, html, first=2, last=2)
+    with pytest.raises(ValueError, match='one real complete HTML img'):
+        validate_collection(image_collection, DIRECTORY, verify_snapshots=True)
+    replace_image_html(image_collection, html, first=2, last=3)
+    assert validate_collection(image_collection, DIRECTORY, verify_snapshots=True)['raw_evidence_verified']
+
+
+@pytest.mark.parametrize('prefix', ['<script>ignored</script>\n', '<textarea>ignored</textarea>\r\n',
+                                    '<template>ignored</template>\r', '<!-- ignored -->\f'])
+def test_original_image_links_after_closed_inert_context_and_line_endings(image_collection, prefix):
+    replace_image_html(image_collection, prefix + IMAGE_TAG.replace('https://example.test/page.png', '/page.png'))
+    assert validate_collection(image_collection, DIRECTORY, verify_snapshots=True)['raw_evidence_verified']
+
+
+def test_original_image_private_html_hash_and_whole_source_pin_are_both_required(image_collection):
+    root = image_collection; base = root / DIRECTORY
+    lock = load(base / 'source-lock.json')
+    lock['sources'][0]['original_image']['identity_link']['sha256'] = '0' * 64
+    save(base / 'source-lock.json', lock); refresh(root)
+    with pytest.raises(ValueError, match='HTML line pin mismatch'):
+        validate_collection(root, DIRECTORY, verify_snapshots=True)
+    replace_image_html(root, '<!doctype html>\n' + IMAGE_TAG)
+    parent = load(base / 'source-lock.json')['sources'][1]
+    (root / parent['snapshot_path']).write_text('<!doctype html>\n' + IMAGE_TAG + ' changed')
+    with pytest.raises(ValueError, match='byte pin mismatch'):
+        validate_collection(root, DIRECTORY, verify_snapshots=True)
+
+
+@pytest.mark.parametrize('mutation', ['bad_hash', 'page', 'extra', 'unknown_source', 'empty', 'duplicate',
+    'no_evidence', 'not_declared', 'parent_not_declared', 'code', 'assumption', 'missing',
+    'unknown_field', 'no_core_evidence', 'text_mix', 'pdf_mix', 'html_is_formula'])
+def test_original_image_field_evidence_membership_and_states(image_collection, mutation):
+    root = image_collection; base = root / DIRECTORY
+    reviews = load(base / 'reviews.json'); review = reviews['records'][0]
+    record = load(base / 'factors/SyntheticVolume.json')
+    ref = review['field_images']['formula'][0]
+    if mutation == 'bad_hash': ref['sha256'] = '0' * 64
+    elif mutation == 'page': ref['printed_page'] = '1733'
+    elif mutation == 'extra': ref['physical_page'] = 1
+    elif mutation == 'unknown_source': ref['source_id'] = 'absent'
+    elif mutation == 'empty': review['field_images']['formula'] = []
+    elif mutation == 'duplicate': review['field_images']['formula'].append(deepcopy(ref))
+    elif mutation == 'no_evidence': record['factor_fields']['formula']['evidence'] = []
+    elif mutation == 'not_declared': record['sources'] = record['sources'][1:]
+    elif mutation == 'parent_not_declared': record['sources'] = record['sources'][:1]
+    elif mutation in {'code', 'assumption', 'missing'}:
+        record['factor_fields']['formula']['status'] = {'code': 'SOURCE_CODE_REVIEWED',
+            'assumption': 'RESEARCH_ASSUMPTION', 'missing': 'MISSING'}[mutation]
+    elif mutation == 'unknown_field': review['field_images']['unknown'] = [ref]
+    elif mutation == 'no_core_evidence': review['field_images'].pop('formula')
+    elif mutation == 'text_mix': review['field_spans']['formula'] = [dict(source_id='page', first_line=1,
+        last_line=1, sha256='a' * 64)]
+    elif mutation == 'pdf_mix': review['field_pages'] = dict(formula=[dict(source_id='page', physical_page=1,
+        sha256=ref['sha256'])])
+    elif mutation == 'html_is_formula':
+        review['field_images']['formula'] = [dict(ref, source_id='html')]
+        record['factor_fields']['formula']['evidence'] = ['html']
+    save(base / 'reviews.json', reviews); save(base / 'factors/SyntheticVolume.json', record); refresh(root)
+    with pytest.raises(ValueError):
+        validate_collection(root, DIRECTORY)
+
+
+@pytest.mark.parametrize('status', ['MISSING', 'RESEARCH_ASSUMPTION'])
+def test_original_image_can_be_background_without_promoting_unreviewed_field(image_collection, status):
+    root = image_collection; base = root / DIRECTORY
+    path = base / 'factors/SyntheticVolume.json'; record = load(path)
+    record['factor_fields']['economic_meaning']['status'] = status
+    save(path, record); refresh(root)
+    assert validate_collection(root, DIRECTORY, verify_snapshots=True)['counts']['factor'] == 1
+
+
+@pytest.mark.parametrize('mutation', ['raw', 'derived', 'alias_ref'])
+def test_original_image_paths_and_same_content_field_aliases_cannot_inflate_evidence(image_collection, mutation):
+    root = image_collection; base = root / DIRECTORY
+    lock = load(base / 'source-lock.json'); image = lock['sources'][0]
+    other = deepcopy(image); other['id'] = 'alias'
+    if mutation == 'derived':
+        other.pop('original_image')
+        other.update(extraction='pdf.pdftotext-layout', snapshot_path='datasets/raw/sources/synthetic/other.pdf',
+            derived_text=dict(parent_pdf_sha256=other['sha256'], sha256='c' * 64, bytes=1,
+                snapshot_path=image['snapshot_path'], generator=dict(name='pdftotext',
+                    version='pdftotext version 24.04.0', arguments=['-layout', '-enc', 'UTF-8', '-', '-'])))
+    elif mutation == 'alias_ref': other['snapshot_path'] = 'datasets/raw/sources/synthetic/alias.png'
+    lock['sources'].append(other); save(base / 'source-lock.json', lock)
+    record = load(base / 'factors/SyntheticVolume.json')
+    record['sources'].append(dict(record['sources'][0], id='alias'))
+    record['factor_fields']['formula']['evidence'].append('alias')
+    save(base / 'factors/SyntheticVolume.json', record)
+    review = load(base / 'reviews.json')
+    review['records'][0]['field_images']['formula'].append(dict(source_id='alias',
+        sha256=other['sha256'], printed_page='1732'))
+    save(base / 'reviews.json', review); sync_image_fixture(root)
+    with pytest.raises(ValueError, match='snapshot paths|Repeated original image'):
+        validate_collection(root, DIRECTORY)
+
+
+@pytest.mark.parametrize('target', ['page', 'html'])
+def test_original_image_private_read_rejects_symlinks(image_collection, tmp_path, target):
+    source = next(s for s in load(image_collection / DIRECTORY / 'source-lock.json')['sources'] if s['id'] == target)
+    path = image_collection / source['snapshot_path']
+    outside = tmp_path / 'outside'; outside.write_bytes(path.read_bytes())
+    path.unlink(); path.symlink_to(outside)
+    with pytest.raises(ValueError, match='symlink'):
+        validate_collection(image_collection, DIRECTORY, verify_snapshots=True)
+
+
+@pytest.mark.parametrize('corruption', ['crc', 'truncated', 'trailing', 'ihdr_repeat', 'iend_repeat',
+    'ihdr_not_first', 'iend_data', 'no_idat', 'nonconsecutive_idat', 'unknown_chunk', 'apng',
+    'rgba', 'depth', 'interlace', 'compression', 'filter_method', 'dimensions', 'huge_dimensions',
+    'invalid_zlib', 'truncated_zlib', 'concatenated_zlib', 'too_long', 'too_short', 'bomb',
+    'filter_byte', 'ancillary_size', 'ancillary_repeat', 'compressed_text'])
+def test_original_png_rejects_repinned_malformed_or_unbounded_bytes(image_collection, corruption):
+    import struct
+    import zlib
+    root = image_collection; base = root / DIRECTORY
+    header = struct.pack('>IIBBBBB', 3, 2, 4, 0, 0, 0, 0)
+    pixels = b'\0\x12\x30' * 2; compressed = zlib.compress(pixels)
+    chunks = [(b'IHDR', header), (b'IDAT', compressed), (b'IEND', b'')]
+    if corruption == 'ihdr_repeat': chunks.insert(1, chunks[0])
+    elif corruption == 'iend_repeat': chunks.append(chunks[-1])
+    elif corruption == 'ihdr_not_first': chunks.insert(0, (b'tEXt', b'key\0value'))
+    elif corruption == 'iend_data': chunks[-1] = (b'IEND', b'x')
+    elif corruption == 'no_idat': chunks[1] = (b'tEXt', b'Title\0Malformed image without IDAT')
+    elif corruption == 'nonconsecutive_idat': chunks[1:2] = [(b'IDAT', compressed[:3]),
+        (b'tEXt', b'key\0value'), (b'IDAT', compressed[3:])]
+    elif corruption in {'unknown_chunk', 'apng', 'compressed_text'}:
+        chunks.insert(1, ({'unknown_chunk': b'abCD', 'apng': b'acTL', 'compressed_text': b'zTXt'}[corruption], b'\0'))
+    elif corruption in {'rgba', 'depth', 'interlace', 'compression', 'filter_method', 'dimensions', 'huge_dimensions'}:
+        h = [3, 2, 4, 0, 0, 0, 0]
+        key, value = {'rgba': (3, 6), 'depth': (2, 8), 'interlace': (6, 1), 'compression': (4, 1),
+            'filter_method': (5, 1), 'dimensions': (0, 4), 'huge_dimensions': (0, 100_000)}[corruption]
+        h[key] = value; chunks[0] = (b'IHDR', struct.pack('>IIBBBBB', *h))
+    elif corruption in {'invalid_zlib', 'truncated_zlib', 'concatenated_zlib'}:
+        chunks[1] = (b'IDAT', {'invalid_zlib': b'not-zlib', 'truncated_zlib': compressed[:-1],
+            'concatenated_zlib': compressed + compressed}[corruption])
+        chunks.insert(1, (b'tEXt', b'Title\0Malformed compressed image'))
+    elif corruption in {'too_long', 'too_short', 'bomb', 'filter_byte'}:
+        p = {'too_long': pixels + b'\0', 'too_short': pixels[:-1], 'bomb': b'\0' * 1_000_000,
+             'filter_byte': b'\x05' + pixels[1:]}[corruption]
+        chunks[1] = (b'IDAT', zlib.compress(p))
+    elif corruption == 'ancillary_size': chunks.insert(1, (b'gAMA', b'\0'))
+    elif corruption == 'ancillary_repeat': chunks[1:1] = [(b'gAMA', struct.pack('>I', 45455))] * 2
+    raw = gray_png(chunks=chunks)
+    if corruption == 'crc': raw = raw[:-1] + bytes([raw[-1] ^ 1])
+    elif corruption == 'truncated': raw = raw[:-3]
+    elif corruption == 'trailing': raw += b'extra'
+    lock = load(base / 'source-lock.json'); image = lock['sources'][0]
+    image.update(save(root / image['snapshot_path'], raw)); save(base / 'source-lock.json', lock)
+    reviews = load(base / 'reviews.json')
+    for refs in reviews['records'][0]['field_images'].values(): refs[0]['sha256'] = image['sha256']
+    save(base / 'reviews.json', reviews); sync_image_fixture(root)
+    # The attacker has repinned both metadata and review: structure alone is not
+    # a claim that bytes decode. The private check must still reject them.
+    validate_collection(root, DIRECTORY)
+    with pytest.raises(ValueError):
+        validate_collection(root, DIRECTORY, verify_snapshots=True)
+
+
+def test_original_png_accepts_all_filters_and_observed_ancillary_chunks():
+    import struct
+    import zlib
+    from quantgraph.graph import collection_batch as module
+    pixels = b''.join(bytes([i, 0x12, 0x30]) for i in range(5))
+    stream = zlib.compress(pixels)
+    raw = gray_png(chunks=[(b'IHDR', struct.pack('>IIBBBBB', 3, 5, 4, 0, 0, 0, 0)),
+        (b'gAMA', struct.pack('>I', 45455)), (b'bKGD', b'\0\x0f'),
+        (b'pHYs', struct.pack('>IIB', 100, 100, 1)), (b'tIME', struct.pack('>HBBBBB', 2020, 1, 2, 3, 4, 5)),
+        (b'IDAT', stream[:3]), (b'IDAT', stream[3:]), (b'tEXt', b'Title\0Scan'),
+        (b'tEXt', b'Author\0Source author'), (b'IEND', b'')])
+    module._verify_original_png(raw, dict(width=3, height=5))
+
+
+@pytest.mark.parametrize('limit', ['images', 'bytes', 'pixels'])
+def test_original_image_batch_limits_precede_any_inflation(image_collection, monkeypatch, limit):
+    from quantgraph.graph import collection_batch as module
+    root = image_collection; base = root / DIRECTORY
+    lock = load(base / 'source-lock.json'); image, parent = lock['sources']
+    count = 65 if limit == 'images' else 17
+    copies = []
+    for number in range(count):
+        copy = deepcopy(image)
+        copy.update(id=f'image-{number}', snapshot_path=f'datasets/raw/sources/synthetic/{number}.png')
+        if limit == 'bytes': copy['bytes'] = 8 * 1024 * 1024
+        if limit == 'pixels':
+            copy['original_image'].update(width=4000, height=4000)
+            copy['original_image']['identity_link']['attributes'].update(width='4000', height='4000')
+        copies.append(copy)
+    lock['sources'] = copies + [parent]
+    save(base / 'source-lock.json', lock); refresh(root)
+    def forbidden(*args, **kwargs):
+        raise AssertionError('Batch limits must be checked before image inflation')
+    monkeypatch.setattr(module, '_verify_original_png', forbidden)
+    with pytest.raises(ValueError, match='collection exceeds its resource limits'):
+        validate_collection(root, DIRECTORY, verify_snapshots=True)
+
+
+def test_original_image_cannot_alias_a_pdf_rendered_snapshot(image_collection):
+    from quantgraph.graph import collection_batch as module
+    root = image_collection; base = root / DIRECTORY
+    lock = load(base / 'source-lock.json'); image = lock['sources'][0]
+    pdf = dict(image, id='pdf', url='https://example.test/document.pdf',
+               snapshot_path='datasets/raw/sources/synthetic/document.pdf',
+               extraction=module.PDF_VISUAL_EXTRACTION)
+    pdf.pop('original_image')
+    pdf['visual_pages'] = dict(page_count=1,
+        inspector=dict(name='pdfinfo', version='pdfinfo version 24.04.0'),
+        generator=dict(name='pdftoppm', version='pdftoppm version 24.04.0', dpi=125,
+                       arguments=['-singlefile', '-png']),
+        pages=[dict(physical_page=1, parent_pdf_sha256=pdf['sha256'], sha256=image['sha256'],
+                    bytes=image['bytes'], snapshot_path=image['snapshot_path'])])
+    lock['sources'].append(pdf); save(base / 'source-lock.json', lock); refresh(root)
+    with pytest.raises(ValueError, match='snapshot paths must be unique'):
+        validate_collection(root, DIRECTORY)
+
+
+def test_original_image_oversize_ihdr_is_rejected_before_zlib_allocation(monkeypatch):
+    from quantgraph.graph import collection_batch as module
+    raw = gray_png(width=10001, height=1)
+    def forbidden(*args, **kwargs):
+        raise AssertionError('Invalid IHDR must be checked before creating the inflater')
+    monkeypatch.setattr(module.zlib, 'decompressobj', forbidden)
+    with pytest.raises(ValueError, match='IHDR'):
+        module._verify_original_png(raw, dict(width=10001, height=1))
+
+
+def test_original_image_bounded_html_and_utf8_are_required():
+    from quantgraph.graph import collection_batch as module
+    with pytest.raises(ValueError, match='byte limit'):
+        module._image_html(b' ' * (8 * 1024 * 1024 + 1))
+    with pytest.raises(ValueError, match='UTF-8'):
+        module._image_html(b'<html>\xff</html>')
+
+
+def test_original_image_evidence_retains_missing_background_and_catalog_readonly(image_collection):
+    from quantgraph.graph.knowledge_catalog import KnowledgeCatalog
+    root = image_collection
+    save(root / 'metadata/catalog.json', dict(schema_version='quantgraph-catalog-registry/v1', overlays=[],
+        collections=[dict(id='image', kind='source_collection', path=DIRECTORY)]))
+    before = {str(p.relative_to(root)): digest(p.read_bytes()) for p in root.rglob('*') if p.is_file()}
+    assert KnowledgeCatalog(root).stats()['collected_factor'] == 1
+    after = {str(p.relative_to(root)): digest(p.read_bytes()) for p in root.rglob('*') if p.is_file()}
+    assert before == after
+
+
+@pytest.mark.parametrize('kind,data', [
+    (b'gAMA', b'\0\0\0\0'), (b'bKGD', b'\0\x10'), (b'pHYs', b'\0' * 8 + b'\x02'),
+    (b'tIME', b'\x07\xe8\x02\x1e\0\0\0'), (b'tEXt', b' bad\0text'),
+    (b'tEXt', b'bad  key\0text'), (b'tEXt', b'key\0text\0extra'),
+])
+def test_original_png_rejects_invalid_observed_ancillary_values(kind, data):
+    import struct
+    import zlib
+    from quantgraph.graph import collection_batch as module
+    raw = gray_png(chunks=[(b'IHDR', struct.pack('>IIBBBBB', 3, 2, 4, 0, 0, 0, 0)),
+        (kind, data), (b'IDAT', zlib.compress(b'\0\x12\x30' * 2)), (b'IEND', b'')])
+    with pytest.raises(ValueError, match='Malformed original PNG ancillary'):
+        module._verify_original_png(raw, dict(width=3, height=2))
+
+
+def test_original_image_identity_parent_order_is_irrelevant(image_collection):
+    root = image_collection; base = root / DIRECTORY
+    lock = load(base / 'source-lock.json'); lock['sources'].reverse()
+    save(base / 'source-lock.json', lock); refresh(root)
+    assert validate_collection(root, DIRECTORY, verify_snapshots=True)['counts']['factor'] == 1

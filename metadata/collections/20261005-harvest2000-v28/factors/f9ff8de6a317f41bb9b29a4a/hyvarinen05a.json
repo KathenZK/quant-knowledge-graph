@@ -1,0 +1,143 @@
+{
+  "economic_basis": {
+    "hypothesis": "完整连续模型评分函数；不把原论文应用示例、统计定理、模型拟合返回值和金融预测等同。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-b0398bab52f2b7864cbb42cd"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X全部观测及固定q/θ所需训练信息已发布之后可得；整窗评分不得回填早期样本，未来训练θ不得伪装实时模型。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-b0398bab52f2b7864cbb42cd"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "固定同一个连续坐标系、观测X及给定q/θ。q是定义在全R^d的正、可归一化函数，Z可以未知；不把离散频数、样本原子、只在有界支持上的跳变密度或任意不归一的势函数直接代入。 对数据坐标x求导，而不是对参数θ求Fisher score。因为Z(θ)对x为常数，∇_x log(q/Z)=∇_x logq；仅模型差一个正的θ相关倍数不会改变评分。 在每个观测处求ψ全部d个分量及各分量对自身坐标的一阶导；后者是logq Hessian的对角。把这些对角加总成divψ，再加ψ平方范数的一半。无需所有混合二阶导。 对T个观测取等权算术平均。这是一般Eq4除常数后的确定评分，不估计未知真实p的梯度，也不调用MCMC、数值积分去算Z或任意核密度。 与真实p的平方score差关系只在Theorem1脚注1/AppendixA条件下解释：真实p可微、两种score平方期望有限，p(x)ψ(x;θ)在无穷远消失，并使分部积分合法。有限样本能算并不证明这些总体条件或金融LLN成立。 模型拟合可以最小化H_T，但本条只给定θ后的评分完整定义，不指定参数域/求解器或声称返回某个全局拟合θ。原Corollary3还要求模型正确、可识别和优化条件；不把未知数据常数当0后称得到J。 原§3.1的无惩罚高斯模型在样本协方差可逆时给与极大似然相同的样本均值和经验协方差逆；该特例共享已有统计构造，不能另计。原§3.2把ICA作为应用，不意味着本条就是已有白化负熵ICA目标换一个g或优化器。 原p700打印G=-2lncosh(πs/(2√3))−ln4，p701把g打印为−(π/3)tanh(πs/(2√3))；按G的微分应有系数−π/√3。这个附例文本差异保留，不把修正版当原始字节，也不批准该例数值仿真。核心Eq1–4及附录不依赖这个特定g。 原Eq13把log伪似然写成条件密度之和，却在正文描述条件似然乘积，另有ICA Eq7归一化常数符号叙述；这些对比/示例不是本条主定义，未用于构造新因子。 只记录研究诊断用途；模型若用同窗拟合所得低训练评分可过拟合。要做可用特征必须冻结q训练范围与使用时点，不能用未来训练模型回填早期评分。 边界：输出H_T可以为负；没有非负裁剪，不能称为概率、收益预测、p值或已校准Fisher距离。样本之间比较需要同坐标尺度、同目标约定，未知C_p不能跨不同真实分布任意抵消。 模型q必须显式给定，未提供金融q/θ时该市场应用仍MISSING。使用自动微分/解析导数/有限差分的实现均未审核；不能拿任意导数估计替代精确公式。 数据坐标改变会改变导数和欧氏范数；本评分不一般仿射不变，不能未经声明标准化后和原尺度混用。 q乘以只依赖θ的正因子会抵消，q非正、Z=∞、非光滑、观测处导数发散或支持边界未处理均不属于此合同。广义/截断/去噪score matching后续版本不冒充本2005版本。 重复样本和T=1不妨碍有限评分；不要求样本协方差满秩。确定算式不自动支持有限样本泛化、独立同分布或一致性结论。 高斯MLE特例同族边界和ICA的共享目标域明确保留；不依赖Gaussian特例或例中参数替换来获得新增身份。 原示例g与G导数、伪似然式的源内差异保留；没有下载或执行这些模拟代码。一般Eq4的符号/1/2系数和求和范围按原图核对。 2005原PDF©作者，官方history说明2017才改CC-By；现行CC-By作者条款不是本旧论文的追溯许可。只公开自撰定义、原出处和摘要，不公开源全文/原图。 原高斯示例中“经验协方差逆”仅在该协方差可逆时有定义；主评分允许重复样本/T=1，并不因此批准奇异样本上的高斯拟合闭式。没有为任意q保证最优解存在、唯一或求解成功。 输出：一个Eq4经验评分；全部坐标/模型/参数/导数实现和直接评分汇总保守一族，不按金融变量或窗口扩增。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-b0398bab52f2b7864cbb42cd"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "完整连续模型评分函数；不把原论文应用示例、统计定理、模型拟合返回值和金融预测等同。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-b0398bab52f2b7864cbb42cd"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给T>=1个有限实d维样本x_t（d>=1）及明确的模型q(x;θ)>0，x∈R^d，0<Z(θ)=∫q(x;θ)dx<∞。所选模型logq对数据坐标二次连续可微，全部观测处所需导数有限；θ为显式给定。令ψ(x;θ)=∇_x logq(x;θ)，H_T(θ)=(1/T)Σ_(t=1..T)Σ_(j=1..d)[∂²_(x_j)logq(x_t;θ)+(1/2)(∂_(x_j)logq(x_t;θ))²]。输出原Eq4中省略与θ无关常数后的完整标量评分；不同维度/模型族/坐标/参数/导数实现不拆族。在原Theorem1的连续密度、有限期望和消失边界条件成立时，J(θ)=(1/2)E_p||∇logq(X;θ)−∇logp(X)||²=E_p H(X;θ)+C_p，C_p=(1/2)E_p||∇logp(X)||²；H_T不是已知的非负J。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-b0398bab52f2b7864cbb42cd"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X（T by d finite real observations;T>=1,d>=1; duplicates allowed）：同一明确连续坐标系的完整样本；单位、标准化与可用时间需固定；q_and_theta（specified positive twice continuously differentiable q(x;theta) on R^d,0<integral q<infinity; finite required derivatives at all observations）：必须给出实际函数及参数或可验证的精确导数；未知归一化常数可省，函数本身不可缺。参数：theta：模型参数和训练/冻结时点需要另行提供；本条不拟合θ；范围valid domain of the supplied q; no universal numeric default；来源默认值None；本条选定explicit externally supplied valid model parameter；data_only_constant：只返回可由样本和q求得的评分，不冒称已知非负总体J；范围originalEq4 scoring convention；来源默认值None；本条选定omit Cp independent of theta"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-b0398bab52f2b7864cbb42cd"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "jmlr",
+  "lab": null,
+  "missing_information": [
+    "金融q/θ、训练范围/时点、输入供应商与PIT仍MISSING",
+    "数值导数/评分实现及异常处理未执行",
+    "总体正则条件/统计校准、经济有效性未验证",
+    "旧论文复用与商业权利未确认"
+  ],
+  "name": "模型对数密度导数的得分匹配评分",
+  "native_source_id": "hyvarinen05a",
+  "one_line": "用给定模型的对数密度梯度平方与散度对样本评分，无需求归一化常数；评分可负，金融模型与时点仍需补齐。",
+  "record_id": "hyvarinen05a",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.jmlr.org/papers/volume6/hyvarinen05a/hyvarinen05a.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Aapo Hyvärinen, Estimation of Non-Normalized Statistical Models by Score Matching, JMLR6(24):695–709, April2005; identical author-university and publisher PDF bytes.",
+      "id": "harvest-source-b0398bab52f2b7864cbb42cd",
+      "license": "COPYRIGHT_2005_AUTHOR_NO_OPEN_LICENSE_ESTABLISHED",
+      "locator": "Printed695 title, author, April2005 and original copyright; p=q/Z on continuous R^d: physical PDF p1-p1; Printed696 Eq1: score is derivative with respect to data coordinate, normalization cancels: physical PDF p2-p2; Printed697 Eq2 population squared score distance, Eq3 integration by parts and footnote1 conditions: physical PDF p3-p3; Printed698 Eq4 complete empirical criterion, unknown constant, identifiability and optimization limits: physical PDF p4-p4; Printed699 Gaussian special case and empirical-covariance equivalence; not a separate family: physical PDF p5-p5; Printed700 ICA model and G definition; selected generic objective does not adopt this simulation: physical PDF p6-p6; Printed701 g coefficient differs from derivative of printedG; general Eq10 model-specialization context: physical PDF p7-p7; Printed702 ICA misspecification simulation and overcomplete example context, not financial evidence: physical PDF p8-p8; Printed705 pseudo-likelihood discussion and Eq13 notation conflict; not adopted: physical PDF p11-p11; Printed706 domain limitations and AppendixA Eq14 expansion: physical PDF p12-p12; Printed707 coordinate integration-by-parts proof and vanishing boundary term: physical PDF p13-p13; Printed708 proof completion and positive full-support identifiability assumptions: physical PDF p14-p14",
+      "revision": "JMLR6(2005):695-709 published April2005 original HTTP snapshot",
+      "sha256": "3e03b415e50cf85708eeb1cd13b62b9c1680faaad715584926475953b2380782",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://www.jmlr.org/papers/volume6/hyvarinen05a/hyvarinen05a.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Aapo Hyvärinen, Estimation of Non-Normalized Statistical Models by Score Matching, JMLR6(24):695–709, April2005; identical author-university and publisher PDF bytes.",
+      "id": "harvest-source-fcf51312fcde21bdb5d25187",
+      "license": "COPYRIGHT_2005_AUTHOR_NO_OPEN_LICENSE_ESTABLISHED",
+      "locator": "Author university exact byte-identical original paper; identity corroboration, not independent formula version: physical PDF p1-p4",
+      "revision": "JMLR6(2005):695-709 published April2005 original HTTP snapshot",
+      "sha256": "3e03b415e50cf85708eeb1cd13b62b9c1680faaad715584926475953b2380782",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://www.cs.helsinki.fi/u/ahyvarin/papers/JMLR05.pdf",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Aapo Hyvärinen, Estimation of Non-Normalized Statistical Models by Score Matching, JMLR6(24):695–709, April2005; identical author-university and publisher PDF bytes.",
+      "id": "harvest-source-8832b8a646ef1fce4334350d",
+      "license": "NOASSERTION",
+      "locator": "Exact bibliographic metadata, native article slug and PDF link:L65-L76; Title, author and volume/pages:L136-L138",
+      "revision": "JMLR6(2005):695-709 published April2005 original HTTP snapshot",
+      "sha256": "209386fc08d9d7b107645774232ddacd69e6b8cbd4e1ce277b61d548d8d6f309",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://www.jmlr.org/papers/v6/hyvarinen05a.html",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Aapo Hyvärinen, Estimation of Non-Normalized Statistical Models by Score Matching, JMLR6(24):695–709, April2005; identical author-university and publisher PDF bytes.",
+      "id": "harvest-source-398b5a6e3f18518bd2c982cc",
+      "license": "NOASSERTION",
+      "locator": "Current CC-by publication policy, not proof of2005 article-specific licensing:L472-L483",
+      "revision": "JMLR6(2005):695-709 published April2005 original HTTP snapshot",
+      "sha256": "de4f2e6dee40e595e0307ab1ff40a11554ab51be6ce12f4a625f04fdf97e3924",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://www.jmlr.org/author-info.html",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Aapo Hyvärinen, Estimation of Non-Normalized Statistical Models by Score Matching, JMLR6(24):695–709, April2005; identical author-university and publisher PDF bytes.",
+      "id": "harvest-source-b738944c90a54b6377154d8e",
+      "license": "NOASSERTION",
+      "locator": "Publisher explicitly dates change to CC-By to early2017:L492-L494",
+      "revision": "Current publisher history HTTP snapshot 2026-10-05T07:41:30.238719+00:00",
+      "sha256": "dae0ee2abbc99bdc61678454bb9be778842e02c25fab7819b3c3ff2f6e35f841",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://www.jmlr.org/history.html",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}
