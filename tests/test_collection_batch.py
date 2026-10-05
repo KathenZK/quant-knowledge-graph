@@ -1652,3 +1652,279 @@ def test_original_image_identity_parent_order_is_irrelevant(image_collection):
     lock = load(base / 'source-lock.json'); lock['sources'].reverse()
     save(base / 'source-lock.json', lock); refresh(root)
     assert validate_collection(root, DIRECTORY, verify_snapshots=True)['counts']['factor'] == 1
+
+
+# Codec fixtures retain raw evidence, independently construct original LF ranges,
+# and then adapt only the evidence coordinates used by the existing collection.
+def codec_source_fixture(root, raw=None, *, utf8=False, first=2, last=3):
+    import platform
+    from quantgraph.graph.collection_batch import CODEC_EXTRACTION
+    base = root / DIRECTORY
+    raw = raw if raw is not None else '注释\f保留\r\nresult=1;\r\nresult=2'.encode('gb18030')
+    codec = 'utf-8' if utf8 else 'gb18030'
+    text = raw.decode(codec)
+    formal = raw.decode('utf-8-sig') if utf8 else text
+    lock = load(base / 'source-lock.json')
+    source = lock['sources'][0]
+    source.update(sha256=digest(raw), bytes=len(raw), extraction='utf8' if utf8 else CODEC_EXTRACTION)
+    save(root / source['snapshot_path'], raw)
+    if not utf8:
+        path = 'datasets/raw/sources/synthetic/volume.decoded-utf8.txt'
+        source['derived_text'] = dict(parent_source_sha256=digest(raw), **save(root / path, text.encode()),
+            snapshot_path=path,
+            generator=dict(name='python-codec', profile='cpython-gb18030-strict-roundtrip/v1', codec='gb18030',
+                errors='strict', output_encoding='utf-8', newline_transformation='none',
+                unicode_normalization='none', bom_transformation='none', producer_implementation='CPython',
+                producer_version=platform.python_version()),
+            native_line_basis='LF_BYTES_PRESERVE_ENDINGS/v1', native_line_count=len(raw.split(b'\n'))-int(raw.endswith(b'\n')),
+            unicode_line_basis='PYTHON_UNICODE_SPLITLINES/v1', unicode_line_count=len(text.splitlines()))
+    save(base / 'source-lock.json', lock)
+    record_path = base / 'factors/SyntheticVolume.json'
+    record = load(record_path)
+    record['sources'][0]['sha256'] = source['sha256']
+    save(record_path, record)
+    chunks = raw.split(b'\n')
+    chunks = [x+b'\n' for x in chunks[:-1]] + ([chunks[-1]] if chunks[-1] else [])
+    selected = b''.join(chunks[first-1:last])
+    # Full-file Unicode positions, including context before the selected span.
+    positions, physical = [], 1
+    for i, part in enumerate(formal.splitlines(keepends=True), 1):
+        if first <= physical <= last:
+            positions.append(i)
+        physical += part.count('\n')
+    start, end = positions[0], positions[-1]
+    canonical = '\n'.join(formal.splitlines()[start-1:end]).encode()
+    native_lines = []
+    for part in chunks[first-1:last]:
+        ending = 2 if part.endswith(b'\r\n') else int(part.endswith(b'\n'))
+        native_lines.append((part[:-ending] if ending else part).decode(codec))
+    candidate_canonical = ('\n'.join(native_lines)+'\n').encode()
+    native = dict(mapping_profile='native-lf-to-unicode-splitlines/v1', parent_source_sha256=digest(raw),
+        derived_text_sha256=digest(formal.encode()), first_line=first, last_line=last,
+        byte_start=sum(map(len, chunks[:first-1])), byte_end_exclusive=sum(map(len, chunks[:last])),
+        raw_sha256=digest(selected), raw_bytes=len(selected), decoded_utf8_sha256=digest(selected.decode(codec).encode()),
+        decoded_utf8_bytes=len(selected.decode(codec).encode()), unicode_first_line=start, unicode_last_line=end,
+        candidate_sha256=digest(candidate_canonical), candidate_hash_scope='LF_JOIN_PLUS_ONE_TERMINAL_LF')
+    span = dict(source_id='code', first_line=start, last_line=end, sha256=digest(canonical), native_lf_span=native)
+    reviews = load(base / 'reviews.json')
+    reviews['records'][0]['field_spans'] = {name: [deepcopy(span)] for name in ['formula', 'inputs', 'calculation']}
+    save(base / 'reviews.json', reviews)
+    refresh(root)
+    return source, span
+
+
+def test_gb18030_original_bytes_and_two_line_coordinates(collection):
+    source, span = codec_source_fixture(collection)
+    assert (span['native_lf_span']['first_line'], span['first_line']) == (2, 3)
+    assert span['native_lf_span']['decoded_utf8_sha256'] != span['sha256']
+    assert validate_collection(collection, DIRECTORY, verify_snapshots=True)['raw_evidence_verified']
+    assert load(collection / DIRECTORY / 'source-lock.json')['sources'][0] == source
+    (collection / source['snapshot_path']).unlink()
+    (collection / source['derived_text']['snapshot_path']).unlink()
+    assert not validate_collection(collection, DIRECTORY)['raw_evidence_verified']
+
+
+@pytest.mark.parametrize('text', [
+    '中文\r\n\U0001f600\f末行', '\ufeff注释\n返回', 'a\n\n',
+    'a\r\nb\n', 'a\rb\n', 'a\v', 'a\f', 'a\x85', 'a\r',
+    'a\f\f\n', '\r\n', 'a\x1cb\x1dc\x1ed\u2028e\u2029f\n',
+])
+def test_codec_preserves_controls_and_full_file_mapping(collection, text):
+    from quantgraph.graph.collection_batch import CODEC_EXTRACTION
+    raw = text.encode('gb18030')
+    last = len(raw.split(b'\n')) - int(raw.endswith(b'\n'))
+    codec_source_fixture(collection, raw, first=1, last=last)
+    assert source_text(raw, CODEC_EXTRACTION) == text
+    assert validate_collection(collection, DIRECTORY, verify_snapshots=True)['raw_evidence_verified']
+
+
+@pytest.mark.parametrize('raw', [b'\x81', b'\xff', b'\x81\x30\x81', b'\x81\x30\x20\x30', b''])
+def test_codec_does_not_fallback_or_replace_invalid_sequences(raw):
+    from quantgraph.graph.collection_batch import CODEC_EXTRACTION
+    with pytest.raises(ValueError):
+        source_text(raw, CODEC_EXTRACTION)
+
+
+def test_reversible_codec_is_not_an_encoding_detector():
+    from quantgraph.graph.collection_batch import CODEC_EXTRACTION
+    raw = b'\xc2\xa9'
+    assert source_text(raw, 'utf8') != source_text(raw, CODEC_EXTRACTION)
+    assert source_text(raw, CODEC_EXTRACTION).encode('gb18030') == raw
+
+
+@pytest.mark.parametrize('mutation', [
+    'role', 'content_snapshot', 'short_commit', 'wrong_commit_url', 'raw_bool', 'raw_limit',
+    'missing_derivative', 'wrong_parent', 'bad_sha', 'derived_bool', 'derived_empty', 'derived_limit',
+    'absolute', 'traversal', 'control_path', 'parent_path', 'missing_generator', 'codec', 'errors',
+    'newline', 'normalize', 'bom', 'output', 'producer', 'version', 'generator_extra', 'derived_extra',
+    'native_basis', 'unicode_basis', 'native_bool', 'unicode_bool', 'line_limit', 'reversed_counts',
+])
+def test_codec_public_contract_rejects_unsafe_declarations(collection, mutation):
+    from quantgraph.graph.collection_batch import CODEC_MAX_RAW, CODEC_MAX_TEXT, CODEC_MAX_LINES
+    codec_source_fixture(collection)
+    base = collection / DIRECTORY
+    lock = load(base / 'source-lock.json'); s = lock['sources'][0]; d = s['derived_text']; g = d['generator']
+    if mutation == 'role': s['role'] = 'author_document'
+    elif mutation == 'content_snapshot': s['revision_kind'] = 'content_snapshot'
+    elif mutation == 'short_commit': s['revision'] = 'a'*7
+    elif mutation == 'wrong_commit_url': s['url'] = s['url'].replace('a'*40, 'b'*40)
+    elif mutation == 'raw_bool': s['bytes'] = True
+    elif mutation == 'raw_limit': s['bytes'] = CODEC_MAX_RAW+1
+    elif mutation == 'missing_derivative': del s['derived_text']
+    elif mutation == 'wrong_parent': d['parent_source_sha256'] = 'b'*64
+    elif mutation == 'bad_sha': d['sha256'] = 'not-a-sha'
+    elif mutation == 'derived_bool': d['bytes'] = True
+    elif mutation == 'derived_empty': d['bytes'] = 0
+    elif mutation == 'derived_limit': d['bytes'] = CODEC_MAX_TEXT+1
+    elif mutation == 'absolute': d['snapshot_path'] = '/tmp/code.txt'
+    elif mutation == 'traversal': d['snapshot_path'] = 'datasets/raw/sources/../escape.txt'
+    elif mutation == 'control_path': d['snapshot_path'] = 'datasets/raw/sources/with\ttab.txt'
+    elif mutation == 'parent_path': d['snapshot_path'] = s['snapshot_path']
+    elif mutation == 'missing_generator': del d['generator']
+    elif mutation == 'codec': g['codec'] = 'gbk'
+    elif mutation == 'errors': g['errors'] = 'replace'
+    elif mutation == 'newline': g['newline_transformation'] = 'universal-newlines'
+    elif mutation == 'normalize': g['unicode_normalization'] = 'NFC'
+    elif mutation == 'bom': g['bom_transformation'] = 'strip'
+    elif mutation == 'output': g['output_encoding'] = 'utf-8-sig'
+    elif mutation == 'producer': g['producer_implementation'] = 'unrecorded'
+    elif mutation == 'version': g['producer_version'] = 'Python3'
+    elif mutation == 'generator_extra': g['command'] = 'python -c malicious'
+    elif mutation == 'derived_extra': d['parent_pdf_sha256'] = s['sha256']
+    elif mutation == 'native_basis': d['native_line_basis'] = 'splitlines'
+    elif mutation == 'unicode_basis': d['unicode_line_basis'] = 'LF'
+    elif mutation == 'native_bool': d['native_line_count'] = True
+    elif mutation == 'unicode_bool': d['unicode_line_count'] = True
+    elif mutation == 'line_limit': d['unicode_line_count'] = CODEC_MAX_LINES+1
+    elif mutation == 'reversed_counts': d['native_line_count'] = d['unicode_line_count']+1
+    save(base / 'source-lock.json', lock); refresh(collection)
+    with pytest.raises(ValueError):
+        validate_collection(collection, DIRECTORY)
+
+
+@pytest.mark.parametrize('mutation', ['newline', 'ff', 'wrong_codec', 'wrong_hash', 'wrong_count'])
+def test_codec_private_rebuild_rejects_repinned_derivative_drift(collection, mutation):
+    codec_source_fixture(collection)
+    base = collection / DIRECTORY
+    lock = load(base / 'source-lock.json'); s = lock['sources'][0]; d = s['derived_text']
+    p = collection / d['snapshot_path']; original = p.read_bytes()
+    if mutation == 'newline': changed = original.replace(b'\r\n', b'\n')
+    elif mutation == 'ff': changed = original.replace(b'\f', b'\n')
+    elif mutation == 'wrong_codec': changed = (collection / s['snapshot_path']).read_bytes().decode('latin1').encode()
+    else: changed = original
+    d.update(save(p, changed))
+    if mutation == 'wrong_hash': d['sha256'] = 'b'*64
+    elif mutation == 'wrong_count': d['unicode_line_count'] += 1
+    save(base / 'source-lock.json', lock)
+    reviews = load(base / 'reviews.json')
+    for spans in reviews['records'][0]['field_spans'].values():
+        spans[0]['native_lf_span']['derived_text_sha256'] = d['sha256']
+    save(base / 'reviews.json', reviews); refresh(collection)
+    validate_collection(collection, DIRECTORY)
+    with pytest.raises(ValueError, match='does not reconstruct'):
+        validate_collection(collection, DIRECTORY, verify_snapshots=True)
+
+
+@pytest.mark.parametrize('mutation', [
+    'missing', 'parent', 'derivative', 'offset', 'raw_bytes', 'raw_hash', 'decoded_hash', 'decoded_bytes',
+    'candidate_hash', 'candidate_scope', 'first_bool', 'last_bool', 'offset_bool', 'raw_bool',
+    'unicode_bool', 'negative', 'end_outside', 'wrong_line', 'wrong_unicode', 'phantom_last', 'extra',
+])
+def test_native_lf_span_cannot_be_forged_after_control_repins(collection, mutation):
+    codec_source_fixture(collection)
+    base = collection / DIRECTORY
+    reviews = load(base / 'reviews.json'); span = reviews['records'][0]['field_spans']['formula'][0]; n = span['native_lf_span']
+    if mutation == 'missing': del span['native_lf_span']
+    elif mutation == 'parent': n['parent_source_sha256'] = 'b'*64
+    elif mutation == 'derivative': n['derived_text_sha256'] = 'b'*64
+    elif mutation == 'offset': n['byte_start'] += 1; n['raw_bytes'] -= 1
+    elif mutation == 'raw_bytes': n['raw_bytes'] += 1
+    elif mutation == 'raw_hash': n['raw_sha256'] = 'b'*64
+    elif mutation == 'decoded_hash': n['decoded_utf8_sha256'] = 'b'*64
+    elif mutation == 'decoded_bytes': n['decoded_utf8_bytes'] += 1
+    elif mutation == 'candidate_hash': n['candidate_sha256'] = 'b'*64
+    elif mutation == 'candidate_scope': n['candidate_hash_scope'] = 'WITHOUT_LF'
+    elif mutation == 'first_bool': n['first_line'] = True
+    elif mutation == 'last_bool': n['last_line'] = True
+    elif mutation == 'offset_bool': n['byte_start'] = False
+    elif mutation == 'raw_bool': n['raw_bytes'] = True
+    elif mutation == 'unicode_bool': n['unicode_first_line'] = True
+    elif mutation == 'negative': n['byte_start'] = -1
+    elif mutation == 'end_outside': n['byte_end_exclusive'] += 1000; n['raw_bytes'] += 1000
+    elif mutation == 'wrong_line': n['first_line'] = 1
+    elif mutation == 'wrong_unicode': n['unicode_first_line'] -= 1
+    elif mutation == 'phantom_last': n['last_line'] += 1
+    elif mutation == 'extra': n['unverified'] = True
+    save(base / 'reviews.json', reviews); refresh(collection)
+    with pytest.raises(ValueError):
+        validate_collection(collection, DIRECTORY, verify_snapshots=True)
+
+
+@pytest.mark.parametrize('text', ['\ufeff中文\f尾\r\n代码', '\ufeff\r\n代码\n', 'a\f\n\n'])
+def test_utf8_optional_native_span_preserves_bom_while_legacy_text_strips_it(collection, text):
+    raw = text.encode()
+    codec_source_fixture(collection, raw, utf8=True, first=1, last=len(raw.split(b'\n'))-int(raw.endswith(b'\n')))
+    assert source_text(raw, 'utf8') == text.removeprefix('\ufeff')
+    assert validate_collection(collection, DIRECTORY, verify_snapshots=True)['raw_evidence_verified']
+
+
+def test_utf8_optional_native_locator_is_actually_verified(collection):
+    codec_source_fixture(collection, b'a\fb\nc', utf8=True, first=2, last=2)
+    base = collection / DIRECTORY
+    reviews = load(base / 'reviews.json')
+    reviews['records'][0]['field_spans']['formula'][0]['native_lf_span']['raw_sha256'] = 'b'*64
+    save(base / 'reviews.json', reviews); refresh(collection)
+    with pytest.raises(ValueError, match='Native LF span does not reconstruct'):
+        validate_collection(collection, DIRECTORY, verify_snapshots=True)
+
+
+@pytest.mark.parametrize('mutation', ['original_alias', 'derivative_alias', 'symlink', 'parent_as_derivative'])
+def test_code_derivative_paths_do_not_alias_other_evidence(collection, mutation):
+    codec_source_fixture(collection)
+    base = collection / DIRECTORY
+    lock = load(base / 'source-lock.json'); source = lock['sources'][0]
+    if mutation == 'symlink':
+        p = collection / source['derived_text']['snapshot_path']; raw = p.read_bytes(); p.unlink()
+        target = p.with_name('other.txt'); target.write_bytes(raw); p.symlink_to(target)
+    else:
+        other = deepcopy(source); other['id'] = 'other'
+        if mutation == 'original_alias':
+            other['extraction'] = 'utf8'; other.pop('derived_text'); other['snapshot_path'] = source['derived_text']['snapshot_path']
+        elif mutation == 'derivative_alias': other['snapshot_path'] = 'datasets/raw/sources/synthetic/other.py'
+        else:
+            other['snapshot_path'] = 'datasets/raw/sources/synthetic/other.py'
+            other['derived_text']['snapshot_path'] = source['snapshot_path']
+        lock['sources'].append(other)
+    save(base / 'source-lock.json', lock); refresh(collection)
+    with pytest.raises(ValueError):
+        validate_collection(collection, DIRECTORY, verify_snapshots=True)
+
+
+def test_codec_line_and_byte_limits_precede_splitting(monkeypatch):
+    import quantgraph.graph.collection_batch as module
+    monkeypatch.setattr(module, 'CODEC_MAX_LINES', 2)
+    with pytest.raises(ValueError, match='line bounds'):
+        module.source_text(b'a\fa\fa', module.CODEC_EXTRACTION)
+    monkeypatch.setattr(module, 'CODEC_MAX_RAW', 2)
+    with pytest.raises(ValueError, match='byte limit'):
+        module.source_text(b'abc', module.CODEC_EXTRACTION)
+    monkeypatch.setattr(module, 'CODEC_MAX_TEXT', 1)
+    with pytest.raises(ValueError, match='byte limit'):
+        module.source_text('字'.encode('gb18030'), module.CODEC_EXTRACTION)
+
+
+def test_codec_total_limit_is_structural(collection, monkeypatch):
+    import quantgraph.graph.collection_batch as module
+    codec_source_fixture(collection)
+    monkeypatch.setattr(module, 'CODEC_MAX_TOTAL', 1)
+    with pytest.raises(ValueError, match='collection exceeds'):
+        validate_collection(collection, DIRECTORY)
+
+
+def test_native_locator_cannot_make_license_content_into_code(collection):
+    codec_source_fixture(collection, b'license\ntext', utf8=True, first=1, last=2)
+    base = collection / DIRECTORY
+    lock = load(base / 'source-lock.json'); lock['sources'][0]['role'] = 'license'
+    save(base / 'source-lock.json', lock); refresh(collection)
+    with pytest.raises(ValueError, match='License or directory'):
+        validate_collection(collection, DIRECTORY)

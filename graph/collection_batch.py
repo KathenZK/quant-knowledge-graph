@@ -99,6 +99,177 @@ TAR_EXTRACTION = 'tar.members-utf8/v1'
 IMAGE_EXTRACTION = 'image.visual-page/v1'
 IMAGE_MAX_BYTES = 8 * 1024 * 1024
 IMAGE_MAX_PIXELS = 16_000_000
+CODEC_EXTRACTION = 'text.decode-gb18030-utf8/v1'
+CODEC_MAX_RAW = 8 * 1024 * 1024
+CODEC_MAX_TEXT = 32 * 1024 * 1024
+CODEC_MAX_LINES = 100_000
+CODEC_MAX_TOTAL = 128 * 1024 * 1024
+NATIVE_LF_PROFILE = 'native-lf-to-unicode-splitlines/v1'
+CODEC_GENERATOR = dict(name='python-codec', profile='cpython-gb18030-strict-roundtrip/v1',
+                       codec='gb18030', errors='strict', output_encoding='utf-8',
+                       newline_transformation='none', unicode_normalization='none', bom_transformation='none')
+
+
+def _sha256(value):
+    return isinstance(value, str) and re.fullmatch(r'[0-9a-f]{64}', value) is not None
+
+
+def _codec_snapshot(path):
+    return (_visual_snapshot(path)
+            and not any(ord(c) < 32 or 127 <= ord(c) <= 159 for c in path))
+
+
+def _text_line_counts(text):
+    # Check bounds before splitlines allocates a list. These are the exact
+    # Python str.splitlines boundaries; LF physical lines deliberately differ.
+    breaks = '\n\r\v\f\x1c\x1d\x1e\x85\u2028\u2029'
+    native = text.count('\n') + int(bool(text) and not text.endswith('\n'))
+    unicode = sum(text.count(c) for c in breaks) - text.count('\r\n')
+    unicode += int(bool(text) and text[-1] not in breaks)
+    if not 1 <= native <= CODEC_MAX_LINES or not 1 <= unicode <= CODEC_MAX_LINES:
+        raise ValueError('Decoded source exceeds its line bounds or is empty')
+    return native, unicode
+
+
+def _decode_gb18030(raw):
+    """An explicit reversible codec, not an encoding detector or code runner."""
+    if not 0 < len(raw) <= CODEC_MAX_RAW:
+        raise ValueError('GB18030 source exceeds its byte limit or is empty')
+    try:
+        text = raw.decode('gb18030', errors='strict')
+        if text.encode('gb18030', errors='strict') != raw:
+            raise ValueError('GB18030 source does not roundtrip exactly')
+        output = text.encode('utf-8', errors='strict')
+    except UnicodeError as error:
+        raise ValueError('Invalid strict reversible GB18030 source') from error
+    if len(output) > CODEC_MAX_TEXT:
+        raise ValueError('Decoded source exceeds its byte limit')
+    _text_line_counts(text)
+    return text
+
+
+def _codec_derivative(source):
+    """Public contract for a code derivative; the original Git bytes stay primary."""
+    derived = source.get('derived_text')
+    keys = {'parent_source_sha256', 'sha256', 'bytes', 'snapshot_path', 'generator',
+            'native_line_basis', 'native_line_count', 'unicode_line_basis', 'unicode_line_count'}
+    if (source['role'] != 'source_code' or source['revision_kind'] != 'git_commit'
+            or type(source['bytes']) is not int or not 0 < source['bytes'] <= CODEC_MAX_RAW
+            or not _codec_snapshot(source['snapshot_path'])
+            or not isinstance(derived, dict) or set(derived) != keys
+            or derived['parent_source_sha256'] != source['sha256']
+            or not _sha256(derived['parent_source_sha256']) or not _sha256(derived['sha256'])
+            or type(derived['bytes']) is not int or not 0 < derived['bytes'] <= CODEC_MAX_TEXT
+            or not _codec_snapshot(derived['snapshot_path'])
+            or derived['snapshot_path'] == source['snapshot_path']):
+        raise ValueError('Invalid code codec parent or derivative contract')
+    _git_commit_url(source['url'], source['revision'])
+    generator = derived['generator']
+    if (not isinstance(generator, dict)
+            or set(generator) != set(CODEC_GENERATOR) | {'producer_implementation', 'producer_version'}
+            or any(generator[k] != v for k, v in CODEC_GENERATOR.items())
+            or generator['producer_implementation'] != 'CPython'
+            or not isinstance(generator['producer_version'], str)
+            or not re.fullmatch(r'3\.[0-9]+\.[0-9]+', generator['producer_version'])):
+        raise ValueError('Code derivative needs the fixed strict codec and producer provenance')
+    if (derived['native_line_basis'] != 'LF_BYTES_PRESERVE_ENDINGS/v1'
+            or derived['unicode_line_basis'] != 'PYTHON_UNICODE_SPLITLINES/v1'
+            or any(type(derived[k]) is not int or not 1 <= derived[k] <= CODEC_MAX_LINES
+                   for k in ('native_line_count', 'unicode_line_count'))
+            or derived['native_line_count'] > derived['unicode_line_count']):
+        raise ValueError('Invalid code derivative line-coordinate contract')
+    return derived
+
+
+def _native_lf_contract(location, source):
+    """Bind original physical code lines to the existing Unicode span coordinates."""
+    native = location.get('native_lf_span')
+    keys = {'mapping_profile', 'parent_source_sha256', 'derived_text_sha256', 'first_line', 'last_line',
+            'byte_start', 'byte_end_exclusive', 'raw_sha256', 'raw_bytes', 'decoded_utf8_sha256',
+            'decoded_utf8_bytes', 'unicode_first_line', 'unicode_last_line',
+            'candidate_sha256', 'candidate_hash_scope'}
+    if (source['role'] != 'source_code' or source['extraction'] not in {'utf8', CODEC_EXTRACTION}
+            or type(source['bytes']) is not int or not 0 < source['bytes'] <= CODEC_MAX_RAW
+            or not _codec_snapshot(source['snapshot_path'])
+            or not isinstance(native, dict) or set(native) != keys
+            or native['mapping_profile'] != NATIVE_LF_PROFILE
+            or native['candidate_hash_scope'] != 'LF_JOIN_PLUS_ONE_TERMINAL_LF'
+            or native['parent_source_sha256'] != source['sha256']
+            or any(not _sha256(native[k]) for k in ('parent_source_sha256', 'derived_text_sha256',
+                                                   'raw_sha256', 'decoded_utf8_sha256', 'candidate_sha256'))):
+        raise ValueError('Invalid native LF source span contract')
+    integer_keys = ('first_line', 'last_line', 'byte_start', 'byte_end_exclusive', 'raw_bytes',
+                    'decoded_utf8_bytes', 'unicode_first_line', 'unicode_last_line')
+    if (any(type(native[k]) is not int for k in integer_keys)
+            or not 1 <= native['first_line'] <= native['last_line'] <= CODEC_MAX_LINES
+            or not 0 <= native['byte_start'] < native['byte_end_exclusive'] <= source['bytes']
+            or native['raw_bytes'] != native['byte_end_exclusive'] - native['byte_start']
+            or not 0 < native['decoded_utf8_bytes'] <= CODEC_MAX_TEXT
+            or not 1 <= native['unicode_first_line'] <= native['unicode_last_line'] <= CODEC_MAX_LINES
+            or (native['unicode_first_line'], native['unicode_last_line']) != (
+                location['first_line'], location['last_line'])):
+        raise ValueError('Invalid native LF byte offsets or Unicode mapping')
+    if source['extraction'] == CODEC_EXTRACTION:
+        derived = source['derived_text']
+        if (native['derived_text_sha256'] != derived['sha256']
+                or native['last_line'] > derived['native_line_count']
+                or native['unicode_last_line'] > derived['unicode_line_count']):
+            raise ValueError('Native LF span differs from the declared derivative')
+    return native
+
+
+def _native_lf_context(raw, source):
+    if not 0 < len(raw) <= CODEC_MAX_RAW:
+        raise ValueError('Native LF source exceeds its byte bound')
+    text = source_text(raw, source['extraction'])
+    _text_line_counts(text)
+    # Original byte offsets include CRLF and the real last-line terminator.
+    offsets, start = [], 0
+    while start < len(raw):
+        newline = raw.find(b'\n', start)
+        end = len(raw) if newline < 0 else newline + 1
+        offsets.append((start, end))
+        start = end
+    mapping, native_line = {}, 1
+    for number, line in enumerate(text.splitlines(keepends=True), 1):
+        if native_line not in mapping:
+            mapping[native_line] = [number, number]
+        else:
+            mapping[native_line][1] = number
+        native_line += line.count('\n')
+    return raw, text, offsets, mapping
+
+
+def _verify_native_lf(native, source, context):
+    raw, text, offsets, mapping = context
+    first, last = native['first_line'], native['last_line']
+    if last > len(offsets) or first not in mapping or last not in mapping:
+        raise ValueError('Native LF line is outside the original code')
+    start, end = offsets[first - 1][0], offsets[last - 1][1]
+    selected = raw[start:end]
+    # UTF8's legacy source_text strips a leading BOM for formal coordinates;
+    # the original-byte and preserved-decoding pins still retain that BOM.
+    codec = 'gb18030' if source['extraction'] == CODEC_EXTRACTION else 'utf-8'
+    selected_text = selected.decode(codec, errors='strict')
+    preserved = selected_text.encode('utf-8')
+    ufirst, ulast = mapping[first][0], mapping[last][1]
+    # This pin is the candidate's LF-physical-line hash, not the outer span's
+    # Unicode hash. In particular it preserves an interior FF and leading BOM.
+    native_lines = selected_text.split('\n')
+    for i in range(len(native_lines) - 1):
+        if native_lines[i].endswith('\r'):
+            native_lines[i] = native_lines[i][:-1]
+    if native_lines[-1] == '':
+        native_lines.pop()
+    canonical = ('\n'.join(native_lines) + '\n').encode('utf-8')
+    if ((start, end) != (native['byte_start'], native['byte_end_exclusive'])
+            or (ufirst, ulast) != (native['unicode_first_line'], native['unicode_last_line'])
+            or digest(selected) != native['raw_sha256'] or len(selected) != native['raw_bytes']
+            or digest(preserved) != native['decoded_utf8_sha256']
+            or len(preserved) != native['decoded_utf8_bytes']
+            or digest(text.encode('utf-8')) != native['derived_text_sha256']
+            or digest(canonical) != native['candidate_sha256']):
+        raise ValueError('Native LF span does not reconstruct from the original bytes')
 
 
 def _image_contract(source):
@@ -375,6 +546,8 @@ def source_text(raw, extraction, *, extractor_version=None, archive_members=None
     """Decode explicitly declared representations; never evaluate source code."""
     if extraction == 'utf8':
         return raw.decode('utf-8-sig')
+    if extraction == CODEC_EXTRACTION:
+        return _decode_gb18030(raw)
     if extraction == 'json.source':
         value = json.loads(raw)['source']
         if not isinstance(value, str) or not value.strip():
@@ -672,6 +845,7 @@ def validate_collection(root, directory, *, verify_snapshots=False):
     if len(sources) != len(lock['sources']):
         raise ValueError('Duplicate collection source ID')
     texts, visual_sources, visual_paths, image_sources = {}, {}, set(), {}
+    codec_sources, native_contexts = {}, {}
     # A visual derivative cannot reuse any original/derived-text path, even
     # under another source ID. Existing text collections keep their contracts.
     reserved_paths = {s['snapshot_path'] for s in sources.values()}
@@ -696,15 +870,18 @@ def validate_collection(root, directory, *, verify_snapshots=False):
         elif source['revision_kind'] != 'content_snapshot' or not source['revision']:
             raise ValueError('Unsupported collection source revision')
         if source['extraction'] not in {'utf8', 'json.source', PDF_EXTRACTION, PDF_VISUAL_EXTRACTION,
-                                        TAR_EXTRACTION, IMAGE_EXTRACTION}:
+                                        TAR_EXTRACTION, IMAGE_EXTRACTION, CODEC_EXTRACTION}:
             raise ValueError('Unsupported source extraction')
         if source['extraction'] == TAR_EXTRACTION:
             _archive_members(source.get('archive_members'))
         elif 'archive_members' in source:
             raise ValueError('Archive member pins require archive extraction')
         derived = _pdf_derivative(source) if source['extraction'] == PDF_EXTRACTION else None
+        if source['extraction'] == CODEC_EXTRACTION:
+            derived = _codec_derivative(source)
+            codec_sources[sid] = derived
         if derived is None and 'derived_text' in source:
-            raise ValueError('Derived text requires PDF extraction')
+            raise ValueError('Derived text requires a supported PDF or code codec extraction')
         visual = _pdf_visual_contract(source) if source['extraction'] == PDF_VISUAL_EXTRACTION else None
         if visual is None and 'visual_pages' in source:
             raise ValueError('Visual page pins require visual PDF extraction')
@@ -723,6 +900,15 @@ def validate_collection(root, directory, *, verify_snapshots=False):
     snapshot_counts = Counter(s['snapshot_path'] for s in sources.values())
     snapshot_counts.update(s['derived_text']['snapshot_path'] for s in sources.values()
                            if isinstance(s.get('derived_text'), dict) and 'snapshot_path' in s['derived_text'])
+    if sum(d['bytes'] for d in codec_sources.values()) > CODEC_MAX_TOTAL:
+        raise ValueError('Decoded code collection exceeds its byte bound')
+    derivative_paths = {s['derived_text']['snapshot_path'] for s in sources.values()
+                        if isinstance(s.get('derived_text'), dict)}
+    for sid, derived in codec_sources.items():
+        if (snapshot_counts[derived['snapshot_path']] != 1
+                or derived['snapshot_path'] in visual_paths
+                or sources[sid]['snapshot_path'] in derivative_paths | visual_paths):
+            raise ValueError('Code codec source or derivative snapshot path conflicts')
     if (len(image_sources) > 64 or sum(sources[sid]['bytes'] for sid in image_sources) > 128 * 1024 * 1024
             or sum(image['width'] * image['height'] for image in image_sources.values()) > 256_000_000):
         raise ValueError('Original image collection exceeds its resource limits')
@@ -748,6 +934,16 @@ def validate_collection(root, directory, *, verify_snapshots=False):
                 _verify_original_png(raw, image_sources[sid])
             elif sid in visual_sources:
                 _verify_pdf_visual(root, raw, source['visual_pages'])
+            elif sid in codec_sources:
+                derived = codec_sources[sid]
+                saved = read_below(root, derived['snapshot_path'], limit=CODEC_MAX_TEXT)
+                text = source_text(raw, source['extraction'])
+                if (digest(saved) != derived['sha256'] or len(saved) != derived['bytes']
+                        or text.encode('utf-8') != saved
+                        or _text_line_counts(text) != (derived['native_line_count'], derived['unicode_line_count'])):
+                    raise ValueError('Code derivative does not reconstruct from its original bytes')
+                texts[sid] = text.splitlines()
+                native_contexts[sid] = _native_lf_context(raw, source)
             elif source['extraction'] == PDF_EXTRACTION:
                 derived = source['derived_text']
                 saved = _pin(root, derived['snapshot_path'], derived)
@@ -818,10 +1014,18 @@ def validate_collection(root, directory, *, verify_snapshots=False):
                 if (type(start) is not int or type(end) is not int or not 1 <= start <= end
                         or not re.fullmatch(r'[0-9a-f]{64}', location['sha256'])):
                     raise ValueError('Invalid source line span')
+                native = None
+                if sid in codec_sources or 'native_lf_span' in location:
+                    native = _native_lf_contract(location, sources[sid])
                 if verify_snapshots:
                     lines = texts[sid]
                     if end > len(lines) or digest('\n'.join(lines[start - 1:end]).encode()) != location['sha256']:
                         raise ValueError('Source span does not match saved bytes')
+                    if native is not None:
+                        if sid not in native_contexts:
+                            native_contexts[sid] = _native_lf_context(
+                                _pin(root, sources[sid]['snapshot_path'], sources[sid]), sources[sid])
+                        _verify_native_lf(native, sources[sid], native_contexts[sid])
         for field_name, locations in field_pages.items():
             if not isinstance(locations, list) or not locations:
                 raise ValueError('Visual field evidence needs a nonempty page-reference list')

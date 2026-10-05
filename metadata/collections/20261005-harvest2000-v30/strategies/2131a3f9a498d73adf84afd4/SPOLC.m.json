@@ -1,0 +1,301 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者假说是用局部最坏历史收益替代预期平均收益、并惩罚主风险方向，有助于短期损失控制。本仓库只核定义，历史最坏值不保证未来损失界，论文最终财富调参不能当样本外证据。",
+    "missing": [
+      "来源规则已静态梳理，未做计算语义执行、经济有效性或账户回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "github.com/laizhr/SPOLC",
+  "lab": null,
+  "missing_information": [
+    "只静态读固定作者代码与明确依赖，没有执行 MATLAB、外来代码、求解器、历史行情或账户回测。",
+    "输入是外部给定资产收益倍数矩阵；未给持续可交易股票池、成分历史、复权/退市处理、缺价修补、交易日历、真实成交和资金约束。",
+    "原作者仓库的引用/免责文字不是完整开源许可证；仅发布自撰定义与来源定位，代码/论文/市场数据授权分别保留 REVIEW_REQUIRED。",
+    "对每输入行恢复目标只是源模型的比例配置，不是交易所订单、成交价格或可实际无摩擦调仓保证。",
+    "依赖MATLAB Optimization Toolbox quadprog，二次目标/约束已据论文和调用核对；数值算法、容差、并列解和失败分支未固定或执行。",
+    "论文FOF最终财富选γ=.025、样本缺价后筛选等不构成PIT经济有效性；这里只核给定输入的构造。",
+    "单资产N=1的原生full svd→diag→sum生成向量r，官方文档区分R2025a起1:r报错与旧版取r首元素（R2024a起警告），而作者未固定运行版本、后续索引和QP未执行；这里保留未处理输入形状，不排除合法N=1或替作者改成econ/diag抽取。"
+  ],
+  "name": "SPOLC：历史最坏收益与秩一风险惩罚的组合配置",
+  "native_source_id": "SPOLC.m",
+  "one_line": "以短窗历史组合收益的最小值为收益目标，联合秩一风险罚求只多目标权重。",
+  "record_id": "SPOLC.m",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED; no claim of reproduced paper optimum or economic validation.",
+    "metadata": "原生函数ID、固定commit及自撰中文规则/定位；不发布上游源码、论文全文、图像或市场数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/laizhr/SPOLC/blob/a5d61f51f5d68371b066449fe916154d260e4542/README.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-spolc-readme-md",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "README.md native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "a5d61f51f5d68371b066449fe916154d260e4542",
+      "sha256": "8b0ecabb7854f0f17996f00654fb8ec527a742ab9982d9b160dc722dd31d9a7a",
+      "supports": [
+        "作者署名/论文定位及免责文字"
+      ],
+      "url": "https://github.com/laizhr/SPOLC/blob/a5d61f51f5d68371b066449fe916154d260e4542/README.md",
+      "verification": "FETCHED_PINNED_REPOSITORY_DOCUMENT"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-spolc-spolc-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "SPOLC.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "a5d61f51f5d68371b066449fe916154d260e4542",
+      "sha256": "6c798a05a637651f21ef9306f91c85d53d89820cd1a56cdd21e8617a0f990e4e",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/SPOLC/blob/a5d61f51f5d68371b066449fe916154d260e4542/SPOLC.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-spolc-spolc_extract-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "SPOLC_extract.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "a5d61f51f5d68371b066449fe916154d260e4542",
+      "sha256": "4d334cb881b12e3dfcfe4e742a94eb51397f2bfbf1de3d0b641404524c7c7d41",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/SPOLC/blob/a5d61f51f5d68371b066449fe916154d260e4542/SPOLC_extract.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-spolc-spolc_run-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "SPOLC_run.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "a5d61f51f5d68371b066449fe916154d260e4542",
+      "sha256": "6f28d7fbfca2799f31a3c3e04c2cada0c15d2cb275d34e0f88e75fee9cc3a12a",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/SPOLC/blob/a5d61f51f5d68371b066449fe916154d260e4542/SPOLC_run.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-spolc-simplex_projection_selfnorm2-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "simplex_projection_selfnorm2.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "a5d61f51f5d68371b066449fe916154d260e4542",
+      "sha256": "c6889420d179e3ba125a5efe53284cc6069010c4297621d3706bd0ed2bc38188",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/SPOLC/blob/a5d61f51f5d68371b066449fe916154d260e4542/simplex_projection_selfnorm2.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-spolc-svdself-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "svdself.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "a5d61f51f5d68371b066449fe916154d260e4542",
+      "sha256": "0942387d48085ab1094a822420cf1114c8889ee0f336b33ad4c067daf6bc89da",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/SPOLC/blob/a5d61f51f5d68371b066449fe916154d260e4542/svdself.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai and original paper coauthors; JMLR",
+      "id": "spolc-paper-pdf",
+      "license": "Journal/author document rights independent of repository source and market data; self-authored metadata only, no source fulltext distributed; commercial REVIEW_REQUIRED.",
+      "locator": "Original JMLR paper; formulas physically visually checked; line ranges refer only to exact pdftotext24.04.0 derived text.",
+      "revision": "JMLR 21(97):1–37,2020; HTTP SHA256 b5a986559bb6ce02b6a86ce57c86130eba97136703860bf728b2e2806bdf36f6",
+      "sha256": "b5a986559bb6ce02b6a86ce57c86130eba97136703860bf728b2e2806bdf36f6",
+      "supports": [
+        "模型方程、来源署名、算法与理论限制"
+      ],
+      "url": "https://jmlr.org/papers/volume21/19-959/19-959.pdf",
+      "verification": "FETCHED_PINNED_PDF_VISUAL_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai and original paper coauthors; JMLR",
+      "id": "spolc-paper-page",
+      "license": "Journal/author document rights independent of repository source and market data; self-authored metadata only, no source fulltext distributed; commercial REVIEW_REQUIRED.",
+      "locator": "JMLR original author/publication page and explicit code link.",
+      "revision": "JMLR 21(97):1–37,2020; HTTP SHA256 a40f891588b00dcefa0d79c4e1f619a309613810b1721a9de7ada7ed76bfee2a",
+      "sha256": "a40f891588b00dcefa0d79c4e1f619a309613810b1721a9de7ada7ed76bfee2a",
+      "supports": [
+        "作者出版物到代码仓的明确链接"
+      ],
+      "url": "https://jmlr.org/papers/v21/19-959.html",
+      "verification": "FETCHED_PINNED_HTML"
+    },
+    {
+      "attribution": "MathWorks official documentation",
+      "id": "mathworks-quadprog",
+      "license": "MathWorks documentation; source/marketdata permission not inherited. REVIEW_REQUIRED.",
+      "locator": "Official dependency semantics, original HTML L937–944 for wthresh or L846–880 for quadprog; not executable source or toolbox version pin.",
+      "revision": "HTTP snapshot SHA256 614250a1cc2b02273ed2ab16015abec5ba400619d1024c96430d2ba3b6f0e109",
+      "sha256": "614250a1cc2b02273ed2ab16015abec5ba400619d1024c96430d2ba3b6f0e109",
+      "supports": [
+        "调用参数的公开文档语义，未执行工具箱"
+      ],
+      "url": "https://www.mathworks.com/help/optim/ug/quadprog.html",
+      "verification": "FETCHED_PINNED_OFFICIAL_DOCUMENTATION"
+    },
+    {
+      "attribution": "MathWorks official documentation",
+      "id": "mathworks-diag",
+      "license": "MathWorks documentation; original code/paper/market-data permissions are not inherited. REVIEW_REQUIRED.",
+      "locator": "Original official HTML splitlines; exact line spans in review. Current documentation only, not historical binary/version validation.",
+      "revision": "HTTP snapshot SHA256 1f8c63582edb8c8fb7f20f4b887171a3381488963706ee85829b7588990d7674",
+      "sha256": "1f8c63582edb8c8fb7f20f4b887171a3381488963706ee85829b7588990d7674",
+      "supports": [
+        "原生MATLAB调用的矩阵/向量形状语义；未运行，未固定历史运行环境"
+      ],
+      "url": "https://www.mathworks.com/help/matlab/ref/diag.html",
+      "verification": "FETCHED_PINNED_OFFICIAL_DOCUMENTATION"
+    },
+    {
+      "attribution": "MathWorks official documentation",
+      "id": "mathworks-svd",
+      "license": "MathWorks documentation; original code/paper/market-data permissions are not inherited. REVIEW_REQUIRED.",
+      "locator": "Original official HTML splitlines; exact line spans in review. Current documentation only, not historical binary/version validation.",
+      "revision": "HTTP snapshot SHA256 8abe9f5fc62f80d8e1dd9a4fea8907e2244d333f6f2aa603bedb1a7545938170",
+      "sha256": "8abe9f5fc62f80d8e1dd9a4fea8907e2244d333f6f2aa603bedb1a7545938170",
+      "supports": [
+        "原生MATLAB调用的矩阵/向量形状语义；未运行，未固定历史运行环境"
+      ],
+      "url": "https://www.mathworks.com/help/matlab/ref/double.svd.html",
+      "verification": "FETCHED_PINNED_OFFICIAL_DOCUMENTATION"
+    },
+    {
+      "attribution": "MathWorks official documentation",
+      "id": "mathworks-sum",
+      "license": "MathWorks documentation; original code/paper/market-data permissions are not inherited. REVIEW_REQUIRED.",
+      "locator": "Original official HTML splitlines; exact line spans in review. Current documentation only, not historical binary/version validation.",
+      "revision": "HTTP snapshot SHA256 e74c200ccf14512743fbc24887e8117a90ac520a5a435fd75b044fef601dfe76",
+      "sha256": "e74c200ccf14512743fbc24887e8117a90ac520a5a435fd75b044fef601dfe76",
+      "supports": [
+        "原生MATLAB调用的矩阵/向量形状语义；未运行，未固定历史运行环境"
+      ],
+      "url": "https://www.mathworks.com/help/matlab/ref/double.sum.html",
+      "verification": "FETCHED_PINNED_OFFICIAL_DOCUMENTATION"
+    },
+    {
+      "attribution": "MathWorks official documentation",
+      "id": "mathworks-colon",
+      "license": "MathWorks documentation; original code/paper/market-data permissions are not inherited. REVIEW_REQUIRED.",
+      "locator": "Original official HTML splitlines; exact line spans in review. Current documentation only, not historical binary/version validation.",
+      "revision": "HTTP snapshot SHA256 edda43466a24490c3a3fcb5ccb00eb3de7d684283300cb0c38f8059eabcf3ffe",
+      "sha256": "edda43466a24490c3a3fcb5ccb00eb3de7d684283300cb0c38f8059eabcf3ffe",
+      "supports": [
+        "原生MATLAB调用的矩阵/向量形状语义；未运行，未固定历史运行环境"
+      ],
+      "url": "https://www.mathworks.com/help/matlab/ref/double.colon.html",
+      "verification": "FETCHED_PINNED_OFFICIAL_DOCUMENTATION"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "lai-spolc-spolc_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "data是T×N历史价格收益倍数矩阵，列为给定资产。作者例程适用于提供这些输入的股票/基金组合模型；不冻结论文样本名单为持续可交易股票池，不自动扩到有保证金的衍生品。"
+    },
+    "cost": {
+      "evidence": [
+        "lai-spolc-spolc_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "runner的g_t=(x_t·b_t)*(1−c/2*Σ|b_t−h_old|)，h_t=b_t⊙x_t/(x_t·b_t)，h_0=0；示例传c=0。可输入非零c但未给现实费率/价差冲击校准，且c不进入QP。首期模型扣c/2、末期不追加清仓；零费示例不意味着真实交易无成本。"
+    },
+    "entry": {
+      "evidence": [
+        "lai-spolc-spolc-m",
+        "lai-spolc-spolc_extract-m",
+        "lai-spolc-spolc_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "第1期等权；暖机阶段对最新收益倍数做归一助手投影；之后求解上述联合QP得到只多目标，目标上升意味着增持。核心优化不使用上一目标或漂移份额，所以不是按上期持仓加一步梯度，也没有费用邻近项。"
+    },
+    "execution_time": {
+      "evidence": [
+        "lai-spolc-spolc_extract-m",
+        "lai-spolc-spolc_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先把既有b_t用于data(t,:)计收益，再将截止t的历史传入extract生成b_(t+1)，在下一行收益前恢复新目标。源码无真实时钟、信息发布/成交价格/求解截止期，未核实际可成交性。"
+    },
+    "exit": {
+      "evidence": [
+        "lai-spolc-spolc-m",
+        "lai-spolc-spolc_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每期恢复下个目标，目标降至0表示不持有该项；无独立止损止盈、现金退出、回撤熔断或期末额外清仓。所谓loss control是目标中的历史最坏行和风险罚，不是触及亏损阈值卖出。"
+    },
+    "position": {
+      "evidence": [
+        "lai-spolc-simplex_projection_selfnorm2-m",
+        "lai-spolc-spolc-m",
+        "lai-spolc-spolc_extract-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "QP显式b≥0且Σb=1，无借贷、做空或单项上限；q是最坏毛收益倍数辅助变量，不是现金/头寸。暖机用附属助手：归一助手先在 max(abs(v))>10^6 时反复把整个 v 除以10，再降序排列u、累加s_j，取最后满足u_j>(s_j−1)/j的j，令a=(s_j−1)/j、b=max(v−a,0)。因此极端输入下是先缩小再投影，不能无条件称为对原v的欧氏投影。 QP阶段直接取解的b，无后续自动修正或投影。"
+    },
+    "risk": {
+      "evidence": [
+        "lai-spolc-spolc-m",
+        "lai-spolc-spolc_run-m",
+        "lai-spolc-svdself-m",
+        "spolc-paper-pdf",
+        "mathworks-diag",
+        "mathworks-svd",
+        "mathworks-sum",
+        "mathworks-colon"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "风险仅为给定窗口内最坏毛收益及秩一二次罚，不是未来亏损或VaR保证。单资产N=1时svdself的diag把5×1的Sig_tmp变为5×5，r变为1×5，随后1:r没有形状检查或修复；官方版本记录载明R2025a起非标量colon报错，旧版取r首元素且R2024a开始警告；作者未固定MATLAB运行版本，本条既不声称所有历史版本都失败，也不保证跨版本单资产输出。若rank=0、trace(D)=0或数值为负，zeta/索引可能无效；重最大奇异值的向量选择、多解和quadprog失败/exitflag均未处理。原γ=.025由论文按FOF最终财富选择，属于样本内设定，不能当未见数据验证；本条未运行SVD/QP或回测。"
+    },
+    "signal": {
+      "evidence": [
+        "lai-spolc-spolc-m",
+        "lai-spolc-spolc_extract-m",
+        "lai-spolc-svdself-m",
+        "mathworks-quadprog",
+        "spolc-paper-pdf",
+        "mathworks-diag",
+        "mathworks-svd",
+        "mathworks-sum",
+        "mathworks-colon"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X为当前截止t的最近w=5行，N列。svdself原样调用三输出full svd(X)，令s=diag(Sig_tmp)、tol=max(size(X))*s(1)*eps(class(X))、r=sum(s>tol)，随后用1:r切片左右奇异向量及s，最后再diag(s(1:r))。在N≥2且秩/trace有效的常规分支，记截断X=V*S*Uᵀ：D=S²−S*Vᵀ11ᵀ*V*S/w；zeta=s_1²/sqrt(trace(D)/(N*(w−1)))；SigmaRO=zeta*u_1*u_1ᵀ。以z=[b;q]求min gamma*bᵀSigmaRO*b−q，约束b≥0、Σb=1、Xb≥q1，q无下界。源码quadprog传H块=2*gamma*SigmaRO，线性q系数−1，预算只约束b；取z前N项为下一目标，不把q计入权重和。单资产N=1时full svd的Sig_tmp为5×1，diag按向量输入构造5×5矩阵，r=sum(s>tol)为1×5向量；MathWorks版本记录说明：R2025a起非标量colon操作报错；此前取操作数第一个元素，R2024a起另有警告。因此旧版在r=[1,0,0,0,0]时可按1:1继续，但当前版本会在1:r处报错。作者未固定MATLAB版本，不能把该分支统一写成标准截断SVD/组合输出。"
+    },
+    "timeframe": {
+      "evidence": [
+        "lai-spolc-spolc_extract-m",
+        "lai-spolc-spolc_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每输入行更新一次，b_1=1/N。已观察t行后：若t<window+1，仅把data(t,:)投影为下一目标（t=1分支同样）；从t≥6开始用最近5行X求优化。即第6行观察后生成第7期首个QP目标，不把首次有5行时自行提前。"
+    },
+    "universe": {
+      "evidence": [
+        "lai-spolc-spolc-m",
+        "lai-spolc-spolc_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只对固定输入N列计算，没有主动选股和成分进出。正有限价格倍数、足够非退化窗口是模型输入条件，源码未做异常检测。选定原例window=5、gamma=.025、cost=0；参数接口其他取值不另计策略，也不据论文样本倒推事前选择。"
+    }
+  }
+}
