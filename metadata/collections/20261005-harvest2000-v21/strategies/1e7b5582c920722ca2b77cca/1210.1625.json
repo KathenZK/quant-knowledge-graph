@@ -1,0 +1,141 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者的研究假说是，排队位置、各场所订单出流的联合分布、净返佣及偏离目标数量的代价，应共同决定一个已给定交易切片的市价与限价数量。优化对象是模型中的预期执行成本，不是价格方向、交易收益或已实现的费用节约。凸性和最优解存在的论文结论不替代参数、成交和账户检验。",
+    "missing": [
+      "未运行源码、求解、仿真或回测；成本模型最优性不充作经济验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "arxiv.org",
+  "lab": null,
+  "missing_information": [
+    "本条是给定买量S和固定短截止T的单切片分配；没有生成买入方向、全日交易计划、资产选择或原持仓卖出规则。不得当成自动选股或完整账户策略。",
+    "选A1–A3与共同最优买价/FIFO/不改挂单/可即时市价成交的正文模型；不把后文条件动态分配、深度分层扩展或随机期限混成已审实现。",
+    "F是截止T前各队列出流的联合分布，取消量只计本单之前的队列；未冻结其点时可得训练样本、联合估计、校准或更新方法。实际未来成交量不是时点0的已知输入。",
+    "市价成交量≤S可在任一单场所立即完成是假设；共同报价、隐藏流动性、网络延迟、价格跳动、场所地理及消息顺序不由本文模型闭合。",
+    "θ按所有提交量计，包括未成交限价及T补单；λu/λo是每股成本/偏好惩罚。不得把λu外再自动加同一补单价差费用，或把超填惩罚改成强制卖出。",
+    "连续股数松弛可能有多个最优解；原文提到最后取整，却未给唯一解选择、整数舍入、资金预算或生产求解容差。",
+    "在T前限价不修改；提前已达到S并不授权本摘要补入跨场所原子撤单。截止后残单取消和晚到成交等执行合同仍缺。",
+    "原PDF是作者arXiv v4，首页同时写First version October2012/Revised October2014；不冒充2016期刊终版。arXiv非独占分发许可不是商业使用或任意再分发授权，commercial REVIEW_REQUIRED。",
+    "仅定义/来源/关系采集；未执行源代码、求解器、仿真、下单或回测，未下载行情，原文/图像不入公开Git。"
+  ],
+  "name": "Cont–Kukanov：FIFO 队列下跨交易所市价与限价数量分配",
+  "native_source_id": "1210.1625",
+  "one_line": "对预定买量联合分配市价单和多场所限价单，把排队成交、返佣、截止补单与超额成交纳入期望成本。",
+  "record_id": "1210.1625",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行来源实现、优化器、仿真或回测。",
+    "metadata": "来源原生身份、精确定位及自撰中文规则；不发布论文、图像、代码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Rama Cont and Arseniy Kukanov, Optimal order placement in limit order markets. arXiv1210.1625v4,23Nov2014; titlepage First version October2012/Revised October2014. Not claimed journal-final equivalence.",
+      "id": "arxiv-1210-1625v4-pdf",
+      "license": "arXiv non-exclusive distribution license (http://arxiv.org/licenses/nonexclusive-distrib/1.0/), not an open commercial-use grant. Original Chinese rule metadata and source locators only; PDF, images and website fulltext are not published. Data, venue agreements, implementation and commercial integration remain REVIEW_REQUIRED.",
+      "locator": "arXiv v4 physicalpp7–13 §2.1–2.6, Eq1–7 and A1–A3/Propositions1–2; p1 author/version and p4 scheduling-versus-placement scope. Lines use pinned pdftotext derivative; formulas visually checked. Fixed-T static Problem1 only.",
+      "revision": "arXiv:1210.1625v4, 2014-11-23; sha256:67c041ed6583ffe050f29472b02c111f8cc28c52adde82e6db6adf4a2d823ebc",
+      "sha256": "67c041ed6583ffe050f29472b02c111f8cc28c52adde82e6db6adf4a2d823ebc",
+      "supports": [
+        "FIFO随机成交与共同买价的订单数量",
+        "显式费用/有效返佣/提交量冲击/欠超填惩罚",
+        "给定S/T的静态分配及截止补单",
+        "参数条件与数量可行域"
+      ],
+      "url": "https://arxiv.org/pdf/1210.1625v4",
+      "verification": "FETCHED_PINNED_AUTHOR_PAPER_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "arXiv abstract page for Cont and Kukanov 1210.1625v4",
+      "id": "arxiv-1210-1625v4-abstract",
+      "license": "arXiv non-exclusive distribution license (http://arxiv.org/licenses/nonexclusive-distrib/1.0/), not an open commercial-use grant. Original Chinese rule metadata and source locators only; PDF, images and website fulltext are not published. Data, venue agreements, implementation and commercial integration remain REVIEW_REQUIRED.",
+      "locator": "Abstract HTML records title, authors, v4 submission identity and non-exclusive distribution license link (L184); identity and rights only, not a substitute for paper rules.",
+      "revision": "arXiv1210.1625v4 abstract HTTP snapshot sha256:815259f8fc82efff48a29e5f29acb6314e86e402d3e358f47f511e4dfb745bf0",
+      "sha256": "815259f8fc82efff48a29e5f29acb6314e86e402d3e358f47f511e4dfb745bf0",
+      "supports": [
+        "论文作者及版本身份",
+        "arXiv许可定位"
+      ],
+      "url": "https://arxiv.org/abs/1210.1625v4",
+      "verification": "FETCHED_PINNED_AUTHOR_PUBLICATION_ABSTRACT"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "arxiv-1210-1625v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "M与L_k单位均为该股票的股数，分别表示起始市价量和第k场所的限价量。限价挂在共同National Best Bid；Q_k是该价位排在本单之前的队列数量。ξ_k=C_k+D_k，其中C_k只含本单之前在T前取消的股数、D_k为到达该队列的可成交对手方订单量。F为ξ向量的联合分布，不能用每所总成交量或独立边际分布直接代替。h为0时半价差，f、r_k、θ、λ均为相应每股货币量，X不是组合收益权重。"
+    },
+    "cost": {
+      "evidence": [
+        "arxiv-1210-1625v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "正文明确模型成本：起始市价每股h+f，限价已成交每股贡献−(h+r_k)，其中有效返佣r_k=r_k^e+AS_k，AS_k为有符号的成交后短期平均价格变化/逆向选择惩罚，不再把它重复减一次；f和返佣可为负。θ>0乘所有提交量M+ΣL_k+(S−A)_+，含未成交限价和截止补单。λ_u≥0、λ_o≥0分别乘欠填/超填数量，既可反映条件成本也可反映偏好；λ_u已经在Eq5中承载补单代价，不额外擅加(h+f)(S−A)_+。本条保留参数化费用模型，但实际报价、费率档、AS/F标定、税费和账户成本未冻结，不能声称实际净成本已验证。"
+    },
+    "entry": {
+      "evidence": [
+        "arxiv-1210-1625v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "0时按算得M*发送市价买单，模型假定任一单场所都能立即成交≤S的市价量，因此选择最便宜场所；各L_k*同时构成在共同最优买价加入各自FIFO队列的限价买单。这里决定数量和场所，不优化一串不同限价档，也不根据之后出现的成交重新选起始X。0≤M≤S且每个限价量≤S−M，并不要求所有订单合计恰等于S。"
+    },
+    "execution_time": {
+      "evidence": [
+        "arxiv-1210-1625v4-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：理论事件順序是0时决定和提交，限价在T前不改，T时对不足量补市价；真实行情时间戳、跨场所下单同步、队列可见性、成交回报/撤单竞争、晚到成交、残单终止、整数舍入及求解完成时钟未给。正文明确隐藏流动性、行情速度、地理/延迟等超出讨论范围。可写模型时点，不能据此宣布具备实盘执行接口或完整回测成交账本。"
+    },
+    "exit": {
+      "evidence": [
+        "arxiv-1210-1625v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "本字段指切片完成：截至T前累计A=M+Σy_k，若A<S，在T再买(S−A)_+股市价单；A≥S则该补量为零。若多个场所合计超填A>S，模型只加λ_o(A−S)_+成本，没有规定卖回超量，更不是在T把股票全平仓。T前限价不修改，不能默补“达到S即瞬时全部撤单”；源未闭合T后的残单撤销及晚到消息处理。"
+    },
+    "position": {
+      "evidence": [
+        "arxiv-1210-1625v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "分配的是外部指定S股买入切片，非权益百分比。A1–A3下使用C：0≤M≤S、每所0≤L_k≤S−M、M+ΣL_k≥S；允许多所提交量合计>S，因此有超额成交风险且目标是软惩罚，不是硬性总量预算Σ=M+L=S。连续非负数量是整数股票问题的松弛，作者仅提最后取整，未给舍入后如何维持边界。没有全账户现金、杠杆或库存上限合同，不把θ/λ当保证金。"
+    },
+    "risk": {
+      "evidence": [
+        "arxiv-1210-1625v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "选定合同要求A1:h+min_k r_k>0；A2:λ_o>h+max_k r_k且λ_o>−(h+f)；A3:λ_u>h+f，并有θ>0及非负两罚项。来源在这些条件下给凸性、下界和C中全局最优解存在，但可能出现最优平台；本次未独立执行求解或验证证明。软惩罚不能消除超填，且目标只控制模型期望成本，不是亏损限额。F需时点可得估计；即时全额市价、共同价位、FIFO和不改单假设的偏离可能使实际路径不同。深度多档和动态扩展不在本条已审范围，不能用之后真实成交修补过去的分配。"
+    },
+    "signal": {
+      "evidence": [
+        "arxiv-1210-1625v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先令y_k(X,ξ)=(ξ_k−Q_k)_+−(ξ_k−Q_k−L_k)_+=min(max(ξ_k−Q_k,0),L_k)，A=M+Σy_k。以0时中间价为基准，v(X,ξ)=(h+f)M−Σ(h+r_k)y_k+θ[M+ΣL_k+(S−A)_+]+λ_u(S−A)_++λ_o(A−S)_+。在输入满足A1–A3时，求X*∈argmin_{X∈C} E_F[v(X,ξ)]，C={0≤M≤S，0≤L_k≤S−M，M+ΣL_k≥S}。F保留场所间联合关系，不假定出流独立；用分布的期望选择数量，未来实际ξ不是下单前已知信号。最优解可能不唯一，本条不补tie-break或把后文数值例的参数当默认。"
+    },
+    "timeframe": {
+      "evidence": [
+        "arxiv-1210-1625v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "选正文静态Problem1，0时一次确定X=(M,L_1,…,L_K)，[0,T)发生队列成交，T时对未完成量补市价单；T是事先给定的短切片期限，不指定为固定1分钟参数。源也允许随机停止时间并讨论条件动态Eq8，但本条只记录固定T的静态族代表，不补逐bar重算或分批改挂单。限价单在T以前保持不变。"
+    },
+    "universe": {
+      "evidence": [
+        "arxiv-1210-1625v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一个需要买入S>0股的股票及其K≥2个可交易场所；固定短期限T>0和该切片买量由外部给定，策略不生成方向、选股或全日切片日程。场所初始队列Q_k≥0，允许Q_k=0。只允许买单，假定没有别的预先挂单。论文提及美国多交易所市场及其他场所作为背景，本条不冻结具体股票名单、交易所套餐或实际账户。"
+    }
+  }
+}

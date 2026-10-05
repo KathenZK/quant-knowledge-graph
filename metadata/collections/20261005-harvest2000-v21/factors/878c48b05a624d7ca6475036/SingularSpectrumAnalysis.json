@@ -1,0 +1,188 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述一条完整序列的自适应低秩结构与重构分量；没有自动收益方向、因果实时信号或噪声标签。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-fb19719d31aa7d1a74eaabb2",
+        "harvest-source-67fb3628f4c61f6a937a25a2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只有每行整个窗口已观测并发布后可计算；内部早期重构点使用窗口后段，不可作为早期实时信号回填。金融窗口、时钟、供应商发布/修订PIT均MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-fb19719d31aa7d1a74eaabb2",
+        "harvest-source-67fb3628f4c61f6a937a25a2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "明确调用pyts.decomposition.SingularSpectrumAnalysis(window_size=4,groups=None,lower_frequency_bound=.075,lower_frequency_contribution=.85,chunksize=None,n_jobs=1).transform(X)。X为M×N普通C连续float64矩阵；每行是一个按时间有序、等间距且已完整观测的序列。源码check_array请求float64，本研究不把隐式类型转换误作金融缺失修复。 fit不学习任何参数，仅返回self；transform每次用当前整行重新构造全部特征方向。行之间不合并估计协方差，训练测试共用一个实例不意味着训练期已冻结投影。 _windowed_view以step=1用输入strides形成(M,K,L)的重叠窗口视图，再transpose并copy成(M,L,K)。同一反对角线对应原序列相同t=a+b，既没有先减均值也没有标准化或去趋势。 逐行计算G=HHᵀ。调用np.linalg.eigh得到升序特征值与列单位特征向量，然后同时倒序；所审附加合同要求G正定且特征值互异，以避免单个分量在重根子空间内的任意基选择。源码没有验证这些条件，不能说它主动拒绝退化。 groups=None生成每行相同的L×L单位membership；_ssa_fused先计算uᵀH，再逐个j构造外积E_j。实现只保存一个分组缓冲矩阵，不物化所有L个矩阵的完整四维堆叠。特征值用于排序，没有再把E_j乘特征值或其平方根。 沿反对角线对每个E_j平均，分母是该反对角线真实元素数c_t。源码先按L>=K决定是否转置，再左右翻转取diagonal(gap−t−1)，与公式等价；默认L4且N>=7时K>=4，N=7的相等情况会转置，仍给同一反对角平均。每个时点由唯一的first_row+last_col端点索引赋值。 默认分组数4，因此返回(M,4,N)，即使M=1也保留样本轴；只有分组数为1的未审扩展路径才挤掉轴1。四条输出整体是一个定义，不能各称一个新增因子。 在精确正交数学下Σ_j E_j=H，从而Σ_j y_j=x；这仅是自撰代数恒等式，不是执行数值测试。每一分量包含特征方向信息，不能从已有SVD熵的单个奇异值份额标量恢复。即使只输出某个分量或对分量加总也不另计新族。 默认lower_frequency参数虽不参与groups=None公式仍会被_check_params验证；n_jobs源码实际默认1，docstring写None，保留该文档差异。chunksize=None使joblib并行分支不进入；未审groups=auto/int/list及其频谱分类、不同chunksize的调度。 NumPy2.2.2固定源码仅补eigh的数学合同：实对称输入下使用下三角、升序值、列单位方向；不是pyts历史安装环境锁。源依赖只给下界，Numba/JIT/BLAS/LAPACK数值稳定性和安装均未执行验证。 边界：额外研究输入域：M>=1,N>=7，有限普通C连续float64，按等间距采样；每行H Hᵀ正定且特征值互异，所有中间浮点有限，eig收敛和内存分配成功。源码仅有常规数组/参数检查，不实现正定、重根或经济有效性验收。 原生window_size允许整数2..N或正比例float，groups可auto/int/list；本条只审默认整数4和None，不把窗口/输出数改变拆为额外构造。 全常量/全零/短到无法满秩和重复特征值不属于所审域；不加抖动、不裁特征值、不用任意基顺序默默消除退化。特征向量翻号在E_j中抵消，但近重根仍可能使单分量数值不稳定。 没有去均值，输入平移通常改变G和单分量；输出分量可能为负。不能自动把第一个叫趋势或后几个叫噪声、季节，groups=auto的分类规则未在本条采用。 所有方向使用整行数据，内部早期y_j,t依赖后续样本；只在完整窗口末形成回溯特征，不能把重构曲线回填当逐棒实时信号。 transform先实际分配一块粗估内存的zeros，失败会抛MemoryError；该检查不是性能或资源保证。本合同不运行任何上游Python/Numba代码。 公开代码为pyts维护者实现；文献引用Golyandina/Zhigljavsky和Alexandrov属于算法归因，不等于原论文全文已审核或其权利受BSD3授权。 旧M3485当前精确原URL返回多资产中心化SVD套利源码；这是当前内容快照补证，不冒称恢复原CSV时的历史执行依赖。共享低秩投影基础被明确承认，不宣称数学/经济独立。 输出：M×4×N的全部重构分量，整体计一个构造族，非4个新因子"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-fb19719d31aa7d1a74eaabb2",
+        "harvest-source-67fb3628f4c61f6a937a25a2"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述一条完整序列的自适应低秩结构与重构分量；没有自动收益方向、因果实时信号或噪声标签。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-fb19719d31aa7d1a74eaabb2",
+        "harvest-source-67fb3628f4c61f6a937a25a2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "对每行长度N的x，固定L=4、K=N−L+1，H_ab=x_(a+b)，a=0..L−1,b=0..K−1。G=HHᵀ（不去均值、不除样本数）；取G的正交单位特征向量u_j，按特征值降序j=0..L−1。E_j=u_j(u_jᵀH)。输出每个j的一整条序列y_j,t=[Σ_(a+b=t) E_j,ab]/c_t，c_t=min(L−1,t)−max(0,t−K+1)+1，t=0..N−1。每行独立，返回Y.shape=(M,4,N)。四个重构分量、窗口/分组参数与求解语言共同计一个SSA构造族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-fb19719d31aa7d1a74eaabb2",
+        "harvest-source-67fb3628f4c61f6a937a25a2"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X（ordinary finite C-contiguous float64 ndarray shape(M,N), M>=1,N>=7; each row Gram positive definite with distinct eigenvalues; finite intermediate arithmetic and successful eigensolve/memory allocation）：每行独立、按时间有序等间距的完整窗口；额外非退化研究合同不是源码保护，金融字段/PIT缺失。。参数：window_size：轨迹矩阵行数，不是全部样本长度；范围selected native default only; other values same family, not reviewed here；源码默认4；groups：每个特征方向独立重构，整体仅计1；范围selected native default only; other values same family, not reviewed here；源码默认None；lower_frequency_bound：本合同不参与公式但仍校验合法性；范围selected native default only; other values same family, not reviewed here；源码默认0.075；lower_frequency_contribution：同上，仅auto分组才使用；范围selected native default only; other values same family, not reviewed here；源码默认0.85；chunksize：直接整批数值分支；范围selected native default only; other values same family, not reviewed here；源码默认None；n_jobs：构造器默认1，docstring None冲突；本分支不调joblib；范围selected native default only; other values same family, not reviewed here；源码默认1"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-fb19719d31aa7d1a74eaabb2",
+        "harvest-source-67fb3628f4c61f6a937a25a2"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "johannfaouzi/pyts",
+  "lab": null,
+  "missing_information": [
+    "金融原始变量、窗口和供应商时点/PIT MISSING",
+    "实际安装NumPy/Numba/BLAS/LAPACK版本、误差与稳定性未执行",
+    "没有分组/交易规则/收益证据；整窗结果不能回填为实时历史值",
+    "引用论文/书籍及市场数据许可另审"
+  ],
+  "name": "轨迹矩阵谱投影与反对角平均的奇异谱分解",
+  "native_source_id": "SingularSpectrumAnalysis",
+  "one_line": "把单序列排成重叠轨迹矩阵，按其Gram特征方向作秩一投影，再以反对角平均还原各分量。",
+  "record_id": "SingularSpectrumAnalysis",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/johannfaouzi/pyts/blob/a5bc3928449426904e16dc3f666d25431e0244bf/pyts/decomposition/_ssa.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Johann Faouzi and pyts contributors; README cites Faouzi and Hicham Janati2020 package paper; implementation references Golyandina and Zhigljavsky2013 and Alexandrov2008. NumPy Developers for supplemental eigh semantics. Self-authored Chinese formula, not original-paper replication.",
+      "id": "harvest-source-fb19719d31aa7d1a74eaabb2",
+      "license": "BSD-3-Clause",
+      "locator": "imports, author and complete fused projection anti-diagonal averaging:L1-L83; public constructor, source attribution and fit no-op:L86-L181; ordinary transform validation and chunksizeNone dispatch:L183-L238; trajectory Gram eigensystem, output axes and identity grouping:L252-L322; grouping return and selected integer window/None group validation:L353-L384; remaining unconditional parameter validation:L412-L447",
+      "revision": "a5bc3928449426904e16dc3f666d25431e0244bf",
+      "sha256": "18c17705b7ffb34825efa445ea3c0ba32e115b1928d381d2b2b13d9eb2b9a0d9",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/johannfaouzi/pyts/blob/a5bc3928449426904e16dc3f666d25431e0244bf/pyts/decomposition/_ssa.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Johann Faouzi and pyts contributors; README cites Faouzi and Hicham Janati2020 package paper; implementation references Golyandina and Zhigljavsky2013 and Alexandrov2008. NumPy Developers for supplemental eigh semantics. Self-authored Chinese formula, not original-paper replication.",
+      "id": "harvest-source-67fb3628f4c61f6a937a25a2",
+      "license": "BSD-3-Clause",
+      "locator": "helper imports and source rights:L1-L19; complete sliding-window stride view:L115-L139",
+      "revision": "a5bc3928449426904e16dc3f666d25431e0244bf",
+      "sha256": "bc15aedd36dd13c4449aaadda27a6890bb4679821e574c6a6b9980223148ccd3",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/johannfaouzi/pyts/blob/a5bc3928449426904e16dc3f666d25431e0244bf/pyts/utils/_utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Johann Faouzi and pyts contributors; README cites Faouzi and Hicham Janati2020 package paper; implementation references Golyandina and Zhigljavsky2013 and Alexandrov2008. NumPy Developers for supplemental eigh semantics. Self-authored Chinese formula, not original-paper replication.",
+      "id": "harvest-source-fc3e5a409d91f49176bcbc79",
+      "license": "BSD-3-Clause",
+      "locator": "public class export:L1-L5",
+      "revision": "a5bc3928449426904e16dc3f666d25431e0244bf",
+      "sha256": "40694da719578941768dc1e116a09e829edf6b7d860fb86dd48c1642e3d0917e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/johannfaouzi/pyts/blob/a5bc3928449426904e16dc3f666d25431e0244bf/pyts/decomposition/__init__.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Johann Faouzi and pyts contributors; README cites Faouzi and Hicham Janati2020 package paper; implementation references Golyandina and Zhigljavsky2013 and Alexandrov2008. NumPy Developers for supplemental eigh semantics. Self-authored Chinese formula, not original-paper replication.",
+      "id": "harvest-source-e1869f7f82c6c2261fc4e210",
+      "license": "BSD-3-Clause",
+      "locator": "version, source license and declared dependency bounds:L1-L23",
+      "revision": "a5bc3928449426904e16dc3f666d25431e0244bf",
+      "sha256": "8f63aee4da28ae5d24eee3017f112c8e8a83a132e18d4106dbc2b58d362856b8",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/johannfaouzi/pyts/blob/a5bc3928449426904e16dc3f666d25431e0244bf/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Johann Faouzi and pyts contributors; README cites Faouzi and Hicham Janati2020 package paper; implementation references Golyandina and Zhigljavsky2013 and Alexandrov2008. NumPy Developers for supplemental eigh semantics. Self-authored Chinese formula, not original-paper replication.",
+      "id": "harvest-source-0e7f1ac30c6f06bc972a9a21",
+      "license": "BSD-3-Clause",
+      "locator": "project scope and declared runtime requirements:L10-L30; maintainer citation:L79-L99; native decomposition module identity:L137-L140; repository license statement:L183-L184",
+      "revision": "a5bc3928449426904e16dc3f666d25431e0244bf",
+      "sha256": "908e8f07795190485a578ccc2e23befc491765d4352bc61d87428bfd2d65294a",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/johannfaouzi/pyts/blob/a5bc3928449426904e16dc3f666d25431e0244bf/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Johann Faouzi and pyts contributors; README cites Faouzi and Hicham Janati2020 package paper; implementation references Golyandina and Zhigljavsky2013 and Alexandrov2008. NumPy Developers for supplemental eigh semantics. Self-authored Chinese formula, not original-paper replication.",
+      "id": "harvest-source-655a0cc09a47d855240bd15c",
+      "license": "BSD-3-Clause",
+      "locator": "complete pyts BSD3 license:L1-L27",
+      "revision": "a5bc3928449426904e16dc3f666d25431e0244bf",
+      "sha256": "ac0768d66df500d8ced56589e12af32f80c8caf7f9a06b5fcc3dc36e87a050ea",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/johannfaouzi/pyts/blob/a5bc3928449426904e16dc3f666d25431e0244bf/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Johann Faouzi and pyts contributors; README cites Faouzi and Hicham Janati2020 package paper; implementation references Golyandina and Zhigljavsky2013 and Alexandrov2008. NumPy Developers for supplemental eigh semantics. Self-authored Chinese formula, not original-paper replication.",
+      "id": "harvest-source-7d21a5528c378d1d28f46126",
+      "license": "BSD-3-Clause",
+      "locator": "eigh default lower-triangle, ascending values, normalized eigenvectors and LAPACK mathematical contract:L1485-L1563; selected lower-triangle eigensolver dispatch and return:L1609-L1630",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "40d795507d435d07bb5f9620a7e2d5f56d6d37bb1bc1b84c5c841b44d3d8257d",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/numpy/linalg/_linalg.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Johann Faouzi and pyts contributors; README cites Faouzi and Hicham Janati2020 package paper; implementation references Golyandina and Zhigljavsky2013 and Alexandrov2008. NumPy Developers for supplemental eigh semantics. Self-authored Chinese formula, not original-paper replication.",
+      "id": "harvest-source-2ba9c9fa57c4e2708e63a8fd",
+      "license": "BSD-3-Clause",
+      "locator": "complete NumPy BSD3 license:L1-L30",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "01fb016849aa427edb1bbbbd55f91c26ca6cadb32a5b20e7f000655dd05b0760",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}
