@@ -5,10 +5,12 @@ commercial rights. Public-clone validation cannot re-fetch private raw evidence.
 """
 from collections import Counter
 from datetime import datetime
+from io import BytesIO
 import json
 from pathlib import Path
 import re
 import subprocess
+import tarfile
 from urllib.parse import unquote, urlsplit
 
 from quantgraph.graph.collection_dedup import collection_source_keys
@@ -48,6 +50,63 @@ def _identity(record):
 
 PDF_EXTRACTION = 'pdf.pdftotext-layout'
 PDF_ARGUMENTS = ['-layout', '-enc', 'UTF-8', '-', '-']
+TAR_EXTRACTION = 'tar.members-utf8/v1'
+
+
+def _archive_members(value):
+    """Validate the ordered member contract even in a clone without raw files."""
+    if not isinstance(value, list) or not value or len(value) > 1000:
+        raise ValueError('Archive extraction requires an ordered member list')
+    names = set()
+    for member in value:
+        if not isinstance(member, dict):
+            raise ValueError('Invalid archive member pin')
+        name = member.get('member')
+        if (not _relative(name) or '\x00' in name or '\n' in name or '\r' in name
+                or name in names
+                or not isinstance(member.get('sha256'), str)
+                or not re.fullmatch(r'[0-9a-f]{64}', member['sha256'])
+                or type(member.get('bytes')) is not int
+                or not 0 <= member['bytes'] <= 32 * 1024 * 1024):
+            raise ValueError('Invalid or repeated archive member pin')
+        names.add(name)
+    if sum(m['bytes'] for m in value) > 128 * 1024 * 1024:
+        raise ValueError('Archive text selection exceeds its size limit')
+    return value
+
+
+def _archive_text(raw, members):
+    """Read exact regular-file members in memory, never extract or execute them.
+
+    The transport pin remains the real tar.gz response. Ordered member pins bind
+    its contents; generated header lines identify their offsets in field spans.
+    Member hashes use original bytes, including CRLF, before UTF-8 decoding.
+    """
+    members = _archive_members(members)
+    wanted = {m['member']: m for m in members}
+    found = {}
+    try:
+        with tarfile.open(fileobj=BytesIO(raw), mode='r:gz') as archive:
+            for entry in archive:
+                if entry.name not in wanted:
+                    continue
+                member = wanted[entry.name]
+                if entry.name in found or not entry.isfile() or entry.issparse():
+                    raise ValueError('Archive member must be a unique regular file')
+                if entry.size != member['bytes']:
+                    raise ValueError('Archive member byte length mismatch')
+                with archive.extractfile(entry) as handle:
+                    content = handle.read(member['bytes'] + 1)
+                if len(content) != member['bytes'] or digest(content) != member['sha256']:
+                    raise ValueError('Archive member byte pin mismatch')
+                found[entry.name] = content.decode('utf-8')
+    except (tarfile.TarError, OSError, EOFError, UnicodeError) as error:
+        raise ValueError('Invalid pinned UTF-8 tar.gz source') from error
+    if found.keys() != wanted.keys():
+        raise ValueError('Pinned archive member is missing')
+    return ''.join('@@ archive member ' + m['member'] + '\n' + found[m['member']]
+                   + ('' if found[m['member']].endswith('\n') else '\n')
+                   for m in members)
 
 
 def _pdf_layout_bytes(raw, expected_version):
@@ -69,7 +128,7 @@ def _pdf_layout_bytes(raw, expected_version):
     return result.stdout
 
 
-def source_text(raw, extraction, *, extractor_version=None):
+def source_text(raw, extraction, *, extractor_version=None, archive_members=None):
     """Decode explicitly declared representations; never evaluate source code."""
     if extraction == 'utf8':
         return raw.decode('utf-8-sig')
@@ -82,6 +141,8 @@ def source_text(raw, extraction, *, extractor_version=None):
         if not extractor_version:
             raise ValueError('PDF extraction requires a pinned extractor version')
         return _pdf_layout_bytes(raw, extractor_version).decode('utf-8')
+    if extraction == TAR_EXTRACTION:
+        return _archive_text(raw, archive_members)
     raise ValueError('Unsupported source-text extraction')
 
 
@@ -239,8 +300,12 @@ def validate_collection(root, directory, *, verify_snapshots=False):
                 raise ValueError('Git source must pin the same full commit in its URL')
         elif source['revision_kind'] != 'content_snapshot' or not source['revision']:
             raise ValueError('Unsupported collection source revision')
-        if source['extraction'] not in {'utf8', 'json.source', PDF_EXTRACTION}:
+        if source['extraction'] not in {'utf8', 'json.source', PDF_EXTRACTION, TAR_EXTRACTION}:
             raise ValueError('Unsupported source extraction')
+        if source['extraction'] == TAR_EXTRACTION:
+            _archive_members(source.get('archive_members'))
+        elif 'archive_members' in source:
+            raise ValueError('Archive member pins require archive extraction')
         derived = _pdf_derivative(source) if source['extraction'] == PDF_EXTRACTION else None
         if derived is None and 'derived_text' in source:
             raise ValueError('Derived text requires PDF extraction')
@@ -253,7 +318,8 @@ def validate_collection(root, directory, *, verify_snapshots=False):
                     raise ValueError('PDF text derivative does not reconstruct from its parent')
                 texts[sid] = saved.decode('utf-8').splitlines()
             else:
-                texts[sid] = source_text(raw, source['extraction']).splitlines()
+                texts[sid] = source_text(raw, source['extraction'],
+                                         archive_members=source.get('archive_members')).splitlines()
     refs = {_identity(ref): ref for ref in index['records']}
     decisions = {_identity(review): review for review in reviews['records']}
     if len(decisions) != len(reviews['records']) or set(decisions) != set(refs):

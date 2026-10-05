@@ -1,0 +1,141 @@
+{
+  "economic_basis": {
+    "hypothesis": "若场内交易的临时冲击和暗池全额成交强度可用给定模型描述，将两个场所的动作随剩余组合联动，可能降低清仓过程的模型冲击与风险代价。多资产随机成交会改变风险平衡，因此简单把旧执行路径加上一张暗池单未必等价。这里只记录作者的控制构造，不验证其最优性证明、清仓成本改善或现实成交能力。",
+    "missing": [
+      "未执行源码、求解ODE、模拟成交或回测；作者最优性结论不是本仓库的经济/计算验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "arxiv.org",
+  "lab": null,
+  "missing_information": [
+    "给定初始持仓向量x、期限T、风险厌恶α、常数临时冲击矩阵Λ、绝对价格增量协方差率Σ和暗池泊松强度θ；未给历史拟合窗口、实时模型校准、证券/场所清单和重估计划。",
+    "基本价为平方可积càdlàg鞅，Cov(P_i(t),P_j(t))=tΣ_ij；Σ不是百分比收益相关矩阵，份额/价格/时间必须同单位。Λ取源定理的对称正定输入，Σ半正定。",
+    "暗池每资产独立泊松跳时全额成交，概率与委托量无关，且与价格独立；不含部分成交、逆向选择或跨资产同时打包成交。暗池按不受本单冲击的基本价成交，主场所线性临时冲击不传入暗池价。",
+    "目标风险罚α E∫XᵀΣXdt不包括执行不确定性本身的风险厌恶，也不是随机清仓收入的完整方差/CARA效用。未验证现实净收益。",
+    "C按有限终值lI解的l→∞极限定义。原Remark3.7明确仅给发散边界并不能直接声称矩阵ODE只有该解；本条不把任一满足c_min→∞的数值解当原构造，未给截断l、网格或求解容差。",
+    "来源Def2.3(iv)物理p6字面漏写等号后的0；p10 Eq11下方和p11定理明确X(T−)=0。本条据后一明确条件，不改raw。p15 Eq14第二资产场内式重复x2，与Eq11矩阵式不一致；本条使用Eq11，不按该展开式默改或宣称整篇证明已核。",
+    "多资产委托可能超当前该资产数量，甚至翻转或新开另一资产以调整组合风险；没有买入资金、借券、杠杆、现金或中间库存硬帽。不能加裁剪后仍称为本文版本。",
+    "终点清零为连续模型极限，不是源给出可实现的最后市价追单；没有生产级订单同步、撤改、延迟回报、失败回退、整手和tick规则。",
+    "论文及arXiv nonexclusive-distrib仅能证明可公开查阅与托管，未建立商用或全文/图像再分发许可；只发布自撰定义和来源定位，REVIEW_REQUIRED。"
+  ],
+  "name": "Kratz–Schöneborn：暗池随机成交与场内连续流联动的有限期清仓",
+  "native_source_id": "1201.6130",
+  "one_line": "以剩余证券数量为状态，用终端清仓约束的矩阵价值同时更新场内交易速度和暗池委托量，成交后重新调整整个组合。",
+  "record_id": "1201.6130",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未验证清仓成本改善、最优性或可成交。",
+    "metadata": "原生身份、定位与自撰中文规则；原文、图像、源码及行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Peter Kratz and Torsten Schoeneborn, Portfolio liquidation in dark pools in continuous time; fixed arXiv v2 author submission, manuscript July02,2012, uploadedAug06,2012.",
+      "id": "kratz-schoeneborn-1201-6130v2-pdf",
+      "license": "arXiv nonexclusive-distrib/1.0 grants hosting distribution rights, not an established public commercial reuse or fulltext/figure redistribution license. Only self-authored Chinese metadata, original identity and locators proposed; commercial REVIEW_REQUIRED.",
+      "locator": "Physical pp4–10 §2–3 price/Poisson assumptions, controlled position, cashflows/costs, Eq3/4 matrix terminal-penalty sequence and Eq11 constrained-limit control; pp11–13 single-asset special case and multiasset tradeoff; p15 Eq14 inconsistent scalar expansion excluded. p6 Def2.3(iv) lacks0, explicit terminal0 is confirmed on p10 afterEq11 and p11 theorem.",
+      "revision": "arXiv:1201.6130v2 uploaded2012-08-06; manuscript dated2012-07-02; sha256:b947c0d8f410ebeb3fdcbdbf26de1c47f5d303927bcc225ec82ad8dff3b567e7",
+      "sha256": "b947c0d8f410ebeb3fdcbdbf26de1c47f5d303927bcc225ec82ad8dff3b567e7",
+      "supports": [
+        "场内与暗池的数量和现金流",
+        "终端清仓矩阵极限与反馈动作",
+        "执行/风险模型限制",
+        "原稿排印范围界限"
+      ],
+      "url": "https://arxiv.org/pdf/1201.6130v2",
+      "verification": "FETCHED_PINNED_AUTHOR_SUBMISSION_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "arXiv fixed-version author-submitted abstract.",
+      "id": "arxiv-1201-6130v2-abstract",
+      "license": "arXiv nonexclusive-distrib/1.0 grants hosting distribution rights, not an established public commercial reuse or fulltext/figure redistribution license. Only self-authored Chinese metadata, original identity and locators proposed; commercial REVIEW_REQUIRED.",
+      "locator": "Original HTML L41 metadata title/authors/online date; L120 andL168 version2 dated2012-08-06; L180 nonexclusive-distrib/1.0 link. Identity/rights only, not the rule formula evidence.",
+      "revision": "arXiv:1201.6130v2 abstract HTTP snapshot sha256:6a4d3a7c35295c0c2a33df62331110e37d5e4a7a50f7ab62732ce5b871739920",
+      "sha256": "6a4d3a7c35295c0c2a33df62331110e37d5e4a7a50f7ab62732ce5b871739920",
+      "supports": [
+        "版本身份",
+        "许可链接定位"
+      ],
+      "url": "https://arxiv.org/abs/1201.6130v2",
+      "verification": "FETCHED_PINNED_VERSIONED_ABSTRACT"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "kratz-schoeneborn-1201-6130v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "外部给定n只证券及初始持仓x∈R^n，可有多头、空头和零分量；目标是于有限期限内把该持仓归零，不负责选股或产生方向alpha。X_i为证券单位数量，ξ_i为每单位时间卖出数量，η_i为当前暗池卖出委托数量；负值代表反向买入。两场所使用同一资产，基本价P̃_i的单位是每单位证券金额，Σ是绝对价格变动的协方差率，不能代入无量纲收益协方差而不换算。"
+    },
+    "cost": {
+      "evidence": [
+        "kratz-schoeneborn-1201-6130v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "模型清仓收到Φ=∫ξᵀ(P̃−Λξ)dt+Σ_i∫η_i P̃_i dπ_i。利用鞅等条件后目标为E∫[ξᵀΛξ+αXᵀΣX]dt；第一项是临时冲击/执行成本，第二项是风险罚，不是再从现金中扣的费用。暗池在模型中无交易成本且不含场内冲击，不把成交本金计作盈利。论文不含永久冲击；真实佣金、返佣、借券、融资、税费、暗池费用与容量冲击未冻结，模型零费不等于现实零费。"
+    },
+    "entry": {
+      "evidence": [
+        "kratz-schoeneborn-1201-6130v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "已收到清仓任务后直接按ξ执行场内连续交易，并在暗池维护η，方向由有符号数量决定，不等待价格阈值或收益预测。ξ>0卖出、ξ<0买入，η同义；暗池没有由策略自选的限价，只在对手流动性跳时按基本价全额成交。每发生资产i的跳，按X←X−η_i e_i扣该分量，再根据新的全组合状态调整之后所有ξ和η；没有把未来已知成交时间用于预先安排订单。θ_i=0时该暗池委托恒为0。"
+    },
+    "execution_time": {
+      "evidence": [
+        "kratz-schoeneborn-1201-6130v2-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：原模型观察当前基本价及份额，并将暗池η保持为跳前可知；先前场内流改变份额，暗池跳时扣当前η_i，再更新后续控制。实际场所的报价时钟、撤改单排队优先级、部分成交、跨场所消息竞争、最终订单确认、tick/整手、网络延迟和未及时清完的退路未给。论文允许连续改暗池单并模型保证场内连续成交，不能把这些假设当成真实执行验收；未运行模拟、求解器、源码或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "kratz-schoeneborn-1201-6130v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "本条要求lim_(s→T−)X(s)=0，归零后线性动作ξ和η均为0；这是清仓完成而非另立止盈止损。单资产且θ>0时η=X，暗池一旦成交便立即清完而停止；多资产一个分量成交不表示全任务结束，继续按剩余向量重算。若暗池一直不成交，连续场内路径仍受终端清零条件约束。没有另加终点整块市价单或把有限l的残仓罚当实际终点交割。"
+    },
+    "position": {
+      "evidence": [
+        "kratz-schoeneborn-1201-6130v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "初始数量x和期限外部给定，dX=−ξdt−ηdπ；在两次暗池跳之间dX/dt=−ξ，在第i类跳仅扣η_i。库存不是权益权重，不要求非负、和为1或逐分量单调减仓。η_i=(C_i行·X−)/C_ii（θ_i>0）可小于或大于该资产余量，多资产相关结构下可反转或新建另一资产仓位；本条不按剩余量截断。单资产θ>0的η=X是整族特例，不拆记录。没有资金/借券/仓位硬帽，必须由下游评估能否实现。"
+    },
+    "risk": {
+      "evidence": [
+        "kratz-schoeneborn-1201-6130v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "代价以期望冲击加市场风险罚衡量，不给保证金、净值止损或最差场景损失上限；执行风险不在该风险厌恶罚中。独立、大小无关、全额泊松成交以及无逆向选择/永久冲击的假设一旦失效，动作和原最优性结论均未核。终端C发散不等于生产数值稳定；有限l近似的截断及误差控制未提供。原p6终值漏0、p15 Eq14展开错用x2保留，核心仅依明确Eq1/3/4/11与p10清零；不声称修复作者证明或用历史收益证实机制。"
+    },
+    "signal": {
+      "evidence": [
+        "kratz-schoeneborn-1201-6130v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "定义Θ=sum_i θ_i，D=Λ^(−1/2)ΣΛ^(−1/2)，λ_min/max为Λ特征值极值、d_min/max为D特征值极值。取l>l0=max{λ_max*(sqrt(Θ²/4+αd_min)−Θ/2), λ_min*sqrt(αd_max)}，由终值C_l(T)=lI反向求矩阵ODE：C_l′=C_lᵀΛ^(−1)C_l+C_lᵀdiag(θ_i/(C_l)_ii)C_l−αΣ。随后按原Thm3.6取每个t<T的C(t)=lim_(l→∞)C_l(t)。动作Eq11为ξ(t,X)=Λ^(−1)C(t)X、η(t,X−)=diag(1_{θ_i>0}/C_ii(t))*C(t)*X−。C是上述极限，不能仅凭终端最小特征值发散任取一个解。输入全在任务前给定，状态只用当时可知份额，不读取以后π或价格；这里未实际解ODE。"
+    },
+    "timeframe": {
+      "evidence": [
+        "kratz-schoeneborn-1201-6130v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "连续时间给定[0,T)内运行，一次有限期清仓任务。C(t)由剩余期限确定，ξ随当前X变化，η使用跳前X(t−)预测地更新；没有固定K线、月末再平衡或滚动日历。时间单位须同时用于T、θ、Λ和Σ。本文数值示例的单位T与参数不作为默认，初始持仓的形成期不属于该任务。"
+    },
+    "universe": {
+      "evidence": [
+        "kratz-schoeneborn-1201-6130v2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定期限T>0、α≥0、常数对称正定Λ、半正定Σ以及θ_i≥0。基本价P̃是平方可积右连续有左极限的鞅，Cov(P̃_i(t),P̃_j(t))=tΣ_ij。场内卖出流的成交价为P̃−Λξ且模型保证成交；暗池按P̃成交，不承受本单临时冲击。各π_i独立泊松且与P̃独立；第i类跳时执行当前η_i全量，否则不成交，概率不依赖单量。没有指定真实券商、暗池套餐、证券筛选或样本形成期。"
+    }
+  }
+}

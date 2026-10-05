@@ -1,17 +1,118 @@
 """Collection eligibility pins, evidence roles and honest status boundaries."""
 from copy import deepcopy
+from io import BytesIO
 import json
 from pathlib import Path
 from shutil import copyfile, copytree
+import tarfile
 
 import pytest
 
-from quantgraph.graph.collection_batch import FORMAT, REVIEW_FORMAT, SOURCE_FORMAT, record_schema, validate_collection
+from quantgraph.graph.collection_batch import FORMAT, REVIEW_FORMAT, SOURCE_FORMAT, TAR_EXTRACTION, record_schema, source_text, validate_collection
 from quantgraph.graph.metadata_pilot import digest, encoded
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DIRECTORY = 'metadata/collections/test-batch'
+
+
+def tar_source(entries):
+    """Synthetic source bytes only; no source programs are executed."""
+    output = BytesIO()
+    with tarfile.open(fileobj=output, mode='w:gz') as archive:
+        for name, content, kind in entries:
+            info = tarfile.TarInfo(name)
+            info.type = kind
+            info.size = len(content) if kind == tarfile.REGTYPE else 0
+            if kind in {tarfile.SYMTYPE, tarfile.LNKTYPE}:
+                info.linkname = 'package/definition.txt'
+            archive.addfile(info, BytesIO(content) if kind == tarfile.REGTYPE else None)
+    return output.getvalue()
+
+
+def member_pin(name, content):
+    return dict(member=name, sha256=digest(content), bytes=len(content))
+
+
+def test_archive_text_uses_declared_order_original_bytes_and_member_headers():
+    a, b = b'first\r\nsecond\r\n', '第三行'.encode()
+    raw = tar_source([('package/b.txt', b, tarfile.REGTYPE),
+                      ('package/a.txt', a, tarfile.REGTYPE)])
+    members = [member_pin('package/a.txt', a), member_pin('package/b.txt', b)]
+    assert source_text(raw, TAR_EXTRACTION, archive_members=members) == (
+        '@@ archive member package/a.txt\nfirst\r\nsecond\r\n'
+        '@@ archive member package/b.txt\n第三行\n')
+
+
+@pytest.mark.parametrize('kind', [tarfile.SYMTYPE, tarfile.LNKTYPE, tarfile.DIRTYPE])
+def test_archive_rejects_selected_links_and_nonfiles(kind):
+    raw = tar_source([('package/definition.txt', b'', kind)])
+    with pytest.raises(ValueError, match='unique regular file'):
+        source_text(raw, TAR_EXTRACTION,
+                    archive_members=[member_pin('package/definition.txt', b'')])
+
+
+@pytest.mark.parametrize('name', ['../outside', '/absolute', 'a/../b', 'a\\b',
+                                  'a\nb', 'a\rb', 'a\x00b', 'a//b'])
+def test_archive_rejects_unsafe_member_contracts_without_raw_files(name):
+    with pytest.raises(ValueError, match='member pin'):
+        source_text(b'', TAR_EXTRACTION, archive_members=[member_pin(name, b'')])
+
+
+@pytest.mark.parametrize('mutation', ['missing', 'duplicate_archive', 'duplicate_pin',
+                                      'wrong_hash', 'wrong_size', 'invalid_utf8', 'invalid_tar'])
+def test_archive_requires_unambiguous_exact_member_bytes(mutation):
+    content = b'formula\n'
+    entries = [('package/definition.txt', content, tarfile.REGTYPE)]
+    pins = [member_pin('package/definition.txt', content)]
+    if mutation == 'missing':
+        entries = []
+    elif mutation == 'duplicate_archive':
+        entries *= 2
+    elif mutation == 'duplicate_pin':
+        pins *= 2
+    elif mutation == 'wrong_hash':
+        pins[0]['sha256'] = '0' * 64
+    elif mutation == 'wrong_size':
+        pins[0]['bytes'] += 1
+    elif mutation == 'invalid_utf8':
+        entries[0] = ('package/definition.txt', b'\xff', tarfile.REGTYPE)
+        pins[0] = member_pin('package/definition.txt', b'\xff')
+    raw = b'not a gzip archive' if mutation == 'invalid_tar' else tar_source(entries)
+    with pytest.raises(ValueError):
+        source_text(raw, TAR_EXTRACTION, archive_members=pins)
+
+
+def test_archive_collection_keeps_http_parent_and_member_evidence(collection):
+    base = collection / DIRECTORY
+    content = b'input\r\nformula\r\n'
+    raw = tar_source([('package/definition.txt', content, tarfile.REGTYPE)])
+    lock = load(base / 'source-lock.json')
+    source = lock['sources'][0]
+    source.update(url='https://example.org/package.tar.gz', revision='archive-snapshot',
+                  revision_kind='content_snapshot', sha256=digest(raw), bytes=len(raw),
+                  extraction=TAR_EXTRACTION,
+                  archive_members=[member_pin('package/definition.txt', content)],
+                  snapshot_path='datasets/raw/sources/synthetic/package.tar.gz')
+    save(collection / source['snapshot_path'], raw)
+    save(base / 'source-lock.json', lock)
+    record = load(base / 'factors/SyntheticVolume.json')
+    record['sources'][0].update({key: source[key] for key in ['url', 'revision', 'sha256']})
+    save(base / 'factors/SyntheticVolume.json', record)
+    review = load(base / 'reviews.json')
+    for locations in review['records'][0]['field_spans'].values():
+        locations[0].update(first_line=2, last_line=3, sha256=digest(b'input\nformula'))
+    save(base / 'reviews.json', review)
+    refresh(collection)
+    assert validate_collection(collection, DIRECTORY, verify_snapshots=True)['raw_evidence_verified']
+    (collection / source['snapshot_path']).unlink()
+    assert not validate_collection(collection, DIRECTORY)['raw_evidence_verified']
+    # Public verification must still reject corrupt member declarations.
+    source['archive_members'][0]['member'] = '../outside'
+    save(base / 'source-lock.json', lock)
+    refresh(collection)
+    with pytest.raises(ValueError, match='member pin'):
+        validate_collection(collection, DIRECTORY)
 
 
 def save(path, value):
