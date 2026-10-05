@@ -1,0 +1,138 @@
+{
+  "economic_basis": {
+    "hypothesis": "成交方向提供了对手方估值的信息，竞争报价可据此补偿信息不对称。本文只记录完整报价与学习机制；按当前近似信念的条件零利润不是现实零亏损、正收益或长期可盈利的保证。",
+    "missing": [
+      "未执行作者代码、报价求根、积分、模拟或回测；未下载行情。零利润条件不是本仓库经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "proceedings.neurips.cc/paper/2008",
+  "lab": null,
+  "missing_information": [
+    "只选竞争零利润ZP分支。使用§2.3原积分固定点和§2.4后验矩投影，未采用§2.5紧缩q记号或最优垄断者Bellman收益尺度，也没有替论文修订其其他公式。",
+    "原环境只有初始冲击，潜在V随后固定；噪声独立同分布高斯且标准差已给。µ0、σ0和噪声尺度如何从现实报价或事件估计未定义，真实V和交易者私有w不是报价者可读输入。",
+    "每步把完整的非高斯后验压成同均值/方差高斯是来源近似；不声称精确保留全部信息或原理保证现实利润。零利润条件只相对于当时输入密度。",
+    "当前只审有限正σ、正噪声尺度、有限报价根且似然归一常数A>0的状态。数值尾概率消减、近零方差、求根初值/容差和失败处理未闭合；不把文中十次迭代当已验证的通用精度。",
+    "高斯价值及报价模型没有非负价格或0–100裁剪，本条不偷偷搬入2012有界预测市场设置；需有明确金融合约映射后才能应用。",
+    "单次成交固定1单位，数量不是权益比例；所选ZP不按库存、现金、保证金或资本上限改变报价。没有既定终点、强平、对冲、停报价或再启动合同。",
+    "报价先于本期交易者动作；之后买/卖/不交易信号用于下一期更新。现实市场如何把未收到订单对应到一个明确到达但放弃交易的交易者、拒单/排队/部分成交均缺失。",
+    "2005作者rev3和final的完美信息者更新写另一侧乘(1−α)(1−η)，与此前条件订单概率(1−α)η通常不一致；不交易式也不等于文中区间事件。保留原版本并不将其误差修正后作为本条来源。",
+    "2012 BMM沿同一Gaussian状态路线加入需求数量和跳变判别，只作同族来源定位，不与本条分别计数；未以其说明覆盖2008单单位模型。",
+    "未运行作者代码、模拟交易者、求根、积分、回测或市场数据。费用与账户执行MISSING；原文或源码无通用商业许可证明，REVIEW_REQUIRED。"
+  ],
+  "name": "Das–Magdon-Ismail：按订单方向后验更新的竞争报价",
+  "native_source_id": "7a614fd06c325499f1680b9896beedeb",
+  "one_line": "对买、卖或不交易反推潜在价值分布，用后验均值和方差作高斯近似，再报价使两侧分别达到模型条件零利润。",
+  "record_id": "7a614fd06c325499f1680b9896beedeb",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未验证报价、后验近似、收益或成交可行性。",
+    "metadata": "原生身份、定位与自撰中文规则；原文、图像、源码及行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://proceedings.neurips.cc/paper_files/paper/2008/hash/7a614fd06c325499f1680b9896beedeb-Abstract.html"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Sanmay Das and Malik Magdon-Ismail. Adapting to a Market Shock: Optimal Sequential Market-Making. Advances in Neural Information Processing Systems21,2008.",
+      "id": "das-magdon-ismail-nips2008-pdf",
+      "license": "Official conference paper is publicly readable; no explicit broad commercial reuse or code/data license established in the collected primary PDF/abstract. Other2012 ACM paper permissions do not transfer. Commercial scope REVIEW_REQUIRED.",
+      "locator": "Physical p3 single-unit dealer and fixed latent value; p4 §2.2 likelihood and §2.3 zero-profit conditional-price fixed points; p5 Fig2 and §2.4 Eq2/3 Gaussian moment updates; p6 simulations confirm approximate update used for ZP. No Bellman/compact-q normalization used.",
+      "revision": "NIPS2008 official proceedings, Adapting to a Market Shock: Optimal Sequential Market-Making; sha256:66b8c3023e21649965fd72b673b24b20846cabe535a5cd6323976f1a4485f63c",
+      "sha256": "66b8c3023e21649965fd72b673b24b20846cabe535a5cd6323976f1a4485f63c",
+      "supports": [
+        "第一方版本及定义范围"
+      ],
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2008/file/7a614fd06c325499f1680b9896beedeb-Paper.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_DOCUMENT_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Official Neural Information Processing Systems proceedings page.",
+      "id": "nips2008-paper-abstract",
+      "license": "Official conference paper is publicly readable; no explicit broad commercial reuse or code/data license established in the collected primary PDF/abstract. Other2012 ACM paper permissions do not transfer. Commercial scope REVIEW_REQUIRED.",
+      "locator": "Original HTML title/authors/NIPS2008 publication and direct Paper/Supplemental links; identity only, no formula evidence.",
+      "revision": "NIPS2008 official abstract HTTP snapshot sha256:52601b3fd762ecd9911e58b80598120cdf15ba78f16173adab7d5d2a7ed4ed8e",
+      "sha256": "52601b3fd762ecd9911e58b80598120cdf15ba78f16173adab7d5d2a7ed4ed8e",
+      "supports": [
+        "论文作者和官方出版身份"
+      ],
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2008/hash/7a614fd06c325499f1680b9896beedeb-Abstract.html",
+      "verification": "FETCHED_PINNED_ORIGINAL_HTML"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "das-magdon-ismail-nips2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一个由做市商双边报价的金融工具。来源可解释为受到初始冲击的证券、IPO或新预测合约，但本条不冻结股票、币种、交易所或二元支付产品。潜在价值V在起始冲击后固定，交易者的信号w=V+ε，ε为独立同分布、均值0且标准差σε的高斯噪声；做市商只观察对方买、卖或不交易，不观察V或w。"
+    },
+    "cost": {
+      "evidence": [
+        "das-magdon-ismail-nips2008-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：固定点只将成交价与潜在V之间的信息损益置为模型条件零期望，没有佣金、返佣、交易税、借券、资金、库存持有、冲击或清算成本。两侧价差是补偿信息不对称的内生报价，不是已扣现实费用的正收益；不得把未给费用设为0或把模型零利润视为商业可行。"
+    },
+    "entry": {
+      "evidence": [
+        "das-magdon-ismail-nips2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每期按固定点给出b≤a，并分别愿意买入1单位和卖出1单位。若本期交易者w>a，交易者买1，做市商按a卖1；若w<b，交易者卖1，做市商按b买1；b≤w≤a则不成交。报价者事先不知道w；上述比较是来源交易者模型，而非做市商可使用的泄漏信号。一次到达最多一笔单位交易，不追加盈利阈值、趋势筛选或同时击中双侧。"
+    },
+    "execution_time": {
+      "evidence": [
+        "das-magdon-ismail-nips2008-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：来源有清楚的事件次序——报价、单个交易者响应、再更新信念——但没有真实时区、行情发布时间、报单排队、部分成交、撤改生效、拒单或融资交割。尤其模型把到达后不交易也作为一次可观测事件，不能拿任意无成交时间棒替代。未执行报价求解或模拟，不宣称完成账户回测。"
+    },
+    "exit": {
+      "evidence": [
+        "das-magdon-ismail-nips2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "该分支持续双边报价，并在每个结果后重估；反方向成交可抵销既有净数量，也可穿过零，来源没有单独仓位止盈止损或逐笔持有期。模型利润按成交价与固定潜在V的差衡量，未规定在V价真实清仓、期限终止或最终强制归零。因此这里没有补出可保证完成的退出订单，也不挪用AS有限期T的终值合同。"
+    },
+    "position": {
+      "evidence": [
+        "das-magdon-ismail-nips2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "数量规则是每次买/卖1单位，而策略的学习状态为(µ_t,σ_t²)，不包含库存目标。观察x=+1/0/−1分别取(z−,z+)=(a,+∞)/(b,a)/(−∞,b)。令ℓ(v)=Φ((z+−v)/σε)−Φ((z−−v)/σε)，A=∫p_t(v)ℓ(v)dv，后验密度g(v)=p_t(v)ℓ(v)/A。按§2.4，µ_(t+1)=∫v g(v)dv，σ_(t+1)²=∫(v−µ_(t+1))²g(v)dv，再把下一期信念设成N(µ_(t+1),σ_(t+1)²)。这是原Eq2/3的矩定义，不是保留完整g；不交易也更新。无账户百分比、现金限额、杠杆或库存硬帽。"
+    },
+    "risk": {
+      "evidence": [
+        "das-magdon-ismail-nips2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "后验压成高斯减少状态维度，同时丢失高阶形状；原文数值示例不构成本库精度验证。竞争条件针对当前近似密度使每侧期望价差为0，不保证实际或全历史精确后验下盈利。单次1单位不限制累计持仓或损失；所选规则没有AS库存反馈、LMSR损失补贴界、止报价/强平、重复冲击适应或波动率目标。保留报价根与A为0/极小、方差近0、未知参数/不成交观察的数据合同缺项。"
+    },
+    "signal": {
+      "evidence": [
+        "das-magdon-ismail-nips2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对当前p_t(v)=φ((v−µ_t)/σ_t)/σ_t，用§2.3竞争零利润固定点：b=∫v p_t(v)Φ((b−v)/σε)dv / ∫p_t(v)Φ((b−v)/σε)dv；a=∫v p_t(v)Φ((v−a)/σε)dv / ∫p_t(v)Φ((v−a)/σε)dv，积分均在全实轴。φ、Φ为标准正态密度/CDF，分母是相应卖/买事件概率。两侧是条件均值，不是µ±固定波动倍数，也不是以真实V作报价中心。这里只定义来源原固定点，不把十次迭代或紧缩q变量的排版作为实现合同。"
+    },
+    "timeframe": {
+      "evidence": [
+        "das-magdon-ismail-nips2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个离散时间步对应一位交易者到达。先用上一轮已更新的信念报b_t、a_t；该交易者以其私有w决定买、卖或不交易；做市商随后更新信念供下一位交易者使用。原模型在时间0受到一次冲击，之后V不变，不含每隔若干小时重置或反复跳变检测。实时时钟、交易所开闭市及未到达和到达后拒绝交易的区分还未落成数据合同。"
+    },
+    "universe": {
+      "evidence": [
+        "das-magdon-ismail-nips2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入是一项工具、初始信念N(µ0,σ0²)、σ0>0及已给定σε>0。每一步保留有限正σ_t的高斯近似p_t，并要求报价固定点有限、b≤a、观察事件的归一常数A>0。这些为所选公式有定义的研究输入范围，不是原程序自动校验。未设置资产筛选、未来收益标签、滚动训练长度或现实数据校准；高斯支持全实轴，不默加价格下界或0–100截断。"
+    }
+  }
+}

@@ -663,3 +663,417 @@ def test_tradingview_duplicate_across_batches_ignores_namespace_and_changed_summ
     else:
         with pytest.raises(ValueError, match='Repeated collection source definition across batches'):
             KnowledgeCatalog(collection)
+
+
+def visual_png(width=2, height=2, value=0):
+    """A real tiny RGB PNG made without an image dependency."""
+    import struct
+    import zlib
+
+    def chunk(kind, data):
+        return (struct.pack('>I', len(data)) + kind + data
+                + struct.pack('>I', zlib.crc32(kind + data)))
+
+    return (b'\x89PNG\r\n\x1a\n'
+            + chunk(b'IHDR', struct.pack('>IIBBBBB', width, height, 8, 2, 0, 0, 0))
+            + chunk(b'IDAT', zlib.compress((b'\0' + bytes([value]) * width * 3) * height))
+            + chunk(b'IEND', b''))
+
+
+@pytest.fixture
+def visual_collection(collection, monkeypatch):
+    from types import SimpleNamespace
+    from quantgraph.graph import collection_batch as module
+
+    base = collection / DIRECTORY
+    original = b'%PDF-1.4\nsynthetic PDF for the mocked Poppler tools\n'
+    snapshots = {1: visual_png(), 2: visual_png(value=255)}
+    lock = load(base / 'source-lock.json')
+    source = lock['sources'][0]
+    source.update(url='https://example.test/scanned.pdf', revision='document-v1',
+                  revision_kind='content_snapshot', sha256=digest(original), bytes=len(original),
+                  snapshot_path='datasets/raw/sources/synthetic/scanned.pdf',
+                  role='author_document', extraction=module.PDF_VISUAL_EXTRACTION)
+    source['visual_pages'] = dict(page_count=2,
+        inspector=dict(name='pdfinfo', version='pdfinfo version 24.04.0'),
+        generator=dict(name='pdftoppm', version='pdftoppm version 24.04.0', dpi=125,
+                       arguments=['-singlefile', '-png']), pages=[])
+    save(collection / source['snapshot_path'], original)
+    for number, raw in snapshots.items():
+        path = f'datasets/raw/sources/synthetic/scan-{number}.png'
+        pin = save(collection / path, raw)
+        source['visual_pages']['pages'].append(dict(physical_page=number,
+            parent_pdf_sha256=source['sha256'], snapshot_path=path, **pin))
+    save(base / 'source-lock.json', lock)
+    path = base / 'factors/SyntheticVolume.json'
+    record = load(path)
+    record['sources'][0].update({key: source[key] for key in ['url', 'revision', 'sha256']})
+    record['sources'][0].update(locator='physical pages 1-2', verification='PINNED_DOCUMENT_REVIEWED')
+    for field in record['factor_fields'].values():
+        field['status'] = 'SOURCE_DESCRIPTION_REVIEWED'
+    save(path, record)
+    reviews = load(base / 'reviews.json')
+    review = reviews['records'][0]
+    review['field_spans'] = {}
+    review['field_pages'] = {name: [dict(source_id='code', physical_page=n, sha256=digest(snapshots[n]))
+                                  for n in [1, 2]] for name in ['formula', 'inputs', 'calculation']}
+    save(base / 'reviews.json', reviews); refresh(collection)
+
+    def run(command, **kwargs):
+        assert kwargs.get('shell') is None
+        assert kwargs['check'] is True and kwargs['timeout'] in {30, 60}
+        assert kwargs['env']['LC_ALL'] == 'C'
+        if command in [['pdfinfo', '-v'], ['pdftoppm', '-v']]:
+            return SimpleNamespace(stderr=(command[0] + ' version 24.04.0\n').encode(), stdout=b'')
+        assert kwargs['input'] == original
+        number = int(command[2])
+        if command[0] == 'pdfinfo':
+            assert command == ['pdfinfo', '-f', str(number), '-l', str(number), '-box', '-']
+            return SimpleNamespace(stdout=(f'Pages: 2\nPage {number} rot: 0\n'
+                f'Page {number} MediaBox: 0 0 1.152 1.152\n').encode(), stderr=b'')
+        assert command == ['pdftoppm', '-f', str(number), '-l', str(number), '-r', '125', '-singlefile', '-png', '-']
+        kwargs['stdout'].write(snapshots[number])
+        return SimpleNamespace(stderr=b'')
+
+    monkeypatch.setattr(module.subprocess, 'run', run)
+    return collection
+
+
+def test_visual_pages_verify_real_image_bytes_and_need_no_tools_or_raw_publicly(visual_collection, monkeypatch):
+    from quantgraph.graph import collection_batch as module
+    assert validate_collection(visual_collection, DIRECTORY, verify_snapshots=True)['counts']['factor'] == 1
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError('Public-clone validation must not run external tools')
+
+    monkeypatch.setattr(module.subprocess, 'run', forbidden)
+    for path in (visual_collection / 'datasets/raw/sources/synthetic').iterdir():
+        path.unlink()
+    assert validate_collection(visual_collection, DIRECTORY)['raw_evidence_verified'] is False
+
+
+@pytest.mark.parametrize('mutation', [
+    'page_bool', 'page_zero', 'page_overflow', 'count_bool', 'count_overflow', 'duplicate_page',
+    'duplicate_path', 'unsafe_path', 'control_path', 'wrong_extension', 'parent_path', 'parent_hash',
+    'missing_page', 'too_many_pages', 'bytes_bool', 'huge_png', 'huge_pdf', 'empty_pages',
+    'bad_hash', 'bad_dpi', 'dpi_bool', 'bad_args', 'renderer', 'version', 'inspector', 'text_mix',
+    'source_code', 'license', 'attribution', 'source_index', 'text_extraction'])
+def test_visual_lock_rejects_invalid_provenance_and_resource_contracts_publicly(visual_collection, mutation):
+    root = visual_collection
+    path = root / DIRECTORY / 'source-lock.json'
+    doc = load(path)
+    source = doc['sources'][0]
+    visual = source['visual_pages']
+    page = visual['pages'][0]
+    if mutation == 'page_bool': page['physical_page'] = True
+    elif mutation == 'page_zero': page['physical_page'] = 0
+    elif mutation == 'page_overflow': page['physical_page'] = 3
+    elif mutation == 'count_bool': visual['page_count'] = True
+    elif mutation == 'count_overflow': visual['page_count'] = 1025
+    elif mutation == 'duplicate_page': visual['pages'].append(deepcopy(page))
+    elif mutation == 'duplicate_path': visual['pages'][1]['snapshot_path'] = page['snapshot_path']
+    elif mutation == 'unsafe_path': page['snapshot_path'] = 'datasets/raw/sources/../outside.png'
+    elif mutation == 'control_path': page['snapshot_path'] = 'datasets/raw/sources/a\nb.png'
+    elif mutation == 'wrong_extension': page['snapshot_path'] = 'datasets/raw/sources/pretend.txt'
+    elif mutation == 'parent_path': page['snapshot_path'] = source['snapshot_path']
+    elif mutation == 'parent_hash': page['parent_pdf_sha256'] = '0' * 64
+    elif mutation == 'missing_page': del page['physical_page']
+    elif mutation == 'too_many_pages': visual['pages'] *= 33
+    elif mutation == 'bytes_bool': page['bytes'] = True
+    elif mutation == 'huge_png': page['bytes'] = 8 * 1024 * 1024 + 1
+    elif mutation == 'huge_pdf': source['bytes'] = 8 * 1024 * 1024 + 1
+    elif mutation == 'empty_pages': visual['pages'] = []
+    elif mutation == 'bad_hash': page['sha256'] = 'not a hash'
+    elif mutation == 'bad_dpi': visual['generator']['dpi'] = 201
+    elif mutation == 'dpi_bool': visual['generator']['dpi'] = True
+    elif mutation == 'bad_args': visual['generator']['arguments'].append('-cropbox')
+    elif mutation == 'renderer': visual['generator']['name'] = 'sh'
+    elif mutation == 'version': visual['generator']['version'] = ''
+    elif mutation == 'inspector': visual['inspector']['name'] = 'pdftotext'
+    elif mutation == 'text_mix': source['derived_text'] = {}
+    elif mutation == 'text_extraction': source['extraction'] = 'utf8'
+    else: source['role'] = mutation
+    save(path, doc); refresh(root)
+    with pytest.raises(ValueError):
+        validate_collection(root, DIRECTORY)
+
+
+@pytest.mark.parametrize('mutation', ['unknown_field', 'duplicate', 'unknown_source', 'unselected_page',
+                                      'page_bool', 'wrong_hash', 'extra_line_span', 'empty', 'non_list'])
+def test_visual_field_references_are_exact_and_unique(visual_collection, mutation):
+    root = visual_collection
+    path = root / DIRECTORY / 'reviews.json'
+    doc = load(path); review = doc['records'][0]
+    refs = review['field_pages']['formula']
+    if mutation == 'unknown_field': review['field_pages']['not_a_field'] = deepcopy(refs)
+    elif mutation == 'duplicate': refs.append(deepcopy(refs[0]))
+    elif mutation == 'unknown_source': refs[0]['source_id'] = 'unknown'
+    elif mutation == 'unselected_page': refs[0]['physical_page'] = 3
+    elif mutation == 'page_bool': refs[0]['physical_page'] = True
+    elif mutation == 'wrong_hash': refs[0]['sha256'] = '0' * 64
+    elif mutation == 'extra_line_span': refs[0]['first_line'] = 1
+    elif mutation == 'empty': review['field_pages']['formula'] = []
+    else: review['field_pages']['formula'] = refs[0]
+    save(path, doc); refresh(root)
+    with pytest.raises(ValueError):
+        validate_collection(root, DIRECTORY)
+
+
+def test_visual_core_needs_declared_field_evidence_and_cannot_claim_code_review(visual_collection):
+    root = visual_collection
+    path = root / DIRECTORY / 'factors/SyntheticVolume.json'
+    doc = load(path)
+    doc['factor_fields']['formula']['status'] = 'SOURCE_CODE_REVIEWED'
+    save(path, doc); refresh(root)
+    with pytest.raises(ValueError, match='cannot establish a code-reviewed'):
+        validate_collection(root, DIRECTORY)
+    doc['factor_fields']['formula']['status'] = 'SOURCE_DESCRIPTION_REVIEWED'
+    doc['factor_fields']['formula']['evidence'] = []
+    save(path, doc); refresh(root)
+    with pytest.raises(ValueError, match='requires evidence|not declared'):
+        validate_collection(root, DIRECTORY)
+
+
+def test_visual_core_cannot_omit_both_evidence_types_or_fake_text_lines(visual_collection):
+    root = visual_collection
+    path = root / DIRECTORY / 'reviews.json'
+    doc = load(path); review = doc['records'][0]
+    del review['field_pages']['formula']
+    save(path, doc); refresh(root)
+    with pytest.raises(ValueError, match='precise source evidence'):
+        validate_collection(root, DIRECTORY)
+    review['field_spans']['formula'] = [dict(source_id='code', first_line=1, last_line=1,
+                                           sha256=digest(b'\f'))]
+    save(path, doc); refresh(root)
+    with pytest.raises(ValueError, match='masquerade'):
+        validate_collection(root, DIRECTORY)
+
+
+def test_text_source_cannot_substitute_for_visual_page_evidence(collection):
+    path = collection / DIRECTORY / 'reviews.json'
+    doc = load(path)
+    doc['records'][0]['field_pages'] = dict(formula=[dict(source_id='code', physical_page=1, sha256='0' * 64)])
+    save(path, doc); refresh(collection)
+    with pytest.raises(ValueError, match='not declared'):
+        validate_collection(collection, DIRECTORY)
+
+
+@pytest.mark.parametrize('alias_kind', ['visual', 'original', 'derived_text'])
+def test_visual_snapshot_paths_do_not_collide_across_sources(visual_collection, alias_kind):
+    root = visual_collection
+    path = root / DIRECTORY / 'source-lock.json'
+    doc = load(path); original = doc['sources'][0]
+    other = deepcopy(original); other['id'] = 'second'
+    if alias_kind != 'visual':
+        other.pop('visual_pages')
+        if alias_kind == 'original':
+            other.update(extraction='utf8', snapshot_path=original['visual_pages']['pages'][0]['snapshot_path'])
+        else:
+            other.update(extraction='pdf.pdftotext-layout', derived_text=dict(
+                snapshot_path=original['visual_pages']['pages'][0]['snapshot_path']))
+    doc['sources'].append(other)
+    save(path, doc); refresh(root)
+    with pytest.raises(ValueError, match='paths must be unique'):
+        validate_collection(root, DIRECTORY)
+
+
+@pytest.mark.parametrize('mutation', ['png_bytes', 'pdf_bytes', 're_pinned_png', 'fake_png', 'huge_dimensions'])
+def test_visual_private_validation_rejects_forged_snapshots_even_if_repinned(visual_collection, mutation):
+    root = visual_collection; base = root / DIRECTORY
+    lock = load(base / 'source-lock.json'); source = lock['sources'][0]
+    page = source['visual_pages']['pages'][0]
+    if mutation == 'pdf_bytes':
+        (root / source['snapshot_path']).write_bytes(b'%PDF-forged')
+    elif mutation == 'png_bytes':
+        (root / page['snapshot_path']).write_bytes(b'forged')
+    else:
+        raw = (visual_png(value=128) if mutation == 're_pinned_png' else
+               b'pretend PNG' if mutation == 'fake_png' else visual_png(width=10001, height=1))
+        page.update(save(root / page['snapshot_path'], raw))
+        if len(raw) < 67:  # A textual forgery can still claim a plausible PNG byte length.
+            raw += b' ' * (67 - len(raw)); page.update(save(root / page['snapshot_path'], raw))
+        review = load(base / 'reviews.json')
+        for refs in review['records'][0]['field_pages'].values():
+            refs[0]['sha256'] = page['sha256']
+        save(base / 'reviews.json', review); save(base / 'source-lock.json', lock); refresh(root)
+    with pytest.raises(ValueError):
+        validate_collection(root, DIRECTORY, verify_snapshots=True)
+
+
+@pytest.mark.parametrize('mutation', ['page_count', 'geometry', 'rotation', 'huge_page', 'version', 'missing_tool', 'timeout'])
+def test_visual_tools_fail_closed_before_rendering(visual_collection, monkeypatch, mutation):
+    from types import SimpleNamespace
+    from quantgraph.graph import collection_batch as module
+    original_run = module.subprocess.run
+
+    def run(command, **kwargs):
+        if command[0] == 'pdftoppm' and '-v' not in command:
+            raise AssertionError('Invalid contract must fail before rendering')
+        if mutation == 'missing_tool': raise FileNotFoundError('tool unavailable')
+        if mutation == 'timeout': raise module.subprocess.TimeoutExpired(command, 30)
+        if mutation == 'version' and '-v' in command:
+            return SimpleNamespace(stderr=b'', stdout=b'')
+        result = original_run(command, **kwargs)
+        if command[0] == 'pdfinfo' and '-v' not in command:
+            if mutation == 'page_count': result.stdout = result.stdout.replace(b'Pages: 2', b'Pages: 3')
+            elif mutation == 'geometry': result.stdout = result.stdout.replace(b'MediaBox:', b'UnknownBox:')
+            elif mutation == 'rotation': result.stdout = result.stdout.replace(b'rot: 0', b'rot: 17')
+            elif mutation == 'huge_page': result.stdout = result.stdout.replace(b'1.152 1.152', b'14000 14000')
+        return result
+
+    monkeypatch.setattr(module.subprocess, 'run', run)
+    with pytest.raises(ValueError):
+        validate_collection(visual_collection, DIRECTORY, verify_snapshots=True)
+
+
+def test_visual_png_symlink_escape_is_rejected(visual_collection, tmp_path):
+    root = visual_collection
+    page = load(root / DIRECTORY / 'source-lock.json')['sources'][0]['visual_pages']['pages'][0]
+    path = root / page['snapshot_path']
+    outside = tmp_path / 'external.png'; outside.write_bytes(path.read_bytes())
+    path.unlink(); path.symlink_to(outside)
+    with pytest.raises(ValueError, match='symlink'):
+        validate_collection(root, DIRECTORY, verify_snapshots=True)
+
+
+def test_scanned_pdf_still_cannot_satisfy_old_text_extraction(monkeypatch):
+    from types import SimpleNamespace
+    from quantgraph.graph import collection_batch as module
+
+    def run(command, **kwargs):
+        if '-v' in command:
+            return SimpleNamespace(stderr=b'pdftotext version 24.04.0\n', stdout=b'')
+        return SimpleNamespace(stdout=b'\f' * 36, stderr=b'')
+
+    monkeypatch.setattr(module.subprocess, 'run', run)
+    with pytest.raises(ValueError, match='returned no text'):
+        module.source_text(b'%PDF-1.4\n', module.PDF_EXTRACTION, extractor_version='pdftotext version 24.04.0')
+
+
+@pytest.mark.parametrize('status', ['RESEARCH_ASSUMPTION', 'MISSING'])
+def test_visual_background_reference_does_not_promote_unreviewed_fields(visual_collection, status):
+    root = visual_collection; base = root / DIRECTORY
+    path = base / 'factors/SyntheticVolume.json'
+    doc = load(path)
+    doc['factor_fields']['economic_meaning']['status'] = status
+    save(path, doc); refresh(root)
+    result = validate_collection(root, DIRECTORY)
+    assert result['records'][0]['factor_fields']['economic_meaning']['status'] == status
+    # It can cite the paper as context, but cannot claim a verified visual page.
+    path = base / 'reviews.json'; review = load(path)
+    review['records'][0]['field_pages']['economic_meaning'] = deepcopy(
+        review['records'][0]['field_pages']['formula'])
+    save(path, review); refresh(root)
+    with pytest.raises(ValueError, match='not declared description-reviewed'):
+        validate_collection(root, DIRECTORY)
+
+
+def test_all_visual_page_geometry_is_inspected_before_any_render(visual_collection, monkeypatch):
+    from quantgraph.graph import collection_batch as module
+    old_run = module.subprocess.run
+    inspected, rendered = [], []
+
+    def run(command, **kwargs):
+        if '-v' not in command:
+            if command[0] == 'pdfinfo': inspected.append(int(command[2]))
+            else:
+                assert inspected == [1, 2]
+                rendered.append(int(command[2]))
+        return old_run(command, **kwargs)
+
+    monkeypatch.setattr(module.subprocess, 'run', run)
+    validate_collection(visual_collection, DIRECTORY, verify_snapshots=True)
+    assert rendered == [1, 2]
+
+
+def test_visual_png_dimensions_are_checked_before_render(visual_collection, monkeypatch):
+    from quantgraph.graph import collection_batch as module
+    root = visual_collection; base = root / DIRECTORY
+    lock = load(base / 'source-lock.json'); pin = lock['sources'][0]['visual_pages']['pages'][0]
+    pin.update(save(root / pin['snapshot_path'], visual_png(width=8, height=8)))
+    save(base / 'source-lock.json', lock); refresh(root)
+    old_run = module.subprocess.run
+
+    def run(command, **kwargs):
+        assert command[0] != 'pdftoppm' or '-v' in command
+        return old_run(command, **kwargs)
+
+    monkeypatch.setattr(module.subprocess, 'run', run)
+    with pytest.raises(ValueError, match='dimensions differ'):
+        validate_collection(root, DIRECTORY, verify_snapshots=True)
+
+
+@pytest.mark.parametrize('corruption', ['signature', 'crc', 'truncated', 'trailing'])
+def test_png_is_more_than_an_extension_or_header(corruption):
+    from quantgraph.graph import collection_batch as module
+    raw = visual_png()
+    if corruption == 'signature': raw = b'x' + raw[1:]
+    elif corruption == 'crc': raw = raw[:50] + bytes([raw[50] ^ 1]) + raw[51:]
+    elif corruption == 'truncated': raw = raw[:-12]
+    else: raw += b'not part of the image'
+    with pytest.raises(ValueError):
+        module._png_dimensions(raw)
+
+
+def two_page_pdf():
+    """Two self-authored vector pages; no external documents or source programs."""
+    bodies = [b'<< /Type /Catalog /Pages 2 0 R >>',
+        b'<< /Type /Pages /Kids [3 0 R 4 0 R] /Count 2 >>',
+        b'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 72 72] /Contents 5 0 R >>',
+        b'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 72 72] /Contents 6 0 R >>']
+    for content in [b'0 g 0 0 36 36 re f\n', b'0.5 g 20 20 30 30 re f\n']:
+        bodies.append(b'<< /Length ' + str(len(content)).encode() + b' >>\nstream\n' + content + b'endstream')
+    raw, offsets = b'%PDF-1.4\n', []
+    for number, body in enumerate(bodies, 1):
+        offsets.append(len(raw))
+        raw += f'{number} 0 obj\n'.encode() + body + b'\nendobj\n'
+    start = len(raw)
+    raw += f'xref\n0 {len(bodies) + 1}\n0000000000 65535 f \n'.encode()
+    raw += b''.join(f'{offset:010d} 00000 n \n'.encode() for offset in offsets)
+    raw += f'trailer\n<< /Size {len(bodies) + 1} /Root 1 0 R >>\nstartxref\n{start}\n%%EOF\n'.encode()
+    return raw
+
+
+def test_real_poppler_visual_collection_rebuilds_two_physical_pages(visual_collection, monkeypatch):
+    from shutil import which
+    import subprocess
+    if not which('pdfinfo') or not which('pdftoppm'):
+        pytest.skip('Optional real Poppler integration; mocked boundary tests always run')
+    monkeypatch.undo()  # Replace the fixture's mock with installed trusted PDF tools.
+    root = visual_collection; base = root / DIRECTORY
+    lock = load(base / 'source-lock.json'); source = lock['sources'][0]
+    raw = two_page_pdf()
+    source.update(save(root / source['snapshot_path'], raw))
+    visual = source['visual_pages']
+    for tool in [visual['inspector'], visual['generator']]:
+        out = subprocess.run([tool['name'], '-v'], capture_output=True, check=True, timeout=30)
+        tool['version'] = (out.stderr or out.stdout).decode().splitlines()[0]
+    for page in visual['pages']:
+        n = str(page['physical_page'])
+        out = subprocess.run(['pdftoppm', '-f', n, '-l', n, '-r', '125', '-singlefile', '-png', '-'],
+                             input=raw, capture_output=True, check=True, timeout=30)
+        page.update(save(root / page['snapshot_path'], out.stdout), parent_pdf_sha256=source['sha256'])
+    save(base / 'source-lock.json', lock)
+    path = base / 'factors/SyntheticVolume.json'; doc = load(path)
+    doc['sources'][0]['sha256'] = source['sha256']; save(path, doc)
+    path = base / 'reviews.json'; doc = load(path)
+    for refs in doc['records'][0]['field_pages'].values():
+        for ref in refs:
+            ref['sha256'] = visual['pages'][ref['physical_page'] - 1]['sha256']
+    save(path, doc); refresh(root)
+    assert validate_collection(root, DIRECTORY, verify_snapshots=True)['raw_evidence_verified'] is True
+
+
+def test_visual_review_remains_a_read_only_catalog_definition(visual_collection):
+    from quantgraph.graph.knowledge_catalog import KnowledgeCatalog
+    root = visual_collection
+    save(root / 'metadata/catalog.json', dict(schema_version='quantgraph-catalog-registry/v1', overlays=[],
+        collections=[dict(id='visual', kind='source_collection', path=DIRECTORY)]))
+    catalog = KnowledgeCatalog(root)
+    assert catalog.stats()['collected_factor'] == 1
+    assert catalog.search(status='NOT_TESTED')['total'] == 1
+    assert catalog.search(status='VALIDATED')['total'] == 0
+    record = catalog.get('Synthetic/Library:SyntheticVolume')['versions'][0]['record']
+    assert record['review']['field_spans'] == {}
+    assert record['review']['field_pages']['formula'][0]['physical_page'] == 1
+    assert record['review']['states']['computation_semantics'] == 'NOT_EXECUTED'

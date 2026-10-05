@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述给定统计目标下的有损随机表示；不是独立收益因子、已知金融信号或已核神经网络程序。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-b35cbfe667cf7c109c61dd6f"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "训练联合概率及目标标签全部实现并发布后才可求q；未来Y标签不得提前用于训练，整窗表示不能回填过去。冻结q用于未来输入还需另定输入编码/未知状态处理。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-b35cbfe667cf7c109c61dd6f"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "核心固定Tishby/Pereira/Bialek原稿arXiv physics/0004057v1；PDF内日期1999-09-30，版本提交2000-04-24，两者分别登记。Princeton作者副本虽成功获取但字节不同，本条不把其当同一版本或第二个算法来源。 输入是已知、归一的有限联合概率pXY；原§3明确把可靠概率估计留在本文范围外。保留非零边缘支持以避免无意义的条件概率，允许联合表部分单元为零。连续金融值的量化/估计器没有由定义自动确定。 T是预先指定有限编码字母表，q(t|x)为每个x对应的随机概率行，不强迫硬分簇或让q为0/1。k的选定在原§3.4明确必要；本合同k<|X|、beta>1是额外研究范围，不是来源软件默认或主动保护。 固定pXY后，q只改变新三变量联合P_q=pXY*q；因此T与Y在给定X后条件独立。原脚注3特意区别这种Y-X-T关系与以T作隐变量生成数据的Y-T-X模型，不能互换这两个条件独立结构。 按全联合表求pT和pTY，两项MI均由同一q诱导。原Eq3和Eq14给完整求和，Eq15给目标；底数2使单位bits，与原文信息率描述一致。改变底数同时比例缩放两项不改变最优集合，不另算新条。 对质量为零的单元采用0log0连续极限，不直接执行0/0。若某t整个未使用，即pT=0，则相应pTY全零且两MI贡献为零；允许空编码，不为求条件分布而强加所有q严格正。 求整个行单纯形上的精确argmin集合。可行域有限维紧且非空，MI可用熵差连续表达，故最小值达到；这是自撰存在性说明，不是执行了求解、获得数值全局最优或选出唯一解。 目标最优通常不唯一：编码标签置换、未使用码字及退化分布均可能给同一值；不同最优信道的信息平面两坐标也不能一概强称相同。没有额外tie-break，不输出伪确定的金融类别或唯一特征数组。 由T-X-Y得I(X;T)=I(T;Y)+I(X;T|Y)，所以目标=(1−beta)I(T;Y)+I(X;T|Y)。这准确展示其共享条件MI基础；并非新增熵估计器或仅把已有两个固定标量相减，而是同时优化整个随机信道。 全族beta>=0的边界需保留：beta<1时独立于x的任意q都给最小值0，beta=1时还有可能满足条件独立等式的其它解。原beta=0单一码字是一个例子，不能误写全部最优都只能一个码字。当前选择beta>1只避开必然平凡子域，不保证每个输入得到非平凡编码。 原p4 Eq2把−Σ_x p(x)Σ_t q(t|x)log q(t|x)标作H(X|T)，实际求和是H(T|X)。核心直接用未歧义的Eq3/14/15，不据此误换成H(T)或H(X|T)作为压缩惩罚，不改原PDF。 原p11 Eq25最后一个由pT产生的导数项印负beta，与Eq24展开中正beta的Σ_t pT log pT项不一致；p12正规化中的exp[beta*lambda_tilde]又不直接对应Eq27，p13 Eq31最终一行印Σ_y而Eq17实际为Σ_x。全部按原图保留，当前不批准其推导、交替迭代或收敛结果，不以自撰修正算法替代原版。 原Eq16/17/28只是隐式自洽关系，正文称formal。原p14明确各块分别凸而联合不凸，解不保证唯一；即使某实现满足固定点或目标单调下降，也不等于当前精确全局argmin。初始化、局部极小、停止、数值稳定和全局认证未冻结。 原论文用相关信息一词指统计信息保留，不是因果、金融收益驱动或已证泛化。使用收益标签Y时，标签对应未来区间必须先完全实现且发布才能进入训练；全窗口q不能回填为旧时点已知信号。 各个q列、码字、beta/k、信息平面坐标、原生/变分/确定性或软件变体以后都按同族保守归并；当前只审明确有限离散全局目标，不自动声称其它推广版本已完整审核。 边界：仅有限已知PMF、正边缘支持、I(X;Y)>0、显式2<=k<|X|及有限beta>1；额外研究域不是原软件校验。 零联合单元和未使用码字允许，以连续熵约定处理；不暗加伪计数或强制满使用。 整族最优信道可能不唯一；没有数值求解器、容差、初始化或全局最优证书，未执行。 原Eq2条件熵标签及Eq25/正规化/Eq31迭代矛盾已保留；只核Eq3/14/15的独立完整目标。 金融变量、联合分布估计、目标标签时点、训练/应用分界和经济有效性未冻结。 版本页链接assumed-1991-2003；旧许可原页本机HTTP406，原页HTML不伪造。一般平台分发权不推及读者再分发/商业权利。 输出：完整最优随机信道集合Q*；其表示、目标值和信息平面坐标同族，未生成数值编码器。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-b35cbfe667cf7c109c61dd6f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述给定统计目标下的有损随机表示；不是独立收益因子、已知金融信号或已核神经网络程序。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-b35cbfe667cf7c109c61dd6f"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定有限集合X、Y和联合PMF p_xy>=0、Σ_xy p_xy=1，各保留的p_x>0,p_y>0，I_p(X;Y)>0。明确指定编码集合T的大小k，所选压缩研究域2<=k<|X|，|X|>=3,|Y|>=2，以及有限实beta>1。可行q_tx>=0且对每个x有Σ_t q_tx=1。令P_q(x,y,t)=p_xy q_tx，p_q(t)=Σ_x p_x q_tx，p_q(t,y)=Σ_x p_xy q_tx。I_q(X;T)=Σ_(p_x q_tx>0) p_x q_tx log2[q_tx/p_q(t)]；I_q(T;Y)=Σ_(p_q(t,y)>0) p_q(t,y) log2[p_q(t,y)/(p_q(t)p_y)]。定义Q*(p,beta,k)=argmin_q {I_q(X;T)−beta I_q(T;Y)}。输出完整最优随机信道集合及其编码表示；共同目标值/信息平面坐标/不同beta或k/编码分量/求解器保守一族，不声称存在唯一数值编码器。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-b35cbfe667cf7c109c61dd6f"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "pXY（finite nonnegative |X| by |Y| real PMF, sum1, all retained row and column marginals positive, |X|>=3,|Y|>=2,I(X;Y)>0）：同一已知联合分布；零联合单元允许，不从价格数据自动估计、离散化或平滑。。参数：beta：保留目标信息相对于压缩输入的权重；不是经回测选出的默认值。；范围selected research subdomain beta>1; whole native tradeoff family not split by beta；来源默认值None；本条选定explicit caller-specified finite value >1；codebook_size_k：求解前确定码字数；不把码字坐标或k参数拆新条。；范围fixed finite codebook per optimization; chosen compression research subdomain；来源默认值None；本条选定explicit integer2<=k<|X|；log_base：同时换底只统一缩放目标，不改变此最优信道集合。；范围bits for both mutual information terms；来源默认值None；本条选定2"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-b35cbfe667cf7c109c61dd6f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "arxiv.org/physics",
+  "lab": null,
+  "missing_information": [
+    "金融输入/标签/资产池/窗口与PIT MISSING",
+    "概率估计、离散化、偏差校正和泛化检验未核",
+    "数值求解器/初始化/容差/唯一解选取/全局最优认证未固定",
+    "原早期许可专页HTTP406，读者一般商业或再分发许可未确认",
+    "原Eq2/25/31和正规化表达差异保留，不批准迭代算法"
+  ],
+  "name": "兼顾压缩与目标信息的信息瓶颈表示",
+  "native_source_id": "0004057v1",
+  "one_line": "在给定输入和目标的联合概率下，寻找压缩输入同时保留目标信息的有限随机编码器，完整优化目标只算一个家族。",
+  "record_id": "0004057v1",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://arxiv.org/pdf/physics/0004057v1"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Naftali Tishby, Fernando C.Pereira and William Bialek, The information bottleneck method, arXiv physics/0004057v1; manuscript1999-09-30/submission2000-04-24. Self-authored Chinese definition.",
+      "id": "harvest-source-b35cbfe667cf7c109c61dd6f",
+      "license": "ARXIV_ASSUMED_1991_2003; no general reader reuse license confirmed",
+      "locator": "Original title/authors and paper date30September1999; arXivv1 stamp24April2000, two dates not conflated: physical PDF p1-p1; Finite stochastic codebook, Eq1 induced marginal and Eq3 mutual information; Eq2 conditional-entropy label discrepancy preserved: physical PDF p4-p4; Section3 assumes known joint pXY and positive mutual information; footnote leaves distribution estimation outside scope: physical PDF p8-p8; Eq14 retained target mutual information and Eq15 normalized stochastic-channel variational objective: physical PDF p9-p9; Eq16/17 self-consistency and Markov T-X-Y; footnote3 rejects interpreting T as data-generative hidden variable: physical PDF p10-p10; Eq23/24 expanded Lagrangian; Eq25 final marginal-derivative sign differs from differentiating Eq24, not an admitted algorithm: physical PDF p11-p11; Eq27/28 implicit channel and normalization expression; solver/proof excluded from selected core: physical PDF p12-p12; Section3.3 alternating iteration; Eq31 final sum printed over y rather than Eq17 x, not silently corrected: physical PDF p13-p13; Non-joint convexity and nonuniqueness discussion; Section3.4 requires codebook cardinality: physical PDF p14-p14; Information plane and codebook-cardinality scope; no finite-dimensional numerical solver or market prescription: physical PDF p15-p15",
+      "revision": "arXiv physics/0004057v1 submitted2000-04-24; internal paper date1999-09-30",
+      "sha256": "afdbc45366b590086e34faef76ad0570885884489ed32233c8571912ef92ef47",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://arxiv.org/pdf/physics/0004057v1",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Naftali Tishby, Fernando C.Pereira and William Bialek, The information bottleneck method, arXiv physics/0004057v1; manuscript1999-09-30/submission2000-04-24. Self-authored Chinese definition.",
+      "id": "harvest-source-321cc61c2ad23f1688743833",
+      "license": "NOASSERTION_METADATA_REUSE",
+      "locator": "Exactv1 identity, author/title and PDF target:L114-L124; Version ID and arXiv DOI:L139-L150; Exactv1 submission datetime and assumed-1991-2003 native license href:L165-L178",
+      "revision": "Original arXivv1 abstract-page HTTP snapshot",
+      "sha256": "7a00cab55205a36c0b554940096fc879540bb60be56b5a70e06f714c1a5a5f7c",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://arxiv.org/abs/physics/0004057v1",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Naftali Tishby, Fernando C.Pereira and William Bialek, The information bottleneck method, arXiv physics/0004057v1; manuscript1999-09-30/submission2000-04-24. Self-authored Chinese definition.",
+      "id": "harvest-source-ab77aca8a4c767974306049c",
+      "license": "NOASSERTION_POLICY_PAGE_REUSE",
+      "locator": "Authors grant posting/distribution rights; original holder retains ownership:L4971-L4975; Platform nonexclusive distribution option and possible independent notices:L5010-L5013; Publisher restrictions and separate reuse requests:L5021-L5028",
+      "revision": "arXiv official current licensing overview HTTP snapshot; not a replacement copy of early assumed-license page",
+      "sha256": "75ef3cef1c13bad8b20c52aee64d2608eac6c20638b71ec8ab2b6f22c84f233d",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://info.arxiv.org/help/license/index.html",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

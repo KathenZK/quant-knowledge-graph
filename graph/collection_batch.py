@@ -7,11 +7,16 @@ from collections import Counter
 from datetime import datetime
 from io import BytesIO
 import json
+import math
+import os
 from pathlib import Path
 import re
+import struct
 import subprocess
 import tarfile
+from tempfile import TemporaryFile
 from urllib.parse import unquote, urlsplit
+import zlib
 
 from quantgraph.graph.collection_dedup import collection_source_keys
 from quantgraph.graph.metadata_pilot import digest, encoded, read_below, validate
@@ -50,6 +55,10 @@ def _identity(record):
 
 PDF_EXTRACTION = 'pdf.pdftotext-layout'
 PDF_ARGUMENTS = ['-layout', '-enc', 'UTF-8', '-', '-']
+PDF_VISUAL_EXTRACTION = 'pdf.visual-pages/v1'
+PDF_VISUAL_ARGUMENTS = ['-singlefile', '-png']
+PDF_VISUAL_MAX_BYTES = 8 * 1024 * 1024
+PDF_VISUAL_MAX_PIXELS = 16_000_000
 TAR_EXTRACTION = 'tar.members-utf8/v1'
 
 
@@ -168,6 +177,156 @@ def _pdf_derivative(source):
     return derived
 
 
+def _visual_snapshot(path):
+    return (_relative(path) and path.startswith('datasets/raw/sources/')
+            and not any(c in path for c in '\x00\r\n'))
+
+
+def _pdf_visual_contract(source):
+    """Physical pages are separate evidence, never substitute text line spans.
+
+    Limits apply before tools run. A field can cite the same page as another
+    field; repeated references within one field cannot add evidence.
+    """
+    visual = source.get('visual_pages')
+    if (source['role'] not in {'author_document', 'published_definition'}
+            or not isinstance(visual, dict)
+            or set(visual) != {'page_count', 'inspector', 'generator', 'pages'}
+            or type(visual.get('page_count')) is not int
+            or not 1 <= visual['page_count'] <= 1024
+            or source['bytes'] > PDF_VISUAL_MAX_BYTES
+            or not _visual_snapshot(source['snapshot_path'])):
+        raise ValueError('Invalid visual PDF source or physical page count')
+    generator, inspector = visual['generator'], visual['inspector']
+    if (not isinstance(generator, dict)
+            or set(generator) != {'name', 'version', 'dpi', 'arguments'}
+            or generator.get('name') != 'pdftoppm'
+            or generator.get('arguments') != PDF_VISUAL_ARGUMENTS
+            or type(generator.get('dpi')) is not int or not 50 <= generator['dpi'] <= 200
+            or not isinstance(generator.get('version'), str)
+            or not re.fullmatch(r'pdftoppm version [0-9][0-9A-Za-z.+_-]*', generator['version'])
+            or not isinstance(inspector, dict) or set(inspector) != {'name', 'version'}
+            or inspector.get('name') != 'pdfinfo' or not isinstance(inspector.get('version'), str)
+            or not re.fullmatch(r'pdfinfo version [0-9][0-9A-Za-z.+_-]*', inspector['version'])):
+        raise ValueError('Visual PDF requires fixed supported tools and rendering parameters')
+    pages = visual['pages']
+    if not isinstance(pages, list) or not 1 <= len(pages) <= 64:
+        raise ValueError('Visual PDF requires a bounded nonempty page selection')
+    seen, paths = set(), set()
+    for page in pages:
+        if (not isinstance(page, dict)
+                or set(page) != {'physical_page', 'parent_pdf_sha256', 'sha256', 'bytes', 'snapshot_path'}
+                or type(page.get('physical_page')) is not int
+                or not 1 <= page['physical_page'] <= visual['page_count']
+                or page['physical_page'] in seen
+                or page.get('parent_pdf_sha256') != source['sha256']
+                or not isinstance(page.get('sha256'), str)
+                or not re.fullmatch(r'[0-9a-f]{64}', page['sha256'])
+                or type(page.get('bytes')) is not int or not 67 <= page['bytes'] <= PDF_VISUAL_MAX_BYTES
+                or not _visual_snapshot(page.get('snapshot_path'))
+                or not page['snapshot_path'].endswith('.png')
+                or page['snapshot_path'] in paths or page['snapshot_path'] == source['snapshot_path']):
+            raise ValueError('Invalid, unsafe or repeated visual PDF page pin')
+        seen.add(page['physical_page'])
+        paths.add(page['snapshot_path'])
+    if sum(page['bytes'] for page in pages) > 128 * 1024 * 1024:
+        raise ValueError('Visual PDF page selection exceeds its byte limit')
+    return visual
+
+
+def _png_dimensions(raw):
+    """Check real PNG framing, checksums and bounded IHDR dimensions."""
+    if not raw.startswith(b'\x89PNG\r\n\x1a\n') or len(raw) > PDF_VISUAL_MAX_BYTES:
+        raise ValueError('Visual page is not a bounded PNG')
+    offset, dimensions, has_data = 8, None, False
+    while offset + 12 <= len(raw):
+        length = int.from_bytes(raw[offset:offset + 4], 'big')
+        kind = raw[offset + 4:offset + 8]
+        end = offset + 12 + length
+        if end > len(raw) or zlib.crc32(raw[offset + 4:end - 4]) != int.from_bytes(raw[end - 4:end], 'big'):
+            raise ValueError('Visual PNG chunk is truncated or corrupt')
+        if dimensions is None:
+            if kind != b'IHDR' or length != 13:
+                raise ValueError('Visual PNG needs an initial IHDR')
+            width, height, depth, color, compression, filtering, interlace = struct.unpack(
+                '>IIBBBBB', raw[offset + 8:end - 4])
+            allowed_depths = {0: {1, 2, 4, 8, 16}, 2: {8, 16}, 3: {1, 2, 4, 8}, 4: {8, 16}, 6: {8, 16}}
+            if (not 1 <= width <= 10_000 or not 1 <= height <= 10_000
+                    or width * height > PDF_VISUAL_MAX_PIXELS
+                    or depth not in allowed_depths.get(color, set())
+                    or compression != 0 or filtering != 0 or interlace not in {0, 1}):
+                raise ValueError('Visual PNG dimensions or format exceed the supported contract')
+            dimensions = width, height
+        elif kind == b'IHDR':
+            raise ValueError('Visual PNG repeats IHDR')
+        if kind == b'IDAT':
+            has_data = has_data or length > 0
+        if kind == b'IEND':
+            if length != 0 or end != len(raw) or not has_data:
+                raise ValueError('Visual PNG has no image data or has trailing content')
+            return dimensions
+        offset = end
+    raise ValueError('Visual PNG is incomplete')
+
+
+def _verify_pdf_visual(root, raw, visual):
+    """Re-render pinned physical pages with fixed argv, no OCR or source code."""
+    if not raw.startswith(b'%PDF-') or len(raw) > PDF_VISUAL_MAX_BYTES:
+        raise ValueError('Visual PDF requires bounded original PDF bytes')
+    env = dict(os.environ, LC_ALL='C')
+    options = dict(capture_output=True, check=True, timeout=30, env=env)
+    try:
+        for tool in (visual['inspector'], visual['generator']):
+            version = subprocess.run([tool['name'], '-v'], **options)
+            lines = (version.stderr or version.stdout).decode('utf-8').splitlines()
+            if not lines or lines[0] != tool['version']:
+                raise ValueError('Visual PDF tool version differs from its recorded version')
+        # Inspect every selected physical page before rendering any of them.
+        sizes, total_pixels = {}, 0
+        for page in visual['pages']:
+            number = page['physical_page']
+            info = subprocess.run(['pdfinfo', '-f', str(number), '-l', str(number), '-box', '-'],
+                                  input=raw, **options).stdout.decode('utf-8')
+            count = re.findall(r'^Pages:\s+(\d+)\s*$', info, re.M)
+            box = re.findall(rf'^Page\s+{number}\s+MediaBox:\s+([-\d.]+)\s+([-\d.]+)\s+'
+                             r'([-\d.]+)\s+([-\d.]+)\s*$', info, re.M)
+            rotation = re.findall(rf'^Page\s+{number}\s+rot:\s+(\d+)\s*$', info, re.M)
+            if (count != [str(visual['page_count'])] or len(box) != 1
+                    or len(rotation) != 1 or int(rotation[0]) not in {0, 90, 180, 270}):
+                raise ValueError('Visual PDF physical page count or page geometry mismatch')
+            x0, y0, x1, y1 = map(float, box[0])
+            widths = x1 - x0, y1 - y0
+            if not all(math.isfinite(value) and 0 < value <= 14_400 for value in widths):
+                raise ValueError('Visual PDF page geometry exceeds rendering limits')
+            # pdfinfo rounds points; allow two pixels of measurement rounding.
+            width, height = (math.ceil(value * visual['generator']['dpi'] / 72) + 2 for value in widths)
+            if int(rotation[0]) in {90, 270}:
+                width, height = height, width
+            total_pixels += width * height
+            if max(width, height) > 10_000 or width * height > PDF_VISUAL_MAX_PIXELS or total_pixels > 256_000_000:
+                raise ValueError('Visual PDF selected pages exceed rendering pixel limits')
+            sizes[number] = width, height
+        for page in visual['pages']:
+            saved = _pin(root, page['snapshot_path'], page)
+            dimensions = _png_dimensions(saved)
+            number = page['physical_page']
+            if any(actual > bound or actual < bound - 4 for actual, bound in zip(dimensions, sizes[number])):
+                raise ValueError('Visual PNG dimensions differ from the physical PDF page')
+            with TemporaryFile() as output:
+                subprocess.run(['pdftoppm', '-f', str(number), '-l', str(number),
+                                '-r', str(visual['generator']['dpi']), *PDF_VISUAL_ARGUMENTS, '-'],
+                               input=raw, stdout=output, stderr=subprocess.PIPE, check=True, timeout=60, env=env)
+                if output.tell() > PDF_VISUAL_MAX_BYTES:
+                    raise ValueError('Rendered visual PNG exceeds its byte limit')
+                output.seek(0)
+                rebuilt = output.read(PDF_VISUAL_MAX_BYTES + 1)
+            _png_dimensions(rebuilt)
+            if rebuilt != saved:
+                raise ValueError('Visual PDF page does not reconstruct from its parent')
+    except (OSError, subprocess.SubprocessError, UnicodeError) as error:
+        raise ValueError('Visual PDF verification requires the recorded pdfinfo and pdftoppm tools') from error
+
+
 def record_schema(root):
     """Extend the frozen metadata contract only with document-review status.
 
@@ -278,7 +437,12 @@ def validate_collection(root, directory, *, verify_snapshots=False):
     sources = {source['id']: source for source in lock['sources']}
     if len(sources) != len(lock['sources']):
         raise ValueError('Duplicate collection source ID')
-    texts = {}
+    texts, visual_sources, visual_paths = {}, {}, set()
+    # A visual derivative cannot reuse any original/derived-text path, even
+    # under another source ID. Existing text collections keep their contracts.
+    reserved_paths = {s['snapshot_path'] for s in sources.values()}
+    reserved_paths.update(s['derived_text']['snapshot_path'] for s in sources.values()
+                          if isinstance(s.get('derived_text'), dict) and 'snapshot_path' in s['derived_text'])
     for sid, source in sources.items():
         url = urlsplit(source['url'])
         if url.scheme != 'https' or not url.hostname or url.username or url.password:
@@ -300,7 +464,7 @@ def validate_collection(root, directory, *, verify_snapshots=False):
                 raise ValueError('Git source must pin the same full commit in its URL')
         elif source['revision_kind'] != 'content_snapshot' or not source['revision']:
             raise ValueError('Unsupported collection source revision')
-        if source['extraction'] not in {'utf8', 'json.source', PDF_EXTRACTION, TAR_EXTRACTION}:
+        if source['extraction'] not in {'utf8', 'json.source', PDF_EXTRACTION, PDF_VISUAL_EXTRACTION, TAR_EXTRACTION}:
             raise ValueError('Unsupported source extraction')
         if source['extraction'] == TAR_EXTRACTION:
             _archive_members(source.get('archive_members'))
@@ -309,9 +473,20 @@ def validate_collection(root, directory, *, verify_snapshots=False):
         derived = _pdf_derivative(source) if source['extraction'] == PDF_EXTRACTION else None
         if derived is None and 'derived_text' in source:
             raise ValueError('Derived text requires PDF extraction')
+        visual = _pdf_visual_contract(source) if source['extraction'] == PDF_VISUAL_EXTRACTION else None
+        if visual is None and 'visual_pages' in source:
+            raise ValueError('Visual page pins require visual PDF extraction')
+        if visual:
+            paths = {page['snapshot_path'] for page in visual['pages']}
+            if paths & (visual_paths | reserved_paths):
+                raise ValueError('Visual PDF derivative snapshot paths must be unique')
+            visual_paths.update(paths)
+            visual_sources[sid] = {page['physical_page']: page for page in visual['pages']}
         if verify_snapshots:
             raw = _pin(root, snapshot, source)
-            if derived:
+            if visual:
+                _verify_pdf_visual(root, raw, visual)
+            elif derived:
                 saved = _pin(root, derived['snapshot_path'], derived)
                 rebuilt = _pdf_layout_bytes(raw, derived['generator']['version'])
                 if rebuilt != saved:
@@ -349,14 +524,22 @@ def validate_collection(root, directory, *, verify_snapshots=False):
             raise ValueError('Collection review cannot promote execution or economic status')
         fields = record.get('strategy_fields') or record['factor_fields']
         spans = review['field_spans']
-        if not set(spans) <= set(fields):
+        field_pages = review.get('field_pages', {})
+        if (not isinstance(spans, dict) or not isinstance(field_pages, dict)
+                or not set(spans) <= set(fields) or not set(field_pages) <= set(fields)):
             raise ValueError('Review references an unknown metadata field')
+        for field in fields.values():
+            if (set(field['evidence']) & set(visual_sources)
+                    and field['status'] == 'SOURCE_CODE_REVIEWED'):
+                raise ValueError('Visual PDF evidence cannot establish a code-reviewed field')
         for field_name, locations in spans.items():
             for location in locations:
                 sid = location['source_id']
                 start, end = location['first_line'], location['last_line']
                 if sid not in declared or sid not in fields[field_name]['evidence']:
                     raise ValueError('Review span is not field evidence')
+                if sid in visual_sources:
+                    raise ValueError('Visual PDF pages cannot masquerade as text line spans')
                 if sources[sid]['role'] not in CONTENT_ROLES:
                     raise ValueError('License or directory cannot establish a definition')
                 if (fields[field_name]['status'] == 'SOURCE_CODE_REVIEWED'
@@ -369,6 +552,26 @@ def validate_collection(root, directory, *, verify_snapshots=False):
                     lines = texts[sid]
                     if end > len(lines) or digest('\n'.join(lines[start - 1:end]).encode()) != location['sha256']:
                         raise ValueError('Source span does not match saved bytes')
+        for field_name, locations in field_pages.items():
+            if not isinstance(locations, list) or not locations:
+                raise ValueError('Visual field evidence needs a nonempty page-reference list')
+            seen_pages = set()
+            for location in locations:
+                if (not isinstance(location, dict)
+                        or set(location) != {'source_id', 'physical_page', 'sha256'}
+                        or not isinstance(location.get('source_id'), str)
+                        or type(location.get('physical_page')) is not int):
+                    raise ValueError('Invalid visual field page reference')
+                sid, number = location['source_id'], location['physical_page']
+                page = visual_sources.get(sid, {}).get(number)
+                if (sid not in declared or sid not in fields[field_name]['evidence'] or page is None
+                        or fields[field_name]['status'] != 'SOURCE_DESCRIPTION_REVIEWED'
+                        or location['sha256'] != page['sha256']):
+                    raise ValueError('Visual page is not declared description-reviewed field evidence')
+                identity = page['parent_pdf_sha256'], number
+                if identity in seen_pages:
+                    raise ValueError('Repeated visual page reference in a field')
+                seen_pages.add(identity)
         outcome = review['dedup']['outcome']
         if outcome not in NO_CREDIT | {'REVIEWED_DISTINCT_CONSTRUCTION'}:
             raise ValueError('Unknown collection duplicate decision')
@@ -384,7 +587,7 @@ def validate_collection(root, directory, *, verify_snapshots=False):
             for field_name in CORE[kind]:
                 if fields[field_name]['status'] not in {'SOURCE_CODE_REVIEWED', 'SOURCE_DESCRIPTION_REVIEWED'}:
                     raise ValueError('Core rule is not source reviewed')
-                if not spans.get(field_name):
+                if not spans.get(field_name) and not field_pages.get(field_name):
                     raise ValueError('Core rule needs precise source evidence')
             if (not isinstance(review['definition_signature'], str) or not review['definition_signature'].strip()
                     or review['definition_signature'] in seen_definitions):
