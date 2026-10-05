@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述变量在控制其余变量后的稀疏线性依赖结构；解释依赖模型条件，交易用途和经济有效性尚未建立。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-3ad45d924bb7e7e386fc86c9"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "S所用全部观测及其修订信息已发布后才可得；不得把全窗估计回填过去。未冻结市场输入、供应商、rho拟合程序和估计截止时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-3ad45d924bb7e7e386fc86c9"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "核心仅固定作者2007-11-08稿Eq1；官方作者书目链接public/Papers/graph.pdf与最初Papers/graph.pdf实际同字节。原稿题名用the lasso，Crossref相关期刊作品题名用the graphical lasso；其published/online为2007-12-12，print为2008-07-01，9(3):432–441。三作者及相关书目信息分别登记，不声称这两版本题名、字节或公式逐字相同。 S是已提供的经验协方差矩阵，必须有限、对称、正半定；允许秩亏/p大于样本数。原文没有在Eq1处明确有限样本分母，本条不把N−1、N、自动去均值/标准化或补缺硬塞进去。若从市场观测构造S，其口径需额外冻结。 原p2写non-negative definite域，但logdet在奇异边界为−infinity；本条显式取正定矩阵的有限目标域。这是数学域澄清，不是原软件已验证的输入检查。rho严格正是本研究合同，不包含rho0下S秩亏无有限解情形。 逐元素L1不是矩阵诱导1范数，也不是只罚上三角。因Theta正定对角为正，原脚注明确这里包含对角；去掉对角的版本只属于同族变体，不作新增依据。 将原最大化写为最小化后，负logdet严格凸、trace线性、entryL1凸。S半正定且rho>0时f(Theta)>=Σ_i[rho lambda_i−lnlambda_i]；各项有有限下界且在lambda到0或infinity时发散，故子水平集远离奇异边界并有界，最优存在且严格凸给唯一。此为自撰精确代数解释，不是数值求解或来源保证的复现实验。 用原Eq6及p4符号规则刻画KKT：Gamma的零坐标可在[-1,1]，非零等其符号。对角Gamma=1使Wii=Sii+rho；不能因此直接断言整个W=S+rhoI，通常非对角也因全耦合优化改变。 若S=0，精确唯一解Theta=I/rho，W=rhoI；对角S时Theta_ii=1/(Sii+rho)且非对角0。此为目标特例，不另计新的岭估计或常量特征。若rho>=max_(i≠j)|Sij|，同一对角解满足KKT；这是显式门关系，非新增参数条目。 原p4–5强调每变量单独Lasso回归用固定S11，整体glasso在共享W上耦合，不能把单响应预测Lasso直接当同一precision输出，也不把这种联系说成完全数学独立。原式包含对角可代数改写成对S+rhoI仅罚非对角的目标，故是否罚对角不作为新族分界。 本条只承诺精确凸目标定义，不承诺原坐标算法浮点结果、收敛/正定容差或优化后的support判零。论文p5–6的软阈循环、W初始化与停止阈默认.001已读作范围，未运行未审核完整Fortran/R代码；其返回近似不自动等于精确最优Theta。 原p1–2条件独立解释依赖多元Gaussian模型：真实precision的零非对角对应给定其余变量的条件独立。估出的零只是受惩罚拟合结构，不证明市场真实条件独立、因果、收益或每个条件关系稳定。非Gaussian数据仍可代入目标，但该概率解释没有自动成立。 既有Tyler使用径向Mahalanobis逆加权与trace归一；Ledoit/OAS按收缩目标混合协方差，MP谱清理按特征值处理；本条是完整Gaussian精度正则优化。共享求逆、协方差、正则、图/优化原语均明确，不把Theta/W/partialcorrelation/graph坐标单独算新。 W70分层风险模型是另一个HOLD0来源，只用于比较同一Gaussian基底上的跨状态耦合；不能用本条rho惩罚修复其基准零维后反称原W70可复现。未来多组/融合和加权Eq15只作同族或待证扩展，不预先另计。 全窗口所有观测进入S时仅在窗口完成及全部数据发布后可用。金融字段、单位、资产池、S估计方式、rho选择与PIT未冻结；不可将事后全样本图回填为过去已知因子。原p7以后速度/细胞信号实证未拿来作为本库经济有效证据。 两条历史QC近邻M3976/M4006仅摘要给出收缩，精确当前backtest源码HTTP500；UNKNOWN_ESTIMATOR保留，未推断其内部等价或不同。其余比较也只到真实已读核心，不宣称所有历史依赖完整排除。此提名仍待独立审计是否足够计新。 边界：NaN/Inf、非对称或非PSD的S、rho<=0不在合同；没有默对称化、特征值截断或加epsilon修复。 数学唯一最优值/矩阵不等于已具备数值容差、解算器、资源上限或支持判零规则。 Gaussian条件独立解释与市场收益、因果和交易权限分别判断。 所有惩罚参数/对角设置/输出表示/语言实现共一族；本条没有生成持仓。 M3976/M4006隐藏估计器未闭合，保持UNKNOWN_ESTIMATOR；不把错误HTTP响应当源代码。 输出：唯一精确Theta*与同族W*=Theta*^−1；浮点实现/稀疏支持阈值未固定。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-3ad45d924bb7e7e386fc86c9"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述变量在控制其余变量后的稀疏线性依赖结构；解释依赖模型条件，交易用途和经济有效性尚未建立。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-3ad45d924bb7e7e386fc86c9"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给有限对称正半定矩阵S∈R^(p×p)，p>=2，显式rho>0。定义Theta*=argmin_(Theta=Thetaᵀ≻0){−ln detTheta+tr(STheta)+rho Σ_(i=1..p)Σ_(j=1..p)|Theta_ij|}。全元素绝对值和含对角且非对角有序(i,j)/(j,i)各计一次，即对称形式Σ_iTheta_ii+2Σ_(i<j)|Theta_ij|。返回唯一正定精度Theta*，W*=Theta*^−1只是同族协方差表示，不另计。等价KKT为W*−S−rho Gamma=0，Gamma_ij=sign(Theta*_ij)当非零，零时Gamma_ij∈[−1,1]；尤其W*_ii=S_ii+rho。所有坐标、边集/阈值、惩罚权重、是否罚对角和求解实现保守合并一族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-3ad45d924bb7e7e386fc86c9"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "S（finite symmetric positive-semidefinite real p by p matrix, p>=2; rank deficiency allowed）：已提供经验协方差；样本分母、变量单位、窗口和预处理另须明确；不可把价格或任意非PSD矩阵直接当S。。参数：rho：调用者事前固定，论文目标无统一默认；未从未来或本数据绩效选最优。；范围finite rho>0；来源默认值None；本条选定explicit positive real；penalty_scope：不是软件默认；去掉对角只属于同族变体。；范围paperEq1 convention, symmetric offdiagonal countedtwice；来源默认值None；本条选定all matrix entries including diagonal"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-3ad45d924bb7e7e386fc86c9"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "hastie.su.domains/Papers",
+  "lab": null,
+  "missing_information": [
+    "S的市场映射/样本分母/预处理/供应商和PIT未固定",
+    "rho选择及实际数值求解器、容差与support判零未验证",
+    "M3976/M4006精确当前源码取回失败，历史估计器未确定",
+    "原稿一般再分发及商用许可未确认",
+    "金融有效性/因果与真实条件独立未验证"
+  ],
+  "name": "逐元素稀疏惩罚的高斯精度矩阵估计",
+  "native_source_id": "graph.pdf",
+  "one_line": "在样本协方差给定时，用对数行列式似然和逐元素绝对值惩罚联合估计整组变量的精度矩阵。",
+  "record_id": "graph.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://hastie.su.domains/Papers/graph.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jerome Friedman, Trevor Hastie, Robert Tibshirani; Sparse inverse covariance estimation with the lasso, author manuscript November8,2007. Self-authored Chinese mathematical definition.",
+      "id": "harvest-source-3ad45d924bb7e7e386fc86c9",
+      "license": "UNKNOWN_REUSE_RIGHTS",
+      "locator": "Three authors, exact2007-11-08 manuscript date and Gaussian conditional independence context: physical PDF p1-p1; Eq1 full entrywiseL1 precision objective, PSD wording and footnote about omitted-diagonal variants: physical PDF p2-p2; Covariance/block dual discussion and Eq6 exactstationarity: physical PDF p3-p3; Subgradient sign correspondence, coupled rather than separate regressions, covariance diagonalSii+rho: physical PDF p4-p4; Original coordinate algorithm, coupled regression interpretation; not a frozen executable implementation: physical PDF p5-p5; Softthreshold and stopping rule boundary, inverse recovery and weightedpenalty Eq15; variants samefamily: physical PDF p6-p6",
+      "revision": "Author manuscript dated2007-11-08; exact original PDF bytes, not asserted identical to later journal publication",
+      "sha256": "43caff20f1d0b140ea722e3f5dbb2b3900a87fb2cdb8aa5068ac14fbfd02d714",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://hastie.su.domains/Papers/graph.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Jerome Friedman, Trevor Hastie, Robert Tibshirani; Sparse inverse covariance estimation with the lasso, author manuscript November8,2007. Self-authored Chinese mathematical definition.",
+      "id": "harvest-source-327d82471b71dedd8d7dd74c",
+      "license": "NOASSERTION_WEBPAGE_SHELL",
+      "locator": "Threeauthors/title and exact public/Papers/graph.pdf link:L9267-L9271",
+      "revision": "Author bibliography HTTP snapshot",
+      "sha256": "1f09f5e73d333b1bf6ef1ed69364dbc9fb228ba2541023e1dc82f96bc6dc9d15",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://hastie.su.domains/publications.html",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Jerome Friedman, Trevor Hastie, Robert Tibshirani; Sparse inverse covariance estimation with the lasso, author manuscript November8,2007. Self-authored Chinese mathematical definition.",
+      "id": "harvest-source-d9b63ce8b034e4f57d4ece35",
+      "license": "UNKNOWN_REUSE_RIGHTS",
+      "locator": "Whole byte-identical author-linked PDF copy; identity/version corroboration only, no additional formula evidence",
+      "revision": "Author manuscript dated2007-11-08; exact original PDF bytes, not asserted identical to later journal publication",
+      "sha256": "43caff20f1d0b140ea722e3f5dbb2b3900a87fb2cdb8aa5068ac14fbfd02d714",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://hastie.su.domains/public/Papers/graph.pdf",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Jerome Friedman, Trevor Hastie, Robert Tibshirani; Sparse inverse covariance estimation with the lasso, author manuscript November8,2007. Self-authored Chinese mathematical definition.",
+      "id": "harvest-source-26234a94b67778683ba0523f",
+      "license": "NOASSERTION_METADATA_REUSE",
+      "locator": "Pinned original JSON identity metadata: message.DOI, message.title, message.author, message.volume, message.issue, message.page, message.published, message.published-online, message.published-print",
+      "revision": "Crossref journal DOI record HTTP snapshot; not a claim of manuscript-byte or formula equivalence",
+      "sha256": "6928cd240263f9664c5e726e3302a6d42be0a5d47bd0d5d73916ce349e870995",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://api.crossref.org/works/10.1093/biostatistics/kxm045",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}
