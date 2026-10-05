@@ -8,7 +8,7 @@ import tarfile
 
 import pytest
 
-from quantgraph.graph.collection_batch import FORMAT, REVIEW_FORMAT, SOURCE_FORMAT, TAR_EXTRACTION, record_schema, source_text, validate_collection
+from quantgraph.graph.collection_batch import FORMAT, REVIEW_FORMAT, SOURCE_FORMAT, TAR_EXTRACTION, _git_commit_url, record_schema, source_text, validate_collection
 from quantgraph.graph.metadata_pilot import digest, encoded
 
 
@@ -202,6 +202,128 @@ def test_public_and_private_validation_have_distinct_evidence_claims(collection)
     validate_collection(collection, DIRECTORY)
     with pytest.raises((ValueError, FileNotFoundError)):
         validate_collection(collection, DIRECTORY, verify_snapshots=True)
+
+
+@pytest.mark.parametrize('route', [
+    'https://github.com/Owner/Repo/blob/{commit}/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/file.py',
+])
+@pytest.mark.parametrize('suffix', ['', '#L1', '#L2-L20'])
+def test_git_commit_routes_keep_source_code_and_original_url(collection, route, suffix):
+    base = collection / DIRECTORY
+    lock = load(base / 'source-lock.json')
+    source = lock['sources'][0]
+    url = route.format(commit=source['revision']) + suffix
+    source['url'] = url
+    save(base / 'source-lock.json', lock)
+    record_path = base / 'factors/SyntheticVolume.json'
+    record = load(record_path)
+    record['sources'][0]['url'] = url
+    save(record_path, record)
+    refresh(collection)
+    assert validate_collection(collection, DIRECTORY, verify_snapshots=True)['raw_evidence_verified']
+    assert load(base / 'source-lock.json')['sources'][0] == source
+    assert source['revision_kind'] == 'git_commit' and source['role'] == 'source_code'
+    assert all(field['status'] == 'SOURCE_CODE_REVIEWED' for field in record['factor_fields'].values())
+    (collection / source['snapshot_path']).unlink()
+    assert not validate_collection(collection, DIRECTORY)['raw_evidence_verified']
+
+
+@pytest.mark.parametrize('url', [
+    'https://github.com/Owner/Repo_1.0/blob/{commit}/%E7%AD%96%E7%95%A5.py#L1-L1',
+    'https://raw.githubusercontent.com/Owner/Repo_1.0/{commit}/dir/a%20b.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/LICENSE',
+    'https://github.com/Owner/Repo/blob/{commit}/a%23b%3Fc.py',
+    'https://GITHUB.COM/Owner/Repo/blob/{commit}/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/blob/main/file.py',
+])
+def test_git_commit_routes_preserve_encoded_filenames_and_line_locations(url):
+    _git_commit_url(url.format(commit='a' * 40), 'a' * 40)
+
+
+@pytest.mark.parametrize('url', [
+    'https://github.com/Owner/Repo/blob/main/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/main/file.py',
+    'https://github.com/Owner/Repo/blob/aaaaaaa/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/aaaaaaa/file.py',
+    'https://github.com/Owner/Repo/blob/{other}/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{other}/file.py',
+    'https://github.com/Owner/Repo/tree/{commit}/file.py',
+    'https://github.com/Owner/Repo/prefix/blob/{commit}/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/blob/{commit}/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/prefix/{commit}/file.py',
+    'https://github.com//Repo/blob/{commit}/file.py',
+    'https://raw.githubusercontent.com//Repo/{commit}/file.py',
+    'https://github.com/Owner//blob/{commit}/file.py',
+    'https://raw.githubusercontent.com/Owner//{commit}/file.py',
+    'https://github.com/Owner/Repo/blob/{commit}',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}',
+    'https://github.com/Owner/Repo/blob/{commit}/',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/',
+    'https://github.com/Owner/Repo/blob/{commit}/dir//file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/dir/../file.py',
+    'https://github.com/Owner/Repo/blob/{commit}/./file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/%2e%2e/file.py',
+    'https://github.com/Owner/Repo/blob/{commit}/%252e%252e/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/dir%2ffile.py',
+    'https://github.com/Owner/Repo/blob/{commit}/dir%5cfile.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/dir\\file.py',
+    'https://github.com/Owner%2fOther/Repo/blob/{commit}/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/bad%ZZ.py',
+    'https://github.com/Owner/Repo/blob/{commit}/bad%ff.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/bad%00.py',
+    'https://github.com/Owner/Repo/blob/{commit}/bad%0a.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/bad%C2%85.py',
+    'https://github.com/Owner/Repo/blob/{commit}/file.py?ref=main',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/file.py?raw=1',
+    'https://github.com/Owner/Repo/blob/{commit}/file.py#L0',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/file.py#L5-L2',
+    'https://github.com/Owner/Repo/blob/{commit}/file.py#blob/{commit}/fake',
+    'https://github.com.evil.example/Owner/Repo/blob/{commit}/file.py',
+    'https://raw.githubusercontent.com.evil.example/Owner/Repo/{commit}/file.py',
+    'https://evil.example/Owner/Repo/blob/{commit}/file.py',
+    'http://github.com/Owner/Repo/blob/{commit}/file.py',
+    'http://raw.githubusercontent.com/Owner/Repo/{commit}/file.py',
+    'https://user@github.com/Owner/Repo/blob/{commit}/file.py',
+    'https://raw.githubusercontent.com:443/Owner/Repo/{commit}/file.py',
+    'https://github.com:444/Owner/Repo/blob/{commit}/file.py',
+    '\nhttps://github.com/Owner/Repo/blob/{commit}/file.py',
+    'https://raw.githubuser\tcontent.com/Owner/Repo/{commit}/file.py',
+    'https://github.com/Owner/Repo/blob/{commit}/fi\rle.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/file.py#L1\n',
+    ' https://github.com/Owner/Repo/blob/{commit}/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/file\x7f.py',
+])
+def test_git_commit_routes_reject_wrong_identity_and_ambiguous_paths(url):
+    with pytest.raises(ValueError):
+        _git_commit_url(url.format(commit='a' * 40, other='b' * 40), 'a' * 40)
+
+
+@pytest.mark.parametrize('revision', ['main', 'a' * 7, 'a' * 39, 'a' * 41, 'A' * 40, None])
+def test_git_commit_revision_requires_full_lowercase_commit(revision):
+    with pytest.raises(ValueError):
+        _git_commit_url('https://raw.githubusercontent.com/O/R/' + 'a' * 40 + '/x', revision)
+
+
+@pytest.mark.parametrize('url', [
+    'https://github.com/Owner/Repo/prefix/blob/{commit}/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/main/blob/{commit}/file.py',
+    'https://git\thub.com/Owner/Repo/blob/{commit}/file.py',
+    'https://raw.githubusercontent.com/Owner/Repo/{commit}/file%0a.py',
+])
+def test_git_commit_validation_rejects_after_all_pins_are_refreshed(collection, url):
+    base = collection / DIRECTORY
+    lock = load(base / 'source-lock.json')
+    source = lock['sources'][0]
+    source['url'] = url.format(commit=source['revision'])
+    save(base / 'source-lock.json', lock)
+    record_path = base / 'factors/SyntheticVolume.json'
+    record = load(record_path)
+    record['sources'][0]['url'] = source['url']
+    save(record_path, record)
+    refresh(collection)
+    with pytest.raises(ValueError):
+        validate_collection(collection, DIRECTORY)
 
 
 def test_provider_document_is_reviewable_without_a_code_review_claim(collection):

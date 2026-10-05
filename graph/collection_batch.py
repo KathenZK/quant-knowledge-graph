@@ -55,6 +55,40 @@ def _identity(record):
     return tuple(record[key] for key in ('identity_namespace', 'entity_type', 'record_id'))
 
 
+def _git_commit_url(value, revision):
+    """Accept only fixed GitHub blob/raw file routes, without rewriting the URL."""
+    message = 'Git source must pin the same full commit in its URL'
+    # urlsplit silently removes some raw controls/leading spaces. Check the
+    # original value, and separately check percent-decoded filename segments.
+    if (not isinstance(value, str) or not isinstance(revision, str)
+            or not re.fullmatch(r'[0-9a-f]{40}', revision)
+            or any(c.isspace() or ord(c) < 32 or 127 <= ord(c) <= 159 for c in value)):
+        raise ValueError(message)
+    url = urlsplit(value)
+    if (url.scheme != 'https' or url.hostname not in {'github.com', 'raw.githubusercontent.com'}
+            or url.netloc.lower() != url.hostname or '?' in value.split('#', 1)[0]):
+        raise ValueError(message)
+    parts = url.path.split('/')
+    commit_at = 4 if url.hostname == 'github.com' else 3
+    if (len(parts) <= commit_at + 1 or parts[0] != ''
+            or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9-]*', parts[1])
+            or not re.fullmatch(r'[A-Za-z0-9_.-]+', parts[2])
+            or (url.hostname == 'github.com' and parts[3] != 'blob')
+            or parts[commit_at] != revision):
+        raise ValueError(message)
+    for part in parts[1:]:
+        if re.search(r'%(?![0-9a-fA-F]{2})', part):
+            raise ValueError(message)
+        decoded = unquote(part, errors='strict')
+        if (decoded in {'', '.', '..'} or any(c in decoded for c in '/\\%')
+                or any(ord(c) < 32 or 127 <= ord(c) <= 159 for c in decoded)):
+            raise ValueError(message)
+    if url.fragment:
+        lines = re.fullmatch(r'L([1-9][0-9]*)(?:-L([1-9][0-9]*))?', url.fragment)
+        if not lines or (lines[2] is not None and int(lines[2]) < int(lines[1])):
+            raise ValueError(message)
+
+
 PDF_EXTRACTION = 'pdf.pdftotext-layout'
 PDF_ARGUMENTS = ['-layout', '-enc', 'UTF-8', '-', '-']
 PDF_VISUAL_EXTRACTION = 'pdf.visual-pages/v1'
@@ -658,10 +692,7 @@ def validate_collection(root, directory, *, verify_snapshots=False):
         if not _relative(snapshot) or not snapshot.startswith('datasets/raw/sources/'):
             raise ValueError('Unsafe collection snapshot path')
         if source['revision_kind'] == 'git_commit':
-            revision = source['revision']
-            if (url.hostname != 'github.com' or not re.fullmatch(r'[0-9a-f]{40}', revision)
-                    or f'/blob/{revision}/' not in unquote(url.path)):
-                raise ValueError('Git source must pin the same full commit in its URL')
+            _git_commit_url(source['url'], source['revision'])
         elif source['revision_kind'] != 'content_snapshot' or not source['revision']:
             raise ValueError('Unsupported collection source revision')
         if source['extraction'] not in {'utf8', 'json.source', PDF_EXTRACTION, PDF_VISUAL_EXTRACTION,

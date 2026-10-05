@@ -1,0 +1,105 @@
+{
+  "economic_basis": {
+    "hypothesis": "完整Eisenberg–Noe清算族，冻结最大全支付数学函数；不拆最小/最大、节点、欠付比例、情景或求解器。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-f0ea61b88b681c837096a661"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "L的法律/会计口径及e情景全部在决策时已知后可得；使用未来实现e只能事后描述，不能回填事前。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-f0ea61b88b681c837096a661"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先固定节点身份、债务方向i欠j、共同清算日与币种单位。L是承诺到期支付，不是相关系数、收益邻接或净值；e是系统外来的非负现金流。原文将外部成本建为付给追加汇节点的债务，不能把任意负e直接截0后宣称同一模型。 按原Eq1逐行合计barp。按原Eq2有债务行归一、无债务行全零。所有原有债权同优先级，发生缺口时严格按L_ij/barp_i同比例付款；不先任意净额对冲双向L，也不让优化器偏好某个债权人。 对任意候选p，节点i可支配金额为e_i+Σ_jΠ_ji p_j。有限责任要求p_i不超此金额，绝对优先要求若未足额偿债便付出全部该金额，两者与0<=p<=barp合成Φ固定点。该定义处理循环债务，不能按任意节点顺序单次遍历代替同时条件。 一般系统可有多个固定点。选Theorem1的逐项最大p⁺作为同族代表，不自动选择最小解或某次迭代遇到的解。Appendix2的两节点互欠1且e=0有p=(t,t),0<=t<=1全族，所选p⁺=(1,1)；这并非声称零现金能按现实逐笔结算。 把数学函数写成明确有限LP：最大化Σp，盒约束及(I−Πᵀ)p<=e。零向量可行、集合紧致，目标连续，存在最优解。若某节点同时小于barp和可用现金，可小幅提高其支付且只改善其它节点的预算，因此任何最优解为清算固定点（原Lemma4）。最大固定点逐项支配所有固定点，严格正目标遂唯一选中p⁺；不需要把全部固定点都称最大支付。此段为来源定理的自撰推导，未调用LP求解器。 还原Q、欠付d和权益v，保留原节点标签；无债务节点p_i=0但可以收到他人付款并留权益。欠付比d_i/barp_i只在barp_i>0时有定义，不把0/0自动填成坏账率。节点数、币种、压力情景、正目标权重或各向量坐标均不增加条数。 原printed239在Eq2后无条件写Π1=1，与零债务行定义及其允许汇节点的设定冲突。本条保留Eq2，正确行和为1或0。由于所有可行p满足barp_i=0⇒p_i=0，1ᵀΠᵀp=1ᵀp仍成立；不能为套随机游走额外把零行填均匀。Theorem1的单调Φ存在性不依赖每行严格等于1。 原printed243默认集Λ矩阵公式写i∈D时对角1，紧随说明却称not in default时1、再下一句又称非违约项被归零；其supersolution解释亦有前后方向问题。保留源内冲突，不把FDS实现、n步界或违约波次升级为已核可执行算法。本文核心采用独立明确的Def1/Φ/Theorem1及LP定义；尚无数值环境和停止容差。 原§3开始假定唯一解、regularity只是足够条件；不外推为任何网络只有一个清算固定点。本条选最大解是明示选择，不替代其他清算制度。原§4比较静态、动态、多优先级、破产成本和福利结论不并入本候选质量结论。 作为给定现金情景下的网络欠付/回收状态描述，可供后续系统性信用风险研究；不生成违约概率、资产价格、交易方向或收益有效性结论。若e是未来实际现金，结果只能在其已知后得到，不能回填成事前信号。 边界：允许零债务行、孤立节点、e=0、非连通和非正则网络；n=1时L=0且p=0。缺失、负负债/现金、无穷金额或混杂币种/清算期不在定义域，不默认插补。 最大清算向量是精确数学定义，不是已验证求解器返回。现有候选不批准FDS实现、浮点容差、稀疏线性求解、有限轮Picard或提前停止结果。 非正则系统可能有多个清算固定点；选择最大不证明该解是唯一法律/现实结算结果。互欠无现金循环的全支付反映同时清算模型，不保证预融资、时间顺序和真实流动性可行。 全部负债同级、比例偿付、有限责任和完美债权执行为源模型；抵押、净额结算、重组、破产费用、债权优先层、外部救助及火售价格反馈没有隐含加入。 原零行/行随机性与默认矩阵文字冲突明确保留；§3.2证明显示增加p_i时对各j残差变化公式亦须分别看j=i与j≠i，i自身需epsilon小于预算余量，不能照抄无条件所有分量增加。 总支付Σp可循环重复计量同一现金；它不是系统外部净财富或累计可成交量。权益和为Σe是本模型有限可行支付的会计关系，不是现实福利或经济效益证明。 原件为大学站点托管的2001已发表论文/JSTOR传输副本，不冒称作者维护代码或开放许可。HTTP公开可读不授权PDF/图再分发或商业数据使用。 来源未给实际L/e/PIT、机构并表边界、净额和优先级处理、同步时钟、未来情景概率、币种转换或数据授权；这些缺口不可用财务报表总负债替代完整对手方矩阵。 输出：全标签最大全支付p⁺，其比例债权付款Q、欠付d和权益v为同族直接派生，不单独计数。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-f0ea61b88b681c837096a661"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "完整Eisenberg–Noe清算族，冻结最大全支付数学函数；不拆最小/最大、节点、欠付比例、情景或求解器。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-f0ea61b88b681c837096a661"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定有限n>=1、L∈R_+^(n×n)、L_ii=0和e∈R_+^n，全部金额用共同单位/同一清算期。barp_i=Σ_j L_ij；Π_ij=L_ij/barp_i若barp_i>0，否则Π_ij=0（原Eq1–2）。Φ(p)=min(barp,Πᵀp+e)，min逐项。清算集合C={p:0<=p<=barp且p=Φ(p)}；所选输出p⁺为C按逐项偏序的最大元素（原Theorem1）。等价明确目标：p⁺=唯一 argmax_(0<=p<=barp, p<=Πᵀp+e) Σ_i p_i。LP等价是原§3.2/Lemma4与Theorem1联合的自撰直接推论，不把非正则系统的任意固定点当该最优解。原标签下实际i→j支付Q_ij=Π_ij p⁺_i，未付余额d_i=barp_i−p⁺_i，权益v_i=e_i+(Πᵀp⁺)_i−p⁺_i>=0；完整向量及这些直接派生量保守计1族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-f0ea61b88b681c837096a661"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "L（finite n by n nonnegative real matrix,n>=1,diagonal exactly0）：L_ij是i欠j的同清算期、同货币单位承诺额；不得仅给每个公司总负债或价格相关图。；e（finite nonnegative real vector lengthn）：节点来自系统外的该情景现金；未来已实现现金不在当时事前可得。；node_and_contract_mapping（n unique ordered entity labels with common units/date and declared equal-seniority claims）：一致映射行/列与输出，须明确并表/外部汇节点/法律口径；原文未给现实供应商或PIT。。参数：clearing_selection：原Theorem1允许多个固定点，选择最大是本候选明示合同而非来源软件默认；其它固定点选择不另计族；范围one original complete family; representative greatest clearing vector；来源默认值None；本条选定greatest fixed point p_plus；LP_objective_weights：仅用于写出完整数学函数的正目标，不伪造源推荐默认或在等价权重间凑数；范围strictly positive weights select same greatest payment;zero/negative excluded from stated equivalence；来源默认值None；本条选定all ones"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-f0ea61b88b681c837096a661"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "doi.org/10.1287",
+  "lab": null,
+  "missing_information": [
+    "完整对手方L/现金e实际数据和PIT MISSING",
+    "法律优先级/并表/抵押/净额/币种/共同清算日映射 MISSING",
+    "情景分布、未来风险预测/经济有效性 MISSING",
+    "数值求解器/容差/迭代停止/运行环境未冻结",
+    "原论文/数据商业权利分别REVIEW_REQUIRED"
+  ],
+  "name": "债务网络的最大比例清算支付",
+  "native_source_id": "mnsc.47.2.236.9835",
+  "one_line": "在有限责任和同级债权同比例偿付下，联立确定整个债务网络的最大支付与欠付状态；不预测违约概率。",
+  "record_id": "mnsc.47.2.236.9835",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://ms.mcmaster.ca/tom/Research%20Papers/EiseNoe01.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Larry Eisenberg and Thomas H.Noe,Systemic Risk in Financial Systems,Management Science47(2):236–249,February2001,DOI10.1287/mnsc.47.2.236.9835,JSTOR2661572. University-hosted copy, not author-maintained implementation.",
+      "id": "harvest-source-f0ea61b88b681c837096a661",
+      "license": "NO_OPEN_REUSE_LICENSE_ESTABLISHED",
+      "locator": "JSTOR transmission cover: original authors/title,Management Science47(2):236–249,February2001;stable2661572;personal noncommercial notice: physical PDF p1-p1; Printed236 original journal first page/title/authors/INFORMS2001 copyright: physical PDF p2-p2; Printed238 §2.2 finite nominal obligations L>=0,diagonal0,external e>=0; optional outside sink modeling: physical PDF p4-p4; Printed239 Eq1–2 relative liabilities with zero row when no obligations; debt equality/proportionality;Def1 limited liability and absolute priority; source row-sum inconsistency: physical PDF p5-p5; Printed240 §2.3 min fixed-point definition,Theorem1 greatest/least clearing vectors; ex-post scope: physical PDF p6-p6; Printed241 Tarski existence and uniqueness distinction; row-sum proof wording retains zero-row caveat: physical PDF p7-p7; Printed242 Def3–5 risk orbit/regularity,Theorem2 sufficient uniqueness; not unconditional uniqueness: physical PDF p8-p8; Printed243 FDS context assumes unique clearing; default-indicator formula versus reversed prose; not adopted implementation: physical PDF p9-p9; Printed244 §3.2 LP feasible domain and Lemma4,strictly increasing objective; finite FDS iteration bound not generic Picard bound: physical PDF p10-p10; Printed245 positive-weight LP discussion and unique-system scope; comparative-statics claims not adopted: physical PDF p11-p11; Printed248 extensions and Appendix1 uniqueness proof; dynamic/seniority variants not adopted: physical PDF p14-p14; Printed249 Appendix2 nonunique zero-cash two-node cycle; original references: physical PDF p15-p15",
+      "revision": "Management Science47(2),February2001,236–249;JSTOR transmission cover accessed03/05/2010 09:02 as printed",
+      "sha256": "b7612e7e5434f5fb8fff2facd686b93a0c035bdf79a7f28cf3e357a92d0a6801",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://ms.mcmaster.ca/tom/Research%20Papers/EiseNoe01.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Larry Eisenberg and Thomas H.Noe,Systemic Risk in Financial Systems,Management Science47(2):236–249,February2001,DOI10.1287/mnsc.47.2.236.9835,JSTOR2661572. University-hosted copy, not author-maintained implementation.",
+      "id": "harvest-source-cdebfc7c1fe4f8dda98dd736",
+      "license": "NO_ARTICLE_LICENSE_INFERRED",
+      "locator": "Native DOI:JSON pointer /message/DOI; Original title:JSON pointer /message/title; Original authors:JSON pointer /message/author; February2001:JSON pointer /message/published-print; 236–249:JSON pointer /message/page; 47:JSON pointer /message/volume; 2:JSON pointer /message/issue",
+      "revision": "Crossref DOI metadata HTTP snapshot 2026-10-05T08:43:32.626570+00:00",
+      "sha256": "6d0d24c4f3439363cd9460ddb16bdc6d95c9ba197e37d193f8e52eee046163f7",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://api.crossref.org/works/10.1287/mnsc.47.2.236.9835",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}
