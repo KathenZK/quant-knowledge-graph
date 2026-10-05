@@ -1,0 +1,337 @@
+{
+  "economic_basis": {
+    "hypothesis": "来源假设不同预测类别的相对费后表现具有持续性，因此让近期占优类别得到更高预测权重；这不是已核实的市场收益机制。",
+    "missing": [
+      "只核此公开代码快照，未取得并逐式核对Carver原书。",
+      "没有执行源码、行情回放或经济验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "www.quantconnect.com/research",
+  "lab": null,
+  "missing_information": [
+    "原公开backtest的精确Lean/pandas/pytz版本、数据版本、可得时点和成交/保证金环境未锁。",
+    "核心代码保留其日期处理、空数据、零分母与旧API兼容性缺口，不修成理想运行版本。",
+    "所锁Lean源码与pandas1.5.3仅补充接口/数学语义，不冒充历史运行依赖。",
+    "期货订阅、到期/展期、实际费率、拒单与真实账户风险尚未执行核验。",
+    "商业权利仍REVIEW_REQUIRED；自撰元数据不包含上游代码/全文/图或行情。"
+  ],
+  "name": "QC：由费后虚拟仓位相对收益驱动的趋势与套息配置",
+  "native_source_id": "16041",
+  "one_line": "分别维护带缓冲的趋势与套息虚拟期货仓，按相对年度费后收益平滑分配两类预测，再生成风险缩放的真实合约目标。",
+  "record_id": "16041",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED; no reproduced performance or deployment claim.",
+    "metadata": "原生ID、版本哈希、自撰定义与定位；没有原文分发授权声明。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.quantconnect.com/terms/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Derek Melchin / QuantConnect research16041; article says re-creation of Carver2023 strategy16; no independent book equivalence claim.",
+      "id": "qc-research-16041-alphapy",
+      "license": "NOASSERTION: public QC embed has no standalone code license header; first-party publication does not establish redistribution or commercial-use permission. REVIEW_REQUIRED. Lean license does not transfer to article, embed, book or data.",
+      "locator": "Selected div#cb4f579ba9ca136bf64996ca32cd8d32_source_alphapy pre decoded UTF8 physical lines; review.field_spans",
+      "revision": "public embed cb4f579ba9ca136bf64996ca32cd8d32; HTTP sha256 609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "sha256": "609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "supports": [
+        "固定作者公开实现的实际默认控制流"
+      ],
+      "url": "https://www.quantconnect.com/terminal/processCache?request=embedded_backtest_cb4f579ba9ca136bf64996ca32cd8d32.html",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Derek Melchin / QuantConnect research16041; article says re-creation of Carver2023 strategy16; no independent book equivalence claim.",
+      "id": "qc-research-16041-futurespy",
+      "license": "NOASSERTION: public QC embed has no standalone code license header; first-party publication does not establish redistribution or commercial-use permission. REVIEW_REQUIRED. Lean license does not transfer to article, embed, book or data.",
+      "locator": "Selected div#cb4f579ba9ca136bf64996ca32cd8d32_source_futurespy pre decoded UTF8 physical lines; review.field_spans",
+      "revision": "public embed cb4f579ba9ca136bf64996ca32cd8d32; HTTP sha256 609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "sha256": "609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "supports": [
+        "固定作者公开实现的实际默认控制流"
+      ],
+      "url": "https://www.quantconnect.com/terminal/processCache?request=embedded_backtest_cb4f579ba9ca136bf64996ca32cd8d32.html",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Derek Melchin / QuantConnect research16041; article says re-creation of Carver2023 strategy16; no independent book equivalence claim.",
+      "id": "qc-research-16041-mainpy",
+      "license": "NOASSERTION: public QC embed has no standalone code license header; first-party publication does not establish redistribution or commercial-use permission. REVIEW_REQUIRED. Lean license does not transfer to article, embed, book or data.",
+      "locator": "Selected div#cb4f579ba9ca136bf64996ca32cd8d32_source_mainpy pre decoded UTF8 physical lines; review.field_spans",
+      "revision": "public embed cb4f579ba9ca136bf64996ca32cd8d32; HTTP sha256 609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "sha256": "609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "supports": [
+        "固定作者公开实现的实际默认控制流"
+      ],
+      "url": "https://www.quantconnect.com/terminal/processCache?request=embedded_backtest_cb4f579ba9ca136bf64996ca32cd8d32.html",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Derek Melchin / QuantConnect research16041; article says re-creation of Carver2023 strategy16; no independent book equivalence claim.",
+      "id": "qc-research-16041-portfoliopy",
+      "license": "NOASSERTION: public QC embed has no standalone code license header; first-party publication does not establish redistribution or commercial-use permission. REVIEW_REQUIRED. Lean license does not transfer to article, embed, book or data.",
+      "locator": "Selected div#cb4f579ba9ca136bf64996ca32cd8d32_source_portfoliopy pre decoded UTF8 physical lines; review.field_spans",
+      "revision": "public embed cb4f579ba9ca136bf64996ca32cd8d32; HTTP sha256 609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "sha256": "609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "supports": [
+        "固定作者公开实现的实际默认控制流"
+      ],
+      "url": "https://www.quantconnect.com/terminal/processCache?request=embedded_backtest_cb4f579ba9ca136bf64996ca32cd8d32.html",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Derek Melchin / QuantConnect research16041; article says re-creation of Carver2023 strategy16; no independent book equivalence claim.",
+      "id": "qc-research-16041-universepy",
+      "license": "NOASSERTION: public QC embed has no standalone code license header; first-party publication does not establish redistribution or commercial-use permission. REVIEW_REQUIRED. Lean license does not transfer to article, embed, book or data.",
+      "locator": "Selected div#cb4f579ba9ca136bf64996ca32cd8d32_source_universepy pre decoded UTF8 physical lines; review.field_spans",
+      "revision": "public embed cb4f579ba9ca136bf64996ca32cd8d32; HTTP sha256 609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "sha256": "609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "supports": [
+        "固定作者公开实现的实际默认控制流"
+      ],
+      "url": "https://www.quantconnect.com/terminal/processCache?request=embedded_backtest_cb4f579ba9ca136bf64996ca32cd8d32.html",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Derek Melchin / QuantConnect research16041; article says re-creation of Carver2023 strategy16; no independent book equivalence claim.",
+      "id": "qc-research-16041-utilspy",
+      "license": "NOASSERTION: public QC embed has no standalone code license header; first-party publication does not establish redistribution or commercial-use permission. REVIEW_REQUIRED. Lean license does not transfer to article, embed, book or data.",
+      "locator": "Selected div#cb4f579ba9ca136bf64996ca32cd8d32_source_utilspy pre decoded UTF8 physical lines; review.field_spans",
+      "revision": "public embed cb4f579ba9ca136bf64996ca32cd8d32; HTTP sha256 609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "sha256": "609592975d6ac8fe34889446dc7692c7f1cc44d3b0610837b7f7ab503dd01236",
+      "supports": [
+        "固定作者公开实现的实际默认控制流"
+      ],
+      "url": "https://www.quantconnect.com/terminal/processCache?request=embedded_backtest_cb4f579ba9ca136bf64996ca32cd8d32.html",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "lean-algorithm-framework-portfolio-equalweightingportfolioconstructionmodel-py",
+      "license": "Apache-2.0 in fixed Lean headers/LICENSE; not permission for primary embed/book/data.",
+      "locator": "Native UTF8 lines; supplemental source version only; not asserted original runtime",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "24daa59b886a2d74639f9d82646f0b1335acdc2716d879b57ef5882d001f74b0",
+      "supports": [
+        "接口或数学调用语义补证，非原回测依赖锁"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Algorithm.Framework/Portfolio/EqualWeightingPortfolioConstructionModel.py",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "lean-algorithm-framework-selection-futureuniverseselectionmodel-py",
+      "license": "Apache-2.0 in fixed Lean headers/LICENSE; not permission for primary embed/book/data.",
+      "locator": "Native UTF8 lines; supplemental source version only; not asserted original runtime",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "d34f67da3570339110abb74ee7d1ffa9db95014f76abfc2b6f1fa426a2352228",
+      "supports": [
+        "接口或数学调用语义补证，非原回测依赖锁"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Algorithm.Framework/Selection/FutureUniverseSelectionModel.py",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "lean-algorithm-portfolio-portfolioconstructionmodel-cs",
+      "license": "Apache-2.0 in fixed Lean headers/LICENSE; not permission for primary embed/book/data.",
+      "locator": "Native UTF8 lines; supplemental source version only; not asserted original runtime",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "e5a711ff4687c0060e1f535bedcc5621b0d092e8047aab7e75b0c885378c496a",
+      "supports": [
+        "接口或数学调用语义补证，非原回测依赖锁"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Algorithm/Portfolio/PortfolioConstructionModel.cs",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "lean-algorithm-execution-immediateexecutionmodel-cs",
+      "license": "Apache-2.0 in fixed Lean headers/LICENSE; not permission for primary embed/book/data.",
+      "locator": "Native UTF8 lines; supplemental source version only; not asserted original runtime",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "29954b83e610e306e5c919f0c77bb8bd4af8f3a028e6caca4c7bc35323c48f90",
+      "supports": [
+        "接口或数学调用语义补证，非原回测依赖锁"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Algorithm/Execution/ImmediateExecutionModel.cs",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "pandas development team",
+      "id": "pandas15-generic",
+      "license": "Pandas source-version mathematical reference only; package license not independently resolved here; REVIEW_REQUIRED.",
+      "locator": "Native UTF8 lines; supplemental source version only; not asserted original runtime",
+      "revision": "pandas v1.5.3 tag",
+      "sha256": "678d02fb759972f631d4edc6d4117cd4e2626169f4501e96616583de21271b2b",
+      "supports": [
+        "接口或数学调用语义补证，非原回测依赖锁"
+      ],
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v1.5.3/pandas/core/generic.py",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "pandas development team",
+      "id": "pandas15-ewm-code",
+      "license": "Pandas source-version mathematical reference only; package license not independently resolved here; REVIEW_REQUIRED.",
+      "locator": "Native UTF8 lines; supplemental source version only; not asserted original runtime",
+      "revision": "pandas v1.5.3 tag",
+      "sha256": "554733e3463d2550563fd06df1cffc7eef72665e4f0f4f4e0dc8ea4bba77634c",
+      "supports": [
+        "接口或数学调用语义补证，非原回测依赖锁"
+      ],
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v1.5.3/pandas/core/window/ewm.py",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect",
+      "id": "lean-license",
+      "license": "REVIEW_REQUIRED; see locked text; no cross-source inheritance.",
+      "locator": "Original native HTML/text",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "522cf0a716ce03f67d46f8fceb5bf78c5b84400ec5cd8d14bf9f02cddc1cb6ba",
+      "supports": [
+        "许可边界或官方接口说明"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/LICENSE",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "pandas development team",
+      "id": "pandas15-ewm-document",
+      "license": "REVIEW_REQUIRED; see locked text; no cross-source inheritance.",
+      "locator": "Original native HTML/text",
+      "revision": "pandas1.5.3 official documentation",
+      "sha256": "975331caad2be97746b730a0089a3c9ed4a3b3c6d42b3f4cd74cb217f1de0889",
+      "supports": [
+        "许可边界或官方接口说明"
+      ],
+      "url": "https://pandas.pydata.org/pandas-docs/version/1.5/reference/api/pandas.Series.ewm.html",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect",
+      "id": "qc-terms",
+      "license": "REVIEW_REQUIRED; see locked text; no cross-source inheritance.",
+      "locator": "Original native HTML/text",
+      "revision": "HTTP content snapshot",
+      "sha256": "6ce81f2329fb75295f21ec4a2864f47e650c19a4601de1a18c08b3b33b186611",
+      "supports": [
+        "许可边界或官方接口说明"
+      ],
+      "url": "https://www.quantconnect.com/terms/",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Derek Melchin / QuantConnect",
+      "id": "qc-research-16041-author-page",
+      "license": "NOASSERTION; no source fulltext redistributed; commercial REVIEW_REQUIRED.",
+      "locator": "Author page HTML with linked embedded backtest ID",
+      "revision": "HTTP sha256 054aa54e352e6ae794b1db375f9be97ac0a34ec10f7283a34fa087115067b6ae",
+      "sha256": "054aa54e352e6ae794b1db375f9be97ac0a34ec10f7283a34fa087115067b6ae",
+      "supports": [
+        "作者、研究原生ID、公开embed链接及与代码的差异定位"
+      ],
+      "url": "https://www.quantconnect.com/research/16041/trend-and-carry-allocation/",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "qc-research-16041-futurespy",
+        "qc-research-16041-alphapy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前公开 embed 的 futures.py 列出18个连续期货根：天然气、标普500迷你、玉米、大豆、燕麦、纳斯达克100迷你、罗素2000迷你、纳斯达克生物科技迷你、美元计价日经225、FTSE新兴迷你、BTC、ETH、铜、黄金、白银、钯、WTI、VIX。天然气交易所选两合约中的后一个，其余交易前一个。它们按能源/股指/农业/FX/金属/波动率及子类手工分组；BTC/ETH在这里是CME有到期期货，不是现货或永续。"
+    },
+    "cost": {
+      "evidence": [
+        "qc-research-16041-mainpy",
+        "qc-research-16041-alphapy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "两袖用于更新w的费用估计：某根首次加入实际合约时构造1张MarketOrder参数，调用当前FeeModel.GetOrderFee并保存金额，此后该根不随合约或费表刷新；按虚拟仓位变化绝对值乘该金额扣费。这个虚拟评分明确未计点差或市场冲击，且未单列每次换月的两腿费用。实际账户仅声明InteractiveBrokers Margin brokerage model和ImmediateExecutionModel，没有固定佣金表、点差、滑点、保证金/利息、成交或期货结算版本锁。此字段记录来源的成本程序，不宣称无成本或费用已正确复现。"
+    },
+    "entry": {
+      "evidence": [
+        "qc-research-16041-alphapy",
+        "qc-research-16041-portfoliopy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "对每个本次可计算根，资金V下基础张数P=V×1.5×a_i×.2/(合约乘数×d×sqrt256)。预测F=G(total,T/C混合)，若F×P=0则不发Insight，不能改成显式空仓目标。否则按F×P正负发Up/Down，并把P、F存到目标合约；其有效期取self.futures[0]所对应交易所的下一个正常开市时刻减1秒，不按每只根各自交易所计算。自定义CreateTargets对本次传入Insight形成目标q*=F×P/10并执行缓冲。没有价格突破/回归的单独二值入场，也不等价于简单趋势同向才允许carry的交集过滤。"
+    },
+    "execution_time": {
+      "evidence": [
+        "qc-research-16041-alphapy",
+        "qc-research-16041-portfoliopy",
+        "qc-research-16041-mainpy",
+        "lean-algorithm-portfolio-portfolioconstructionmodel-cs",
+        "lean-algorithm-execution-immediateexecutionmodel-cs"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Alpha读取当前已存历史、先算旧虚拟收益与w，再算本次趋势/套息并发Insight；custom PCM随后将新的虚拟张数标为下一日及形成实际张数目标。main.rebalance_func要求非暖机且当前QuoteBars>0且Insight总数或日号改变才允许base PCM再平衡；但custom CreateTargets在super返回后无论base是否为空，都遍历本次insights生成自己的非零目标及虚拟仓位，故不能把该门槛当成所有下单的总开关。声明ImmediateExecutionModel；所锁Lean补充源码把尚未完成的目标差转市价委托并检查最低保证金门槛，但它不是原backtest运行版本。没有把consolidator、history日期转换、QuoteBars/Bars到达和Alpha/PCM调用顺序验证成真实可成交时钟，也没有执行来源代码。"
+    },
+    "exit": {
+      "evidence": [
+        "qc-research-16041-portfoliopy",
+        "qc-research-16041-mainpy",
+        "lean-algorithm-portfolio-portfolioconstructionmodel-cs"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "缓冲上下界分别round(q*±.1×abs(P))；若当前合约实际持仓q在闭区间内维持q，否则从下方到下界、从上方到上界。目标可以为正、负或0，跨零即换方向。自定义PCM保留super.CreateTargets返回的数量0目标，以处理已过期且无其他有效Insight的合约；非零base目标不直接使用。main另只在预热后第一次OnData检查已有持仓，若没有有效Insight，加入列表，待该标的市场开市调用Liquidate并移除。没有独立止损/止盈/最大持有期，合约切换由新目标及旧Insight到期流程驱动，未证明每一滚动日都完成平旧开新。"
+    },
+    "position": {
+      "evidence": [
+        "qc-research-16041-alphapy",
+        "qc-research-16041-portfoliopy",
+        "qc-research-16041-utilspy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "上述P是合约张数的基础尺度，V采用账户TotalPortfolioValue；虚拟两袖改用固定1000000×同一每单位资金尺度，分别计算G(3,T)和G(carry数,C)再除10，并用各自上一保存张数作相同缓冲。虚拟目标存于algorithm.Time.date()+1，属于次期对齐标签；实际目标使用实际持仓。类间/子类等权乘1.5是固定diversification multiplier，不是估计相关性后的保证风险。没有组合净/毛名义上限或明示逐合约上限，零/负价格、零波动、异常年化价差分母未完整保护；不能将20%目标波动解释成保证达到的实际风险或资金杠杆。"
+    },
+    "risk": {
+      "evidence": [
+        "qc-research-16041-mainpy",
+        "qc-research-16041-alphapy",
+        "pandas15-generic"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "原代码没有独立止损或回撤限制，NullRiskManagementModel不增加保护。源内须保留：ewm(30)与span30注释不一致；默认lookback表达式实际3541日；clean_history对旧索引replace(tzinfo=pytz.timezone(...))后转UTC再round(D)，未验证DST/索引对齐；warm_up_annualized_carry只对2010-01-01调用FutureChainProvider取得列表，再筛选到当前日期并查历史，未证明该列表覆盖整个历史区间。没有补齐空收益滚动、缺一个虚拟袖、零波动、两个到期月间距round为0、非有限值、缺FeeModel、类级futures列表跨实例共享或移除根未从列表删除等边界。pandas Series.append及旧API名字属于原样代码；补充现行Lean和pandas1.5.3资料不证明历史环境/运行可用。所有源码静态审核，不执行、不修复、不声称盈利。"
+    },
+    "signal": {
+      "evidence": [
+        "qc-research-16041-alphapy",
+        "qc-research-16041-portfoliopy",
+        "pandas15-generic",
+        "pandas15-ewm-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码先按各根独立计算两类预测。原始carry=(近合约最新close−远合约最新close)/(abs(round(到期日差/30))/12)；时间戳取近合约最新历史索引，没有额外保证两条close同日。sigma：将实际raw_close与调整后close按共同索引对齐，r=diff(adjusted_close)/raw_close.shift(1)，取ewm(span32,min_periods32).std()×sqrt256，最终sigma=.3×该序列全窗均值+.7×末值。日价格风险d=sigma×当前目标合约价/sqrt256。趋势分量f_n=clip((EMA_n−EMA_4n)/d×k_n,−20,20)，k16=4.1,k32=2.79,k64=1.91，三者平均为T。套息把整个已存annualized_carry历史除以当前d，再分别ewm(span=s,min_periods=s).mean()取末值×30并clip±20，有值分量平均为C。设G(m,x)=clip(FDM[m]×x,±20)，FDM1..9为1,1.02,1.03,1.23,1.25,1.27,1.29,1.32,1.34；虚拟单袖用G(3,T)与G(实际carry数,C)，实际用G(3+实际carry数,wT+(1−w)C)。w由过去虚拟持仓的相对费后表现产生：各根只有保存行数>256+30才参与；用adjusted_open.diff().shift(−1)与当时保存的虚拟张数逐索引相乘再乘合约乘数，减abs(张数diff)×首次记录的1张FeeModel金额，首行diff改为首行仓位；除固定资金1000000。逐日期跨根求和，取趋势收益减套息收益，再滚动256行求和/target_risk得RP。w=最后一个EW加权均值(clip(.5+RP/2,0,1))。实际调用是ewm(30)，依据所锁pandas1.5.3接口它表示com30、alpha=1/31、adjust=True，非注释所说span30。没有任何根满足虚拟历史条件时w=.5；有根入选但滚动结果为空时源码直接iloc[-1]，未补回退。"
+    },
+    "timeframe": {
+      "evidence": [
+        "qc-research-16041-mainpy",
+        "qc-research-16041-alphapy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "候选固定main默认参数：emac_filters6→快EMA16/32/64及慢64/128/256；carry跨度5/20/60/120；sigma_span32、target_risk .2、blend_years3、cap20、buffer_scaler .1；年化天数256。每日TradeBarConsolidator保存连续open/close和实际合约close。total_lookback实际为3×365×blend_years+最大EMA跨度，默认3541日，不能按参数名改成3年。SetWarmUp为417日。Update在同一个日号已成功发过Insight或Slice无Bars时返回；若没发出Insight不置day，可在当日后续Slice再试。"
+    },
+    "universe": {
+      "evidence": [
+        "qc-research-16041-universepy",
+        "qc-research-16041-mainpy",
+        "qc-research-16041-alphapy",
+        "qc-research-16041-utilspy",
+        "lean-algorithm-framework-selection-futureuniverseselectionmodel-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认Universe每日刷新，合约过滤Expiration(0,365)；连续历史用BackwardsPanamaCanal及LastTradingDay映射。get_near_and_further_contracts从算法当前Securities中取同根、非canonical且Expiry≥当前Mapped合约Expiry者，按到期升序取前二；未额外按成交量/Tradable标记过滤。没有两份非空raw_history、目标Price为0或波动历史不足则跳过。只有本次获得sigma的根进入GetPositionSize：类间等分、类内子类等分、子类内根等分，a_i=1/(类数×该类子类数×该子类根数)。不把该手工层级等分说成协方差风险平价。"
+    }
+  }
+}

@@ -16,6 +16,113 @@ ROOT = Path(__file__).resolve().parents[1]
 DIRECTORY = 'metadata/collections/test-batch'
 
 
+def html_code_fixture(root):
+    from quantgraph.graph.collection_batch import HTML_PRE_DECODER, HTML_PRE_EXTRACTION
+    base = root / DIRECTORY
+    raw = b'<div id="other"><pre>ignore()</pre></div><div id="file_py"><pre>x = 1\nx + 2\n</pre></div>'
+    decoded = b'x = 1\nx + 2\n'
+    lock = load(base / 'source-lock.json')
+    source = lock['sources'][0]
+    source.update(url='https://example.org/published-code.html', revision='snapshot-one',
+                  revision_kind='content_snapshot', extraction=HTML_PRE_EXTRACTION,
+                  selector='div#file_py pre', sha256=digest(raw), bytes=len(raw),
+                  snapshot_path='datasets/raw/sources/synthetic/source.html',
+                  derived_text=dict(parent_html_sha256=digest(raw), sha256=digest(decoded), bytes=len(decoded),
+                                    snapshot_path='datasets/raw/sources/synthetic/decoded.py', decoder=HTML_PRE_DECODER))
+    save(root / source['snapshot_path'], raw)
+    save(root / source['derived_text']['snapshot_path'], decoded)
+    save(base / 'source-lock.json', lock)
+    row = load(base / 'factors/SyntheticVolume.json')
+    row['sources'][0].update({key: source[key] for key in ['url', 'revision', 'sha256']})
+    save(base / 'factors/SyntheticVolume.json', row)
+    reviews = load(base / 'reviews.json')
+    for spans in reviews['records'][0]['field_spans'].values():
+        spans[0]['sha256'] = digest(decoded.rstrip(b'\n'))
+    save(base / 'reviews.json', reviews)
+    refresh(root)
+    return source
+
+
+def test_html_code_preserves_entities_unicode_and_original_newlines():
+    from quantgraph.graph.collection_batch import HTML_PRE_EXTRACTION
+    raw = ('<pre>outside</pre><div id="code"><div><pre>\r\n'
+           '<span>值 = &quot;&lt;&amp;&gt;&quot;</span>\r\nx = &#49;\n'
+           '</pre></div></div><script>do_not_run()</script>').encode()
+    assert source_text(raw, HTML_PRE_EXTRACTION, selector='div#code pre') == '\r\n值 = "<&>"\r\nx = 1\n'
+
+
+@pytest.mark.parametrize('raw', [
+    b'<div id="other"><pre>x</pre></div>',
+    b'<div id="code"><pre>x</pre></div><div id="code"><pre>y</pre></div>',
+    b'<div id="code" id="other"><pre>x</pre></div>',
+    b'<span id="code"><pre>x</pre></span>',
+    b'<div id="code"><pre>x</pre><pre>y</pre></div>',
+    b'<div id="code"><pre><pre>x</pre></pre></div>',
+    b'<div id="code"><pre>x</div></pre>',
+    b'<div id="code"><pre>x</pre>',
+    b'<div id="code"></div><pre>x</pre>',
+    b'<div id="code"><pre> </pre></div>',
+    b'<div id="code"><pre><script>x</script></pre></div>',
+    b'<template><div id="code"><pre>x</pre></div></template>',
+    b'<noscript><div id="code"><pre>x</pre></div></noscript>',
+    b'<div id="code"><template><pre>x</pre></template></div>',
+    b'<div id="code"><noscript><pre>x</pre></noscript></div>',
+    b'<div id="code"><pre>actual()<template>unselected()</template></pre></div>',
+    b'<div id="code"><pre>actual()<noscript>conditional()</noscript></pre></div>',
+    b'<script/><div id="code"><pre>x</pre></div>',
+    b'<template/><div id="code"><pre>x</pre></div>',
+    b'<textarea/><div id="code"><pre>x</pre></div>',
+    b'<xmp><div id="code"><pre>x</pre></div></xmp>',
+    b'<textarea><div id="code"><pre>x</pre></div></textarea>',
+    b'<div id="code"><iframe><pre>x</pre></iframe></div>',
+    b'<div id="code"><pre>\xff</pre></div>',
+])
+def test_html_code_rejects_missing_ambiguous_or_incomplete_blocks(raw):
+    from quantgraph.graph.collection_batch import HTML_PRE_EXTRACTION
+    with pytest.raises((ValueError, UnicodeError)):
+        source_text(raw, HTML_PRE_EXTRACTION, selector='div#code pre')
+
+
+def test_html_code_private_validation_rebuilds_pinned_parent(collection):
+    source = html_code_fixture(collection)
+    validate_collection(collection, DIRECTORY)
+    validate_collection(collection, DIRECTORY, verify_snapshots=True)
+    # A separately pinned derivative cannot silently substitute different code.
+    base = collection / DIRECTORY
+    lock = load(base / 'source-lock.json')
+    other = b'other = 1\nother + 2\n'
+    lock['sources'][0]['derived_text'].update(save(collection / source['derived_text']['snapshot_path'], other))
+    save(base / 'source-lock.json', lock)
+    refresh(collection)
+    with pytest.raises(ValueError, match='does not reconstruct'):
+        validate_collection(collection, DIRECTORY, verify_snapshots=True)
+
+
+@pytest.mark.parametrize('mutation', ['selector', 'parent', 'same_path', 'unsafe_path', 'decoder',
+                                      'bytes_bool', 'raw_limit', 'text_limit', 'role', 'wrong_extraction'])
+def test_html_code_public_contract_rejects_invalid_derivation(collection, mutation):
+    from quantgraph.graph.collection_batch import CODEC_MAX_RAW, CODEC_MAX_TEXT
+    html_code_fixture(collection)
+    base = collection / DIRECTORY
+    lock = load(base / 'source-lock.json')
+    source = lock['sources'][0]
+    derivative = source['derived_text']
+    if mutation == 'selector': source['selector'] = 'div pre'
+    elif mutation == 'parent': derivative['parent_html_sha256'] = '0' * 64
+    elif mutation == 'same_path': derivative['snapshot_path'] = source['snapshot_path']
+    elif mutation == 'unsafe_path': derivative['snapshot_path'] = 'datasets/raw/sources/../x'
+    elif mutation == 'decoder': derivative['decoder'] = 'eval'
+    elif mutation == 'bytes_bool': derivative['bytes'] = True
+    elif mutation == 'raw_limit': source['bytes'] = CODEC_MAX_RAW + 1
+    elif mutation == 'text_limit': derivative['bytes'] = CODEC_MAX_TEXT + 1
+    elif mutation == 'role': source['role'] = 'license'
+    else: source['extraction'] = 'utf8'
+    save(base / 'source-lock.json', lock)
+    refresh(collection)
+    with pytest.raises(ValueError):
+        validate_collection(collection, DIRECTORY)
+
+
 def tar_source(entries):
     """Synthetic source bytes only; no source programs are executed."""
     output = BytesIO()

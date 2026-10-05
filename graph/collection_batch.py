@@ -108,6 +108,13 @@ NATIVE_LF_PROFILE = 'native-lf-to-unicode-splitlines/v1'
 CODEC_GENERATOR = dict(name='python-codec', profile='cpython-gb18030-strict-roundtrip/v1',
                        codec='gb18030', errors='strict', output_encoding='utf-8',
                        newline_transformation='none', unicode_normalization='none', bom_transformation='none')
+HTML_PRE_EXTRACTION = 'html.pre-id.utf8'
+HTML_PRE_DECODER = ('Python stdlib HTMLParser(convert_charrefs=True); concatenate selected pre '
+                    'handle_data; UTF8, no upstream execution')
+HTML_PRE_INACTIVE = {'template', 'noscript', 'textarea', 'title', 'xmp', 'iframe',
+                     'noembed', 'noframes', 'plaintext'}
+HTML_VOID_ELEMENTS = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input',
+                      'link', 'meta', 'param', 'source', 'track', 'wbr'}
 
 
 def _sha256(value):
@@ -117,6 +124,105 @@ def _sha256(value):
 def _codec_snapshot(path):
     return (_visual_snapshot(path)
             and not any(ord(c) < 32 or 127 <= ord(c) <= 159 for c in path))
+
+
+def _html_pre_id(selector):
+    match = re.fullmatch(r'div#([A-Za-z0-9_-]{1,200}) pre', selector) if isinstance(selector, str) else None
+    if not match:
+        raise ValueError('HTML code requires an exact div ID and pre selector')
+    return match[1]
+
+
+def _html_pre_derivative(source):
+    derived = source.get('derived_text')
+    _html_pre_id(source.get('selector'))
+    keys = {'parent_html_sha256', 'sha256', 'bytes', 'snapshot_path', 'decoder'}
+    if (source['role'] != 'source_code' or source['revision_kind'] != 'content_snapshot'
+            or type(source['bytes']) is not int or not 0 < source['bytes'] <= CODEC_MAX_RAW
+            or not _codec_snapshot(source['snapshot_path'])
+            or not isinstance(derived, dict) or set(derived) != keys
+            or derived['parent_html_sha256'] != source['sha256']
+            or not _sha256(derived['sha256'])
+            or type(derived['bytes']) is not int or not 0 < derived['bytes'] <= CODEC_MAX_TEXT
+            or not _codec_snapshot(derived['snapshot_path'])
+            or derived['snapshot_path'] == source['snapshot_path']
+            or derived['decoder'] != HTML_PRE_DECODER):
+        raise ValueError('Invalid HTML code parent or derivative contract')
+    return derived
+
+
+def _html_pre_text(raw, selector):
+    """Decode one explicitly identified code block, without executing HTML or code."""
+    target_id = _html_pre_id(selector)
+    if not 0 < len(raw) <= CODEC_MAX_RAW:
+        raise ValueError('HTML code source exceeds its byte bound or is empty')
+
+    class SelectedPre(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.matches = self.depth = self.pre_count = self.size = 0
+            self.in_pre = False
+            self.parts = []
+            self.inert = []
+
+        def handle_starttag(self, tag, attrs):
+            if tag in HTML_PRE_INACTIVE:
+                if self.in_pre:
+                    raise ValueError('HTML code block contains inactive or scripting-dependent content')
+                self.inert.append(tag)
+            ids = [value for key, value in attrs if key == 'id']
+            if target_id in ids:
+                self.matches += 1
+                if self.matches != 1 or tag != 'div' or len(ids) != 1 or self.inert:
+                    raise ValueError('HTML code selector is ambiguous')
+                self.depth = 1
+            elif self.depth and tag == 'div':
+                self.depth += 1
+            if self.depth and tag == 'pre':
+                self.pre_count += 1
+                if self.pre_count != 1 or self.in_pre or self.inert:
+                    raise ValueError('HTML code selector must contain exactly one pre')
+                self.in_pre = True
+            elif self.in_pre and tag in {'script', 'style'}:
+                raise ValueError('HTML code block contains an active content element')
+
+        def handle_startendtag(self, tag, attrs):
+            if tag not in HTML_VOID_ELEMENTS:
+                raise ValueError('HTML code source uses a self-closing nonvoid element')
+            self.handle_starttag(tag, attrs)
+            self.handle_endtag(tag)
+
+        def handle_endtag(self, tag):
+            if tag in HTML_PRE_INACTIVE:
+                if not self.inert or self.inert[-1] != tag:
+                    raise ValueError('HTML inactive content has mismatched boundaries')
+                self.inert.pop()
+            if tag == 'pre' and self.depth:
+                if not self.in_pre:
+                    raise ValueError('HTML code has an unmatched pre end')
+                self.in_pre = False
+            if tag == 'div' and self.depth:
+                self.depth -= 1
+                if self.depth == 0 and self.in_pre:
+                    raise ValueError('HTML code pre extends beyond its selected div')
+
+        def handle_data(self, data):
+            if self.in_pre:
+                self.size += len(data.encode('utf-8'))
+                if self.size > CODEC_MAX_TEXT:
+                    raise ValueError('HTML decoded code exceeds its byte bound')
+                self.parts.append(data)
+
+    parser = SelectedPre()
+    parser.feed(raw.decode('utf-8', errors='strict'))
+    parser.close()
+    if parser.matches != 1 or parser.pre_count != 1 or parser.depth or parser.in_pre:
+        raise ValueError('HTML code requires one complete selected div/pre')
+    text = ''.join(parser.parts)
+    if not text.strip():
+        raise ValueError('HTML selected code is empty')
+    _text_line_counts(text)
+    return text
 
 
 def _text_line_counts(text):
@@ -542,12 +648,14 @@ def _pdf_layout_bytes(raw, expected_version):
     return result.stdout
 
 
-def source_text(raw, extraction, *, extractor_version=None, archive_members=None):
+def source_text(raw, extraction, *, extractor_version=None, archive_members=None, selector=None):
     """Decode explicitly declared representations; never evaluate source code."""
     if extraction == 'utf8':
         return raw.decode('utf-8-sig')
     if extraction == CODEC_EXTRACTION:
         return _decode_gb18030(raw)
+    if extraction == HTML_PRE_EXTRACTION:
+        return _html_pre_text(raw, selector)
     if extraction == 'json.source':
         value = json.loads(raw)['source']
         if not isinstance(value, str) or not value.strip():
@@ -845,7 +953,7 @@ def validate_collection(root, directory, *, verify_snapshots=False):
     if len(sources) != len(lock['sources']):
         raise ValueError('Duplicate collection source ID')
     texts, visual_sources, visual_paths, image_sources = {}, {}, set(), {}
-    codec_sources, native_contexts = {}, {}
+    codec_sources, html_code_sources, native_contexts = {}, {}, {}
     # A visual derivative cannot reuse any original/derived-text path, even
     # under another source ID. Existing text collections keep their contracts.
     reserved_paths = {s['snapshot_path'] for s in sources.values()}
@@ -870,7 +978,7 @@ def validate_collection(root, directory, *, verify_snapshots=False):
         elif source['revision_kind'] != 'content_snapshot' or not source['revision']:
             raise ValueError('Unsupported collection source revision')
         if source['extraction'] not in {'utf8', 'json.source', PDF_EXTRACTION, PDF_VISUAL_EXTRACTION,
-                                        TAR_EXTRACTION, IMAGE_EXTRACTION, CODEC_EXTRACTION}:
+                                        TAR_EXTRACTION, IMAGE_EXTRACTION, CODEC_EXTRACTION, HTML_PRE_EXTRACTION}:
             raise ValueError('Unsupported source extraction')
         if source['extraction'] == TAR_EXTRACTION:
             _archive_members(source.get('archive_members'))
@@ -880,8 +988,13 @@ def validate_collection(root, directory, *, verify_snapshots=False):
         if source['extraction'] == CODEC_EXTRACTION:
             derived = _codec_derivative(source)
             codec_sources[sid] = derived
+        if source['extraction'] == HTML_PRE_EXTRACTION:
+            derived = _html_pre_derivative(source)
+            html_code_sources[sid] = derived
+        elif 'selector' in source:
+            raise ValueError('HTML code selector requires HTML extraction')
         if derived is None and 'derived_text' in source:
-            raise ValueError('Derived text requires a supported PDF or code codec extraction')
+            raise ValueError('Derived text requires a supported PDF or code extraction')
         visual = _pdf_visual_contract(source) if source['extraction'] == PDF_VISUAL_EXTRACTION else None
         if visual is None and 'visual_pages' in source:
             raise ValueError('Visual page pins require visual PDF extraction')
@@ -900,11 +1013,12 @@ def validate_collection(root, directory, *, verify_snapshots=False):
     snapshot_counts = Counter(s['snapshot_path'] for s in sources.values())
     snapshot_counts.update(s['derived_text']['snapshot_path'] for s in sources.values()
                            if isinstance(s.get('derived_text'), dict) and 'snapshot_path' in s['derived_text'])
-    if sum(d['bytes'] for d in codec_sources.values()) > CODEC_MAX_TOTAL:
+    code_derivatives = codec_sources | html_code_sources
+    if sum(d['bytes'] for d in code_derivatives.values()) > CODEC_MAX_TOTAL:
         raise ValueError('Decoded code collection exceeds its byte bound')
     derivative_paths = {s['derived_text']['snapshot_path'] for s in sources.values()
                         if isinstance(s.get('derived_text'), dict)}
-    for sid, derived in codec_sources.items():
+    for sid, derived in code_derivatives.items():
         if (snapshot_counts[derived['snapshot_path']] != 1
                 or derived['snapshot_path'] in visual_paths
                 or sources[sid]['snapshot_path'] in derivative_paths | visual_paths):
@@ -934,6 +1048,13 @@ def validate_collection(root, directory, *, verify_snapshots=False):
                 _verify_original_png(raw, image_sources[sid])
             elif sid in visual_sources:
                 _verify_pdf_visual(root, raw, source['visual_pages'])
+            elif sid in html_code_sources:
+                derived = html_code_sources[sid]
+                saved = _pin(root, derived['snapshot_path'], derived)
+                text = source_text(raw, HTML_PRE_EXTRACTION, selector=source['selector'])
+                if text.encode('utf-8') != saved:
+                    raise ValueError('HTML code derivative does not reconstruct from its parent')
+                texts[sid] = text.splitlines()
             elif sid in codec_sources:
                 derived = codec_sources[sid]
                 saved = read_below(root, derived['snapshot_path'], limit=CODEC_MAX_TEXT)

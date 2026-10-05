@@ -1,6 +1,6 @@
 # 来源采集进度
 
-目标为在原 8,546 条目录基线上新增 **1,000 个策略、1,000 个因子与量化特征**。本轮累计通过来源与去重复核的新增项为 **139 个策略、217 个因子**，尚余 861 个策略、783 个因子。下载数量、未决候选和同族参数不计入目标。
+目标为在原 8,546 条目录基线上新增 **1,000 个策略、1,000 个因子与量化特征**。本轮累计通过来源与去重复核的新增项为 **140 个策略、220 个因子**，尚余 860 个策略、780 个因子。下载数量、未决候选和同族参数不计入目标。
 
 | 冻结批次 | 新策略 | 新因子 | 内容 |
 |---|---:|---:|---|
@@ -35,9 +35,10 @@
 | [第二十九批](20261005-harvest2000-v29/README.md) | 1 | 2 | DODO DPP 库存做市、Hasbrouck 价格发现、Eisenberg–Noe 债务网络清算 |
 | [第三十批](20261005-harvest2000-v30/README.md) | 4 | 1 | 峰价与递归预测、稀疏及稳健在线配置、经验双尾异常特征 |
 | [第三十一批](20261005-harvest2000-v31/README.md) | 2 | 1 | 自适应预测与核加权组合、Cox 精确风险集条件似然 |
-| 合计 | 139 | 217 | 356 个来源支持的不同定义或构造 |
+| [第三十二批](20261005-harvest2000-v32/README.md) | 1 | 3 | 费后虚拟组合配置、频谱残差、LOCI 和动态模型连接度 |
+| 合计 | 140 | 220 | 360 个来源支持的不同定义或构造 |
 
-217 个因子分为 150 个统计特征、24 个技术指标、31 个风险测度、12 个链上指标。金融测度的具体用途另存 `method_category`，区分风险、表现归因和市场微观结构。以上是定义层数量，不是独立盈利机会的数量。
+220 个因子分为 152 个统计特征、24 个技术指标、32 个风险测度、12 个链上指标。金融测度的具体用途另存 `method_category`，区分风险、表现归因和市场微观结构。以上是定义层数量，不是独立盈利机会的数量。
 
 每批的 `index.json`、`source-lock.json`、`reviews.json`、`quality-contract.json` 都由 `manifest.json` 固定摘要。规则与公式绑定具体源码或供应商文档行段，去重比较绑定旧记录的 ID、文件与摘要。已经提交的原定义不改写，后续核准项写新批次并登记到统一 `catalog.json`。
 
@@ -48,7 +49,7 @@
 ```sh
 uv run quantgraph catalog-stats
 uv run quantgraph catalog-search --status REVIEWED_NEW_DEFINITION --limit 1000
-uv run python -m quantgraph.graph.collection_batch --directory metadata/collections/20261005-harvest2000-v31
+uv run python -m quantgraph.graph.collection_batch --directory metadata/collections/20261005-harvest2000-v32
 ```
 
 末条命令验证公开元数据；本机存在原始快照时加 `--verify-snapshots`，再核对原始字节和字段证据行段。公开克隆缺少原文时不能声称重做了正文审核。
@@ -58,3 +59,5 @@ PDF 来源使用 `pdf.pdftotext-layout`：来源摘要始终指向原始 PDF，`
 固定 Git 提交下的 GB18030 源码可用 `text.decode-gb18030-utf8/v1`：严格解码后须逐字节反编码还原，UTF-8 派生文件单独锁定摘要与实际验证环境；不改换行、控制字符或 Unicode。正式 Unicode 行段同时绑定原生 LF 行号、字节偏移及原段哈希。它验证声明的编码转换，不自动识别编码，也不证明作者历史运行环境或算法已执行。
 
 扫描论文无法提取公式时使用 `pdf.visual-pages/v1`：直接锁定原 PDF 和真实物理页的 PNG 摘要，字段通过 `field_pages` 绑定到图页；本机按锁定的 `pdfinfo`、`pdftoppm` 版本及参数重绘并核对字节。封面文本或书目 JSON 只作身份依据，不能代替公式证据；独立重绘环境也不冒充历史采集环境。
+
+网页内代码使用 `html.pre-id.utf8`：锁定原始 HTML、唯一 `div` ID 下的 `pre` 和派生文本摘要。离线重建核对原字节；公开克隆只检查锁合同，不宣称重新读取了本机原件。原网页和解码源码均不加入 Git。
