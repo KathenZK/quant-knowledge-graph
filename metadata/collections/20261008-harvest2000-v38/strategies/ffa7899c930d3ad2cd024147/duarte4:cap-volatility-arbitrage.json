@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "利率期权隐含波动率系统性高于随后实现波动率，卖出并对冲可获正超额收益。",
+    "missing": [
+      "欧洲美元期货与Libor已停用，实盘需改用SOFR期货/期权。",
+      "caplet逐个计算与上限报价波动率的映射细节仅概括。",
+      "工作稿未与RFS终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "bankofcanada.ca/wp-content",
+  "lab": null,
+  "missing_information": [
+    "欧洲美元期货与Libor已停用，实盘需改用SOFR期货/期权。",
+    "caplet逐个计算与上限报价波动率的映射细节仅概括。",
+    "工作稿未与RFS终版比对；未回测。"
+  ],
+  "name": "利率上限波动率套利（卖出平值利率上限并以欧洲美元期货Delta对冲）",
+  "native_source_id": "duarte4:cap-volatility-arbitrage",
+  "one_line": "每月卖出平值利率上限（等价于一串1个月期caplet波动率互换），以欧洲美元期货Delta对冲，赚取caplet隐含方差与对应期货实现方差之差；卖出价按中间价隐含波动率减1个百分点计成本。",
+  "record_id": "duarte4:cap-volatility-arbitrage",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.bankofcanada.ca/wp-content/uploads/2010/08/duarte4.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jefferson Duarte, Francis A. Longstaff, Fan Yu,《Risk and Return in Fixed Income Arbitrage: Nickels in Front of a Steamroller?》2006-03工作稿（期刊版据外部书目为RFS 20(3), 2007, pp.769–811，未取）。中文定义自撰。",
+      "id": "v38-boc-duarte-longstaff-yu-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L519–535（PDF物理页13,14）；universe L538–541（PDF物理页14）；signal L1259–1262（PDF物理页30）；entry L532–533（PDF物理页14）；exit L1314–1322（PDF物理页31）；position L1308–1313（PDF物理页31）；position L241–243（PDF物理页7）；cost L542–546（PDF物理页14）",
+      "revision": "Duarte/Longstaff/Yu《Risk and Return in Fixed Income Arbitrage: Nickels in Front of a Steamroller?》Current version: March 2006（加拿大央行网站托管会议稿）；53页；未与RFS 20(3) 2007期刊版比对；sha256 e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1",
+      "sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.bankofcanada.ca/wp-content/uploads/2010/08/duarte4.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美元平值利率上限（行权价=对应期限互换利率），以欧洲美元期货对冲。"
+    },
+    "cost": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "卖出隐含波动率按中间价减1个百分点（约一个vega）计成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月卖出$100名义平值利率上限并用欧洲美元期货Delta对冲（实现上用一串短期波动率互换等价复制）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月初按上限报价建仓、月末结算；具体时点未在引用段写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一个月期限到期结算，次月重新进入（以降低上限价值状态变化影响）。"
+    },
+    "position": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个caplet的超额收益≈(σ²−σ̂²)F²C_FF/2·dt（Black模型gamma×隐含−实现方差），即名义按F²C_FF/2缩放的波动率互换；资本按10%年化波动缩放。"
+    },
+    "risk": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "卖出波动率，利率波动骤升时亏损（负偏）。"
+    },
+    "signal": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "无条件信号：每月持续进入1个月期波动率互换，收取caplet期初隐含方差、支付对应欧洲美元期货当月实现方差。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月度滚动。"
+    },
+    "universe": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "互换市场数据、CME每日欧洲美元期货收盘价、Citigroup与Bloomberg利率上限波动率。"
+    }
+  }
+}
