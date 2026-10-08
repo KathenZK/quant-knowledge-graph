@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "CDS期限结构隐含的信用风险溢价越高，该公司股票随后超额收益越高。",
+    "missing": [
+      "主结果γ用全样本估计（前视）；样本外滚动/扩展窗口长度与明细在网络附录，未取得。",
+      "持有期按“每月末排序”推定为一个月。",
+      "ECB会议稿（2011-11-18）未与JF终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v39-ecb-fwz-credit-risk-premia-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "Markit CDS为付费数据，仅覆盖有活跃CDS的公司；全样本γ有前视，实盘必须用样本外估计，但窗口长度在网络附录中，本PDF不含。"
+    },
+    "calculation": {
+      "evidence": [
+        "v39-ecb-fwz-credit-risk-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按RP̂把股票排为五组（P1最高、P5最低），等权与市值加权均有报告；P1−P5全样本月均2.91%（危机前2.70%，危机中5.85%）。主结果中γ用全样本估计（照搬Cochrane–Piazzesi做法）；样本外版本只用t时信息、以滚动或扩展窗口估计γ，各策略平均年超额收益6%、四因子α 8%。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v39-ecb-fwz-credit-risk-premia-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者的结构模型：股票风险调整后的预期超额收益与CDS隐含的信用风险溢价正相关。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v39-ecb-fwz-credit-risk-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "RX̄_{t+1}=¼Σ_{T∈{1,3,5,7}}RX^T_{t+1}=γ0+γ1S¹_t+γ2F^{1×1}_t+γ3F^{3×1}_t+γ4F^{5×1}_t+γ5F^{7×1}_t+ε_{t+1}=γ′F_t+ε_{t+1}（式14，Cochrane–Piazzesi式单因子）；RP̂_{t+1}=−γ′F_t（式15）；可再除以30日滚动日CDS收益波动，得到CDS隐含风险价格。"
+    },
+    "inputs": {
+      "evidence": [
+        "v39-ecb-fwz-credit-risk-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Markit 675个美国发行人美元CDS日利差（1/3/5/7/10年，MR与NR条款），2001-01-02至2010-04-26；远期CDS利差由拟合的生存曲线与Libor/互换贴现因子（Datastream）计算；CRSP日股价、Compustat市值/账面/评级；合并后共624家公司。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v39-ecb-fwz-credit-risk-premia-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "跨市场（信用到股票）选股因子；可与违约概率、困境类因子对照。"
+    }
+  },
+  "identity_namespace": "ecb.europa.eu/events",
+  "lab": null,
+  "missing_information": [
+    "主结果γ用全样本估计（前视）；样本外滚动/扩展窗口长度与明细在网络附录，未取得。",
+    "持有期按“每月末排序”推定为一个月。",
+    "ECB会议稿（2011-11-18）未与JF终版比对；未回测。"
+  ],
+  "name": "CDS期限结构信用风险溢价（Friewald–Wagner–Zechner）",
+  "native_source_id": "FWZ2011:CDS-term-structure-credit-risk-premium",
+  "one_line": "逐公司用1年期CDS利差与1×1、3×1、5×1、7×1远期CDS利差回归1/3/5/7年CDS平均超额收益得γ，信用风险溢价估计RP̂=−γ′F_t；每月末按RP̂把股票分五组，做多最高组、做空最低组。原文主结果用全样本γ，样本外版本用滚动或扩展窗口。",
+  "record_id": "FWZ2011:CDS-term-structure-credit-risk-premium",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.ecb.europa.eu/events/pdf/conferences/ws_asset/sess3/Friewald-Wagner-Zechner.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Nils Friewald, Christian Wagner, Josef Zechner,《The Cross-Section of Credit Risk Premia and Equity Returns》2011-11-18工作稿（ECB会议托管）。中文定义自撰。",
+      "id": "v39-ecb-fwz-credit-risk-premia-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L452–481（PDF物理页11,12）；formula L488–504（PDF物理页12）；inputs L512–527（PDF物理页12,13）；inputs L528–548（PDF物理页13）；calculation L619–620（PDF物理页15）；calculation L760–768（PDF物理页19）；calculation L775–778（PDF物理页19）；calculation L912–925（PDF物理页23,24）",
+      "revision": "Friewald/Wagner/Zechner《The Cross-Section of Credit Risk Premia and Equity Returns》November 18, 2011（欧洲央行会议网页托管稿）；71页；未与JF期刊版比对；sha256 d27e9d68667d5173fbc00c15f8635dafac48b59755b147c06b51782848203083",
+      "sha256": "d27e9d68667d5173fbc00c15f8635dafac48b59755b147c06b51782848203083",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.ecb.europa.eu/events/pdf/conferences/ws_asset/sess3/Friewald-Wagner-Zechner.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}
