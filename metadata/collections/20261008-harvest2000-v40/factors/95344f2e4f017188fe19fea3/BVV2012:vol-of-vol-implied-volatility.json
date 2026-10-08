@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "隐含波动率自身波动越大（对风险的不确定性越高）的股票，随后一个月收益越低。",
+    "missing": [
+      "工作稿（2012-07-30）样本至2009年，期刊终版（JFQA 2018）的定义与样本可能更新，未比对。",
+      "组合交易成本未报告；期权数据筛选后覆盖范围随时间变化。",
+      "Quantpedia转载稿，非作者或机构托管；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v40-quantpedia-baltussen-vol-of-vol-wp2012-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "需付费OptionMetrics逐期权数据，只覆盖有上市期权的中大盘股；各组每月平均超过230只、最少130只；极端组约33%的股票次月仍在原组。"
+    },
+    "calculation": {
+      "evidence": [
+        "v40-quantpedia-baltussen-vol-of-vol-wp2012-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末以倒数第二个交易日的期权数据（一天实施滞后）计算vol-of-vol，按升序分五组；组内市值加权（另报告等权），High−Low持有一个月。作者报告低组月超额0.59%、高组−0.26%，High−Low为−0.85%/月（t=−2.83），四因子α −0.69%/月（t=−2.39）；故因子方向为做多低vol-of-vol、做空高vol-of-vol。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v40-quantpedia-baltussen-vol-of-vol-wp2012-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者把vol-of-vol视为投资者对预期收益不确定性的代理（二阶信念），高不确定性股票随后收益更低，与代表性投资者理性定价不一致。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v40-quantpedia-baltussen-vol-of-vol-wp2012-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "VoV^{1M}_{i,t}=sqrt[(1/20)Σ_{j=t−19}^{t}(σ^{IV}_{i,j}−σ̄^{IV}_{i,t})²]/σ̄^{IV}_{i,t}（式4），σ̄^{IV}_{i,t}=(1/20)Σσ^{IV}_{i,j}；σ^{IV}_{i,j}为当日ATM认购与ATM认沽隐含波动率的平均；至少12个非缺失观测，缺失超过10天的值删除。"
+    },
+    "inputs": {
+      "evidence": [
+        "v40-quantpedia-baltussen-vol-of-vol-wp2012-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "OptionMetrics个股期权（1996-01-01至2009-09-30）：只用第三个周五到期的标准期权，未平仓量>0、最优买价>0、IV在3%–200%，买卖价差不超过中间价25%，剩余10–52个交易日；ATM定义为行权价/现价0.95–1.05，取最接近1.00者。CRSP普通股（代码10/11，NYSE/AMEX/NASDAQ），剔除封闭式基金与REIT、价格<5美元及市值<2.25亿美元（2009年末折现）的股票。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v40-quantpedia-baltussen-vol-of-vol-wp2012-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "期权隐含信息的美股横截面选股因子；可与IV-RV价差、波动微笑偏斜、特质波动率对照。"
+    }
+  },
+  "identity_namespace": "quantpedia.com/www",
+  "lab": null,
+  "missing_information": [
+    "工作稿（2012-07-30）样本至2009年，期刊终版（JFQA 2018）的定义与样本可能更新，未比对。",
+    "组合交易成本未报告；期权数据筛选后覆盖范围随时间变化。",
+    "Quantpedia转载稿，非作者或机构托管；未回测。"
+  ],
+  "name": "隐含波动率之波动（vol-of-vol，Baltussen–van Bekkum–van der Grient）",
+  "native_source_id": "BVV2012:vol-of-vol-implied-volatility",
+  "one_line": "每只股票用近20个交易日的ATM认购与认沽隐含波动率均值序列，计算其标准差除以同期均值得到vol-of-vol；每月末（采用倒数第二个交易日的期权数据）按vol-of-vol分五组，组内市值加权，做多最低组、做空最高组，持有一个月。",
+  "record_id": "BVV2012:vol-of-vol-implied-volatility",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://quantpedia.com/www/Unknown_Unknowns_-_Vol-of-Vol_and_the_Cross_Section_of_Stock_Returns.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Guido Baltussen, Sjoerd van Bekkum, Bart van der Grient,《Unknown Unknowns: Vol-of-Vol and the Cross Section of Stock Returns》2012-07-30工作稿（Quantpedia转载；终版JFQA 2018未比对）。中文定义自撰。",
+      "id": "v40-quantpedia-baltussen-vol-of-vol-wp2012-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L463–504（PDF物理页7）；inputs L507–574（PDF物理页7,8）；inputs L598–641（PDF物理页8,9）；calculation L924–932（PDF物理页12）；calculation L1046–1048（PDF物理页13）；calculation L1082–1098（PDF物理页14）；availability L1024–1037（PDF物理页13）",
+      "revision": "作者工作稿《Unknown Unknowns: Vol-of-Vol and the Cross Section of Stock Returns》，日期July 30, 2012，Quantpedia网站转载（非作者或机构托管）；59页；JFQA 53(4), 2018终版更名为《Unknown Unknowns: Uncertainty About Risk and Stock Returns》，未比对；sha256 5f5630514afca467177094c31d45ca2c469c430b4b81f53bbc43766290be669e",
+      "sha256": "5f5630514afca467177094c31d45ca2c469c430b4b81f53bbc43766290be669e",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://quantpedia.com/www/Unknown_Unknowns_-_Vol-of-Vol_and_the_Cross_Section_of_Stock_Returns.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "发行人股票隐含波动率上升（降低）的公司债，下个月收益低于（高于）其他债券。",
+    "missing": [
+      "作者接收稿未印日期，未与Management Science终版比对；网络附录未取。",
+      "风险调整所用债券因子（DRF/CRF/LRF/REV等）由Turan Bali提供，属Bai–Bali–Wen（JFE 2019）体系，该论文已撤稿；α数值据此须谨慎，原始十分位收益差不依赖这些因子。",
+      "仅大额（100万美元）交易成本下净收益显著；同文ΔCVOL、ΔPVOL单独排序、ΔCVOL−ΔPVOL、百分比变化与双重排序属同一核心信号的变体，未单列；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v42-polyu-cao-goyal-xiao-zhan-ivchange-bonds-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "需要TRACE、FISD与OptionMetrics，只覆盖发行人有上市期权的债券；2008-03-04前OptionMetrics按16:15收盘价记录，作者以跳过一天规避该前视。交易成本：按Edwards–Harris–Piwowar估计（100万美元单笔18/16/30bp，10万美元单笔68/45/100bp，分别对应全部、投资级、非投资级），仅100万美元规模下净收益与α显著；10万美元规模或Bao–Pan–Wang成本下不显著。"
+    },
+    "calculation": {
+      "evidence": [
+        "v42-polyu-cao-goyal-xiao-zhan-ivchange-bonds-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按上月ΔImpVOL把债券分为十组（第一组隐含波动率降幅最大，第十组升幅最大），以上月债券市值（未偿面值×价格）加权，持有一个月后重排；月收益=(P_t+AI_t+C_t)/(P_{t−1}+AI_{t−1})−1。作者报告ΔImpVOL十分位第十组减第一组月均−0.60%（t=3.62），债券+股票11因子α −0.98%（t=5.57）；单用ΔCVOL时第一组0.95%、第十组0.44%，差−0.52%（t=−3.57），债券五因子α −0.58%（t=−2.53）、债券+股票α −0.90%（t=−4.94）。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v42-polyu-cao-goyal-xiao-zhan-ivchange-bonds-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者认为股票期权市场先反映发行人违约风险与未来波动的变化，公司债投资者注意力有限且套利成本高，债价滞后调整。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v42-polyu-cao-goyal-xiao-zhan-ivchange-bonds-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "ΔImpVOL_{i,t}=(ΔCVOL_{i,t}+ΔPVOL_{i,t})/2；ΔCVOL、ΔPVOL分别为发行人股票在OptionMetrics波动率曲面上Delta=0.5、期限365天的认购与认沽隐含波动率的月末值较上月末的变化；隐含波动率取债券月末价格观测日的前一天（跳过一天，作者称跳过两天无实质差别）。"
+    },
+    "inputs": {
+      "evidence": [
+        "v42-polyu-cao-goyal-xiao-zhan-ivchange-bonds-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "增强版TRACE逐笔成交与Mergent FISD发行条款（按Bai–Bali–Wen 2019剔除非美国公开市场、结构化/MBS/ABS/机构/股票挂钩、可转债、偿债基金、浮息或非常规付息债，价格低于5或高于1000、剩余期限不足1年的债，以及when-issued、锁定、特殊条件、结算超过两天、撤销与更正的成交）；日价为当日成交量加权均价，月末价取该月最后五个交易日中的最后一个观测，无观测则缺失；OptionMetrics波动率曲面（核平滑插值，固定Delta与期限）。合并后2002-07至2017-08共881,625个债券月、2,327家公司。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v42-polyu-cao-goyal-xiao-zhan-ivchange-bonds-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "公司债横截面选券的跨市场信号；可与债券价值（BBM）、信用动量等因子对照，或作为大额机构交易的增强信号。"
+    }
+  },
+  "identity_namespace": "ira.lib.polyu.edu.hk",
+  "lab": null,
+  "missing_information": [
+    "作者接收稿未印日期，未与Management Science终版比对；网络附录未取。",
+    "风险调整所用债券因子（DRF/CRF/LRF/REV等）由Turan Bali提供，属Bai–Bali–Wen（JFE 2019）体系，该论文已撤稿；α数值据此须谨慎，原始十分位收益差不依赖这些因子。",
+    "仅大额（100万美元）交易成本下净收益显著；同文ΔCVOL、ΔPVOL单独排序、ΔCVOL−ΔPVOL、百分比变化与双重排序属同一核心信号的变体，未单列；未回测。"
+  ],
+  "name": "发行人隐含波动率月变化ΔImpVOL预测公司债收益：十分位市值加权多空（Cao–Goyal–Xiao–Zhan）",
+  "native_source_id": "CGXZ2023:bond-implied-vol-change-DImpVOL",
+  "one_line": "对每只有TRACE成交的美国公司债，取其发行人股票期权波动率曲面上Delta=0.5、期限365天的认购与认沽隐含波动率的月末变化，ΔImpVOL=(ΔCVOL+ΔPVOL)/2（隐含波动率取债券月末定价日的前一天）；每月末按ΔImpVOL把债券分十组，按上月债券市值加权，做多隐含波动率降幅最大的第一组、做空升幅最大的第十组，持有一个月。",
+  "record_id": "CGXZ2023:bond-implied-vol-change-DImpVOL",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://ira.lib.polyu.edu.hk/bitstream/10397/99894/1/Cao_Implied_Volatility_Changes.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jie Cao, Amit Goyal, Xiao Xiao, Xintong Zhan,《Implied Volatility Changes and Corporate Bond Returns》作者接收稿（PolyU机构仓储托管；终版Management Science 2023未比对）。中文定义自撰。",
+      "id": "v42-polyu-cao-goyal-xiao-zhan-ivchange-bonds-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L363–372（PDF物理页10）；formula L567–568（PDF物理页15）；formula L523–528（PDF物理页14）；inputs L295–309（PDF物理页8）；inputs L310–330（PDF物理页8,9）；inputs L344–354（PDF物理页9）；inputs L363–372（PDF物理页10）；calculation L118–136（PDF物理页3,4）；calculation L410–423（PDF物理页11）；calculation L453–456（PDF物理页12）；calculation L523–528（PDF物理页14）；calculation L310–330（PDF物理页8,9）；availability L393–397（PDF物理页10）；availability L198–209（PDF物理页5,6）；availability L1128–1164（PDF物理页30,31）",
+      "revision": "作者接收稿（accepted manuscript）《Implied Volatility Changes and Corporate Bond Returns》，香港理工大学机构知识库（PolyU Institutional Research Archive，机构仓储）托管；正文未印日期；69页；未与Management Science 69(3):1375–1397（2023）终版比对；sha256 0d9c6d85792077b19acc4079c641b916d80d2b27ccf5bb7ec694ba3f0426ec5e",
+      "sha256": "0d9c6d85792077b19acc4079c641b916d80d2b27ccf5bb7ec694ba3f0426ec5e",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://ira.lib.polyu.edu.hk/bitstream/10397/99894/1/Cao_Implied_Volatility_Changes.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

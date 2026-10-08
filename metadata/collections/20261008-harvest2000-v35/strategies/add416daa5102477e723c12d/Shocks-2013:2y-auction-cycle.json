@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "一级交易商在拍卖前需吸收大量新发供给、风险承担能力受限，导致国债价格在拍卖前下跌、拍卖后回升，可预期且重复。",
+    "missing": [
+      "下单时点与使用的价格（收盘/中间价）未在所引段落写明。",
+      "“久期匹配”的精确权重随时间变化，仅给出约20%/80%的近似。",
+      "仅2013-05作者稿，未与RFS终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "personal.lse.ac.uk/loud",
+  "lab": null,
+  "missing_information": [
+    "下单时点与使用的价格（收盘/中间价）未在所引段落写明。",
+    "“久期匹配”的精确权重随时间变化，仅给出约20%/80%的近似。",
+    "仅2013-05作者稿，未与RFS终版比对；未回测。"
+  ],
+  "name": "美债2年期拍卖前后久期对冲多空循环",
+  "native_source_id": "Shocks-2013:2y-auction-cycle",
+  "one_line": "每次2年期国债拍卖前t日做空新发2年期、做多久期匹配的6个月国库券+10年期组合，拍卖日反手持有至拍卖后t日（t=1–10）。",
+  "record_id": "Shocks-2013:2y-auction-cycle",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://personal.lse.ac.uk/loud/Shocks.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Dong Lou, Hongjun Yan, Jinfan Zhang,《Anticipated and Repeated Shocks in Liquid Markets》2013-05稿（作者主页；期刊RFS 2013据外部书目，未取期刊原件）。中文定义自撰。",
+      "id": "v35-lse-lou-yan-zhang-2013-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L770–774（PDF物理页17）；universe L768–770（PDF物理页17）；universe L1599–1600（PDF物理页38）；signal L1592–1593（PDF物理页38）；entry L1594–1595（PDF物理页38）；exit L1595–1598（PDF物理页38）；position L814–820（PDF物理页17,18）；cost L794–828（PDF物理页17,18）",
+      "revision": "Lou/Yan/Zhang《Anticipated and Repeated Shocks in Liquid Markets》This Draft: May 2013；LSE作者主页托管；43页；sha256 98ad8352790d1c628cc7941a088680dbfeb2aa7ea9283b883a8606f0fd6e011d",
+      "sha256": "98ad8352790d1c628cc7941a088680dbfeb2aa7ea9283b883a8606f0fd6e011d",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://personal.lse.ac.uk/loud/Shocks.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v35-lse-lou-yan-zhang-2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国国债：新发（on-the-run）2年期国债、6个月国库券与10年期国债。"
+    },
+    "cost": {
+      "evidence": [
+        "v35-lse-lou-yan-zhang-2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Panel C：每个券日收益扣1/360隔夜special repo利率（1998–2008）；买卖价差按Fleming(2003)：10年2.44bp、2年0.66bp、6月0.37bp，整个多空组合1.46bp/次，每月两次往返共2.92bp；t≤6时成本吞噬利润。"
+    },
+    "entry": {
+      "evidence": [
+        "v35-lse-lou-yan-zhang-2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "拍卖前第t个交易日：做空on-the-run 2年期国债，做多久期匹配的on-the-run 6个月国库券与10年期国债组合。"
+    },
+    "execution_time": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "按日收益计；具体下单时点（开盘/收盘）未写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v35-lse-lou-yan-zhang-2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有至拍卖日后反手：做多同一2年期、做空久期匹配组合，持有至拍卖后第t个交易日平仓。"
+    },
+    "position": {
+      "evidence": [
+        "v35-lse-lou-yan-zhang-2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "多空两侧久期匹配以对冲利率风险；作者久期估计下对冲组合约20%为10年期、80%为6个月国库券。"
+    },
+    "risk": {
+      "evidence": [
+        "v35-lse-lou-yan-zhang-2013-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "通过久期匹配对冲平行利率风险；其他风险控制未述。"
+    },
+    "signal": {
+      "evidence": [
+        "v35-lse-lou-yan-zhang-2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "日历事件信号：2年期国债拍卖日；窗口参数t∈{1,…,10}个交易日。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v35-lse-lou-yan-zhang-2013-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日频持有，按月度拍卖循环。"
+    },
+    "universe": {
+      "evidence": [
+        "v35-lse-lou-yan-zhang-2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "单一循环：2年期国债拍卖（样本中几乎每月一次）；全样本1980-01至2008-06。"
+    }
+  }
+}

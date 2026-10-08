@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "通过共同分析师覆盖相连的公司间存在信息传导迟滞，关联股过去收益正向预测本股未来收益。",
+    "missing": [
+      "同一分析师多次预测、离职/匿名分析师的处理未在所引段落说明。",
+      "期刊终版(JFE 2020)未取得比对。",
+      "未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v35-nber-w25201-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "IBES detail需按预测公告日期构造过去12个月覆盖关系以避免前视；所引段落按月末定义，数据权利与时点细节需另锁。"
+    },
+    "calculation": {
+      "evidence": [
+        "v35-nber-w25201-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末计算各股CS RET，按其分五分位，计算下月价值加权与等权组合收益，月末再平衡；长短组合做多最高五分位、做空最低五分位（作者亦报告十分位版本更强）。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v35-nber-w25201-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：共同分析师覆盖刻画基本面关联，投资者对关联公司信息反应迟缓，产生跨公司动量溢出。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v35-nber-w25201-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CS RET_{i,t}=Σ_{j=1}^{N} n_ij·Ret_{j,t} / Σ_{j=1}^{N} n_ij（原式(1)）。Ret_{j,t}为关联股j在月t的收益；n_ij为同时覆盖i与j的分析师人数；N为月t内与i关联的股票数。关联定义：月末若至少一名分析师同时覆盖两只股票即为关联；“覆盖”指该分析师过去12个月内对该股发布过至少一次FY1或FY2盈利预测（IBES detail）。"
+    },
+    "inputs": {
+      "evidence": [
+        "v35-nber-w25201-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP中NYSE、NASDAQ、NYSE MKT(原AMEX)上市普通股月收益；IBES detail文件的FY1/FY2预测记录（用于分析师—股票覆盖关系）；剔除上月末股价低于5美元的股票。美国样本1983:12–2015:12。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v35-nber-w25201-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股横截面动量溢出因子；可与客户动量、TNIC同行动量、伪复合公司收益对照。"
+    }
+  },
+  "identity_namespace": "nber.org/papers",
+  "lab": null,
+  "missing_information": [
+    "同一分析师多次预测、离职/匿名分析师的处理未在所引段落说明。",
+    "期刊终版(JFE 2020)未取得比对。",
+    "未回测；经济有效性未检验。"
+  ],
+  "name": "共同分析师覆盖关联股动量（CS RET）",
+  "native_source_id": "w25201:CS_RET",
+  "one_line": "以同时覆盖两只股票的分析师人数为权重，计算关联股票上月加权收益CS RET；月末五分位，做多高CS RET、做空低CS RET。",
+  "record_id": "w25201:CS_RET",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w25201/w25201.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Usman Ali, David Hirshleifer,《Shared Analyst Coverage: Unifying Momentum Spillover Effects》NBER WP 25201（2018-10，2019-02修订；期刊版JFE 2020据外部书目，未取）。中文定义自撰。",
+      "id": "v35-nber-w25201-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L480–483（PDF物理页12）；formula L584–607（PDF物理页14,15）；inputs L479–486（PDF物理页12）；calculation L609–611（PDF物理页15）；calculation L616–617（PDF物理页15）",
+      "revision": "NBER Working Paper 25201, October 2018, Revised February 2019；55页；sha256 3839078cb2af30a79d30fbd6e1ac82f4a5a2276906ed15e08baacbefa9d374c7",
+      "sha256": "3839078cb2af30a79d30fbd6e1ac82f4a5a2276906ed15e08baacbefa9d374c7",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w25201/w25201.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

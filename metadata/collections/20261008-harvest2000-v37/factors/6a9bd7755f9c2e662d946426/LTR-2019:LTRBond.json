@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "过去36个月（跳过近12个月）累计收益最低的公司债随后收益更高。",
+    "missing": [
+      "月收益公式本体（含应计利息）在派生文本中排版不完整，仅转写文字说明。",
+      "交易成本未计入。",
+      "2019-03工作论文，未与JFE期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v37-georgetown-bsw-ltr-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "需要逐券月度收益历史至少48个月；TRACE数据须按原文过滤。"
+    },
+    "calculation": {
+      "evidence": [
+        "v37-georgetown-bsw-ltr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月先按信用评级分三组，组内按剩余期限分三组，再按LTR分三组（3×3×3条件排序）；LTRBond=各评级×期限组合内最低LTR组减最高LTR组的市值加权收益差之平均。1977-01至2017-12月均0.47%（t=6.12），年化Sharpe 1.11。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v37-georgetown-bsw-ltr-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：长期输家债券的过往收益反映投资者事前风险评估，因而要求更高预期收益。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v37-georgetown-bsw-ltr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "LTR_{i,t}=债券i在t−48至t−13月的36个月累计收益（跳过t−12至t−2的12个月动量与t−1短期反转月）；单变量检验按LTR每月分五分位，以未偿面额市值加权。"
+    },
+    "inputs": {
+      "evidence": [
+        "v37-georgetown-bsw-ltr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Lehman、Datastream、NAIC、Bloomberg、增强版TRACE、Mergent FISD六源合并（剔除非美上市、结构化/抵押/资产支持/机构/权益挂钩、可转债、价格<5美元、浮息、剩余期限<1年；TRACE另剔当发/锁定/取消/超两日结算/成交<1万美元）；月收益含应计利息与票息，月末取最后五个交易日内最接近月末的成交；违约债按IG −40.17%、NIG −17.67%的复合违约收益处理；评级取标普与穆迪均值（1=AAA…21=CCC）。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v37-georgetown-bsw-ltr-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "公司债横截面因子；与股票长期反转、债券动量、信用评级因子对照。"
+    }
+  },
+  "identity_namespace": "faculty.georgetown.edu/qw50",
+  "lab": null,
+  "missing_information": [
+    "月收益公式本体（含应计利息）在派生文本中排版不完整，仅转写文字说明。",
+    "交易成本未计入。",
+    "2019-03工作论文，未与JFE期刊版比对；未回测。"
+  ],
+  "name": "公司债长期反转因子（LTRBond）",
+  "native_source_id": "LTR-2019:LTRBond",
+  "one_line": "LTR=债券t−48至t−13的36个月累计收益（跳过动量与短期反转月）；每月按信用评级三分→期限三分→LTR三分（3×3×3条件排序），市值加权做多低LTR、做空高LTR。",
+  "record_id": "LTR-2019:LTRBond",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://faculty.georgetown.edu/qw50/LTR.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Turan G. Bali, Avanidhar Subrahmanyam, Quan Wen,《Long-Term Reversals in the Corporate Bond Market》2019-03工作论文（期刊版据外部书目为JFE 139(2) 2021，未取）。中文定义自撰。",
+      "id": "v37-georgetown-bsw-ltr-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L334–335（PDF物理页9）；formula L361–366（PDF物理页10）；inputs L205–230（PDF物理页6）；inputs L257–275（PDF物理页7,8）；inputs L282–295（PDF物理页8）；inputs L314–319（PDF物理页9）；calculation L737–744（PDF物理页20）",
+      "revision": "Bali/Subrahmanyam/Wen《Long-Term Reversals in the Corporate Bond Market》This Version: March 2019；乔治城大学作者页托管；65页；未与期刊版比对；sha256 abe2651ee5989e29814b077f9bd619db33573e7620cbc9ecd0937a7ce7250f65",
+      "sha256": "abe2651ee5989e29814b077f9bd619db33573e7620cbc9ecd0937a7ce7250f65",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://faculty.georgetown.edu/qw50/LTR.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

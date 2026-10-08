@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "投资者忽视各公司盈利中共同的总体成分（相关性忽视）：新闻月对总体盈利新信息反应不足（下月延续），重复月对可预见的重复信息过度反应（下一新闻月反转），使市场月收益自相关在季度内交替变号。",
+    "missing": [
+      "原文未报告该时序组合本身的收益与夏普（证据为样本内回归t值折算夏普约0.4与样本外R²），未扣交易成本；以市场组合计，实盘需用指数期货或ETF。",
+      "延续臂在t−1月末收盘既算信号又按该价建仓，原文未给跳过一日的结果（反转臂天然间隔一个月）；5%目标波动的历史波动估计窗口在表8注中只简述，引用Guo–Wachter（2025）方法未展开。",
+      "新闻月/重复月按日历季度划分，非日历财年公司的影响另有讨论；同作者Guo（2025，RFS）“Earnings Extrapolation”以过去新闻月收益预测市场，与本信号同族，本批不另列以免重复计数；工作论文未与期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "nber.org/papers/w35753",
+  "lab": null,
+  "missing_information": [
+    "原文未报告该时序组合本身的收益与夏普（证据为样本内回归t值折算夏普约0.4与样本外R²），未扣交易成本；以市场组合计，实盘需用指数期货或ETF。",
+    "延续臂在t−1月末收盘既算信号又按该价建仓，原文未给跳过一日的结果（反转臂天然间隔一个月）；5%目标波动的历史波动估计窗口在表8注中只简述，引用Guo–Wachter（2025）方法未展开。",
+    "新闻月/重复月按日历季度划分，非日历财年公司的影响另有讨论；同作者Guo（2025，RFS）“Earnings Extrapolation”以过去新闻月收益预测市场，与本信号同族，本批不另列以免重复计数；工作论文未与期刊版比对；未回测。"
+  ],
+  "name": "相关性忽视择时：季度首月（新闻月）与次月（重复月）交替符号的市场收益自相关，按上一新闻/重复月市场超额收益减扩展均值定多空，目标波动5%、截断±3（Guo–Wachter）",
+  "native_source_id": "GW2026:newsy-repetitive-month-market-timing",
+  "one_line": "把每季度第一个月定义为新闻月（财报新信息）、第二个月为重复月；对目标月t取其之前最近的新闻月或重复月nr(t)：t为重复月时信号s=mkt_{nr(t)}−截至t−1的市场超额收益扩展均值，t为新闻月时取其相反数，季度第三个月信号为0；每月末按s建立美股市场多空头寸，权重与s成正比，缩放到截至t−1的历史波动5%并截断在±3，持有一个月。",
+  "record_id": "GW2026:newsy-repetitive-month-market-timing",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w35753/w35753.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Hongye Guo, Jessica Wachter,《Correlation Neglect in Asset Prices》NBER Working Paper 35753（2026-09）。中文定义自撰。",
+      "id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L348–359（PDF物理页10）；assets L1715–1724（PDF物理页48）；universe L455–462（PDF物理页13）；signal L334–343（PDF物理页10）；signal L348–359（PDF物理页10）；signal L455–462（PDF物理页13）；signal L1715–1724（PDF物理页48）；entry L1715–1724（PDF物理页48）；entry L970–975（PDF物理页26）；exit L1715–1724（PDF物理页48）；position L1715–1724（PDF物理页48）；position L385–391（PDF物理页11）；position L970–975（PDF物理页26）；risk L385–391（PDF物理页11）；risk L464–470（PDF物理页13）；risk L480–489（PDF物理页14）；timeframe L1715–1724（PDF物理页48）；execution_time L455–462（PDF物理页13）；execution_time L348–359（PDF物理页10）；execution_time L480–489（PDF物理页14）",
+      "revision": "NBER工作论文No. 35753（封面日期September 2026；NBER官网原发，非镜像；版权页\"All rights reserved\"，仅允许引用不超过两段）；66页；期刊版未见；sha256 817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2",
+      "sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w35753/w35753.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v46-nber-w35753-guo-wachter-correlation-neglect-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国股票市场组合（CRSP市场超额收益），按月建立多头或空头头寸。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原文未扣交易成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v46-nber-w35753-guo-wachter-correlation-neglect-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末（t−1月末）按s_{t−1}确定下月市场头寸方向与大小。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v46-nber-w35753-guo-wachter-correlation-neglect-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "预测变量与回归系数只用截至t−1的数据（扩展窗口），作者称全部为实时计算；目标为新闻月时（反转臂）信号取自t−2月，隔一个月；目标为重复月时（延续臂）信号取自紧邻的t−1月，在t−1月末收盘计算并建仓。"
+    },
+    "exit": {
+      "evidence": [
+        "v46-nber-w35753-guo-wachter-correlation-neglect-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月，月末按新信号重设。"
+    },
+    "position": {
+      "evidence": [
+        "v46-nber-w35753-guo-wachter-correlation-neglect-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "市场权重与s_{t−1}成正比，缩放使策略截至t−1的历史波动为5%，再截断在3与−3之间；平均股票头寸为零（β中性择时）。"
+    },
+    "risk": {
+      "evidence": [
+        "v46-nber-w35753-guo-wachter-correlation-neglect-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告：样本内两臂合并的差异系数t=−4.29，约合β中性择时策略夏普0.4；实时扩展窗口样本外R²：仅反转臂2.75%、仅延续臂3.20%、两臂合计5.95%，Guo（2025）预测变量3.68%，两者平均6.95%（Goyal等（2024）46个预测变量中样本外R²为正的19个，其中位数0.26%、最大1.09%）。"
+    },
+    "signal": {
+      "evidence": [
+        "v46-nber-w35753-guo-wachter-correlation-neglect-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "季度第1个月为新闻月、第2个月为重复月（第3个月公告较少、重复性减弱）；nr(t)为t之前最近的新闻月或重复月（如t=2月则nr=1月，t=4月则nr=2月）；s_{t−1}=mkt_{nr(t)}−mkt̄_{t−1}（t为重复月），s_{t−1}=−(mkt_{nr(t)}−mkt̄_{t−1})（t为新闻月），t为季度第3个月时s=0；mkt̄_{t−1}为截至t−1的扩展窗口均值。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v46-nber-w35753-guo-wachter-correlation-neglect-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度。"
+    },
+    "universe": {
+      "evidence": [
+        "v46-nber-w35753-guo-wachter-correlation-neglect-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "单一资产：美国股票市场；市场收益用Global Financial Database回溯至1872年以估计扩展窗口，样本外评估自1926年起，数据至2024年。"
+    }
+  }
+}

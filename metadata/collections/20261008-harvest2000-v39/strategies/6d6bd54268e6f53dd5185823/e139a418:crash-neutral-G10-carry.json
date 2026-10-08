@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "用虚值认沽去掉崩盘风险后，G10套息仍有显著正收益，崩盘风险溢价只占套息收益的一小部分。",
+    "missing": [
+      "FX期权数据为J.P. Morgan DataQuery专有数据；交叉汇率期权流动性弱于X/USD期权。",
+      "价差加权的归一化（权重总和/杠杆）未在引用段写明。",
+      "组合对冲、X/USD对冲方案及25δ/50δ档位结果未单列；作者稿未与JFE终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "repository.upenn.edu/bitstreams",
+  "lab": null,
+  "missing_information": [
+    "FX期权数据为J.P. Morgan DataQuery专有数据；交叉汇率期权流动性弱于X/USD期权。",
+    "价差加权的归一化（权重总和/杠杆）未在引用段写明。",
+    "组合对冲、X/USD对冲方案及25δ/50δ档位结果未单列；作者稿未与JFE终版比对；未回测。"
+  ],
+  "name": "崩盘中性G10套息（交叉汇率10δ认沽对冲，Jurek）",
+  "native_source_id": "e139a418:crash-neutral-G10-carry",
+  "one_line": "每月按G10一月利率构造价差加权套息（权重∝利率与第5、6名利率均值之差，可美元中性），按“层级对冲”把多空敞口配对，用对应交叉汇率的一月期10δ认沽保护每个多J/空I敞口；认沽数量q_p=e^{y^j τ}/(1+e^{y^j τ}δ_p)并对冲期权Delta，认沽费用以低息货币I借入；持有一个月。",
+  "record_id": "e139a418:crash-neutral-G10-carry",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://repository.upenn.edu/server/api/core/bitstreams/e139a418-9bbe-4403-a6d8-120648162a65/content"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jakub W. Jurek,《Crash-Neutral Currency Carry Trades》2013-08作者稿（UPenn开放仓储）。中文定义自撰。",
+      "id": "v39-upenn-jurek-crash-neutral-carry-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L863–891（PDF物理页14）；universe L863–891（PDF物理页14）；signal L324–340（PDF物理页6）；entry L638–650（PDF物理页11）；entry L664–672（PDF物理页11）；entry L724–736（PDF物理页12）；exit L598–606（PDF物理页10）；exit L1173–1183（PDF物理页18）；position L324–340（PDF物理页6）；position L598–606（PDF物理页10）；position L608–636（PDF物理页10,11）；risk L1218–1242（PDF物理页19）；cost L1609–1619（PDF物理页25）；timeframe L1173–1183（PDF物理页18）；execution_time L863–891（PDF物理页14）",
+      "revision": "Jurek《Crash-Neutral Currency Carry Trades》作者稿，封面日期August 2013（宾夕法尼亚大学ScholarlyCommons仓储托管；期刊版据外部书目为JFE 2014，未取、未比对）；51页；sha256 69d10680bfa667949e85ae0ae20a669f1ff92a639fbe1b1ab0795a48f3180b12",
+      "sha256": "69d10680bfa667949e85ae0ae20a669f1ff92a639fbe1b1ab0795a48f3180b12",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://repository.upenn.edu/server/api/core/bitstreams/e139a418-9bbe-4403-a6d8-120648162a65/content",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v39-upenn-jurek-crash-neutral-carry-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "G10货币一月期存款/远期敞口，以及45个G10交叉汇率的一月期欧式期权（主口径10δ认沽）。"
+    },
+    "cost": {
+      "evidence": [
+        "v39-upenn-jurek-crash-neutral-carry-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "把隐含波动率乘以1.1模拟期权买卖价差：10δ对冲组合收益下降，但仍在10%水平显著。"
+    },
+    "entry": {
+      "evidence": [
+        "v39-upenn-jurek-crash-neutral-carry-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月按层级对冲配对：最大多头与最大空头先配对，用对应J/I交叉汇率认沽对冲，余量依次与下一大敞口配对。每对买入行权价K_p的认沽q_p=exp(y^j τ)/(1+exp(y^j τ)δ_p)份，另买−q_p·δ_p单位J货币对冲认沽Delta，认沽费用以I货币借入。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v39-upenn-jurek-crash-neutral-carry-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月末（期权数据按月末采样）。"
+    },
+    "exit": {
+      "evidence": [
+        "v39-upenn-jurek-crash-neutral-carry-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "期权一个月后到期结算：到期价内时，行权价以下的货币敞口全部消除；组合每月再平衡（买入持有一个月）。"
+    },
+    "position": {
+      "evidence": [
+        "v39-upenn-jurek-crash-neutral-carry-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "价差加权（可选美元中性）；期权覆盖经Delta对冲，使建仓时的货币敞口与未对冲套息相同；约定高息货币为J，始终买入J/I认沽。"
+    },
+    "risk": {
+      "evidence": [
+        "v39-upenn-jurek-crash-neutral-carry-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告：对冲后偏度约−0.4（未对冲−1.1），最差月收益改善约4%；层级/组合对冲的年均收益5.27%/5.36%（t≈2.1），与未对冲之差（崩盘溢价）仅0.31%/0.22%，不显著。"
+    },
+    "signal": {
+      "evidence": [
+        "v39-upenn-jurek-crash-neutral-carry-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月t按各国一月利率排名，高息做多、低息做空；价差加权的权重按该国利率与第5、6名利率均值之差的绝对距离分配；美元中性版要求其余九种货币权重之和为0。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v39-upenn-jurek-crash-neutral-carry-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度（一月期期权，月度再平衡）。"
+    },
+    "universe": {
+      "evidence": [
+        "v39-upenn-jurek-crash-neutral-carry-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "J.P. Morgan DataQuery的45个G10交叉货币对期权隐含波动率（固定期限，5个Delta档：10δ/25δ认沽、ATM、25δ/10δ认购），1999-01至2012-06，月末采样（162个月）；一月期Eurocurrency（LIBOR）利率与日汇率来自Reuters/Datastream。"
+    }
+  }
+}

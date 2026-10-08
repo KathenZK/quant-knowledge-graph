@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "过去3个月CDS收益最高（信用改善最多）的发行人随后继续改善，信用评级调整缓慢导致CDS动量。",
+    "missing": [
+      "CDS买卖价差与可交易性（场外、需ISDA）未在引用段计入。",
+      "回收率数据来自Creditex拍卖结果；Markit数据为商业数据。",
+      "工作论文版未与期刊版比对；同文“CDS→股票”跨市场与联合动量规则参数不全，未收录；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "aeaweb.org/conference",
+  "lab": null,
+  "missing_information": [
+    "CDS买卖价差与可交易性（场外、需ISDA）未在引用段计入。",
+    "回收率数据来自Creditex拍卖结果；Markit数据为商业数据。",
+    "工作论文版未与期刊版比对；同文“CDS→股票”跨市场与联合动量规则参数不全，未收录；未回测。"
+  ],
+  "name": "单名CDS动量（3个月形成、1个月持有，五分位）",
+  "native_source_id": "AEA2015-957:CDS-momentum-3-1",
+  "one_line": "每月末按过去J=3个月CDS持有期收益（卖保护方视角，ISDA平坦风险率模型盯市）把美国单名5年期CDS分五组，卖出赢家P5的保护、买入输家P1的保护，等权，持有1个月，形成与持有期间不跳月。",
+  "record_id": "AEA2015-957:CDS-momentum-3-1",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.aeaweb.org/conference/2015/retrieve.php?pdfid=957&tk=QDTTD9Ra"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jongsub Lee, Andy Naranjo, Stace Sirmans,《CDS Momentum: Slow Moving Credit Ratings and Cross-Market Spillovers》2014-12-28工作论文（AEA 2015年会托管）。中文定义自撰。",
+      "id": "v38-aea2015-lns-cds-momentum-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L239–248（PDF物理页7）；universe L239–248（PDF物理页7）；signal L448–470（PDF物理页12）；signal L493–496（PDF物理页13）；signal L563–566（PDF物理页15）；entry L564–568（PDF物理页15）；entry L578–581（PDF物理页15）；entry L583–587（PDF物理页15）；exit L569–570（PDF物理页15）；position L569–570（PDF物理页15）；execution_time L493–496（PDF物理页13）",
+      "revision": "Lee/Naranjo/Sirmans《CDS Momentum: Slow Moving Credit Ratings and Cross-Market Spillovers》December 28, 2014；AEA 2015年会托管PDF；59页；未与期刊版比对；sha256 dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc",
+      "sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.aeaweb.org/conference/2015/retrieve.php?pdfid=957&tk=QDTTD9Ra",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v38-aea2015-lns-cds-momentum-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Markit美国1,247家上市公司5年期美元单名CDS综合报价，2003-01至2011-12；2009年“Big Bang”前为MR条款、后为XR条款。"
+    },
+    "cost": {
+      "evidence": [
+        "v38-aea2015-lns-cds-momentum-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "引用段未计CDS买卖价差。"
+    },
+    "entry": {
+      "evidence": [
+        "v38-aea2015-lns-cds-momentum-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按过去J个月CDS收益分五个等规模组；对收益最高P5（赢家）卖出保护、对最低P1（输家）买入保护；J=3时月均收益52bp（t=3.87），形成与持有期之间不跳月。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v38-aea2015-lns-cds-momentum-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月19日（IMM日前一日）午夜按Markit报价进出，保证进出同一到期合约。"
+    },
+    "exit": {
+      "evidence": [
+        "v38-aea2015-lns-cds-momentum-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有K个月后全部平仓（基准K=1）。"
+    },
+    "position": {
+      "evidence": [
+        "v38-aea2015-lns-cds-momentum-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "各动量组合等权；K>1时按重叠组合等权平均避免重叠收益。"
+    },
+    "risk": {
+      "evidence": [
+        "v38-aea2015-lns-cds-momentum-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "输家组多为低评级发行人，信用事件时买保护腿获利、卖保护腿承担违约损失（−(1−R)）。"
+    },
+    "signal": {
+      "evidence": [
+        "v38-aea2015-lns-cds-momentum-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CDS收益=卖保护方1美元名义的盯市损益：−(S_{t1}−S_{t0})·RPV01(t0)，RPV01用平坦风险率由5年报价校准、NSS拟合Libor曲线贴现，调整应计保费与信用事件实际回收；按每月19日到次月19日交易同一到期合约；形成期收益由月收益复利。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v38-aea2015-lns-cds-momentum-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月度（每月19日至次月19日）。"
+    },
+    "universe": {
+      "evidence": [
+        "v38-aea2015-lns-cds-momentum-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "同上CDS样本中每月可得者。"
+    }
+  }
+}

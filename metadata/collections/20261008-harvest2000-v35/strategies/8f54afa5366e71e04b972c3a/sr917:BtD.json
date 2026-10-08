@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "做市商在美股收盘净卖压后持有多余库存，欧洲开盘时新流动性到来，价格反转上行（库存风险补偿）。",
+    "missing": [
+      "美欧夏令时不同步的约3周内欧洲开盘对应时点变化，策略是否随之平移未在规则中定义。",
+      "成交方向判定所需的逐笔报价数据（Refinitiv/CME）权利需另行确认。",
+      "未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "newyorkfed.org/staff_reports",
+  "lab": null,
+  "missing_information": [
+    "美欧夏令时不同步的约3周内欧洲开盘对应时点变化，策略是否随之平移未在规则中定义。",
+    "成交方向判定所需的逐笔报价数据（Refinitiv/CME）权利需另行确认。",
+    "未回测；经济有效性未检验。"
+  ],
+  "name": "标普E-mini欧洲开盘时段买跌：前日收盘净卖压后01:30–03:30（ET）持有",
+  "native_source_id": "sr917:BtD",
+  "one_line": "若前一交易日15:15–16:15（ET）E-mini相对签名成交量RSV为负，则在01:30（ET）做多ES、03:30平仓；否则不持仓。",
+  "record_id": "sr917:BtD",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr917.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Nina Boyarchenko, Lars C. Larsen, Paul Whelan,《The Overnight Drift》FRBNY Staff Report 917（2020-02，2022-08修订）。中文定义自撰。",
+      "id": "v35-nyfed-sr917-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L272–275（PDF物理页8）；universe L1221–1225（PDF物理页29）；signal L681–684（PDF物理页18）；signal L799–813（PDF物理页21）；signal L304–305（PDF物理页9）；entry L1212–1225（PDF物理页29）；exit L1212–1225（PDF物理页29）；position L1176–1185（PDF物理页29）；cost L1185–1186（PDF物理页29）；cost L1247–1250（PDF物理页30）",
+      "revision": "Federal Reserve Bank of New York Staff Reports no. 917, February 2020; revised August 2022；98页；sha256 403276b2ea8227c14ccfb854014af1df6a425430e5f622599640d7c0c16e683a",
+      "sha256": "403276b2ea8227c14ccfb854014af1df6a425430e5f622599640d7c0c16e683a",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr917.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v35-nyfed-sr917-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CME S&P 500 E-mini期货（ES），始终使用成交最活跃合约（通常为近月，临近到期改用次月）。"
+    },
+    "cost": {
+      "evidence": [
+        "v35-nyfed-sr917-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "含成本收益用报价计算：多头R=(P_{t2}^{bid}−P_{t1}^{ask})/P_{t1}^{ask}（式(11)）；扣除买卖价差后作者报告BtD夏普约1.1，而无条件OD/OD+近零或为负。"
+    },
+    "entry": {
+      "evidence": [
+        "v35-nyfed-sr917-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "满足条件的交易日在OD+区间起点01:30（ET）做多ES。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v35-nyfed-sr917-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美东时间01:30入、03:30出（对应欧洲开盘前后）；作者另述夏令时不同步期间欧洲开盘对应时点变化，本条按文中固定时间。"
+    },
+    "exit": {
+      "evidence": [
+        "v35-nyfed-sr917-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "03:30（ET）平仓（OD+区间终点），不隔日持有。"
+    },
+    "position": {
+      "evidence": [
+        "v35-nyfed-sr917-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "单一ES多头，仅在约一半交易日持仓；收益按R=(P_{t2}−P_{t1})/P_{t1}计（式(10)），文中以1美元投资示例，无杠杆/规模规则。"
+    },
+    "risk": {
+      "evidence": [
+        "v35-nyfed-sr917-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "无止损或风险预算；作者指出BtD信号过滤了大部分负收益（正偏度）。"
+    },
+    "signal": {
+      "evidence": [
+        "v35-nyfed-sr917-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "SV_t^i=买方主动成交合约数−卖方主动成交合约数（成交价对照最优买/卖价判方向）（式(3)）；RSV_t^i=SV_t^i/TV_t^i∈[−1,1]，TV为买卖合约数之和（式(6)）；收盘不平衡RSV_t^close取15:15–16:15（ET，维护前最后一小时）。条件：RSV_{t−1}^close<0。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v35-nyfed-sr917-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日内（美国隔夜时段），逐交易日判断。"
+    },
+    "universe": {
+      "evidence": [
+        "v35-nyfed-sr917-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "单一合约ES；成本测试样本2004-01至2020-12（此后隔夜买卖价差多为最小跳动）。"
+    }
+  }
+}

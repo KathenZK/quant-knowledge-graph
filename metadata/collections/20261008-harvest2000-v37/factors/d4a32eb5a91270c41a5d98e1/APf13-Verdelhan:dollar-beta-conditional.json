@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "对美元因子暴露高的货币在条件化美元策略下获得更高超额收益。",
+    "missing": [
+      "多空组合（P6−P1）是否也按平均远期贴水符号翻转原文未单列；本记录以“各组合均按符号定向”为口径。",
+      "国家名单见数据附录，未转写。",
+      "2013-10会议稿，未与JF期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v37-nber-conf-verdelhan-2013-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "滚动窗口止于t−1，排序仅用t时信息；需60个月历史。"
+    },
+    "calculation": {
+      "evidence": [
+        "v37-nber-conf-verdelhan-2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Table 4：六个美元β组合年化平均对数超额收益由P1的1.3%升至P6的7.1%，计买卖价差后0.6%至5.8%；未经条件化时仅0.3%–2.4%。作者指出做多高美元β、做空低美元β可消除美国特有成分。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v37-nber-conf-verdelhan-2013-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：美元因子含全球冲击成分，高美元暴露货币在平均利差为正时承担更多全球风险并获补偿。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v37-nber-conf-verdelhan-2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个t：Δs_i对常数、美元因子Dollar与carry因子做60个月滚动回归（窗口止于t−1），美元因子斜率记为τ_i,t；美元因子=六个利率排序组合汇率变动的均值，carry因子=高利率组减低利率组。按τ分六组；对每组，若全体发达国平均远期贴水（外国减美国利率均值）为正则做多，否则做空。"
+    },
+    "inputs": {
+      "evidence": [
+        "v37-nber-conf-verdelhan-2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Barclays/Reuters（Datastream）日度即期与远期汇率（美元计价中间价），取月末，1983-11至2010-12；发达与新兴国家全样本，国家列表见数据附录。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v37-nber-conf-verdelhan-2013-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "外汇横截面风险因子；与美元套息（平均远期贴水择时）、carry对照。"
+    }
+  },
+  "identity_namespace": "conference.nber.org/confer",
+  "lab": null,
+  "missing_information": [
+    "多空组合（P6−P1）是否也按平均远期贴水符号翻转原文未单列；本记录以“各组合均按符号定向”为口径。",
+    "国家名单见数据附录，未转写。",
+    "2013-10会议稿，未与JF期刊版比对；未回测。"
+  ],
+  "name": "美元β排序条件化货币组合",
+  "native_source_id": "APf13-Verdelhan:dollar-beta-conditional",
+  "one_line": "每月用截至t−1的60个月滚动回归估计各货币对美元因子的暴露τ，按τ分六组；每组在发达国平均远期贴水为正时做多、为负时做空；高β组条件收益最高，作者以多高β空低β隔离全球成分。",
+  "record_id": "APf13-Verdelhan:dollar-beta-conditional",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://conference.nber.org/confer/2013/APf13/Verdelhan.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Adrien Verdelhan,《The Share of Systematic Variation in Bilateral Exchange Rates》2013-10会议稿（期刊版据外部书目为JF 2018，未取）。中文定义自撰。",
+      "id": "v37-nber-conf-verdelhan-2013-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L1032–1047（PDF物理页25,26）；formula L805–820（PDF物理页19,20）；inputs L781–784（PDF物理页19）；calculation L1049–1056（PDF物理页26）；calculation L411–414（PDF物理页11）",
+      "revision": "Verdelhan《The Share of Systematic Variation in Bilateral Exchange Rates》October 2013；NBER资产定价会议PDF；53页；未与期刊版比对；sha256 d93f2bd6c12a9e65e4ffea6aabbc3d57cf7559d7f725cee1a9ceeb346a54a451",
+      "sha256": "d93f2bd6c12a9e65e4ffea6aabbc3d57cf7559d7f725cee1a9ceeb346a54a451",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://conference.nber.org/confer/2013/APf13/Verdelhan.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "economic_basis": {
+    "hypothesis": "高TK（过去收益分布在前景理论下更有吸引力）的股票被高估，随后收益较低。",
+    "missing": [
+      "市场收益基准的具体指数（如CRSP价值加权）在所引段落未写明。",
+      "零收益归入n侧系依原文“n=60−m”推得，未见单独说明。",
+      "作者主页手稿未与RFS期刊终版逐字比对。",
+      "未计算行情、未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v35-bmw2016-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "每月初只用截至上月末的60个月收益，原则上时点可得；市场收益所用具体指数在所引段落未写明，需另行确定。"
+    },
+    "calculation": {
+      "evidence": [
+        "v35-bmw2016-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月初按TK把股票分十分位，计算下一个月的价值加权与等权组合收益（美国样本1931-07至2010-12）；作者假设TK负向预测收益，长短组合为做多低TK、做空高TK（文中报告收益加权等稳健性α）。月度再平衡、持有1个月。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v35-bmw2016-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者假说：部分投资者按过去收益分布的前景理论价值决定配置，高TK股票被追捧而高估、随后收益偏低。属研究假说，本库未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v35-bmw2016-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "设过去60个月个股月收益减市场月收益为r，升序记为r_{−m}<…<r_{−1}（负）与r_1<…<r_n（其余，n=60−m），每个概率1/60（原式(7)）。TK=Σ_{i=−m}^{−1} v(r_i)[w^−((i+m+1)/60)−w^−((i+m)/60)] + Σ_{i=1}^{n} v(r_i)[w^+((n−i+1)/60)−w^+((n−i)/60)]（原式(8)）。价值函数v(x)=x^α（x≥0），−λ(−x)^α（x<0）（式(5)）；概率加权w^+(P)=P^γ/(P^γ+(1−P)^γ)^{1/γ}，w^−(P)=P^δ/(P^δ+(1−P)^δ)^{1/δ}（式(6)）；基准参数取Tversky–Kahneman(1992)：α=0.88，λ=2.25，γ=0.61，δ=0.69。"
+    },
+    "inputs": {
+      "evidence": [
+        "v35-bmw2016-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "个股与市场的月收益：基准用“月收益减市场收益”（作者另以原始收益、超无风险收益作稳健性，结果相近）；回看过去60个月，要求至少5年月收益数据。美国样本为可算TK的CRSP全体股票（1926–2010），账面数据早期取自French网站。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v35-bmw2016-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股横截面行为金融因子；可与CGO（M4429）、偏度/MAX类彩票因子对照研究。"
+    }
+  },
+  "identity_namespace": "nicholasbarberis.github.io/papers",
+  "lab": null,
+  "missing_information": [
+    "市场收益基准的具体指数（如CRSP价值加权）在所引段落未写明。",
+    "零收益归入n侧系依原文“n=60−m”推得，未见单独说明。",
+    "作者主页手稿未与RFS期刊终版逐字比对。",
+    "未计算行情、未回测；经济有效性未检验。"
+  ],
+  "name": "前景理论TK值：过去60个月超额市场收益分布的累积前景理论价值",
+  "native_source_id": "bmw17b:TK",
+  "one_line": "把个股过去60个月相对市场的月超额收益视作等概率分布，按Tversky–Kahneman累积前景理论参数求其价值TK；月度十分位，高TK预期低收益。",
+  "record_id": "bmw17b:TK",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://nicholasbarberis.github.io/bmw17b.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Nicholas Barberis, Abhiroop Mukherjee, Baolian Wang,《Prospect Theory and Stock Returns: An Empirical Test》作者主页手稿（期刊：RFS 29(11), 2016，据外部书目，未取期刊原件）。中文定义自撰。",
+      "id": "v35-bmw2016-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L266–298（PDF物理页8）；formula L416–438（PDF物理页12）；formula L439–446（PDF物理页12）；inputs L392–405（PDF物理页11）；inputs L589–592（PDF物理页16）；calculation L662–669（PDF物理页18）；calculation L752–753（PDF物理页21）",
+      "revision": "Barberis/Mukherjee/Wang《Prospect Theory and Stock Returns: An Empirical Test》作者主页PDF(bmw17b)，pdfinfo创建2016-06-06；55页；未与RFS期刊版逐字比对；sha256 49222de4a7905ecce14e286cdba29533f73f21b49200ddcbc9bd9ce78c55fb2f",
+      "sha256": "49222de4a7905ecce14e286cdba29533f73f21b49200ddcbc9bd9ce78c55fb2f",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://nicholasbarberis.github.io/bmw17b.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

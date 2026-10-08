@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "央行实际供应的M1低于由GDP与贸易决定的国际常态需求时货币政策偏紧，市场对其后续影响反应迟缓，该货币在随后数月至数年相对升值。",
+    "missing": [
+      "正文写样本2001-07至2020-04，表1标题写2006-07至2020-05（前60个月用于滚动面板的可能性），原文未解释差异；货币仅16种，五分位每组约3种，结果对个别货币敏感。",
+      "OECD ORDR数据库已停用（并入OECD Data Explorer），M1实时值取自MEI各月存档，作者自建实时库并修正了2处数据错误；复现需重建同口径实时数据。原文未扣交易成本。",
+      "同文参数化信号、面板回归与7种因子模型α、通胀预测属对照或扩展，未单列；工作论文未与期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "nber.org/papers/w33423",
+  "lab": null,
+  "missing_information": [
+    "正文写样本2001-07至2020-04，表1标题写2006-07至2020-05（前60个月用于滚动面板的可能性），原文未解释差异；货币仅16种，五分位每组约3种，结果对个别货币敏感。",
+    "OECD ORDR数据库已停用（并入OECD Data Explorer），M1实时值取自MEI各月存档，作者自建实时库并修正了2处数据错误；复现需重建同口径实时数据。原文未扣交易成本。",
+    "同文参数化信号、面板回归与7种因子模型α、通胀预测属对照或扩展，未单列；工作论文未与期刊版比对；未回测。"
+  ],
+  "name": "央行货币紧缩度：60个月滚动面板用实时GDP/出口/进口预测M1，取当月残差/M1的负值，月末五分位做多最紧缩货币、做空最宽松货币的一个月远期（Bartram–Grinblatt–Xu）",
+  "native_source_id": "BGX2025:central-bank-restrictiveness-currency-forwards",
+  "one_line": "每月末T用T−59至T的60个月面板，以当时公开可得的（OECD实时数据库各期首发/当期版本）GDP、出口、进口（换算成美元）解释同期最新公开M1（含经济体与月份固定效应，斜率用季度一阶差分估计）；把第T月残差除以该经济体M1再取负即为“央行紧缩度”信号；按信号把16个OECD经济体货币分五组，月末做多最紧缩组、做空最宽松组的一个月远期（组内等权），持有一个月。",
+  "record_id": "BGX2025:central-bank-restrictiveness-currency-forwards",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w33423/w33423.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Söhnke M. Bartram, Mark Grinblatt, Yan Xu,《Monetary Policy Predicts Currency Movements》NBER Working Paper 33423（2025-01）。中文定义自撰。",
+      "id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L442–485（PDF物理页9,10）；assets L501–507（PDF物理页10）；universe L501–507（PDF物理页10）；universe L283–302（PDF物理页6,7）；universe L1226–1237（PDF物理页26）；signal L226–269（PDF物理页5,6）；signal L283–302（PDF物理页6,7）；signal L306–316（PDF物理页7）；signal L318–379（PDF物理页7,8）；signal L381–418（PDF物理页8,9）；signal L420–440（PDF物理页9）；entry L420–440（PDF物理页9）；entry L608–641（PDF物理页12,13）；entry L1226–1237（PDF物理页26）；exit L442–485（PDF物理页9,10）；exit L1226–1237（PDF物理页26）；position L608–641（PDF物理页12,13）；position L1226–1237（PDF物理页26）；risk L53–58（PDF物理页2）；risk L110–116（PDF物理页3）；risk L608–641（PDF物理页12,13）；risk L1226–1237（PDF物理页26）；risk L799–811（PDF物理页16）；risk L221–223（PDF物理页5）；timeframe L283–302（PDF物理页6,7）；timeframe L420–440（PDF物理页9）；execution_time L110–116（PDF物理页3）；execution_time L318–379（PDF物理页7,8）；execution_time L420–440（PDF物理页9）；execution_time L608–641（PDF物理页12,13）",
+      "revision": "NBER工作论文No. 33423（封面日期January 2025；NBER官网原发，非镜像）；38页；版权页\"All rights reserved\"，仅允许引用不超过两段；期刊版未见，未比对；sha256 f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1",
+      "sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w33423/w33423.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "16个OECD经济体（含美国、欧元区合并为一）货币兑美元的一个月远期（信号回归含美元，收益为外币兑美元远期）。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原文以远期中间价计收益，未扣买卖价差或其他交易成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "第T月末信号公开后，把货币按信号分为五组，做多信号最高（最紧缩）组、做空最低（最宽松）组的一个月远期。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只用第T月末交易员已知的实时宏观数据计算信号，在T月末建仓、按T+1月收益评价；当月同期收益仅作对照，不可交易。"
+    },
+    "exit": {
+      "evidence": [
+        "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月，T+1月末按即期结算，收益R=(f_{T+1}−F_T)/F_T，随即按新信号重建。"
+    },
+    "position": {
+      "evidence": [
+        "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "五分位组合，组内等权；多最紧缩组、空最宽松组的零成本远期多空组合。"
+    },
+    "risk": {
+      "evidence": [
+        "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告极端五分位价差：信号当月（不可交易）0.29%/月，信号公开后的下一月0.42%/月（t=2.29，年化约3–5%）；滞后0–36个月的信号价差不减弱，持有一年累计超过3%；中间三组不单调；与套息赛马时本信号胜出。"
+    },
+    "signal": {
+      "evidence": [
+        "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "第1步：每月末T用T−59..T的60个月面板回归M1_{i,t}=a_i+c_t+β_GDP·GDP_{i,t}+β_EX·X_{i,t}+β_IM·I_{i,t}+ε_{i,t}，M1取第t月末已公开的最新值（OECD MEI各月存档拼成实时库），GDP、出口、进口取OECD ORDR实时数据中第t月版本（经季节调整，换算成美元时用所属月份月中汇率，至少早于交易日2.5个月）；斜率用季度一阶差分回归估计，再代入水平面板得固定效应与第T月残差；少于4个完整月份观测的货币当期剔除。第2步：信号=−ε_{i,T}/M1_{i,T}，越大表示M1低于“交易性货币需求”越多、央行越紧缩。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度。"
+    },
+    "universe": {
+      "evidence": [
+        "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "样本内最多16种货币（欧元区按一国处理，成员11–19国加总），Datastream日度即期与一个月远期中间价；文中称2001-07至2020-04共2,469个货币-月观测，表1标注样本期2006-07至2020-05。"
+    }
+  }
+}

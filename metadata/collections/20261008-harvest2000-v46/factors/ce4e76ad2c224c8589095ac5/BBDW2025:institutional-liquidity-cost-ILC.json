@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "内部化零售成交买卖越不平衡，说明批发商越多地以昂贵方式向机构提供流动性，股票的机构流动性成本越高，投资者要求更高的预期收益。",
+    "missing": [
+      "主证据为Fama–MacBeth回归；组合排序细节与结果在Supplementary Material（未抓取），正文只给年化价差区间4.08%–15.24%，组合构造（分位数、持有期）本条未核。",
+      "样本仅2010–2019年；BJZZ算法存在第I/II类误分类与签名误差，作者第VI节检验后称不影响定价；需TAQ数据。",
+      "与M4538（BJZZ有符号零售订单不平衡）同源数据，但本条取绝对值月均、方向为流动性溢价，核心信号不同；ILCT与3/12个月窗口属变体，未单列；未扣交易成本；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "需要TAQ逐笔成交数据并实现BJZZ识别；作者称ILC与机构预期交易成本相关，剔除微盘股后年化溢价仍为2.7%–3.2%，并发现动量收益无法覆盖机构交易成本。原文未扣交易成本。"
+    },
+    "calculation": {
+      "evidence": [
+        "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末计算ILC，滞后一个月使用：月m超额收益对m−2月末ILC及m−1月控制变量（FF3β、BM、市值、股息率、特质波动、上月收益、12−2月收益）做Fama–MacBeth回归（Newey–West 6阶）。ILC系数1.27（t=3.11），乘以标准差0.21得每月26.7个基点、年化3.20%的流动性溢价；按3或12个月窗口构造为每月25–31个基点。作者称附录组合排序（等权CRSP断点或剔除最小市值五分位的NYSE断点市值加权，最低价1/2/5美元）中最不流动减最流动组合的年化风险调整价差为4.08%–15.24%。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者认为批发商在机构流动性需求大、中间价流动性不足时以内部化零售订单向机构提供昂贵流动性，故|零售不平衡|反映机构预期交易成本，投资者对此要求流动性溢价。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "ILCV_{j,m}=(1/n_{jM})Σ_{t∈M}|Mroibvol_{jt}|，Mroibvol_{jt}=(Mrbvol_{jt}−Mrsvol_{jt})/(Mrbvol_{jt}+Mrsvol_{jt})，n_{jM}为期间M内BJZZ成交量非零的交易日数，主分析M=当月；按笔数的ILCT同理（式1–2）。"
+    },
+    "inputs": {
+      "evidence": [
+        "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "TAQ常规交易时段、整手、场外子便士价格成交，按BJZZ法以子便士增量>0.6¢记零售买、<0.4¢记零售卖；NMS普通股，资产定价分析样本2010-01至2019-12，剔除上月末收盘价低于2美元者。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股月度流动性截面因子；可替代传统流动性代理（价差、Amihud、Kyle λ）在2010年后的定价检验，或作为机构交易成本的约束变量。"
+    }
+  },
+  "identity_namespace": "cambridge.org/S0022109025000043",
+  "lab": null,
+  "missing_information": [
+    "主证据为Fama–MacBeth回归；组合排序细节与结果在Supplementary Material（未抓取），正文只给年化价差区间4.08%–15.24%，组合构造（分位数、持有期）本条未核。",
+    "样本仅2010–2019年；BJZZ算法存在第I/II类误分类与签名误差，作者第VI节检验后称不影响定价；需TAQ数据。",
+    "与M4538（BJZZ有符号零售订单不平衡）同源数据，但本条取绝对值月均、方向为流动性溢价，核心信号不同；ILCT与3/12个月窗口属变体，未单列；未扣交易成本；未回测。"
+  ],
+  "name": "机构流动性成本ILC：TAQ子便士内部化零售成交（BJZZ）日度买卖量不平衡绝对值的月均值，隔一个月预测收益，高ILC（流动性差）股票收益更高（Barardehi–Bernhardt–Da–Warachka）",
+  "native_source_id": "BBDW2025:institutional-liquidity-cost-ILC",
+  "one_line": "用BJZZ算法从TAQ常规时段整手场外子便士成交中识别内部化零售买卖（子便士增量>0.6¢为买、<0.4¢为卖），日度Mroibvol=(买量−卖量)/(买量+卖量)；ILC=当月有非零BJZZ成交日的|Mroibvol|平均值。用第m−2月末的ILC预测第m月收益（隔一个月），ILC越高表示机构流动性成本越高、预期收益越高，可做多高ILC、做空低ILC。",
+  "record_id": "BBDW2025:institutional-liquidity-cost-ILC",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/756B4D476B4CE2A7C44658DF67295F21/S0022109025000043a.pdf/div-class-title-institutional-liquidity-costs-internalized-retail-trade-imbalances-and-the-cross-section-of-stock-returns-div.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Yashar H. Barardehi, Dan Bernhardt, Zhi Da, Mitch Warachka,《Institutional Liquidity Costs, Internalized Retail Trade Imbalances, and the Cross Section of Stock Returns》JFQA 60(8), 2025（CC BY 4.0开放获取出版版）。中文定义自撰。",
+      "id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+      "license": "CC BY 4.0（Creative Commons Attribution，期刊首页声明“unrestricted re-use, distribution and reproduction, provided the original article is properly cited”）",
+      "locator": "派生文本(pdftotext -layout)行段：formula L441–450（PDF物理页8）；formula L482–492（PDF物理页9）；inputs L441–450（PDF物理页8）；inputs L473–482（PDF物理页9）；inputs L1491–1527（PDF物理页25）；calculation L1451–1473（PDF物理页24）；calculation L1491–1527（PDF物理页25）；calculation L1542–1561（PDF物理页26）；calculation L1609–1634（PDF物理页27）；availability L40–43（PDF物理页1）；availability L1609–1634（PDF物理页27）",
+      "revision": "期刊出版版（Open Access），Journal of Financial and Quantitative Analysis Vol. 60, No. 8, Dec. 2025, pp. 3826–3865，DOI 10.1017/S0022109025000043；剑桥大学出版社cambridge.org原发，非镜像；40页；Supplementary Material（组合排序、稳健性）未抓取；sha256 c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287",
+      "sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/756B4D476B4CE2A7C44658DF67295F21/S0022109025000043a.pdf/div-class-title-institutional-liquidity-costs-internalized-retail-trade-imbalances-and-the-cross-section-of-stock-returns-div.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

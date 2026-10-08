@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "同城不同行业公司受共同地方基本面冲击，但分析师按行业分工，跨行业的地方信息扩散缓慢，邻居上月收益可预测本股下月收益。",
+    "missing": [
+      "COMPUSTAT只有当前总部邮编，历史迁址会造成误分（作者称偏向低估效应）。",
+      "20个经济区的名单与边界以BEA定义为准，正文只举例未全列。",
+      "AEA 2020工作稿（2019-12-18）未与RFS期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "aeaweb.org/conference",
+  "lab": null,
+  "missing_information": [
+    "COMPUSTAT只有当前总部邮编，历史迁址会造成误分（作者称偏向低估效应）。",
+    "20个经济区的名单与边界以BEA定义为准，正文只举例未全列。",
+    "AEA 2020工作稿（2019-12-18）未与RFS期刊版比对；未回测。"
+  ],
+  "name": "同城跨行业领先滞后：按总部所在经济区其他行业公司上月收益排序（Parsons–Sabbatucci–Titman）",
+  "native_source_id": "AEA2020:geographic-lead-lag-quintile",
+  "one_line": "美国20个最大都市经济区（BEA EA）的上市公司，每月按“同一经济区、但不属本公司Fama-French 12行业”的其他公司上月等权收益排序分五组，市值加权，做多邻居上月收益最高组、做空最低组，持有一个月。",
+  "record_id": "AEA2020:geographic-lead-lag-quintile",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.aeaweb.org/conference/2020/preliminary/paper/SfTyaRaf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Christopher A. Parsons, Riccardo Sabbatucci, Sheridan Titman,《Geographic Lead-Lag Effects》2019-12-18工作稿（AEA 2020年会论文页）。中文定义自撰。",
+      "id": "v40-aea2020-geographic-lead-lag-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L264–281（PDF物理页8,9）；universe L264–281（PDF物理页8,9）；universe L282–288（PDF物理页9）；signal L778–783（PDF物理页21）；signal L796–800（PDF物理页22）；entry L872–879（PDF物理页24）；entry L880–889（PDF物理页24）；exit L872–879（PDF物理页24）；position L872–879（PDF物理页24）；position L890–914（PDF物理页24,25）；risk L890–914（PDF物理页24,25）；risk L919–922（PDF物理页25）；timeframe L872–879（PDF物理页24）",
+      "revision": "AEA 2020年会论文页提供的工作稿PDF，封面\"This version: December 18, 2019\"；65页；未与RFS 33(10), 2020期刊版比对；sha256 389412458d1d18da1a8c0f98190705d635f52e59f59d0f46266f2d95620fe982",
+      "sha256": "389412458d1d18da1a8c0f98190705d635f52e59f59d0f46266f2d95620fe982",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.aeaweb.org/conference/2020/preliminary/paper/SfTyaRaf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v40-aea2020-geographic-lead-lag-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "NYSE/NASDAQ/AMEX美国普通股（股票代码10、11），总部位于美国20个最大城市中心或邻近地区。"
+    },
+    "cost": {
+      "evidence": [
+        "v40-aea2020-geographic-lead-lag-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "原文未扣交易成本；月度全组换仓。"
+    },
+    "entry": {
+      "evidence": [
+        "v40-aea2020-geographic-lead-lag-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按r_{c,∉j,t}排序（不是按本股收益），分为五组，做多邻居收益最高的20%公司、做空最低的20%。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v40-aea2020-geographic-lead-lag-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月末按当月区域收益排序并重组；日内时点未写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v40-aea2020-geographic-lead-lag-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "排序与持有期都是一个月，每月末重组。"
+    },
+    "position": {
+      "evidence": [
+        "v40-aea2020-geographic-lead-lag-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "组内市值加权；多空为Q5−Q1（附表A2的十分位结果相近）。"
+    },
+    "risk": {
+      "evidence": [
+        "v40-aea2020-geographic-lead-lag-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告：Q1月均74bp（CAPM α −26bp），Q5月均116bp、夏普0.53；Q5−Q1月均42bp（t=3.65），市场α 47bp、FF5 α 42bp（t=3.32）；只用每期最大20%公司时结果几乎相同（附表A3）。"
+    },
+    "signal": {
+      "evidence": [
+        "v40-aea2020-geographic-lead-lag-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "r_{c,∉j,t}：与公司i同在经济区c、但行业不同于i的公司在t月的等权收益（不含同城同业，也不含i本身）。例：可口可乐7月收益对应亚特兰大非饮料公司（如家得宝）6月收益。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v40-aea2020-geographic-lead-lag-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度（一个月排序期、一个月持有期）。"
+    },
+    "universe": {
+      "evidence": [
+        "v40-aea2020-geographic-lead-lag-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "1970–2013年；按COMPUSTAT当前总部邮编归入BEA经济区（迁址公司会被误分）；每月把公司归入Fama-French 12行业之一。"
+    }
+  }
+}
