@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2081",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2081,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "89412030b463c223cb92deb90e7934d755382e812d84b6edc0a2dd0899927fd6",
+    "rule_sha256": "7e1325f08e8a6c9addc61a986b33a8a63a7d525c753f4e5a2d10e8fc6664c188"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2081",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2081"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/epretrace/epretrace.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（epretrace.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区epretrace：5m，收盘落在近50根最高价的75%–95%回撤带做多；自定义目标+31%卖、相对开仓−21%止损；硬止损−99.9%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区epretrace；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区epretrace：5m，收盘落在近50根最高价的75%–95%回撤带做多；自定义目标+31%卖、相对开仓−21%止损；硬止损−99.9%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/epretrace/epretrace.py默认 Int/DecimalParameter。timeframe=5m；stoploss=−0.999；minimal_roi={\"0\":1000}；use_custom_stoploss=True。ep_retracement_window=50，ep_retracement=0.95，ep_retracement2=0.75，epcat1=close；ep_target=0.31，ep_stop=0.21。做多：close < 前窗最高×0.95 且 close > 前窗最高×0.75 且 volume>0。populate_sell_trend 条件 close>1000000（实质不发卖信号）。custom_sell：现价≥开仓价×(1+0.31) 返回 sell_ep2mas。custom_stoploss：现价触及开仓价×(1−0.21) 则触发。提出日期未知。 不是普通突破：本条是5m epretrace，收盘落在近50根最高价75%–95%回撤带做多，目标+31%/止损−21%。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

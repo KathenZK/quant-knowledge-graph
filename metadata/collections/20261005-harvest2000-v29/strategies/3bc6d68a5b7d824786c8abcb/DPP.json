@@ -1,0 +1,362 @@
+{
+  "economic_basis": {
+    "hypothesis": "把当前库存相对目标的偏离反馈到有限数量交换价格，可能提高给定参考价附近的报价密度，并促使反向订单补回亏缺库存。这只是可研究的做市机制；未验证参考价及时性、逆向选择损失、套利损失、资本效率或净收益。",
+    "missing": [
+      "仅静态读取来源代码；无编译、链调用、行情、账户回测或经济验收。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "github.com/DODOEX/contractV2",
+  "lab": null,
+  "missing_information": [
+    "只核固定commit的DPP 1.0.0普通双向交换族，未编译、部署、调用合约或回测；不是可运行策略发布。所有声明是静态代码规则审阅。",
+    "同一PMM族最多一条；不同k/i/LP费、代币/链、DPP/DVM实现和参考价供给版本不自动另计。CFMM网络套利者与池运营者角色不同，但仅角色差异不足判新，本条比较完整target递推和交易结算。",
+    "本文选正初始余额、TWAP关闭、仓内FeeRateModel且feeRateImpl=0。条件由下游提供，不冒称任意已部署池都符合；该具体非零fee proxy未读时不能补费率规则。",
+    "参考价i及库存/费率/k都是owner给定，未包含预测模型或自动oracle；官方V1/总体PMM介绍与本固定V2文件不得互补。初始转资和后续参数更新时机没有策略。",
+    "整数舍入、SafeMath.sqrt在x=2的边界、overflow fallback及窄uint转换保留；尚无可达性分析或执行验收，不以数学连续曲线替换实代码。",
+    "源码有flashLoan与独立DPPAdmin等其他路径。本条仅常规sellBase/sellQuote与直接owner reset/ratioSync范围，不用其排除来声称真实部署没有其他可调用路径。",
+    "LP费用从毛输出扣且留池；维护者0为所选可核分支，不等于真实全成本0。gas、外部借贷/抵押/对冲、失败及经济有效性未核。",
+    "核心文件Apache-2.0署名DODO ZOO；IERC20自述复制OpenZeppelin且SPDX MIT。源码版权与接口归属分别保留，不将仓库许可推广至官方文案、代币数据、第三方费率部署或市场数据。公开只发布自撰定义/定位，commercial仍REVIEW_REQUIRED。"
+  ],
+  "name": "DODO PMM：目标库存重算与跨均衡分段结算的双币做市",
+  "native_source_id": "DPP",
+  "one_line": "给定双币库存、参考价和曲率，按亏缺侧目标库存重算报价曲线；客户交换穿越均衡点时分段结算，LP费用留池并以实际余额更新库存。",
+  "record_id": "DPP",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED; not a contract security audit or deployment endorsement.",
+    "metadata": "原生contract名、固定commit/文件路径和自撰中文定义/定位；不分发上游源码全文或市场数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/DODOEX/contractV2/blob/2f1bcdac7ef1beee7599a756e2eed26732c2536d/LICENSE"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-dodoprivatepool-impl-dpp-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/DODOPrivatePool/impl/DPP.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "13295dd20e3b6043fac6d22f66a1842c88b97f24cdd0f9e15dc4b7ce556d6210",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/DODOPrivatePool/impl/DPP.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-dodoprivatepool-impl-dppstorage-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/DODOPrivatePool/impl/DPPStorage.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "978b946e22a96683281ad820e061aed9f18c5ee346b4ecf71e766beda73f005a",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/DODOPrivatePool/impl/DPPStorage.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-dodoprivatepool-impl-dpptrader-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/DODOPrivatePool/impl/DPPTrader.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "252680138958e9e2988031270be480bb97d1e4aeb961cc466831fa7352d97bff",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/DODOPrivatePool/impl/DPPTrader.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-dodoprivatepool-impl-dppvault-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/DODOPrivatePool/impl/DPPVault.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "e433b69e12270ac19a3d73020efa65b975c9d0672ab4ab210fe843908ef3c453",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/DODOPrivatePool/impl/DPPVault.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-lib-pmmpricing-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/lib/PMMPricing.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "4d41bb46d60b97a1bc1e43985733ce1050354a15d6a187b16dceab07929927c9",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/lib/PMMPricing.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-lib-dodomath-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/lib/DODOMath.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "cd2393bdb50542b082d6abbd9ce88c5e2b80e91dd4732c8217c10147c2b63b5f",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/lib/DODOMath.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-lib-decimalmath-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/lib/DecimalMath.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "48806173e99f16e2728ce25e336e2a1dc2b491226acd8d8e9d73f5259104c5d8",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/lib/DecimalMath.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-lib-safemath-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/lib/SafeMath.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "534db7f95a0b0c4e98bcfc70a4dac8e20ed6ed343f526bcaa91b6ef8f24e1d24",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/lib/SafeMath.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-lib-feeratemodel-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/lib/FeeRateModel.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "a2305a693e0526d131519cd915dc00636432826b56322b60eb8df4d7eb195a65",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/lib/FeeRateModel.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-lib-initializableownable-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/lib/InitializableOwnable.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "979331ec48dae09e0769f65b80bccfd60a545c21cb865734a84afc95a3f60f22",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/lib/InitializableOwnable.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-lib-reentrancyguard-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/lib/ReentrancyGuard.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "7ef9617be197601353f5caa4ebe5861d388f083907a145331a3ce7e12849f18c",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/lib/ReentrancyGuard.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-lib-safeerc20-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/lib/SafeERC20.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "788a1c586687f937a61bc9448390d629663967295e5457d07ef10075e10fb5eb",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/lib/SafeERC20.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "OpenZeppelin IERC20 interface, as stated in exact file",
+      "id": "dodo-contracts-intf-ierc20-sol",
+      "license": "SPDX MIT; file explicitly attributes copied OpenZeppelin IERC20 interface; repository Apache-2.0 does not replace per-file notice.",
+      "locator": "contracts/intf/IERC20.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "f0294e8517da4078b9f30c12946c2398c74d53e8117968ba5a4430c68ab9273f",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/intf/IERC20.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX/DODO ZOO; source @author DODO Breeder",
+      "id": "dodo-contracts-intf-idodocallee-sol",
+      "license": "Apache-2.0 repository LICENSE and Copyright2020 DODO ZOO SPDX header. SafeERC20 additionally describes OpenZeppelin origin; all upstream notices remain in local original. No upstream code distributed here.",
+      "locator": "contracts/intf/IDODOCallee.sol; UTF8 original source lines, exact field ranges in review.field_spans.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "d0b418dddc8b7462daeb10a66f53641703d6c8dcb2450623163d143ec18b7204",
+      "supports": [
+        "固定版本的定价、库存、结算及权限依赖"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/contracts/intf/IDODOCallee.sol",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "DODOEX official repository/documentation",
+      "id": "dodo-license",
+      "license": "Apache License2.0 original repository license; only its scope, not documentation/marketdata or other deployed components.",
+      "locator": "LICENSE; identity/license scope only; not used to supplement unimplemented price oracle.",
+      "revision": "2f1bcdac7ef1beee7599a756e2eed26732c2536d",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "supports": [
+        "许可范围"
+      ],
+      "url": "https://raw.githubusercontent.com/DODOEX/contractV2/2f1bcdac7ef1beee7599a756e2eed26732c2536d/LICENSE",
+      "verification": "FETCHED_PINNED_LICENSE"
+    },
+    {
+      "attribution": "DODOEX official repository/documentation",
+      "id": "dodo-officialcontracts",
+      "license": "Official documentation copyright/terms not inferred from GitHub Apache license; identity and scope only; self-authored metadata, no fulltext distribution.",
+      "locator": "official-contracts; identity/license scope only; not used to supplement unimplemented price oracle.",
+      "revision": "HTTP sha256:42928470db14f45a35107e6c5c9be383a9dce01639fea40cadc4fab6aab2828c",
+      "sha256": "42928470db14f45a35107e6c5c9be383a9dce01639fea40cadc4fab6aab2828c",
+      "supports": [
+        "官方项目身份和版本仓库定位"
+      ],
+      "url": "https://docs.dodoex.io/en/developer/contracts/dodo-v1-v2",
+      "verification": "FETCHED_PINNED_ORIGINAL_HTML"
+    },
+    {
+      "attribution": "DODOEX official repository/documentation",
+      "id": "dodo-officialpmm",
+      "license": "Official documentation copyright/terms not inferred from GitHub Apache license; identity and scope only; self-authored metadata, no fulltext distribution.",
+      "locator": "official-pmm; identity/license scope only; not used to supplement unimplemented price oracle.",
+      "revision": "HTTP sha256:3f67868404fd60feb45e50c320932e2c91a0b0550c4bfe53ba5ad337f60204ce",
+      "sha256": "3f67868404fd60feb45e50c320932e2c91a0b0550c4bfe53ba5ad337f60204ce",
+      "supports": [
+        "官方项目身份和版本仓库定位"
+      ],
+      "url": "https://docs.dodoex.io/en/product/pmm-algorithm",
+      "verification": "FETCHED_PINNED_ORIGINAL_HTML"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "dodo-contracts-dodoprivatepool-impl-dpp-sol",
+        "dodo-contracts-dodoprivatepool-impl-dppstorage-sol",
+        "dodo-contracts-dodoprivatepool-impl-dpptrader-sol",
+        "dodo-contracts-intf-ierc20-sol"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "持有两种不同ERC20的实际池余额B、Q，分别称base和quote；数量均为合约最小整数单位，不是权益权重或美元。i为18位定点的quote最小单位/base最小单位价格；本路径不读取decimals来换算人类币数，也不自动获得市场公允价。选已预置正余额的DPP运营者规则，输入是客户已转入池的币，输出是池支付的另一币；本条不选择币对、链地址或部署实例。"
+    },
+    "cost": {
+      "evidence": [
+        "dodo-contracts-dodoprivatepool-impl-dpp-sol",
+        "dodo-contracts-dodoprivatepool-impl-dpptrader-sol",
+        "dodo-contracts-lib-decimalmath-sol",
+        "dodo-contracts-lib-feeratemodel-sol",
+        "dodo-contracts-lib-safemath-sol"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "设毛输出y、LP费率l；本条所选维护者模型分支费率m=0。通用代码先算维护者费floor(y*m/10^18)，净输出=y−floor(y*l/10^18)−维护者费；LP费不转出而留池，维护者费付maintainer，两笔均按毛y分别向下取整，不是先扣一种再对余数计另一种。lpFeeRate允许0至10^18；任意非零维护者外部模型费率未被DPP统一封顶，若合计扣费超过y会SafeMath下溢回退，而非clamp净输出为0。曲线价格冲击属于交换价，不能和LP费混为同一费用。gas、失败交易成本、资金/借贷/对冲和部署费用MISSING，尚无净收益口径。"
+    },
+    "entry": {
+      "evidence": [
+        "dodo-contracts-dodoprivatepool-impl-dpp-sol",
+        "dodo-contracts-dodoprivatepool-impl-dpptrader-sol",
+        "dodo-contracts-dodoprivatepool-impl-dppvault-sol",
+        "dodo-contracts-lib-initializableownable-sol"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始化只可经尚未初始化的initOwner进入，记录所给币、i/k/LP费等，读取此时实际余额设置B=B0、Q=Q0、R=ONE；init本身不是拉取资金，如何先转入库存由调用方给定。常规sellBase先读base实际余额，x=该余额−旧B，而非函数参数里的预计输入；用旧存储状态经目标修正/分段曲线算毛输出，再把净quote付to，维护者费付maintainer。若R变化才把查询返回的内存B0写回BASE_TARGET并写新R；最后保存已读base余额和当前quote实际余额。sellQuote镜像地用quote余额差、付base、变化时写内存Q0，最后保存当前base余额及已读quote余额。入场就是接受客户双向交换，未设预测涨跌、最小利润、固定下单份数或挂单价格梯。"
+    },
+    "execution_time": {
+      "evidence": [
+        "dodo-contracts-dodoprivatepool-impl-dpptrader-sol",
+        "dodo-contracts-dodoprivatepool-impl-dppvault-sol",
+        "dodo-contracts-lib-reentrancyguard-sol",
+        "dodo-contracts-lib-safeerc20-sol"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码顺序为调用方先把币送入池→sellBase或sellQuote读取余额差→用该次旧存储状态查询→向接收人/维护者转出另一币→按状态变化写target/R→以实际余额更新储备；受preventReentrant修饰，SafeERC20要求底层调用成功且非空返回值为true。这只核实所选函数的静态控制流，没有执行合约、构造交易或审计链安全。单独转币与后续调用的原子性、路由端最小收取量、deadline、区块排序、MEV、确认、代币税/重基/回调和真实到账未冻结；不可把接口代码等同于回测成交或安全部署。"
+    },
+    "exit": {
+      "evidence": [
+        "dodo-contracts-dodoprivatepool-impl-dppvault-sol",
+        "dodo-contracts-lib-pmmpricing-sol"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "反向客户交换沿同一曲线可以补回亏缺侧库存，跨均衡点后换分支，不能称每笔库存一定以盈利平掉。没有到期、逐笔止盈止损或自动全部换回某记账币。owner可调用reset：要求旧存储B/Q不少于给定最低保留检查值、校验新费率/i/k，先更新参数，再向assetTo付给定baseOut/quoteOut，随后把剩余实际余额同时设为新储备/目标、R=ONE；这两项最低检查作用于付款前存储余额，不是付款后的硬留存额。重设金额和时机为外部选择，来源未提供优化或择时。retrieve明令不能用来取base/quote。ratioSync仅在owner调用时按实际/旧储备比例重算对应target，R不被重设；不是本条自动再平衡日程。"
+    },
+    "position": {
+      "evidence": [
+        "dodo-contracts-dodoprivatepool-impl-dppstorage-sol",
+        "dodo-contracts-dodoprivatepool-impl-dpptrader-sol",
+        "dodo-contracts-dodoprivatepool-impl-dppvault-sol"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "池运营者持仓是B/Q两个实际币余额，初始规模完全由已转入库存决定，不是对账户的50/50或满仓指令。B0/Q0是定价目标，可能在查询内存中修正；只有对应方向R改变才写回其返回目标，不能每次把两目标都同步为余额。LP费按输出币留在池，导致真实余额不等于按毛输出扣除的理想曲线库存；下一次从真实储备开始重算。余额/目标存uint112、k/LP费uint64、i uint128。代码无美元杠杆或风险预算，外部借币/抵押/对冲均未定义。ratioSync直接把比例结果转uint112，未单独检查其计算结果是否超过该类型上界；因此本条不把所有owner操作宣称为已验证安全。"
+    },
+    "risk": {
+      "evidence": [
+        "dodo-contracts-dodoprivatepool-impl-dpptrader-sol",
+        "dodo-contracts-dodoprivatepool-impl-dppvault-sol",
+        "dodo-contracts-lib-dodomath-sol",
+        "dodo-contracts-lib-feeratemodel-sol",
+        "dodo-contracts-lib-pmmpricing-sol",
+        "dodo-contracts-lib-safemath-sol"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "需要有可报价的目标与储备，零初始币余额虽未被init统一拒绝，却可能触发TARGET_IS_ZERO、除零或转出失败；不能当默认正常池。SafeMath大多检查溢出/下溢，但源码少数乘法探测、sqrt循环和窄类型转换有自身整数语义，不声称整套已审安全。尤其root(2)按实际循环返回2；这不是理想floor(sqrt(2))，尚未执行或证明该极小输入在可达池状态中影响多少交换，摘要不默修。零输入在R=ONE也会返回BELOW/ABOVE的新R，不能假定状态完全不动。价格i不随外部市价自动更新，可能产生严重逆向选择及库存损失；无亏损限额、停机或自动对冲。k=0线性有限库存与k=10^18分支是同族边界，不能按参数另计策略，也不宣称任意初始目标/费率下都精确等同别的恒定乘积池。flashLoan、特殊token、代理/部署与任意非零维护者费实现未纳所选审阅。"
+    },
+    "signal": {
+      "evidence": [
+        "dodo-contracts-dodoprivatepool-impl-dppstorage-sol",
+        "dodo-contracts-lib-decimalmath-sol",
+        "dodo-contracts-lib-dodomath-sol",
+        "dodo-contracts-lib-pmmpricing-sol",
+        "dodo-contracts-lib-safemath-sol"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "令S=10^18，f(a,b)=floor(ab/S)、d(a,b)=floor(aS/b)、c(a,b)=ceil(aS/b)、inv(i)=floor(S²/i)。所有变量为无符号整数，计算次序按源保留；溢出/下溢/零除可回退交易。定义源码根函数root(x)：y=x,z=floor(x/2)+1；当z<y，令y=z,z=floor((floor(x/z)+z)/2)，直到停止，返回y；不无条件改为理想实数平方根。\n积分G(V0,V1,V2,i,k)：要求V0>0，a=i(V1−V2)；k=0返回floor(a/S)，否则u=d(floor(V0²/V1),V2)，返回floor((S−k+f(k,u))*a/S²)。\n重定目标T(V,Δ,i,k)：k=0返回V+f(i,Δ)；否则V=0返回0。设a=4ki；a=0时r=S；若无符号乘积aΔ的溢出探测通过，r=root(floor(aΔ/V)+S²)，否则r=root(floor(a/V)*Δ+S²)。返回f(V,S+d(r−S,2k))。\n成交输出U(V0,V,Δ,i,k)：要求V0>0；Δ=0返回0。k=0返回min(f(i,Δ),V)。k=S时a=iΔ；a=0则u=0；若aV的溢出探测通过，u=floor(aV/V0²)，否则u=floor(floor(ΔV/V0)*i/V0)；返回floor(Vu/(u+S))。0<k<S时a=floor(kV0/V)*V0+iΔ，b=(S−k)V，sg=(a>b)，h=floor(|a−b|/S)，r=root(h²+f(4(S−k),f(k,V0)*V0))；sg时n=r−h且n=0回退，否则n=h+r；V2=c(n,2(S−k))；V2>V返回0，否则返回V−V2。上述溢出探测是源码的wrapped乘法除回原数比较，不擅改为任意精度无溢出结果。\n每次查询读存储i,k,B,Q,B0,Q0,R，再在内存修目标：BELOW_ONE时Q0=T(Q,B−B0,i,k)；ABOVE_ONE时B0=T(B,Q−Q0,inv(i),k)；ONE不改。卖入base量x：ONE输出U(Q0,Q0,x,i,k)且新R=BELOW；BELOW输出U(Q0,Q,x,i,k)且R不变；ABOVE令x*=B0−B、y*=Q−Q0：x<x*输出min(G(B0,B+x,B,i,k),y*)并保持ABOVE，x=x*输出y*并变ONE，x>x*输出y*+U(Q0,Q0,x−x*,i,k)并变BELOW。卖入quote量x对称：ONE输出U(B0,B0,x,inv(i),k)且变ABOVE；ABOVE输出U(B0,B,x,inv(i),k)保持ABOVE；BELOW令x*=Q0−Q、y*=B−B0，低于阈值输出min(G(Q0,Q+x,Q,inv(i),k),y*)保持BELOW，等于时y*/ONE，高于时y*+U(B0,B0,x−x*,inv(i),k)/ABOVE。先算毛输出，再按cost扣费。"
+    },
+    "timeframe": {
+      "evidence": [
+        "dodo-contracts-dodoprivatepool-impl-dpp-sol",
+        "dodo-contracts-dodoprivatepool-impl-dppstorage-sol",
+        "dodo-contracts-dodoprivatepool-impl-dpptrader-sol",
+        "dodo-contracts-dodoprivatepool-impl-dppvault-sol"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "事件驱动：每次常规交换调用用当时存储状态与实际币余额处理，无历史K线、形成期或定时再平衡。所选TWAP关闭；即便原可选TWAP开启，也只是按block timestamp累计当前midPrice，并不会自动更新i。i只有初始化/owner reset中显式赋值；因此没有持续外部oracle输入、价格校准或参考价刷新频率，不能据PMM产品介绍补一个。无固定终点，撤资/重设由owner另给。"
+    },
+    "universe": {
+      "evidence": [
+        "dodo-contracts-dodoprivatepool-impl-dpp-sol",
+        "dodo-contracts-dodoprivatepool-impl-dppvault-sol",
+        "dodo-contracts-lib-feeratemodel-sol",
+        "dodo-contracts-lib-initializableownable-sol"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "来源参数为owner、maintainer、不同的两币地址、lpFeeRate、费率模型、k、i和TWAP开关；初始化检查lpFeeRate≤10^18、k≤10^18、0<i≤10^36，初始余额/目标须能存uint112。这里固定审阅范围为正初始余额、TWAP关闭，维护者费模型采用同仓FeeRateModel且feeRateImpl=0的分支，所以维护者费为0；这是明确所选状态，并非声称所有部署默认如此。i/k/LP费与投入余额由外部给定，无源码内生标定、更新时机或资产筛选。非零feeRateImpl会调用另一实现，未提供其固定身份就不属于本条已闭合分支。"
+    }
+  }
+}

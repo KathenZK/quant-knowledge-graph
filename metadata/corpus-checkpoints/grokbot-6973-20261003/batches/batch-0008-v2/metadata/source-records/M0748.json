@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0748",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 748,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "078f05cea269c61e1560eecdbe2ac8144503b281e6f0de624a1850454484da41",
+    "rule_sha256": "1900b696093b99148534569d439a4b07d7826bb6fb0602c80e20b7dee55985a4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0748",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0748"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://cdn.cboe.com/api/global/us_indices/governance/Cboe_SP_500_Put_Protection_Indices_Methodology.pdf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cboe"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "标普500月度5%虚值认沽保护：第三个星期五滚动，行权价取11点前最后价95%之下的第一档"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2015-08-03"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cboe S&P 500 5% Put Protection Index (PPUT)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写Cboe标普500 5%认沽保护指数PPUT，不是已收的月度虚值2%卖出认沽PUTY，也不是上一领口同时卖出10%虚值认购。PPUT跟踪一套假想风险管理：多头跟踪标普500指数SPX，并持有月度、虚值5%的SPX认沽。指数为全收益，成分股股息在功能上再投资进组合。滚动日是每月第三个星期五；若该日为交易所假日，则提前到前一营业日。行权价选择：低于11:00美东之前最后公布的SPX数值95%的第一档可得行权价。旧认沽在9:30美东按标普500特别开盘价SOQ结算，结算值等于max(0, 旧行权价减当日SOQ)。新认沽权利金用11:30至12:00美东成交量加权平均价；先剔除OPRA代码为大写A至H与小写f至t的成交，再按剩余成交量加权。若该时段新行权价没有成交，则按VWAP时段结束前最后卖价视同买入。首次滚动日同时建立指数多头并买入一张虚值认沽；其后滚动日旧认沽结算、按同一规则进入新认沽，股票指数多头不变。方法页写Base Date为1986-06-30，Launch Date为2015-08-03，基值100、美元。提出日期取Launch Date。同文件的PPUT3M是季度、虚值10%认沽保护，不是本条。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "1.1 Index Objective；2.2；2.3 Index Rebalance；5 Index Information"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

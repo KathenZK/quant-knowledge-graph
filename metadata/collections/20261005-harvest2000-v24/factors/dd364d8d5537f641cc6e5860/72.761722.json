@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "用于探索给定多变量样本中与高斯边缘不同的潜在线性表示；不能由目标名称推断分量已独立或存在金融收益。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-4340c20badf57001d5f016ab"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "全部训练样本及修订已发布后才可估W；全窗方向不能回填为过去已知因子。金融变量、预处理、训练/应用分界、供应商和PIT MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-4340c20badf57001d5f016ab"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "固定Aapo Hyvärinen1999 IEEE10(3)626–634作者托管原重印PDF。作者页链接原路径以HTTP给出，此次同主机同路径HTTPS下载；Crossref核DOI/作者/页码。原文还归引1997固定点算法和1998近似负熵，本条不把这些年份各算新族。 原p1从零均值x出发，p5明确实际期望可用样本均值估。本条选全部N样本的普通1/N均值，要求输入已经验零均值并C正定，不暗加n−1或稳健散布。原始数据的中心化、缩放、缺失处理是另需固定的预处理。 选择原Eq14范围a1∈[1,2]中的1，G=lncosh；这是研究子合同，不声称软件默认。κ是同G在标准高斯下的期望常数，不替换成样本均值、0或未经来源固定的小数；本条不批准任何近似积分程序。 对每个候选w先取G(w转置x)的全样本均值，再减κ并平方，最后对d行求和。不能改成逐观测先平方再均值，也不能去掉平方后声称优化等价；G为偶函数，符号反转不影响此目标。 约束WCW转置=I同时固定每个输出的经验方差1与两两经验不相关。C正定时W可逆，输出维数d不做截断；输入秩亏时原文建议先PCA降维，但该选择/阈值不属于本合同。 白化使二阶相关消失后仍有正交旋转自由。自撰等价参数化W=Q C^(−1/2)、QQ转置=I，说明所选非线性边缘对比决定旋转；任何固定白化矩阵本身不等于ICA答案。C的正定逆平方根此处是数学定义，不是已审底层特征值求解器。 正交Q集合紧、有限样本logcosh连续，故存在全局最大值和最优集合。这是数学存在性，不给出计算方法、唯一矩阵或数值收敛。行符号和行排列必然不能由目标区分；高斯/对称/退化样本还可有更多最优表示。 原Eq6是负熵的近似，不是等式；因而优化Eq8不保证真实总相关/互信息达到最小、更不证明输出统计独立。论文在真实线性混合、非高斯成分等假设下的识别/局部收敛结论不能无条件应用于金融样本。 原p5 Eq20为白化单方向w新∝E[xg(w转置x)]−E[g′(w转置x)]w；多输出还需p6逐步或对称去相关。当前没有指定初始化、收敛容差、失败返回、期望子采样或并列解选择，不把该固定点迭代同全局argmax集合等同。 原多信息最小化动机与已有TC使用相同信息论对象；区别不是新造熵函数，而是整个受约束线性潜表示学习问题。G的选择、单/多输出、逐步/对称算法、维度/窗口/方向及求解器未来统一保守为一ICA家族。 所选目标由所有样本的平均构造，置换样本次序不改变数学目标；不利用时间延迟预测关系。若金融样本按时间排列，只能在整个训练窗已发布后估计W，不能将包含未来样本的变换回填过去；冻结W后的未来输入处理也需另立研究合同。 分量的名称/符号/顺序不对应特定资产、风险、收益驱动或可交易信号；这里没有实证恢复验证、金融数据、策略交易、下单或回测。 边界：只审原Eq7/8＋Eq14的完整经验数学目标，不审核或执行FastICA软件/迭代返回；数值求解器和唯一解选取MISSING。 C正定及已零均值是额外研究输入合同，原库/论文不会替本条主动验证；近奇异浮点条件和数值稳定未测试。 近似负熵不是精确熵，去相关不是独立，符号/排列和其他非唯一性必须保留。 全部线性解混、参数/非线性、逐步/对称与单/多分量输出保守一族，不能按d凑因子。 PDF明确1999 IEEE版权与受限下载水印，作者托管不自动给一般复制/商业授权；原文与图不入公共Git。 输出：最优解混矩阵集合及每个矩阵对应全样本表示；最优值/行/分量同族，未产生数值结果。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-4340c20badf57001d5f016ab"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用于探索给定多变量样本中与高斯边缘不同的潜在线性表示；不能由目标名称推断分量已独立或存在金融收益。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-4340c20badf57001d5f016ab"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入N个有限实d维样本x_t，d>=2、N>=d+1，已满足(1/N)Σ_t x_t=0，C=(1/N)Σ_t x_t x_t转置严格正定。选原Eq14的a1=1，即G(u)=ln cosh(u)；κ=E_(Z∼N(0,1))[G(Z)]=(1/sqrt(2π))∫_R ln cosh(z) exp(−z²/2) dz。令W各行为w_i转置，A(X)=argmax_(W∈R^(d×d),WCW转置=I_d) Σ_(i=1..d)[(1/N)Σ_(t=1..N)G(w_i转置x_t)−κ]^2。输出完整最优变换集合及s_t=W x_t的表示集合；W、s、对比值和逐分量不拆计。这里是原Eq7/8的经验近似负熵对比目标，不是精确互信息、概率密度估计或已执行的FastICA返回值。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-4340c20badf57001d5f016ab"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X（finite real d by N matrix, d>=2, N>=d+1, exact empirical column-average vector0, C positive definite）：每列完整共同观测且已按固定预处理居中；不隐式去缺、降维或稳健白化。。参数：a1：logcosh对比的形状，选择1不是已核软件默认；所有选择保守同族；范围source recommendation1<=a1<=2; selected1；来源默认值None；本条选定1；expectation_estimator：原文p5允许以样本均值估期望，本条明确选整批，不启用随机子样本；范围finite batch; all observations used；来源默认值None；本条选定all-N ordinary sample mean with divisorN"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-4340c20badf57001d5f016ab"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "doi.org/10.1109",
+  "lab": null,
+  "missing_information": [
+    "数值全局求解/初始化/停止/并列矩阵选择与验证未冻结",
+    "金融字段、居中预处理、训练窗与PIT未固定",
+    "未验证真实线性混合/独立性/收益或风险解释",
+    "IEEE原文及市场数据一般商业使用权未建立"
+  ],
+  "name": "非线性边缘对比驱动的独立成分线性表示",
+  "native_source_id": "72.761722",
+  "one_line": "在输出单位方差且互不相关的约束下，寻找使边缘logcosh对比总和最大的线性变换，完整表示只算一族。",
+  "record_id": "72.761722",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.cs.helsinki.fi/u/ahyvarin/papers/TNN99_reprint.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Aapo Hyvärinen, Fast and Robust Fixed-Point Algorithms for Independent Component Analysis, IEEE Transactions on Neural Networks10(3):626–634,1999, DOI10.1109/72.761722. Self-authored Chinese definition.",
+      "id": "harvest-source-4340c20badf57001d5f016ab",
+      "license": "IEEE_COPYRIGHT_NO_GENERAL_REUSE_GRANT_VERIFIED",
+      "locator": "Exact title author IEEE copyright and original zero-mean linear transform Eq1: physical PDF p1-p1; Model and entropy context; Eq6 approximation, Eq7 one-unit contrast, Eq8 full uncorrelated multi-output objective: physical PDF p2-p2; Source ICA model assumptions and estimator properties, not unrestricted recovery guarantees: physical PDF p3-p3; Eq14 logcosh contrast with parameter range; distinct alternative contrasts; sphering boundary: physical PDF p4-p4; Eq20 fixed-point routine and local convergence discussion, covariance condition and sample means replacing expectations: physical PDF p5-p5; Deflation and symmetric decorrelation Eq24-26; not selected numerical solver or implementation guarantee: physical PDF p6-p6",
+      "revision": "IEEE TNN10(3)626-634 1999; author-hosted original reprint pinned by bytes",
+      "sha256": "a58d27223e2b13dac1feaec6a49b6f439582ecf5105c6a1e9cec81d5b07200c8",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://www.cs.helsinki.fi/u/ahyvarin/papers/TNN99_reprint.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Aapo Hyvärinen, Fast and Robust Fixed-Point Algorithms for Independent Component Analysis, IEEE Transactions on Neural Networks10(3):626–634,1999, DOI10.1109/72.761722. Self-authored Chinese definition.",
+      "id": "harvest-source-ff165f548a98bf8932c126eb",
+      "license": "NOASSERTION_WEBPAGE_SHELL",
+      "locator": "Author identifies1999 paper and exact linked reprint; original link HTTP, fetched matching path over HTTPS:L51-L61; Original1997 algorithm and1998 negentropy antecedents; not separate new factors:L76-L95",
+      "revision": "Author FastICA bibliography HTTP snapshot",
+      "sha256": "92c34b59b2d494d8bfa0d4aeee513237bc28aedf755411d155e63cecf2778267",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://www.cs.helsinki.fi/u/ahyvarin/papers/fastica.shtml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Aapo Hyvärinen, Fast and Robust Fixed-Point Algorithms for Independent Component Analysis, IEEE Transactions on Neural Networks10(3):626–634,1999, DOI10.1109/72.761722. Self-authored Chinese definition.",
+      "id": "harvest-source-5aea840854a009e1b0557134",
+      "license": "NOASSERTION_METADATA_REUSE",
+      "locator": "Pinned original JSON identity metadata: message.DOI, message.title, message.author, message.volume, message.issue, message.page, message.publisher, message.license",
+      "revision": "Crossref DOI record HTTP snapshot",
+      "sha256": "44afae35aff059e02686fb78d7d353306ea23cbc57a53e25c10a55d26871a66f",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://api.crossref.org/works/10.1109/72.761722",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

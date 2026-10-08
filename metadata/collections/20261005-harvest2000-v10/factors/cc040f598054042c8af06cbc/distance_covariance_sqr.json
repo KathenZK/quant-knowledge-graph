@@ -1,0 +1,175 @@
+{
+  "economic_basis": {
+    "hypothesis": "比较两组同一批对象之间的成对距离结构，用距离协方差及归一化结果描述依赖；可研究非线性联动，但不给相关方向、因果关系或自动显著性结论。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-fbbe94ec8ecb62dcd63704ee",
+        "harvest-source-9ab772c747c39b65639fcae9"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-fbbe94ec8ecb62dcd63704ee",
+        "harvest-source-9ab772c747c39b65639fcae9"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "两输入按行一一配对；维数p和q可以不同，但行数必须相同。主内部用n=x.shape[0]，明确合同要求numpy ndarray；不假定所有Python list在外层同样可用。函数不按时间戳或标的ID重新对齐。 原默认method=AUTO可能选择AVL快速算法。本条明确选原生naive，terms函数只接受AUTO或NO_COMPILE；未审AVL/MERGESORT和其它array-API后端，不把加速实现当成新因子。 内部把1D数组扩成列矩阵；分别计算X内和Y内的欧氏距离幂矩阵，拉直求内积并求行和/全矩阵和，再用展开公式计算，不必显式生成双中心矩阵。包括对角距离0和所有有序点对。 实际距离helper按输入类型选择SciPy cdist或直接广播平方差求和再取e/2次幂，二者数学距离同式；本条没有固定运行时NumPy/SciPy/array_api_compat选择的实际分支或逐浮点一致性。 distance_correlation_sqr通过同一terms求xy/xx/yy，用sqrt(abs(xx*yy))归一，只有分母严格等于0才置0，没有近零容差。U距离平方统计可以为负，源码直接保留，不把名称中的平方误解为样本值必非负。 distance_covariance/distance_correlation包装会通过_sqrt把负数裁到0再开方；主distance_covariance_sqr不做这个截断。所有参数、分量数、归一化与开方不拆成多个新增条目。 边界：_check_valid_dcov_exponent对e不在(0,2)只warnings.warn，不抛错；本条研究合同更窄，不声称源码保证独立性刻画条件。 虽然文件存在_check_same_n_elements，本条naive调用链没有调用它；长度不匹配可能在矩阵内积时报错，不能声称有统一友好校验。高于二维的shape约束用assert，NaN/Inf及空列没有统一入口校验。 n<=3的U分母为0或负，源码不主动拒绝；有效合同要求n>=4。有偏版本常量输入令归一分母为0并返回0，不是已统计证明独立。 主公式可能浮点相消而得到小负数，开方包装会截断；本条不把机器零、截断零或绝对分母当作显著性/独立性证明。 不同量纲/坐标尺度会改变欧氏距离；本条未调用affinely-invariant白化，也未审partial distance correlation控制变量投影。它们不在本条已审公式内，不预先作为其它新增计数。 只能在完整配对窗口已可得后计算；时间相关样本的检验分布、IID假设与p值没有研究。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-fbbe94ec8ecb62dcd63704ee",
+        "harvest-source-9ab772c747c39b65639fcae9"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "比较两组同一批对象之间的成对距离结构，用距离协方差及归一化结果描述依赖；可研究非线性联动，但不给相关方向、因果关系或自动显著性结论。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-fbbe94ec8ecb62dcd63704ee",
+        "harvest-source-9ab772c747c39b65639fcae9"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条固定原生method=naive、compile_mode=NO_COMPILE与有限NumPy数组合同。X∈R^(n×p)、Y∈R^(n×q)，a_ij=||X_i−X_j||₂^e、b_ij=||Y_i−Y_j||₂^e，e默认1且研究0<e<2；A_i=Σ_j a_ij，B_i=Σ_j b_ij，A=Σ_i A_i，B=Σ_i B_i，P=Σ_ij a_ij b_ij。主输出V_xy=P/n²−2Σ_i A_iB_i/n³+AB/n⁴，等价双中心距离矩阵逐元素积均值。原生U版本(n>=4)为U_xy=P/[n(n−3)]−2ΣA_iB_i/[n(n−2)(n−3)]+AB/[n(n−1)(n−2)(n−3)]。分别令Y=X或X=Y得到V_xx,V_yy，R²=V_xy/sqrt(abs(V_xx V_yy))；分母恰0时返回0。U归一化同式换U。带平方根包装返回sqrt(max(V_xy,0))或sqrt(max(R²,0))；这些平方/归一化/有偏与无偏函数只登记一个族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-fbbe94ec8ecb62dcd63704ee",
+        "harvest-source-9ab772c747c39b65639fcae9"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（finite real numpy ndarray n×p or length-n vector; n>=2,p>=1; n>=4 for U variant）：同一批样本的第一组属性，按行与y配对；输入尺度、分量定义与采样时点须另外固定。；y（finite real numpy ndarray n×q or length-n vector, same n as x; q>=1）：第二组属性；列数可与x不同，行顺序必须代表相同样本。无缺失处理或自动对齐。。参数：exponent：欧氏距离的幂；范围research finite0<e<2; outside only warning；源码默认1；method：算法选择；本条明确避开未审加速分支；范围reviewed native naive only; AUTO/AVL/MERGESORT not fully reviewed；源码默认AUTO；compile_mode：原生不编译选项；范围reviewed CompileMode.NO_COMPILE; naive also permits AUTO；源码默认AUTO；estimator_function：不是新增invented参数；指被调用的原生函数；范围native biased/U and square-root/correlation functions listed as one family；源码默认distance_covariance_sqr"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-fbbe94ec8ecb62dcd63704ee",
+        "harvest-source-9ab772c747c39b65639fcae9"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "vnmabus/dcor",
+  "lab": null,
+  "missing_information": [
+    "实际NumPy/SciPy/array_api_compat依赖版本及数值后端未运行固定",
+    "输入供应商/观测发布时间/PIT和金融坐标定义缺失",
+    "没有假设检验、回测或经济有效性证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "成对距离中心化的依赖统计族",
+  "native_source_id": "distance_covariance_sqr",
+  "one_line": "比较两组同一批对象之间的成对距离结构，用距离协方差及归一化结果描述依赖；可研究非线性联动，但不给相关方向、因果关系或自动显著性结论。",
+  "record_id": "distance_covariance_sqr",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/dcor/distances.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "dcor维护者Carlos Ramos Carreño及软件论文合作者José L. Torrecilla；距离统计原理论作者Székely、Rizzo、Bakirov按源码README归因。审维护者实现，不冒称原数学论文作者代码。",
+      "id": "harvest-source-ead6567a6836aa2af8e85dd8",
+      "license": "MIT",
+      "locator": "distance backends and imports:L1-L18; explicit Euclidean-power and SciPy distance paths:L23-L106; pairwise shape contract and same-object dispatch:L109-L161",
+      "revision": "0b989bb54d6f55f75f16d2a44ed97596ab718292",
+      "sha256": "1a55f112e116edfb69a91c2dbc155732e550b1017af3f5b66f3b884ec76a6686",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/dcor/distances.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "dcor维护者Carlos Ramos Carreño及软件论文合作者José L. Torrecilla；距离统计原理论作者Székely、Rizzo、Bakirov按源码README归因。审维护者实现，不冒称原数学论文作者代码。",
+      "id": "harvest-source-4f7ce9aaabbec9d349ca5631",
+      "license": "MIT",
+      "locator": "native compile options:L31-L56; array namespace and nonnegative sqrt wrapper:L77-L114; shape conversion and distance backend eligibility:L134-L170",
+      "revision": "0b989bb54d6f55f75f16d2a44ed97596ab718292",
+      "sha256": "f19a7bdd4734c8bb5b063e58f30986c84cf2e0bbc7dfc656ffa504758c2ce1df",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/dcor/_utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "dcor维护者Carlos Ramos Carreño及软件论文合作者José L. Torrecilla；距离统计原理论作者Székely、Rizzo、Bakirov按源码README归因。审维护者实现，不冒称原数学论文作者代码。",
+      "id": "harvest-source-000d4884d895ede7259f6054",
+      "license": "MIT",
+      "locator": "package scope and biased/unbiased families:L5-L26; software attribution and original mathematical references:L57-L111",
+      "revision": "0b989bb54d6f55f75f16d2a44ed97596ab718292",
+      "sha256": "545cf7bc86acf8350eb4ff783dbf6b6e82971eba1006dc1c4af6da0bc54475a9",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "dcor维护者Carlos Ramos Carreño及软件论文合作者José L. Torrecilla；距离统计原理论作者Székely、Rizzo、Bakirov按源码README归因。审维护者实现，不冒称原数学论文作者代码。",
+      "id": "harvest-source-f66606fb1d6042b5692d90f3",
+      "license": "MIT",
+      "locator": "MIT license:L1-L21",
+      "revision": "0b989bb54d6f55f75f16d2a44ed97596ab718292",
+      "sha256": "be0b87241d3a60d0b372b85ea90b25963dbba03ff40b6507b93dfc91b548fc41",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "dcor维护者Carlos Ramos Carreño及软件论文合作者José L. Torrecilla；距离统计原理论作者Székely、Rizzo、Bakirov按源码README归因。审维护者实现，不冒称原数学论文作者代码。",
+      "id": "harvest-source-fbbe94ec8ecb62dcd63704ee",
+      "license": "MIT",
+      "locator": "generic covariance/correlation wrappers and exact denominator:L208-L313; native method dispatch and public default signature:L380-L448; biased and U covariance returns:L487-L558; covariance nonnegative sqrt wrapper:L611-L619; correlation squared return:L908-L916; U correlation squared return:L971-L979; correlation nonnegative sqrt wrapper:L1031-L1040",
+      "revision": "0b989bb54d6f55f75f16d2a44ed97596ab718292",
+      "sha256": "a9649b8e696d468ad4d0bca99ad87c5577c5b49f0a4e47c178f34aad00adddd7",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/dcor/_dcor.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "dcor维护者Carlos Ramos Carreño及软件论文合作者José L. Torrecilla；距离统计原理论作者Székely、Rizzo、Bakirov按源码README归因。审维护者实现，不冒称原数学论文作者代码。",
+      "id": "harvest-source-9ab772c747c39b65639fcae9",
+      "license": "MIT",
+      "locator": "exponent warning and separate sample length helper:L32-L55; row and total sums:L75-L87; naive terms and exact biased/U normalization:L130-L199; reviewed distance computation path:L657-L672",
+      "revision": "0b989bb54d6f55f75f16d2a44ed97596ab718292",
+      "sha256": "5a165c80115fd1990434dcba41f1f14a7f258fd911df7d830fbdae3c04e8e0bf",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/dcor/_dcor_internals.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

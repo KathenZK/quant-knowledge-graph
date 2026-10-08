@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6005",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5959,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6b705dfff3a1953326851bb5b6d5ca2d10f10bfb59f4515a464b2f1008c5276c",
+    "rule_sha256": "beec6835f765c384e95816f0104f81e0fda71e03252697698debdc69b3f81967"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6005",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6005"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://toslc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/V-Z/VolatilitySwitch"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Ron McEwan / thinkorswim"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-311/W3216"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "McEwan/thinkorswim·波动开关趋势态：日频；VolatilitySwitch<0.5且收盘>SMA50持SPY否则BIL（VolSwitch·TrendSMA·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2013-02-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Volatility Switch Trend Mode With SMA — SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 thinkorswim《VolatilitySwitch》策略页之 **趋势体制分支** 可钉核（McEwan TASC 2013-02）。VolatilitySwitch 将历史波动归一到 0..1；<0.5 视为趋势态，此时用价上均线做多。日频：若 **VolatilitySwitch(length=21) < 0.5 且 收盘 > SMA(50)** → 满仓 SPY，否则 BIL。不是纯 RV 压缩阈；不是 ATR 压缩；不用均值回归分支 RSI。计入美股/ETF。提出日期 2013-02-01。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "VolSwitch·TrendSMA·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

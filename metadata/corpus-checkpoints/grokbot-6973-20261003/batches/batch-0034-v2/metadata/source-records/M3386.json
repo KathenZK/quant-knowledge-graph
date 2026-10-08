@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3386",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3340,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "947ee0e4fd8df1bb0141ca847abe537c5e738017226a0125b7b82dfe4f64b5b0",
+    "rule_sha256": "e4bccf853e3faa6ea4d90e175f3438f174d1520f76f480252fedd7d4e6ba0707"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3386",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3386"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/TrailingStopOrderRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；空仓时追踪止损买100（trailing=$2，非百分比）；成交后追踪止损卖100（trailing=$0.5）（Lean TrailingStopOrderRegression）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；空仓时追踪止损买100（trailing=$2，非百分比）；成交后追踪止损卖100（trailing=$0.5）（Lean TrailingStopOrderRegression）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `TrailingStopOrderRegressionAlgorithm.py`。`add_equity(\"SPY\")`；`buy_trailing_amount=2`，`sell_trailing_amount=0.5`，`trailing_as_percentage=False`。无买单票据时 `trailing_stop_order(+100, trailing_amount=2)`；组合已投资且无卖单票据时 `trailing_stop_order(−100, trailing_amount=0.5)`。断言止损价须始终落在相对前一根低/高的 trailing 距离内，且买成交价≥止损、卖成交价≤止损。不是止损限价 EMA30/60 核（W561），也不是仅 TrailingStopRisk 风控叠层核。提出日期未知。SPY追踪止损买$2/卖$0.5（非%）≠ 止损限价EMA30/60（M3368）/仅TrailingStopRisk风控叠层。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

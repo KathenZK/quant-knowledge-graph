@@ -1,0 +1,139 @@
+{
+  "economic_basis": {
+    "hypothesis": "在给定不完全市场模型内，到期负债通常不能逐状态精确复制。来源用全期均方误差投影来选择持仓，并用累计交易盈亏调节后续份额，使对冲路径随已知账户状态变化。此为负债近似机制，不是股票收益预测，也不证明真实市场误差更小、无套利价格正确或策略能盈利。",
+    "missing": [
+      "未执行代码、优化、数值求解或回测；数学损失目标不等于经济收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "people.math.ethz.ch/~mschweiz/Files",
+  "lab": null,
+  "missing_information": [
+    "本条只选Example1有限事件树：X0常数，F由X历史生成，各可达节点下一期价格不退化为单点；T有限，H平方可积。不是把任意行情树估计都认作满足原定理。",
+    "核心目标为固定初资c的E[(H−c−GT)^2]，不是只最小化Var[GT]，也不是给定期望收益下选资本权重。论文§3方差最优/最优初资与§4特例只作同族范围，不另计。",
+    "β、ρ里的未来增量及H是给定联合模型中被条件期望积分的随机变量；不能用一条事后实现路径替代条件期望，也不假定独立增量。本文未给真实数据的树拟合、概率校准或样本更新合同。",
+    "一般ND模型中，作者明确尚未证明由Eq2.19直接构造即自动属于Θ。此处有限状态、有限数值的限定下逐步所得变量平方可积，这是对所选有限模型的代数检查，不是原文对任意估计器给出的保证。原0/0=0约定不作浮点接近零阈值。",
+    "模型只要求实值折现X，不附带股票价格始终正或无套利的完整市场约束；平方损失最小也不保证逐状态偿付、非负财富或有限杠杆。源§3特别警示模型导出的初值未必适合作为公允价格。",
+    "无摩擦与不影响价格是明确模型假设。手续费、价差、借贷差、保证金、交割、整股、交易时钟和失败动作未闭合；加真实成本会破坏本文线性增益结构，不能简单声称沿用同一最优解。",
+    "公式只给0至T自融资增益与到期误差，不默补T时全部证券按可成交价清盘及支付负债的执行账本。没有盘中止损、止盈或现金保底。",
+    "作者公开PDF和出版清单核实身份与版本，无开放许可声明；原文、图像和行情不入Git，商用REVIEW_REQUIRED。未执行源码、求解器、数值模拟或回测。"
+  ],
+  "name": "Schweizer：有限事件树上的到期负债均方对冲",
+  "native_source_id": "discrete.pdf",
+  "one_line": "先由给定事件树后向计算风险调整系数，再用当前累计交易盈亏反馈下一期证券份额，最小化到期负债的平方误差。",
+  "record_id": "discrete.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未执行来源实现、模型或交易。",
+    "metadata": "原生身份、来源定位与自撰中文定义；原文、图像、代码、行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://people.math.ethz.ch/~mschweiz/Files/discrete.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Martin Schweizer, Variance-Optimal Hedging in Discrete Time, Mathematics of Operations Research20(1995),1–32; author PDF dated04.05.1995, ETH author publications link Files/discrete.pdf.",
+      "id": "schweizer-discrete-variance-hedging-pdf",
+      "license": "Author-hosted paper and publication list, no open redistribution or commercial-use grant established. Original Chinese definition metadata/locators only. Commercial use REVIEW_REQUIRED.",
+      "locator": "Physicalp1 dated cover; pp4–5 basic self-financing model and ND; p7 Example1 finite event trees; pp9–10 Eq2.2/2.11/2.14; p13 general recursive admissibility caveat; pp18–19 related same-family initial-capital/variance criteria; p21 martingale degeneration. Text lines use pinned pdftotext derivative, core formulas visually checked.",
+      "revision": "Author PDF This version:04.05.1995; MOR20(1995),1–32; sha256:19fd6133ffd7c078eed1964ad3fe5df7ee7169cd34326fe9bb5a94bf463a5e10",
+      "sha256": "19fd6133ffd7c078eed1964ad3fe5df7ee7169cd34326fe9bb5a94bf463a5e10",
+      "supports": [
+        "有限事件树与非退化条件",
+        "固定初资和负债的终端均方对冲",
+        "后向β/ρ及前向自融资份额反馈",
+        "一般递推可接受性边界和无摩擦假设"
+      ],
+      "url": "https://people.math.ethz.ch/~mschweiz/Files/discrete.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_PAPER_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Martin Schweizer ETH personal publications page",
+      "id": "schweizer-author-publications-html",
+      "license": "Author-hosted paper and publication list, no open redistribution or commercial-use grant established. Original Chinese definition metadata/locators only. Commercial use REVIEW_REQUIRED.",
+      "locator": "UTF-8 HTML L277–291: Schweizer1995a title, MOR20,1–32, Files/discrete.pdf link. Bibliographic identity only, no rule or license grant inferred.",
+      "revision": "Author publications HTML snapshot sha256:04ee374329717ec0c57258ef3f5beb73aaff16af9235ccdde924c5fdcb36774a",
+      "sha256": "04ee374329717ec0c57258ef3f5beb73aaff16af9235ccdde924c5fdcb36774a",
+      "supports": [
+        "作者原站与论文链接身份"
+      ],
+      "url": "https://people.math.ethz.ch/~mschweiz/ms_publ_eng.html",
+      "verification": "FETCHED_PINNED_AUTHOR_PUBLICATION_LIST"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "schweizer-discrete-variance-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一只风险资产的折现价格X_k，及折现价值恒为1的无风险资产。ξ_k是(k−1,k]期间所持风险资产份额；ΔX_k=X_k−X_(k−1)是每份折现价格变化，ξ_kΔX_k才是折现交易盈亏，不能直接替换成百分比收益。H、c与G均用同一折现金额单位。源假设小交易者不影响价格并允许自融资，不额外借用某种期权delta模型。"
+    },
+    "cost": {
+      "evidence": [
+        "schweizer-discrete-variance-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原文明确选无摩擦交易，小交易者不影响价格，故理论增益仅Σξ_kΔX_k，没有费用扣款。源特别说明交易成本会破坏G对策略的线性，成本版本超出本文范围。这里审核的是这一理想模型假设，真实手续费、买卖价差、冲击、税、借券及融资价差均未知，不能当作已核零成本或从已有其他模型借费率。"
+    },
+    "entry": {
+      "evidence": [
+        "schweizer-discrete-variance-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在0时点以G_0=0与给定c形成ξ_1=ρ_1−β_1c；在随后k−1时点用同一反馈式得到新的完整目标ξ_k。目标比现有份额高时买入差额，目标可为负；买卖含义来自源把ξ定义为自融资持有份额，不额外添加突破、收益阈值或择时信号。无需等负债损失发生后才建仓，也不根据已实现H调仓。"
+    },
+    "execution_time": {
+      "evidence": [
+        "schweizer-discrete-variance-hedging-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：理论信息顺序已明确——k−1观察历史、选择ξ_k、持有至k、再计ΔX_k；但没有交易所时钟、可成交报价、下单类别、模型计算延迟、整股舍入、借券/保证金和到期支付的实盘合同。后向条件期望是模型积分步骤，不能当成真实未来数据读取；尚未运行求解、交易模拟或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "schweizer-discrete-variance-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每期用新的ξ_k替换上一期目标：目标降低则减持，目标为0则该期不持有风险资产，为负可卖空。持有与更新到T为止，终端比较H−c−G_T；源没有独立止损、止盈、障碍提前退出或T后重新卖出新负债的规则。T时证券如何实际清算并向对手交割不是增益公式自动给出的交易合同。"
+    },
+    "position": {
+      "evidence": [
+        "schweizer-discrete-variance-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持仓单位是风险证券份额，G_0=0、G_k=Σ_(j≤k)ξ_jΔX_j；财富为c+G_k。折现安全资产作为自融资残余，在k−1调仓后其金额可写为c+G_(k−1)−ξ_kX_(k−1)，这是原自融资定义的会计换算，不是另加的优化目标。ξ可以多或空，不归一成权重，也无Σw=1、保证金或硬性杠杆帽。可接受集Θ要求ξ_k为F_(k−1)可测且ξ_kΔX_k平方可积；不把模型允许负现金等同实际可借款。"
+    },
+    "risk": {
+      "evidence": [
+        "schweizer-discrete-variance-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "ND要求存在统一δ∈(0,1)使(E[ΔX_k|F_(k−1)])²≤δE[(ΔX_k)²|F_(k−1)]；源Example1有限非退化树满足此条件。一般模型中作者未证明直接Eq2.19递推自动属于Θ，本条明确限定有限状态且数值有限，不宣称任意估计器均可用。无套利、公允价格、非负财富和逐状态偿付不是平方误差最小的同义词；源也警示§3最优初值不总能作公允价。若X为P鞅，则β=0且退化为ξ_k=E[HΔX_k|F_(k−1)]/E[(ΔX_k)²|F_(k−1)]，这是同族特例而非另一新增。概率估错、非平方可积、数据泄露、融资限制或真实成本会改变可行性和结果。"
+    },
+    "signal": {
+      "evidence": [
+        "schweizer-discrete-variance-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "令Q_k=Π_(j=k+1)^T(1−β_jΔX_j)，从k=T向1后向求；空乘积=1。令D_k=E[(ΔX_k)²Q_k²|F_(k−1)]，β_k=E[ΔX_kQ_k|F_(k−1)]/D_k，ρ_k=E[HΔX_kQ_k|F_(k−1)]/D_k。分母包含Q_k平方，分子没有；全文采用0/0=0、空和0。然后以G_0=0前向计算ξ_k=ρ_k−β_k(c+G_(k−1))，G_k=G_(k−1)+ξ_kΔX_k。所有E均为给定物理概率P下的条件期望，H不是当时已实现的负债；此构造求固定c的min E[(H−c−G_T)²]，不把只用当期协方差的最小方差权重替入。"
+    },
+    "timeframe": {
+      "evidence": [
+        "schweizer-discrete-variance-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "抽象有限离散日期0,1,…,T，T为给定正整数；每个k−1时点根据F_(k−1)决定ξ_k并持有至k，观察ΔX_k后才更新G_k。预先可在模型事件树上后向求各节点β和ρ，但实际只沿当时已观察节点使用仓位。不是提前看到真实未来，也未规定日、周或分钟的交易日历。模型在T结算误差，未指定固定频率重新估计P。"
+    },
+    "universe": {
+      "evidence": [
+        "schweizer-discrete-variance-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入一个已给定的有限事件树X0…XT及其物理概率P，X0常数，F_k由至k的X历史生成；每个可达节点的下一期X至少有两个不同可能值，满足原文非退化条件ND。另给到期负债H∈L²(F_T)与固定初始资本c∈R。本条选源Example1，不规定某个交易所、股票池或从行情生成树的方法；期权H=(X_T−K)+只是源示例，不把看涨合约固定为唯一用途。"
+    }
+  }
+}

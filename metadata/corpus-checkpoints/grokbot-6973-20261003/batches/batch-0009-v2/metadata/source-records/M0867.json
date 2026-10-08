@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0867",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 867,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "431cb07ee47296a1211cb521f2daee2c101edb7356bd4303842db9aafaaf644c",
+    "rule_sha256": "914626456f628fe02e8cf0cf4572ee7e217334ed0bb068c4c0d55a1f216c5807"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0867",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0867"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/49/VIX-Predicts-Stock-Index-Returns"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Jared Broad"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "OEF的VIX分位：相对默认504日分布，第90百分位看涨未来12个月、第10百分位看跌，活跃信号等权每周再平衡"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2019-02-23"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "VIX Predicts Stock Index Returns"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：需要 VIX，不能只凭 OEF 价格回测。本条只写该公开策略页已印出的 OEF、默认 504 个交易日、默认第 90 与第 10 百分位、未来 12 个月信号与每周等权，不是已收的动态 VIX-SPY 状态：那边波动率尖峰时买入 SPY、异常低或正在上升时规避，并用未印出的分类器估计未来 21 个交易日上涨超过 2%，没有 OEF，也没有 90/10。也不是每日用 VIX、VIX9D、VIX3M 与 SPY 的 25 日 SMA、MACD 在 SVXY、UVXY 与 TQQQ 间切换。也不是按市值筛选的四只最大股票、VIX 很低约 90%、约 50–70 百分位约 50%、较高约 30% 并加入 GLD。也不是过去两年里 VIX 处于最高分位做多股指 ETF、最低分位做空：那边没有印出第 90 与第 10 百分位，没有点名 OEF，没有把信号写成未来 12 个月，也没有活跃信号等权与每周再平衡。每日将 VIX 与约两年（默认 504 个交易日）分布比较：高于配置的高分位（默认第 90 百分位）发出 OEF 未来 12 个月看涨信号，低于低分位（默认第 10 百分位）发出看跌信号。投资范围固定为 OEF；活跃信号等权，每周再平衡、立即执行。看跌信号按页面原样保留，不改写成未印出的做空仓位。提出日期按页面原样保留2019-02-23。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。需要 VIX"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

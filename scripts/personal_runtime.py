@@ -33,7 +33,7 @@ def initialize(source, target):
         raise ValueError('Choose a new isolated destination; existing personal data is never overwritten')
     target.mkdir(parents=True, mode=0o700)
     manifest = dict(mode='personal_local', created_at=datetime.now(timezone.utc).isoformat(), inputs=[])
-    for name in ['catalog.sqlite', 'ingestion.sqlite', 'jobs.sqlite', 'factor-studies.sqlite', 'personal.sqlite', 'source-links.sqlite']:
+    for name in ['catalog.sqlite', 'ingestion.sqlite', 'jobs.sqlite', 'factor-studies.sqlite', 'personal.sqlite', 'source-links.sqlite', 'corpus-research.sqlite']:
         if (source / name).is_file():
             manifest['inputs'].append(backup_database(source / name, target / name))
     # Recovery points are referenced by the personal SQLite restore audit. Copy

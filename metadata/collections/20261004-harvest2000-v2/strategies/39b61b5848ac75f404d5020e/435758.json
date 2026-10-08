@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "多个价量方向确认可能过滤短期反复，但也可能过度重复同一价格信息；无收益或经济有效性证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "逐tick/成交重算使实时路径与历史bar诊断不可直接类比。",
+    "标题美元阈值未配明确账户币种。"
+  ],
+  "name": "TSI状态与短Hull量权均线多重确认",
+  "native_source_id": "435758",
+  "one_line": "TSI相对信号线、OHLC均价突破最近三棒和短Hull/量权均线同向时开多空，以账户浮盈亏绝对额清仓。",
+  "record_id": "435758",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8ETSI%E6%8C%87%E6%A0%87%E5%92%8CHull%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%E7%BA%BF%E7%9A%84%E9%87%8F%E5%8C%96%E7%AD%96%E7%95%A5-Quantitative-Trading-Strategy-Based-on-TSI-Indicator-and-Hull-Moving-Average.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-435758-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "554e4e45c9ccd02d1d9f17d97f7878f2daa0fb95e47c0260cf8575ea1708bb0f",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8ETSI%E6%8C%87%E6%A0%87%E5%92%8CHull%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%E7%BA%BF%E7%9A%84%E9%87%8F%E5%8C%96%E7%AD%96%E7%95%A5-Quantitative-Trading-Strategy-Based-on-TSI-Indicator-and-Hull-Moving-Average.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-435758-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-435758-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未显式佣金、滑点、点差或持仓费用，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-435758-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "T>EMA6(T)且上述所有多确认时调用buy多头；T<EMA6(T)且所有空确认时sell空头。使用状态判断而非TSI首穿；相反方向入口可反转。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-435758-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v2，calc_on_every_tick=true且calc_on_order_fills=true；当前OHLC4与指标在实时bar/成交重算时可变，不能把历史收盘信号等同逐tick路径。源码依次多entry、空entry、浮盈亏close_all，未实际执行。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-435758-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "strategy.openprofit>200或<−2000时close_all；阈值是全部当前持仓的账户浮盈亏绝对值，不是每份合约200/2000价格点。除此以外有反向entry；没有逐单固定价格止盈止损。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-435758-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认100%权益、pyramiding=0；entry的qty显式传na，使用默认数量模式。没有明确账户币种、资产单位或风险比例定仓。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-435758-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "浮盈亏阈值在脚本计算时触发市价清仓，跳空/滑点可越过阈值；TSI分母为0时没有保护。两方向过滤同时满足不可能，但成交与反转路径未核。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-435758-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "p=OHLC4；T=100×EMA35(EMA35(change(p)))/EMA35(EMA35(abs(change(p))))，信号为EMA6(T)。H=WMA(2WMA(p,1)−WMA(p,2),1)。多确认H>H[1]且H>H[2]、VWMA2(p)>VWMA4(p)、p分别>p[1],p[2],p[3]；空确认全反向。p不是只用收盘，三棒比较也不要求过去三棒自身单调。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-435758-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-435758-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

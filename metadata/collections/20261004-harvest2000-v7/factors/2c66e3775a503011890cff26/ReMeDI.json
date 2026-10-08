@@ -1,0 +1,104 @@
+{
+  "economic_basis": {
+    "hypothesis": "对相隔指定滞后的两组非重叠价格增量求交叉积，估计微观结构噪声的滞后自协方差；完整滞后向量及可选相关归一属于同一构造。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只接受xts或data.table。data.table必须有PRICE列；xts若仅一列就取该列，多列时必须有PRICE列并只读取该列。as.numeric抽出物理顺序，不按时间戳重新排序。 文档要求log-prices，但函数内没有log调用；PRICE列名不代表可以直接输入原价。必须由调用方预先按固定口径取对数，尺度改变会使自协方差随之改变。 默认kn=1、lags=1、makeCorrelation=FALSE。代码只检查lags对1取模全为0；研究合同另外要求kn为正整数、lags为非空非负整数向量、N>=3kn+max(lags)+1，保证每个seq上界不少于下界。 窗口内i会引用到i+lag+kn，所以输出只能在完整窗口截止以后可用；不可把每个交叉积回填为i时点已知。时间轴按观测序号计，kn和lag不是秒数。 相关形式把0加在请求lags前，依次计算同一估计后取res[-1]/res[1]；若请求本来含0，也保留其对应归一项。没有截断到[-1,1]，没有零分母保护。knChooseReMeDI自动调参和渐近方差函数不属于本条，不能自动借用其选择结果。 边界：没有na.rm或finite检查，缺失/Inf污染交叉积与sum；长度不足时seq会倒向生成索引，可能越界/NA或错误，不能当成空和0。 只验证lags整数，不限制非负或kn合法；本条显式限定研究域。原始输入N为分母，即使不同lag有效交叉积数不同仍不改分母。 lag0估计可为0或负，归一可Inf/NaN或超出[-1,1]，源码文档也提示此边界；不做强制相关修复。 函数按观测序号计算并完全忽略间隔长度，非等时采样时lag的时间含义需外部约定；不自动证明微观结构噪声模型适用于给定资产。 未知kn选择/置信区间/显著性不补；同核多个滞后和相关形式不另计。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对相隔指定滞后的两组非重叠价格增量求交叉积，估计微观结构噪声的滞后自协方差；完整滞后向量及可选相关归一属于同一构造。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入已是对数价格Y_i，i=1..N；给定k=kn与非负整数lag ℓ，I_ℓ={2k+1,...,N−k−ℓ}。Rhat_ℓ=(1/N)Σ_(i∈I_ℓ)(Y_(i+ℓ)−Y_(i+ℓ+k))(Y_i−Y_(i−2k))。makeCorrelation=False返回所请求各ℓ的Rhat；True则先额外算ℓ=0，再将各项除Rhat_0。分母是原始N，不是N−3k−ℓ，也不对两增量分别去均值。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "pData（xts one-column or with PRICE column, or data.table with numeric PRICE; finite ordered log-price values）：单个完整时段按观测时间升序排列的自然对数价格。函数不取log、不排序、不按DT自动分日；不能输入raw price后仍称log-price模型。。参数：kn：两个分离增量的区间长度；范围positive integer k; research N>=3k+max(lags)+1；源码默认1；lags：同族输出坐标，不分别计数；范围nonempty nonnegative integer vector；源码默认1；makeCorrelation：True除以额外估计的lag0；未必落[-1,1]；范围boolean；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "jonathancornelissen/highfrequency",
+  "lab": null,
+  "missing_information": [
+    "自动kn选择、渐近误差估计和原Matlab源码未纳入已审合同",
+    "R运行环境、行情PIT、观测时钟及数据许可未冻结",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "分离区间价格增量的微观结构噪声自协方差",
+  "native_source_id": "ReMeDI",
+  "one_line": "对相隔指定滞后的两组非重叠价格增量求交叉积，估计微观结构噪声的滞后自协方差；完整滞后向量及可选相关归一属于同一构造。",
+  "record_id": "ReMeDI",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "实现：Emil Sjoerup；源码致谢Merrick Li提供Matlab实现。原方法：Li与Oliver Linton，A ReMeDI for microstructure noise。此条仅绑定highfrequency固定R实现，不称原Matlab完全复现。",
+      "id": "harvest-source-5f01e4e89a90ac43d08c6870",
+      "license": "GPL-2.0-or-later",
+      "locator": "native noise interpretation, log-price input, formula and attribution:L3526-L3559; exact accepted input classes and lag integer check:L3560-L3586; full separated-increment estimator and optional correlation:L3588-L3615",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "47103e0f8a9f72ae6cdac845655c22a976e2aece49f7bb672302b33338354a32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Emil Sjoerup；源码致谢Merrick Li提供Matlab实现。原方法：Li与Oliver Linton，A ReMeDI for microstructure noise。此条仅绑定highfrequency固定R实现，不称原Matlab完全复现。",
+      "id": "harvest-source-1028bcab3647a0fae74441ed",
+      "license": "GPL-2.0-or-later",
+      "locator": "package identity, maintainers, GPL >=2 and original package paper:L1-L24; unfrozen runtime dependencies:L26-L45",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d8d98b0df5ea59c9488f6af78a6246dbbbabb593d56ef92e84eb7516dadce0b3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "admission": {
+    "membership": {
+      "curated": true,
+      "historical_public_export": false
+    },
+    "reasons": [],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "ADMITTED"
+  },
+  "category": "unclassified",
+  "definition": {
+    "content_origin": "ATTRIBUTED_SOURCE_DEFINITION_EXCERPT",
+    "definition_sha256": "400aa06c798aa6c7716db067d54876d41c1091eeb44cee50833b5c905a7e5937",
+    "formula": null,
+    "formula_dialect": null,
+    "formula_sha256": null,
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "accounting_availability_lag_months": 4,
+      "core_153": true,
+      "original_sign": "1",
+      "source_occurrences": [],
+      "theme": "Profitability"
+    },
+    "required_fields": [
+      "BEV",
+      "EBIT"
+    ],
+    "required_fields_status": "partial_latex_token_extraction",
+    "status": "DEFINITION_EXCERPT",
+    "text": "$ \\frac{EBIT\\mbox{*}_t}{BEV\\mbox{*}_t}$",
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "monthly",
+    "holding_period": {
+      "scope": "default JKP monthly factor portfolio",
+      "unit": "month",
+      "value": 1
+    },
+    "lookback": null,
+    "rebalance": "monthly for default monthly JKP portfolios",
+    "universe": "global equities; source covers 93 countries; country-specific data availability"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": "qkg:concept:99bdf186-5823-5a82-b411-e242d44257bc",
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:46e611b3-6736-5f2c-8c02-e4ebb2075469"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:99bdf186-5823-5a82-b411-e242d44257bc"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:99bdf186-5823-5a82-b411-e242d44257bc"
+    ],
+    "source_record_ids": [
+      "qkg:record:e8ea141c-dbba-55ed-8dd9-0e8cb779ba3a"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "输入字段提取不完整，不得视为完整数据需求合同。"
+  ],
+  "name": "Operating Profit after Depreciation scaled by BEV",
+  "native_source_ids": [
+    "ebit_bev"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 3683,
+        "line_ordinal": 980,
+        "line_sha256": "e05f86bcab5a590c7f6abe7184cc64a8e29db9dda9baf4fef950bf3278a8fc53",
+        "record_id": "qkg:record:e8ea141c-dbba-55ed-8dd9-0e8cb779ba3a"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "not_applicable"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "primary_definition"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:46e611b3-6736-5f2c-8c02-e4ebb2075469",
+  "record_kind": "signal",
+  "rights": {
+    "attribution_required": true,
+    "commercial_use": [
+      "PROHIBITED"
+    ],
+    "derivative_allowed": [
+      "CONDITIONAL"
+    ],
+    "license_labels": [
+      "CC-BY-NC-4.0 (reference metadata; conservative scope); MIT (code)"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "CONDITIONAL"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [],
+        "status": "ADMITTED"
+      },
+      "attribution": [
+        "Soliman, Mark T"
+      ],
+      "code_url": "https://github.com/bkelly-lab/jkp-data/blob/666e8960ed81a664f1e9f189f92925ab2eeffcd5/src/jkp/data/aux_functions.py",
+      "license": "CC-BY-NC-4.0 (reference metadata; conservative scope); MIT (code)",
+      "locator": "documentation.tex:L1514",
+      "name": "Operating Profit after Depreciation scaled by BEV",
+      "native_id": "ebit_bev",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": "The use of DuPont analysis by market participants",
+        "url": null,
+        "year": 2008
+      },
+      "parameters": {
+        "accounting_availability_lag_months": 4,
+        "core_153": true,
+        "original_sign": "1",
+        "source_occurrences": [],
+        "theme": "Profitability"
+      },
+      "primary_source": true,
+      "record_id": "qkg:record:e8ea141c-dbba-55ed-8dd9-0e8cb779ba3a",
+      "response_sha256": "a987f4876e80a21f8712e208818361c81f011e25259a3f7575cee49806b34801",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": "666e8960ed81a664f1e9f189f92925ab2eeffcd5",
+      "rights": {
+        "attribution_required": true,
+        "commercial_use": "PROHIBITED",
+        "derivative_allowed": "CONDITIONAL",
+        "license": "CC-BY-NC-4.0 (reference metadata; conservative scope); MIT (code)",
+        "license_id": "qkg:license:debe6add-b9c3-5468-a3f1-47f1ae88c9d1",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "CONDITIONAL",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "NONCOMMERCIAL_ONLY",
+        "terms_url": "https://github.com/bkelly-lab/jkp-data/blob/666e8960ed81a664f1e9f189f92925ab2eeffcd5/DATA_LICENSE"
+      },
+      "sha256": "a987f4876e80a21f8712e208818361c81f011e25259a3f7575cee49806b34801",
+      "source_id": "jkp",
+      "source_name": "JKP Global Factor Data",
+      "url": "https://github.com/bkelly-lab/jkp-data/blob/666e8960ed81a664f1e9f189f92925ab2eeffcd5/documentation/documentation.tex"
+    }
+  ]
+}

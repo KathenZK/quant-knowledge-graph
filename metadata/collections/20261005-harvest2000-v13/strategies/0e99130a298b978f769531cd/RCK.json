@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "在已知且稳定的联合收益分布下，以负幂矩约束缩小 Kelly 可行集，可在长期对数增长与相对初始财富的下行风险之间取舍；这依赖模型假设，未证明真实市场概率预测或净收益。",
+    "missing": [
+      "原文数值模拟回报未作为本次准入或真实市场概率保证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "stanford.edu/boyd/papers/kelly",
+  "lab": null,
+  "missing_information": [
+    "SOURCE_DESCRIPTION_REVIEWED仅表示原作者数学定义可定位；NOT_EXECUTED、NOT_TESTED，不代表实际概率估计、最优解数值或回测通过。",
+    "真实资产宇宙、联合收益情景/概率形成方法、轮次频率、α/β和成交费用均未冻结；这是条件于这些输入的组合构造。",
+    "风险定义相对于初始财富而非历史峰值，负幂矩约束为充分条件；跨期分布独立同分布及固定比例假设不可省略。",
+    "只收 Eq7/Eq11 一般有限情景，未把 α/β 参数、两结果特例、二次近似和求解器拆成不同策略。",
+    "原作者站点提供可读稿件不自动授予论文、源码或数据商业许可；不发布原文、公式图或源码，商业状态 REVIEW_REQUIRED。"
+  ],
+  "name": "RCK：相对初始财富跌幅概率约束的 Kelly 配置",
+  "native_source_id": "RCK",
+  "one_line": "在有限联合收益情景下最大化预期对数增长，以组合收益负幂的期望约束限制跌破初始财富阈值的概率。",
+  "record_id": "RCK",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、求解器、模拟或回测。",
+    "metadata": "原生模型标识、来源定位和自撰中文定义；不发布论文全文、图、源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://stanford.edu/~boyd/papers/kelly.html"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Enzo Busseti, Ernest K. Ryu and Stephen Boyd, Risk-Constrained Kelly Gambling (author manuscript March19,2016); author page identifies Journal of Investing25(3):118–134,Fall2016. Chinese paraphrase by catalog curator.",
+      "id": "boyd-kelly-20160319-pdf",
+      "license": "No explicit redistribution or commercial license established for the author manuscript. Public availability is not a license; any GitHub implementation license does not cover this paper or input data. Original Chinese definitions only; commercial scope REVIEW_REQUIRED.",
+      "locator": "Author manuscript March19,2016: model physicalpages2–3; initial-wealth risk page6; bound Eq6/page7; RCK Eq7/pages7–8; general finite-outcome Eq11/page10. Field lines refer to fixed pdftotext stdout; formulas visually checked against original PDF.",
+      "revision": "Author manuscript dated March19,2016; Risk-Constrained Kelly Gambling; PDF sha256:1a51f811ea225d3abbdb9eaf2225d38122f7f7b0a4368d15341c63536403b74d",
+      "sha256": "1a51f811ea225d3abbdb9eaf2225d38122f7f7b0a4368d15341c63536403b74d",
+      "supports": [
+        "原作者有限联合收益情景、现金项、固定比例重复配置、对数增长目标与负幂期望风险约束"
+      ],
+      "url": "https://stanford.edu/~boyd/papers/pdf/kelly.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_RESEARCH_PAPER_AND_VISUAL_FORMULAS_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "boyd-kelly-20160319-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "形式化对象为 n 个非负收益倍数的投资/下注，其中第 n 项现金收益倍数恒为 1。论文把股票长多和衍生品收益列为可建模对象；本条只选有限联合情景的配置方法，没有指定可直接下单的股票、期权或交易所。"
+    },
+    "cost": {
+      "evidence": [
+        "boyd-kelly-20160319-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：本文所收模型只给 w_t=∏(r_s·b) 和优化目标，没有明确佣金、买卖价差、每轮再平衡交易成本、冲击、税费或借贷现金利率。现金倍数恒为 1 是原模型约定，不是对真实无风险利率或账户费用为零的声明。"
+    },
+    "entry": {
+      "evidence": [
+        "boyd-kelly-20160319-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在重复配置开始前，依据给定联合分布和风险参数求上述目标，将每项财富比例设为 b_i。b_i>0 表示持有该项，现金为 b_n；没有价格交叉、排名或逐次信号开仓。每轮实际财富变化后再恢复同一目标比例。本条只收条件于已知分布的权重构造，不填补分布训练和订单生成。"
+    },
+    "execution_time": {
+      "evidence": [
+        "boyd-kelly-20160319-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先给定情景分布与风险预算并确定 b，再重复各轮配置；第 t 轮实现的 r_t 乘到 w_t 后得到 w_{t+1}。固定目标的语义没有使用当轮尚未实现的 r_t 重新选择当轮 b。论文不规定交易日历、时区、收盘/开盘成交、再平衡所需延迟或现金利息计提；不得把理论即时比例恢复当成已经验证的成交。"
+    },
+    "exit": {
+      "evidence": [
+        "boyd-kelly-20160319-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "固定 b_i=0 的项不配置；每轮随财富变动恢复目标比例，减少超过目标的持仓。若所有风险项 E[r_i]≤1，原文说明全现金为最优；这仍是解优化问题的结果。没有实际财富跌破 α 即清仓的止损规则，也没有持有若干轮退出或峰值回撤触发器。"
+    },
+    "position": {
+      "evidence": [
+        "boyd-kelly-20160319-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "全财富按 b≥0、Σb=1 分配，现金与风险资产共同占满 100%，无做空或杠杆。初始模型财富归一为 1；每輪重置为同一最优 b，区别于固定股数持有。全现金 b=e_n 总可行；有限情景要求有正概率的 r·b>0，但不强制 b_n>0。原稿没有在所有资产结构下声明最优 b 唯一，本条也不补多解并列规则或求解容差。"
+    },
+    "risk": {
+      "evidence": [
+        "boyd-kelly-20160319-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "W_min=inf_{t≥1} w_t，相对于初始财富 1；风险是 Prob(W_min<α)，不是从历史峰值量起的最大回撤。原文在独立同分布、固定比例等模型条件下给出 E[(r·b)^(−λ)]≤1 ⇒ Prob(W_min<α)<β 的充分条件；它是较保守的可行域限制，不是精确求解该概率，也不保证真实市场风险。λ→0 的边界退化为普通 Kelly；α=.7、β=.1 只是论文示例而非本条生产默认值。情景误估、收益为零/缺失、参数选择、现实破产和执行约束未补；未运行优化器、模拟或回测。"
+    },
+    "signal": {
+      "evidence": [
+        "boyd-kelly-20160319-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先给定 α、β∈(0,1)，设 λ=log(β)/log(α)>0。在单纯形 b_i≥0、Σ_i b_i=1 上，求 b∈argmax Σ_{k=1}^K π_k log(r^(k)·b)，同时要求 Σ_k π_k(r^(k)·b)^(−λ)≤1。原文 Eq11 用等价的 log-sum-exp 形式：logΣ_k exp(logπ_k−λ log(r^(k)·b))≤0。各正概率情景的组合收益必须为正；全现金提供可行点，不另加最低现金占比。输入为完整收益情景而非仅均值/协方差；不先求普通 Kelly 后一律乘风险折扣。"
+    },
+    "timeframe": {
+      "evidence": [
+        "boyd-kelly-20160319-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "采用离散轮次 t=1,2,…，在固定收益分布和风险参数下选一个权重向量 b，并在每轮重复保持同一财富比例。w_1=1，w_t=∏_{s=1}^{t−1}(r_s·b)。轮次不是已冻结的日线或月线频率；本条没有每期重新拟合概率或将历史价格窗口写成在线学习。"
+    },
+    "universe": {
+      "evidence": [
+        "boyd-kelly-20160319-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "由调用方预先给定 n 项资产和 K 个完整联合收益向量 r^(k)，以及各情景概率 π_k。概率总和为 1；零概率情景可从支持集删除，本条有限和的对数形式在 π_k>0 的支持集上使用。每个 r^(k) 非负、现金分量为 1，不能把资产各自边际概率当作独立联合情景。跨期向量须独立同分布；本文没有给真实市场情景估计窗口、滚动成分和分布漂移处置。"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4488",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4442,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a84c72c56d979ed287c031e750a239533e4eda36324eb8f3bb8fd5cae38e6c38",
+    "rule_sha256": "96d936ed746e92d35acb09578fd40ff548b8c48b953c9782401834ea092e4354"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4488",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4488"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://doi.org/10.1287/mnsc.2013.1838"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Christopher J. Neely / David E. Rapach / Jun Tu / Guofu Zhou"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-159/W1698"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Neely·Rapach·Tu·Zhou·技术指标择时股权溢价：月末；14条MA/MOM/VOL二值信号；多数看多（均值≥0.5或PC1高）满仓SPX/SPY，否则国债/现金；持1月（NRTZ TECH·Majority）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2014-07"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Neely·Rapach·Tu·Zhou·技术指标择时股权溢价：月末；14条MA/MOM/VOL二值信号；多数看多（均值≥0.5或PC1高）满仓SPX/SPY，否则国债/现金；持1月（NRTZ TECH·Majority）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Neely/Rapach/Tu/Zhou《Forecasting the Equity Risk Premium: The Role of Technical Indicators》（Management Science 2014）之 **技术指标组择时** 可钉死交易核。每月末对标普计算文中 **14** 个二值信号 Si∈{0,1}：MA(s,l) 对 s∈{1,2,3}、l∈{9,12}；MOM(9)/MOM(12)；VOL(s,l) 同 MA 窗的 on-balance volume 均线交叉。落地：**若 14 信号均值 ≥0.5**（或第一主成分处于历史高半，与文 PC-TECH 同向）则 **100% 做多 SPX/SPY**；否则持 **T-bill/现金**；持有 **1月**。相对 HJTZ PLS情绪择时（M4482）与单条 SMA：本核为 **多技术规则多数投票/PC**。不是宏观14变量组合（另条）。计入美股/ETF。提出日期 2014-07。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "ManSci 2014 · 14 tech indicators majority/PC-TECH times equity"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

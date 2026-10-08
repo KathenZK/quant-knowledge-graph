@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1515",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1515,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0954272fca1c7233278a812a59ce874f956936c1dcec19fc47c57c4091157032",
+    "rule_sha256": "d795d8467d919863ec45c686b59e6b5dc0745ddc2e096c1434c626f4ef599fae"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1515",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1515"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Apollo11/Apollo11.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Apollo11.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Apollo11：15m，三支买信号或（VW-MACD/Fib-BB/BB3σ量价）；卖出信号关闭，靠分级自定义止损"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Apollo11；15m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Apollo11：15m，三支买信号或（VW-MACD/Fib-BB/BB3σ量价）；卖出信号关闭，靠分级自定义止损"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写davidzr仓strategies/Apollo11/Apollo11.py默认（buy_signal_1/2/3均为True）。timeframe=15m；stoploss默认档由custom_stoploss接管；minimal_roi约{\"0\":10}（实质禁用即时ROI）。卖出populate_sell_trend强制不发信号。做多三支或：(1) vwmacd<signal，且low<EMA240、close>EMA240，且EMA5上穿EMA10，且EMA3<EMA50，volume>0；其中vwmacd=量加权EMA12−量加权EMA26，signal=EMA(vwmacd,9)；(2) Fib下轨=SMA(50)−ATR(14)×4.236上穿BB下轨=SMA(49)−STDDEV(64)×3，且close<EMA(50)×(1−(−1))即close<2×EMA50（代码s2_ema=EMA50−EMA50×(−1)），volume>0；(3) low<BB(典型价,20,3σ)下轨，且high>量加权慢MA(20)，且high<EMA50，volume>0。custom_stoploss：浮盈>20%/10%/6%/3%时分别返回4%/3%/2%/1%追踪；深亏按时长收紧（文件内−10%/−8%与60H/120H等分支）。提出日期未知。 不是单支MACD或单支布林：本条是15m Apollo11三支买信号或（VW-MACD/Fib-BB/BB3σ量价），卖出信号关闭，靠分级自定义止损。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

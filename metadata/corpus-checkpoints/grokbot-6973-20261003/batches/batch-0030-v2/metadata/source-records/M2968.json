@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2968",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2958,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "bd5825da93975cdd0ffaf059c648dfcb8e2be77ee8f4d6cb42bc6eb48a11cf4b",
+    "rule_sha256": "4b8d2f790397afe96d040940efe63d74b1c6490fc800a20dbe2e78786f00fe0d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2968",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2968"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/IndexOptionBearPutSpreadAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPXW 0DTE；行权档+5..+10，空仓买熊市看跌价差1组（Lean IndexOptionBearPutSpread）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPXW 0DTE +5..+10空仓买熊市看跌价差1组；Lean IndexOptionBearPutSpread）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPXW 0DTE；行权档+5..+10，空仓买熊市看跌价差1组（Lean IndexOptionBearPutSpread）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `IndexOptionBearPutSpreadAlgorithm.py`。`add_index_option(SPX,\"SPXW\")`，过滤 `weeklys_only().strikes(5,10).expiration(0,0)`。已有票据持仓则返回；取最近到期 puts 按行权价排序，`OptionStrategies.bear_put_spread(spxw, puts[-1].strike, puts[0].strike, expiry)` 后 `buy(...,1)`。不是牛市看跌价差（W421）核。提出日期未知。 不是W421牛市看跌价差核：本条为SPXW 0DTE行权档+5..+10空仓买熊市看跌价差1组。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,110 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述区块空间相对于手续费支付的拥挤价格。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ee36fcdcf28a76722c4a8baf",
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "源文间隔 1 day；须在区间结束、原件及必要价格/分类标签发布后使用，实际发布延迟/PIT快照缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ee36fcdcf28a76722c4a8baf",
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "累计同日手续费与区块字节数。 总手续费除以总区块字节数；零手续费交易纳入；没有交易的区间不计算。 边界：这是总量之比，不是逐笔 fee/bytes 的等权平均。 Solana排除投票交易并包括成功/失败交易；交易集合必须与源定义一致。 区块字节口径的节点实现需要另冻结。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ee36fcdcf28a76722c4a8baf",
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述区块空间相对于手续费支付的拥挤价格。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ee36fcdcf28a76722c4a8baf",
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "FeeTotNtv / BlkSizeByte。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ee36fcdcf28a76722c4a8baf",
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "FeeTotNtv：按冻结原始文档定义，原生名称/作用见公式和计算步骤；BlkSizeByte：按冻结原始文档定义，原生名称/作用见公式和计算步骤。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ee36fcdcf28a76722c4a8baf",
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "coinmetrics/product-docs",
+  "lab": null,
+  "missing_information": [
+    "供应商数据获取与商用授权未确认",
+    "区间时间边界、发布延迟和修订历史未冻结",
+    "未获取行情/链上数据或执行任何回测",
+    "供应商内部算法/分类标签仅有文档层定义，未取得完整源码"
+  ],
+  "name": "单位区块字节的总手续费",
+  "native_source_id": "FeeByteMeanNtv",
+  "one_line": "描述区块空间相对于手续费支付的拥挤价格。",
+  "record_id": "FeeByteMeanNtv",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/fees-and-revenue/fees.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Coin Metrics, product-docs official repository",
+      "id": "harvest-source-ee36fcdcf28a76722c4a8baf",
+      "license": "NOASSERTION",
+      "locator": "Mean Tx Fee per Byte (native units):L23-L59",
+      "revision": "8489126ae94aff995d01be44f965327f2640f51e",
+      "sha256": "cc2b5f348da91c6794e96a06a3f848e65f17c983f7b2f16af33cbd467eeafa79",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/fees-and-revenue/fees.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Coin Metrics, product-docs official repository",
+      "id": "harvest-source-53e80cdde5f8021f81a239dc",
+      "license": "NOASSERTION",
+      "locator": "network-usage/blocks.md:L1-L504",
+      "revision": "8489126ae94aff995d01be44f965327f2640f51e",
+      "sha256": "960446e16b4ee925786c1a8da4966d99b31ac1368d0209dfe00d50b086f0e95f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/network-usage/blocks.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

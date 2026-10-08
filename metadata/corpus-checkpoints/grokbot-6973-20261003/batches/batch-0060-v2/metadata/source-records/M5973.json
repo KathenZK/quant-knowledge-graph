@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5973",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5927,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1d2a9fdc3ced7e4c5fb591fc16f576651e258a2516a5bf1008d8253369b5f38c",
+    "rule_sha256": "a137785c9e7afb8d51cdb8d4101c22b4f2d28258ffb42df3d9d71cc0d429d375"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5973",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5973"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.mesasoftware.com/papers/TheInverseFisherTransform.pdf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "John F. Ehlers / MESA Software"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-308/W3184"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Ehlers/MESA·逆Fisher强弱零轴：日频；逆Fisher(相对强弱5,WMA9)>0持SPY否则BIL（IFish·Above0·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2004-05-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Inverse Fisher Strength Above Zero — SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Ehlers《The Inverse Fisher Transform》之 **逆Fisher 相对强弱零轴上方持有态** 新核。Value1=0.1×(相对强弱(Close,5)−50)；Value2=WMA(Value1,9)；IFish=(e^{2·Value2}−1)/(e^{2·Value2}+1)。日频：若 IFish **大于** 0 → 满仓 SPY，否则 BIL（持有态钉死；原文另有±0.5交叉交易规则，本条不取交叉）。不是 Fisher 变换零轴（M5526）；不是普通相对强弱；不是 CyberCycle 逆Fisher。计入美股/ETF。提出日期 2004-05-01。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "IFish·Above0·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,116 @@
+{
+  "economic_basis": {
+    "hypothesis": "提取指定周期带内的历史周期分量，并显式保留中心延迟。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5ac91bae7d1d25474f1b53ef"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "收盘后输入才固定；源码未锁定市场、交易所或bar周期；实时柱内的输出可变。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5ac91bae7d1d25474f1b53ef"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "构造理想带通系数并减去全部 2K+1 项的均值，使权重和为0。 用当前及过去2K根数据作对称卷积，中心是t-K。 缺失历史经 nz 默认置0；第一阶段输出不等于完整窗口结果。 边界：当前计算值描述 t-K 的中心周期分量，只能当前得到；绝不能把它搬回 t-K 后再回测。 默认K=12需要25点才有完整历史。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5ac91bae7d1d25474f1b53ef"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "提取指定周期带内的历史周期分量，并显式保留中心延迟。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5ac91bae7d1d25474f1b53ef"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "a=2π/pHigh,b=2π/pLow；B0=(b-a)/π，Bj=(sin(jb)-sin(ja))/(πj)；θ=(B0+2Σ_(j=1..K)Bj)/(2K+1)；y_t=(B0-θ)x_(t-K)+Σ_(j=1..K)(Bj-θ)*(x_(t-K+j)+x_(t-K-j))。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5ac91bae7d1d25474f1b53ef"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src：每根已完成柱的价格或数值输入；默认close。参数：pLow：最短通过周期；范围integer >=2；源码默认6；pHigh：最长通过周期；范围integer >pLow；源码默认32；K：对称半窗；范围integer 1..100 (UI)；源码默认12"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5ac91bae7d1d25474f1b53ef"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "mihakralj/pinescript",
+  "lab": null,
+  "missing_information": [
+    "Pine运行环境与ta.*内建语义未另冻结",
+    "未编译或执行Pine代码",
+    "市场数据、时间周期、调整方式和成本未选择"
+  ],
+  "name": "延迟对称 Baxter–King 带通",
+  "native_source_id": "baxterking",
+  "one_line": "提取指定周期带内的历史周期分量，并显式保留中心延迟。",
+  "record_id": "baxterking",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/baxterking.pine"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-5ac91bae7d1d25474f1b53ef",
+      "license": "MIT",
+      "locator": "baxterking:L33-L89; UI defaults and input selectors:L93-L96; native function invocation and selected source:L99-L99",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "8af7fe19d456ff53bbaf0bcd23b7c697dd45559f27d74397127ffc0c746b4f14",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/baxterking.pine",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-804bcf21463c75493a5520e3",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "19436752dbc325b6013c778a438efa521d0fefe0eb53aebf83d7753543052936",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-7b5ed203dc075b0a0b6a3132",
+      "license": "MIT",
+      "locator": "author notes:L1-L61",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "1f3a66f758199a79243a2ee548db2707a0affc82f567550bf0285afd49f2a331",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/baxterking.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

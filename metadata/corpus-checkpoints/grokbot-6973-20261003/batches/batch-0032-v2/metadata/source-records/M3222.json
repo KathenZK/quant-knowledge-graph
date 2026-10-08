@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3222",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3176,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "583e2cf2a64f6a512f1ddb545b22bbe181a7f875a4e7be7e37b73b98eeb0bec8",
+    "rule_sha256": "f4200d6ea02b73f55a6c8c300a332d5909a858b73d3ca80e08d20c272f75428a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3222",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3222"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CapmAlphaRankingFrameworkAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：道指约30成分；月初开盘后对SPY做21日收益OLS取截距α最高2只；ConstantAlpha UP(1日,mag=0.025)等权；单票最大回撤1%（Lean CapmAlphaRanking）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：道指约30成分；月初开盘后对SPY做21日收益OLS取截距α最高2只；ConstantAlpha UP(1日,mag=0.025)等权；单票最大回撤1%（Lean CapmAlphaRanking）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `CapmAlphaRankingFrameworkAlgorithm.py`。宇宙分钟；`CapmAlphaRankingUniverseSelectionModel`：基准 SPY；成分约 AAPL/AXP/BA/…/XOM（道指列表）；每月 `month_start`+`after_market_open(SPY)` 触发；各标的与基准取 `period=21` 日线收盘经 ROC(1) 收益序列，对基准做最小二乘 `lstsq([收益,1], 基准收益)`，取截距 `ols[1]` 为 α，降序取 Top2。Alpha=`ConstantAlphaModel(PRICE,UP,1日,0.025)`；等权+即时；风控 `MaximumDrawdownPercentPerSecurity(0.01)`。不是粗选 PE Top2 核（W463），也不是 Greenblatt EV/EBITDA 核（W481）。提出日期未知。道指成分×SPY 21日OLS α Top2+ConstantAlpha UP1日 ≠ 粗选PE Top2（W463）/Greenblatt EV/EBITDA（W481）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

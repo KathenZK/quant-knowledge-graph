@@ -1,0 +1,678 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "admission": {
+      "additionalProperties": false,
+      "properties": {
+        "membership": {
+          "additionalProperties": false,
+          "properties": {
+            "curated": {
+              "type": "boolean"
+            },
+            "historical_public_export": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "curated",
+            "historical_public_export"
+          ],
+          "type": "object"
+        },
+        "reasons": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "scope": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ADMITTED",
+            "REVIEW_REQUIRED"
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "reasons",
+        "membership",
+        "scope"
+      ],
+      "type": "object"
+    },
+    "category": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "definition": {
+      "additionalProperties": false,
+      "properties": {
+        "content_origin": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "definition_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "formula": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "formula_dialect": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "formula_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hash_scope": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "required_fields": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "required_fields_status": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "FORMULA_AVAILABLE",
+            "DEFINITION_EXCERPT",
+            "STRUCTURED_SUMMARY_ONLY",
+            "MISSING"
+          ]
+        },
+        "text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "truncated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "formula",
+        "formula_dialect",
+        "text",
+        "parameters",
+        "required_fields",
+        "required_fields_status",
+        "status",
+        "content_origin",
+        "truncated",
+        "formula_sha256",
+        "definition_sha256",
+        "hash_scope"
+      ],
+      "type": "object"
+    },
+    "domain": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_class": {},
+        "frequency": {},
+        "holding_period": {},
+        "lookback": {},
+        "rebalance": {},
+        "universe": {}
+      },
+      "required": [
+        "asset_class",
+        "frequency",
+        "universe",
+        "lookback",
+        "holding_period",
+        "rebalance"
+      ],
+      "type": "object"
+    },
+    "entity_type": {
+      "const": "factor"
+    },
+    "identity": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_canonical_factor_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "equivalence_scope": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "legacy_canonical_factor_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "normalized_canonical_factor_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "normalized_concept_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "source_record_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "source_record_ids",
+        "legacy_canonical_factor_ids",
+        "normalized_canonical_factor_ids",
+        "normalized_concept_ids",
+        "curated_canonical_factor_id",
+        "equivalence_scope"
+      ],
+      "type": "object"
+    },
+    "identity_namespace": {
+      "const": "quantgraph/factor-variant"
+    },
+    "missing_information": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "native_source_ids": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "exporter": {
+          "const": "factor-metadata-export/v1"
+        },
+        "line_hash_scope": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_artifact": {
+          "const": "normalized/factor_records.jsonl"
+        },
+        "source_lines": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "line_bytes": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "line_ordinal": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "line_sha256": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "record_id": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "record_id",
+              "line_ordinal",
+              "line_sha256",
+              "line_bytes"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "source_snapshot_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "exporter",
+        "source_snapshot_sha256",
+        "source_artifact",
+        "source_lines",
+        "line_hash_scope"
+      ],
+      "type": "object"
+    },
+    "quality": {
+      "additionalProperties": false,
+      "properties": {
+        "backtest_ready": {
+          "const": false
+        },
+        "economic_validity": {
+          "const": "NOT_EVALUATED"
+        },
+        "metadata_status": {
+          "const": "IMPORTED_TRACEABLE_METADATA"
+        },
+        "parse_status": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "semantic_status": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "source_quality_tiers": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "upstream_code_executed_in_export": {
+          "const": false
+        }
+      },
+      "required": [
+        "metadata_status",
+        "source_quality_tiers",
+        "parse_status",
+        "semantic_status",
+        "economic_validity",
+        "backtest_ready",
+        "upstream_code_executed_in_export"
+      ],
+      "type": "object"
+    },
+    "record_id": {
+      "pattern": "^qkg:factor:[a-f0-9-]{36}$",
+      "type": "string"
+    },
+    "record_kind": {
+      "enum": [
+        "signal",
+        "placebo",
+        "withdrawn",
+        "parameter_template",
+        "factor_portfolio"
+      ]
+    },
+    "rights": {
+      "additionalProperties": false,
+      "properties": {
+        "attribution_required": {
+          "type": "boolean"
+        },
+        "commercial_use": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "derivative_allowed": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "license_labels": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "license_notice": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "market_observations_included": {
+          "const": false
+        },
+        "raw_data_allowed": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "redistribution_allowed": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "scope": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_fulltext_included": {
+          "const": false
+        }
+      },
+      "required": [
+        "license_labels",
+        "commercial_use",
+        "redistribution_allowed",
+        "derivative_allowed",
+        "raw_data_allowed",
+        "attribution_required",
+        "scope",
+        "source_fulltext_included",
+        "market_observations_included",
+        "license_notice"
+      ],
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "quantgraph-factor-metadata/v1"
+    },
+    "sources": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "admission": {
+            "additionalProperties": false,
+            "properties": {
+              "reasons": {
+                "items": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "type": "array",
+                "uniqueItems": true
+              },
+              "status": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "reasons"
+            ],
+            "type": "object"
+          },
+          "attribution": {
+            "type": "array"
+          },
+          "code_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "license": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "locator": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "native_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "paper": {
+            "additionalProperties": false,
+            "properties": {
+              "permission": {
+                "const": "REVIEW_REQUIRED"
+              },
+              "title": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "url": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "year": {}
+            },
+            "required": [
+              "title",
+              "url",
+              "year",
+              "permission"
+            ],
+            "type": "object"
+          },
+          "parameters": {
+            "type": "object"
+          },
+          "primary_source": {
+            "type": "boolean"
+          },
+          "record_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "response_sha256": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "retrieved_at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "revision": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "rights": {
+            "additionalProperties": false,
+            "properties": {
+              "attribution_required": {},
+              "commercial_use": {},
+              "derivative_allowed": {},
+              "license": {},
+              "license_id": {},
+              "raw_data_allowed": {},
+              "redistribution_allowed": {},
+              "rights_scope": {},
+              "rights_status": {},
+              "terms_url": {}
+            },
+            "required": [
+              "license",
+              "license_id",
+              "rights_status",
+              "commercial_use",
+              "redistribution_allowed",
+              "derivative_allowed",
+              "raw_data_allowed",
+              "attribution_required",
+              "rights_scope",
+              "terms_url"
+            ],
+            "type": "object"
+          },
+          "sha256": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source_id": {
+            "enum": [
+              "aqr",
+              "french",
+              "gtja191",
+              "jkp",
+              "osap",
+              "qlib",
+              "wq101"
+            ]
+          },
+          "source_name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "record_id",
+          "source_id",
+          "source_name",
+          "native_id",
+          "name",
+          "url",
+          "locator",
+          "revision",
+          "sha256",
+          "response_sha256",
+          "retrieved_at",
+          "license",
+          "attribution",
+          "primary_source",
+          "code_url",
+          "paper",
+          "parameters",
+          "admission",
+          "rights"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "entity_type",
+    "identity_namespace",
+    "native_source_ids",
+    "identity",
+    "name",
+    "record_kind",
+    "category",
+    "domain",
+    "definition",
+    "sources",
+    "admission",
+    "quality",
+    "rights",
+    "provenance",
+    "missing_information"
+  ],
+  "type": "object"
+}

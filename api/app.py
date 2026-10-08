@@ -20,6 +20,12 @@ def create_app(root=None, profile=None, *, ingestion_repository=None, ingestion_
         db=FactorDB(root,profile=selected)
     app=FastAPI(title='Quant Knowledge Graph',version='0.2.0',description='Curated definitions and provenance; no backtest or strategy execution endpoints.')
     app.state.db=db
+    if not public_only:
+        from quantgraph.db import project_root
+        knowledge_root = project_root(root)
+        if (knowledge_root / 'metadata/catalog.json').is_file():
+            from quantgraph.api.knowledge import install_knowledge
+            install_knowledge(app, knowledge_root)
 
     @app.get('/health')
     def health():

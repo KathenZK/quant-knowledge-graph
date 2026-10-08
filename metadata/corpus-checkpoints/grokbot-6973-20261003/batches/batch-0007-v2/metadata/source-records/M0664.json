@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0664",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 664,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "85a59dbbc8dccae1057c3aff4fb1bc8d6852aaaa8da84ea09b39323c4919a4bf",
+    "rule_sha256": "ee168879e95c39c726e60f5bc0e1a6385352c5cf0ff75fafd6c2f37bc35c3609"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0664",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0664"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/chois-dividend-growth-allocation/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Paul Choi（Allocate Smartly实测）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "股息与成长配置：TIPS均线、股息率1.6%与利差滞后才持QQQ或SCHD"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Balance Between Growth and Dividend: Dividend & Growth Allocation"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "每月最后一个交易日收盘判断风险开启或关闭，三项必须同时成立才开启。第一，TIP价格高于其12个月平均。第二，标普500股息率大于等于1.6%，股息率为过去12个月每股股息除以标普500现金价格；季度股息不是实时公布，实测加入1个月滞后，即用最近现金价格和上一月股息。第三，7到15个月之前这段期间，美国国债收益率曲线从未倒挂；倒挂定义为10年期收益率比3个月期低超过0.5个百分点。2019年6月及之后用FRED序列T10Y3MM，此前由该站自行计算利差。风险开启时，QQQ与SCHD的动量为1、3、6、9、12个月百分比收益的平均，收盘全仓动量较高的一只。风险关闭时，对BIL、TLT、PDBC计算动量，等于收盘除以6个月月末收盘平均再减1；收盘全仓动量最高且动量为正的一只，否则持现金。原本给BIL的仓位改为现金。持有至下月最后一个交易日。页面写明1.6%阈值贴合近年历史，且TIPS长期数据为模拟。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Strategy rules tested；Edit 01/10/24（倒挂改为低超过0.5个百分点；2019年6月起用T10Y3MM）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

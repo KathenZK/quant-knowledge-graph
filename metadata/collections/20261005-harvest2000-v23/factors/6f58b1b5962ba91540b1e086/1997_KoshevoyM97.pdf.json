@@ -1,0 +1,91 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述查询点在给定经验多变量分布中的中心程度，不定义金融收益或异常交易方向。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-66cda57ceda72d9a824369a0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "样本X和query y全部已观测/发布后才可用。若样本云从完整历史窗构造，不能把窗口末深度回填过去；金融字段、供应商、修订及PIT MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-66cda57ceda72d9a824369a0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入n个完整有限实d维向量x_i和同坐标查询y，选定n>=2、d>=2；经验分布每个观测质量1/n。允许重复点和秩亏，重复观测仍各占一个1/n，不先去重后改概率。论文也讨论一般分布，本条不把一般密度估计或用户给定非等权分布自动纳入已审范围。 可行权集合A(y)={lambda>=0:sum_i lambda_i=1,sum_i lambda_i x_i=y}。约束逐坐标精确成立；若集合空（y在样本凸包外，包括其仿射支撑外），依Definition7.1返回0。数值求解器未收敛不是空集证据，不能悄悄返回0。 对可行query，原Eq7.5要求每个n lambda_i<=1/alpha；p14末式写sup1/(n max lambda)。因此等价定义gamma*=min max_i lambda_i，输出D=1/(n gamma*)。可写线性规划min gamma s.t.A(y)且lambda_i<=gamma；这是自撰代数改写，不是原件所附已验证程序。 可行lambda集合是概率单纯形的闭子集，紧且非空；max lambda连续，因此最小值达到。gamma*在[1/n,1]，D在[1/n,1]；lambda最优解可能多个，D标量定义唯一，不为它们编任意排序或唯一权重。 所有alpha层、trimmed-region描述、最优gamma、概率重构lambda和查询批输出保守共一族。不能把每个坐标、阈值、样本长度、窗口、1−D或者新求解器单独算新因子。所审输出是单query的D，区域网格与绘图不是额外算法。 均值query有lambda_i=1/n，D=1；反向D=1也迫使均匀lambda而query为样本均值。凸包边界可能有正深度，因此本合同不宣称从凸包外接近时全局连续；全部点相同则该点D=1，其余0。n/d选择不是满秩保证，算法定义不要求求逆散布。 非奇异仿射换坐标会保持每个lambda重构约束，因此深度不变；原Theorem7.1(vi)明写regular d×d，不能随意投影到低维后宣称同值。一般查询坐标/样本也须同一变换，不混单位或错配变量。 原p13 A(mu,x)集合写nu分布却写E(mu)=x，紧随文字和p14 Eq7.3/7.4写E(nu)=x；本条核心直接依清楚的经验Eq7.5/7.6，不改原件。Theorem7.1(ii)表述未显式限定逼近序列都在conv中，证明用该限定；不据此承诺跨支持边界连续。 原p12/16将任意分布Mahalanobis深度关联到拥有相同均值协方差的高斯分布zonoid深度，不是任意经验深度都等价Mahalanobis距离。普通凸包、CVaR支持函数、有界权、最优化都是共享原语，本提名是完整多变量query重构和alpha反演；不宣称数学或经济独立。 没有指定浮点LP求解器、容差、不可行性证书、输入标准化或资源限额。固定数学定义不代表已数值计算或回测。金融变量、横截面/窗口、估计时点和交易用途仍需在研究仓库另定，深度低不自动是可获利异常。 边界：等质量按观测计，重复点不能直接合并成等权唯一点。 凸包外0与数值失败分开，边界允许正值；不填eps或按误差阈值默放松等式。 秩亏允许；不偷加逆协方差、椭球近似或正态分布假设。 A(mu,x)原记号与continuity表述的限制均保留，不修改原PDF。 商用许可未核定，原PDF/文本/页图不入公共Git；未执行任何源算法或优化。 输出：一个D∈[0,1]的数学定义值；最优权可多解，求解状态与数值结果未产生"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-66cda57ceda72d9a824369a0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述查询点在给定经验多变量分布中的中心程度，不定义金融收益或异常交易方向。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-66cda57ceda72d9a824369a0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给n>=2个有限实d维向量x_i（d>=2）及同坐标y。A(y)={lambda∈R^n:lambda_i>=0,Σlambda_i=1,Σlambda_i x_i=y}。若A(y)为空则D(y)=0；否则gamma*=min_(lambda∈A(y))max_i lambda_i，D(y)=1/(n gamma*)。等价LP：min_(lambda,gamma) gamma，s.t.Σlambda_i x_i=y，Σlambda_i=1，0<=lambda_i<=gamma。等价原Eq7.5为sup{alpha∈(0,1]:存在lambda∈A(y)，n lambda_i<=1/alpha∀i}。全部alpha、输出权/坐标与查询只算一族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-66cda57ceda72d9a824369a0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X（finite real n by d matrix, n>=2,d>=2; repeated rows and deficient rank allowed）：行是完整共同观测，列是固定相同变量；不默认去均值、缩放、去重或补缺。；y（finite real d-vector）：与X列完全对应的查询点；可在凸包外，不能事后换成最近投影。。参数：empirical_mass：选择原经验分布口径，不是源码默认；非等权实现不另拆族；范围equal empirical mass; duplicates retained；来源默认值None；本条选定1/n per observation"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-66cda57ceda72d9a824369a0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "wisotypo3.uni-koeln.de/sites/statistik/pdf_publikationen",
+  "lab": null,
+  "missing_information": [
+    "金融字段/样本窗/query选择、时点/PIT和数据权利未定",
+    "浮点求解器、容差和最优/不可行证书未选定与运行",
+    "原文特定商业再使用许可未核定",
+    "未验证金融用途、收益方向或经济独立"
+  ],
+  "name": "有界概率重构的经验 Zonoid 数据深度",
+  "native_source_id": "1997_KoshevoyM97.pdf",
+  "one_line": "求重构一个多变量查询点所需的最小最大样本权重，将其倒数归一成相对样本云的位置深度。",
+  "record_id": "1997_KoshevoyM97.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://wisotypo3.uni-koeln.de/sites/statistik/pdf_publikationen/1997_KoshevoyM97.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Gleb Koshevoy and Karl Mosler. Zonoid Trimming for Multivariate Distributions. The Annals of Statistics1997,25(5):1998-2017. University of Cologne hosted exact journal PDF. Self-authored Chinese mathematical metadata; no DOI invented.",
+      "id": "harvest-source-66cda57ceda72d9a824369a0",
+      "license": "NOASSERTION_SPECIFIC_REUSE_GRANT_NOT_ESTABLISHED",
+      "locator": "Exact authors, title, Annals1997volume25issue5 and printed1998-2017 pages: physical PDF p1-p1; Definition1.1 bounded density reweighting and scalar trimming comparison: physical PDF p2-p2; Gaussian/Mahalanobis special comparison and Definition7.1 sup depth with outside zero: physical PDF p12-p12; Mean has depth1; measure notation discrepancy E(mu) in A(mu,x): physical PDF p13-p13; Eq7.5 empirical constraints, Eq7.6 and minimax-weight equivalent depth: physical PDF p14-p14; Theorem7.1 invertible affine transform and continuity proof restricted to convex support: physical PDF p15-p15; Mahalanobis Gaussian relation and simplicial/Tukey relationships, not general equivalence: physical PDF p16-p16",
+      "revision": "Annals of Statistics 1997 volume25 issue5 pages1998-2017; content-sha256:f348aa44605fa5ae2413f8299cc83e5bb4a94eb2d22f0ee8a3ce47e0cebacddd",
+      "sha256": "f348aa44605fa5ae2413f8299cc83e5bb4a94eb2d22f0ee8a3ce47e0cebacddd",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://wisotypo3.uni-koeln.de/sites/statistik/pdf_publikationen/1997_KoshevoyM97.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

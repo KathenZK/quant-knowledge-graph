@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "对完整矩阵描述低秩结构与稀疏偏离的竞争性分解；作为结构诊断，不自动把任一分量解释为金融趋势、错误或收益驱动。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ca019abce68365f75ebd608b"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只在完整输入矩阵及其修订已全部发布后计算；全窗优化不可回填成内部历史时点可知分量。金融输入、行列映射、窗口、供应商及PIT均MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ca019abce68365f75ebd608b"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源身份固定arxiv0912.3599v1，而非未指定最新版或后来JACM排版。此条审Eq1.1的全观测精确凸优化定义与λ建议；不声称其Algorithm1迭代已实现或已运行。 输入M已经完整，既不默认把缺失补零，也不先中心化、标准化或做Hankel变换。变量L,S与M同shape，约束逐元素严格相加等于M；未知的是低秩/稀疏贡献，不预先固定rank或异常坐标。 核范数是全部奇异值之和，不是最大奇异值、Frobenius范数或平方奇异值总和。L1是全部矩阵元素绝对值之和，不是矩阵诱导1范数（最大列和）。两项都有数据量纲，λ无量纲。 论文Eq1.1允许正λ；本条选择p5–6给的1/sqrt(max(n1,n2))，不是由金融回测优化的参数。n>=2是额外研究范围，不把维度/λ变化、L/S输出各拆新增。 可消去S=M−L得到同一有限维凸目标。零L使可行集非空且目标有限；当||L||F趋向无穷，||L||_*>=||L||F使目标发散，所以至少有最优解。此为自撰数学解释，不是求解器执行或唯一性证明。 该目标不严格凸，一般输入不能宣称唯一分解或恢复真实异常。定义保留argmin集合，若研究要可重复单一矩阵，需另固定求解器、容差、并列选择和退化处理。M=0时两非负范数之和只在L=S=0取0。 论文恢复定理有额外不可省略条件：真实L0的奇异方向非相干、rank受限、真实S0支持在给定大小集合中均匀随机且足够稀疏；高概率是对该支持抽样而言。未知金融矩阵不自动满足这些条件，λ推荐也不把高概率保证变成每个输入必恢复。 低秩不等于平滑趋势，稀疏不等于数据错误或可交易冲击。原文e1 e1^T同时低秩和稀疏的例子说明语义不可仅凭M辨识。没有价格、收益、成交量、样本行列或金融经济标签的内建映射。 p29视觉原文Eq5.1为+<Y,M−L−S>+(μ/2)||M−L−S||F²；同页Eq5.2/5.3与Alg1却印阈值λμ、μ及L步−Y/μ。按Eq5.1对固定变量完成平方应为阈值λ/μ、1/μ，L与S中心均含+Y/μ。这里保留该符号/尺度冲突，不暗改原文、也不把自撰修正式冒称来源算法。核心Eq1.1不依赖该求解伪代码。 原文§1.6缺失观测扩展Eq1.5只约束已观察坐标，和本条完整M合同不同；噪声容许、非凸rank目标、在线版本等未审。同族后续补核不能仅换容差、窗口或分量来增加计数。 全部行列信息共同参与全矩阵优化；即使把行排成时间，早期L/S也使用晚期样本。仅在整个已知窗口结束且全部输入发布后形成诊断，不能回填成历史实时因子。 边界：输入矩阵全观测有限，未选金融字段/频率/横截面、单位标准化或PIT；未进行任何分解、优化数值运行或行情下载。 返回argmin最优解集合是数学定义；若要求唯一数值数组，求解器/容差/并列解选择仍MISSING。不能把未跑的理想最优解称可直接金融回测。 目标中的核范数与逐元素L1原语均不新造；与普通PCA/SSA/Procrustes共享谱基础，但完整联合低秩/稀疏变量和等式约束不是这些已有输出的简单重命名。 真实数据低秩稀疏分离与优化定义是否存在是两回事；论文定理条件和概率空间不能省略，金融有效性未建立。 Algorithm1的原阈值/符号与Eq5.1不一致已视觉锁定；当前不准入任何该伪代码可执行结果，也未用后来版本静默替换。 从L/S提单一元素、rank或异常比例只是同族摘要，不作为额外因子。参数、矩阵维度、求解器与语言端口不拆。 arXiv非独占分发许可授权平台保存分发，不能推成读者一般再分发、改编或商业授权；原PDF/网页不入公共Git，市场数据许可独立缺失。 输出：完整最优解对集合F(M)及其共同目标值属于一族；单一解与异常标签的数值选择未冻结。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ca019abce68365f75ebd608b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对完整矩阵描述低秩结构与稀疏偏离的竞争性分解；作为结构诊断，不自动把任一分量解释为金融趋势、错误或收益驱动。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ca019abce68365f75ebd608b"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入完整有限实矩阵M∈R^(n1×n2)，n1,n2>=2；nmax=max(n1,n2)，选择论文建议λ=1/sqrt(nmax)>0。定义F(M)=argmin_(L,S∈R^(n1×n2),L+S=M)[||L||_*+λ||S||_(1,entry)]，其中||L||_*=Σ_j σ_j(L)，||S||_(1,entry)=Σ_iΣ_j|S_ij|。输出整个最优解对集合F(M)，也可取其中经显式求解器/并列规则选出的(L*,S*)，但此条没有冻结该数值选择。共享最优目标v(M)=min_L[||L||_*+λΣ_ij|M_ij−L_ij|]，不另计新标量。L/S及rank、异常位置/幅值摘要、参数/求解器变体整体仅计一个PCP家族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ca019abce68365f75ebd608b"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "M（fully observed finite real n1 by n2 matrix; n1,n2>=2）：已明确行列和统一输入单位的整个观测矩阵；不隐式中心化、不补缺、不预设金融映射。。参数：lambda：平衡核范数与逐元素L1的无量纲权重，恢复保证另需原定理条件；范围paper Eq1.1 positive lambda; selected theorem-recommended value, not software default；来源默认值None；本条选定1/sqrt(max(n1,n2))"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ca019abce68365f75ebd608b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "arxiv",
+  "lab": null,
+  "missing_information": [
+    "数值求解器、容差、并列最优解选择与计算执行未固定",
+    "金融输入矩阵的行列、字段、预处理、供应商和PIT未固定",
+    "原始论文/数据商业再使用权未建立",
+    "未验证真实低秩/稀疏生成假设、金融收益或风险解释",
+    "缺失数据/噪声扩展和原印Algorithm1不属于已闭合实现"
+  ],
+  "name": "核范数与逐元素稀疏惩罚的主成分分解",
+  "native_source_id": "0912.3599v1",
+  "one_line": "把完整观测矩阵联合分成两部分，在精确相加约束下最小化低秩项的核范数与另一项的逐元素绝对值和。",
+  "record_id": "0912.3599v1",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://arxiv.org/pdf/0912.3599v1"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Emmanuel J. Candès, Xiaodong Li, Yi Ma, John Wright; Robust Principal Component Analysis? arXiv:0912.3599v1, submitted18Dec2009, manuscript17Dec2009. Self-authored Chinese definition.",
+      "id": "harvest-source-ca019abce68365f75ebd608b",
+      "license": "ARXIV_NONEXCLUSIVE_DISTRIBUTION_NOT_GENERAL_REUSE",
+      "locator": "exact authors, date and low-rank-plus-sparse model: physical PDF p1-p1; classical fixed-rank approximation versus sparse gross corruption: physical PDF p2-p2; Eq1.1 complete nuclear plus entrywise L1 objective and exact equality; identifiability example: physical PDF p4-p4; incoherence and random support recovery assumptions; rectangular lambda recommendation: physical PDF p5-p5; lambda=1/sqrt(max dimensions) conditional interpretation and matrix-completion distinction: physical PDF p6-p6; related decomposition attribution and incomplete-data extension boundary: physical PDF p7-p7; masked equality extension Eq1.5 excluded from current fully observed scope: physical PDF p8-p8; same complete convex target and solver discussion: physical PDF p28-p28; Eq5.1 versus literal Eq5.2/5.3 and Algorithm1 threshold/sign discrepancy; solver not admitted: physical PDF p29-p29",
+      "revision": "arXiv:0912.3599v1",
+      "sha256": "c3866c673fd75baacebbe07851c93e2aa8134a5e52d9113a5300bb8b46eff02e",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://arxiv.org/pdf/0912.3599v1",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Emmanuel J. Candès, Xiaodong Li, Yi Ma, John Wright; Robust Principal Component Analysis? arXiv:0912.3599v1, submitted18Dec2009, manuscript17Dec2009. Self-authored Chinese definition.",
+      "id": "harvest-source-8ce47aa42d01fbc820edfe26",
+      "license": "NOASSERTION_WEBPAGE_SHELL",
+      "locator": "version title authors submitted date and exact PDF link:L114-L124; version history and article-specific nonexclusive-distribution license link:L160-L178",
+      "revision": "arXiv:0912.3599v1",
+      "sha256": "a945d8816a04041291ee3b8693c9201979f2c8957247c69ca5439b6dcbdcfe0d",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://arxiv.org/abs/0912.3599v1",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Emmanuel J. Candès, Xiaodong Li, Yi Ma, John Wright; Robust Principal Component Analysis? arXiv:0912.3599v1, submitted18Dec2009, manuscript17Dec2009. Self-authored Chinese definition.",
+      "id": "harvest-source-c4b3cfa063bb6bd2aa3e03cb",
+      "license": "UNKNOWN_PAGE_SHELL_RIGHTS_NOT_ASSERTED",
+      "locator": "grant to arXiv for distribution; not a general reader commercial license:L11-L25",
+      "revision": "nonexclusive-distrib/1.0",
+      "sha256": "1991765e2079370736d4dedf217375799ad19aab6700ebdf42ae3dd84690067a",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://arxiv.org/licenses/nonexclusive-distrib/1.0/license.html",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

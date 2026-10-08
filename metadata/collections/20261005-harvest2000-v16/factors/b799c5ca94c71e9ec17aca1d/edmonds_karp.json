@@ -1,0 +1,137 @@
+{
+  "economic_basis": {
+    "hypothesis": "给定有向关系网络、源节点、汇节点和每条边容量，求满足中间节点流量守恒的最大净通过量；残余网络保留瓶颈结构。金融流量/容量含义尚缺，不等于市场成交量或电流介数。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-39b8c6ddcb5fd5da6b4f9fd2",
+        "harvest-source-46e8151054a08ddaa0307d4a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-39b8c6ddcb5fd5da6b4f9fd2",
+        "harvest-source-46e8151054a08ddaa0307d4a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定原生edmonds_karp入口，capacity=\"capacity\"、residual=None、cutoff=None、value_only=False，无外部backend。每条原边容量必须显式给非负Python整数（排除bool），源汇不同且图调用期间不变；这是额外研究合同，不声称源入口验证这些要求。 build_residual_network先拒绝多重图，保留全部节点；实际只收u!=v且capacity>0的边，负/零容量和None返回会被过滤。本条排除负值和缺失容量，0边不进入R。每条正容量弧补一条反向残余弧，已有原反向边则保留其原容量而非覆盖为0。 工具用inf=3*正容量和，若和0则1；本整数有限合同内不是额外市场容量。原库缺属性按无限容量，callable可隐藏边和无限路径检测均未纳入已审输入合同。 所有残余弧flow初始化0。双向BFS从s沿后继、从t沿前驱，在flow<capacity的弧上扩展；每轮扩较小frontier，相等时扩源侧。找到交点后还原完整s→t路径，取整条最小剩余容量增广，允许通过反向负流取消旧分配。 cutoff=None被置float(inf)，因此直到找不到增广路径才返回；value_only在此原生算法被忽略，仍返回R。显式提前cutoff、提供已有残余网络以及默认maximum_flow的preflow_push求解器未审，不把包装函数默认冒称Edmonds–Karp。 原生输出R的全部边流是一个可行最优解，等最优流分配可能不唯一并受迭代顺序影响；scalar flow_value和残余边流同族。这里只据源Notes保留最大流/最小割关系，没有声称已审minimum_cut包装的分区实现。 边界：无s→t可达正容量路径则F=0，即使图中还有其它边；这仅是给定容量网络的可行流，不表示市场无流动性。 有原反向弧时有符号残余流可为负；不能把每个R[u][v][flow]都解释为非负原始成交量。反向弧主要允许撤销先前增广。 source只检查端点存在/不同、多重图与无限路径，非有限、负值、异常自定义容量对象等不在本条合同。保留不同于源自动校验的边界。 若使用浮点容量，严格flow<capacity与逐步加减可能有舍入问题；原maximum_flow文档也提示流分配和割错误。本条选整数并未实际执行验证。 电流介数服从拉普拉斯电导传播且汇总中介份额，本条容量约束最大化可走多路径但不按电导欧姆定律分流。共享“flow”名称不等于同定义。 不按s/t交换、容量单位、最大流求解器、最大流/最小割对偶、可归约的单纯unit-capacity匹配再增条目；后续扩展必须另核整族等价。 输出：原生残余DiGraph R，最大流标量在R.graph[flow_value]，全部有符号残余边流同族；不直接返回标量。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-39b8c6ddcb5fd5da6b4f9fd2",
+        "harvest-source-46e8151054a08ddaa0307d4a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "给定有向关系网络、源节点、汇节点和每条边容量，求满足中间节点流量守恒的最大净通过量；残余网络保留瓶颈结构。金融流量/容量含义尚缺，不等于市场成交量或电流介数。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-39b8c6ddcb5fd5da6b4f9fd2",
+        "harvest-source-46e8151054a08ddaa0307d4a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定内置简单有向无自环图G，s≠t为已有节点，每条边c_uv为显式非负Python整数，缺边容量0。对成对残余弧令f_uv=−f_vu、−c_vu<=f_uv<=c_uv；每个u不等于s,t满足Σ_v f_uv=0。目标F*=max Σ_v f_sv。原生初始化所有残余弧f=0；重复以双向BFS寻找残余容量c_uv−f_uv>0的s→t最短增广路径P，δ=min_(uv∈P)(c_uv−f_uv)，沿P加δ且反向减δ，累计F+=δ；无增广路径即停止。函数返回残余DiGraph R，F*位于R.graph[\"flow_value\"]，不直接返回标量。F*与对应最小s–t割容量相等为同一族的目标/对偶，不另记最小割、逆方向、节点对或求解器变体。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-39b8c6ddcb5fd5da6b4f9fd2",
+        "harvest-source-46e8151054a08ddaa0307d4a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G,s,t（finite built-in simple loop-free networkx.DiGraph, at least2 nodes; distinct existing hashable s,t; stable graph）：已观察有向关系与明确源汇；未定义金融节点、边、资金/信用/流动性传输机制或PIT。；capacity（explicit nonnegative Python integer edge attribute, excluding bool; no missing edge values）：每边容量计量单位需一致并预先固定。整数是额外研究合同，避免将浮点残余阈值误差说成已验证；没有自动从成交量或持仓产生容量。。参数：capacity：每边容量上限；缺失默认无限不是本研究合同；范围reviewed literal attribute name capacity; present nonnegative Python int on every input edge；源码默认capacity；residual：每次从输入图建立新的残余网络；范围reviewed None；源码默认None；cutoff：全程求到无增广路径；提前停止不在最大值合同；范围reviewed None；源码默认None；value_only：原函数仍返回残余图，不直接返回float；范围ignored by this native solver；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-39b8c6ddcb5fd5da6b4f9fd2",
+        "harvest-source-46e8151054a08ddaa0307d4a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/关系/边权或容量的定义、数据供应商、观察发布时点与PIT均MISSING",
+    "完整Python/NetworkX后端运行环境未冻结，未执行上游或数值验证",
+    "原始论文全文及其许可未审；未证明金融应用的收益或风险有效性",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "容量约束下的源汇最大通过量",
+  "native_source_id": "edmonds_karp",
+  "one_line": "给定有向关系网络、源节点、汇节点和每条边容量，求满足中间节点流量守恒的最大净通过量；残余网络保留瓶颈结构。金融流量/容量含义尚缺，不等于市场成交量或电流介数。",
+  "record_id": "edmonds_karp",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。Edmonds–Karp按原函数名保留算法归属；生成树源码注明David Eppstein修改，UnionFind注明Josiah Carlson原代码与D. Eppstein修改。仅审当前仓库字节，不称已核原始论文或外部历史原件。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。Edmonds–Karp按原函数名保留算法归属；生成树源码注明David Eppstein修改，UnionFind注明Josiah Carlson原代码与D. Eppstein修改。仅审当前仓库字节，不称已核原始论文或外部历史原件。",
+      "id": "harvest-source-39b8c6ddcb5fd5da6b4f9fd2",
+      "license": "BSD-3-Clause",
+      "locator": "full native BFS augmentation implementation and parameter defaults:L1-L178; residual convention and max-flow/min-cut relationship:L204-L225; actual residual output and algorithm label:L252-L255",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "aa7e7171ef072ac5acb1613e9a6381ab0495da5eea09b6bd3a2b837a4c60e16e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/flow/edmondskarp.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。Edmonds–Karp按原函数名保留算法归属；生成树源码注明David Eppstein修改，UnionFind注明Josiah Carlson原代码与D. Eppstein修改。仅审当前仓库字节，不称已核原始论文或外部历史原件。",
+      "id": "harvest-source-46e8151054a08ddaa0307d4a",
+      "license": "BSD-3-Clause",
+      "locator": "complete residual graph capacity construction:L80-L156; attribute/callable capacity reader; missing default infinity:L193-L231",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "2c0f413bf34ef93ccc3191cd090018a5e9a1953af4cf23cfdae0f02d38ba26f5",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/flow/utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。Edmonds–Karp按原函数名保留算法归属；生成树源码注明David Eppstein修改，UnionFind注明Josiah Carlson原代码与D. Eppstein修改。仅审当前仓库字节，不称已核原始论文或外部历史原件。",
+      "id": "harvest-source-af8be5df0a041e172e106ae7",
+      "license": "BSD-3-Clause",
+      "locator": "different default high-level solver, not reviewed native path:L14-L17; maintainer warning on floating capacities:L162-L188",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "9baeba095f4a596ad1385ccd2e582151552c97a5631ea11355e43a37f6ef2716",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/flow/maxflow.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

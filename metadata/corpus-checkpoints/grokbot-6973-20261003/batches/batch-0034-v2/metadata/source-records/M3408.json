@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3408",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3362,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7bd9f0a591e1d517a8389391e6a3c38b437a24c599ab5ba3b88ee9d311d42e25",
+    "rule_sha256": "42026c9d2b776d36d4d0bb0b336f1bc0e364422ade9e59ae6178008281f2cf41"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3408",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3408"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/OptionSplitRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：AAPL；过滤含周权、行权−2..+2、到期0–2年；9:00后空仓买行权650的Call按到期升序第2张1份；日>6且14:00后清仓（拆股数量断言1→7）（Lean OptionSplit）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：AAPL；过滤含周权、行权−2..+2、到期0–2年；9:00后空仓买行权650的Call按到期升序第2张1份；日>6且14:00后清仓（拆股数量断言1→7）（Lean OptionSplit）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `OptionSplitRegressionAlgorithm.py`。`add_option(\"AAPL\")`；`include_weeklys().strikes(−2,2).expiration(0,365×2)`。未投资且 hour>9 minute>0：链上 `strike==650` 且 CALL，按到期升序，取第2张 `buy(...,1)`。已投资且 `day>6` 且 hour>14 minute>0 → `liquidate`。断言拆股前持仓量1、拆股后绝对量7。不是 W569 指定行权卖 Put/Call 核，也不是 W582 最高行权周权核。提出日期未知。AAPL买行权650 Call到期升序第2张；日>6且14:00后清仓（拆股1→7断言） ≠ 指定行权卖Put/Call（近核）/最高行权周权（M3387）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

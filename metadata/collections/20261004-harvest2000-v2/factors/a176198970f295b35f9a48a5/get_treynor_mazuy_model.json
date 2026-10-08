@@ -1,0 +1,104 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述已观测组合回报相对于市场回报的非线性凸性。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅在整个估计窗口/分组结束、所有输入已观测并发布后可得；拟合系数及统计量不得回填为窗口内的实时因子。PIT数据与发表延迟缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "以资产超额收益索引对齐基准超额收益与其平方，删除任一输入缺失的行。 用带截距的sklearn LinearRegression拟合两个解释变量。 返回系数与窗口内残差；只把窗口结束后可得的归因参数用于后续研究，不把残差提前分配给窗口内各历史时点。 边界：有效样本少于3输出NaN；恰3样本或共线性可使拟合不稳，源码未设额外约束。 γ为正只表示所选窗口的凸性拟合，不能仅凭此推断可持续择时技能。 Henriksson-Merton的分段回归作为同类近邻本轮不另外计数；窗口/基准替换不加条数。 输出：一个完整统计构造；参数、窗口及多输出分量不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述已观测组合回报相对于市场回报的非线性凸性。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "在已完成估计窗口内OLS拟合 r_p-r_f=α+β*(r_m-r_f)+γ*(r_m-r_f)^2+ε；返回α、β、γ、样本内R²及残差。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "excess_returns（pandas Series only）：已完成估计窗口的资产超额收益；benchmark_excess_returns（pandas Series only）：同频率同窗口的市场超额收益。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "JerBouma/FinanceToolkit",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或进行数值复现",
+    "NumPy/Pandas/SciPy/sklearn版本及默认行为未冻结",
+    "金融数据、无风险收益与基准、供应商、数据发布时点和修订快照未选定",
+    "未验证经济收益有效性或市场适用假设"
+  ],
+  "name": "Treynor–Mazuy 二次市场暴露归因",
+  "native_source_id": "get_treynor_mazuy_model",
+  "one_line": "描述已观测组合回报相对于市场回报的非线性凸性。",
+  "record_id": "get_treynor_mazuy_model",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/performance/performance_model.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-99a8336dd3a67158dadfd559",
+      "license": "MIT",
+      "locator": "get_treynor_mazuy_model:L2567-L2618; _get_market_timing_regression:L2497-L2564; imports and explicit constants:L1-L31",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "7475deeb890b2cd86b8e491df6491ad782ce4a5db59fe3e9b11513edb8dcc013",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/performance/performance_model.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-cb2abb9f4ee81dee928c5ef7",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "20f27d76a82699c1a5926ed41e8d1d8681ab3d554492559a9bfbd6f0d1ee2eef",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

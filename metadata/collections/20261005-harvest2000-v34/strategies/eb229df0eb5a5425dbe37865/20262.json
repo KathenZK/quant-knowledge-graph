@@ -1,0 +1,212 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者假设加速增长与对数周期振荡可描述临界前泡沫。此处仅保存拟合及交易控制构造，不证明预测性、最优性、因果效力或经济独立性。",
+    "missing": [
+      "本条不新增LPPLS因子或优化器，只保留作者完整配置一族；没有重放其绩效。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "www.quantconnect.com/research",
+  "lab": null,
+  "missing_information": [
+    "NumPy/SciPy/Lean历史运行版本、求解器默认和数据版本未锁；补充参考不等于作者使用该版本。",
+    "无真实手续费/滑点/借券/资金模型，股数与购买力、订单失败、时区和session可得性未闭合。",
+    "上游代码仅静态读取；没有优化运行、行情采集、回测或收益/可部署判断。",
+    "不将文章来源中的绩效/全局最优/避免偏差宣传作为有效性证据。"
+  ],
+  "name": "QC：对数周期幂律临界期拟合与非对称多空持仓",
+  "native_source_id": "20262",
+  "one_line": "滚动拟合对数周期幂律的临界期与形状，满足全部条件时转为空头；其余分支依现有仓位处理趋势多头。",
+  "record_id": "20262",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED; commercial REVIEW_REQUIRED.",
+    "metadata": "仅原生身份、哈希、定位和自撰规则；不主张文章或主代码再分发授权。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.quantconnect.com/terms/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Ethan Huang; mentor Rudy Osuna; Triton Quantitative Trading at UC San Diego (source header)",
+      "id": "qc-research-20262-mainpy",
+      "license": "NOASSERTION: no standalone license in author embed; commercial REVIEW_REQUIRED, Lean license does not cover this code or data.",
+      "locator": "div#9eb08f43140aa4073c1389cb85358616_source_mainpy pre decoded UTF8 lines 1–169",
+      "revision": "public embed 9eb08f43140aa4073c1389cb85358616; HTTP sha256 0a14cc81ac49a24e0501c1f9f2635ae68d9f95a8deb8d8cacdd4e4d0c302b6f5",
+      "sha256": "0a14cc81ac49a24e0501c1f9f2635ae68d9f95a8deb8d8cacdd4e4d0c302b6f5",
+      "supports": [
+        "PRIMARY_AUTHOR_PUBLISHED_CODE"
+      ],
+      "url": "https://www.quantconnect.com/terminal/processCache?request=embedded_backtest_9eb08f43140aa4073c1389cb85358616.html",
+      "verification": "PINNED_BYTES_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Ethan Huang and Rudy Osuna; QuantConnect first-party research page",
+      "id": "qc-research-20262-author-page",
+      "license": "NOASSERTION; source article and market data not covered by Lean license; commercial REVIEW_REQUIRED.",
+      "locator": "Exact UTF8 source lines in field_spans or supplementary_document_evidence",
+      "revision": "HTTP sha256 e67f920b32b93955bede4c3d331f88c61a99cd63629938d0132c74ce6044d5b6",
+      "sha256": "e67f920b32b93955bede4c3d331f88c61a99cd63629938d0132c74ce6044d5b6",
+      "supports": [
+        "AUTHOR_ATTRIBUTION_AND_DESCRIPTION_DIFFERENCES"
+      ],
+      "url": "https://www.quantconnect.com/research/20262/lppls-for-bubbles-in-speculative-markets/",
+      "verification": "PINNED_BYTES_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "reference-indicators-exponentialmovingaverage-cs",
+      "license": "Apache-2.0 source header for Lean files only; versioned documentation rights do not transfer to author code, article or market data.",
+      "locator": "Exact UTF8 source lines in field_spans or supplementary_document_evidence",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "dfc0ce32bf17259a18c2ebe19dcdcd412a1f7cf090b9a6063dbf07cca250575b",
+      "supports": [
+        "SUPPLEMENTARY_MATH_API_REFERENCE_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Indicators/ExponentialMovingAverage.cs",
+      "verification": "PINNED_BYTES_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "reference-indicators-simplemovingaverage-cs",
+      "license": "Apache-2.0 source header for Lean files only; versioned documentation rights do not transfer to author code, article or market data.",
+      "locator": "Exact UTF8 source lines in field_spans or supplementary_document_evidence",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "9ad026997a917663a711f62ea916b35be3e0629f4966341d12ab94b83e0c856a",
+      "supports": [
+        "SUPPLEMENTARY_MATH_API_REFERENCE_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Indicators/SimpleMovingAverage.cs",
+      "verification": "PINNED_BYTES_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "NumPy / SciPy developers",
+      "id": "reference-numpy-lstsq",
+      "license": "Apache-2.0 source header for Lean files only; versioned documentation rights do not transfer to author code, article or market data.",
+      "locator": "Exact UTF8 source lines in field_spans or supplementary_document_evidence",
+      "revision": "NumPy2.2 documentation supplemental not historical runtime",
+      "sha256": "64e7e00721f8a7c0bdf65d8a84d51698c2bd5bf5faea2a2f1a0f430c4f9db04c",
+      "supports": [
+        "SUPPLEMENTARY_MATH_API_REFERENCE_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://numpy.org/doc/2.2/reference/generated/numpy.linalg.lstsq.html",
+      "verification": "PINNED_BYTES_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "NumPy / SciPy developers",
+      "id": "reference-scipy-lbfgsb",
+      "license": "Apache-2.0 source header for Lean files only; versioned documentation rights do not transfer to author code, article or market data.",
+      "locator": "Exact UTF8 source lines in field_spans or supplementary_document_evidence",
+      "revision": "SciPy1.15.1 documentation supplemental not historical runtime",
+      "sha256": "5a7c526bab6b7ecba8fd46a3e10090392b7cb0aa9db8f4352398a4ab38fdebfb",
+      "supports": [
+        "SUPPLEMENTARY_MATH_API_REFERENCE_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://docs.scipy.org/doc/scipy-1.15.1/reference/optimize.minimize-lbfgsb.html",
+      "verification": "PINNED_BYTES_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect",
+      "id": "lean-license",
+      "license": "REVIEW_REQUIRED; see locked text; no cross-source inheritance.",
+      "locator": "Original native HTML/text",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "522cf0a716ce03f67d46f8fceb5bf78c5b84400ec5cd8d14bf9f02cddc1cb6ba",
+      "supports": [
+        "许可边界或官方接口说明"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/LICENSE",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect",
+      "id": "qc-terms",
+      "license": "REVIEW_REQUIRED; see locked text; no cross-source inheritance.",
+      "locator": "Original native HTML/text",
+      "revision": "HTTP content snapshot",
+      "sha256": "6ce81f2329fb75295f21ec4a2864f47e650c19a4601de1a18c08b3b33b186611",
+      "supports": [
+        "许可边界或官方接口说明"
+      ],
+      "url": "https://www.quantconnect.com/terms/",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "qc-research-20262-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "美国基本面股票宇宙，逐只股票作多或作空，不是指数对冲或保证市场中性。源起始现金100000；起始日用运行时end_date减5×365日，结束日期和历史引擎版本未在文件中冻结。只记录源配置，不采用文章回测回报作资格或收益证据。"
+    },
+    "cost": {
+      "evidence": [
+        "qc-research-20262-mainpy"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：文件没有显式手续费、价差、滑点、借券费、融资费或成本参数；不能用平台未锁默认或文章绩效反推为零。"
+    },
+    "entry": {
+      "evidence": [
+        "qc-research-20262-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "拟合有效且六项泡沫条件全部成立时，逐股set_holdings(security,−.045)，包括已有多仓、已有空仓或空仓；不是只在信号首次翻转时发目标。不成立时只在原来空仓且trend_up和high_regime皆真时设+.045。原来空头走前一if分支平仓，同一次else内不会再执行elif开多；因此不能把文章的平空并重新做多写成同次立即翻多。"
+    },
+    "execution_time": {
+      "evidence": [
+        "qc-research-20262-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "warmup后的周首08:00回调逐股读取已有session/EMA/current price，先拟合再调用set_holdings/liquidate；证券被移出宇宙时也会直接liquidate。源没有订单事件、失败重试、限价或实际成交规则。盘前请求、价格更新/历史对齐和时区由未锁引擎处理，不能当作同价可成交证明。这里审已印调用顺序，未运行Lean或上游优化器。"
+    },
+    "exit": {
+      "evidence": [
+        "qc-research-20262-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "离开宇宙且有仓则清仓。宇宙内拟合有效而泡沫条件不成立时，无论EMA方向是否上行都清现有空头；原来多头在正常分支没有任何卖出判断，即使两趋势条件不满足也维持。再次出现泡沫信号时−.045目标可反转多仓。暖机不足、过滤后不足50价、拟合None或success假均continue，保留已有仓位而非清仓；没有最长持期、价格止损或独立期末清算。"
+    },
+    "position": {
+      "evidence": [
+        "qc-research-20262-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每次信号直接请求该股票占组合权益−4.5%或+4.5%，不是按入选数等权，也不按波动率或信号强度缩放。已有空头遇泡沫信号会再次设−4.5%；已有多头无泡沫时不再调整回+4.5%。最多100股若同向目标都能实现，名义目标可达450%；源码没总杠杆帽、归一、保证金或现金分配保护，实际购买力、股数取整、请求次序与拒单会影响实现，不能宣称所有目标会成交。"
+    },
+    "risk": {
+      "evidence": [
+        "qc-research-20262-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码的cond>1e10仅在候选误差函数检查，选后重构未再次检查；没有异常捕获，cond/lstsq或minimize报错不由None分支兜底。close过滤去除NaN/非正，却未过滤正Inf；常价、病态矩阵、极端中间量、求解失败可造成缺信号或异常。多初点局部L-BFGS-B不保证全局最优，success不证明临界日期、市场泡沫或未来下跌。SciPy/NumPy具体运行版本、停止默认、线性代数后台与历史Lean环境未锁；版本化官方文档只是数学/API解释，不补造成历史运行参数。不存在单股止损、组合回撤帽或已验证账户可行性；高目标暴露和无正常多头退出的风险如实保留。"
+    },
+    "signal": {
+      "evidence": [
+        "qc-research-20262-mainpy",
+        "reference-indicators-exponentialmovingaverage-cs",
+        "reference-indicators-simplemovingaverage-cs"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "令过滤后正价格P_i，t_i=i，y_i=ln(P_i)，w_i=exp(linspace(0,1,n)_i)/Σexp(linspace(0,1,n))。参数θ=(d,m,ω)，tc=t_last+d，u_i=abs(tc−t_i)，若u=0替换1e−6；X_i=[1,u_i^m,u_i^m cos(ω ln u_i),u_i^m sin(ω ln u_i)]。对每θ，G=Xᵀdiag(w)X、h=Xᵀdiag(w)y；若np.linalg.cond(G)>1e10返回Inf，否则β=np.linalg.lstsq(G,h,rcond=None)[0]，目标Σw_i(y_i−X_iβ)^2。这是对正规方程调用lstsq，不擅改成直接sqrt(W)X求解或保证显式逆矩阵。60个有序初点取d∈[3,7,15,20,50]、m∈[.3,.5,.6]、ω∈[6,8,10,12]笛卡尔积；各调用L-BFGS-B，边界d∈[.1,80]、m∈[.1,.9]、ω∈[4,15]，仅ftol显式1e−5。只留success且fun有限且严格小于当前最小值者，因此相同误差不替换早选者；全失败返回None。选中θ后重建G/h并再lstsq，lenβ!=4返回None；(a,b,c1,c2)=β，c=sqrt(c1²+c2²)，φ=atan2(c2,c1)。R²=1−Σw残差²/[Σw(y−Σwy)²+1e−12]，不clip。信号要求.35<m<.65、7<ω<12、b<0、c<abs(b)、0<d<30、R²>.7全部严格成立。另trend_up=EMA50>1.01EMA200，high_regime=当前price>1.05EMA200。补充固定Lean参考：EMA默认α=2/(N+1)，满N时首值为初N均值，此后αP+(1−α)旧EMA；参考源码版本不是作者历史引擎锁。"
+    },
+    "timeframe": {
+      "evidence": [
+        "qc-research-20262-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "日频数据。整体warmup250；warmup结束后安排SPY周首交易日08:00调仓，live模式当场额外调用一次；非live模式另排today的08:00。逐股session和两个EMA都ready才处理。session按枚举反转取close为旧到新，过滤close<=0和NaN后至少50个才拟合，丢值后用连续0..n−1而非实际间隔日期；tc_rel单位因此是有效观测序号步，不能无条件叫日历天。session在调度时是否含正在形成交易日数据未核，不补成已证实闭bar。"
+    },
+    "universe": {
+      "evidence": [
+        "qc-research-20262-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每周刷新：从有基本面数据且价格严格大于10的股票中，按当前fundamental.dollar_volume升序排序，取尾部至多100只。源码没有把成交额算成过去一周平均；入选列表内部仍按该升序排列，但引擎selected枚举顺序未额外锁定。新增证券将session.size设100，注册EMA50/200并各调用warm_up_indicator；退出名单时若有仓先liquidate并注销两个EMA。历史成分、复权/日历、缺值和首次取样时点另待核。"
+    }
+  }
+}

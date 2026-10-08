@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4790",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4744,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "16b738b050e291263ca90ae41d1242645d6a7263987b6be526aa56f6e3ed3387",
+    "rule_sha256": "cab577274567dbb3a4c6f3d7c75a9449075b03431a0b4fa92e4fa1d48a3bdab4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4790",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4790"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.cxoadvisory.com/economic-indicators/combine-market-trend-and-economic-trend-signals/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO Advisory"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-190/W2001"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·股指SMA10且失业率SMA12双确认：月末；两信号皆多头才持SPY否则T-bill（CXO SMA10∧UR·Both）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·股指SMA10且失业率SMA12双确认：月末；两信号皆多头才持SPY否则T-bill（CXO SMA10∧UR·Both）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CXO《Combine Market Trend and Economic Trend Signals?》**Both**。每月末：**(1)** **SPY** 收盘 **>** SMA(**10**)；**(2)** 美国季调失业率（FRED **UNRATE**）**<** 其 SMA(**12**)。两信号**同时**有利 → 下月满仓 SPY，否则 **T-bill**。失业率用月末可得最新发布值并**披露发布滞后**（不以未发布月冒充）。不是 Either（M3662）。**OVERRIDE** 同 URL 异核。计入美股/ETF。提出日期按同文已收。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO · Both · SPY>SMA10 ∧ UNRATE<SMA12 · else T-bill · FRED UNRATE lag"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,180 @@
+{
+  "admission": {
+    "membership": {
+      "curated": true,
+      "historical_public_export": false
+    },
+    "reasons": [],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "ADMITTED"
+  },
+  "category": "unclassified",
+  "definition": {
+    "content_origin": "ATTRIBUTED_SOURCE_DEFINITION_EXCERPT",
+    "definition_sha256": "29731ca4f1056f56d6be2f02945fce91490fcd8262078ee3b404a0b81b06fc87",
+    "formula": null,
+    "formula_dialect": null,
+    "formula_sha256": null,
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "filter": "abs(prc)>5",
+      "long_short_quantile": null,
+      "portfolio_period_months": 12.0,
+      "sign": -1.0,
+      "start_month": 6.0,
+      "stock_weight": "EW"
+    },
+    "required_fields": [
+      "ni"
+    ],
+    "required_fields_status": "partial_definition_extraction",
+    "status": "DEFINITION_EXCERPT",
+    "text": "In each month, run a cross-sectional regression of a firm's five-year stock return on the 5 year lagged  EP = net income (ni)/market value of equity and a constructed regressor that is the change in EP from 5 years ago to today plus the five-year stock return. The residual from that regression is IntanEP.",
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "monthly",
+    "holding_period": {
+      "scope": "OSAP original-paper portfolio configuration",
+      "unit": "months",
+      "value": 12.0
+    },
+    "lookback": null,
+    "rebalance": null,
+    "universe": "US equities; original-paper filters and licensed inputs vary by signal"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": "qkg:concept:4e611ef4-7bd8-5987-8d6f-81787af6c18f",
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:61de533e-4787-5620-8809-ac264267214d"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:4e611ef4-7bd8-5987-8d6f-81787af6c18f"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:4e611ef4-7bd8-5987-8d6f-81787af6c18f"
+    ],
+    "source_record_ids": [
+      "qkg:record:e46bdcf4-2d18-50ec-a4ca-5960952d723d"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "输入字段提取不完整，不得视为完整数据需求合同。"
+  ],
+  "name": "Intangible return using EP",
+  "native_source_ids": [
+    "IntanEP"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 4144,
+        "line_ordinal": 605,
+        "line_sha256": "889fc308e68be10991933af5153ceb9e724a85ce959b49f65287e5ee621a574e",
+        "record_id": "qkg:record:e46bdcf4-2d18-50ec-a4ca-5960952d723d"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "not_applicable"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "primary_definition"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:61de533e-4787-5620-8809-ac264267214d",
+  "record_kind": "signal",
+  "rights": {
+    "attribution_required": true,
+    "commercial_use": [
+      "CONDITIONAL"
+    ],
+    "derivative_allowed": [
+      "CONDITIONAL"
+    ],
+    "license_labels": [
+      "GPL-2.0"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "CONDITIONAL"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [],
+        "status": "ADMITTED"
+      },
+      "attribution": [
+        "Daniel and Titman"
+      ],
+      "code_url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/Signals/pyCode/Predictors/ZZ1_IntanBM_IntanSP_IntanCFP_IntanEP.py#L1",
+      "license": "GPL-2.0",
+      "locator": "CSV record 87; Acronym=IntanEP",
+      "name": "Intangible return using EP",
+      "native_id": "IntanEP",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": null,
+        "url": null,
+        "year": 2006
+      },
+      "parameters": {
+        "filter": "abs(prc)>5",
+        "long_short_quantile": null,
+        "portfolio_period_months": 12.0,
+        "sign": -1.0,
+        "start_month": 6.0,
+        "stock_weight": "EW"
+      },
+      "primary_source": true,
+      "record_id": "qkg:record:e46bdcf4-2d18-50ec-a4ca-5960952d723d",
+      "response_sha256": "f6c055120bad7afe97c16e23e0f49bce0982269026605a955e8064bd661cf415",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": "8db892442c2c3a3779b0f1eac4370d3655be15a1",
+      "rights": {
+        "attribution_required": true,
+        "commercial_use": "CONDITIONAL",
+        "derivative_allowed": "CONDITIONAL",
+        "license": "GPL-2.0",
+        "license_id": "qkg:license:9d6cc42c-065b-5687-87f6-b1e384dea14c",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "CONDITIONAL",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "REVIEW_REQUIRED",
+        "terms_url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/LICENSE"
+      },
+      "sha256": "f6c055120bad7afe97c16e23e0f49bce0982269026605a955e8064bd661cf415",
+      "source_id": "osap",
+      "source_name": "Open Source Asset Pricing",
+      "url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/SignalDoc.csv"
+    }
+  ]
+}

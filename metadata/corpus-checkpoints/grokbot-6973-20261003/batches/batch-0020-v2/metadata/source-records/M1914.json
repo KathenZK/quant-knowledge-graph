@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1914",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1914,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "58f8591c4918e43a91605864681a81ec475d72c5a07485faf419336ebb88439b",
+    "rule_sha256": "a42edd6c61c0b6ac4fed6dd18b358b2703a7c08ffbad374f9180c8808f0fe057"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1914",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1914"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/PRICEFOLLOWING/PRICEFOLLOWING.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（PRICEFOLLOWING.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区PRICEFOLLOWING：5m，默认关闭RSI守卫时EMA7下穿TEMA(7)且TEMA降做多；RSI<70且EMA7上穿TEMA平多；止损−10%，追踪止损开"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区PRICEFOLLOWING；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区PRICEFOLLOWING：5m，默认关闭RSI守卫时EMA7下穿TEMA(7)且TEMA降做多；RSI<70且EMA7上穿TEMA平多；止损−10%，追踪止损开"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/PRICEFOLLOWING/PRICEFOLLOWING.py默认参数。timeframe=5m；stoploss=−0.1；minimal_roi约60/30/0分钟对应2.5%/3%/4%；trailing_stop=True，positive=0.02，offset=0.03且only_offset_is_reached=True；sell_profit_only=True。rsi_enabled 默认 False；rsi_value 默认30；sell_rsi_enabled 默认 True；sell_rsi_value 默认70。指标：EMA7、TEMA(7)、RSI。做多（rsi_enabled=False 支）：ema7 下穿 tema，且 tema<tema.shift(1)。平多（sell_rsi_enabled=True）：rsi<sell_rsi_value 且 ema7 上穿 tema。提出日期未知。 不是单EMA交叉或单TEMA：本条是5m PRICEFOLLOWING，默认关RSI守卫时EMA7下穿TEMA(7)且TEMA降做多，RSI<70且EMA7上穿TEMA平多，止损−10%追踪开。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3268",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3222,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "98d1f978d895a84292db83c0efd21aec944e6fefaa32b81abab0464d927eda27",
+    "rule_sha256": "4cdf6fb92761f96382acc7110769a5e1917d7bb73c173337183ad418babb9406"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3268",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3268"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FutureOptionBuySellCallIntradayRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES20H20与ES19M20分钟；行权3200看涨各一；次日开盘后1分钟买近月看涨1张并卖远月看涨1张，持有至到期行权/分配后自动清算（Lean FutureOptionBuySellCallIntraday）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货期权：ES20H20与ES19M20分钟；行权3200看涨各一；次日开盘后1分钟买近月看涨1张并卖远月看涨1张，持有至到期行权/分配后自动清算（Lean FutureOptionBuySellCallIntraday）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FutureOptionBuySellCallIntradayRegressionAlgorithm.py`。添加 ES 2020-03-20 与 2020-06-19 期货合约；链上筛选 strike==3200 且 CALL，加入两张美式期权。`date_rules.tomorrow`+`after_market_open(es19m20,1)`：`market_order(options[0],1)` 与 `market_order(options[1],-1)`。期末断言无持仓（行权/分配/期货到期清算）。不是黄金期货期权 ATM 买单核（W466），也不是指数期权价差工厂核。提出日期未知。ES双月 3200 看涨买近卖远持有至到期 ≠ 黄金期货期权ATM（W466）/指数期权价差。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

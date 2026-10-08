@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "代理成交量的持续优势可能反映趋势压力；真实订单流和经济有效性都没有被验证。",
+    "missing": [
+      "没有经过核实的原始论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "作者原始发布URL、原始版本与镜像一致性尚未核实。",
+    "依赖Pine内建函数及运行时；未编译、执行、下载行情或回测。",
+    "基线近邻经正文比较，但还没有独立复核的全库机制去重结论。",
+    "实际市场、周期、价格调整、合约规格及可交易约束未冻结。",
+    "源码署名Shuttle_Club；FMZ上传者另列，不互相替代。",
+    "中性区默认不清零状态计数。"
+  ],
+  "name": "K线分解成交量优势区首次切换策略",
+  "native_source_id": "437655",
+  "one_line": "按K线方向和开盘在振幅内的位置分解多空成交量，用量加权平滑和优势门槛识别首次方向切换。",
+  "record_id": "437655",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果。未断言源码、论文、数据或商业内部使用权；没有把镜像发布权限扩展为原作者授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E4%B9%8B%E9%87%8F%E8%83%BD%E9%A9%B1%E5%8A%A8%E7%AD%96%E7%95%A5Volume-Energy-Driven-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ仓库发布账号 ChaoZhang；源码署名声明 Shuttle_Club；转载链与原作者发布版本未核实，不把上传者视为实现作者。",
+      "id": "fmz-437655-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "fe2d38cf1e3435f75bdfca48ef698807b0c0d9c10418be4e44cf411b62dea950",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E4%B9%8B%E9%87%8F%E8%83%BD%E9%A9%B1%E5%8A%A8%E7%AD%96%E7%95%A5Volume-Energy-Driven-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-437655-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表当前标的；策略主体没有固定证券代码。FMZ回测注释的BTC_USDT配置仅是转载包装，未确认为原作者适用市场。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-437655-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码commission_value=0.04但未显式commission_type；具体类型依赖Pine默认，未据此宣称完整成本。滑点、点差和持仓费用未给。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-437655-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认方向ANY；bull状态计数up首次等于1时开Long，bear计数dn首次等于1时开Short。出现相反状态时清零另一侧计数；默认all_signal_show=false，中性区不重置，所以中性后回到原方向不自动视作新信号。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-437655-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5，calc_on_order_fills=false、calc_on_every_tick=false；条件以bar数据更新，再先close后entry。未实际验证成交时点、反转数量或费用单位。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-437655-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "首次bull状态先close Short；首次bear状态先close Long，随后按方向开关提交入口。离开优势区进入中性本身不退出。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-437655-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认strategy.cash每次10000美元，初始资本10000；没有额外qty或风险缩放。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-437655-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "没有价格止损或时间退出。high==low或平滑量为0时没有显式分母防护。阴阳分解是代理量，不是成交方向数据。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-437655-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "bull_vol在阳线取全部volume，否则取volume×(high−open)/(high−low)；bear_vol在阴线取全部volume，否则取volume×(open−low)/(high−low)。分别VWMA11，均值vol_flat=(两侧平滑量绝对和)/2。多头需bull>bear且vol_flat/bull<0.85，空头对称。不是实际逐笔主动买卖量。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-437655-published-code"
+      ],
+      "status": "MISSING",
+      "text": "计算窗口均以图表bar为单位；策略主体未强制周期。FMZ回测包装周期与原作者要求没有等价证明，原始运行周期为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-437655-published-code"
+      ],
+      "status": "MISSING",
+      "text": "没有跨资产选股或动态股票池；源码运算针对当前图表序列。具体交易品种、合约乘数、交易日历和调整规则仍须另行冻结。"
+    }
+  }
+}

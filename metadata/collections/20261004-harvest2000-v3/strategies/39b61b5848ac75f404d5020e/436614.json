@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "稳定极值形成的价格区间与方向指标改善可能刻画短期回归，但枢轴稀疏和入退同bar情况须验证。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "dailyatr不是外部日线ATR，参数按图表bar。",
+    "缺省止盈0代表禁用，不能按0跳止盈记录。"
+  ],
+  "name": "停滞极值枢轴ATR带与双向趋势指数回归",
+  "native_source_id": "436614",
+  "one_line": "用长期不变高低极值构造枢轴，在ATR外带穿回且短期波动更强、方向指数改善时反向入场，触中轴退出。",
+  "record_id": "436614",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E6%94%AF%E6%92%91%E9%98%BB%E5%8A%9B%E5%B8%A6%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E7%AD%96%E7%95%A5Trend-Tracking-Strategy-Based-on-Dynamic-Pivot-Bands.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-436614-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "067bb46d477905965b40bfe6bd87fc2a7fcca95cf5bb9937175f41182084ad08",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E6%94%AF%E6%92%91%E9%98%BB%E5%8A%9B%E5%B8%A6%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E7%AD%96%E7%95%A5Trend-Tracking-Strategy-Based-on-Dynamic-Pivot-Bands.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-436614-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-436614-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未明确手续费、滑点、点差或融资成本，成本MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-436614-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "opentrades<1且ATR3>ATR50；多还要求L<=下带且C>下带（代码另一O<=下带且C>下带OR分支亦保留）和S>S[3]；空要求H>=上带且C<上带（或O>=上带且C<上带）和S<S[3]。每次固定1。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-436614-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v4，无外部周期请求；dailyatr只是ATR22[1]，不证明日线。先多entry/close，空entry/close，再固定跳数exit；没有显式逐tick/收盘成交/成交重算，实际状态未运行。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-436614-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "high>当前P时close Long，low<当前P时close Short；即用当棒高低是否触越中轴，不是收盘回到中轴。每bar另提交loss100跳的exit；profit默认0被转na禁用。多entry、close之后才检查空侧并最终更新保护。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-436614-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "strategy.fixed默认1、初始资本10000；两入口无qty覆盖且要求没有开放交易。没有按ATR距带定账户风险。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-436614-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "dev(h/l,24)非0即na，只有滚动极值序列足够长不变才更新保存枢轴，前期可长期缺值；不是常见左右各24棒确认枢轴。中轴/外带当前变化，同bar可能入口与close共存；100跳风险依市场跳值。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-436614-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "h=highest(H,24)，仅当dev(h,24)==0时取h，否则na，再fixnan持有hp；l=lowest(L,24)同理lp。P=(hp+lp+(H[1]+L[1]+C[1])/3)/3；上下带=P±3ATR22[1]。u=H−H[1]，d=L[1]−L；uDM=u>d且u>0?u:0，dDM=d>u且d>0?d:0；TR使用tr(true)：没有前收盘时取当根H−L，其余取max(H−L,abs(H−C[1]),abs(L−C[1]))；A=RMA2(TR)，X=100RMA2(uDM)/A−100RMA2(dDM)/A。DTI=100×EMA3(EMA5(EMA20(X)))/EMA3(EMA5(EMA20(abs(X))))；S=EMA4(DTI)。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-436614-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-436614-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

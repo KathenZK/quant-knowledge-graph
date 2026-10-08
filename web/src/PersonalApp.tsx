@@ -1,3 +1,6 @@
+import HostedNotebookImport, { HostedSyncStatus } from "./HostedNotebook";
+import { isHosted, hostedSave, hostedNoteKey } from "./hosted-transport";
+import { applicationFetch } from "./api";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import {
   Link,
@@ -58,6 +61,8 @@ import {
   type PersonalRecord,
 } from "./personal-data";
 import PersonalRestore from "./PersonalRestore";
+import ResearchInDetails, { LegacyResearchEntry } from "./ResearchInDetails";
+import KnowledgeBrief from "./KnowledgeBrief";
 import "./personal.css";
 
 function useApi<T>(url: string) {
@@ -76,6 +81,8 @@ type Workspace = {
   notify: (message: string) => void;
   refresh: () => void;
 };
+const selectionKey = (r: PersonalRecord) =>
+  isHosted ? hostedNoteKey(r) : r.entity_id;
 const compareUrl = (refs: CompareRef[]) =>
   "/compare?" +
   new URLSearchParams(
@@ -415,13 +422,17 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
     notify: setMessage,
     refresh: notebook.retry,
     save: async (item, values) => {
-      const saved = await personalApi<PersonalRecord>(recordPath(item), {
-        method: "PUT",
-        body: JSON.stringify(personalPatch(values)),
-      });
+      const saved = isHosted
+        ? await hostedSave(item, values)
+        : await personalApi<PersonalRecord>(recordPath(item), {
+            method: "PUT",
+            body: JSON.stringify(personalPatch(values)),
+          });
       setRecords((rows) => [
-        ...rows.filter(
-          (row) => row.kind !== saved.kind || row.entity_id !== saved.entity_id,
+        ...rows.filter((row) =>
+          isHosted
+            ? !sameRecord(row, saved)
+            : row.kind !== saved.kind || row.entity_id !== saved.entity_id,
         ),
         saved,
       ]);
@@ -490,13 +501,15 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
         <div className="pw-sidebar-bottom">
           <span className="pw-local-label">
             <span className="pw-live-dot" />
-            仅本机使用
+            {isHosted ? "仅本人访问" : "仅本机使用"}
           </span>
           <p>从定义到规则，从来源到自己的判断。</p>
           <small>
             知识收录 ≠ 收益验证
             <br />
-            个人笔记保存在本地服务中
+            {isHosted
+              ? "批注保存到云端，可跨设备读取"
+              : "个人笔记保存在本地服务中"}
           </small>
         </div>
       </aside>
@@ -510,13 +523,17 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
           </Link>
         </div>
         <main id="personal-main" tabIndex={-1}>
-          {meta.warnings?.map((warning) => (
-            <div className="pw-notice" key={warning}>
-              {warning}
-            </div>
-          ))}
-          {meta.initialized === false ||
-          meta.initialization?.status === "MISSING" ? (
+          {meta.warnings?.length ? (
+            <details className="pw-snapshot-notes">
+              <summary>资料快照与阅读边界</summary>
+              {meta.warnings.map((warning) => (
+                <p key={warning}>{warning}</p>
+              ))}
+            </details>
+          ) : null}
+          {(meta.initialized === false ||
+            meta.initialization?.status === "MISSING") &&
+          location.pathname !== "/results" ? (
             <Empty title="完整 Catalog 尚未初始化">
               <p>
                 {meta.initialization?.message ||
@@ -562,6 +579,7 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
                   element={<DetailPage workspace={workspace} />}
                 />
                 <Route path="/compare" element={<Compare />} />
+                <Route path="/results" element={<LegacyResearchEntry />} />
                 <Route
                   path="/list"
                   element={
@@ -627,6 +645,65 @@ export default function PersonalApp({ meta }: { meta: PersonalMeta }) {
     </div>
   );
 }
+function SnapshotProgress({
+  meta,
+  kind,
+}: {
+  meta: PersonalMeta;
+  kind: string;
+}) {
+  const snapshot = meta.snapshot_progress;
+  const scope = meta.research_scope_summary;
+  return (
+    <div className="pw-snapshot-progress">
+      {scope ? (
+        <div>
+          <p>
+            截至 {scope.as_of_utc || "本次固定导入"}，已展示工作范围{" "}
+            {scope.total_work_items.toLocaleString()} 项：最终交接{" "}
+            {scope.final_handoff_records.toLocaleString()} 条，加后续{" "}
+            {scope.additional_collected_objects} 个候选、研究模型或组件。
+            {scope.initial_batch_records.toLocaleString()} 条是初始批次。
+          </p>
+          <p>
+            固定快照中 {scope.execution_records.toLocaleString()}{" "}
+            项已有探索性执行，共 {scope.execution_versions.toLocaleString()}{" "}
+            个版本、{scope.imported_runs} 批；其余{" "}
+            {scope.no_execution_records.toLocaleString()}{" "}
+            项仍在工作清单。人工研究总结已覆盖 {scope.interpreted_records} 项。
+          </p>
+          <p>
+            数据质量、历史可得性、实现忠实度与统计证据分别核验。执行覆盖不表示严格通过；当前不能用这些数量表示已验证的盈利策略。
+          </p>
+        </div>
+      ) : (
+        snapshot && (
+          <p>
+            截至 {snapshot.as_of_utc}，原始{" "}
+            {snapshot.corpus_records.toLocaleString()} 条记录中，
+            {snapshot.executed_records.toLocaleString()} 条已有执行证据，共{" "}
+            {snapshot.execution_versions.toLocaleString()} 个实现版本。已导入{" "}
+            {snapshot.imported_runs} 批
+            {snapshot.awaiting_import_runs
+              ? `，另 ${snapshot.awaiting_import_runs} 批等待兼容校验`
+              : ""}
+            。
+          </p>
+        )
+      )}
+      {meta.intake_summary && meta.intake_summary.reviewed_records > 0 && (
+        <p>
+          本次补证与采集资料 {meta.intake_summary.reviewed_records} 条，其中{" "}
+          {meta.intake_summary.source_reviews} 条补回既有记录。
+          {kind === "variant"
+            ? "因子原论文说明、规则组件和Qlib特征分别标注；"
+            : "隔离候选和研究模型仍可阅读；"}
+          资料入库不增加回测次数。
+        </p>
+      )}
+    </div>
+  );
+}
 function Browse({
   kind,
   meta,
@@ -643,6 +720,15 @@ function Browse({
   const effective = new URLSearchParams(params);
   effective.set("kind", kind);
   effective.set("page_size", "18");
+  if (
+    kind === "variant" &&
+    meta.factor_quality_summary &&
+    !effective.has("factor_scope")
+  )
+    effective.set(
+      "factor_scope",
+      effective.get("q") ? "all" : "research_cards",
+    );
   if (!effective.has("collapse_templates"))
     effective.set("collapse_templates", "true");
   const results = useApi<{
@@ -663,6 +749,18 @@ function Browse({
     setParams(next);
   };
   const filterSpec: [string, string, Facet[]][] = [
+    ...(kind === "variant" && meta.factor_quality_summary
+      ? [
+          [
+            "factor_scope",
+            "资料层次",
+            [
+              { value: "all", label: "全部资料" },
+              ...meta.factor_quality_summary.groups,
+            ],
+          ] as [string, string, Facet[]],
+        ]
+      : []),
     ["method_family", "方法类型", meta.facets.method_families || []],
     ["market", "市场", meta.facets.markets || []],
     ["frequency", "频率", meta.facets.frequencies || []],
@@ -715,6 +813,31 @@ function Browse({
           ? "查看已有来源中的信号、入场、出场与参数，把值得研究的方法留下。"
           : "阅读原始公式、变量、计算口径与实现差异，沿关系理解它如何被使用。"}
       </Title>
+      <SnapshotProgress meta={meta} kind={kind} />
+      {kind === "variant" && meta.factor_quality_summary && (
+        <section
+          className="pw-reading-section"
+          aria-label="因子资料质量与核验范围"
+        >
+          <p>
+            默认查看带用途说明与来源证据的研究资料卡。基础特征、指标引用和组件仍可从“资料层次”打开；输入名称搜索时默认查全部资料。
+          </p>
+          <p>
+            {meta.factor_quality_summary.groups
+              .filter((g) => g.count)
+              .map((g) => `${g.label} ${g.count}`)
+              .join(" · ")}
+          </p>
+          <p>
+            已逐ID登记 {meta.factor_quality_summary.assessed} /{" "}
+            {meta.factor_quality_summary.total} 条。源码逐式匹配{" "}
+            {meta.factor_quality_summary.source_statuses
+              .PASS_ALL_NATIVE_ALIASES_MATCH_PINNED_LOADER || 0}{" "}
+            条；指标引用仍缺完整执行合同。{meta.factor_quality_summary.notice}
+          </p>
+          <p>本轮没有删除条目，也没有把这些资料标为已经验证盈利的因子。</p>
+        </section>
+      )}
       <section className="pw-catalog">
         <form
           className="pw-search"
@@ -748,7 +871,7 @@ function Browse({
               key={key}
               name={label}
               options={options}
-              value={params.get(key) || ""}
+              value={effective.get(key) || ""}
               onChange={(value) => filter(key, value)}
             />
           ))}
@@ -1099,8 +1222,14 @@ function Families({ meta }: { meta: PersonalMeta }) {
 }
 function DetailPage({ workspace }: { workspace: Workspace }) {
   const { kind, id } = useParams();
+  const [params] = useSearchParams();
+  const pinned = new URLSearchParams();
+  if (isHosted) {
+    for (const key of ["definition_revision", "snapshot_batch"])
+      if (params.get(key)) pinned.set(key, params.get(key)!);
+  }
   const result = useApi<PersonalDetail>(
-    `/v1/web/entities/${encodeURIComponent(kind || "")}/${encodeURIComponent(id || "")}`,
+    `/v1/web/entities/${encodeURIComponent(kind || "")}/${encodeURIComponent(id || "")}${pinned.size ? "?" + pinned : ""}`,
   );
   if (result.loading) return <Loading />;
   if (result.error || !result.data)
@@ -1108,7 +1237,11 @@ function DetailPage({ workspace }: { workspace: Workspace }) {
       <ErrorState error={result.error || "条目不存在"} retry={result.retry} />
     );
   return (
-    <Reading key={`${kind}/${id}`} item={result.data} workspace={workspace} />
+    <Reading
+      key={`${kind}/${id}/${pinned}`}
+      item={result.data}
+      workspace={workspace}
+    />
   );
 }
 function Section({
@@ -1142,9 +1275,11 @@ function Reading({
   const location = useLocation();
   useEffect(() => {
     if (location.hash)
-      requestAnimationFrame(() =>
-        document.getElementById(location.hash.slice(1))?.scrollIntoView(),
-      );
+      requestAnimationFrame(() => {
+        const target = document.getElementById(location.hash.slice(1));
+        if (target instanceof HTMLDetailsElement) target.open = true;
+        target?.scrollIntoView?.();
+      });
   }, [location.hash]);
   const knowledge = item.knowledge;
   const rules = knowledge?.reading || [];
@@ -1197,427 +1332,448 @@ function Reading({
                 )}
             </div>
           )}
-          <section className="pw-summary">
-            <span className="pw-kicker">一句话理解 · 来源整理</span>
-            <p>{summary}</p>
-            <div className="pw-summary-tags">
-              <SmallState item={item} workspace={workspace} />
-              <span>
-                知识：
-                {rules.some((rule) => rule.status !== "UNKNOWN") || item.formula
-                  ? "已有可读定义"
-                  : "来源资料"}
-              </span>
-              <span>
-                研究：
-                {item.results?.total
-                  ? `${item.results.total} 条记录`
-                  : "尚未研究"}
-              </span>
-            </div>
-          </section>
-          <Section
-            id="logic"
-            title={factor ? "定义与计算对象" : "方法逻辑"}
-            label="来源观点与整理说明"
-          >
-            <p className="pw-prose">
-              {item.economic_logic ||
-                (factor
-                  ? "这是技术特征或经验构造，来源未给出独立经济解释。"
-                  : "来源未单独说明方法的经济逻辑；请结合下面的原始规则理解。")}
-            </p>
-            {knowledge?.source_facts?.length ? (
-              <details className="pw-source-facts">
-                <summary>查看来源支持的事实与定位</summary>
-                {knowledge.source_facts.map((fact, index) => (
-                  <div key={index}>
-                    <strong>{fact.label}</strong>
-                    <p>{fact.text}</p>
-                    {fact.source && <small>依据：{fact.source}</small>}
+          <KnowledgeBrief item={item} />
+          <details className="pw-reading-technical" id="reading-details">
+            <summary>完整规则、计算细节与来源沿革</summary>
+            <section className="pw-summary">
+              <span className="pw-kicker">一句话理解 · 来源整理</span>
+              <p>{summary}</p>
+              <div className="pw-summary-tags">
+                <SmallState item={item} workspace={workspace} />
+                <span>
+                  知识：
+                  {rules.some((rule) => rule.status !== "UNKNOWN") ||
+                  item.formula
+                    ? "已有可读定义"
+                    : "来源资料"}
+                </span>
+                <span>
+                  研究：
+                  {item.results?.total
+                    ? `${item.results.total} 条记录`
+                    : "尚未研究"}
+                </span>
+              </div>
+            </section>
+            <Section
+              id="logic"
+              title={factor ? "定义与计算对象" : "方法逻辑"}
+              label="来源观点与整理说明"
+            >
+              <p className="pw-prose">
+                {item.economic_logic ||
+                  (factor
+                    ? "这是技术特征或经验构造，来源未给出独立经济解释。"
+                    : "来源未单独说明方法的经济逻辑；请结合下面的原始规则理解。")}
+              </p>
+              {knowledge?.source_facts?.length ? (
+                <details className="pw-source-facts">
+                  <summary>查看来源支持的事实与定位</summary>
+                  {knowledge.source_facts.map((fact, index) => (
+                    <div key={index}>
+                      <strong>{fact.label}</strong>
+                      <p>{fact.text}</p>
+                      {fact.source && <small>依据：{fact.source}</small>}
+                    </div>
+                  ))}
+                </details>
+              ) : null}
+            </Section>
+            {factor && (
+              <Section id="formula" title="公式与变量" label="原始定义保留">
+                <Formula value={knowledge?.formula || item.formula} />
+                {knowledge?.explanation_basis && (
+                  <p className="pw-muted">
+                    释义依据：{knowledge.explanation_basis}
+                  </p>
+                )}
+                {knowledge?.variables?.length ? (
+                  <dl className="pw-definition-list">
+                    {knowledge.variables.map((variable) => (
+                      <div key={variable.name}>
+                        <dt>
+                          <code>{variable.name}</code>
+                        </dt>
+                        <dd>{variable.meaning}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : (
+                  <p className="pw-muted">
+                    来源未提供单独的变量释义。可在原始公式和来源资料中核对。
+                  </p>
+                )}
+                <dl className="pw-definition-list">
+                  <div>
+                    <dt>计算结构</dt>
+                    <dd>{axisLabel(item.axis)}</dd>
                   </div>
-                ))}
-              </details>
-            ) : null}
-          </Section>
-          {factor && (
-            <Section id="formula" title="公式与变量" label="原始定义保留">
-              <Formula value={knowledge?.formula || item.formula} />
-              {knowledge?.explanation_basis && (
+                  <div>
+                    <dt>所需数据</dt>
+                    <dd>{humanList(item.required_fields)}</dd>
+                  </div>
+                  <div>
+                    <dt>历史窗口</dt>
+                    <dd>
+                      {item.lookback
+                        ? `${item.lookback.value} ${item.lookback.unit}`
+                        : "来源未说明"}
+                    </dd>
+                  </div>
+                </dl>
+              </Section>
+            )}
+            <Section
+              id="rules"
+              title={factor ? "计算语义" : "具体规则"}
+              label="已知项与未知项分别展示"
+            >
+              {rules.length ? (
+                <div className="pw-rule-grid">
+                  {rules.map((rule, index) => (
+                    <div
+                      className={
+                        rule.status === "UNKNOWN"
+                          ? "pw-rule unknown"
+                          : "pw-rule"
+                      }
+                      key={`${rule.key}-${index}`}
+                    >
+                      <h3>
+                        {rule.label}
+                        <span>
+                          {rule.status === "UNKNOWN"
+                            ? "未说明"
+                            : rule.status === "SOURCE_REPORTED"
+                              ? "来源明确"
+                              : rule.status === "CARD_IMPLEMENTATION"
+                                ? "资料卡实现约定"
+                                : rule.status === "CARD_REPORTED"
+                                  ? "资料卡说明"
+                                  : "从来源整理"}
+                        </span>
+                      </h3>
+                      <p>{rule.text || "来源未说明"}</p>
+                      {rule.evidence && (
+                        <details>
+                          <summary>定位依据</summary>
+                          <p>{rule.evidence}</p>
+                        </details>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="pw-rule-grid">
+                  {(factor
+                    ? ["缺失值处理", "预热期", "复权口径"]
+                    : [
+                        "信号",
+                        "入场",
+                        "出场",
+                        "持仓与仓位",
+                        "换仓频率",
+                        "现金处理",
+                        "多空方向",
+                        "数据与时间条件",
+                      ]
+                  ).map((label) => (
+                    <div className="pw-rule unknown" key={label}>
+                      <h3>{label}</h3>
+                      <p>来源未说明</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {!factor &&
+                (knowledge?.original_rule || item.strategy?.original_rule) && (
+                  <details className="pw-original-inline">
+                    <summary>完整原始规则（不受解析状态限制）</summary>
+                    <pre>
+                      {knowledge?.original_rule || item.strategy?.original_rule}
+                    </pre>
+                  </details>
+                )}
+            </Section>
+            <Section
+              id="parameters"
+              title="参数说明"
+              label="不推测缺失单位与作用"
+            >
+              {params.length ? (
+                <div className="pw-table-scroll">
+                  <table className="pw-table">
+                    <thead>
+                      <tr>
+                        <th>参数</th>
+                        <th>数值</th>
+                        <th>作用 / 单位</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {params.map((parameter, index) => (
+                        <tr key={index}>
+                          <th>
+                            <code>{parameter.name}</code>
+                          </th>
+                          <td>{readable(parameter.value)}</td>
+                          <td>
+                            {parameter.meaning}
+                            {"unit" in parameter && parameter.unit
+                              ? ` / ${parameter.unit}`
+                              : ""}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
                 <p className="pw-muted">
-                  释义依据：{knowledge.explanation_basis}
+                  没有可单独提取的参数。已有原文仍完整保留在规则和技术详情中。
                 </p>
               )}
-              {knowledge?.variables?.length ? (
+            </Section>
+            <Section
+              id="example"
+              title={factor ? "简单计算例子" : "一个说明用途的例子"}
+              label="不代表真实交易或回测"
+            >
+              {knowledge?.example ? (
+                <div className="pw-example">
+                  <p>{knowledge.example.text}</p>
+                  <small>依据：{knowledge.example.basis}</small>
+                </div>
+              ) : (
+                <p className="pw-muted">
+                  现有定义不足以提供确定的计算例子，暂不补造数值或执行条件。
+                </p>
+              )}
+            </Section>
+            <Section
+              id="sources"
+              title="来源与沿革"
+              label="作者、材料与版本分开核对"
+            >
+              <dl className="pw-definition-list">
+                <div>
+                  <dt>来源材料</dt>
+                  <dd>
+                    {item.source_name || item.source_type || "已收录来源"}
+                  </dd>
+                </div>
+                <div>
+                  <dt>提出者 / 来源作者</dt>
+                  <dd>
+                    {source?.author ||
+                      item.strategy?.source_author ||
+                      item.authors?.join("、") ||
+                      "来源未说明"}
+                  </dd>
+                </div>
+                {item.strategy && (
+                  <div>
+                    <dt>具体策略变体作者</dt>
+                    <dd>
+                      {item.strategy.variant_author ||
+                        "来源未说明；指标作者不等于派生策略作者"}
+                    </dd>
+                  </div>
+                )}
+                <div>
+                  <dt>来源定位</dt>
+                  <dd>
+                    {source?.locator ||
+                      item.source_locator ||
+                      "当前记录未提供定位"}
+                  </dd>
+                </div>
+                <div>
+                  <dt>原生编号</dt>
+                  <dd>
+                    {readable(source?.native_ids || item.source_native_ids)}
+                  </dd>
+                </div>
+                <div>
+                  <dt>版本</dt>
+                  <dd>
+                    {source?.revision || item.source_revision || "来源未记录"}
+                  </dd>
+                </div>
+              </dl>
+              <dl className="pw-definition-list">
+                <div>
+                  <dt>材料发表时间</dt>
+                  <dd>
+                    {source?.publication_date
+                      ? readable(source.publication_date)
+                      : "未确认；不以采集时间代替"}
+                  </dd>
+                </div>
+                {source?.reference_year && (
+                  <div>
+                    <dt>来源记录的文献年份</dt>
+                    <dd>
+                      {readable(source.reference_year)}（未核为正式发表日期）
+                    </dd>
+                  </div>
+                )}
+                {source?.reported_date && (
+                  <div>
+                    <dt>来源报告的时间</dt>
+                    <dd>
+                      {source.reported_date}
+                      {source.date_status === "UNVERIFIED_REPORTED_DATE"
+                        ? "（未独立确认准确含义）"
+                        : ""}
+                    </dd>
+                  </div>
+                )}
+                <div>
+                  <dt>{source?.collected_at_label || "资料采集时间"}</dt>
+                  <dd title={source?.collected_at}>
+                    {humanDate(source?.collected_at)}
+                  </dd>
+                </div>
+                {source?.ingestion_observed_at && (
+                  <div>
+                    <dt>迁移 / 入库观察时间</dt>
+                    <dd title={source.ingestion_observed_at}>
+                      {humanDate(source.ingestion_observed_at)}
+                      {source.collection_time_notice && (
+                        <small className="pw-block">
+                          {source.collection_time_notice}
+                        </small>
+                      )}
+                    </dd>
+                  </div>
+                )}
+                {source?.variant_created_at && (
+                  <div>
+                    <dt>该变体创建时间</dt>
+                    <dd>{humanDate(source.variant_created_at)}</dd>
+                  </div>
+                )}
+              </dl>
+              <SourceCheck id={item.entity_id} />
+              <div className="pw-source-links">
+                <ExternalLink url={source?.url || item.source_url}>
+                  打开来源资料
+                </ExternalLink>
+                {family && (
+                  <Link to={`/families#${encodeURIComponent(family.value)}`}>
+                    所属方法族：{family.label} →
+                  </Link>
+                )}
+              </div>
+              {item.papers?.length > 0 && (
+                <div className="pw-papers">
+                  {item.papers.map((paper) => (
+                    <p key={paper.paper_id}>
+                      <ExternalLink url={paper.url}>
+                        {paper.title || paper.paper_id}
+                      </ExternalLink>{" "}
+                      · {paper.year || "发表年未确认"} ·{" "}
+                      {paper.authors?.join("、") || "作者未确认"}
+                    </p>
+                  ))}
+                </div>
+              )}
+              <details>
+                <summary>来源许可和个人阅读边界</summary>
+                <p>
+                  来源许可：{item.license || "未记录"}
+                  。个人阅读不改变公开分发或商业使用授权结论。
+                </p>
                 <dl className="pw-definition-list">
-                  {knowledge.variables.map((variable) => (
-                    <div key={variable.name}>
-                      <dt>
-                        <code>{variable.name}</code>
-                      </dt>
-                      <dd>{variable.meaning}</dd>
+                  {Object.entries(item.rights || {}).map(([key, value]) => (
+                    <div key={key}>
+                      <dt>{key}</dt>
+                      <dd>{value}</dd>
                     </div>
                   ))}
                 </dl>
-              ) : (
-                <p className="pw-muted">
-                  来源未提供单独的变量释义。可在原始公式和来源资料中核对。
-                </p>
-              )}
-              <dl className="pw-definition-list">
-                <div>
-                  <dt>计算结构</dt>
-                  <dd>{axisLabel(item.axis)}</dd>
-                </div>
-                <div>
-                  <dt>所需数据</dt>
-                  <dd>{humanList(item.required_fields)}</dd>
-                </div>
-                <div>
-                  <dt>历史窗口</dt>
-                  <dd>
-                    {item.lookback
-                      ? `${item.lookback.value} ${item.lookback.unit}`
-                      : "来源未说明"}
-                  </dd>
-                </div>
-              </dl>
+              </details>
             </Section>
-          )}
-          <Section
-            id="rules"
-            title={factor ? "计算语义" : "具体规则"}
-            label="已知项与未知项分别展示"
-          >
-            {rules.length ? (
-              <div className="pw-rule-grid">
-                {rules.map((rule, index) => (
-                  <div
-                    className={
-                      rule.status === "UNKNOWN" ? "pw-rule unknown" : "pw-rule"
-                    }
-                    key={`${rule.key}-${index}`}
-                  >
-                    <h3>
-                      {rule.label}
-                      <span>
-                        {rule.status === "UNKNOWN"
-                          ? "未说明"
-                          : rule.status === "SOURCE_REPORTED"
-                            ? "来源明确"
-                            : "从来源整理"}
-                      </span>
-                    </h3>
-                    <p>{rule.text || "来源未说明"}</p>
-                    {rule.evidence && (
-                      <details>
-                        <summary>定位依据</summary>
-                        <p>{rule.evidence}</p>
-                      </details>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="pw-rule-grid">
-                {(factor
-                  ? ["缺失值处理", "预热期", "复权口径"]
-                  : [
-                      "信号",
-                      "入场",
-                      "出场",
-                      "持仓与仓位",
-                      "换仓频率",
-                      "现金处理",
-                      "多空方向",
-                      "数据与时间条件",
-                    ]
-                ).map((label) => (
-                  <div className="pw-rule unknown" key={label}>
-                    <h3>{label}</h3>
-                    <p>来源未说明</p>
-                  </div>
-                ))}
-              </div>
-            )}
-            {!factor &&
-              (knowledge?.original_rule || item.strategy?.original_rule) && (
-                <details className="pw-original-inline">
-                  <summary>完整原始规则（不受解析状态限制）</summary>
-                  <pre>
-                    {knowledge?.original_rule || item.strategy?.original_rule}
-                  </pre>
-                </details>
-              )}
-          </Section>
-          <Section
-            id="parameters"
-            title="参数说明"
-            label="不推测缺失单位与作用"
-          >
-            {params.length ? (
-              <div className="pw-table-scroll">
-                <table className="pw-table">
-                  <thead>
-                    <tr>
-                      <th>参数</th>
-                      <th>数值</th>
-                      <th>作用 / 单位</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {params.map((parameter, index) => (
-                      <tr key={index}>
-                        <th>
-                          <code>{parameter.name}</code>
-                        </th>
-                        <td>{readable(parameter.value)}</td>
-                        <td>
-                          {parameter.meaning}
-                          {"unit" in parameter && parameter.unit
-                            ? ` / ${parameter.unit}`
-                            : ""}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p className="pw-muted">
-                没有可单独提取的参数。已有原文仍完整保留在规则和技术详情中。
-              </p>
-            )}
-          </Section>
-          <Section
-            id="example"
-            title={factor ? "简单计算例子" : "一个说明用途的例子"}
-            label="不代表真实交易或回测"
-          >
-            {knowledge?.example ? (
-              <div className="pw-example">
-                <p>{knowledge.example.text}</p>
-                <small>依据：{knowledge.example.basis}</small>
-              </div>
-            ) : (
-              <p className="pw-muted">
-                现有定义不足以提供确定的计算例子，暂不补造数值或执行条件。
-              </p>
-            )}
-          </Section>
-          <Section
-            id="sources"
-            title="来源与沿革"
-            label="作者、材料与版本分开核对"
-          >
-            <dl className="pw-definition-list">
-              <div>
-                <dt>来源材料</dt>
-                <dd>{item.source_name || item.source_type || "已收录来源"}</dd>
-              </div>
-              <div>
-                <dt>提出者 / 来源作者</dt>
-                <dd>
-                  {source?.author ||
-                    item.strategy?.source_author ||
-                    item.authors?.join("、") ||
-                    "来源未说明"}
-                </dd>
-              </div>
-              {item.strategy && (
-                <div>
-                  <dt>具体策略变体作者</dt>
-                  <dd>
-                    {item.strategy.variant_author ||
-                      "来源未说明；指标作者不等于派生策略作者"}
-                  </dd>
-                </div>
-              )}
-              <div>
-                <dt>来源定位</dt>
-                <dd>
-                  {source?.locator ||
-                    item.source_locator ||
-                    "当前记录未提供定位"}
-                </dd>
-              </div>
-              <div>
-                <dt>原生编号</dt>
-                <dd>
-                  {readable(source?.native_ids || item.source_native_ids)}
-                </dd>
-              </div>
-              <div>
-                <dt>版本</dt>
-                <dd>
-                  {source?.revision || item.source_revision || "来源未记录"}
-                </dd>
-              </div>
-            </dl>
-            <dl className="pw-definition-list">
-              <div>
-                <dt>材料发表时间</dt>
-                <dd>
-                  {source?.publication_date
-                    ? readable(source.publication_date)
-                    : "未确认；不以采集时间代替"}
-                </dd>
-              </div>
-              {source?.reference_year && (
-                <div>
-                  <dt>来源记录的文献年份</dt>
-                  <dd>
-                    {readable(source.reference_year)}（未核为正式发表日期）
-                  </dd>
-                </div>
-              )}
-              {source?.reported_date && (
-                <div>
-                  <dt>来源报告的时间</dt>
-                  <dd>
-                    {source.reported_date}
-                    {source.date_status === "UNVERIFIED_REPORTED_DATE"
-                      ? "（未独立确认准确含义）"
-                      : ""}
-                  </dd>
-                </div>
-              )}
-              <div>
-                <dt>{source?.collected_at_label || "资料采集时间"}</dt>
-                <dd title={source?.collected_at}>
-                  {humanDate(source?.collected_at)}
-                </dd>
-              </div>
-              {source?.ingestion_observed_at && (
-                <div>
-                  <dt>迁移 / 入库观察时间</dt>
-                  <dd title={source.ingestion_observed_at}>
-                    {humanDate(source.ingestion_observed_at)}
-                    {source.collection_time_notice && (
-                      <small className="pw-block">
-                        {source.collection_time_notice}
-                      </small>
-                    )}
-                  </dd>
-                </div>
-              )}
-              {source?.variant_created_at && (
-                <div>
-                  <dt>该变体创建时间</dt>
-                  <dd>{humanDate(source.variant_created_at)}</dd>
-                </div>
-              )}
-            </dl>
-            <SourceCheck id={item.entity_id} />
-            <div className="pw-source-links">
-              <ExternalLink url={source?.url || item.source_url}>
-                打开来源资料
-              </ExternalLink>
-              {family && (
-                <Link to={`/families#${encodeURIComponent(family.value)}`}>
-                  所属方法族：{family.label} →
-                </Link>
-              )}
-            </div>
-            {item.papers?.length > 0 && (
-              <div className="pw-papers">
-                {item.papers.map((paper) => (
-                  <p key={paper.paper_id}>
-                    <ExternalLink url={paper.url}>
-                      {paper.title || paper.paper_id}
-                    </ExternalLink>{" "}
-                    · {paper.year || "发表年未确认"} ·{" "}
-                    {paper.authors?.join("、") || "作者未确认"}
-                  </p>
-                ))}
-              </div>
-            )}
-            <details>
-              <summary>来源许可和个人阅读边界</summary>
-              <p>
-                来源许可：{item.license || "未记录"}
-                。个人阅读不改变公开分发或商业使用授权结论。
-              </p>
-              <dl className="pw-definition-list">
-                {Object.entries(item.rights || {}).map(([key, value]) => (
-                  <div key={key}>
-                    <dt>{key}</dt>
-                    <dd>{value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </details>
-          </Section>
-          <Section
-            id="related"
-            title="沿关系继续阅读"
-            label="点击节点或名称查看详情"
-          >
-            <RelationExplorer item={item} />
-          </Section>
-          {factor && item.implementations?.length > 0 && (
             <Section
-              id="implementations"
-              title="实现与差异"
-              label="同名不能证明计算等价"
+              id="related"
+              title="沿关系继续阅读"
+              label="点击节点或名称查看详情"
             >
-              {item.implementations.map((impl) => (
-                <div className="pw-implementation" key={impl.implementation_id}>
-                  <strong>
-                    {impl.language} ·{" "}
-                    {impl.source_locator || impl.implementation_id}
-                  </strong>
-                  <p>
-                    版本：{impl.revision || "未说明"} · 是否执行：
-                    {impl.executed ? "已有执行记录" : "未执行"} · 许可：
-                    {impl.license || "未记录"}
-                  </p>
-                  {impl.code_url && (
-                    <ExternalLink url={impl.code_url}>查看该实现</ExternalLink>
-                  )}
-                  <small>
-                    现有记录未提供跨实现等价验证时，不能视为相同口径。
-                  </small>
-                </div>
-              ))}
+              <RelationExplorer item={item} />
             </Section>
-          )}
-          <Section
-            id="unknowns"
-            title="局限与未知"
-            label="研究前值得核对的问题"
-          >
-            {unknowns.length ? (
-              <ul className="pw-unknowns">
-                {unknowns.map((unknown, index) => (
-                  <li key={index}>{unknown}</li>
+            {factor && item.implementations?.length > 0 && (
+              <Section
+                id="implementations"
+                title="实现与差异"
+                label="同名不能证明计算等价"
+              >
+                {item.implementations.map((impl) => (
+                  <div
+                    className="pw-implementation"
+                    key={impl.implementation_id}
+                  >
+                    <strong>
+                      {impl.language} ·{" "}
+                      {impl.source_locator || impl.implementation_id}
+                    </strong>
+                    <p>
+                      版本：{impl.revision || "未说明"} · 是否执行：
+                      {impl.executed ? "已有执行记录" : "未执行"} · 许可：
+                      {impl.license || "未记录"}
+                    </p>
+                    {impl.code_url && (
+                      <ExternalLink url={impl.code_url}>
+                        查看该实现
+                      </ExternalLink>
+                    )}
+                    <small>
+                      现有记录未提供跨实现等价验证时，不能视为相同口径。
+                    </small>
+                  </div>
                 ))}
-              </ul>
-            ) : (
-              <p>当前来源没有单独列出限制。这不表示方法不存在限制。</p>
+              </Section>
             )}
-            {item.strategy?.research_hypotheses?.length ? (
-              <div className="pw-hypotheses">
-                <h3>待验证的研究假设</h3>
-                {item.strategy.research_hypotheses.map((hypothesis, index) => (
-                  <p key={index}>{hypothesis}</p>
-                ))}
-              </div>
-            ) : null}
-          </Section>
+            <Section
+              id="unknowns"
+              title="局限与未知"
+              label="研究前值得核对的问题"
+            >
+              {unknowns.length ? (
+                <ul className="pw-unknowns">
+                  {unknowns.map((unknown, index) => (
+                    <li key={index}>{unknown}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>当前来源没有单独列出限制。这不表示方法不存在限制。</p>
+              )}
+              {item.strategy?.research_hypotheses?.length ? (
+                <div className="pw-hypotheses">
+                  <h3>待验证的研究假设</h3>
+                  {item.strategy.research_hypotheses.map(
+                    (hypothesis, index) => (
+                      <p key={index}>{hypothesis}</p>
+                    ),
+                  )}
+                </div>
+              ) : null}
+            </Section>
+          </details>
           <Section id="research" title="已有研究" label="只读研究记录">
-            {item.results ? (
+            <ResearchInDetails item={item} />
+            {item.results?.total ? (
               <PersonalResearch results={item.results} />
-            ) : (
-              <p>尚未研究</p>
-            )}
+            ) : item.kind !== "strategy" ? (
+              <p>尚无与该因子定义版本绑定的本地诊断或回测结果。</p>
+            ) : null}
           </Section>
           <Section
             id="personal"
             title="我的判断"
             label="你的整理独立于原始来源"
           >
-            <NoteEditor item={item} workspace={workspace} />
+            <ScopedNoteEditor item={item} workspace={workspace} />
           </Section>
           <DuplicateSuggestions
             item={item}
@@ -1702,14 +1858,53 @@ function Reading({
           <div>
             <span className="pw-kicker">本文导航</span>
             <nav aria-label="详情章节">
-              <a href="#logic">{factor ? "定义与对象" : "方法逻辑"}</a>
-              {factor && <a href="#formula">公式与变量</a>}
-              <a href="#rules">{factor ? "计算语义" : "具体规则"}</a>
-              <a href="#parameters">参数说明</a>
-              <a href="#sources">来源与沿革</a>
-              <a href="#related">相关方法</a>
-              <a href="#unknowns">局限与未知</a>
-              <a href="#personal">我的判断</a>
+              <Link to={`${location.pathname}${location.search}#overview`}>
+                {factor ? "因子含义" : "策略用途"}
+              </Link>
+              <Link to={`${location.pathname}${location.search}#trading`}>
+                {factor ? "计算与场景" : "标的与进出场"}
+              </Link>
+              <Link to={`${location.pathname}${location.search}#rationale`}>
+                论文与盈利依据
+              </Link>
+              <Link to={`${location.pathname}${location.search}#research`}>
+                已有研究结果
+              </Link>
+              {factor && (
+                <Link
+                  to={`${location.pathname}${location.search}#reading-details`}
+                >
+                  公式与变量
+                </Link>
+              )}
+              <Link
+                to={`${location.pathname}${location.search}#reading-details`}
+              >
+                {factor ? "计算语义" : "具体规则"}
+              </Link>
+              <Link
+                to={`${location.pathname}${location.search}#reading-details`}
+              >
+                参数说明
+              </Link>
+              <Link
+                to={`${location.pathname}${location.search}#reading-details`}
+              >
+                来源与沿革
+              </Link>
+              <Link
+                to={`${location.pathname}${location.search}#reading-details`}
+              >
+                相关方法
+              </Link>
+              <Link
+                to={`${location.pathname}${location.search}#reading-details`}
+              >
+                局限与未知
+              </Link>
+              <Link to={`${location.pathname}${location.search}#personal`}>
+                我的判断
+              </Link>
             </nav>
             <div className="pw-aside-facts">
               <span>所需数据</span>
@@ -1740,13 +1935,58 @@ function axisLabel(axis: string) {
     "来源未说明"
   );
 }
-function NoteEditor({
+function ScopedNoteEditor({
   item,
   workspace,
 }: {
   item: PersonalItem;
   workspace: Workspace;
 }) {
+  const [params] = useSearchParams();
+  const target = {
+    ...item,
+    ...(isHosted &&
+    params.get("research_run") &&
+    params.get("research_variant") &&
+    params.get("research_manifest")
+      ? {
+          origin_run_id: params.get("research_run")!,
+          variant_id: params.get("research_variant")!,
+          manifest_sha256: params.get("research_manifest")!,
+        }
+      : {}),
+  };
+  return (
+    <NoteEditor
+      key={JSON.stringify([
+        target.entity_id,
+        target.definition_revision,
+        target.origin_run_id,
+        target.variant_id,
+        target.manifest_sha256,
+      ])}
+      item={target}
+      workspace={workspace}
+    />
+  );
+}
+export function NoteEditor({
+  item,
+  workspace,
+}: {
+  item: PersonalItem;
+  workspace: Workspace;
+}) {
+  const draftKey =
+    "quantgraph-unsaved:" +
+    JSON.stringify([
+      item.kind,
+      item.entity_id,
+      item.definition_revision,
+      item.origin_run_id,
+      item.variant_id,
+      item.manifest_sha256,
+    ]);
   const serverRecord = useApi<PersonalRecord>(recordPath(item));
   const workspaceRecord = workspace.records.find((row) =>
     sameRecord(row, item),
@@ -1757,23 +1997,75 @@ function NoteEditor({
       (workspaceRecord.updated_at || "") > (serverRecord.data.updated_at || ""))
       ? workspaceRecord
       : serverRecord.data;
-  const [draft, setDraft] = useState<PersonalRecord>(
-    saved || emptyRecord(item),
-  );
-  const [dirty, setDirty] = useState(false);
-  const [tagsText, setTagsText] = useState((saved?.tags || []).join(", "));
+  const [draft, setDraft] = useState<PersonalRecord>(() => {
+    if (isHosted) {
+      try {
+        const raw = sessionStorage.getItem(draftKey);
+        if (raw) {
+          const cached = JSON.parse(raw);
+          if (
+            cached.entity_id === item.entity_id &&
+            cached.definition_revision === item.definition_revision
+          )
+            return cached;
+        }
+      } catch {
+        /* original text remains in the browser */
+      }
+    }
+    return {
+      ...emptyRecord(item),
+      ...saved,
+      origin_run_id: item.origin_run_id,
+      variant_id: item.variant_id,
+      manifest_sha256: item.manifest_sha256,
+    };
+  });
+  const [dirty, setDirty] = useState(() => {
+    try {
+      return isHosted && !!sessionStorage.getItem(draftKey);
+    } catch {
+      return false;
+    }
+  });
+  const [draftPersisted, setDraftPersisted] = useState(false);
+  const [tagsText, setTagsText] = useState((draft.tags || []).join(", "));
   const [aliasesText, setAliasesText] = useState(
-    (saved?.aliases || []).join(", "),
+    (draft.aliases || []).join(", "),
   );
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   useEffect(() => {
     if (!dirty) {
-      setDraft(saved || emptyRecord(item));
+      setDraft({
+        ...emptyRecord(item),
+        ...saved,
+        origin_run_id: item.origin_run_id,
+        variant_id: item.variant_id,
+        manifest_sha256: item.manifest_sha256,
+      });
       setTagsText((saved?.tags || []).join(", "));
       setAliasesText((saved?.aliases || []).join(", "));
     }
   }, [saved, item, dirty]);
+  useEffect(() => {
+    if (!isHosted) return;
+    try {
+      if (dirty)
+        sessionStorage.setItem(
+          draftKey,
+          JSON.stringify({
+            ...draft,
+            tags: tokenList(tagsText),
+            aliases: tokenList(aliasesText),
+          }),
+        );
+      else sessionStorage.removeItem(draftKey);
+      setDraftPersisted(dirty);
+    } catch {
+      setDraftPersisted(false);
+    }
+  }, [draftKey, draft, dirty, tagsText, aliasesText]);
   const change = <K extends keyof PersonalRecord>(
     key: K,
     value: PersonalRecord[K],
@@ -1782,6 +2074,7 @@ function NoteEditor({
     setDirty(true);
   };
   const submit = async () => {
+    if (serverRecord.loading || serverRecord.error) return;
     setBusy(true);
     setError("");
     try {
@@ -1792,8 +2085,9 @@ function NoteEditor({
       });
       setDirty(false);
       serverRecord.retry();
-      workspace.notify("个人判断已保存到本地服务。刷新或更换浏览器仍可读取。");
+      workspace.notify("个人判断已保存。刷新或更换浏览器仍可读取。");
     } catch (error) {
+      serverRecord.retry();
       setError(
         error instanceof Error ? error.message : "保存失败，编辑内容仍保留。",
       );
@@ -1809,158 +2103,216 @@ function NoteEditor({
         void submit();
       }}
     >
-      {saved &&
-        (saved.version_changed ||
-          saved.definition_revision !== item.definition_revision) && (
-          <p className="pw-notice">
-            来源定义已有修订。以下笔记仍关联原保存版本，保存判断不会自动替换历史引用。
-          </p>
-        )}
-      {serverRecord.data?.linked_notes?.length ? (
-        <details className="pw-linked-notes">
-          <summary>
-            查看归并前分别保存的 {serverRecord.data.linked_notes.length}{" "}
-            份个人笔记
-          </summary>
-          {serverRecord.data.linked_notes.map((note) => (
-            <div key={note.entity_id}>
-              <Link to={personalPath(note)}>{note.name}</Link>
-              <p>
-                {note.note ||
-                  note.reason ||
-                  note.summary ||
-                  "该引用没有文字备注"}
-              </p>
-              <small>原版本：{note.definition_revision}</small>
-            </div>
-          ))}
-        </details>
-      ) : null}
-      <div className="pw-form-row">
-        <label>
-          阅读状态
-          <select
-            value={draft.status}
-            onChange={(event) =>
-              change("status", event.target.value as PersonalRecord["status"])
-            }
-          >
-            {personalStatuses.map((status) => (
-              <option key={status}>{status}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          主题分组
-          <input
-            maxLength={100}
-            value={draft.group}
-            onChange={(event) => change("group", event.target.value)}
-            placeholder="例如：低换手趋势方法"
-          />
-        </label>
-      </div>
-      <label>
-        标签（逗号分隔）
-        <input
-          maxLength={1000}
-          value={tagsText}
-          onChange={(event) => {
-            setTagsText(event.target.value);
-            setDirty(true);
-          }}
-          placeholder="如：价格、趋势、待核对退出规则"
-        />
-      </label>
-      <label>
-        研究选择的理由
-        <textarea
-          maxLength={12000}
-          value={draft.reason}
-          onChange={(event) => change("reason", event.target.value)}
-          placeholder="为什么值得研究，或为什么暂不研究？"
-          rows={2}
-        />
-      </label>
-      <label>
-        备注
-        <textarea
-          maxLength={12000}
-          value={draft.note}
-          onChange={(event) => change("note", event.target.value)}
-          placeholder="记录自己的理解、比较结果和阅读线索"
-          rows={3}
-        />
-      </label>
-      <label>
-        我的问题与研究假设
-        <textarea
-          maxLength={12000}
-          value={draft.questions}
-          onChange={(event) => change("questions", event.target.value)}
-          placeholder="哪些条件需要验证？还缺哪些证据？"
-          rows={3}
-        />
-      </label>
-      <details className="pw-note-extras">
-        <summary>我的整理、别名与来源问题</summary>
-        <label>
-          我的整理
-          <textarea
-            maxLength={20000}
-            rows={4}
-            value={draft.summary}
-            onChange={(event) => change("summary", event.target.value)}
-            placeholder="用自己的话整理方法，不会覆盖作者原文"
-          />
-        </label>
-        <label>
-          补充别名（逗号分隔）
-          <input
-            maxLength={1000}
-            value={aliasesText}
-            onChange={(event) => {
-              setAliasesText(event.target.value);
-              setDirty(true);
-            }}
-          />
-        </label>
-        <label>
-          来源 / 规则问题
-          <textarea
-            maxLength={12000}
-            rows={3}
-            value={draft.problem}
-            onChange={(event) => change("problem", event.target.value)}
-            placeholder="例如：退出条件不一致、来源链接失效、参数单位缺失"
-          />
-        </label>
-      </details>
-      <div className="pw-note-save">
-        <label className="pw-checkbox">
-          <input
-            type="checkbox"
-            checked={draft.starred}
-            onChange={(event) => change("starred", event.target.checked)}
-          />
-          收藏到我的清单
-        </label>
-        <span>
-          {dirty
-            ? "有未保存的修改"
-            : saved?.updated_at
-              ? `已保存 · ${humanDate(saved.updated_at)}`
-              : "尚未保存个人判断"}
-        </span>
-        <button className="primary" disabled={busy || !dirty} type="submit">
-          {busy ? "保存中…" : "保存个人判断"}
-        </button>
-      </div>
-      {error && (
-        <p className="pw-error" role="alert">
-          {error}
+      {isHosted && item.origin_run_id && (
+        <p className="pw-notice">
+          这份批注固定关联 {item.origin_run_id} / {item.variant_id}
+          。来源ID关联不等于定义版本已精确复现。
         </p>
       )}
+      {serverRecord.error && (
+        <ErrorState error={serverRecord.error} retry={serverRecord.retry} />
+      )}
+      {dirty && (
+        <p className="pw-reading-basis">
+          有未保存草稿，尚未写入云端。
+          {draftPersisted
+            ? "当前浏览器会话已暂存，刷新后可恢复。"
+            : "请保留本页，保存失败后可重试。"}
+        </p>
+      )}
+      {isHosted &&
+        dirty &&
+        serverRecord.data &&
+        serverRecord.data.record_revision !== draft.record_revision && (
+          <div className="pw-notice">
+            <p>云端有较新批注，你的草稿没有丢失。</p>
+            <details>
+              <summary>读取云端版本后比较</summary>
+              <p>批注：{serverRecord.data.note}</p>
+              <p>问题：{serverRecord.data.questions}</p>
+              <p>标签：{serverRecord.data.tags.join("、")}</p>
+            </details>
+            <button
+              type="button"
+              onClick={() => {
+                setDraft(serverRecord.data!);
+                setTagsText(serverRecord.data!.tags.join(", "));
+                setAliasesText(serverRecord.data!.aliases.join(", "));
+                setDirty(false);
+                setError("");
+              }}
+            >
+              采用云端版本
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setDraft({
+                  ...draft,
+                  record_revision: serverRecord.data!.record_revision,
+                });
+                setError("");
+                setDirty(true);
+              }}
+            >
+              保留我的草稿，下一次保存作为新修订
+            </button>
+          </div>
+        )}
+      <fieldset disabled={busy || serverRecord.loading || !!serverRecord.error}>
+        {saved &&
+          (saved.version_changed ||
+            saved.definition_revision !== item.definition_revision) && (
+            <p className="pw-notice">
+              来源定义已有修订。以下笔记仍关联原保存版本，保存判断不会自动替换历史引用。
+            </p>
+          )}
+        {serverRecord.data?.linked_notes?.length ? (
+          <details className="pw-linked-notes">
+            <summary>
+              查看归并前分别保存的 {serverRecord.data.linked_notes.length}{" "}
+              份个人笔记
+            </summary>
+            {serverRecord.data.linked_notes.map((note) => (
+              <div key={note.entity_id}>
+                <Link to={personalPath(note)}>{note.name}</Link>
+                <p>
+                  {note.note ||
+                    note.reason ||
+                    note.summary ||
+                    "该引用没有文字备注"}
+                </p>
+                <small>原版本：{note.definition_revision}</small>
+              </div>
+            ))}
+          </details>
+        ) : null}
+        <div className="pw-form-row">
+          <label>
+            阅读状态
+            <select
+              value={draft.status}
+              onChange={(event) =>
+                change("status", event.target.value as PersonalRecord["status"])
+              }
+            >
+              {personalStatuses.map((status) => (
+                <option key={status}>{status}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            主题分组
+            <input
+              maxLength={100}
+              value={draft.group}
+              onChange={(event) => change("group", event.target.value)}
+              placeholder="例如：低换手趋势方法"
+            />
+          </label>
+        </div>
+        <label>
+          标签（逗号分隔）
+          <input
+            maxLength={1000}
+            value={tagsText}
+            onChange={(event) => {
+              setTagsText(event.target.value);
+              setDirty(true);
+            }}
+            placeholder="如：价格、趋势、待核对退出规则"
+          />
+        </label>
+        <label>
+          研究选择的理由
+          <textarea
+            maxLength={12000}
+            value={draft.reason}
+            onChange={(event) => change("reason", event.target.value)}
+            placeholder="为什么值得研究，或为什么暂不研究？"
+            rows={2}
+          />
+        </label>
+        <label>
+          备注
+          <textarea
+            maxLength={12000}
+            value={draft.note}
+            onChange={(event) => change("note", event.target.value)}
+            placeholder="记录自己的理解、比较结果和阅读线索"
+            rows={3}
+          />
+        </label>
+        <label>
+          我的问题与研究假设
+          <textarea
+            maxLength={12000}
+            value={draft.questions}
+            onChange={(event) => change("questions", event.target.value)}
+            placeholder="哪些条件需要验证？还缺哪些证据？"
+            rows={3}
+          />
+        </label>
+        <details className="pw-note-extras">
+          <summary>我的整理、别名与来源问题</summary>
+          <label>
+            我的整理
+            <textarea
+              maxLength={20000}
+              rows={4}
+              value={draft.summary}
+              onChange={(event) => change("summary", event.target.value)}
+              placeholder="用自己的话整理方法，不会覆盖作者原文"
+            />
+          </label>
+          <label>
+            补充别名（逗号分隔）
+            <input
+              maxLength={1000}
+              value={aliasesText}
+              onChange={(event) => {
+                setAliasesText(event.target.value);
+                setDirty(true);
+              }}
+            />
+          </label>
+          <label>
+            来源 / 规则问题
+            <textarea
+              maxLength={12000}
+              rows={3}
+              value={draft.problem}
+              onChange={(event) => change("problem", event.target.value)}
+              placeholder="例如：退出条件不一致、来源链接失效、参数单位缺失"
+            />
+          </label>
+        </details>
+        <div className="pw-note-save">
+          <label className="pw-checkbox">
+            <input
+              type="checkbox"
+              checked={draft.starred}
+              onChange={(event) => change("starred", event.target.checked)}
+            />
+            收藏到我的清单
+          </label>
+          <span>
+            {dirty
+              ? "有未保存的修改"
+              : saved?.updated_at
+                ? `已保存 · ${humanDate(saved.updated_at)}`
+                : "尚未保存个人判断"}
+          </span>
+          <button className="primary" disabled={busy || !dirty} type="submit">
+            {busy ? "保存中…" : "保存个人判断"}
+          </button>
+        </div>
+        {error && (
+          <p className="pw-error" role="alert">
+            {error}
+          </p>
+        )}
+      </fieldset>
     </form>
   );
 }
@@ -2291,7 +2643,8 @@ function DuplicateSuggestions({
         同名、同模板或公式相似不等于同一方法。确认只调整个人关联，原始材料保留。
       </p>
       <button
-        disabled={busy}
+        disabled={busy || isHosted}
+        title={isHosted ? "重新采集由研究端处理" : undefined}
         onClick={async () => {
           setBusy(true);
           setError("");
@@ -2490,6 +2843,7 @@ function ComparisonTable({ query }: { query: string }) {
         </div>
       ),
     ],
+    ["已保存的研究结果", (item) => <ResearchInDetails item={item} compact />],
     ["所需数据", (item) => humanList(item.required_fields)],
     ["时序 / 截面", (item) => axisLabel(item.axis)],
     [
@@ -2645,14 +2999,14 @@ function Notebook({
   };
   const exportItems = (format: string) =>
     run(async () => {
-      const response = await fetch("/v1/personal/export", {
+      const response = await applicationFetch("/v1/personal/export", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-QuantGraph-Request": "1",
         },
         body: JSON.stringify({
-          ids: selected.length ? selected : shown.map((item) => item.entity_id),
+          ids: selected.length ? selected : shown.map(selectionKey),
           format,
         }),
       });
@@ -2724,54 +3078,70 @@ function Notebook({
           </>
         }
       >
-        收藏、阅读状态、个人整理和问题保存在同一个本地服务中，不依赖当前浏览器。
+        {isHosted
+          ? "收藏、阅读状态、批注和研究问题保存在云端，不依赖当前浏览器。"
+          : "收藏、阅读状态、个人整理和问题保存在同一个本地服务中，不依赖当前浏览器。"}
       </Title>
       <div className="pw-notice">
         <FolderOpen size={18} />
-        同一台机器的浏览器连接此服务，都可读取这些笔记。备份只含个人层；原始来源资料保持独立。
+        {isHosted
+          ? "使用同一账户可读取已保存批注。云端接收状态单独显示；研究端拉取后继续研究。"
+          : "同一台机器的浏览器连接此服务，都可读取这些笔记。备份只含个人层；原始来源资料保持独立。"}
       </div>
       {error && <ErrorState error={error} retry={workspace.refresh} />}
-      <Migration
-        legacy={legacy}
-        busy={busy}
-        migrate={(mode, items) =>
-          void run(async () => {
-            const digest = await crypto.subtle.digest(
-              "SHA-256",
-              new TextEncoder().encode(JSON.stringify(items)),
-            );
-            const contentId = Array.from(new Uint8Array(digest), (byte) =>
-              byte.toString(16).padStart(2, "0"),
-            ).join("");
-            const result = await personalApi<{
-              imported?: number;
-              preserved?: number;
-              skipped?: number;
-              already_migrated?: boolean;
-              replayed?: boolean;
-            }>("/v1/personal/migrate", {
-              method: "POST",
-              body: JSON.stringify({
-                migration_id: `localStorage-v1:${mode}:${contentId}`,
-                items,
-              }),
-            });
-            workspace.refresh();
-            setLegacy(legacy.filter((row) => row.mode !== mode));
-            workspace.notify(
-              result.already_migrated || result.replayed
-                ? "这份浏览器清单此前已迁移，本次没有重复导入。"
-                : `浏览器清单已迁移：新增 ${result.imported || 0} 条，保留已有 ${result.preserved || 0} 条。浏览器原清单仍保留。`,
-            );
-          })
-        }
-      />
-      <PersonalRestore
-        file={restoreFile}
-        onFileProcessed={restoreFileProcessed}
-        refresh={workspace.refresh}
-        notify={workspace.notify}
-      />
+      {isHosted ? (
+        <HostedNotebookImport
+          file={restoreFile}
+          onFileProcessed={restoreFileProcessed}
+          refresh={workspace.refresh}
+        />
+      ) : (
+        <Migration
+          legacy={legacy}
+          busy={busy}
+          migrate={(mode, items) =>
+            void run(async () => {
+              const digest = await crypto.subtle.digest(
+                "SHA-256",
+                new TextEncoder().encode(JSON.stringify(items)),
+              );
+              const contentId = Array.from(new Uint8Array(digest), (byte) =>
+                byte.toString(16).padStart(2, "0"),
+              ).join("");
+              const result = await personalApi<{
+                imported?: number;
+                preserved?: number;
+                skipped?: number;
+                already_migrated?: boolean;
+                replayed?: boolean;
+              }>("/v1/personal/migrate", {
+                method: "POST",
+                body: JSON.stringify({
+                  migration_id: `localStorage-v1:${mode}:${contentId}`,
+                  items,
+                }),
+              });
+              workspace.refresh();
+              setLegacy(legacy.filter((row) => row.mode !== mode));
+              workspace.notify(
+                result.already_migrated || result.replayed
+                  ? "这份浏览器清单此前已迁移，本次没有重复导入。"
+                  : `浏览器清单已迁移：新增 ${result.imported || 0} 条，保留已有 ${result.preserved || 0} 条。浏览器原清单仍保留。`,
+              );
+            })
+          }
+        />
+      )}
+      {isHosted ? (
+        <HostedSyncStatus />
+      ) : (
+        <PersonalRestore
+          file={restoreFile}
+          onFileProcessed={restoreFileProcessed}
+          refresh={workspace.refresh}
+          notify={workspace.notify}
+        />
+      )}
       {failure && (
         <p className="pw-error" role="alert">
           {failure}
@@ -2814,12 +3184,10 @@ function Notebook({
             type="checkbox"
             checked={
               shown.length > 0 &&
-              shown.every((item) => selected.includes(item.entity_id))
+              shown.every((item) => selected.includes(selectionKey(item)))
             }
             onChange={(event) =>
-              setSelected(
-                event.target.checked ? shown.map((item) => item.entity_id) : [],
-              )
+              setSelected(event.target.checked ? shown.map(selectionKey) : [])
             }
           />
           选择当前结果
@@ -2860,20 +3228,17 @@ function Notebook({
       ) : (
         <div className="pw-notebook-list">
           {shown.map((record) => (
-            <article
-              className="pw-saved"
-              key={`${record.kind}/${record.entity_id}`}
-            >
+            <article className="pw-saved" key={selectionKey(record)}>
               <div className="pw-saved-title">
                 <input
                   type="checkbox"
                   aria-label={`选择 ${record.name}`}
-                  checked={selected.includes(record.entity_id)}
+                  checked={selected.includes(selectionKey(record))}
                   onChange={(event) =>
                     setSelected(
                       event.target.checked
-                        ? [...selected, record.entity_id]
-                        : selected.filter((id) => id !== record.entity_id),
+                        ? [...selected, selectionKey(record)]
+                        : selected.filter((id) => id !== selectionKey(record)),
                     )
                   }
                 />
@@ -2998,7 +3363,8 @@ function SourceCheck({ id }: { id: string }) {
         </small>
       )}
       <button
-        disabled={busy}
+        disabled={busy || isHosted}
+        title={isHosted ? "实时来源复查由研究端处理" : undefined}
         onClick={async () => {
           setBusy(true);
           setFailure("");

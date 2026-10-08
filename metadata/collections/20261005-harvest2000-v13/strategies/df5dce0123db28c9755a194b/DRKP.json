@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "若真实联合收益概率落在给定不确定集合内，针对其中最不利的预期对数增长选权重，可降低仅用单一概率估计配置的脆弱性；集合是否覆盖真实市场、机会成本和净收益均未验证。",
+    "missing": [
+      "原文数值模拟回报未作为本次准入或真实市场概率保证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "stanford.edu/boyd/papers/robust_kelly",
+  "lab": null,
+  "missing_information": [
+    "只有条件于 R 与有限概率集合的数学配置定义；真实资产、概率形成/训练窗口、执行周期和费用未冻结。",
+    "原作者稿为 SOURCE_DESCRIPTION_REVIEWED；未执行源码、优化器或模拟，NOT_EXECUTED/NOT_TESTED。",
+    "同一 DRKP 方法只收有限概率向量凸包的一条构造，不把其它不确定集、半径、样本数或数值实现另计新增。",
+    "研究的是预期log增长对概率集合的不利选择，不附加 RCK 的负幂矩风险约束，不宣称最大回撤或概率止损保证。",
+    "作者站点可读稿件的商业和再分发许可未明确；不发布论文全文、图片或源码，REVIEW_REQUIRED。"
+  ],
+  "name": "DRKP：多种收益概率分布下的最坏对数增长配置",
+  "native_source_id": "DRKP",
+  "one_line": "给定有限联合收益情景和多个可能的概率向量，求使最差预期对数增长最大的长多含现金组合。",
+  "record_id": "DRKP",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、求解器、模拟或回测。",
+    "metadata": "原生模型标识、来源定位和自撰中文定义；不发布论文全文、图、源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://stanford.edu/~boyd/papers/robust_kelly.html"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Qingyun Sun and Stephen Boyd, Distributional Robust Kelly Gambling, author manuscript December8,2018. Chinese paraphrase by catalog curator.",
+      "id": "boyd-robust-kelly-20181208-pdf",
+      "license": "No explicit redistribution or commercial license established for the author manuscript. Public availability is not a license; any GitHub implementation license does not cover this paper or input data. Original Chinese definitions only; commercial scope REVIEW_REQUIRED.",
+      "locator": "Author manuscript December8,2018: model and cash physicalpage1; expectedlog objective and distributional uncertainty page2; section2.1 finite convex hull method page3. Other distribution sets are out of this selected variant. Field lines refer to fixed pdftotext stdout; formulas visually checked against original PDF.",
+      "revision": "Author manuscript dated December8,2018; Distributional Robust Kelly Gambling; PDF sha256:7b2c5df6d05296e4a523806b874c2d34b067daeed5fb474df4788cba023024a5",
+      "sha256": "7b2c5df6d05296e4a523806b874c2d34b067daeed5fb474df4788cba023024a5",
+      "supports": [
+        "原作者有限联合收益情景、现金项、固定比例重复配置、有限概率向量凸包上的最坏期望log增长目标"
+      ],
+      "url": "https://stanford.edu/~boyd/papers/pdf/robust_kelly.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_RESEARCH_PAPER_AND_VISUAL_FORMULAS_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "boyd-robust-kelly-20181208-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原模型把 n 项非负收益倍数的投资/下注作为财富配置对象，第 n 项现金每轮收益倍数恒为 1。它给出可用于金融收益情景的数学权重构造；本文数值示例是赛马，不把该例结果或资金单位当成股票、债券、外汇的已实证策略。具体可交易资产为外部输入。"
+    },
+    "cost": {
+      "evidence": [
+        "boyd-robust-kelly-20181208-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：所收形式化财富每轮乘数为 r·b，没有明确再平衡佣金、买卖价差、税费、冲击或融资现金利息。现金收益倍数1是数学模型约定；不是已核实际账户费用为零。"
+    },
+    "entry": {
+      "evidence": [
+        "boyd-robust-kelly-20181208-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "配置开始前，根据给定 R、多个概率向量求同一个最坏期望目标，按解 b 的正权重项持有，b_n 为现金。没有价格交叉或获利阈值入场。之后以每轮最新财富 W 持有 W b_i 对应比例，原文没有把每轮目标更新成最近收益的在线梯度。"
+    },
+    "execution_time": {
+      "evidence": [
+        "boyd-robust-kelly-20181208-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先固定联合情景与概率集合，再求解 b，并在收益兑现之前按当前财富配置。收益实现后财富乘 r·b，下一轮恢复同一目标。论文未定义证券成交日历、信息发布时间、信号到成交延迟、订单类型或价格；不得把已知下一轮实际收益用于同轮权重，也不宣称比例恢复可无摩擦成交。"
+    },
+    "exit": {
+      "evidence": [
+        "boyd-robust-kelly-20181208-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每轮按固定 b 恢复目标比例，目标为零的项不配置，比例超出目标的项在比例恢复时减持。无按实际回撤、破 α 阈值、止盈或固定持有轮数强制清仓；改变概率集合后重新求解属于未冻结的应用政策。"
+    },
+    "position": {
+      "evidence": [
+        "boyd-robust-kelly-20181208-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "本条明确选择原始长多单纯形：b≥0且Σb=1；现金计入满仓比例，无借贷杠杆、做空或逐资产额外上限。论文允许一般附加凸约束B，但未将其自动纳入此选择。全现金 b=e_n 在各情景都给收益倍数1、预期log增长0，是本条可行对照；不据此承诺实际投资不会亏损，也不声明每组输入解唯一。"
+    },
+    "risk": {
+      "evidence": [
+        "boyd-robust-kelly-20181208-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "最坏是对指定概率集合取最小的期望对数增长，不是最坏单次收益、CVaR、历史最大回撤或跌破初始财富概率上限。收益假设跨轮独立同分布；真实概率未落入Π或收益情景R漏掉事件时，此优化目标不提供域外保障。s=1或所有概率向量相同退化为普通Kelly，不另计参数版本；多解并列、数值容差/失败、零收益对数域和真实执行约束尚需处理。没有运行优化器或回测。"
+    },
+    "signal": {
+      "evidence": [
+        "boyd-robust-kelly-20181208-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "选择 b_i≥0、Σ_i b_i=1。对每个可能概率向量计算 G_j(b)=Σ_{k=1}^K π^(j)_k log(r^(k)·b)，求 b∈argmax min_{j=1…s}G_j(b)。由于 G 对概率向量线性，在 Π=conv(π^(1),…,π^(s)) 上取下确界等于上述有限最小值；不把概率向量平均后再做普通 Kelly。资产配置变量是 b，π^(j)和R是输入。任一可能概率分布给予正概率的情景，组合收益须为正以令对数有限；所有概率均为零的情景不贡献期望。"
+    },
+    "timeframe": {
+      "evidence": [
+        "boyd-robust-kelly-20181208-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按离散轮次重复配置；对给定 R、Π 一次确定固定财富比例 b，在每轮财富变化后仍按同一比例投入。原文假设跨轮收益向量独立同分布，未设日/月频率、动态更新 R 或概率集合的再训练周期。不能把最坏分布目标理解为每次观察当轮结果后改配。"
+    },
+    "universe": {
+      "evidence": [
+        "boyd-robust-kelly-20181208-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定非负 n×K 收益倍数矩阵 R，其第 k 列 r^(k) 是同一轮全部资产的联合结果；现金所在末行全为 1。再给定 s 个 K 维概率向量 π^(j)，每个非负且总和 1，可能的真实概率集合为它们的凸包 Π。不是每只资产独立抽样，也不是在每轮选表现最差的一列收益。模型没有资产池、情景估计窗口、概率训练、成分变更或缺价规则。"
+    }
+  }
+}

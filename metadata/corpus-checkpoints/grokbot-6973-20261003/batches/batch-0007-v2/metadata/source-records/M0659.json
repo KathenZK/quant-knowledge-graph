@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0659",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 659,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7c67e6b5d4db8f0ee5afe06146d96f823f81d291bd02ad2cd9fe4d0d7679b702",
+    "rule_sha256": "03fe348e5e614a6892288514ccbc79fefcff58ff3e3b14c266f159fa554d6d1b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0659",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0659"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.lookintobitcoin.com/charts/mvrv-quantile-bands/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Look Into Bitcoin"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "比特币MVRV分位带低于25分位与高于75分位"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "MVRV Quantile Bands"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "比特币日线。先算MVRV（市价相对已实现价格）。再对已确认周期高点拟合下降线、对已确认周期低点拟合上升线，得到收缩包络，把每日MVRV在包络内归一，并用截至当日的全部历史做分位，不使用未来数据，再把分位阈值换算回价格带。色带覆盖第5到第95百分位。读数低于第25百分位视为相对聚合成本历史上便宜；常见问题写低于第10百分位只出现在主要周期低点附近。高于第75百分位为估值拉伸；高于90曾在数月内聚集于主要周期高点。跌破第5百分位带为熊市低点，升破第95百分位带为主要周期顶部。页面未给出拟合周期高低点的确认规则，故包络的精确复现步骤未写全。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "How Are the Bands Calculated；How to Read the Chart；Frequently Asked Questions"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

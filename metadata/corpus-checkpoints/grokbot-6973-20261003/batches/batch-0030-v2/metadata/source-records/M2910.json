@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2910",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2906,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "31bb8c6e8a24d597ab85d8e2c7d986c8b71073c75b111bb19b3a62313c2503d3",
+    "rule_sha256": "36bf84835b894411b4b8a4a8bf4f953c86d2378b9b3ed287978ca85fe8b43276"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2910",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2910"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/SmaCrossUniverseSelectionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：有基本面且价相对SMA(100)满足容差；按(均线−价)相对差取前10各配10%（Lean SmaCrossUniverseSelection）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SMA100容差筛选按相对差Top10各10%；Lean SmaCrossUniverseSelection）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：有基本面且价相对SMA(100)满足容差；按(均线−价)相对差取前10各配10%（Lean SmaCrossUniverseSelection）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `SmaCrossUniverseSelectionAlgorithm.py`。宇宙日线；每标的 `SMA(100)`，`tolerance=0.01`：仅当 `SMA > price×tolerance`（源码条件）且指标就绪时计入；按 `(SMA−price)/((SMA+price)/2)` 降序取前 `_count=10`；移除则清仓，新增各 `set_holdings(..., 0.1)`；杠杆设定 2。不是成交额 Top3 等权（W388）核，也不是 EMA100/300×1.01 Top10（W333）核。提出日期未知。 不是成交额Top3等权（W388）核，也不是EMA100/300×1.01 Top10（W333）核：本条为价相对SMA(100)容差筛选按(均线−价)相对差取前10各配10%。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

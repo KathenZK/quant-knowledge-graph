@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2734",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2734,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "cabb08760d9ac9041c555462979858115774d47118b76afa3b1469e25f94df3a",
+    "rule_sha256": "3a4f0836842bf6aa44f724f4d4034fd8e9f136c91d0ec6042f936599a659d322"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2734",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2734"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/alternative-data-chain-universe-eodhdupcomingdividends/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：EODHD未来1日内除息且股息>$0.05且成交额Top100，每日09:00单票上限10%（QC Documentation chain dividends）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（EODHD未来1日内除息股息>$0.05且成交额Top100每日09:00单票上限10%；QC Documentation chain dividends）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：EODHD未来1日内除息且股息>$0.05且成交额Top100，每日09:00单票上限10%（QC Documentation chain dividends）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `alternative-data-chain-universe-eodhdupcomingdividends/main.py`。选：`dividend_date≤now+1日` 且 `dividend>0.05`；交集基本面按成交额取前100。每日 09:00：权重=`min(1/N, 0.1)`。不是 W325（股息>$0.75、等权、无Top100）核。提出日期未知。 不是W325（股息>$0.75、等权、无Top100）核：本条为EODHD未来1日内除息且股息>$0.05且成交额Top100，每日09:00单票上限10%。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

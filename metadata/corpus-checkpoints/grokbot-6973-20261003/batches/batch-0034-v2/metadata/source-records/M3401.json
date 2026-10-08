@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3401",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3355,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "75c83b629e977651a383db35c26e1c7c69783bcebc2b0dd221c7210c36e400ef",
+    "rule_sha256": "0f67d0f48f6b32380f3f927615cdc6f48e1ef1adf69cd6eac3fcc01d3adc9668"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3401",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3401"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/TiingoPriceAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：AAPL；并挂 TiingoPrice 日线；EMA(5)>EMA(10) 空仓则满仓，快<慢则清仓（Lean TiingoPrice）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：AAPL；并挂 TiingoPrice 日线；EMA(5)>EMA(10) 空仓则满仓，快<慢则清仓（Lean TiingoPrice）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `TiingoPriceAlgorithm.py`。`add_equity(\"AAPL\")` + `add_data(TiingoPrice, AAPL, Daily)`；`ema(AAPL,5)` 与 `ema(AAPL,10)`。`on_data`：切片含权益且 Tiingo 行非空、双均线就绪后：未投资且快>慢 → `set_holdings(1)`；已投资且快<慢 → `liquidate`。不是日线 EMA50/200 暖机核，也不是 Parameterized 默认 EMA100/200 核。提出日期未知。AAPL+Tiingo日线EMA5/10满仓/清仓 ≠ EMA50/200暖机 / Parameterized EMA100/200。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

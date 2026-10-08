@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0846",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 846,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9feae2944716ff4f9c27cd2a01de2baefa1241e6535c416aad0426ce2089a8a3",
+    "rule_sha256": "31b33f520a5710f5b7666bc85a43f9f08afd8dabdc3d084f30535f07b2ddb26f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0846",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0846"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/330/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Emi Gal"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "流动性过滤加密均值回归篮子：Bitfinex美元对每周成交量前25且处于30日2倍标准差布林内，BTCUSD高于40日SMA否则现金，未实现亏损达到或超过30%剔除"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2022-04-18"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Liquidity-Filtered Crypto Mean Reversion Basket"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该公开策略页已印出的 25、30 日、40 日与 30% 未实现亏损，不是已收的每周留成交量前 25 个呈布林均值回归的 USD 对、每日买卖相对输家赢家、单日跌幅超过 30% 才跳过：那边没有写死 30 日 2 倍标准差，没有 40 日 SMA 开关，30% 是单日跌幅而不是未实现亏损。也不是 15 分钟 %B 小于 0 再加 RSI、ADX 与带宽过滤。Bitfinex USD 报价加密货币现货。每周用日数据按 USD 成交量排序，取前 25 个且价格处于 30 日、2 倍标准差 Bollinger Bands 内的交易对，排除已越过短期上下轨者；等权持有并用每日信号再平衡。BTCUSD 高于 40 日 SMA 才投资，否则全部现金；排除未实现亏损达到或超过 30% 的持仓，若全部持仓触发则全部清仓。短期上下轨长度页面未印出，本条不补。提出日期按页面原样保留2022-04-18。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。短期上下轨长度未印出"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

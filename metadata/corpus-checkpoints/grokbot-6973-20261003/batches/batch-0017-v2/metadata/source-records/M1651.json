@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1651",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1651,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1d477e93001a3987a403c22843e2c6bf374e0cb890b75be053e99898f7209663",
+    "rule_sha256": "b777f60381c21d1bc23157e89fdb217b2184110cdce24b2642902370ebb3bdac"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1651",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1651"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://file.iyanbao.com/pdf/e9762-3250d92d-c926-4de2-88c3-219c25cd0de1.pdf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "东吴证券金工（高子剑、凌志杰；研报PDF《信息分布均匀度UID选股因子绩效月报》附录；专题《波动率选股因子》系列（二）2020-09-01）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "东吴金工信息分布均匀度UID（过去20日；Vol_daily=剔第一分钟后日内分钟涨跌幅标准差；UID=std(Vol_daily)/mean(Vol_daily)；市值中性）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（全体A股叙述；剔ST/停牌/上市不满60交易日；月频）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2020-09-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "东吴金工信息分布均匀度UID（过去20日；Vol_daily=剔第一分钟后日内分钟涨跌幅标准差；UID=std(Vol_daily)/mean(Vol_daily)；市值中性）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。每月月底回溯过去20个交易日：每个交易日用分钟数据计算日内分钟涨跌幅标准差得Vol_daily（剔除隔夜第一分钟涨跌幅）；再算20个Vol_daily的标准差std与均值mean；UID=std(Vol_daily)/mean(Vol_daily)，并做市值中性化。页述逻辑：信息冲击使日间Vol_daily更不均匀则std更大，IC为负方向。相对传统VOL20（过去20日日收益标准差+市值中性）：本条为「波动的波动」标准化。 不是传统VOL20日收益标准差：本条为过去20日剔第一分钟后日内分钟涨跌幅标准差Vol_daily的std/mean（UID）并市值中性。 计入其他。 提出日期按源文件原样保留2020-09-01。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

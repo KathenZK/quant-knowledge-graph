@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0807",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 807,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b26125c2fa3eb9b43b244a83edc5825b3a5b9df9b1cfa57dc0a5568a6d0748df",
+    "rule_sha256": "25b2e84880c43a86cd1269edfc2bab388fee175bcedb7c62b529b35ad4de78be"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0807",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0807"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/21195/bitcoin-regime-signal-for-growth-equities/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "比特币日线开关持有QQQ：Bitfinex的BTCUSD高于50日简单均线且20日变动率为正才全仓QQQ，否则全仓SHY，每周第一个交易日美东8:00"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Bitcoin Regime Signal for Growth Equities"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该研究页已印出的QQQ与SHY切换，不是已收的比特币现货14期RSI低于30满仓、高于70清仓，也不是比特币111日均线上穿350日均线2倍只卖出现货，也不是用宏观因子预测SPY、GLD、BND、BTCUSD的21日收益。交易的是美国上市ETF。QQQ与SHY日线。信号只看Bitfinex的BTCUSD日线：价格高于其50日简单移动平均，并且20日变动率大于0，才把组合100%换成QQQ；任一条件不成立则100%换成SHY。正文把20日变动率写成20日收益为正。只在每周第一个交易日、美东8:00、美国常规交易时段之前检视，并清掉不在目标里的持仓。不做空，不加杠杆。页面未写变动率用百分比还是小数，只印出大于0；未写均线或变动率尚未就绪时的持仓。提出日期取未知；文中2014年1月至2026年8月是回测区间。Faber 2007与Liu、Tsyvinski 2021是参考文献，不是本页刊出日。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Introduction交易句；Implementation中BTCUSD、sma 50、roc 20与week_start 8:00代码。回测区间January 2014至August 2026"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2470",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2470,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f2fbeea2b8a99e0f68cfe9e3d2404bf711df7ea58b65d56bdb49f8080c1e63ee",
+    "rule_sha256": "b72cf38abc7362b4e64539b6a0be734a8e359a53ca308af31e266396f3021abe"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2470",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2470"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/dynamic-breakout-strategy-forex/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "外汇：EURUSD小时，波动调节唐奇安回看(夹20–60)，破N日高做多/破N日低做空，回到N日收盘均值平仓（EasyQuant Dynamic Breakout II）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "外汇（EURUSD小时动态唐奇安；EasyQuant Dynamic Breakout II）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-11-27"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "外汇：EURUSD小时，波动调节唐奇安回看(夹20–60)，破N日高做多/破N日低做空，回到N日收盘均值平仓（EasyQuant Dynamic Breakout II）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Implementing the Dynamic Breakout II Forex Strategy in QuantConnect》已印 AdaptiveVolatilityBreakout。`add_forex(\"EURUSD\", HOUR, OANDA)`；初始 lookback=20，ceiling=60，floor=20。每日 `before_market_close` 前1分钟：用60日收盘算近30日与前30日标准差，`delta_vol=(current−prev)/current`，lookback 四舍五入后夹到[20,60]；buy_point=近 lookback 日最高，sell_point=最低，liquidation_point=近 lookback 日收盘均值。小时：价≥buy_point 且持仓≤0 → SetHoldings(+1)；价≤sell_point 且持仓≥0 → SetHoldings(−1)；多头且价≤liquidation_point 或空头且价≥liquidation_point 则 Liquidate。WarmUp=ceiling+30。不是固定唐奇安核（W210）。提出日期取页面 Published on。 不是固定唐奇安：本条为EURUSD小时波动调节唐奇安回看夹20–60，破N日高/低开仓，回到N日收盘均值平仓。 计入其他。 提出日期按源文件原样保留2025-11-27。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

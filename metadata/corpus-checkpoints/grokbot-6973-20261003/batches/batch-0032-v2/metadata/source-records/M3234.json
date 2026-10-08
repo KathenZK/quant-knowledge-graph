@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3234",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3188,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f16ea3d0ad11dc337a52ede4194ded750e692546ad4b25e60441a1e26dd12f76",
+    "rule_sha256": "25b774c63d9140410efc2666a7606c7fc13b8a2615df0d726febd9e51e9ddc3c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3234",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3234"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateFrameworkAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；ConstantAlpha UP(20分钟,mag=0.025)+等权按日再平衡；单票最大回撤1%（Lean BasicTemplateFramework）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；ConstantAlpha UP(20分钟,mag=0.025)+等权按日再平衡；单票最大回撤1%（Lean BasicTemplateFramework）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateFrameworkAlgorithm.py`。手工宇宙 SPY 分钟；Alpha=`ConstantAlphaModel(PRICE,UP,20分钟,0.025)`；`EqualWeightingPortfolioConstructionModel(Resolution.DAILY)`；即时执行；`MaximumDrawdownPercentPerSecurity(0.01)`。不是叠加组合回撤2%+单票浮盈1%的 AddRiskManagement 核（W454），也不是 ConfidenceWeighted 核（W414）。提出日期未知。SPY分钟 ConstantAlpha UP20分+等权日再平衡+单票回撤1% ≠ AddRiskManagement双回撤（W454）/ConfidenceWeighted（W414）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

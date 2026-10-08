@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "价格与RSI极值不同步或提示局部回收，但指标同步关系和收益未验证。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "Smart Money Divergence仅为来源名称，未采集资金流或跨市场数据。",
+    "极值相等也可触发，不要求严格新高新低。"
+  ],
+  "name": "五棒价格极值与RSI非同步极值的回收交易",
+  "native_source_id": "488156",
+  "one_line": "创近五棒价格低点并收回前低，同时RSI未创对应新低且价在均线上时做多；空头镜像，按触发收盘与ATR挂括号。",
+  "record_id": "488156",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E6%B5%81%E5%8A%A8%E6%80%A7%E6%8D%95%E6%8D%89%E4%B8%8E%E6%99%BA%E8%83%BD%E8%B5%84%E9%87%91%E5%88%86%E6%AD%A7%E6%8C%87%E6%A0%87%E7%BB%93%E5%90%88%E7%AD%96%E7%95%A5-Liquidity-Grab-Smart-Money-Divergence-Indicator-Combination-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ianzeng123；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-488156-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "9f843a21fc8e2fa50b5a3c0b0eb86d6bf5dc983168e6309c360066c31d1401c8",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E6%B5%81%E5%8A%A8%E6%80%A7%E6%8D%95%E6%8D%89%E4%B8%8E%E6%99%BA%E8%83%BD%E8%B5%84%E9%87%91%E5%88%86%E6%AD%A7%E6%8C%87%E6%A0%87%E7%BB%93%E5%90%88%E7%AD%96%E7%95%A5-Liquidity-Grab-Smart-Money-Divergence-Indicator-Combination-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-488156-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-488156-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未显式设置佣金、滑点、点差及持仓费用，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-488156-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每次多状态满足即entry Buy多，空状态即entry Sell空，未要求空仓或首次事件。相反入口可能反转；单图表内没有第二资产价格数据。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-488156-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5，当前bar参与5窗极值/RSI/ATR/均线；先多入口和保护，再空入口和保护。未声明逐tick、收盘成交、成交重算；没有运行证明实际入场及保护成交。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-488156-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多入口分支同次提交from_entry=Buy、stop=C−1.5ATR14、limit=C+3ATR14；空入口分支反向。只在相应信号再次成立时更新，基准是当次信号收盘，不是实际均价或单调追踪。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-488156-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认每次1%权益，无入口qty覆盖；不是按止损距离承担1%账户风险。未冻结最小交易量、合约乘数和杠杆。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-488156-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "持仓期间重复同向信号可更新原括号位置；原始止损风险与成交价跳空相关。源码出口ID与另一方向入口同名，入口/出口配对静态可读，具体平台订单行为仍未运行确认。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-488156-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "RSI=RSI14(C)，趋势=SMA50(C)，A=ATR14。low==lowest(low,5)且C>low[1]为下扫；high==highest(high,5)且C<high[1]为上扫。多为下扫且RSI>lowest(RSI,5)且C>SMA50，空为上扫且RSI<highest(RSI,5)且C<SMA50。窗口含当前bar且允许价格极值相等；不是两组已确认枢轴背离或跨资产SMT。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-488156-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-488156-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

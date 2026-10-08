@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2530",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2530,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "18d353bd3bcc96b9b096cc75e76452771f6fb64db15dcfe8e6eb56266414ad62",
+    "rule_sha256": "2815e3f79514f0a2d99e03c08f0241a1d9687355b4e1bb7d7d0093a49987b432"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2530",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2530"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-sixty-forty-portfolio/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY60%+TLT40%，仅当任一权重漂移>|5%|时在季度首日开盘后再平衡（QC Documentation 60/40 drift）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY60/TLT40漂移5%季度再平衡；QC Documentation）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY60%+TLT40%，仅当任一权重漂移>|5%|时在季度首日开盘后再平衡（QC Documentation 60/40 drift）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-sixty-forty-portfolio/main.py`。`_spy_weight=0.60`，`_tlt_weight=0.40`，`_drift_threshold=0.05`。`quarter_start(SPY)` + `after_market_open(SPY,1)`：若 SPY 或 TLT 当前权重相对目标绝对偏差 ≤5% 则不下单；否则按目标 `set_holdings`。不是 W259：那边是 **每月** 首日开盘后30分钟 **无条件** 再平衡到 60/40。提出日期未知。 不是W259每月无条件60/40：本条为SPY60/TLT40仅当漂移>|5%|时季度首日再平衡。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

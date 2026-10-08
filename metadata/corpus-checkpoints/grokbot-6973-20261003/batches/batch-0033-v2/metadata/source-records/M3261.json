@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3261",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3215,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c7784ee08d371d8fd5211e7edce8b43e3f1d415865a749dec58546bc7058a371",
+    "rule_sha256": "9fdabee70f9f0b192703e03255b967554e5807341bd24a990e8c35b0bc8a8d80"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3261",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3261"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateFuturesFrameworkAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：分钟；前月链；2013-10-09前选ES、之后选黄金；仅对期货发 ConstantAlpha UP(1日)；目标数量=insight方向±1手（Lean BasicTemplateFuturesFramework）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：分钟；前月链；2013-10-09前选ES、之后选黄金；仅对期货发 ConstantAlpha UP(1日)；目标数量=insight方向±1手（Lean BasicTemplateFuturesFramework）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateFuturesFrameworkAlgorithm.py`。`FrontMonthFutureUniverseSelectionModel`：`filter.front_month().only_apply_filter_at_market_open()`；`select_future_chain_symbols`：NY 日期 `<2013-10-09`→ES迷你，否则→COMEX 黄金。Alpha=`ConstantFutureContractAlphaModel(PRICE,UP,1日)`（仅 `SecurityType.FUTURE` 才 emit）；组合=`SingleSharePortfolioConstructionModel`（UP→+1，DOWN→−1）；即时；空风控。不是连续合约 SMA4/10 核（W426），也不是日线远月近端核（W495）。提出日期未知。前月链按日切 ES→黄金 + 仅期货 ConstantAlpha UP1日±1手 ≠ 连续SMA4/10（W426）/远月近端日线（M3228）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

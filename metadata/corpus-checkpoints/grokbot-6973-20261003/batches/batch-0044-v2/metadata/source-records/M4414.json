@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4414",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4368,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c07896d484befe4fd2ab74736b6e245f9c61cebf86da6e5663672b659ce5be5d",
+    "rule_sha256": "194fb870fe71a35a79f2539b2c56d6800d7d54e2e3eee499af332c845e0fc96e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4414",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4414"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://usekeel.io/strategies/mean-reversion-hyperliquid"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel Research"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-151/W1624"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel·永续均值回归洗盘：1h；Hyperliquid成交额Top20；布林下轨深度∩短周期超卖∩EWMA价>EWMA200；等权毛杠杆1×、单票≤20%；MR距离上穿0离场；漂移>10%再平衡（Keel MR·HL·Top20·1h）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-08"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel·永续均值回归洗盘：1h；Hyperliquid成交额Top20；布林下轨深度∩短周期超卖∩EWMA价>EWMA200；等权毛杠杆1×、单票≤20%；MR距离上穿0离场；漂移>10%再平衡（Keel MR·HL·Top20·1h）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Keel 公开 **Mean Reversion（Hyperliquid）** 可钉死核。宇宙：Hyperliquid 永续成交额 **Top20**；信号时框 **1h**。入场须同时：**布林带(20,2)** 下轨深度过滤器（默认阈值约 **0.05**，越低越深）、**RSI(2)≤约10**、且短 EWMA 相对 **EWMA(200)** 趋势过滤器为上（买涨势中的超卖而非自由落体）。等权、目标毛杠杆约 **1×**、单票上限约 **20%**。离场：相对 SMA(20)/ATR(14) 的均值回归距离指标上穿约 **0**（多头模式）。执行缓冲约 **10%**。相对刚入库资金费截面/动量⊕资金费：本核为**趋势过滤下的超卖反转多头**。计入加密。提出日期 2024-08。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel MR HL · top20 1h · BB(20,2) depth ∩ RSI2≤10 ∩ >EWMA200 · EW 1x · MR-distance exit · 10% buffer"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

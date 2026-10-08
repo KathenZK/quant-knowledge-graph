@@ -547,6 +547,25 @@ def readable_item(value, raw):
             knowledge['layers']['source_facts']=[]
             if knowledge['reading']:
                 knowledge['reading'][0].update(label='分类整理说明',status='ORGANIZED_EXPLANATION')
+    from quantgraph.graph.reading_brief import reading_brief
+    value['knowledge']['reader_brief'] = _clean_private(reading_brief(value, value['knowledge'], METHOD_GUIDES[method['value']], raw.get('intake_card')))
+    if raw.get('intake_card') and not strategy:
+        # A collected implementation formula is not a quotation from the linked
+        # paper or exchange API. Keep the detailed fallback consistent with the
+        # evidence-aware card instead of relabelling it SOURCE_REPORTED.
+        knowledge=value['knowledge'];brief=knowledge['reader_brief']
+        knowledge['reading']=[dict(key=r['key'],label=r['label'],text=r['text'],status=r['status'],origin=r.get('origin')) for r in brief['trading']]
+        if formula:
+            knowledge['reading'].insert(0,dict(key='formula',label='资料卡的实现公式',text=private_text(formula),status='CARD_IMPLEMENTATION'))
+        knowledge['source_facts']=[]
+        knowledge['layers']['source_facts']=[]
+        knowledge['unknowns']=[r['label']+'：'+r['text'] for r in brief['trading'] if r['status']=='UNKNOWN']
+    from quantgraph.graph.factor_quality import apply_factor_quality
+    value = apply_factor_quality(value, raw)
+    if 'factor_quality' in value:
+        value['factor_quality'] = _clean_private(value['factor_quality'])
+    value['knowledge']['summary'] = value['knowledge']['reader_brief']['purpose']
+    value['knowledge']['summary_basis'] = value['knowledge']['reader_brief']['purpose_basis']
     value['statuses']['display'] = '个人本机资料 · 公开权限与原有可见性未改变'
     value['stable_knowledge_id'] = stable_knowledge_id(value)
     value['prior_version_ids'] = []
@@ -588,14 +607,24 @@ class PersonalCatalogRepository(CatalogRepository):
                 historical = con.execute('SELECT entity_id,payload FROM catalog_items WHERE active=0').fetchall()
                 edges = con.execute('''SELECT e.payload,e.patch,e.visibility FROM catalog_edges e
                     WHERE EXISTS(SELECT 1 FROM catalog_edge_origins o WHERE o.relationship_id=e.relationship_id AND o.active=1)''').fetchall()
+                reviews = (con.execute('SELECT entity_id,revision,payload FROM private_intake_reviews WHERE sequence IN (SELECT MAX(sequence) FROM private_intake_reviews GROUP BY entity_id)').fetchall()
+                           if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='private_intake_reviews'").fetchone() else [])
+                review_by_id={r['entity_id']:r for r in reviews}
+                assessments=(con.execute('SELECT * FROM factor_quality_assessments ORDER BY sequence').fetchall()
+                    if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='factor_quality_assessments'").fetchone() else [])
+                assessment_by_id={(r['entity_id'],r['definition_revision']):r for r in assessments}
             # SQLite/WAL housekeeping and an idempotent import can change mtimes
             # without changing any source row. Avoid repeating expensive reading.
             digest=hashlib.sha256(); row_stamps={}
-            for batch in (rows,historical,edges):
+            for batch in (rows,historical,edges,reviews,assessments):
                 for row in batch:
                     serialized=json.dumps(tuple(row),ensure_ascii=False).encode()
                     digest.update(serialized)
                     if batch is rows:
+                        if row['entity_id'] in review_by_id:
+                            serialized+=review_by_id[row['entity_id']]['payload'].encode()
+                        assessment=assessment_by_id.get((row['entity_id'],row['definition_revision']))
+                        if assessment:serialized+=assessment['payload'].encode()+assessment['input_sha256'].encode()
                         row_stamps[row['entity_id']]=hashlib.sha256(serialized).digest()
             content_digest=digest.digest()
             if content_digest==self._content_digest:
@@ -608,8 +637,16 @@ class PersonalCatalogRepository(CatalogRepository):
             for row in rows:
                 eid=row['entity_id']; fingerprint=row_stamps[eid]
                 previous=self._base_rows.get(eid)
+                private=json.loads(row['private_payload'])
+                if eid in review_by_id:
+                    private['intake_card']=json.loads(review_by_id[eid]['payload'])
+                assessment=assessment_by_id.get((eid,row['definition_revision']))
+                if assessment:
+                    private['_factor_quality_review']=json.loads(assessment['payload'])
+                    private['_factor_quality_version']=assessment['assessment_version']
+                    private['_factor_quality_sha256']=assessment['input_sha256']
                 base_rows[eid]=previous if previous and previous[0]==fingerprint else (
-                    fingerprint,readable_item(self._value(row),json.loads(row['private_payload'])))
+                    fingerprint,readable_item(self._value(row),private))
             base={eid:entry[1] for eid,entry in base_rows.items()}
             lineage = defaultdict(list)
             for r in historical:
@@ -784,7 +821,7 @@ class PersonalCatalogRepository(CatalogRepository):
         return matches
 
     def search(self, *, q='', kind='strategy', category='', family='', field='', market='', frequency='', source_type='', result_status='', page=1, page_size=20, admin=False,
-               method_family='', daily_ohlcv=False, axis='', extra_data='', completeness='', collapse_templates=False, include_tests=False, allowed_ids=None, collapse_duplicates=True, template_id='', asset_scope=''):
+               method_family='', daily_ohlcv=False, axis='', extra_data='', completeness='', collapse_templates=False, include_tests=False, allowed_ids=None, collapse_duplicates=True, template_id='', asset_scope='', factor_scope=''):
         if page < 1 or not 1 <= page_size <= 100:
             raise ValueError('Invalid pagination')
         data=self._load(); plan=self._search_vocabulary.plan(q); groups=plan['expanded_terms']; matched=[]
@@ -800,6 +837,8 @@ class PersonalCatalogRepository(CatalogRepository):
                 continue
             factor_source = kind=='variant' and value['kind']=='source' and value.get('source_type')=='factor_source_record'
             if kind and kind!='all' and value['kind']!=kind and not factor_source:
+                continue
+            if factor_scope and factor_scope!='all' and value.get('factor_quality',{}).get('group')!=factor_scope:
                 continue
             if any(wanted and value.get(key)!=wanted for key,wanted in [('category',category),('family',family),('frequency',frequency),('source_type',source_type)]):
                 continue
@@ -1047,7 +1086,12 @@ class PersonalCatalogRepository(CatalogRepository):
         valid_ids={i['entity_id'] for i in items}
         relations=[e for e in self._edges if e['from_id'] in valid_ids and e['to_id'] in valid_ids]
         relation_layers=Counter(self.relation_explanation(e['relation'])['category'] for e in relations)
-        return dict(mode='personal_local',release='local-catalog',graph_api='v1',graph_version='0.2.0',adapter_version=VERSION,
+        reviewed=[i['knowledge']['reader_brief'] for i in items if i['knowledge']['reader_brief'].get('intake_status')]
+        from quantgraph.graph.factor_quality import quality_summary
+        return dict(factor_quality_summary=quality_summary(items),mode='personal_local',release='local-catalog',graph_api='v1',graph_version='0.2.0',adapter_version=VERSION,
+            intake_summary=dict(reviewed_records=len(reviewed),by_status=dict(Counter(r['intake_status'] for r in reviewed)),
+                by_type=dict(Counter(r.get('entry_type','unknown') for r in reviewed)),
+                source_reviews=sum(bool(r.get('existing_record_overlay')) for r in reviewed),new_backtests_from_import=0),
             counts={k:counts[k] for k in ['strategy','variant','concept','family','template','source']},
             visible_counts=dict(counts),test_counts=dict(Counter(v['kind'] for v in self._load().values() if v.get('test_record'))),
             result_count=self.results()['total'],legacy_result_count=0,

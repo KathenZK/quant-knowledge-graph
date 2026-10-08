@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2248",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2248,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c00621677e8f502a08a78bde2fc0629d2b0b108c4e1492c6f136064934e8e050",
+    "rule_sha256": "ecb1a686b88274a143ada344002923297766920712d8097d655cd3ad47e7cc1e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2248",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2248"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bigquant.com/wiki/doc/C54hzJxRqd"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区（《MA、MACD、RSI等指标解析与量化策略实操》；bqu1vdra；页更新2026-03-13）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant教程：多指标趋势追踪（沪深300/中证500；市场20日动量多头≥50%∧60日≥35%；EMA20>EMA60∧MACD金叉柱正∧RSI14∈[40,72]∧价>布林中轨；打分40/35/25；Top10；5日调仓；止损10%/止盈25%/最长45日）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（沪深300与中证500成分；日频；每5交易日调仓）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-03-13"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant教程：多指标趋势追踪（沪深300/中证500；市场20日动量多头≥50%∧60日≥35%；EMA20>EMA60∧MACD金叉柱正∧RSI14∈[40,72]∧价>布林中轨；打分40/35/25；Top10；5日调仓；止损10%/止盈25%/最长45日）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。第一层市场择时：沪深300成分中20日动量多头占比≥50%且60日动量多头占比≥35%才允许建仓，否则空仓。第二层个股：同时满足EMA20>EMA60、MACD金叉且柱状图为正、RSI(14)∈[40,72]、收盘价高于布林带中轨。综合打分：MACD柱40%+20日动量35%+RSI25%，取Top10等权（每只10%）。每5个交易日调仓。风控：止损−10%、止盈+25%、最长持有45天。相对已收简单动量Top10/10日：本条为双层过滤⊕三指标加权核。 不是已收简单动量Top10：本条为双层市场择时⊕EMA/MACD/RSI/布林打分Top10⊕5日调仓⊕止损10%/止盈25%/最长45日。 计入其他。 提出日期按源文件原样保留2026-03-13。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

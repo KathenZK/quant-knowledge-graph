@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1780",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1780,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5d82b60f66f155f6edfe67a1e038eb58a9e4caaf1849e7ad9dd8953805501bae",
+    "rule_sha256": "4a019e5e79e8cae81e8ff411ea3c88d88177268cf622f016886287061c1808a2"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1780",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1780"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/TheForce/TheForce.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（TheForce.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区TheForce：15m，Stoch快线K/D均在20–80、MACD与信号皆升、收涨且EMA5收≥EMA5开做多；对称条件平多；止损−1.5%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区TheForce；15m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区TheForce：15m，Stoch快线K/D均在20–80、MACD与信号皆升、收涨且EMA5收≥EMA5开做多；对称条件平多；止损−1.5%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写davidzr仓strategies/TheForce/TheForce.py默认。timeframe=15m；stoploss=−0.015；minimal_roi约30/15/0分钟对应0.5%/1%/1.2%。指标：STOCHF(5,3,3)得fastk/fastd；MACD(12,26,1)；ema5c=EMA(close,5)、ema5o=EMA(open,5)。做多须同时：fastk与fastd均在[20,80]，macd>前值且macdsignal>前值，收盘>昨收，ema5c≥ema5o。平多：fastk≤80且fastd≤80，macd与信号皆低于各自前值，且ema5c<ema5o。提出日期未知。 不是单Stoch或单MACD：本条是15m TheForce，Stoch快线K/D均在20–80、MACD与信号皆升、收涨且EMA5收≥EMA5开做多，对称平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

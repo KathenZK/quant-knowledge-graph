@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2807",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2807,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ad3fb92cb76fa25d1dac3c7847c7638bac5999297725f8b263cafba9a851439a",
+    "rule_sha256": "629e1dfa001b7be6ade04d8466a84de920efa5714a3d3c72dd7bd1385c0e7f27"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2807",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2807"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/alternative-data-chain-universe-eodhdupcomingipos/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：EODHD预期/已定价IPO且最低报价>$1，上市满7日后按成交额Top100，每日09:00等权（QC Documentation chain IPOs）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（EODHD EXPECTED/PRICED IPO价带>1上市满7日成交额Top100每日09:00等权；QC Documentation chain IPOs）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：EODHD预期/已定价IPO且最低报价>$1，上市满7日后按成交额Top100，每日09:00等权（QC Documentation chain IPOs）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `alternative-data-chain-universe-eodhdupcomingipos/main.py`。Fundamental 存盘 + `EODHDUpcomingIPOs`：捕获 `deal_type∈{EXPECTED,PRICED}` 且价带 `min(lowest,highest,offer)>1` 的 IPO 日；保留 IPO 日距今≤30日的字典；选 `ipo_date≤now−7日` 的标的，与基本面交集按 `dollar_volume` 取前100。每日 09:00 等权 `1/N`，`set_holdings(..., True)`。不是非链 upcoming-IPOs（上市前宇宙、harvest 已拒），也不是无延迟/无Top100 核。提出日期未知。 不是非链upcoming-IPOs（上市前宇宙、harvest已拒）核，也不是无延迟/无Top100核：本条为EODHD EXPECTED/PRICED且价带>1，IPO日≤30日窗口内且上市满7日后按成交额Top100，每日09:00等权。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

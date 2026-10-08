@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2642",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2642,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f8199e91a8aea998904350053524190cc6b5c02911668c912f3ed324a22c6a42",
+    "rule_sha256": "4d0854b7698db065c38d1480dfc13135a80b9eb84592f47651d52442c82423c9"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2642",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2642"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-options-static/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：每周一开盘后买SPY并卖出下周五到期ATM看涨备兑（QC Documentation covered call Friday）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY周一ATM下周五到期备兑；QC Documentation covered call Friday）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：每周一开盘后买SPY并卖出下周五到期ATM看涨备兑（QC Documentation covered call Friday）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-options-static/main.py`。SPY RAW；每周一开盘后1分钟：目标到期=`(time+4日).date()`（下周五）；链上 CALL 且 expiry=该日，按 |strike−现价| 取最近 ATM；正股数量=`floor(满仓股数/乘数)×乘数`；卖出张数=`−(已有正股+新买股数)/乘数`。找不到周五合约则清正股。不是 W255 EasyQuant 30–45日最近价外看涨备兑。提出日期未知。 不是W255 EasyQuant 30–45日最近价外看涨备兑：本条为每周一开盘后买SPY并卖出下周五到期ATM看涨备兑。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

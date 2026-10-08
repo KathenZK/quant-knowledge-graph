@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0811",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 811,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1de2a5dee5c37e146199c1129f9ec1a559e96619e055a79da7f379f0a191a2a0",
+    "rule_sha256": "851954edf72dea014de3891b2f4e4e3f7337b3fc4a9f41860d35baa829e4ca86"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0811",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0811"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/18469/low-beta-portfolios-across-industries/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect研究）；规则受Asness、Frazzini与Pedersen 2013启发"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "行业组低绝对贝塔：每个有晨星行业组代码的组取成交额最高50只，60日对SPY的绝对贝塔低于全体中位数者留下，组内按绝对贝塔升序名次加权，行业之间等权，只做多"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Low Beta Portfolios Across Industries"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该研究页已印出的只做多行业分散低绝对贝塔，不是已收的股票低贝塔用一年波动与五年相关再经Vasicek收缩、多空两边都缩放到组合贝塔为1，也不是国家ETF相对MSCI美国股指分成低贝塔与高贝塔两组后做多低贝塔做空高贝塔。标的用SPY日线作回归的自变量。股票宇宙在该SPY的每月第一个交易日选择。先只留有晨星行业组代码的股票，按行业组代码再按成交额排序，每个行业组取排序后末尾的只数，结果段把该默认写成每组50只，即成交额最高的50只。贝塔用这些入选股票与SPY过去若干日收盘，结果段把该默认写成60日。实现函数取这段历史的收盘，不前填，去掉缺列，再算收益率并去掉空值。以SPY日收益为自变量、个股日收益为因变量，回归含截距，用伪逆求斜率，再取绝对值。全体入选股票绝对贝塔的中位数为门槛。每个行业组内，只留绝对贝塔严格低于该中位数的股票；组内没有则跳过该组。组内权重按绝对贝塔排序后的名次：sort_values默认升序，再rank且method为first、ascending为False，所以绝对贝塔更小者名次更大、权重更高；权重等于该名次除以组内名次合计。各组权重再除以实际留下股票的行业组个数，使行业组之间等权。已持有但不在入选名单的标的目标权重写成0。再平衡排在该SPY每月第一个交易日再偏移2个交易日、午夜。页面未在打开的initialize片段里印出60与50的赋值语句，只在结果段把红圈默认写成这两个数，本条按该默认照记，不把优化网格的其他格写成规则。未写成交额回看天数。未写贝塔样本不足时是否把该股从中位数里剔除以外的处理。未写午夜再平衡用哪一根尚未开盘的价格。提出日期取未知；文中2010年1月至页面所称当日是回测区间。参考文献2013年5月10日不是本页刊出日。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Background的贝塔回归式；Implementation中SPY、月首选股、month_start偏移2与午夜再平衡、每组末尾截取、绝对贝塔低于中位数、rank method first与行业等权。Results把红圈默认写成贝塔期60、每行业50只。回测区间January 2010至页面所称current day"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

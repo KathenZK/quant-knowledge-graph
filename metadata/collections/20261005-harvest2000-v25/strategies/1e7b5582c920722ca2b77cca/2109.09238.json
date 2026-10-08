@@ -1,0 +1,140 @@
+{
+  "economic_basis": {
+    "hypothesis": "日前价格偏离该节点同小时历史水平时，历史两市场价差可能帮助选择有条件成交的报价区间；损失/盈利约束筛去样本内不利区间。属于研究假说，既不证明两市场必定收敛，也不证明样本外收益或风险控制。",
+    "missing": [
+      "未执行求解器/源代码、下载行情或回测；论文绩效与报价可解性不是本仓库经济或成交验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "arxiv.org",
+  "lab": null,
+  "missing_information": [
+    "只采不依赖预测的Strategy3及原Eq3–11；完整三分支算法需要的预测器、准确率估计与高低阈值未闭合。",
+    "§III脚注2明示聚类特征使用每个节点、每小时固定的三年历史平均D-LMP。§IV/Strategy3的lambda_star同样称历史均价，但未明确其是否复用该三年均价、是否仅取决策前数据、历史训练各t是否滚动重估及缺失/修订处理；不笼统声称原文没有均价窗口，也不将全样本聚类均价默认为实时可用报价输入。",
+    "原Eq4/10含等号的条件成交定义与MILP20/21在报价=清算价时允许binary自由选择不同；本条保留原条件式，未执行或修复MILP。原文higher-than措辞与Eq4等号差异一并保留。",
+    "历史T、epsilon、theta、m边界须预先给定；来源示例为过去一年、m为30至200、三组epsilon/theta，未把某组绩效当最优或生产默认。",
+    "原模型单位MWh；信用额度决定真实总量但未公开，示例50 MW措辞不能直接当成单位模型或本条账户仓位。跨节点总资本/保证金约束与多解选择缺失。",
+    "已存价差不包括手续费、uplift、信用/抵押融资、税与冲击；cost MISSING，不将原文net profit当完整净收益。",
+    "下一日逐小时的抽象顺序已给；实际提交截止、实时结算频率/修订、部分成交/同价分配、拒单与信用校验缺失，execution_time MISSING。",
+    "损失比约束只作用于训练区间，不是未来止损；没有独立回测、原优化器执行、经济有效性或商业许可验证。"
+  ],
+  "name": "Samani等：历史损失约束报价与节点标记的收敛投标",
+  "native_source_id": "2109.09238",
+  "one_line": "逐节点用已知日前/实时价差优化单位金融投标的报价偏移，只有历史目标超过门槛才在次日相应小时报单，成交量按实时价格反向结算。",
+  "record_id": "2109.09238",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未验证收益、风险上限、优化解或可成交性。",
+    "metadata": "原生身份、定位与自撰中文规则；原文、图像、源码及行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Ehsan Samani, Mahdi Kohansal, Hamed Mohsenian-Rad, University of California Riverside; fixed author-submitted arXiv v1.",
+      "id": "samani-kohansal-mohsenianrad-2109-09238v1-pdf",
+      "license": "arXiv nonexclusive-distrib/1.0 is the hosting distribution permission, not established commercial reuse/fulltext/figure permission. Only self-authored Chinese metadata and source identity/locators proposed; commercial REVIEW_REQUIRED.",
+      "locator": "Physical pp1–3 financial DAM/RTM settlement, APnodes and units; p6 known-data/credit boundaries; p10 §IV.A Eq3–11 original conditional unit-quantity optimization; p11 Algorithm1 and non-equivalent-at-ties MILP; p12 standalone Strategy3, unit quantity and one-year example; p13 TableIV and 50MW performance scaling excluded. Physical p5 §III footnote2 explicitly defines fixed three-year node/hour average for clustering; application to §IV prospective bidding remains unspecified.",
+      "revision": "arXiv:2109.09238v1 submitted2021-09-19; sha256:508b3aa4ca98671f09ca56109357d36e2325ab6d01dc4a8bd8cf5dfee50966e5",
+      "sha256": "508b3aa4ca98671f09ca56109357d36e2325ab6d01dc4a8bd8cf5dfee50966e5",
+      "supports": [
+        "两市场金融结算",
+        "历史样本报价优化",
+        "节点标签与单位仓位",
+        "边界与缺项"
+      ],
+      "url": "https://arxiv.org/pdf/2109.09238v1",
+      "verification": "FETCHED_PINNED_AUTHOR_SUBMISSION_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "arXiv fixed-version author-submitted abstract.",
+      "id": "arxiv-2109-09238v1-abstract",
+      "license": "arXiv nonexclusive-distrib/1.0 is the hosting distribution permission, not established commercial reuse/fulltext/figure permission. Only self-authored Chinese metadata and source identity/locators proposed; commercial REVIEW_REQUIRED.",
+      "locator": "Original HTML L120 submission2021-09-19; L202 hosting nonexclusive-distrib/1.0 license link; page title/authors/version. Identity/rights only, not formula evidence.",
+      "revision": "arXiv:2109.09238v1 abstract HTTP snapshot sha256:31aa4607effdff6b226954d9c95475224ab2195fa2866717fbaad5dd852caf98",
+      "sha256": "31aa4607effdff6b226954d9c95475224ab2195fa2866717fbaad5dd852caf98",
+      "supports": [
+        "原生版本身份",
+        "许可链接定位"
+      ],
+      "url": "https://arxiv.org/abs/2109.09238v1",
+      "verification": "FETCHED_PINNED_VERSIONED_ABSTRACT"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "samani-kohansal-mohsenianrad-2109-09238v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "仅金融性的收敛投标（convergence/virtual bid），标的是同一CAISO节点同一小时的日前与实时电价结算差，不要求交付电力。需求单在日前买、实时卖同量；供给单日前卖、实时买同量。量用MWh，报价与LMP用美元/MWh；论文前半段识别历史参与者行为只是来源背景，不拿HDBSCAN聚类当本条必需交易信号。"
+    },
+    "cost": {
+      "evidence": [
+        "samani-kohansal-mohsenianrad-2109-09238v1-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：所选eta只是单位清算量乘日前/实时价差，论文称net profit但Eq3–11没有交易费、uplift、信用/抵押融资、税费或冲击项。本条保留价差收支，不把未写的费用置0，也未将历史表格的净利润称为本仓库复现结果。"
+    },
+    "entry": {
+      "evidence": [
+        "samani-kohansal-mohsenianrad-2109-09238v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Algorithm1在每节点独立求两向问题。需求问题可行且最优Obj严格大于theta时标Demand，供给同理标Supply；可以同时有两标签或无标签。次日每小时，Demand按已知同小时均值减m_D报单位需求单，Supply按均值加m_S报单位供给单，无标签跳过。源Strategy3明示用于没有准确预测的节点；此处单独收其分支，未替全组合发明准确率阈值。按选定Eq4/10，需求报价>=实际日前清算价才成交，供给报价<=清算价才成交；成交价为清算LMP而非所报限价。m_min>0的源示例下，两方向报价分处均值两边，同一实际lambda不能同时满足二者。"
+    },
+    "execution_time": {
+      "evidence": [
+        "samani-kohansal-mohsenianrad-2109-09238v1-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：抽象顺序为决策前收齐已知历史数据→每天拟合节点两向偏移并标记→提交次日逐小时报价→日前清算→对应实时反向结算。源未冻结实际报单截止、时区/夏令时、实时结算采样/修订、同价/部分成交分配与迟到/拒单处理，也没有发布锁定输入数据。这里审的是条件于给定输入的报价与结算定义，不是完整可成交/可直接回测的实现。"
+    },
+    "exit": {
+      "evidence": [
+        "samani-kohansal-mohsenianrad-2109-09238v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "若需求单已成交，按实时LMP卖回同一量，单位结算pi−lambda；供给单按实时LMP买回，单位结算lambda−pi。结算差乘实际清算量，未清算则无这笔头寸与价差支付。这里是两结算市场的既定反向结算，既没有等待均值回归才平仓，也没有在实时另用最优m生成新的独立方向单；没有额外止盈/止损、展期或将资金重新投资的规则。"
+    },
+    "position": {
+      "evidence": [
+        "samani-kohansal-mohsenianrad-2109-09238v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "本条采用原模型每个已选节点、每小时、每个报价方向的单位量1 MWh，一档价格/数量；不是各节点等权的账户比例，也不按Obj加权。§IV.C明确真实可投量取决于参与者信用，因此作者采用unit value；§IV.D绩效例另换成Alias9平均50 MW（同段又讨论MWh），不拿该例替换本条单位合同。各节点独立优化没有汇总资本、信用、保证金或最大并发节点预算，不能宣称多节点总量无风险/可融资。"
+    },
+    "risk": {
+      "evidence": [
+        "samani-kohansal-mohsenianrad-2109-09238v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "epsilon约束仅令训练样本总负结算绝对值不超过总正结算的epsilon倍，theta筛训练总目标；不等于未来最大亏损、收益概率或逐笔止损。负结算和为0时Omega比值形式可未定义，而源不等式仍可读，不另立新因子。Eq4/10采用<=/>=；紧接解释写higher-than，且MILP20/21在lambda=x时允许b1=0或1，因此原条件模型与线性化在同价边界不完全一致，本条明确以原条件模型为范围，不默改算法。Big-M=3000仅是作者求解示例，不是仓位或损失上限。均值构造/数据可得性、多解、实时结算细节及罕见电价尖峰风险未闭合；聚类用全样本不能作为本条实时预测器，绩效不当独立验证。"
+    },
+    "signal": {
+      "evidence": [
+        "samani-kohansal-mohsenianrad-2109-09238v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "记单位量结算eta，P_t=max(eta_t,0)、L_t=min(eta_t,0)。需求方向：x_t=lambda_star_t−m，eta_t=(pi_t−lambda_t)×1[lambda_t<=x_t]；供给方向：x_t=lambda_star_t+m，eta_t=(lambda_t−pi_t)×1[lambda_t>=x_t]。未成交收益为0是原条件式结合结算流程的展开。分别求m∈[m_min,m_max]使Obj=Σ_t eta_t最大，并约束−Σ_t L_t<=epsilon×Σ_t P_t。P=L=0时该约束成立，但theta>0的入选门槛仍挡住无收益方向。epsilon、theta和m边界为外部预先给定参数；源§IV.D示例m_min=30、m_max=200美元/MWh，TableIV三组(epsilon,theta)为(.01,100)、(.001,1000)、(.0001,2000)，不择优设置生产默认。多解时保留argmax集合，没有自造tie-break。选择原Eq3–11，不宣称其MILP在所有边界等价。"
+    },
+    "timeframe": {
+      "evidence": [
+        "samani-kohansal-mohsenianrad-2109-09238v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每天按各节点已知历史区间T重新解需求和供给两向问题，标记结果用于次日每个小时的一档报价；持有期是对应日前至实时的金融结算，不跨日等待价格回归。§IV.D示例在2019年每一天使用此前一年的历史数据；该年份只是研究样例。m在一次该节点/方向的优化中是跨T共用的单个偏移，而不是每个样本自由拟合一个m_t。均值lambda_star按小时区分。"
+    },
+    "universe": {
+      "evidence": [
+        "samani-kohansal-mohsenianrad-2109-09238v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "逐个给定的CAISO聚合定价节点APnode处理，含交易枢纽、负荷聚合点及其他多个Pnode的聚合。输入为决策前已可知的历史各小时日前价lambda_t、实时价pi_t，及该节点同小时历史平均日前价lambda_star_t；明天各小时用决策时已知的对应历史均值。不得把明天实际lambda或pi输入拟合。§III脚注2给聚类特征的平均D-LMP明确使用三年历史，且各节点/小时各为固定数；但§IV/Strategy3未明确lambda_star是否同一输入或如何在每次决策前估计。完整逐日节点资格名单、发布时间/修订政策及历史训练各t均价的可得性未给；不把聚类的三年全样本均价或第二种聚类特征的一年窗口直接移植为实时均价实现。"
+    }
+  }
+}

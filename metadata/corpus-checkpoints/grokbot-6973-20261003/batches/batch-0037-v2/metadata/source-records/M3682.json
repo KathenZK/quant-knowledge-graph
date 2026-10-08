@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3682",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3636,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "326a8a0f0f8af68752073f300fb9ff0ad99e0844eaea45ec4f4431a8404ef0bc",
+    "rule_sha256": "2cd50e06258d389cf883ab23442328f2f75203afd159fd1a95fbc3fd737c6337"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3682",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3682"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.cxoadvisory.com/technical-trading/best-moving-average-weighting-scheme-for-market-timing/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO Advisory（转述 Valeriy Zakamulin）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-66/W888"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·股指EMA(0.87)择时：月频；10月窗EMA衰减0.87，收盘高于EMA持有美股指数否则现金（CXO EMA·λ0.87·10m）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2015-06-16"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·股指EMA(0.87)择时：月频；10月窗EMA衰减0.87，收盘高于EMA持有美股指数否则现金（CXO EMA·λ0.87·10m）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CXO《Best Moving Average Weighting Scheme for Market Timing?》转述 Zakamulin 最稳健方案：对美股指数月频，用衰减因子 **λ=0.87** 的指数加权均线，回看约 **10** 个月；月末收盘 **高于** 该 EMA 则下月持有指数，否则持现金/无风险。不是简单动量（价差两端）；不是双均线交叉 DCM；不是 SPY SMA10 常规范式的等价表述优先（本条钉死 λ=0.87 EMA）。计入美股/ETF。提出日期 2015-06-16，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "网页 EMA decay 0.87 / 10-month timing"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

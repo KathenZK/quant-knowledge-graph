@@ -1,0 +1,182 @@
+{
+  "economic_basis": {
+    "hypothesis": "对异步资产先形成共同刷新观测序列，将其增量投影到固定半整数余弦基，只累计前若干频率的跨资产乘积，得到窗口协方差矩阵；是源码定义的估计器，不把“信息分离”解释成已证明可盈利信号。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整窗口内的各资产对数价格水平与原始观测时点均已到达并可用后才可计算；不能用最终窗口长度、刷新网格或晚到修订回填早期值。当前缺具体数据供应商、观测时间精度与时区、交易日界、输入发布时间/修订和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "原生内部函数名SIML(data,mn,alpha=.4)；公共cce(method=\"SIML\",psd=FALSE)分派到它，本条只把协方差核心作为已审输出。没有迭代极大似然优化器或自动模型选择，名称来自方法归属，不补造拟合过程。 先调用refresh_sampling。它把每列时点按数值拼接，用长度累计和标明C中的各列起点；预分配长度为最短列观测数的采样索引，并从共同首时点开始。此处本合同要求共同首/末时点和至少3次观测，以避免将边界不足的C指针访问当成安全缺失返回。 C helper每轮对每列找到严格晚于上一刷新时刻的第一点，取这些点的最大时刻为下一刷新点，再把每列指针推进到不晚于该刷新时刻的最后一点。选择的是上一笔值，不是对每个共同τ再往后取下一笔；不做线性插值。 输出的各列zoo仍带各自被选原时刻，随后SIML立刻as.numeric剥掉这些时刻并cbind，因此按刷新轮次横向对应，而非再次按原索引作zoo外连接。预分配索引剩余0项在R下不选择元素，不作为0价格补入。 对拼好的矩阵逐行diff，n为刷新价格行数减1。只有mn实参缺省时才算ceil(n^alpha)；给定mn时alpha不参与系数。直接用公式的半整数位置和半整数频率构造m×n余弦矩阵，不是从FFT结果挑最大能量频点。 每一行Z作跨资产外积再求和除m，全部矩阵元素属一个族。精确实数算术下为Gram矩阵而半正定，但未执行浮点特征值测试；公共包装的特征值修复/相关归一不计为另一个因子。 各资产可以在内部不同时刻观测，但共同刷新会放弃部分高频观测；整个n和m由完整窗口确定。输出不可在窗口前半段提前获得，不能用最终刷新长度回填早期。 边界：源码没有主动验证mn范围、alpha、共同时间覆盖或非有限值；mn<=0或超过n、乱序、重复时间和异常跨度不在本合同，不能宣称返回NaN即可。C refresh helper用裸数组，范围检查不足，选择安全合同不代替对一般输入的软件验证。 价格常量得到零增量和零协方差是定义结果；公共cormat对零对角另有退化，本条没有把该相关输出作为已审有效结果。 完整m=n时，在精确算术的正交基关系下会还原增量Gram；本条核心是原方法的截断m选项，不能把不同m、不同alpha或单个频率坐标计成额外族。 余弦频率索引对应刷新观测次序，不是每秒Hz；不把不规则实际持续时间隐含为均匀日历采样。该估计器没有额外乘每段时长或按年折算。 仅有截断投影不证明当前市场噪声已剔净或矩阵可直接用于交易组合优化。R、zoo、C编译与浮点环境未冻结执行，论文统计条件/有限样本表现不在采集结论内。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对异步资产先形成共同刷新观测序列，将其增量投影到固定半整数余弦基，只累计前若干频率的跨资产乘积，得到窗口协方差矩阵；是源码定义的估计器，不把“信息分离”解释成已证明可盈利信号。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "明确p>=2资产共同起止时刻t0<T、内部严格递增。刷新τ0=t0；τ_(r+1)=max_a min{t_i^a:t_i^a>τ_r}，直到τ=T。每个τ_r取Y_ra=X_(max{i:t_i^a<=τ_r})^a，即截至刷新时刻的上一笔，并按刷新次序拼矩阵；设共有n+1个刷新点，ΔY_ja=Y_ja−Y_(j−1),a，j=1…n。m=mn显式正整数或缺省ceil(n^alpha)，alpha默认.4；本合同1<=m<=n。Z_ka=sqrt(n)·sqrt[2/(n+1/2)] Σ_(j=1..n) cos[(2π/(2n+1))(k−1/2)(j−1/2)] ΔY_ja，k=1…m。C_ab=(1/m)Σ_(k=1..m)Z_ka Z_kb。不是样本中心化协方差，不再除n、不年化；输入已为对数价格水平，函数不会自动log。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "data（R list of p>=2 univariate numeric zoo objects, finite log-price levels; finite strictly increasing numeric indices in a common unit; exactly common first t0 and last T; each >=3 points, resulting refresh grid >=3 points; no missing/duplicate times）：各资产独立观测序列；输入不需等时距。共同起止和数值合同是本次明确审阅范围，并非上游自动校验。数据提供方/时点和金融宇宙尚未冻结。。参数：mn：n为刷新观测行数减1，不是原始tick总数或最短列直接长度；原签名没有常数默认mn；范围reviewed integer 1<=mn<=n; omission selects ceiling(n^alpha)；源码默认OMITTED: ceiling(n^alpha)；alpha：缺省截取维数增长指数，不是收益指数或年化系数；范围reviewed native default .4 when mn omitted; ignored if mn explicitly supplied；源码默认0.4"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "yuimaproject/yuima",
+  "lab": null,
+  "missing_information": [
+    "市场数据供应商、PIT修订规则、观测时间精度/单位、交易日界和完整资产宇宙未冻结",
+    "R/zoo/C编译依赖和数值环境未执行固定，函数为内部native core而非新建对外API",
+    "原论文全文逐式复核与统计假设适用性未完成；没有收益方向、回测或真实噪声稳健性证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "刷新采样后截取余弦基信息的 SIML 协方差",
+  "native_source_id": "SIML",
+  "one_line": "对异步资产先形成共同刷新观测序列，将其增量投影到固定半整数余弦基，只累计前若干频率的跨资产乘积，得到窗口协方差矩阵；是源码定义的估计器，不把“信息分离”解释成已证明可盈利信号。",
+  "record_id": "SIML",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/DESCRIPTION"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-ff0019a5394f47012be8a421",
+      "license": "GPL-2.0-only",
+      "locator": "fixed package version, team/maintainer and GPL-2 declaration:L1-L25",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "97a61c26e3d1271ce6a24aff808ed9456e4cd94a9dc1d61d91dd4e0250905c2b",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-f20388cbd5bc257e031ae3bd",
+      "license": "GPL-2.0-only",
+      "locator": "GPL version2 copyright and license identity:L1-L7; copying modification and distribution conditions:L59-L195; version options and warranty disclaimer:L237-L280",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-e904fad824130bdff7b3371a",
+      "license": "GPL-2.0-only",
+      "locator": "official repository scope:L1-L5; project acknowledgment:L36-L39",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "9a3f3dd089d39134ad43f042588c18adc3f24ff58b55a8f11084f46bea066655",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-3af81e9f818144da17ac5596",
+      "license": "GPL-2.0-only",
+      "locator": "native SIML identity, refresh entry and missing-mn default:L1548-L1561; complete implemented cosine projection and Gram accumulation:L1577-L1600; refresh helper numeric timestamps and original lengths:L17-L27; complete active R refresh path and zero-index selection:L84-L124; public wrapper preprocessing scope:L2681-L2704; public method-to-core binding:L2708-L2717; wrapper PSD/correlation outputs excluded from core:L2724-L2752",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "c88f91b131b9a1e7999598a0a9f881aefae5f23f48149c6b91e155f627af32b3",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/R/cce.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-bcc89ebff686bed91e41c1de",
+      "license": "GPL-2.0-only",
+      "locator": "complete native refresh sampling pointer algorithm:L28-L81",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "7c8369808ad7bdc19b945e8ec16bd100e66af282977bffa17de19e188ec30494",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/src/cce_functions.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-c1e6ff2220085d90b6e9d90c",
+      "license": "GPL-2.0-only",
+      "locator": "nine-argument refresh declaration:L23-L23; registered refresh native symbol and arity:L76-L76; native routine registration:L120-L124",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "89ea63624d215a38717af906db7344f960863341fc2ca28a6f988b29805c691b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/src/yuima_init.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-8c076969a48aacc0b5ad7838",
+      "license": "GPL-2.0-only",
+      "locator": "native mn/alpha meaning:L115-L121; public SIML call:L162-L162; SIML method and refresh sampling attribution:L190-L190; Kunitomo-Sato original reference:L279-L281; implementation team attribution:L303-L306",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "29e53d2964a8ca4eeb8a366966f1d98c3857bd2eeefa7289ffc48df38d90d2a4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/man/cce.Rd",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

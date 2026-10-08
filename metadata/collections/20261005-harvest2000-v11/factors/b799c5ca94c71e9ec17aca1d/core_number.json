@@ -1,0 +1,143 @@
+{
+  "economic_basis": {
+    "hypothesis": "衡量节点在递归移除低连接节点后，仍可留在多高最低连接度的子图中；描述网络结构，不等同原图度数或市场重要性。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-a5032cc915ecdedc0f22d6aa",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图方式、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-a5032cc915ecdedc0f22d6aa",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定实现初始化core为原图无权度数，按度数升序排列节点，建立每个度数桶的开始位置及每个节点当前位置；不是只把原图度数排序后输出。 按动态节点列表次序处理v；对其邻居u，仅当core[u]>core[v]，从u的邻居列表移除v，将u交换到其当前度数桶首、移动桶边界，再令core[u]减1。等于v的邻居不继续减，因此保留最终核心级别。 邻居表是从固定无向图复制的list；桶交换和列表删除是内部状态，不修改原图G的边。无向all_neighbors直接使用G.neighbors，每个邻居只出现一次。 core_number本身没有k参数，也没有权重参数。只登记整个核心数映射这一族；不把每个节点、每个阈值子图、k_shell或k_crust派生另行计数。 边界：源入口拒绝多重图和自环；本条仅审无向路径，有向总入出度约定不当作本条已审核的全部方向语义。 星形图中心原始度很高，但叶子递归退出后全体非孤立节点核心数仅1；这说明核心数不是原始度数的单调变换。此为定义推导，不是执行测试。 图边权大小不进入计算；把相关系数的大小交给weight属性不会自动形成加权核心。构图阈值改变仍视为同族参数，不新增数量。 源文件还包含onion_layers和k_truss等接口，本条没有凭同文件出现就宣称它们已审核或逐一计数。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-a5032cc915ecdedc0f22d6aa",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "衡量节点在递归移除低连接节点后，仍可留在多高最低连接度的子图中；描述网络结构，不等同原图度数或市场重要性。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-a5032cc915ecdedc0f22d6aa",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定无向简单无自环图G=(V,E)。对每个整数k>=0，从G重复删除当前度数<k的节点及关联边，直到不再能删除，剩余节点集合为V_k。节点u的核心数c(u)=max{k:u∈V_k}。孤立节点c=0，空图输出空映射。不同k的核心/壳层及最大核心数是同一分解的派生，不拆新增。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-a5032cc915ecdedc0f22d6aa",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in undirected simple networkx.Graph, loop-free and unchanged during call）：节点与边均已确定；边属性不参与。金融关系如何估计、阈值、节点全集和数据时点尚缺。。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-a5032cc915ecdedc0f22d6aa",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/关系/阈值、供应商和数据PIT缺失",
+    "Python和外部backend运行环境未冻结；未执行实现",
+    "没有金融预测、收益或因果有效性证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "逐级剥离低度节点的核心数",
+  "native_source_id": "core_number",
+  "one_line": "衡量节点在递归移除低连接节点后，仍可留在多高最低连接度的子图中；描述网络结构，不等同原图度数或市场重要性。",
+  "record_id": "core_number",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers固定内置实现；核心分解归因Batagelj/Zaversnik，关系分散度归因Backstrom/Kleinberg，按固定源码References保留，不称其原论文全文已复现。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现；核心分解归因Batagelj/Zaversnik，关系分散度归因Backstrom/Kleinberg，按固定源码References保留，不称其原论文全文已复现。",
+      "id": "harvest-source-a5032cc915ecdedc0f22d6aa",
+      "license": "BSD-3-Clause",
+      "locator": "core definition and attribution:L1-L14; complete core-number signature, guards and peeling implementation:L45-L122",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "e923b95b3f8b4a4c7ab760d2ab418f98ebc500b19ed2056c5ddb2f9e8f45963b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/core.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现；核心分解归因Batagelj/Zaversnik，关系分散度归因Backstrom/Kleinberg，按固定源码References保留，不称其原论文全文已复现。",
+      "id": "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+      "license": "BSD-3-Clause",
+      "locator": "unweighted all-neighbor dispatch:L1021-L1073; simple self-loop generator and counting guard:L1397-L1442",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "e836dd94f419dbb9beb8a44e2db14f7e8f632d44972da9c366ab9620e554e852",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/function.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现；核心分解归因Batagelj/Zaversnik，关系分散度归因Backstrom/Kleinberg，按固定源码References保留，不称其原论文全文已复现。",
+      "id": "harvest-source-9bc7c4ec626786f0185a037d",
+      "license": "BSD-3-Clause",
+      "locator": "neighbor access:L1343-L1387; default unweighted degree view contract:L1510-L1545",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6708c0bdc9aa744e0c70d57c4b75ea517cfe6a183d589c737baca4333c241734",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/graph.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

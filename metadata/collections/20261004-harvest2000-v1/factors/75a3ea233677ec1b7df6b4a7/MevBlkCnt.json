@@ -1,0 +1,91 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述由特定MEV相关客户端提出的主链区块规模。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "源文间隔 1 day；须在区间结束、原件及必要价格/分类标签发布后使用，实际发布延迟/PIT快照缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "仅选择实际进入主链的区块。 按源定义，只要Solana槽位leader使用Jito-Solana客户端，整块标为MEV相关。 累计区间内符合条件的区块个数。 边界：是客户端分类代理，不是逐笔证明存在抢跑/套利的交易数量。 leader客户端标签如何取得及其历史修订未公开在此节，必须保存供应商标签版本。 不另列USD金额、转账额或日窗口变体。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述由特定MEV相关客户端提出的主链区块规模。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Σ_(主链区块b属于区间) 1[该slot leader运行Jito-Solana客户端]。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "main-chain block set：按冻结原始文档定义，原生名称/作用见公式和计算步骤；slot leader identity：按冻结原始文档定义，原生名称/作用见公式和计算步骤；Jito-Solana client classification：按冻结原始文档定义，原生名称/作用见公式和计算步骤。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-53e80cdde5f8021f81a239dc"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "coinmetrics/product-docs",
+  "lab": null,
+  "missing_information": [
+    "供应商数据获取与商用授权未确认",
+    "区间时间边界、发布延迟和修订历史未冻结",
+    "未获取行情/链上数据或执行任何回测",
+    "供应商内部算法/分类标签仅有文档层定义，未取得完整源码"
+  ],
+  "name": "Solana 的 MEV 客户端区块数量",
+  "native_source_id": "MevBlkCnt",
+  "one_line": "描述由特定MEV相关客户端提出的主链区块规模。",
+  "record_id": "MevBlkCnt",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/network-usage/blocks.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Coin Metrics, product-docs official repository",
+      "id": "harvest-source-53e80cdde5f8021f81a239dc",
+      "license": "NOASSERTION",
+      "locator": "MEV Block Count:L434-L461",
+      "revision": "8489126ae94aff995d01be44f965327f2640f51e",
+      "sha256": "960446e16b4ee925786c1a8da4966d99b31ac1368d0209dfe00d50b086f0e95f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/network-usage/blocks.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

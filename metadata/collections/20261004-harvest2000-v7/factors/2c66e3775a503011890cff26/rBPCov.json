@@ -1,0 +1,124 @@
+{
+  "economic_basis": {
+    "hypothesis": "以相邻绝对收益的乘积估计连续波动部分，并通过两资产收益和/差的双幂差构造协方差；方差、协方差及各资产坐标属于同一算法族。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条审单一完整窗口的有限numeric vector/matrix路径，alignBy/alignPeriod=NULL、makeReturns=FALSE、cor=FALSE、makePsd=FALSE；输入已是按序同频对数收益，不含价格转收益、重采样和按日自动拆分。 一列时先as.numeric再as.vector，RBPVar对相邻绝对值乘积求和；多列时对每列取同一BV，对每一对列先按位置相加/相减再取绝对值和相邻乘积。 极化步骤不是Pearson相关，也不是简单Σx_t y_t：在x+y及x−y上各自使用非线性的绝对乘积，再相减并除4。协方差可为负，输出矩阵未保证正半定。 cor与makePsd是公开接口的可选后处理，本条不审其求逆/特征值投影路径，也不把相关矩阵另计一种因子。单变量主分支在这些后处理之前直接返回BV。 边界：没有na.rm，任一相关乘积为NA会污染对应输出；非有限输入不在已审合同内。短于2项的R区间索引不等价空和，不能称自动NaN处理。 非对角可负、多资产矩阵可能非正半定；本条不默默截负或投影。零序列BV为0，但不能因此推断可逆协方差或可用风险权重。 这是方差/协方差尺度，源码不年化、不取平方根；收益采样频率与完整时段须另冻结。 跳跃稳健是方法定位而非本库实证。连续跳跃、依赖或微观结构噪声均可能影响估计，未运行或测试市场性质。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "以相邻绝对收益的乘积估计连续波动部分，并通过两资产收益和/差的双幂差构造协方差；方差、协方差及各资产坐标属于同一算法族。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "对N项收益x，BV(x)=(π/2)Σ_(t=2..N)|x_(t−1)||x_t|。对两列x,y，BCov(x,y)=(π/8)Σ_(t=2..N){|x_(t−1)+y_(t−1)||x_t+y_t|−|x_(t−1)−y_(t−1)||x_t−y_t|}=[BV(x+y)−BV(x−y)]/4。多资产矩阵对角为各列BV，非对角为该BCov并对称赋值。无去均值、无除N、无N/(N−1)校正。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "rData（finite real numeric vector or N-by-d matrix; N>=2, d>=1; ordered equally sampled intraday returns）：单个完整窗口内同频率、同单位的对数收益；多列须共享时间行，列为不同资产。函数不主动排序或验证同频。。参数：alignBy：无重采样；范围reviewed NULL only；源码默认None；alignPeriod：无重采样；范围reviewed NULL only；源码默认None；makeReturns：输入已是收益；范围reviewed FALSE only；源码默认False；cor：返回协方差/方差而非相关；范围reviewed FALSE only；源码默认False；makePsd：不作正半定投影；范围reviewed FALSE only；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "jonathancornelissen/highfrequency",
+  "lab": null,
+  "missing_information": [
+    "R与数值依赖未执行固定",
+    "价格转收益、重采样及跨日包装路径未纳入本条已审合同",
+    "输入市场、日历与PIT时点缺失",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "相邻绝对收益双幂方差与极化协方差",
+  "native_source_id": "rBPCov",
+  "one_line": "以相邻绝对收益的乘积估计连续波动部分，并通过两资产收益和/差的双幂差构造协方差；方差、协方差及各资产坐标属于同一算法族。",
+  "record_id": "rBPCov",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup。原方法归属：Ole E. Barndorff-Nielsen、Neil Shephard (2004)，Measuring the impact of jumps in multivariate price processes using bipower covariation。",
+      "id": "harvest-source-5f01e4e89a90ac43d08c6870",
+      "license": "GPL-2.0-or-later",
+      "locator": "native meaning, polarisation formula, attribution and defaults:L1080-L1131; wrapper paths excluded from reviewed finite matrix contract:L1132-L1178; single-window dispatch, diagonal BV and off-diagonal polarization:L1179-L1220",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "47103e0f8a9f72ae6cdac845655c22a976e2aece49f7bb672302b33338354a32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup。原方法归属：Ole E. Barndorff-Nielsen、Neil Shephard (2004)，Measuring the impact of jumps in multivariate price processes using bipower covariation。",
+      "id": "harvest-source-b5a2f57468a7eff5e05fd791",
+      "license": "GPL-2.0-or-later",
+      "locator": "complete bipower variance and pair covariance helper formulas:L245-L262",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "5f38e15d48ae103a5e9db0715647b0dbc053e7d08ce67aa8b4e620799989d4e2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/internalRealizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup。原方法归属：Ole E. Barndorff-Nielsen、Neil Shephard (2004)，Measuring the impact of jumps in multivariate price processes using bipower covariation。",
+      "id": "harvest-source-1028bcab3647a0fae74441ed",
+      "license": "GPL-2.0-or-later",
+      "locator": "package identity, maintainers, GPL >=2 and original package paper:L1-L24; unfrozen runtime dependencies:L26-L45",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d8d98b0df5ea59c9488f6af78a6246dbbbabb593d56ef92e84eb7516dadce0b3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

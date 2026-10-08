@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0832",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 832,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "cb12274cf56cc2280640d1cc07012bacc129825d1648c2eeb96f917269ce9fcf",
+    "rule_sha256": "5b960d6077f33d9893c14b26f5e150a66a73ebf7a5dbc18abcff9e0a418c77a8"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0832",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0832"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/284/Linear-Alpha-Squeeze"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Awang Ananda"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "黄金小时线性阿尔法挤压：XAUUSD，布林落入肯特纳后做多，动量向上且高于200小时SMA，3倍ATR止损，5%风险，6倍ATR目标，3倍ATR跟踪"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "黄金CFD"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-02-14"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Linear Alpha Squeeze"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条计入其他，不是加密，也不是美股。不是已收的六个OANDA CFD（黄金、原油、白银、标普500、天然气、铜）小时线、日50/200均线过滤、突破布林上轨且带宽处过去100个交易时段最低30百分位。也不是加密%B小于0再加ADX与带宽过滤，也不是未指定品种的Keltner止损单。小时线，标的是XAUUSD。以布林带收缩至肯特纳通道内定义挤压，挤压结束后的第一根K线在动量为正且较前一小时增强、价格高于200小时SMA时做多。按14小时ATR设置3倍ATR止损距离并以ATR调整仓位，每笔风险目标为组合价值5%，有效杠杆约9.8倍上限；止盈为6倍ATR，另有3倍ATR追踪止损；动量转负或明显减弱（低于近期强度一半）时提前平仓。数据不足：布林带周期与肯特纳宽度页面未印出，动量指标的名称与周期也未印出，只写了动量为正且较前一小时增强、以及低于近期强度一半，不能把未写出的周期或宽度补成规则。提出日期按页面原样保留2026-02-14。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。布林带周期与肯特纳宽度未知"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

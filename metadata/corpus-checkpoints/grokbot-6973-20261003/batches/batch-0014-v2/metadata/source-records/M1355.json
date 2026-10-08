@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1355",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1355,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e09da11319b4ae0c3c63f3a6c038224c200fadd2fc1f2867587562575bbf6cf7",
+    "rule_sha256": "0315064ed90cb9cd860f6547e0460339324e9ea170f86ff021b0d0f820bab5b7"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1355",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1355"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/EMABBRSI/EMABBRSI.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区EMABBRSI：1h，RSI>33且上穿布林(20,3σ)下轨、或回踩EMA200、或EMA50上穿EMA200做多；RSI>91在布林下轨上或EMA50下穿EMA200平多；止损−20%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区EMABBRSI；1h）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区EMABBRSI：1h，RSI>33且上穿布林(20,3σ)下轨、或回踩EMA200、或EMA50上穿EMA200做多；RSI>91在布林下轨上或EMA50下穿EMA200平多；止损−20%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写同仓strategies/EMABBRSI/EMABBRSI.py默认。ticker_interval=1h。指标：EMA7/25/50/200、RSI未传周期、布林典型价格20期2σ与3σ。做多三者择一：rsi>33且收盘上穿bb_lowerband3；或前日收盘>EMA200且当日低点<EMA200且收盘>EMA200；或EMA50上穿EMA200。平多：close>bb_lowerband（2σ下轨）且rsi>91，或EMA50下穿EMA200。stoploss=−0.20；minimal_roi约0/25/41/67分钟阶梯。提出日期未知。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

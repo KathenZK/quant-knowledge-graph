@@ -1,5 +1,8 @@
+import { isHosted } from "./hosted-transport";
+import { hostedRequest, hostedFetch } from "./hosted-api";
 import { useEffect, useState } from "react";
 export async function api<T>(url: string, init?: RequestInit): Promise<T> {
+  if (isHosted) return hostedRequest<T>(url, init);
   const response = await fetch(url, {
     ...init,
     headers: {
@@ -46,4 +49,8 @@ export function useApi<T>(url: string) {
     return () => controller.abort();
   }, [url, attempt]);
   return { ...state, retry: () => setAttempt((n) => n + 1) };
+}
+
+export function applicationFetch(url: string, init?: RequestInit) {
+  return isHosted ? hostedFetch(url, init) : fetch(url, init);
 }

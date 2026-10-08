@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1828",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1828,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b87281e02a47394f444f3f6d36623fc627fc62697f891c79c584d3f0c55666d4",
+    "rule_sha256": "ff0ac3143ece53e315878e0595258b48a4204f4baab4e5c6a183285924dd1c73"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1828",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1828"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/NormalizerStrategy/NormalizerStrategy.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（NormalizerStrategy.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区NormalizerStrategy：1h，九档归一化收盘之和pct_sum<0.2做多；>8平多；止损−99%，追踪止损开，持仓超300分钟且浮亏则强制收紧"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区NormalizerStrategy；1h）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区NormalizerStrategy：1h，九档归一化收盘之和pct_sum<0.2做多；>8平多；止损−99%，追踪止损开，持仓超300分钟且浮亏则强制收紧"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写davidzr仓strategies/NormalizerStrategy/NormalizerStrategy.py默认。timeframe=1h；stoploss=−0.99；minimal_roi={\"0\":0.18}；trailing_stop=True，positive=0.01，offset=0.05且only_offset_is_reached=True；use_custom_stoploss=True。对回看[13,21,34,55,89,144,233,377,610]将收盘做(min-max)归一化得norm_*，pct_sum为其行和。做多：pct_sum<0.2且volume>0。平多：pct_sum>8且volume>0。自定义止损：浮亏且开仓逾300分钟则返回0.01。提出日期未知。 不是单归一化或单Fibonacci回看：本条是1h NormalizerStrategy，九档归一化收盘之和pct_sum<0.2做多、>8平多，持仓超300分钟且浮亏强制收紧。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

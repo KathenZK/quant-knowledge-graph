@@ -1,0 +1,193 @@
+{
+  "economic_basis": {
+    "hypothesis": "将配对差的绝对幅度排序，再比较正负差所占秩量；统计对象是差分布关于零的对称性，不是两独立组均值或时间相关系数。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-a5449b01fffbf084a40051c6",
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "全部观测、分组与事件/删失标签在计算时已经发布后才可提取；金融输入、窗口、事件口径和发布时间另行固定。未运行来源函数、采集市场数据或回测，p值没有金融时序校准。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-a5449b01fffbf084a40051c6",
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "公共wilcoxon默认correction=False；私有_wilcoxon_nd默认True不覆盖公共传参。固定method=\"asymptotic\"，排除auto/exact/PermutationMethod的校准和分支审查；未来补审仍同族。 可以直接输入差d或相同长度x/y。源码用实际float差，零判定d==0；排名与并列实际依据abs(d)，所以+d与−d的幅度相同会并列，不能照文档简写d[i]==d[j]把异号幅度相同排除。 wilcox内部复制d并把零设NaN，count扣除这些点；排序将这些NaN置尾且其符号掩码均假，有限差的秩与直接删零相同。本合同排除原始NaN，不能将这个内部处理泛化为输入缺失修复。 pratt保留零参与排序但不给R+/R−，并修正零阶矩和并列项；zsplit把零秩一半放两侧，不做pratt的矩减项。非零绝对值重复按average秩和每组单次t³−t校正。 连续性修正在给p值的Z上完成，最后返回两侧zstatistic时才取−abs。输出statistic不是Z，也不是R+−R−；两侧/单侧改变返回表示不是新的特征。 边界：实际排序依据绝对差而非原差；浮点相减会打破本应相等的差或产生非零伪差，不能在看结果后随意调舍入。 要求差分布的独立性和对称性等校准条件，配对金融时间序列不自动满足；不等于仅检验中位数为零。 全零的wilcox/pratt可能出现零标准差，zsplit又有不同形式输出；本条统一排除全零，不把边界数值当显著性结论。 固定渐近路径可用于定义提取，但小样本的近似概率未获验证；exact和置换不是本条完成的计算。 全部观测、分组与事件/删失标签在计算时已经发布后才可提取；金融输入、窗口、事件口径和发布时间另行固定。未运行来源函数、采集市场数据或回测，p值没有金融时序校准。 输出：一个完整统计构造族；统计量、p值、内部量和全部原生选项不拆计数"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-a5449b01fffbf084a40051c6",
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "将配对差的绝对幅度排序，再比较正负差所占秩量；统计对象是差分布关于零的对称性，不是两独立组均值或时间相关系数。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-a5449b01fffbf084a40051c6",
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "普通NumPy一维有限float64差d，至少一个非零差；若提供x/y则d=x−y且逐位置配对。固定method=asymptotic。zero_method=wilcox先排除零，n为非零数；pratt/zsplit保留全部n点，z0为零数。对|d|取average秩r_i，R+=Σ_(d>0)r_i，R−=Σ_(d<0)r_i；zsplit再向R+/R−各加(1/2)Σ_(d=0)r_i。令Q=n(n+1)(2n+1)，μ=n(n+1)/4；pratt把μ减z0(z0+1)/4、Q减z0(z0+1)(2z0+1)，并从并列校正排除零组。其余并列绝对值组大小t_g，σ=sqrt[(Q−(1/2)Σ_g(t_g³−t_g))/24]，要求σ>0。Z0=(R+−μ)/σ。correction=True时Z=Z0−c/(2σ)，greater c=1、less c=−1、two-sided c=sign(Z0)；False时Z=Z0。p两侧=2Φ(−|Z|)、less=Φ(Z)、greater=Φ(−Z)。返回statistic两侧为min(R+,R−)，单侧为R+；显式渐近的zstatistic两侧为−|Z|，单侧为Z。三个零规则、修正、方向及p/Z均同族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-a5449b01fffbf084a40051c6",
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "d or x,y（ordinary NumPy1D finite float64, n_input>=2; y=None or same shape; at least one nonzero finite difference）：差已给定或从严格配对观测计算；浮点差应由上游预先定义精度，函数不自动按报价单位舍入；valid approximation domain（positive finite sigma and all rank/moment arithmetic finite; ordinary unmasked arrays）：排除全零退化和浮点异常；此附加合同不是源自动保护或近似可靠性保证。参数：zero_method：零差的原生处理约定，三者合为一个族；范围wilcox/pratt/zsplit；源码默认wilcox；correction：正态近似半单位连续性修正；范围False/True；源码默认False；alternative：差分布相对关于零对称分布的方向；范围two-sided/less/greater；源码默认two-sided；method：明确固定近似路径，避免样本量改变后自动切换未审精确/置换分支；范围reviewed explicit asymptotic only；源码默认auto；axis：严格按位置配对，不自动对齐日期或资产；范围reviewed 0 for 1D inputs；源码默认0"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-a5449b01fffbf084a40051c6",
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "scipy/scipy",
+  "lab": null,
+  "missing_information": [
+    "未执行来源算法、未回测、未冻结数值运行环境",
+    "金融输入、市场、窗口、组标签生成/PIT发布时间缺失",
+    "p值在金融序列下的校准和多重检验未审",
+    "不证明收益方向、经济独立性或商业许可"
+  ],
+  "name": "配对差绝对秩的 Wilcoxon 符号秩诊断",
+  "native_source_id": "wilcoxon",
+  "one_line": "将配对差的绝对幅度排序，再比较正负差所占秩量；统计对象是差分布关于零的对称性，不是两独立组均值或时间相关系数。",
+  "record_id": "wilcoxon",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_wilcoxon.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-a5449b01fffbf084a40051c6",
+      "license": "BSD-3-Clause",
+      "locator": "input validation, public-forwarded parameters and fixed asymptotic choice:L59-L131; complete rank, zero and tie moment logic:L134-L205; selected asymptotic branch:L208-L248; native statistic and reported z output:L275-L284",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "ae71de6c35a990374665d47f89623a4fbf6544b69b97a0a8142bd747c06ca09e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_wilcoxon.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-701f1f6dbf5d9baab9f7ceac",
+      "license": "BSD-3-Clause",
+      "locator": "public wrapper signature and paired definition:L3796-L3867; source floating tie warning and approximate calibration boundary:L3910-L3942; actual forwarding and approx alias:L4044-L4050",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "16149a4eec5c1005a120d400b8c34852e0d29037436bed20e99a543b679679ca",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_morestats.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-dcaa4b2ca5e08690e90c3e75",
+      "license": "BSD-3-Clause",
+      "locator": "rank restoration and complete ordinary average-rank tie counts:L10404-L10520; tail direction helper:L1559-L1575; normal cdf/sf:L11231-L11243",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "f83fbd7a76afa61a865820917184eabd67d5ebc04cde4db102ba1ba86e94d0cb",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-bbbecde791dfaaebacee469f",
+      "license": "BSD-3-Clause",
+      "locator": "1D input, defaults, finite path, paired NaN policy:L433-L620; factory defaults:L365-L370; ordinary 1D result return:L621-L623",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "a1650feb6cfcf6f9a1c764c824e725b39f039a2e19001fb60f48f88c354d102f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_axis_nan_policy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-088c1d9c7042eaaa4ba39300",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_scope:L1-L81",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "6a4d55e53007e0d509dc30f5a8d460c280f0f5bcf2567c910948e7eb23047b10",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-8b75a55d87853f7f61280e73",
+      "license": "BSD-3-Clause",
+      "locator": "ordinary unmasked count is product of selected axis shape:L677-L686",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "14dbc9a53b4f6bb8dffe8fb302574fed5a522b619ce15696b1e29766d81b238c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_array_api.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

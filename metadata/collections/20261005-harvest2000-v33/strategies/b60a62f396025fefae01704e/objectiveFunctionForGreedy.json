@@ -1,0 +1,361 @@
+{
+  "economic_basis": {
+    "hypothesis": "用少量整数合约近似大资金理想组合，兼顾风险偏离与成本；这是作者配置假说，非新alpha或已验证更优收益。",
+    "missing": [
+      "未执行源码或历史回放；作者2021早期绩效撤回不能作为当前版本有效性证明。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "github.com/pst-group/pysystemtrade",
+  "lab": null,
+  "missing_information": [
+    "选定source-native目标控制器，外部alpha/理想仓位/Σ/成本校准与市场名单不由此处生成。",
+    "当前固定代码合同与作者历史博文不强行等同；不用事后绩效补规则。",
+    "NumPy/pandas/Python运行版本、实际账户时钟/成交/费用尚未验证。",
+    "commercial REVIEW_REQUIRED；GPL代码许可不覆盖书、博客、行情或第三方原型。"
+  ],
+  "name": "Carver：整数合约跟踪误差与成本缓冲配置",
+  "native_source_id": "objectiveFunctionForGreedy",
+  "one_line": "以给定分数合约目标为参照，沿单合约方向贪婪减小跟踪误差和成本，再按误差缓冲缩放并取整为下一仓位。",
+  "record_id": "objectiveFunctionForGreedy",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED.",
+    "metadata": "原生ID、固定来源哈希、定位和自撰定义，不分发原文/源码。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/pst-group/pysystemtrade/blob/326b5d402c2825cc8561cabb899d1454e593bda9/LICENSE"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-license",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "LICENSE native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "b98fbb37db5b23bc5cfdcd16793206a5a7120a7b01f75374e5e0888376e4691c",
+      "supports": [
+        "SAME_COMMIT_DEPENDENCY_OR_CONTEXT"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/LICENSE",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-readme-md",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "README.md native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "6f50ed3562ea201e3f048ee98a00c23f71495ef792d3e18fe8bea7d09ab334d0",
+      "supports": [
+        "SAME_COMMIT_DEPENDENCY_OR_CONTEXT"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/README.md",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-systems-provided-dynamic_small_system_optimise-accounts_stage-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "systems/provided/dynamic_small_system_optimise/accounts_stage.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "692df422cd749e97780d6e6055cd51003ffb6951e41cc17283dfd4bfeb6f7a1b",
+      "supports": [
+        "SELECTED_SOURCE_NATIVE_ALLOCATION"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/systems/provided/dynamic_small_system_optimise/accounts_stage.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-systems-provided-dynamic_small_system_optimise-buffering-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "systems/provided/dynamic_small_system_optimise/buffering.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "b01dc56b0b9e41dc9ce8585c6bba83839aed2d02a2d30bf3ce729855f41faed4",
+      "supports": [
+        "SELECTED_SOURCE_NATIVE_ALLOCATION"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/systems/provided/dynamic_small_system_optimise/buffering.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-systems-provided-dynamic_small_system_optimise-data_for_optimisation-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "systems/provided/dynamic_small_system_optimise/data_for_optimisation.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "02a5561e4195f1be41e92b2e31ff03a9e2f70a2331e3862572fb557a1f941b3c",
+      "supports": [
+        "SELECTED_SOURCE_NATIVE_ALLOCATION"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/systems/provided/dynamic_small_system_optimise/data_for_optimisation.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-systems-provided-dynamic_small_system_optimise-greedy_algo-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "systems/provided/dynamic_small_system_optimise/greedy_algo.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "2cad3ccc976223739a862f8447990de5ddfd5344e26b670d3eacad68f5c8d79c",
+      "supports": [
+        "SELECTED_SOURCE_NATIVE_ALLOCATION"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/systems/provided/dynamic_small_system_optimise/greedy_algo.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimisation-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "systems/provided/dynamic_small_system_optimise/optimisation.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "07a13d7a4487c30318648cb70d8124bd1355cbcfacd54bdde591ddec165324fa",
+      "supports": [
+        "SELECTED_SOURCE_NATIVE_ALLOCATION"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/systems/provided/dynamic_small_system_optimise/optimisation.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimised_positions_stage-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "systems/provided/dynamic_small_system_optimise/optimised_positions_stage.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "9b547630ed6063cb6a8f56d792036eeca33a461233827f44cc15cb177d8d4a82",
+      "supports": [
+        "SELECTED_SOURCE_NATIVE_ALLOCATION"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/systems/provided/dynamic_small_system_optimise/optimised_positions_stage.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-systems-provided-dynamic_small_system_optimise-set_up_constraints-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "systems/provided/dynamic_small_system_optimise/set_up_constraints.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "01ca932d94b900407bc8a606bd426576dcf599aa08734298566e6d8faa166146",
+      "supports": [
+        "SELECTED_SOURCE_NATIVE_ALLOCATION"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/systems/provided/dynamic_small_system_optimise/set_up_constraints.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-sysquant-optimisation-weights-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "sysquant/optimisation/weights.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "1f0aedd1c1dc64727eccfde4ff34246b75a2117a5da36da0b75775df4a16f8ac",
+      "supports": [
+        "SAME_COMMIT_DEPENDENCY_OR_CONTEXT"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/sysquant/optimisation/weights.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-sysquant-estimators-covariance-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "sysquant/estimators/covariance.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "47ab2f18357a02e4e4f9d2ae9d632ca2030a7191dd640e69ea57706bf6e56de3",
+      "supports": [
+        "SAME_COMMIT_DEPENDENCY_OR_CONTEXT"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/sysquant/estimators/covariance.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-sysquant-estimators-correlations-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "sysquant/estimators/correlations.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "6c24ea70a07e3025df3e278cca22b653f60640e56ae15457da84954ac142f336",
+      "supports": [
+        "SAME_COMMIT_DEPENDENCY_OR_CONTEXT"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/sysquant/estimators/correlations.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-sysquant-estimators-mean_estimator-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "sysquant/estimators/mean_estimator.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "da926dab116fdce10e2ca62c44b74e1fd7456aaed97170ce1416fa97f119abbc",
+      "supports": [
+        "SAME_COMMIT_DEPENDENCY_OR_CONTEXT"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/sysquant/estimators/mean_estimator.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-syscore-constants-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "syscore/constants.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "783de910302a13e57fd77dab6b65ab7f385704a4d10d40949687ebda0ea519d1",
+      "supports": [
+        "SAME_COMMIT_DEPENDENCY_OR_CONTEXT"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/syscore/constants.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-syscore-genutils-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "syscore/genutils.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "6acc1fc99b54bbc873df551fadd112bfee8cf117a82acec6da8b9190bd986d75",
+      "supports": [
+        "SAME_COMMIT_DEPENDENCY_OR_CONTEXT"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/syscore/genutils.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-sysdata-config-defaults-yaml",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "sysdata/config/defaults.yaml native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "6ab5e12dae82dd4b2b78f0cf951bc258b92f81bb4f9a975d6bbb746d6d7e9972",
+      "supports": [
+        "SAME_COMMIT_DEPENDENCY_OR_CONTEXT"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/sysdata/config/defaults.yaml",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver / pst-group maintainers; author blog attributes original greedy idea and R prototype to Doug Hohner, not independently reviewed here.",
+      "id": "pysystemtrade-syscore-pandas-strategy_functions-py",
+      "license": "Repository fixed LICENSE states GPLv3; no transfer to book/blog/third-party inputs or market data. Metadata commercial status REVIEW_REQUIRED.",
+      "locator": "syscore/pandas/strategy_functions.py native UTF8 lines; review.field_spans",
+      "revision": "326b5d402c2825cc8561cabb899d1454e593bda9",
+      "sha256": "1f495b081676f1a1a0f73315ad38e312e4d1c58b257b6f9f88ccc28d4ac8f3df",
+      "supports": [
+        "SAME_COMMIT_DEPENDENCY_OR_CONTEXT"
+      ],
+      "url": "https://raw.githubusercontent.com/pst-group/pysystemtrade/326b5d402c2825cc8561cabb899d1454e593bda9/syscore/pandas/strategy_functions.py",
+      "verification": "PINNED_GIT_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Rob Carver; attribution to Doug Hohner in article",
+      "id": "carver-greedy-author-blog",
+      "license": "NOASSERTION for author blog; not inherited GPL or third-party authorization; REVIEW_REQUIRED.",
+      "locator": "Original HTML, historical attribution and dated correction; not substituted for fixed code.",
+      "revision": "HTTP sha256 34f7730a1e5453e41f8f672514e444800d5865e6d043605c9b4184f8aae24e5c",
+      "sha256": "34f7730a1e5453e41f8f672514e444800d5865e6d043605c9b4184f8aae24e5c",
+      "supports": [
+        "历史作者线索；2021-10-22绩效撤回与后续版本提示"
+      ],
+      "url": "https://qoppac.blogspot.com/2021/10/mr-greedy-and-tale-of-minimum-tracking.html",
+      "verification": "PINNED_BYTES_STATIC_DESCRIPTION_REVIEW_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimisation-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimised_positions_stage-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "这是把外部理想仓位映射为小资金整数合约目标的配置控制构造，适用作者框架中的跨市场期货，不另造预测信号。输入每根理想合约数q*、前次整数仓q0、每合约名义/资本比例v、收益协方差Σ、每单位权重成本c、限制列表及可选最大仓位；具体交易所和合约列表来自调用方，不把文章示例45个市场当冻结宇宙。选择当前commit的objectiveFunctionForGreedy及其逐日期stage连接，框架的实盘/回测入口不采入本项目。"
+    },
+    "cost": {
+      "evidence": [
+        "pysystemtrade-syscore-pandas-strategy_functions-py",
+        "pysystemtrade-sysdata-config-defaults-yaml",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-buffering-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimisation-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimised_positions_stage-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "目标内成本为Σ abs(c_i Δw_i s)，是影子惩罚，不等于已支付费用；所锁defaults small_system给s=50、buffer b=.0125、cost_multiplier=1、相关向0收缩.5。stage显式从config给speedControl传数值，因此不使用dataclass误写的tuple默认(10,)/(.02,)。stage的c用最后可得单合约成本、最后价格/FX和资本/v归一，再乘历史价格差波动/最终价格差波动的deflator：按1B前填价格差、rolling180/min3样本std前填。它使用整段末值而非每个历史时点原生PIT成本，属于源模拟费用尺度，不能当实时费表或无前视的回测成本。原式capital=0返回0，不补为合理资金合同。实际点差/冲击/融资、到期换月及成交后的扣款账本不由本控制器闭合。 源补充：get_cost_deflator先按common_index重索引并前填，仍为NaN者置10000.0；这一人为费用倍率不是缺值观测或真实费用。"
+    },
+    "entry": {
+      "evidence": [
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimisation-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-buffering-py",
+        "pysystemtrade-sysquant-optimisation-weights-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "原始贪婪解若全零，代码退回前仓（没有前仓时会返回sentinel，不能称普遍可用）。有前仓时再算d=T(w0,w_greedy)，d≤0则a=0，否则a=max((d−b)/d,0)。a≤0维持前仓；否则Δq=round(a×(w_greedy−w0)/v)，返回w0+v⊙Δq；最后除v再round并转整数。注意第二次d是前仓到贪婪解的距离，不是前仓到原理想目标距离。目标比旧仓大即增持，小即减持，可越零；这里只生成持仓目标，不宣称任何订单已经提交或成交。"
+    },
+    "execution_time": {
+      "evidence": [
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimised_positions_stage-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-accounts_stage-py"
+      ],
+      "status": "MISSING",
+      "text": "源码提供目标仓位序列与账户分析包装器，未在选定核心给出实际下单时钟、报价观察→成交时间、排队/滑点、拒单重试或仓位回执同步规则；不把previous_optimal_positions当实际成交仓。accounts_stage把delayfill=True传入上游收益函数，但本候选不以此名称补出真实延迟合同，也未执行该函数。"
+    },
+    "exit": {
+      "evidence": [
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimisation-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimised_positions_stage-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "退出和减持由同一目标映射产生，没有独立价格止损/止盈或固定持有期限。尤其理想目标全零并不保证清仓：raw greedy全零会回前仓，缓冲也能维持前仓。stage把每期返回结果复制为下一期previous_positions；优化过程中抛异常时捕获并返回前仓。因而不能把目标低于旧仓、缺数据补0或reduce_only名称自动写成必然完成清仓。"
+    },
+    "position": {
+      "evidence": [
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-set_up_constraints-py",
+        "pysystemtrade-syscore-genutils-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimisation-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先设权重边界[−999,999]（非无限）；long_only使下界0。no_trade有前仓则上下界均为前仓，否则均0，并在max_position前提前返回。reduce_only：前仓正→[0,w0]；负→[max(已有下界,w0),0]；零→固定0；缺前仓不作该限制。再与abs(max_position×v)相交并assert上界≥下界。方向：下界≥0用+1；否则上界≤0用−1；否则目标NaN用+1，其他用copysign(1,目标)，+0返回+1。起点为固定边界、正下界、负上界或0。最终缓冲/round之后没有重新验证边界；早退/异常回前仓也可能保留不符新限制的仓。不能把它解释成完整保证金/净毛杠杆约束或严格整数可行优化器。"
+    },
+    "risk": {
+      "evidence": [
+        "pysystemtrade-syscore-pandas-strategy_functions-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-buffering-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-data_for_optimisation-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimisation-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimised_positions_stage-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "保留真实缺口：Σ负二次型抛错但NaN/奇异未完整保护；有效键顺序由set决定；0/负v、缺成本、非有限输入、限制不相容/非整数边界未完整处理；全零解回前仓可妨碍清仓；无前仓全零返回sentinel；默认speedControl属性为tuple而stage读取config数值；早退/缓冲/round/异常回前仓之后无统一可行性检查。stage的最终成本/价格/FX和deflator含整段末值，不能宣传其回放为PIT可实现结果。2021作者博文明确撤回最初绩效结论并指向后续方法，当前commit与历史博文不是同一版本，故本条仅代码定义、未运行、未验证经济有效或最优性。 源补充：stage的try仅包obj_instance.optimise_positions；构造目标实例、取输入和构造器内异常发生在try外，不保证所有异常都能退回前仓。"
+    },
+    "signal": {
+      "evidence": [
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimisation-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-greedy_algo-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimised_positions_stage-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "令w*=q*⊙v，w0=q0⊙v，T(a,b)=sqrt((a−b)^TΣ(a−b))。有前仓且T(w0,w*)<b时直接返回前仓，不先做新限制校验。否则求原始贪婪路径：J(w)=T(w,w*)+Σ_i abs(c_i×(w_i−w0_i)×s)+外部constraint_function(w)，缺外部函数其项0；无前仓时成本项0。从各键start开始，每轮对未永久触边的每个键只尝试w_i+v_i×direction_i，越界即永久标记at_limit；选择本轮严格小于当前最优J的一个单步，等值不更新；有改善继续，没有即停。它没有跨坐标交换或反向搜索，不保证全局最优。选定stage不传外部constraint_function；给定Σ/目标本身来自其他stage，不能凭本控制器推导或宣称新的alpha。"
+    },
+    "timeframe": {
+      "evidence": [
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimised_positions_stage-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "核心是每次收到理想仓位、Σ、v和c时的一步离散目标更新。示范stage按common_index顺序循环，从全零previous_optimal_positions开始，每次把本期结果复制到下一期；common_index和原始目标的时间粒度由portfolio_stage提供，不固定成日线/分钟。没有未来成交结果回传作为这条stage的下一状态，next previous是此前计算目标。"
+    },
+    "universe": {
+      "evidence": [
+        "pysystemtrade-sysquant-estimators-correlations-py",
+        "pysystemtrade-sysquant-estimators-covariance-py",
+        "pysystemtrade-sysquant-optimisation-weights-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-data_for_optimisation-py",
+        "pysystemtrade-systems-provided-dynamic_small_system_optimise-optimisation-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "有效键是Σ.assets_with_data、w*=q*×v的非NaN键、v非NaN键三者集合交集；set转list未排序，平分择优会依赖该顺序。covarianceEstimate只剔整行全NaN资产，不保证所有协方差元素有限或正定；成本不是该有效键过滤条件，缺成本键仍可报错。缺失的原目标键最终补零权重，并再除以v、round转int。选定stage每次给完整上一目标仓，NaN前仓先改0；未确认异常缺值补零总能产生真实可行平仓。 源补充：最后replace_weights_with_ints调用_int_from_nan，NaN被转成0，其他值int转换；Inf仍可能抛错。这不构成完整有效输入校验。"
+    }
+  }
+}

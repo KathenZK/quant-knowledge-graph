@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2139",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2139,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "2b84e0879d8848d7b62236321384d00a7ac6947e48f97a2ee5da1d0a77ce4e14",
+    "rule_sha256": "50e78acade875aefdd61fec908a2823aa47975d108b093c7a5767e4803682ae9"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2139",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2139"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/wtc/wtc.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（wtc.py；@Mablue）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区wtc：30m，MinMax缩放后WT1上穿WT2且WT1/Stoch/def 落在超参区间做多；WT1下穿WT2且卖侧区间平多；止损−12.8%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区wtc；30m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区wtc：30m，MinMax缩放后WT1上穿WT2且WT1/Stoch/def 落在超参区间做多；WT1下穿WT2且卖侧区间平多；止损−12.8%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/wtc/wtc.py以文件头 buy_params/sell_params 为准。timeframe=30m；stoploss=−0.128；minimal_roi约0/569/3211/7617分钟对应30.873%/16.689%/6.473%/0。典型价 WaveTrend：esa=EMA(ap,10)，d=EMA(|ap−esa|,10)，ci=(ap−esa)/(0.0015×d)，wt1=EMA(ci,21)，wt2=SMA(wt1,4)；STOCH(14)之 slowk；对指标列 MinMaxScaler 后 def=slowk−wt1。做多：wt1上穿wt2，且 wt1∈[0.0102,0.8633]，slowk∈[0.6864,0.9133]，def∈[0.0019,0.9609]。平多：wt1下穿wt2，且 wt1∈[0.0628,0.82]，slowk∈[0.4461,0.9821]，def∈[−0.5377,−0.7979]（按 sell_params）。不是 WaveTrendStra 纯交叉核。提出日期未知。 不是WaveTrendStra纯交叉：本条是30m wtc，MinMax缩放后WT1上穿WT2且WT1/Stoch/def落在超参区间做多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

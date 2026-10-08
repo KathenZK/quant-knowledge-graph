@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2532",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2532,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b230a8962f4111bbd69c38e08a9ca778241c4b04331d5c0bd6865ca72defa22a",
+    "rule_sha256": "1856a04da345b3803c71fc49e015e1358ab60c840430ffdaa22ff11762af8d23"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2532",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2532"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15345/capm-alpha-ranking-strategy-on-dow-30-companies/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect 研究（页面演示）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：道指30成分近21日收益对SPY回归取截距α最高的2只，每月开盘后各SetHoldings(1)（QC CAPM Alpha Ranking Dow 30）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（道指30 CAPM α Top2；QC CAPM Alpha Ranking）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：道指30成分近21日收益对SPY回归取截距α最高的2只，每月开盘后各SetHoldings(1)（QC CAPM Alpha Ranking Dow 30）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect 研究《CAPM Alpha Ranking Strategy On Dow 30 Companies》已印实现。固定道指成分列表（文称变更后最早可回测自2015-03-19）；基准 SPY；`lookback` 为近21个交易日。每月 `month_start` + `after_market_open`：`history` 收盘 `pct_change`，对各成分相对基准做 `np.linalg.lstsq` 取截距为 α；降序取前2。不在名单的持仓 `liquidate`；对入选两只各 `set_holdings(symbol, 1)`（代码与正文均为各100%，合计约2倍名义）。不是 Dogs of the Dow 股息/低价核。提出日期未知。 不是Dogs of the Dow：本条为道指30成分近21日对SPY回归α最高2只每月各SetHoldings(1)。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

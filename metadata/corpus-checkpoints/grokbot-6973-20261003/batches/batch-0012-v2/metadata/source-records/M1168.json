@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1168",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1168,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d50f8aaf0db6d5ffba7114c66483e723fc523f04dfde915cbd78895a1dc740f7",
+    "rule_sha256": "40f46c09a01c4fac44ff93c6b043cdc47fc62c32c6703f34380039b58570eb41"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1168",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1168"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bigquant.com/wiki/doc/YSonXtEzFI"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区（bqy4a9le等）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区：动量60日前20%+波动20日最低30%+PB最低30%+市值≤100亿；Top5每5日"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（沪深；剔北交所/ST/上市未满一年/停牌）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-09-03"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区：动量60日前20%+波动20日最低30%+PB最低30%+市值≤100亿；Top5每5日"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。过滤：总市值≤100亿；pe_ttm∈(0,30)；PB全市场最低30%。截面：momentum_60d=close/m_lag(close,60)−1取前20%；volatility_20d=20日收益标准差取最低30%；再与PB最低30%交集。打分：流通市值升序优先小市值；持股数5只等权。每默认5个交易日再平衡，不在目标池则清仓。 不是C123月度Top30，也不是M1149创业板Top30每5日：本条是动量60日前20%∩波动20日最低30%∩PB最低30%∩市值≤100亿，持股5只每5日。 计入其他。 提出日期按源文件原样保留2025-09-03。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

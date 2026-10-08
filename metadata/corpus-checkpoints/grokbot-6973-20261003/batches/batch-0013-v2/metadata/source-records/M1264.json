@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1264",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1264,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "cd54a841ecc66372c175e28efe50c96fd58baba87387f28bdcb2b4133968926d",
+    "rule_sha256": "c018a5c8e1d40cf809f165e347dd9f693840d3ffa8552b606ffefc9a3e6d31e0"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1264",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1264"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/freqtrade/freqtrade/blob/develop/freqtrade/templates/sample_strategy.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "freqtrade（官方模板）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade 官方模板 SampleStrategy：5m，RSI上穿默认30且TEMA(9)≤布林中轨并上行做多；RSI上穿默认70且TEMA在中轨上并下行平多；止损-10%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade模板；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade 官方模板 SampleStrategy：5m，RSI上穿默认30且TEMA(9)≤布林中轨并上行做多；RSI上穿默认70且TEMA在中轨上并下行平多；止损-10%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写 `freqtrade/templates/sample_strategy.py` 默认属性与 populate_entry/exit。timeframe=`5m`；`can_short=False`（默认只做多生效）。`buy_rsi` 默认30、`sell_rsi` 默认70；布林为典型价格、window=20、stds=2；TEMA 周期9。做多：RSI 上穿 buy_rsi，且 TEMA≤布林中轨，且 TEMA 高于前一根，且成交量>0。平多：RSI 上穿 sell_rsi，且 TEMA>中轨，且 TEMA 下行，且量>0。止损 `-0.10`；ROI 表 60分钟1%、30分钟2%、立即4%。源码 `ta.RSI(dataframe)` 未传 timeperiod（与文档示例明确写14不同，本条不把周期写成已印数字）。不是 futures/FSampleStrategy。提出日期未知。 不是M0237 FSampleStrategy（1h永续、RSI上穿30/70、无布林守卫、止损-5%）：本条是官方模板sample_strategy.py默认5m、RSI上穿buy_rsi30且TEMA(9)≤布林中轨并上行做多、RSI上穿sell_rsi70且TEMA在中轨上并下行平多、止损-10%。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

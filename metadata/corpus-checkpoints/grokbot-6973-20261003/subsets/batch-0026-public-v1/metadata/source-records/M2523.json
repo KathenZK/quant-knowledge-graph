@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2523",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2523,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "dec5f63ee861dad3db2cd3282b701d86ad9fa1012ecb7f9c831e97032c5608e2",
+    "rule_sha256": "c8cb96252f57cdc8d82b36dc73278f60781218bc2c15936d50f3f82a9a1c4ae1"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2523",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2523"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/17882/trading-volatility-with-options/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect 研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：VIX相对自身SMA(24×21)的z分数取负整数张数，对SPX挂期约30日ATM跨式；z≈0则清仓，指派则清仓（QC Trading Volatility with Options）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPX ATM跨式；VIX z分数张数；QC Trading Volatility with Options）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：VIX相对自身SMA(24×21)的z分数取负整数张数，对SPX挂期约30日ATM跨式；z≈0则清仓，指派则清仓（QC Trading Volatility with Options）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect 研究《Trading Volatility with Options》已印实现。`add_index('VIX')`；`std`/`sma` 窗口均为 `24*21`、日线。`add_index_option('SPX')`，`set_filter(lambda u: u.straddle(30))`。每个交易日开盘后30分钟 `_trade`：`z_score=(VIX价−SMA)/STD`，`quantity=−int(z_score)`。若 quantity=0 则 `liquidate()`；若未投资且 quantity≠0：取链上 expiry>now 的最近到期，ATM 行权价（最接近标的价），`OptionStrategies.straddle` 后 `order(strategy, quantity)`。因 quantity 为 −int(z)，VIX 相对偏低（z 负）→ quantity 正 → 买跨式；VIX 相对偏高 → 卖跨式。`on_order_event`：成交且 `is_assignment` 则 `liquidate()`。不是 Dual VIX/VIXY 核（W272），也不是备兑/铁鹰/牛市价差核。提出日期未知。 不是Dual VIX/VIXY核（W272），也不是备兑/铁鹰/牛市价差：本条为VIX相对SMA(24×21)的z分数取负整数张数，对SPX挂约30日ATM跨式。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

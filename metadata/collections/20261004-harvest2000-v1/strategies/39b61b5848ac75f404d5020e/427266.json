@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "低开后收回可能反映买盘恢复；追踪退出是否有利需独立研究。",
+    "missing": [
+      "没有经过核实的原始论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "作者原始发布URL、原始版本与镜像一致性尚未核实。",
+    "依赖Pine内建函数及运行时；未编译、执行、下载行情或回测。",
+    "基线近邻经正文比较，但还没有独立复核的全库机制去重结论。",
+    "实际市场、周期、价格调整、合约规格及可交易约束未冻结。",
+    "非日线时“低开”仅为相邻bar开收差。",
+    "pyramiding=1及无空仓过滤的实际重复订单行为需运行时核验。"
+  ],
+  "name": "低于前收开盘且收阳的追踪止损多头",
+  "native_source_id": "427266",
+  "one_line": "当前开盘低于前收且收盘高于开盘时做多，持仓后用收盘推高止损。",
+  "record_id": "427266",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果。未断言源码、论文、数据或商业内部使用权；没有把镜像发布权限扩展为原作者授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E8%B7%B3%E7%A9%BA%E7%BC%BA%E5%8F%A3%E5%8F%8D%E8%BD%AC%E7%AD%96%E7%95%A5Gap-Down-Reversal-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ仓库发布账号 ChaoZhang；源码署名声明 RolandoSantos；转载链与原作者发布版本未核实，不把上传者视为实现作者。",
+      "id": "fmz-427266-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "2bdec869653028a86ac9b773094bdf9c3882bd21a4053073134e873874607c65",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E8%B7%B3%E7%A9%BA%E7%BC%BA%E5%8F%A3%E5%8F%8D%E8%BD%AC%E7%AD%96%E7%95%A5Gap-Down-Reversal-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-427266-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表当前标的；策略主体没有固定证券代码。FMZ回测注释的BTC_USDT配置仅是转载包装，未确认为原作者适用市场。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-427266-published-code"
+      ],
+      "status": "MISSING",
+      "text": "源码未显式设置佣金、滑点、点差或持仓费用；成本为MISSING，不能按零成本结论使用。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-427266-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "起始日期之后且低开收阳条件成立，提交EL多头市价入口；未另加空仓判断。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-427266-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v2，未显式声明逐tick或收盘成交；入口读取当前K线收盘，跟踪止损在检测到持仓后更新。未验证历史/实时和成交顺序。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-427266-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "有多头仓位时提交Stop out止损，价格为max(当根close×0.95,前根跟踪止损价)；空仓时跟踪值归零。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-427266-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认strategy.cash，每次名义金额10000，初始资本10000，pyramiding=1；没有按止损距离倒算风险仓位。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-427266-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "5%是相对更新收盘的跟踪距离，不是保证最大亏损5%；未设止盈或最长持有期。入场成交与保护单首次生效的时点未核。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-427266-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "条件为open<close[1]且close>open；比较的是相邻图表K线，源码没有要求这是隔夜跳空或日线。起始日默认2009-01-01，按品种时区判断。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-427266-published-code"
+      ],
+      "status": "MISSING",
+      "text": "计算窗口均以图表bar为单位；策略主体未强制周期。FMZ回测包装周期与原作者要求没有等价证明，原始运行周期为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-427266-published-code"
+      ],
+      "status": "MISSING",
+      "text": "没有跨资产选股或动态股票池；源码运算针对当前图表序列。具体交易品种、合约乘数、交易日历和调整规则仍须另行冻结。"
+    }
+  }
+}

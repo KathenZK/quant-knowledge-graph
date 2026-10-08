@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2587",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2587,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "953ed450fa2fca64703b283ba897ea71ea23e7f99374d846ede44d5ff8d9755f",
+    "rule_sha256": "9846b438287599b829111eea50972da3bb7d611bdb5b5bfc75d2af8403c29671"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2587",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2587"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-dollar-cost-averaging/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：每周首个交易日开盘后对VOO加仓约5000美元名义（QC Documentation VOO weekly DCA）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（VOO每周开盘后约5000美元DCA；QC Documentation VOO weekly DCA）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：每周首个交易日开盘后对VOO加仓约5000美元名义（QC Documentation VOO weekly DCA）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-dollar-cost-averaging/main.py`。标的 VOO（分钟）；`_dollar_amount=5000`；初始现金 200000。`week_start(VOO)` + 开盘后1分钟：若现金 < 5000 则返回；否则目标权重 = (当前持仓市值+5000)/总资产，`calculate_order_quantity` 得正数量则 `market_order`。暖机结束时亦调用一次。不是带 BEAM/波动带调节的加密 DCA。提出日期未知。 不是带BEAM/波动带调节的加密DCA：本条为每周首个交易日开盘后对VOO加仓约5000美元名义。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

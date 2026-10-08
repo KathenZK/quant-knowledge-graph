@@ -1,0 +1,164 @@
+{
+  "economic_basis": {
+    "hypothesis": "将已观察样本按数值排序，以凸下包络和凹上包络逐步收缩候选模态区间，汇总经验分布与单峰形状之间的最大偏离。这里登记维护者校正版的默认标量算法，不给显著性结论或峰数估计。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-d3694cef314e8fc4e3952de3",
+        "harvest-source-328b81869cbf99f8386e4e31"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "排序和包络覆盖整个输入窗口，只有全部样本已观察并发布之后才可用；不将最终分布形状回填给窗内早期时点。采样、供应商、标签延迟和修订策略MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-d3694cef314e8fc4e3952de3",
+        "harvest-source-328b81869cbf99f8386e4e31"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "公共R入口仅审普通无自定义class的一维double向量、默认标量分支；is.unsorted时用quick排序，as.double后经注册.C(diptst)进入固定C核。额外研究合同要求N>=4、N<2^30、样本值两两不同且所有差/乘除有限并有足够内存；C int至少32位。这里不声称上游主动完整校验，也未执行证明全域数值安全。 以下索引均从1开始。凸下包络前驱mn_1=1；j=2..N从mn_j=j−1开始，令a=mn_j,b=mn_a。若a=1或(x_j−x_a)(a−b)<(x_a−x_b)(j−a)，停止；否则令mn_j=b再比较。等号会继续合并。 凹上包络后继mj_N=N；k=N−1..1从mj_k=k+1开始，令a=mj_k,b=mj_a。若a=N或(x_k−x_a)(a−b)<(x_a−x_b)(k−a)，停止；否则令mj_k=b再比较。该反向构造保留源码符号和严格比较，不能简单换成普通凸包面积。 初始low=1,high=N,Q=1。每轮从high反复取mn直到low，得到递减索引g_1..g_G；从low反复取mj直到high，得到递增h_1..h_H。初始化选定位置ig=G,ih=H，扫描指针u=G−1,v=2。若G=H=2，包络间距d=1且跳过扫描；否则d=0，进入下一步的至少一次扫描。 扫描若g_u>h_v，记a=g_u,b=g_(u+1),c=h_v，δ=c−b+1−(x_c−x_b)(a−b)/(x_a−x_b)；先令v←v+1，若δ>=d则d←δ,ig←u+1,ih←v−1。否则记a=g_u,b=h_(v−1),c=h_v，δ=(x_a−x_b)(c−b)/(x_c−x_b)−(a−b−1)；先u←u−1，若δ>=d则d←δ,ig←u+1,ih←v。每次随后u←max(u,1),v←min(v,H)，直到g_u=h_v结束。相等最大距离选择后出现的位置；原C在该段使用long double计算距离，不能声称跨编译器位级相同。 若本轮d<Q立即结束。否则下侧只遍历g_j到g_(j+1)的区段，j=ig..G−1，上侧只遍历h_j到h_(j+1)，j=ih..H−1；换成升序端点[a,b]后用公式中的两种偏离式，内层区段起始最大值为1，双侧各自最大值初始0。不是在每轮全部原样本区段重复求最大。 令Q=max(Q,下侧最大值,上侧最大值)。若low=g_ig且high=h_ih，两端均未改善则结束；否则low←g_ig,high←h_ih重新建立当前包络链并扫描。保留维护者1994年加入的双端停止保护，不把它简化成固定迭代次数或收敛容差。 最终只把Q除2N一次，R标量分支返回这一个double，不返回模式位置、凸包节点或自动峰数。min.is.0=TRUE、full.result及图形/调试为同族其它输出选项，不因参数或语言变体新增；本条不审dip.test的模拟/查表p值。 源码在全相同样本或N<2时直接走归一结束：本默认合同仍返回1/(2N)。这些退化样本不在本条严格不同值/N>=4的研究输入域，但边界事实保留；文档N<=3的最小值说明针对默认口径，不可外推到min.is.0=TRUE。 构造舍弃原时间顺序，描述完整窗口经验分布形状。单峰可以偏斜或厚尾，大dip也不能自动给出峰数、金融制度切换、可交易方向或显著性；时间依赖和选择偏差需要研究层另检。 边界：默认校正版保持1/(2N)底值；对极小样本或常数返回正值不是收益信号，也不能当连续理论目标在点质量上的零距离。min.is.0改变最小值但不形成新算法族。 原C对N<=0和未排序输入设置ifault；默认R分支只取dip，不把ifault包装为错误。本条通过非空正常R排序输入排除，不假设所有非法输入安全报错。 R wrapper/C double、包络距离long double及比较边界依赖实际平台；未锁运行环境或执行数值对照。样本极大或幅值极端可造成分配、整数或浮点问题，额外域限制不等于经过实验认证。 当前只审双包络统计量，未审dip.test的均匀零假设校准、插值表、模拟随机数或p值；将来的p值或方向/窗口版本仍同族。 GPL-2.0-or-later来自固定DESCRIPTION的License声明；源码归属不能授权1985年论文、行情或其它数据。公开只提供自撰数学定义和原件定位。 输出：单个double D；整族包括默认底值、其它包装/模式区间/附带检验，不拆输出或参数计数"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-d3694cef314e8fc4e3952de3",
+        "harvest-source-328b81869cbf99f8386e4e31"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "将已观察样本按数值排序，以凸下包络和凹上包络逐步收缩候选模态区间，汇总经验分布与单峰形状之间的最大偏离。这里登记维护者校正版的默认标量算法，不给显著性结论或峰数估计。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-d3694cef314e8fc4e3952de3",
+        "harvest-source-328b81869cbf99f8386e4e31"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条固定full.result=FALSE、min.is.0=FALSE、debug=FALSE。排序后x_1<…<x_N，4<=N<2^30。按下述凸下/凹上包络循环，保持未归一累计最大偏离Q，初值Q=1；每轮从所选下包络区段[a,b]取max{1,max_(a<=j<=b)[j−a+1−(x_j−x_a)(b−a)/(x_b−x_a)]}，从上包络区段[a,b]取max{1,max_(a<=j<=b)[(x_j−x_a)(b−a)/(x_b−x_a)−(j−a−1)]}，区段长度b−a<=1时该区段值为1。两侧空区段集合的最大值为0，Q与两侧最大值取max；由包络最大间距选取新模态区间，直到不能改进或包络间距小于Q。返回D=Q/(2N)，完整包络和停止规则见步骤。默认最小值1/(2N)，不能把它擅自改为0或当p值。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-d3694cef314e8fc4e3952de3",
+        "harvest-source-328b81869cbf99f8386e4e31"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（ordinary unclassed R double vector; 4<=N<2**30; finite pairwise distinct values; finite all differences/products/divisions and sufficient memory）：已完整观察的一维样本；排序不要求等时距，但金融窗口、变量、调整/缺失处理和实际发布时点须另冻结。重复值/全常数不在当前研究输入合同。。参数：full.result：仅标量输出；模式区间/包络/绘图不拆新增；范围reviewed fixed False；源码默认False；min.is.0：默认未归一Q下界1，返回最小1/(2N)；范围reviewed fixed False；源码默认False；debug：关闭打印；调试及结果包装不在合同；范围reviewed fixed False；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-d3694cef314e8fc4e3952de3",
+        "harvest-source-328b81869cbf99f8386e4e31"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "mmaechler/diptest",
+  "lab": null,
+  "missing_information": [
+    "1985原论文许可及市场输入/发布时点未建立",
+    "实际R/C long double/排序环境和编译依赖未冻结，未执行数值验证",
+    "当前研究域要求值互不相同；重复样本/浮点并列及源其它输出未扩大审核",
+    "单峰性到金融可用状态或交易规则的映射、时间序列零假设校准未定义",
+    "经济用途为RESEARCH_ASSUMPTION；未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予原论文/书籍、输入数据或其他第三方素材权利"
+  ],
+  "name": "经验分布偏离单峰形状的 Hartigan dip 统计量",
+  "native_source_id": "dip",
+  "one_line": "将已观察样本按数值排序，以凸下包络和凹上包络逐步收缩候选模态区间，汇总经验分布与单峰形状之间的最大偏离。这里登记维护者校正版的默认标量算法，不给显著性结论或峰数估计。",
+  "record_id": "dip",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/mmaechler/diptest/blob/f84e4136af10d7f86bb0fc09d241a7693ab219e2/src/dip.c"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Martin Maechler维护的diptest校正R/C实现，承继Dario Ringach移植与Hartigan/Hartigan 1985原方法；源码明确1994/2003修正。本文以固定维护者版本为准，不冒称原始论文/Fortran的逐字或数值复现。",
+      "id": "harvest-source-d3694cef314e8fc4e3952de3",
+      "license": "GPL-2.0-or-later",
+      "locator": "AS217 original attribution and corrected implementation history:L1-L40; complete argument sorting gate scaled initialization and hull index construction:L50-L127; complete GCM LCM chain construction maximum separation and early-stop gate:L129-L214; complete lower upper deviations interval shrink termination and scalar normalization:L216-L292; registered native C argument types and entrypoint:L297-L340",
+      "revision": "f84e4136af10d7f86bb0fc09d241a7693ab219e2",
+      "sha256": "d2f744b585a658aa9379f7bb05abd5fc95a636f63ebd8911a552e3ea91b65c90",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/mmaechler/diptest/blob/f84e4136af10d7f86bb0fc09d241a7693ab219e2/src/dip.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Martin Maechler维护的diptest校正R/C实现，承继Dario Ringach移植与Hartigan/Hartigan 1985原方法；源码明确1994/2003修正。本文以固定维护者版本为准，不冒称原始论文/Fortran的逐字或数值复现。",
+      "id": "harvest-source-328b81869cbf99f8386e4e31",
+      "license": "GPL-2.0-or-later",
+      "locator": "complete public wrapper default scalar path sorting conversion and output:L1-L44",
+      "revision": "f84e4136af10d7f86bb0fc09d241a7693ab219e2",
+      "sha256": "a5269836c0c456ba2d7f9bda1b5279aa33f72b2167789ea3e85573dd27522ac8",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/mmaechler/diptest/blob/f84e4136af10d7f86bb0fc09d241a7693ab219e2/R/dip.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Martin Maechler维护的diptest校正R/C实现，承继Dario Ringach移植与Hartigan/Hartigan 1985原方法；源码明确1994/2003修正。本文以固定维护者版本为准，不冒称原始论文/Fortran的逐字或数值复现。",
+      "id": "harvest-source-d0d6f107f69a28cf764b15fa",
+      "license": "GPL-2.0-or-later",
+      "locator": "native registration imports and public dip export:L1-L18",
+      "revision": "f84e4136af10d7f86bb0fc09d241a7693ab219e2",
+      "sha256": "81b92b848c7eebe294b10c59599e59fa443d774c83ab70cdfb0289190e279e91",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mmaechler/diptest/blob/f84e4136af10d7f86bb0fc09d241a7693ab219e2/NAMESPACE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Martin Maechler维护的diptest校正R/C实现，承继Dario Ringach移植与Hartigan/Hartigan 1985原方法；源码明确1994/2003修正。本文以固定维护者版本为准，不冒称原始论文/Fortran的逐字或数值复现。",
+      "id": "harvest-source-1bd8606779046d77ec50b978",
+      "license": "GPL-2.0-or-later",
+      "locator": "public contract and default minimum boundary correction:L1-L58; original references author attribution and separate p-value function:L71-L94",
+      "revision": "f84e4136af10d7f86bb0fc09d241a7693ab219e2",
+      "sha256": "e5d887894cfb04d013e29e08ae376a0c0fe3ea7ab486647771c0358df8723360",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mmaechler/diptest/blob/f84e4136af10d7f86bb0fc09d241a7693ab219e2/man/dip.Rd",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Martin Maechler维护的diptest校正R/C实现，承继Dario Ringach移植与Hartigan/Hartigan 1985原方法；源码明确1994/2003修正。本文以固定维护者版本为准，不冒称原始论文/Fortran的逐字或数值复现。",
+      "id": "harvest-source-344bfd576f2ba34d0420b56c",
+      "license": "GPL-2.0-or-later",
+      "locator": "complete package authors version and GPL >=2 declaration:L1-L19",
+      "revision": "f84e4136af10d7f86bb0fc09d241a7693ab219e2",
+      "sha256": "75cefbb5495c0bb70e962d2d4633af4c19f3b16b87d582723a9ba91284186694",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mmaechler/diptest/blob/f84e4136af10d7f86bb0fc09d241a7693ab219e2/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Martin Maechler维护的diptest校正R/C实现，承继Dario Ringach移植与Hartigan/Hartigan 1985原方法；源码明确1994/2003修正。本文以固定维护者版本为准，不冒称原始论文/Fortran的逐字或数值复现。",
+      "id": "harvest-source-2876e5827ae465e488292ea7",
+      "license": "GPL-2.0-or-later",
+      "locator": "maintainer CRAN development provenance:L1-L18",
+      "revision": "f84e4136af10d7f86bb0fc09d241a7693ab219e2",
+      "sha256": "813144a685eb6fe0cff7ff7b30e4da03637356b2fd28e46b618a3dad3a20f465",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mmaechler/diptest/blob/f84e4136af10d7f86bb0fc09d241a7693ab219e2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

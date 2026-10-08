@@ -1,0 +1,116 @@
+{
+  "economic_basis": {
+    "hypothesis": "用多尺度细节的软阈值收缩构造一条滤波数值序列，供噪声敏感性研究使用。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-b40c3ff5e170de2b1d057727"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅当前及过去数值，但每一历史层状态和阈值均依赖过去；只在当前输入发布且该bar确认后取值。实时src可变，源码不检查isconfirmed。初始化/前史长度须固定；不将居中Haar结果移回历史时间。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-b40c3ff5e170de2b1d057727"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先将当前缺失src按0处理；第一级用原始前一src，缺失时以当前c0代替；后续每级使用上一层在2^(j−1)棒前的状态，缺失时用上一层当前值。没有向未来取样、没有抽取每隔一根才输出。 细节等于前一层减本层。层数之外的代码分支令细节为0；所有有效层共享由一阶细节窗口计算的同一个当前阈值。 名为mad的代码实际是最近M根|d1|的算术均值，缺失历史当0且分母仍M；再除0.6745，不能称它是真正中位绝对偏差或已校准高斯标准差。 软阈值对|d|<=T给0，否则按符号减T。加回最粗层及各层阈后细节；q=0时在有效数值上望远镜相消回c0，不把该对照开关另计。 边界：真实MAD需中位数，源码使用均值代理；不推断该阈值达到某个统计置信度。 src缺失被置0而不是忽略；暖机时较早细节置0会降低阈值，初始区间不等同成熟窗口。 源码注释称O(levels)，但阈值循环遍历2^J项；只能按实际代码描述运行结构。 层数变化影响窗口和尺度，不拆不同J或阈值为新条。 输出：一条滤波序列；参数、移植、状态和输出方向不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-b40c3ff5e170de2b1d057727"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用多尺度细节的软阈值收缩构造一条滤波数值序列，供噪声敏感性研究使用。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-b40c3ff5e170de2b1d057727"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "c0_t=nz(x_t,0)，c1_t=(c0_t+nz(x_(t−1),c0_t))/2，d1_t=c0_t−c1_t。j=2..J：cj_t=[c(j−1)_t+nz(c(j−1)_(t−2^(j−1)),c(j−1)_t)]/2，dj_t=c(j−1)_t−cj_t。M=2^J，s_t=[Σ_(i=0..M−1)|nz(d1_(t−i),0)|/M]/0.6745，T_t=s_t√(2lnM)×q。输出cJ_t+Σ_(j=1..J)sign(dj_t)max(|dj_t|−T_t,0)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-b40c3ff5e170de2b1d057727"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src（time-ordered real Pine series float）：默认close；有限样本、采样频率与实际标的另行固定。参数：levels：分解层数；范围integer 1..8；源码默认4；threshMult：公共阈值乘数；范围function>=0; UI0..5；源码默认1.0；src：输入序列；范围ordered Pine series float；源码默认close"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-b40c3ff5e170de2b1d057727"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "mihakralj/pinescript",
+  "lab": null,
+  "missing_information": [
+    "Pine运行环境未冻结；未执行、未回测",
+    "实际市场/周期/数据PIT缺失",
+    "无收益方向与经济有效性证据"
+  ],
+  "name": "带软阈值重建的因果 Haar 多级滤波",
+  "native_source_id": "wavelet",
+  "one_line": "用多尺度细节的软阈值收缩构造一条滤波数值序列，供噪声敏感性研究使用。",
+  "record_id": "wavelet",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/wavelet.pine"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "mihakralj",
+      "id": "harvest-source-b40c3ff5e170de2b1d057727",
+      "license": "MIT",
+      "locator": "source identity, soft helper, bounds:L1-L30; undecimated dyadic decomposition:L32-L63; mean-absolute detail proxy, threshold and reconstruction:L65-L99; default inputs:L103-L111",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "3ce490af8d5d83789d96215b96f2a35c0209bff34549234f169b631c277e3a7a",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/wavelet.pine",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "mihakralj",
+      "id": "harvest-source-09e3d7dd1083f0fc94331481",
+      "license": "MIT",
+      "locator": "license:L1-L21",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "19436752dbc325b6013c778a438efa521d0fefe0eb53aebf83d7753543052936",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "mihakralj",
+      "id": "harvest-source-ba25544c6555f6fbc5f26c2b",
+      "license": "MIT",
+      "locator": "maintainer and scope:L1-L64",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "78d3686264db24dcfdebcc72f243e29460d7f2c11a8404f3e4793f45f9f5f64b",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

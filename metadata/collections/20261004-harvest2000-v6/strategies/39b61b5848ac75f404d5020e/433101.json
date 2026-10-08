@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说：用效率比自幂平滑线的运动幅度过滤三均线趋势中的平缓阶段；未证实比传统趋势过滤更有效。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "ER零值与初始缺值仅静态保留，未运行；不把a的非平缓条件说成上升条件。"
+  ],
+  "name": "自幂效率比均线运动门与三SMA多头排列",
+  "native_source_id": "433101",
+  "one_line": "三SMA多头且价高于长SMA时，仅在自幂自适应线变化不落入窄带时做多；三SMA空头排列清仓。",
+  "record_id": "433101",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E4%B8%89%E9%87%8DSMA%E8%87%AA%E9%80%82%E5%BA%94K%E7%BA%BF%E4%BA%A4%E5%8F%89%E9%95%BF%E7%BA%BF%E7%AD%96%E7%95%A5Twisted-SMA-Adaptive-Crossover-Long-Line-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 Wielkieef; Powered KAMA attributed to alexgrover, modification Wielkieef; Markdown L196；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-433101-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "4a33c8f7632c5eb07023c748ad27aee24ae0f1353aa8f2cf5c484e503098f699",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E4%B8%89%E9%87%8DSMA%E8%87%AA%E9%80%82%E5%BA%94K%E7%BA%BF%E4%BA%A4%E5%8F%89%E9%95%BF%E7%BA%BF%E7%AD%96%E7%95%A5Twisted-SMA-Adaptive-Crossover-Long-Line-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-433101-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-433101-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "佣金按成交额0.03%，slippage=0为脚本配置；不代表真实滑点、资金费或点差为零。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-433101-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "long_cond成立每棒调用BUY市价多头；没有空头entry，不要求排列当棒首次形成。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-433101-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每棒先递推a及三SMA状态再发entry，最后发close_all；calc_on_order_fills=false，未显式逐tick或收盘成交设置。未运行，未验证预热期、平坦序列和实际成交。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-433101-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "SMA4<SMA9<SMA18时strategy.close_all；没有固定止损、目标或独立自适应线离场条件。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-433101-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始资金10000、每笔100%权益、pyramiding=1；未提供风险距离定量或显式qty。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-433101-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "ER分母为零、ER=0的1/ER以及初值a[1]缺失没有显式修复；保留源码表达式，未执行验证其na传播。无硬止损、账户回撤或组合规模约束。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-433101-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "SMA4>SMA9>SMA18且C>SMA100。另ER=abs(C−C[25])/sum25(abs(C−C[1]))；默认SelfPowered=true，p=ER^(1/ER)，a=p×C+(1−p)×nz(a[1],C)。flatBand=(a/a[1]>.999且a/a[1]<1.001)，入口还要求not flatBand；这只排除接近平缓，不要求a上升。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-433101-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称或注释中的建议周期不等于冻结交易周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-433101-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

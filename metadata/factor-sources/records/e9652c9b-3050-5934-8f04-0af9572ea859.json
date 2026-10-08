@@ -1,0 +1,178 @@
+{
+  "admission": {
+    "membership": {
+      "curated": true,
+      "historical_public_export": false
+    },
+    "reasons": [],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "ADMITTED"
+  },
+  "category": "reversal",
+  "definition": {
+    "content_origin": "ATTRIBUTED_SOURCE_DEFINITION_EXCERPT",
+    "definition_sha256": "e380847c6fdb8cc739d788be3d7ad0422c1c3ff182adc96ec4c555868bd18c13",
+    "formula": null,
+    "formula_dialect": null,
+    "formula_sha256": null,
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "accounting_availability_lag_months": 4,
+      "core_153": true,
+      "original_sign": "-1",
+      "source_occurrences": [],
+      "theme": "Short-Term Reversal"
+    },
+    "required_fields": [
+      "RI"
+    ],
+    "required_fields_status": "partial_latex_token_extraction",
+    "status": "DEFINITION_EXCERPT",
+    "text": "$\\frac{RI\\mbox{*}_{t}}{RI\\mbox{*}_{t-1}} - 1$",
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "monthly",
+    "holding_period": {
+      "scope": "default JKP monthly factor portfolio",
+      "unit": "month",
+      "value": 1
+    },
+    "lookback": null,
+    "rebalance": "monthly for default monthly JKP portfolios",
+    "universe": "global equities; source covers 93 countries; country-specific data availability"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": "qkg:concept:f7511d7f-f1b8-549c-b593-2257e7c742bb",
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:e9652c9b-3050-5934-8f04-0af9572ea859"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:f7511d7f-f1b8-549c-b593-2257e7c742bb"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:f7511d7f-f1b8-549c-b593-2257e7c742bb"
+    ],
+    "source_record_ids": [
+      "qkg:record:873e9b32-55e4-5d61-8fa7-629afbd3d703"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "输入字段提取不完整，不得视为完整数据需求合同。"
+  ],
+  "name": "Short Term Reversal",
+  "native_source_ids": [
+    "ret_1_0"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 3637,
+        "line_ordinal": 1194,
+        "line_sha256": "213e6cae0a618bf4b9d754222fb1cea9272d4b9a2b6bb9d6975478de18aa3cc0",
+        "record_id": "qkg:record:873e9b32-55e4-5d61-8fa7-629afbd3d703"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "not_applicable"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "primary_definition"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:e9652c9b-3050-5934-8f04-0af9572ea859",
+  "record_kind": "signal",
+  "rights": {
+    "attribution_required": true,
+    "commercial_use": [
+      "PROHIBITED"
+    ],
+    "derivative_allowed": [
+      "CONDITIONAL"
+    ],
+    "license_labels": [
+      "CC-BY-NC-4.0 (reference metadata; conservative scope); MIT (code)"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "CONDITIONAL"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [],
+        "status": "ADMITTED"
+      },
+      "attribution": [
+        "Jegadeesh, Narasimhan"
+      ],
+      "code_url": "https://github.com/bkelly-lab/jkp-data/blob/666e8960ed81a664f1e9f189f92925ab2eeffcd5/src/jkp/data/aux_functions.py",
+      "license": "CC-BY-NC-4.0 (reference metadata; conservative scope); MIT (code)",
+      "locator": "documentation.tex:L2241",
+      "name": "Short Term Reversal",
+      "native_id": "ret_1_0",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": "Evidence of predictable behavior of security returns",
+        "url": null,
+        "year": 1990
+      },
+      "parameters": {
+        "accounting_availability_lag_months": 4,
+        "core_153": true,
+        "original_sign": "-1",
+        "source_occurrences": [],
+        "theme": "Short-Term Reversal"
+      },
+      "primary_source": true,
+      "record_id": "qkg:record:873e9b32-55e4-5d61-8fa7-629afbd3d703",
+      "response_sha256": "a987f4876e80a21f8712e208818361c81f011e25259a3f7575cee49806b34801",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": "666e8960ed81a664f1e9f189f92925ab2eeffcd5",
+      "rights": {
+        "attribution_required": true,
+        "commercial_use": "PROHIBITED",
+        "derivative_allowed": "CONDITIONAL",
+        "license": "CC-BY-NC-4.0 (reference metadata; conservative scope); MIT (code)",
+        "license_id": "qkg:license:debe6add-b9c3-5468-a3f1-47f1ae88c9d1",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "CONDITIONAL",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "NONCOMMERCIAL_ONLY",
+        "terms_url": "https://github.com/bkelly-lab/jkp-data/blob/666e8960ed81a664f1e9f189f92925ab2eeffcd5/DATA_LICENSE"
+      },
+      "sha256": "a987f4876e80a21f8712e208818361c81f011e25259a3f7575cee49806b34801",
+      "source_id": "jkp",
+      "source_name": "JKP Global Factor Data",
+      "url": "https://github.com/bkelly-lab/jkp-data/blob/666e8960ed81a664f1e9f189f92925ab2eeffcd5/documentation/documentation.tex"
+    }
+  ]
+}

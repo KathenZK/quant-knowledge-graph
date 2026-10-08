@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3355",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3309,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c092024ab1c768910748869b600880eedb0a288cd1f12a367f579c581f37bbc5",
+    "rule_sha256": "477ef6b61c923320e57803064c2489060b5c7a27fba58bd1d2df3d37b3e422f1"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3355",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3355"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ImmediateExecutionModelWorksWithBinanceFeeModel.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密现货：Binance保证金；BUSD账户；BTCBUSD分钟；ConstantAlpha UP(20分钟,mag=0.025)；等权分钟再平衡+ImmediateExecution（校验成交量约5.8）（Lean ImmediateExecutionModelWorksWithBinanceFee）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密现货：Binance保证金；BUSD账户；BTCBUSD分钟；ConstantAlpha UP(20分钟,mag=0.025)；等权分钟再平衡+ImmediateExecution（校验成交量约5.8）（Lean ImmediateExecutionModelWorksWithBinanceFee）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ImmediateExecutionModelWorksWithBinanceFeeModel.py`。`set_account_currency(\"BUSD\")`；现金 100000 BUSD；`BrokerageName.BINANCE` MARGIN；手动宇宙 BTCBUSD；`ConstantAlphaModel(PRICE,UP,20分钟,0.025)`；`EqualWeightingPortfolioConstructionModel(Resolution.MINUTE)`；`ImmediateExecutionModel()`。断言成交数量接近 5.8（计入手续费）。不是 GDAX 分数币阶梯核（W539），也不是 Bybit EMA 核（W536）。提出日期未知。Binance保证金 BTCBUSD ConstantAlpha+分钟等权+即时执行校验费后约5.8 ≠ Bybit EMA（M3293）/GDAX分数币（M3296）。计入加密。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

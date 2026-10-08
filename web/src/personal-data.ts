@@ -1,3 +1,5 @@
+import { isHosted, hostedRecordPath } from "./hosted-transport";
+import { hostedRequest } from "./hosted-api";
 import type { Detail, Facet, Item, Kind, Meta, RelationGraph } from "./types";
 
 export type PersonalStatus =
@@ -31,8 +33,73 @@ export interface PersonalRecord {
   aliases: string[];
   problem: string;
   updated_at?: string;
+  record_revision?: number;
+  snapshot_batch?: string;
+  origin_run_id?: string;
+  variant_id?: string;
+  manifest_sha256?: string;
+  definition_revision_bound?: boolean;
 }
 export interface Knowledge {
+  reader_brief?: {
+    version: string;
+    purpose: string;
+    purpose_basis: string;
+    trading: {
+      key: string;
+      label: string;
+      text: string;
+      status: string;
+      origin?: string;
+      evidence?: string;
+    }[];
+    source_url?: string;
+    economic_rationale: {
+      text: string;
+      status: string;
+      notice: string;
+      causal_status?: string;
+      source_url?: string;
+      source_locator?: string;
+    };
+    papers: {
+      paper_id?: string;
+      title: string;
+      url?: string;
+      year?: number;
+      authors: string[];
+      relationship: string;
+      status: string;
+      locator?: string;
+      claim: string;
+      version_read?: string;
+      does_not_support?: string[];
+    }[];
+    empirical_notice: string;
+    intake_status?: string;
+    intake_label?: string;
+    definition_sources?: {
+      url?: string;
+      locator?: string;
+      supports?: string[];
+    }[];
+    evidence_links?: {
+      url?: string;
+      locator?: string;
+      quote?: string;
+      source_sha256?: string;
+      claim_id?: string;
+      supports?: string[] | string;
+    }[];
+    entry_type?: string;
+    review_notice?: string;
+    source_review_summary?: string;
+    empirical_scope?: Record<string, unknown>;
+    blocked_reasons?: string[];
+    validation?: Record<string, string>;
+    novelty?: Record<string, unknown>;
+    worked_example?: { text: string; basis: string };
+  };
   version?: string;
   summary: string;
   method_family: { value: string; label: string; basis?: string };
@@ -83,8 +150,62 @@ export interface Knowledge {
   original_rule?: string;
 }
 export type PersonalItem = Item & {
+  research_scope?: {
+    record_id: string;
+    entity_id: string;
+    definition_revision: string;
+    definition_sha256?: string;
+    binding_kind: string;
+    universe_version: string;
+    entity_type: string;
+    entity_type_label: string;
+    status: string;
+    execution_versions: number;
+    reason: string;
+    interpreted: boolean;
+    in_scope: boolean;
+    source_title?: string;
+    source_field_differences?: Record<
+      string,
+      { catalog_value: unknown; source_value: unknown }
+    >;
+  };
+  factor_quality?: {
+    group: string;
+    label: string;
+    assessment_version?: string;
+    assessment_sha256?: string;
+    review_label: string;
+    paper_scope_label: string;
+    source_body_label?: string;
+    base_definition_label?: string;
+    calculation_explanation?: string;
+    numeric_meaning?: string;
+    strategy_use?: string;
+    failure_modes?: string;
+    data_timing?: string;
+    missing_facts: string[];
+    metadata_corrections?: {
+      version: string;
+      field: string;
+      previous: unknown;
+      current: unknown;
+      basis: string;
+    }[];
+    reference_template?: {
+      what_zh?: string;
+      definition_source_url?: string;
+      source_locator?: string;
+      common_boundary_zh?: string;
+    };
+    source_comparisons?: { native_id?: string; source_url?: string }[];
+  };
+  snapshot_batch?: string;
   is_historical?: boolean;
   current_entity_id?: string;
+  origin_run_id?: string;
+  variant_id?: string;
+  manifest_sha256?: string;
   stable_knowledge_id?: string;
   prior_version_ids?: string[];
   knowledge?: Knowledge;
@@ -102,6 +223,48 @@ export type PersonalItem = Item & {
 };
 export type PersonalDetail = Detail & PersonalItem;
 export interface PersonalMeta extends Omit<Meta, "mode" | "facets"> {
+  research_scope_summary?: {
+    total_work_items: number;
+    final_handoff_records: number;
+    initial_batch_records: number;
+    additional_collected_objects: number;
+    entity_types: Record<string, number>;
+    execution_records: number;
+    execution_versions: number;
+    no_execution_records: number;
+    imported_runs: number;
+    interpreted_records: number;
+    uninterpreted_execution_records: number;
+    unbound_execution_versions: number;
+    as_of_utc?: string;
+    notice: string;
+  };
+  factor_quality_summary?: {
+    total: number;
+    groups: (Facet & { count: number })[];
+    assessed: number;
+    archived: number;
+    notice: string;
+    source_statuses: Record<string, number>;
+    review_statuses: Record<string, number>;
+  };
+  intake_summary?: {
+    reviewed_records: number;
+    by_status: Record<string, number>;
+    by_type: Record<string, number>;
+    source_reviews: number;
+    new_backtests_from_import: number;
+  };
+  snapshot_progress?: {
+    as_of_utc: string;
+    corpus_records: number;
+    executed_records: number;
+    execution_versions: number;
+    imported_runs: number;
+    awaiting_import_runs?: number;
+    collection_cards?: number;
+    factor_cards?: number;
+  };
   mode: "personal_local";
   initialized?: boolean;
   message?: string;
@@ -165,10 +328,49 @@ export function readable(value: unknown): string {
       .join("；");
   return String(value);
 }
-export function personalPath(item: { kind: Kind; entity_id: string }) {
-  return `/entity/${item.kind}/${encodeURIComponent(item.entity_id)}`;
+export function personalPath(item: {
+  kind: Kind;
+  entity_id: string;
+  definition_revision?: string;
+  snapshot_batch?: string;
+  origin_run_id?: string;
+  variant_id?: string;
+  manifest_sha256?: string;
+}) {
+  const base = `/entity/${item.kind}/${encodeURIComponent(item.entity_id)}`;
+  if (isHosted && item.snapshot_batch && item.definition_revision) {
+    const q = new URLSearchParams({
+      definition_revision: item.definition_revision,
+      snapshot_batch: item.snapshot_batch,
+    });
+    for (const key of [
+      "origin_run_id",
+      "variant_id",
+      "manifest_sha256",
+    ] as const)
+      if (item[key])
+        q.set(
+          "research_" +
+            (key === "origin_run_id"
+              ? "run"
+              : key === "variant_id"
+                ? "variant"
+                : "manifest"),
+          item[key]!,
+        );
+    return base + "?" + q;
+  }
+  return base;
 }
-export function recordPath(item: { kind: Kind; entity_id: string }) {
+export function recordPath(item: {
+  kind: Kind;
+  entity_id: string;
+  definition_revision: string;
+  origin_run_id?: string;
+  variant_id?: string;
+  manifest_sha256?: string;
+}) {
+  if (isHosted) return hostedRecordPath(item);
   return `/v1/personal/items/${item.kind}/${encodeURIComponent(item.entity_id)}`;
 }
 export function emptyRecord(item: PersonalItem): PersonalRecord {
@@ -194,6 +396,7 @@ export async function personalApi<T>(
   url: string,
   init?: RequestInit,
 ): Promise<T> {
+  if (isHosted) return hostedRequest<T>(url, init);
   const response = await fetch(url, {
     ...init,
     headers: {
@@ -270,7 +473,29 @@ export const kindNames: Record<Kind, string> = {
   source: "来源记录",
 };
 
-export function sameRecord(record: PersonalRecord, item: PersonalItem) {
+export function sameRecord(
+  record: PersonalRecord,
+  item: Pick<
+    PersonalItem,
+    | "kind"
+    | "entity_id"
+    | "definition_revision"
+    | "stable_knowledge_id"
+    | "prior_version_ids"
+    | "origin_run_id"
+    | "variant_id"
+    | "manifest_sha256"
+  >,
+) {
+  if (isHosted)
+    return (
+      record.kind === item.kind &&
+      record.entity_id === item.entity_id &&
+      record.definition_revision === item.definition_revision &&
+      (record.origin_run_id || "") === (item.origin_run_id || "") &&
+      (record.variant_id || "") === (item.variant_id || "") &&
+      (record.manifest_sha256 || "") === (item.manifest_sha256 || "")
+    );
   return (
     record.kind === item.kind &&
     (record.entity_id === item.entity_id ||

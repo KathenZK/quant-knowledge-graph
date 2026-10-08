@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3382",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3336,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "fd2dd650864013e324c12abbed15a8edbffe594f74507c82c3a8c310d03ad171",
+    "rule_sha256": "e849e6c16af2d1e54cd120f228fee2e8d8efe40df33863998dab286b911245df"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3382",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3382"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/OptionChainStrategyFiltersRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；宇宙 filter=straddle(7)；空仓时对链上 straddle(7) 两腿 buy OptionStrategies.straddle 1组（Lean OptionChainStrategyFilters）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；宇宙 filter=straddle(7)；空仓时对链上 straddle(7) 两腿 buy OptionStrategies.straddle 1组（Lean OptionChainStrategyFilters）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `OptionChainStrategyFiltersRegressionAlgorithm.py`。`add_option(\"GOOG\")`；`set_filter(lambda u: u.straddle(7))`。`on_data`：未交易时取 `slice` 链 `straddle(7)`，若腿数=2 → `buy(OptionStrategies.straddle(option, strike, expiry),1)`。断言期望 ATM≈747.5、到期 2015-12-31（源内注释）。不是卖出 ATM 跨式核（W393），也不是工厂 Long/Short Straddle 核（W471）。提出日期未知。GOOG filter=straddle(7)空仓买跨式1组 ≠ 卖ATM跨式（M2878）/工厂LongShortStraddle（M3177）/SPY straddle(30)（M2674）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

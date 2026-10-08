@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1033",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1033,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9ef3edd672e2e034f9cf3636da0ee75e41f326e9d36f87ef7bee783aebb81798",
+    "rule_sha256": "b4932fa04b1fc6c9ff89c884a7696640c469be31f64391f2f9ed8a907e874492"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1033",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1033"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/stock/stockzmt/2021-01-22/doc-ikftpnny0430498.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中金公司研究部（公开页转载《量化择时系列（1）：金融工程视角下的技术择时艺术》）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中金公司QRS阻力支撑相对强度择时"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（实证：沪深300；文中亦测上证50/中证500）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2021-01-21"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中金公司QRS阻力支撑相对强度择时"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。取最近N日最高价与最低价做OLS，得β与R²；再取最近M日β序列做正态标准分zscore(β)；QRS=zscore(β)×R²。若QRS向上穿过开仓阈值S则买入持有；若向下穿过平仓阈值−S则卖出平仓；其余维持仓位。沪深300参数取N=18、M=600、S=0.7。不是M0956光大RSRS标准分：那边是zscore(β)本身过±0.7，不乘R²。不是M0957右偏标准分：那边是（标准分×R²×斜率）、N=16、M=300。本条QRS=zscore(β)×R²、N=18、M=600、阈值S=0.7。计入其他。提出日期按源文件原样保留2021-01-21。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

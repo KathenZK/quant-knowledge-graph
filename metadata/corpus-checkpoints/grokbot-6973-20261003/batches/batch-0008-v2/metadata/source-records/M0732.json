@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0732",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 732,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9927c053efd58f1dccf1fe931dee17d8cc8fb4ac1d8747d175de40e627b7fb2c",
+    "rule_sha256": "7375b937b8c761f0f1d847749954f34f14f9dd623ff3a8e8f8a87174f426634d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0732",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0732"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://research.glassnode.com/dissecting-bitcoins-unrealised-on-chain-profit-loss/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Rafael Schultze-Kraft（Glassnode）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "比特币NUPL：市值减已实现市值再除以市值，分档0、0.25、0.5、0.75"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2019-11-13"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dissecting Bitcoin’s Unrealised On–Chain Profit/Loss"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条写Glassnode该文对未实现盈亏和NUPL的算法与数字，不是已收的MVRV分位带。相对未实现盈利和相对未实现亏损，是把未实现盈利、未实现亏损各自除以市值。未实现盈利、未实现亏损按每个流通比特币的现价减去其上次移动时的价格，再只加总盈利或亏损的一侧。相对未实现盈利大于0.75，页面写表示潜在顶部和卖出点。相对未实现亏损大于相对未实现盈利，页面写历史上表示市场底部和较好的买入机会。NUPL等于相对未实现盈利减去相对未实现亏损，也可写成市值减去已实现市值，再除以市值。页面把NUPL按0.0、0.25、0.5、0.75分成若干带，写这些门槛虽属任意，历史上对应宏观周期里不同情绪；并写读数可用来识别获利了结和较有效的入场。图中的情绪名称没有随正文抽出，本条不写情绪名称。页面未写仓位、成交时点，也未写离开某一档是否离场。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Unrealised Profit/Loss；Figure 7至Figure 9"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

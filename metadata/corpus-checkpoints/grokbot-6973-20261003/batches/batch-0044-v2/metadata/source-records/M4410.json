@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4410",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4364,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d1413d866767705ab321e6a1c73e7b585ed640296509d35aa85cbfdc1d1e02e3",
+    "rule_sha256": "b3b68542fa7c3d459a7f0d22c3b1c0a5ac2452d5f8486e2b91cf949f3e35d26c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4410",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4410"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.nber.org/papers/w24163"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Kent Daniel / David Hirshleifer / Lin Sun"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-151/W1620"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Daniel·Hirshleifer·Sun·PEAD因子：月初；剔金融；市值中位×最近季报CAR[−2,+1]的NYSE20/80；PEAD=½(SH+BH)−½(SL+BL)市值加权持1月（DHS PEAD·CAR·2×3）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2017-12"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Daniel·Hirshleifer·Sun·PEAD因子：月初；剔金融；市值中位×最近季报CAR[−2,+1]的NYSE20/80；PEAD=½(SH+BH)−½(SL+BL)市值加权持1月（DHS PEAD·CAR·2×3）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写同文之 **短期误定价盈余漂移因子 PEAD**。宇宙：同 FIN（普通股），**剔除金融**；若最近一次盈余公告距今超过约 **6个月** 则剔除。盈余惊喜用公告日前后四日累计超额收益 **CAR_i=Σ_{d=−2…+1}(R_{i,d}−R_{m,d})**（RDQ；至少两日有效收益；RDQ须至少早于月末约2个交易日）。每月初：按上月末 NYSE 市值中位分小/大；独立按上月末可用 **CAR** 用 NYSE **20%/80%** 分低/中/高惊喜；六个市值加权组合；当月 **PEAD=(r_SH+r_BH)/2−(r_SL+r_BL)/2**。相对 Bernard–Thomas SUE 六十分位持有（库内已有）：本核为 **CAR 回报型惊喜的规模×惊喜 2×3 因子**。相对 QP SUE∩EAR：本核为单信号 CAR 的 FF 式因子而非双交。计入美股/ETF。提出日期 2017-12。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "NBER w24163 · §1.1 · PEAD size×CAR[-2,+1] 2×3 VW · monthly"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

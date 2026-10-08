@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3295",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3249,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "af969ab81b4b0dacc74d3770168b0496e3f441766b5ce3ad9ad70c59f97e5482",
+    "rule_sha256": "642d9b105d35ef17aff307fd661ce9395d02386a0e597da191caff884c2e0e04"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3295",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3295"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ExtendedMarketTradingRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟延长时段；每日仅一次；非常规交易时段（非9:30–16:00）以 bar.low 限价买10股（Lean ExtendedMarketTrading）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟延长时段；每日仅一次；非常规交易时段（非9:30–16:00）以 bar.low 限价买10股（Lean ExtendedMarketTrading）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ExtendedMarketTradingRegressionAlgorithm.py`。`add_equity(\"SPY\", Minute, ..., fill_data_forward=True, extended=True)`。`on_data`：若当日尚未动作且 `not in_market_hours()`（`time` 不在 9:30–16:00）→ `limit_order(\"SPY\",10, spy_bar.low)` 并记 `_last_action`。断言成交不得发生在常规时段。不是仅 RTH 限价核，也不是日程未实现亏损清仓核（W517）。提出日期未知。SPY延长时段非RTH以bar.low限价买10 ≠ 仅RTH限价/日程未实现亏损清仓（M3265）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

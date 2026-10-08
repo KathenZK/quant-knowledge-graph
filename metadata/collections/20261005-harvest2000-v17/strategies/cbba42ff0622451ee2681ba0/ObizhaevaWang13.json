@@ -1,0 +1,123 @@
+{
+  "economic_basis": {
+    "hypothesis": "若订单簿的恢复规律与模型足够接近，利用暂时冲击衰减来安排订单可能改变给定订单的预期执行成本。这里只保留原始构造；实际最优性、参数稳定性、容量、成交质量和收益改善均未验证。",
+    "missing": [
+      "未运行、未回测；论文模型最优性和实证不是仓库验收结论。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi:10.1016/j.finmar.2012.09.001",
+  "lab": null,
+  "missing_information": [
+    "这是给定买入订单的执行组成部分；X0及买入动机来自外部，不能宣称本条独立预测收益或决定整个账户持仓。",
+    "所选核要求初始稳态D0=0、有限正ρ、均匀正深度q、κ=1/q−λ>0、固定T；不能直接套非稳态或一般形状订单簿。",
+    "物理15页Proposition2价值函数有β_t X_t D_t，16页Proposition3印成β_t D_t；8页ρqD流入与18页ρD文字也不同。保留印式差异，不默修、不使用其闭式价值函数或流量解释补计算。",
+    "构造只引用一致的Eq25/31路径和直接成本Eq13/29；论文学术最优性不是本仓库独立证明、计算验收或经济有效性。",
+    "真实输入校准、交易窗口、总量来源、资本约束、tick/整手、离散化、成交失败/延迟及终点补单未闭合。",
+    "完成后归零的是剩余待买量；持仓为累计买入证券，后续退出未规定。模型购入支出与盈利/损失不可混用。",
+    "MIT作者页为gb2312原件，仅保留作身份补证并单独记录转码链；不把派生UTF8当HTTP原响应。核心来源是原PDF。",
+    "论文明确Elsevier2012出版版权；作者托管可读不等于商用转载、源码或数据授权。全文/图片不入Git，商业REVIEW_REQUIRED。"
+  ],
+  "name": "Obizhaeva–Wang：按订单簿恢复速度分配首尾块与连续买入",
+  "native_source_id": "ObizhaevaWang13",
+  "one_line": "给定总买入股数和期限，在指数恢复的均匀深度订单簿模型中，首尾各执行一块，中间以固定股数速度完成其余订单。",
+  "record_id": "ObizhaevaWang13",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、优化器或回测。",
+    "metadata": "作者原生文件/DOI身份、定位及自撰中文规则；不发布论文原文、图像、源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://web.mit.edu/wangj/www/pap/ObizhaevaWang13.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Anna A. Obizhaeva and Jiang Wang, Optimal trading strategy and supply/demand dynamics, Journal of Financial Markets16(2013),1–32, DOI10.1016/j.finmar.2012.09.001. MIT author-hosted finalpaper. Chinese paraphrase by catalog curator.",
+      "id": "obizhaeva-wang-execution-pdf",
+      "license": "PDF p1: Copyright2012 Elsevier B.V. All rights reserved. MIT author-hosted readable paper is not an open-source license or market-data authorization. No fulltext/images redistributed; commercialuse REVIEW_REQUIRED.",
+      "locator": "Physicalpp5/7–10/15–19: given order, initial uniform LOB, resilience, direct cost Eq13/29 and core path Eq25/31; p1 authorship/rights. Printed value-function/flow discrepancies retained, not corrected; selected paths visually reviewed.",
+      "revision": "Journal of Financial Markets16(2013),1–32; author-hosted final PDF sha256:f3d1c3928ffca84ace4b550ae3cc9c424a271e0e671c0063713c5f9cd842b175",
+      "sha256": "f3d1c3928ffca84ace4b550ae3cc9c424a271e0e671c0063713c5f9cd842b175",
+      "supports": [
+        "恢复型均匀订单簿中给定买入订单的首尾冲击块与连续执行路径"
+      ],
+      "url": "https://web.mit.edu/wangj/www/pap/ObizhaevaWang13.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_UNIVERSITY_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "obizhaeva-wang-execution-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一只具有卖方限价订单簿的证券，任务是买入给定X0股。X_t为尚未买入股数，x_t为一次离散买入股数，μ_t为每单位时间买入股数；q是每单位价格区间的股数密度，不是账户库存。s为全买卖价差；F为未受本订单冲击的基础价格。原文适用于订单执行模型，不固定实际股票/交易所，不从金额权重自动转换或生成方向。"
+    },
+    "cost": {
+      "evidence": [
+        "obizhaeva-wang-execution-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "模型中的离散买入x在交易前ask A处，平均成交价为A+x/(2q)，费用/支出为[A+x/(2q)]x。连续段支出∫A_t μ_t dt；整个任务C=该积分+各离散块支出之和，目标最小化E[C]。A已含半点差s/2、永久冲击和未恢复的暂时偏移，不能把x/q最高扫盘价当平均价。这里C是含本金的购入支出，不是净收益。实际手续费、税费、融资、延迟和不满足模型时的滑点未提供；不额外使用印式不一致的闭式价值函数。"
+    },
+    "entry": {
+      "evidence": [
+        "obizhaeva-wang-execution-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "上游已经决定买入X0且初始稳态条件成立时，t=0吃入x0=X0/(ρT+2)股，随后在(0,T)按μ=ρX0/(ρT+2)持续买入。买单消耗当时卖盘，不是AS式同时给出买卖限价等待被动成交；任务没有RSI、价差阈值或收益预测门槛。未满足模型输入或总量/期限未知时，来源没有定义可用的策略实例，不能补用默认订单量。"
+    },
+    "execution_time": {
+      "evidence": [
+        "obizhaeva-wang-execution-pdf"
+      ],
+      "status": "MISSING",
+      "text": "模型顺序为初始块→连续买入→终点块，A_t与V_t按交易前左极限取值，离散块成本按当时均匀订单簿积分。来源没有将数学连续流映射到某交易所的下单节拍、实际限价/市价标志、部分成交回报、撤改、失败重试或最后时刻订单确认；因此真实执行合同MISSING。只采集知识与构造，没有新增下单/runner接口，也未运行源码、模拟订单或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "obizhaeva-wang-execution-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "t=T买完余量；在所选确定路径与完全成交假设下余量等于X0/(ρT+2)，终点块后X_(T+)=0。这里归零的是未执行订单，不是证券持仓：完成任务后已累计买入X0股。论文未规定之后持有多久、卖出、止盈或止损；不能把“完成订单”误写为清仓。实现发生缺单/延迟时原文仅要求终点买完，没有生产级追单和限价上限规则。"
+    },
+    "position": {
+      "evidence": [
+        "obizhaeva-wang-execution-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "总买入数量X0固定且为正；所有离散x与连续μ非负，不通过中途卖出绕开冲击。恒等式∫0^T μ_t dt+Σx_t=X0约束整体任务，没有权益百分比、杠杆、可用现金或保证金上限。模型允许连续实数股量；整手/tick舍入需另定。均匀深度、风险中性和稳态条件下路径数量只依赖X0、ρ、T；q、λ和s仍影响价格与成本，不因从路径式消失就设为0。"
+    },
+    "risk": {
+      "evidence": [
+        "obizhaeva-wang-execution-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "核心范围仅为风险中性、初始D0=0、固定均匀深度与有限正恢复；未并入信息、风险厌恶或一般订单簿形状的§8扩展。ρ→0或∞时论文说明多种路径同样好，不宣称该极限解唯一。单次实际可买深度、价格突跳、流动性撤走及无法终点成交均未验证。另保留源内冲突：Proposition2的价值函数交叉项为β_t X_t D_t，而Proposition3印成β_t D_t；§3.2流入速率ρqD与§7.1文字ρD也不一致。本条不采用或修正这些价值函数/流入量表述，规则依据一致的Eq25/31，成本依据直接Eq13/29，未声称独立复证最优性。"
+    },
+    "signal": {
+      "evidence": [
+        "obizhaeva-wang-execution-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "这不是方向信号。令κ=1/q−λ，V_t=F_t+λ(X0−X_t)，D_t=A_t−V_t−s/2；模型dA_t=dV_t−ρD_t dt−κ dX_t。离散买入x使D增加κx，不继续交易时D按exp(−ρΔt)衰减。对初始D0=0的风险中性买入任务，Eq25与Eq31给同一路径：x0=xT=X0/(ρT+2)，μ_t=ρX0/(ρT+2)，0<t<T。两块加连续积分恰为X0；不得把X_t记成已持有股数或把ρ误作预期收益。"
+    },
+    "timeframe": {
+      "evidence": [
+        "obizhaeva-wang-execution-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在给定区间[0,T]内完成一次订单执行任务：t=0和t=T有离散块，中间0<t<T为连续买入流。T是外部期限，不固定为一天或某根K线；ρ是该时间单位的倒数，因此ρT无量纲。没有独立再平衡日历，T届满即完成本次买入；原文有限N等间隔构造只作连续极限推导，不作为另一个新增策略。"
+    },
+    "universe": {
+      "evidence": [
+        "obizhaeva-wang-execution-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "选定初始稳态订单簿：V0=F0，A0=F0+s/2，所有P>=A0处卖单密度为固定q>0。F_t=F0+σZ_t为无漂移布朗基础价格；永久冲击λ满足0<=λ<1/q，κ=1/q−λ>0；恢复速度0<ρ<∞，固定期限T>0。原文还允许退化端点，这里为明确构造选非退化范围；没有在线估计q/λ/ρ或重校准规则，输入必须由下游给定。"
+    }
+  }
+}

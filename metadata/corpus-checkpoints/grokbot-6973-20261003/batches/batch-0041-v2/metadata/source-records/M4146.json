@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4146",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4100,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8c9ad7bff78a59293bb4fc0d2a564efc9a5e732fa74f91d26ea00f76ff1673f7",
+    "rule_sha256": "ea80c3849cf805f72401bbeaeed7f136faae187f9e176f5ab8cdf7ee4a17c59f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4146",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4146"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://pages.stern.nyu.edu/~lpederse/papers/ValMomEverywhere.pdf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cliff Asness / Tobias Moskowitz / Lasse H. Pedersen（AQR）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-121/W1353"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AQR·ValMom·外汇价值：月末；价值=−5年实际汇率变化（PPP）；秩减均值加权多便宜空昂贵至1美元（AQR ValMom·FX·Value）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "外汇"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2013-06"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AQR·ValMom·外汇价值：月末；价值=−5年实际汇率变化（PPP）；秩减均值加权多便宜空昂贵至1美元（AQR ValMom·FX·Value）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Asness/Moskowitz/Pedersen《Value and Momentum Everywhere》（JoF 2013）**货币价值**腿。宇宙约 10 发达货币（澳/加/德或欧/日/新/挪/瑞典/瑞士/英/美等）。价值信号=**过去 5 年购买力平价变化的相反数**（文：负的 5 年即期汇率收益，并扣相对美国 CPI 的通胀差；即 5 年 PPP 变化）。权重式(1)：`w∝rank(S)−mean(rank)`，缩放为 **1 美元多头+1 美元空头**；月末再平衡。不是 OECD PPP **水平**多低估三空高估三（近 M0346）；不是美元套息 AFD（近 M0348）；不是外汇动量腿。**OVERRIDE** 同 URL 异核。计入外汇。提出日期 2013-06。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "ValMom Everywhere §I.B / currencies value = −5y PPP change · rank-weight eq(1)"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

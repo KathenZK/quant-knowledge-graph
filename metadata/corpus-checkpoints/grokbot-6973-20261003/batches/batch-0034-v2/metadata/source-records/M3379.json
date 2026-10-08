@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3379",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3333,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ee8c1637a49918dac3cf692e7317aa962b8c0d9ebcda40401081c8b0cd0dca42",
+    "rule_sha256": "55c5f14e81af1ee4c6f790d521fc4a5331db325ae6a931c61bcdb3d67504058d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3379",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3379"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/NumeraiSignalExportDemonstrationAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：VTI成分；每个交易日13:00 UTC对有数据成分按秩次线性权重 (i+1)/Σ(1..N) set_holdings，并导出 Numerai 信号（Lean NumeraiSignalExportDemonstration）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：VTI成分；每个交易日13:00 UTC对有数据成分按秩次线性权重 (i+1)/Σ(1..N) set_holdings，并导出 Numerai 信号（Lean NumeraiSignalExportDemonstration）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `NumeraiSignalExportDemonstrationAlgorithm.py`。`add_equity(\"VTI\")` + `universe.etf(VTI)`；日程 `every_day(VTI)` @ `13:00 UTC`：符号按名排序；`denominator=N*(N+1)/2`；`targets=[PortfolioTarget(sym,(i+1)/denominator)]` → `set_holdings(targets)`（并 `signal_export.set_target_portfolio`）。不是周频等权 CrunchDAO 核（W574），也不是 EMA 交叉 Collective2 核（W575）。提出日期未知。VTI成分13:00UTC秩次线性权重导出Numerai ≠ 周频等权CrunchDAO（W574）/EMA交叉Collective2（W575）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

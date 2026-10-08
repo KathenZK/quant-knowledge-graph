@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3507",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3461,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "dec6a26aa60c44005b74815e77935b132d1f2bcef7919d840c74f287dfc71402",
+    "rule_sha256": "3906f95b9d1771b333865e0d31056b867c4c0321ce02f7fc8e4796f9296e4322"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3507",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3507"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Trading-Equity-Curve"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor（Michael Kapler）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：在W711多空信号上；对策略权益做BB(50,2σ)，上穿下轨杠杆1.9、上穿中轨杠杆1（SI Equity-Curve BB 杠杆）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2014-11-11"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：在W711多空信号上；对策略权益做BB(50,2σ)，上穿下轨杠杆1.9、上穿中轨杠杆1（SI Equity-Curve BB 杠杆）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写同页 `SPY.20.EQUITY` 模型。底层仓位同 W711：`iif(signal,1,-1)`。对 `SPY.CROSS` 权益序列算 `BBands(equity, 50, sd=2)`；杠杆：权益**上穿**下轨 → 杠杆 **1.9**；权益**上穿**中轨 → 杠杆 **1**；其余用 `ifna.prev` 沿用前值。最终权重=方向信号×杠杆。不是无权益曲线叠加的裸 50/200 多空核。提出日期 2014-11-11。SI Equity-Curve BB：对SPY.CROSS权益BB(50,2σ)上穿下轨杠杆1.9/中轨1 ≠ 裸50/200多空（W711）。计入美股/ETF。提出日期按源文件原样保留2014-11-11。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SPY.20.EQUITY（BBands 50,2；leverage 1.9 / 1）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

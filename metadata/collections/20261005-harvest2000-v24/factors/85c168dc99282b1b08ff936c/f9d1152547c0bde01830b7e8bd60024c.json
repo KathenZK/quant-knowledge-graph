@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "用于检查非负观测是否能由少量可加非负模式表示；模式不自动具有经济含义或收益方向。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-de78b301caa8f24248d0d8b3"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "全矩阵与其数据修订全部可知后才可求表示；跨整个窗口联合拟合不得回填过去。金融输入、行列、窗口、供应商与PIT MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-de78b301caa8f24248d0d8b3"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "身份固定官方NIPS2000第13卷论文、原站hash和sourceid1861，核心是PDF物理p1–3的Eq1/2与Problem1；p1明确这是此前NMF工作的算法分析，不宣称作者在本篇首次发明所有非负分解。 不对V隐式减均值或白化；这些操作通常会引入负数并改变问题。零元素允许，缺失、无穷和负数不属于输入。收益率含负值时，不能默加偏移或取绝对值后仍称相同金融信号。 W每列是学出的非负基，H每列是该观测的非负系数；两者同时未知。不要求W列正交，不要求H列和1，不等同于给定字典的非负最小二乘，也不等同于资产持仓单纯形。 平方损失逐元素求和，等于Frobenius范数平方，不是谱范数平方、不额外除nm、不取平方根。r是显式表示宽度；rank(WH)<=r但不要求等于r，零列/重复列不擅自剔除。 原Problem1只对单独W或单独H为凸，对二者联合非凸。定义用全局argmin集合明确目标，未确定能找到它的算法、停止准则或数值保证；不能把论文局部迭代或任意驻点等同于该集合。 对任意正对角D，(WD,D^−1H)有同乘积；分量同时置换也不改变重构。一般最优解和重构均不保证唯一，不能为金融解释擅定分量次序、单位或唯一经济标签。全部分量、坐标和残差/目标摘要只算一族。 自撰存在性说明：可把每个非零W列缩放至列和1并把尺度吸入H，零W列可把对应H置0。任何有界目标子水平上WH逐元素有界，因非负且已归一，H的每列和等于WH的列和而有界；W也有界。故可在闭的归一化表示中取收敛子列，存在最优对。该有限维论证不表示唯一性、实际计算成功或浮点稳定。 V=0时任何非负W,H且WH=0都取零损失，不能把全部最优对强行写成W=H=0。正比例缩放V会使目标值平方缩放，但因子尺度仍不唯一。原始单位与输入变换必须另行固定。 原p3 Eq4对H的乘法因子是(W转置V)/(W转置WH)，对W为(VH转置)/(WHH转置)，均逐元素乘除；这里仅描述来源算法边界，不作为已批准求解器。零分母、零初始化锁定、浮点下溢、交替更新时序和停止条件未形成所选数值合同；不静默加eps或重启。 原p2/p4/p7用收敛至局部最优措辞，p3又明确不能期待全局最小；本条只审核Problem1目标，保留这些原文措辞而不把单调下降或固定点直接当作全局/局部最优证明。没有执行乘法算法、拟合矩阵或比较收敛。 Problem2的广义KL损失、其Eq5乘法更新与将来不同求解器保守归入同一NMF家族，不在此次另提名。已收KL等概率差异统计不因此自动变成NMF；这里不同之处是双未知非负表示目标，而非单独换损失。 一般r>=2的非负因子可行域与普通截断SVD不同；r=1非负输入可与非负主奇异向量的最佳rank1拟合重合，这个边界不另计。共享平方损失、低秩和线性代数原语，不声称数学或经济独立。 全部观测共同确定W,H；若列按时间排列，窗口内早期系数仍受晚期样本影响。只在整个窗口信息公布后形成表示；不能将全样本H回填成当时已知交易信号。 边界：完整数学目标已审，数值求解器、初始化/容差/单一解选取MISSING；未执行或回测。 r/窗口/维度/各列/重构残差/平方目标与将来损失/实现变体全部保守同族，不按分量凑数。 r<min(n,m)是本条研究范围并遵循来源常用压缩设定，不是软件主动输入校验；没有默认rank。 非负性不保证稀疏、可解释或真实经济部件；列缩放/排列非唯一必须保留。 原论文与原站未给本次可确认的一般复用许可，公开只自撰定义/原链接/pin，不拷原全文、图或metadata内full_text；商用REVIEW_REQUIRED。 输出：F_r(V)完整最优因子对集合；选定数值数组尚未生成，WH/残差/目标值共享同族。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-de78b301caa8f24248d0d8b3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用于检查非负观测是否能由少量可加非负模式表示；模式不自动具有经济含义或收益方向。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-de78b301caa8f24248d0d8b3"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给完整有限非负V∈R_+^(n×m)，n,m>=2；每列为一个观测、每行为一个已指定变量。显式给整数r，1<=r<min(n,m)。定义F_r(V)=argmin_(W∈R_+^(n×r),H∈R_+^(r×m)) Σ_(i=1..n)Σ_(j=1..m)[V_ij−Σ_(a=1..r)W_ia H_aj]^2。输出完整最优因子对集合，及相应重构WH、残差V−WH、共同最小目标值均属于同一NMF家族；未指定选出单一最优解的数值求解器。此为原Problem1精确数学目标，不把原Eq4迭代返回值冒充全局最优。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-de78b301caa8f24248d0d8b3"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "V（finite fully observed entrywise nonnegative real n by m matrix, n,m>=2）：每列一观测、每行一指定变量，单位/预处理显式给定；不填缺、不自动中心化或把负数转正。。参数：r：非负表示宽度，原文通常小于两输入维度；不是来源给定默认数值，参数变化不另计；范围1<=r<min(n,m)；来源默认值None；本条选定explicit caller-specified integer"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-de78b301caa8f24248d0d8b3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "proceedings.neurips.cc",
+  "lab": null,
+  "missing_information": [
+    "数值求解器、初始化、容差、并列解选择和运行验证未冻结",
+    "金融矩阵变量/单位、输入变换、窗口及PIT未冻结",
+    "原文一般再分发/商业授权未确认",
+    "真实经济部件、稀疏性和收益风险解释未建立"
+  ],
+  "name": "非负基与非负系数的联合矩阵重构",
+  "native_source_id": "f9d1152547c0bde01830b7e8bd60024c",
+  "one_line": "同时学习两张非负矩阵，以它们的乘积逼近非负观测矩阵；完整表示目标算一个家族。",
+  "record_id": "f9d1152547c0bde01830b7e8bd60024c",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://proceedings.neurips.cc/paper_files/paper/2000/file/f9d1152547c0bde01830b7e8bd60024c-Paper.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Daniel D. Lee and H. Sebastian Seung, Algorithms for Non-negative Matrix Factorization, Advances in Neural Information Processing Systems13, NIPS2000, pp556–562. Original publisher sourceid1861; self-authored Chinese definition.",
+      "id": "harvest-source-de78b301caa8f24248d0d8b3",
+      "license": "UNKNOWN_REUSE_RIGHTS",
+      "locator": "Exact paper title/authors; section2 Eq1 nonnegative factors; earlier work attribution: physical PDF p1-p1; n by m observations in columns, n by r and r by m factors; Eq2 squared Frobenius loss, Eq3 alternative generalized KL; source convergence claim: physical PDF p2-p2; Problem1 complete constrained joint objective; separate versus joint convexity; Eq4 multiplicative updates and limits of source claims: physical PDF p3-p3; Rescaled gradient interpretation and auxiliary function, not selected numerical solver: physical PDF p4-p4; Auxiliary function majorization proof context, not evidence of executed solver: physical PDF p5-p5; Alternative generalized KL proof context and source local-convergence claim: physical PDF p6-p6; Summary and antecedent references; no general reuse license stated: physical PDF p7-p7",
+      "revision": "NIPS2000 volume13 pages556-562; original publisher PDF pinned by bytes",
+      "sha256": "d943865213cbb4c678d783ab20944147d9eaef1756513e9f9388e26471f31305",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2000/file/f9d1152547c0bde01830b7e8bd60024c-Paper.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Daniel D. Lee and H. Sebastian Seung, Algorithms for Non-negative Matrix Factorization, Advances in Neural Information Processing Systems13, NIPS2000, pp556–562. Original publisher sourceid1861; self-authored Chinese definition.",
+      "id": "harvest-source-6f69353f6b2e8687b1bc8e40",
+      "license": "NOASSERTION_WEBPAGE_SHELL",
+      "locator": "Title authors volume publication year and exact PDF URL:L25-L40; Authors NIPS2000 volume and explicit original PDF/metadata links:L125-L134",
+      "revision": "Publisher NIPS2000 bibliographic page; HTTP snapshot",
+      "sha256": "9423571d73dd164576dcb9e87c19476fd0f36740df4af36bc77c387c066ea927",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2000/hash/f9d1152547c0bde01830b7e8bd60024c-Abstract.html",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Daniel D. Lee and H. Sebastian Seung, Algorithms for Non-negative Matrix Factorization, Advances in Neural Information Processing Systems13, NIPS2000, pp556–562. Original publisher sourceid1861; self-authored Chinese definition.",
+      "id": "harvest-source-4782f43f0016009fe9ccb3ec",
+      "license": "UNKNOWN_METADATA_REUSE_RIGHTS",
+      "locator": "Pinned original JSON identity metadata: title, book, page_first, page_last, authors, sourceid",
+      "revision": "Publisher JSON sourceid1861; HTTP snapshot",
+      "sha256": "368849ac1284e32ffc52f90edcdf9620b0609b459665c18788e7f6af20330f57",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2000/file/f9d1152547c0bde01830b7e8bd60024c-Metadata.json",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

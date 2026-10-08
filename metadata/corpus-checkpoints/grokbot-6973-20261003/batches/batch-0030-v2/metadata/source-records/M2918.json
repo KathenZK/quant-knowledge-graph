@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2918",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2914,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ae683dfcfa741d4863b9f7ed8dd0e77efc0de91aa1fa46fdc052b84988e08dc0",
+    "rule_sha256": "1b2805c67a820df19402bf3c1d1be4d2b4dc6d69550fb525ed768cab321d4d62"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2918",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2918"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/NLTKSentimentTradingAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；开盘后30分钟对经济新闻分词，含“Up”等权做多、含“Down”清仓（Lean NLTKSentimentTrading）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY开盘后30分经济新闻分词Up做多Down清仓；Lean NLTKSentimentTrading）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；开盘后30分钟对经济新闻分词，含“Up”等权做多、含“Down”清仓（Lean NLTKSentimentTrading）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `NLTKSentimentTradingAlgorithm.py`。标的 SPY 分钟；自定义 Dropbox `EconomicNews.csv`；每日 `after_market_open(SPY,30)`：`nltk.word_tokenize` 当日标题；若词含 `Down` 且已投资则 `liquidate`；若含 `Up` 且未投资则 `set_holdings(..., 1/N)`（N=符号数，示例为1）。不是 Brain 情绪阈值核（W315/W366）。提出日期未知。 不是Brain情绪阈值核（W315/W366）：本条为开盘后30分钟对经济新闻分词，含Up等权做多、含Down清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

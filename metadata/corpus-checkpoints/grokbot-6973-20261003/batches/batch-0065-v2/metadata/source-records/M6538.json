@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6538",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6492,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a5fc98ed96f6f15d8bc89aa2c5661904423382f3ffb4f4bb679abf3ce2bc22da",
+    "rule_sha256": "fb6ad49e5c8fb17d2549a9108eff80a3c2e180cb9174ff772af15e99a4b43f6f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6538",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6538"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/ZZ1_ResidualMomentum6m_ResidualMomentum.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Blitz / Huij / Martens / OpenSourceAP CrossSection"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-364/W3749"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Blitz·残差动量十分位多空：月末；FF3残差36月滚动；近12月剔近1月残差均值/残差波动；等权多最高空最低持1月（Blitz·ResidualMomentum·DecileL/S）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2011-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "FF3 residual momentum univariate decile L/S (Blitz et al. 2011 Table 2B lineage)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Blitz/Huij/Martens《Residual Momentum》（JEmpFin 2011）残差动量之可钉十分位多空（OpenSourceAP ResidualMomentum可执行核，非目录字段）。对每只股票用过去36个月月超额收益对MKTRF/SMB/HML做滚动回归得残差；ResidualMomentum=过去12个月残差的均值/标准差（跳过最近1个月，即t−12…t−2）。价格过滤|prc|>1。每月末按ResidualMomentum分十分位；等权做多最高十分位、做空最低十分位，持有1月。Sign为正。不是French·Mom/IntMom或QP残差动量近核（近M6462/M6519/M4131）。代码与SignalDoc：LSQuantile=0.1、StockWeight=EW、PortfolioPeriod=1。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Blitz·ResidualMomentum·DecileL/S"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

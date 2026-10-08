@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2136",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2136,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f2ffba98c66229231f8a311d9775f351cabc48bc0e0dfdee91848bf3f287cb1d",
+    "rule_sha256": "0c4cc18b0c19e6b0c2ef9860e544368682d1060847eaeefa84f8f89f70bc5dd6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2136",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2136"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/StrategyScalpingFast2/StrategyScalpingFast2.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（StrategyScalpingFast2.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区StrategyScalpingFast2：1m，开盘<EMA5(low)且收盘>重采样SMA50做多；卖出信号关闭，靠ROI/止损约−32.6%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区StrategyScalpingFast2；1m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区StrategyScalpingFast2：1m，开盘<EMA5(low)且收盘>重采样SMA50做多；卖出信号关闭，靠ROI/止损约−32.6%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/StrategyScalpingFast2/StrategyScalpingFast2.py以 buy_params 为准（买侧各过滤默认 False）。timeframe=1m；stoploss=−0.326；minimal_roi约0/18/51/123分钟对应8.2%/6%/1.2%/0；use_sell_signal=False；resample_factor=5。重采样后 SMA(50) 为 resample_sma；ema_low/high/close=EMA(5)。做多须：volume>0，open<ema_low，resample_sma<close（ADX/MFI/Stoch 过滤均关闭）。卖侧 populate 仍写 open≥ema_high 与 MFI/ADX/fastd 等，但 use_sell_signal=False 不发卖。相对 ReinforcedSmoothScalp：本文件卖信号关闭且买侧仅开盘/重采样核。提出日期未知。 不是ReinforcedSmoothScalp：本条是1m StrategyScalpingFast2，开盘<EMA5(low)且收盘>重采样SMA50，卖信号关闭。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

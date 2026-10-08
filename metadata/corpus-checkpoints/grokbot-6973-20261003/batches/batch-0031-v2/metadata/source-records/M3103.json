@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3103",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3070,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a2cda2598152d1ffd9fa4d55aa777c3fd710334228ca41f4ed2a5c9a28eb2e0f",
+    "rule_sha256": "8584fc768aa79a9372ede9c9a37d231710545d90b0071f4c3089f1b13fa29e7e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3103",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3103"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/LongAndShortButterflyCallStrategiesAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：等距看涨蝶式；ATM±spread 三档，空仓买 butterfly_call 2组，平仓买 short_butterfly_call 2组（Lean LongAndShortButterflyCall）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：等距看涨蝶式；ATM±spread 三档，空仓买 butterfly_call 2组，平仓买 short_butterfly_call 2组（Lean LongAndShortButterflyCall）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `LongAndShortButterflyCallStrategiesAlgorithm.py`（继承 OptionStrategyFactoryMethodsBaseAlgorithm）。同到期看涨≥3档：`atm` 最接近标的；`spread=min(atm−最低,最高−atm)`；`itm=atm−spread`，`otm=atm+spread`。`buy(OptionStrategies.butterfly_call(..., otm, atm, itm, expiry), 2)`；平仓 `buy(short_butterfly_call, 2)`。不是 SPXW 指数看涨蝶式核（W423），也不是看跌蝶式核（W468）。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

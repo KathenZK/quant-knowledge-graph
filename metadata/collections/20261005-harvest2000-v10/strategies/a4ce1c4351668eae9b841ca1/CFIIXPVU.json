@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "在不主动放大基准国家利率风险的前提下，重新分配同国不同期限敞口，以提高曲线不变假设下的套息和滚降收益。该假设并不保证实际曲线变化下超额收益。",
+    "missing": [
+      "未验证经济有效性、收益、风险优越性或可交易复制。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "FTSE Russell",
+  "lab": null,
+  "missing_information": [
+    "只有正式方法描述，未取得或执行上游实现、优化器；未取得WGBI历史成员、个券行情、曲线/OAS、久期和外汇数据。",
+    "曲线/OAS拟合、桶内个券名义分配、最优解并列及缺失数据处理没有在本文件展开；不可宣称完整计算可复现。",
+    "基础WGBI的全部筛选标准引用FTSE Fixed Income Index Guide，本轮未锁该依赖；此条把WGBI成员身份作为输入，不重建基础宇宙。",
+    "国家PV01限制正文写预设倍数以下，具体USD指数表写1x，Figure1写等式；摘要同时保留这些表达，不默改严格不等式。",
+    "交易成本、优化换手惩罚、实际成交时刻与报价可得性没有完整规定；未回测、未经济验证。"
+  ],
+  "name": "CaRD XOPV美元对冲：国家PV01约束下的国债套息与滚降优化",
+  "native_source_id": "CFIIXPVU",
+  "one_line": "按国家及期限桶估算曲线不变下未来一年收益，在国家利率风险与全组合久期约束下做只多优化，月末再平衡并按月滚动美元汇率对冲。",
+  "record_id": "CFIIXPVU",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行源码、未回测或产生经济有效性结论。",
+    "metadata": "自撰定义与出处定位；公开可读取不等于获得来源或数据授权。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://research.ftserussell.com/products/downloads/FTSE_Nomura_Carry_and_Roll_Down_CaRD_Series_Ground_Rules.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FTSE Russell",
+      "id": "ftse-nomura-card-pdf",
+      "license": "©2026 LSEG，All rights reserved。原件第14页禁止未经许可复制、存储或传播，LSEG数据使用与分发另需许可；公开可读取不表示已获分发或商用授权。本批仅自撰事实性定义、来源及页码；商业使用、指数产品、数据许可REVIEW_REQUIRED。",
+      "locator": "官方PDF物理页码与pdftotext派生文本行号；原PDF SHA为出版来源，派生文本非HTTP响应，见review.field_spans",
+      "revision": "Ground Rules v2.0; February 2026; PDF sha256:75ea91f4f31a54524c734c891fde1b4e6886d8746bfdf270d4541e8fd22c42b7",
+      "sha256": "75ea91f4f31a54524c734c891fde1b4e6886d8746bfdf270d4541e8fd22c42b7",
+      "supports": [
+        "策略方法、仓位、再平衡及明确缺项"
+      ],
+      "url": "https://research.ftserussell.com/products/downloads/FTSE_Nomura_Carry_and_Roll_Down_CaRD_Series_Ground_Rules.pdf",
+      "verification": "FETCHED_PINNED_FIRST_PARTY_DOCUMENT_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "ftse-nomura-card-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "FTSE世界国债指数WGBI中的固定利率、本币计价、投资级主权债；本条只取来源表内美元对冲XOPV指数，原生供应商码CFIIXPVU。货币对冲使用滚动一个月外汇远期。其他货币/排除国家版本不另计新增。"
+    },
+    "cost": {
+      "evidence": [
+        "ftse-nomura-card-pdf"
+      ],
+      "status": "MISSING",
+      "text": "本文件没有给交易佣金、买卖价差、冲击、融资或外汇远期执行成本的扣减模型，也没有换手惩罚。即远期使用LSEG报价中值并不代表实际零成本。待获得可交易数据和成本假设后方能计算可实现净结果。"
+    },
+    "entry": {
+      "evidence": [
+        "ftse-nomura-card-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在当月规定的固定日，以月末为结算日计算carry/roll-down、修正久期及市值，求新桶配置并导出个债面值，再于对应月末重建组合。优化解给正权重的桶纳入，其余桶债券权重为0。来源未给桶内各债面值如何由桶解分配的细节及最优解并列决胜规则；不补等权或市值权假设。"
+    },
+    "execution_time": {
+      "evidence": [
+        "ftse-nomura-card-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月末再平衡、每天计值；固定日后到日历月末，在美国、英国、欧元区、日本和澳大利亚各区域均须至少留4个营业日，年度固定日表另公布。优化输入以固定日观察、按对应月末结算；不把月末之后数据用于当月权重。外汇定盘取围绕伦敦16:00若干快照的中位中间报价。实际交易时段未明确。"
+    },
+    "exit": {
+      "evidence": [
+        "ftse-nomura-card-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末再平衡到新优化解；落到零权重桶或不再属于WGBI的国家/债券被剔除。月内成员按固定日集合保持，期限跨桶边界本身不触发盘中交易。没有额外价格止损、止盈或信号提前清仓规则。外汇远期按月滚动。"
+    },
+    "position": {
+      "evidence": [
+        "ftse-nomura-card-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只多、不加杠杆、禁止负权重。Figure1 XOPV令各桶配置市值总和等于基准总市值，并在每个国家内令Σ(桶市值×桶修正久期)等于基准相应之和；PV01近似市值×修正久期/10000。正文/具体美元指数表另表述全组合修正久期等于基准、国家PV01权重不高于其原值1x。国家市值权重可以变化且没有月换手上限。没有把其他XOMV/LO约束并入本条。对冲远期面值按月初收益率不变估计月末全价市值，并考虑已知本息现金流和应计利息；月中利率变化导致的价格变化未被完全对冲。"
+    },
+    "risk": {
+      "evidence": [
+        "ftse-nomura-card-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "约束匹配国家利率风险和组合久期，但不保证曲线各期限相对变动、OAS或流动性风险消失；国家市场价值权重与月换手没有固定上限。未来曲线不变是预期收益形成假设；外汇对冲遗漏月中利率变动对应的价值差。原件没有给优化器、并列解、桶内分配、数据缺失或成交容量细节；定义审核不表示已具备逐债复现条件。"
+    },
+    "signal": {
+      "evidence": [
+        "ftse-nomura-card-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "这是组合优化输入，不是突破买卖信号。对每个国家×期限桶，在当前收益率曲线及期权调整利差OAS未来12个月保持不变的假设下，计算12个月预期回报；再用当前即期/远期汇率把预期收益转换成美元对冲收益。目标是最大化各桶配置市值×该桶预期carry与roll-down收益之和。曲线/OAS估计与单债到桶的具体计算器未在此文展开，不自行替换成收益率高低排序。"
+    },
+    "timeframe": {
+      "evidence": [
+        "ftse-nomura-card-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "预期回报形成期为未来12个月的曲线不变情景；每月固定日优化、月末再平衡，持有到下一月度更新；每日估值。不是用历史12月均收益作为信号。"
+    },
+    "universe": {
+      "evidence": [
+        "ftse-nomura-card-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "成员继承当期WGBI，国家进入或离开WGBI时同进同出。按发行国家与加权平均剩余期限分为[1,3)、[3,5)、[5,7)、[7,10)、[10,15)、[15,∞)年六桶。固定日确定月度桶内成员；计算月份中即使期限跌破桶下限仍保持该月集合。WGBI完整准入筛选需其独立指南，本文件只指明基础宇宙，不把当下国家清单反填历史。"
+    }
+  }
+}

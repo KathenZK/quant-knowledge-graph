@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0813",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 813,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8083d11427e8dd277c082e5fcbfa3a08ee0f1dbf40a01652a3dd2562e1434732",
+    "rule_sha256": "1df08f7b1944b36c2e38232fce31785f9b9a36842e92dbbdaed216128d509e72"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0813",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0813"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/17900/intraday-application-of-hidden-markov-models/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Louis Szeto（QuantConnect研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "市值前十五分钟三状态隐马尔可夫：高斯隐马尔可夫成分3、迭代100、随机种子100，五分钟收益窗口150，每月重训，预测概率下标2大于下标0则该只权重正10%，否则负10%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Intraday Application of Hidden Markov Models"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该研究页已印出的市值前十、五分钟三状态隐马尔可夫，不是已收的黄金与标普500隐马尔可夫，那一页没有印出高回撤概率如何赋给下一期黄金权重。本页把比较印在代码里。宇宙每日按市值从高到低取10只美国股票，默认分钟分辨率。新加入的股票建三成分高斯隐马尔可夫，迭代次数100，随机种子100，月份标志初始为负1。一分钟K线合并成五分钟。变动率指标周期为1，滚动窗口长度150。每根五分钟K线结束时用该K线价格更新变动率。窗口就绪且K线结束月份与上次训练月份不同，才用窗口里的变动率值反序后拟合成一列再训练，并把月份标志改成该月。然后用最新一期变动率取预测概率。正文写正状态概率大于负状态则买入，否则卖空。实现写成预测概率向量下标2大于下标0则目标权重0.1，否则负0.1。页面没有印出三个状态如何按收益均值排序后再赋给下标，本条不补排序，只照记下标比较。结果段写参数(5, 150)是随机选定，并写合并K线从2至8分钟、变动率历史从80至160做过网格；本条不把网格写成另一套默认。未写离开市值前十的股票如何平仓。未写下标1的概率如何影响仓位。未写权重0.1乘10只时毛敞口如何再归一。提出日期取未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Implementation步骤1至5：市值前10、GaussianHMM、RateOfChange窗口150、五分钟合并、post_prob下标2与0、权重0.1。Results把参数写成(5, 150)"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

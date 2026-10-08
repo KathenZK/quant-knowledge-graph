@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3095",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3062,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7fd9cf1caf609d6c84a31a92e9381284b20e100ea2cefcadbbb935f03c180f13",
+    "rule_sha256": "f4413a6cf4ab92ddb0f73c261f49638c00315801c28c61c1a3ad6df4a76bb59b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3095",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3095"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateOptionsFrameworkAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：TWX/AAPL 切换；最早到期周权ATM看跌；ConstantOption UP(0.5小时)+单股目标±1（Lean BasicTemplateOptionsFramework）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：TWX/AAPL 切换；最早到期周权ATM看跌；ConstantOption UP(0.5小时)+单股目标±1（Lean BasicTemplateOptionsFramework）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateOptionsFrameworkAlgorithm.py`。宇宙=`EarliestExpiringWeeklyAtTheMoneyPutOptionUniverseSelectionModel`：过滤 `strikes(+1,+1).expiration(0,7).weeklys_only().puts_only().only_apply_filter_at_market_open`；链选择函数按日期在 TWX/AAPL 间切换（源码 `select_option_chain_symbols`）。Alpha=`ConstantOptionContractAlphaModel(PRICE,UP,0.5小时)`（仅期权符号发 Insight）；组合=`SingleSharePortfolioConstructionModel`（UP→+1张、DOWN→−1张）；空风控。不是股票跨式/蝶式工厂核。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

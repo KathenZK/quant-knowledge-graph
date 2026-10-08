@@ -1,0 +1,197 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者把过去峰价、上次预测与已知转折频率组合为可能的跟随/回复价格状态，并依当前目标与预测的偏差调节更新强度；是否改善未来配置没有被本库验证。",
+    "missing": [
+      "未取得/逐式核对原论文定义；本候选以固定作者实现为准，不宣称与论文等价。",
+      "未执行计算或验证经济/账户收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "github.com/laizhr/KTPT",
+  "lab": null,
+  "missing_information": [
+    "未执行作者代码、MATLAB lasso、市场行情或账户回测。",
+    "仅明确原生lasso调用与后续控制流，历史MATLAB/Statistics Toolbox版本、Lambda完整生成/提前停止路径和数值容差环境没有冻结；当前文档不等同历史环境。",
+    "原调用不使用FitInfo.Intercept、混合系数未限幅、非有限/短输入与低维回归失败未处理，不予修源或默补。",
+    "只多预算为来源模型比例；真实标的、成分、价格处理、成交、费用与账户合同缺失。",
+    "作者代码和论文未取得统一商用授权；元数据自撰、原件不分发、商用REVIEW_REQUIRED。"
+  ],
+  "name": "KTPT：三阶段价格预测与持仓偏差核加权更新",
+  "native_source_id": "KTPT.m",
+  "one_line": "先融合峰价与上次预测，再做跨资产弹性网拟合和转折强度混合，以预测和旧仓差的核权重形成目标。",
+  "record_id": "KTPT.m",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED; no reproduced returns or runtime readiness claim.",
+    "metadata": "原生ID/固定版本/自撰定义与来源定位；不发布源码、全文、图或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/laizhr/KTPT/blob/45407266828faf06c2adb4ad74510d8a5a6c9bd8/README.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Author repository laizhr / Zhao-Rong Lai; KTPT header names Zhao-Rong Lai, Pei-Yi Yang, Xiaotian Wu, Liangda Fang; helper provenance is not separately restated by KTPT.",
+      "id": "lai-ktpt-ktpt-m",
+      "license": "No explicit license grant in locked tree/README. Citation requests do not establish permissive code or paper permission. REVIEW_REQUIRED; no fulltext redistributed.",
+      "locator": "KTPT.m native LF physical lines; GB18030 strict reversible decode if needed; exact field spans in review.",
+      "revision": "45407266828faf06c2adb4ad74510d8a5a6c9bd8",
+      "sha256": "c57d6a2a3856f3d77e275c7468783a41fdd0cec59887195301f8ed2f0c0359d7",
+      "supports": [
+        "固定源码、原生控制流和参数"
+      ],
+      "url": "https://github.com/laizhr/KTPT/blob/45407266828faf06c2adb4ad74510d8a5a6c9bd8/KTPT.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Author repository laizhr / Zhao-Rong Lai; KTPT header names Zhao-Rong Lai, Pei-Yi Yang, Xiaotian Wu, Liangda Fang; helper provenance is not separately restated by KTPT.",
+      "id": "lai-ktpt-ktpt_run-m",
+      "license": "No explicit license grant in locked tree/README. Citation requests do not establish permissive code or paper permission. REVIEW_REQUIRED; no fulltext redistributed.",
+      "locator": "KTPT_run.m native LF physical lines; GB18030 strict reversible decode if needed; exact field spans in review.",
+      "revision": "45407266828faf06c2adb4ad74510d8a5a6c9bd8",
+      "sha256": "0d3456d0864f8dc9806ba725ec0a8f445bd54665327b84962c6d6cfeba657a61",
+      "supports": [
+        "固定源码、原生控制流和参数"
+      ],
+      "url": "https://github.com/laizhr/KTPT/blob/45407266828faf06c2adb4ad74510d8a5a6c9bd8/KTPT_run.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Author repository laizhr / Zhao-Rong Lai; KTPT header names Zhao-Rong Lai, Pei-Yi Yang, Xiaotian Wu, Liangda Fang; helper provenance is not separately restated by KTPT.",
+      "id": "lai-ktpt-readme-md",
+      "license": "No explicit license grant in locked tree/README. Citation requests do not establish permissive code or paper permission. REVIEW_REQUIRED; no fulltext redistributed.",
+      "locator": "README.md native LF physical lines; GB18030 strict reversible decode if needed; exact field spans in review.",
+      "revision": "45407266828faf06c2adb4ad74510d8a5a6c9bd8",
+      "sha256": "71eab3c4e2c5d35d2285b2cc77d96095c0f2410682554023e4197afc8d167aaf",
+      "supports": [
+        "仓库作者声明和论文定位；不是论文公式审核"
+      ],
+      "url": "https://github.com/laizhr/KTPT/blob/45407266828faf06c2adb4ad74510d8a5a6c9bd8/README.md",
+      "verification": "FETCHED_PINNED_REPOSITORY_DOCUMENT"
+    },
+    {
+      "attribution": "Author repository laizhr / Zhao-Rong Lai; KTPT header names Zhao-Rong Lai, Pei-Yi Yang, Xiaotian Wu, Liangda Fang; helper provenance is not separately restated by KTPT.",
+      "id": "lai-ktpt-simplex_projection_selfnorm2-m",
+      "license": "No explicit license grant in locked tree/README. Citation requests do not establish permissive code or paper permission. REVIEW_REQUIRED; no fulltext redistributed.",
+      "locator": "simplex_projection_selfnorm2.m native LF physical lines; GB18030 strict reversible decode if needed; exact field spans in review.",
+      "revision": "45407266828faf06c2adb4ad74510d8a5a6c9bd8",
+      "sha256": "dd9edbdd42c21040a57d5411f27508a3da8a37eb4a62016fcad7ad63418d221d",
+      "supports": [
+        "固定源码、原生控制流和参数"
+      ],
+      "url": "https://github.com/laizhr/KTPT/blob/45407266828faf06c2adb4ad74510d8a5a6c9bd8/simplex_projection_selfnorm2.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "MathWorks official documentation",
+      "id": "mathworks-double.max",
+      "license": "MathWorks documentation separate from strategy source/paper/data rights; commercial REVIEW_REQUIRED.",
+      "locator": "Current official HTML operator documentation; exact lines in official_documentation_evidence. Not fixed historical MATLAB binary/source.",
+      "revision": "HTTP snapshot SHA256 8270ef8e73450db58c7ce5d72d5449faf46f2c38792babaafe38b9e49e994771",
+      "sha256": "8270ef8e73450db58c7ce5d72d5449faf46f2c38792babaafe38b9e49e994771",
+      "supports": [
+        "默认维度/调用参数当前文档语义；未固定历史运行环境"
+      ],
+      "url": "https://www.mathworks.com/help/matlab/ref/double.max.html",
+      "verification": "FETCHED_PINNED_OFFICIAL_DOCUMENTATION"
+    },
+    {
+      "attribution": "MathWorks official documentation",
+      "id": "mathworks-lasso",
+      "license": "MathWorks documentation separate from strategy source/paper/data rights; commercial REVIEW_REQUIRED.",
+      "locator": "Current official HTML operator documentation; exact lines in official_documentation_evidence. Not fixed historical MATLAB binary/source.",
+      "revision": "HTTP snapshot SHA256 fa250f18d8eb92868a89cd972d8ed481e81a8917ac9a4cd2720d2300cca45cf8",
+      "sha256": "fa250f18d8eb92868a89cd972d8ed481e81a8917ac9a4cd2720d2300cca45cf8",
+      "supports": [
+        "默认维度/调用参数当前文档语义；未固定历史运行环境"
+      ],
+      "url": "https://www.mathworks.com/help/stats/lasso.html",
+      "verification": "FETCHED_PINNED_OFFICIAL_DOCUMENTATION"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "lai-ktpt-ktpt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "data为T×N的外部资产价格收益倍数，作者例程不冻结证券名单或交易所。没有量/盘口输入；返回比例目标而非实际股数或订单。"
+    },
+    "cost": {
+      "evidence": [
+        "lai-ktpt-ktpt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本固定runner显式tran_cost=0；仍按g_t=(x_t·b_t)*(1−c/2*Σ|b_t−h_old|)写模型，h_t=b_t⊙x_t/g_t，h初始0。在c=0时分母等于毛组合倍数；不把该h公式擅自外推为非零成本的正确漂移。没有真实佣金、价差、冲击、税费或市场费率校准，零费例程不是现实无成本声明。"
+    },
+    "entry": {
+      "evidence": [
+        "lai-ktpt-ktpt-m",
+        "lai-ktpt-ktpt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "t=5开始实际记录等权收益；之后依据新目标的正分量持有，目标增加表示增持。每次由旧目标b_t和此前预测P_hat_t递推，P_hat最初为空，但首个调用p=6走暖机分支先赋值，下一次才读旧预测。无另设收益阈值开仓/现金等待条件。"
+    },
+    "execution_time": {
+      "evidence": [
+        "lai-ktpt-ktpt-m",
+        "lai-ktpt-ktpt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "用现有b_t承接t行收益之后，调用只引用截至t的价格与转折确认来生成b_(t+1)。Sign的计算会用C_(i+1)，但nr_p最多用i=p−2，其最晚确认价是C_(p−1)=C_t，不把预计算整个数组误判成当期使用未来。真实信息发布时间/撮合/执行延迟/借款与份额取整未规定或验证。"
+    },
+    "exit": {
+      "evidence": [
+        "lai-ktpt-ktpt-m",
+        "lai-ktpt-ktpt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每期使用新目标替换原目标，降为0时退出该列；无止损、止盈、信号有效期或独立清仓分支。t=T不再形成下个目标，也不追加模拟期末清仓成本。"
+    },
+    "position": {
+      "evidence": [
+        "lai-ktpt-ktpt-m",
+        "lai-ktpt-simplex_projection_selfnorm2-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "投影助手在max(abs(v))>1e6时重复除10，排序u并累计s，取最后满足u_j>(s_j−1)/j的rho，theta=(s_rho−1)/rho，返回max(v−theta,0)。可处理的有限输入得到只多和为1的目标，无单项额外上限/杠杆/现金。核乘法后u加权和不一定0，由最终助手恢复预算；1000不是资金杠杆。"
+    },
+    "risk": {
+      "evidence": [
+        "lai-ktpt-ktpt-m",
+        "lai-ktpt-ktpt_run-m",
+        "lai-ktpt-simplex_projection_selfnorm2-m",
+        "mathworks-lasso"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "没有独立止损/回撤帽。原lasso只显式Alpha=.99：当前官方文档列默认Intercept/Standardize=true、NumLambda100且可提前返回更少列、LambdaRatio1e−4、普通矩阵MaxIter1e5/RelTol1e−4；它们是当前文档补证，不能冒充2018作者固定工具箱环境。未锁历史Lambda路径/停止细节，不能保证相同中列系数。代码忽略截距、不限制混合系数/预测正值，非有限输入、短T、低维回归/常量数据、投影无rho与求解失败无回退。源码未运行，不宣称学习或收益复现。"
+    },
+    "signal": {
+      "evidence": [
+        "lai-ktpt-ktpt-m",
+        "lai-ktpt-ktpt_run-m",
+        "mathworks-double.max",
+        "mathworks-lasso"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "记p=t+1。p<7时xhat=x_t、P_hat_p=xhat⊙C_t。否则P为C_(t−4:t,:)的5×N窗，Ptilde=max(P)（默认维；N=1为列向量窗最大），y=.5*Ptilde+.5*P_hat_t。调用B=lasso(Pᵀ,yᵀ,Alpha=.99)，L=size(B,2)，yhat=B(:,ceil(L/2))ᵀP；不请求FitInfo，不补拟合截距，不按交叉验证误差选列。转折计数nr_p：p≤10时Σ_(i=1..p−2)Sign_i，否则Σ_(i=p−10..p−2)Sign_i；lambda=(Σ_j nr_(p,j)/N)/(p−2)若p<12，否则除9。P_hat_p=[lambda./(2*x_t)]⊙Ptilde+[1−lambda./(2*x_t)]⊙yhat，xhat=P_hat_p./C_t。将xhat转列并减均值为u；b_t也减均值为a，K_i=exp(−|a_i−u_i|^(1/6))；v=b_t+1000*diag(K)*u，再调用附属投影助手。lambda/(2*x_t)未截断到[0,1]，不是保证凸混合。"
+    },
+    "timeframe": {
+      "evidence": [
+        "lai-ktpt-ktpt-m",
+        "lai-ktpt-ktpt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "runner从t=5到T才执行收益/更新循环；前4个daily_incre_fact和cum_wealth保持初始化1，返回权重矩阵这些列虽为等权，并未承接对应四期收益。t=5先用等权计收益，调用p=6的暖机预测；从观察t=6后才进入正规三阶段预测生成第7期目标。无交易日历/时区，逐输入行。"
+    },
+    "universe": {
+      "evidence": [
+        "lai-ktpt-ktpt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入列固定。C第1行全1，i≥2时C_i=C_(i−1)⊙data(i,:)；无成分进出、复权/退市/缺值处理。默认win_size=5、W2=10、tran_cost=0。代码为所有i=2..T−1预算局部转折Sign_i=1{(C_i−C_(i−1))*(C_i−C_(i+1))>0}，实际预测只用已知的转折，不能直接拿未确认最新端点。"
+    }
+  }
+}

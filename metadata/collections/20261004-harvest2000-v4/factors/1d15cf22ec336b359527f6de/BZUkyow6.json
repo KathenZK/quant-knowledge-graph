@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "让没有被新价格刷新的一侧向通道中点收缩，同时受滚动高低范围约束。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-66cab09005ec4da9a09b8738"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只使用当前及过去输入与上bar状态；实时当前hi/lo会改变结果，原文无闭bar过滤。复现需保留状态起始点与完整前史，按已确认bar快照取值。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-66cab09005ec4da9a09b8738"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "循环缓冲每bar写入当前hi/lo，bar_index%L定位，计算最近L根中成对非na观测的最高hi和最低lo；暖机允许不足L个有效点。 若U或D缺失，优先用窗极值初始化两界，窗极值缺失则用当前hi/lo；两个年龄归零，该bar不走收缩分支。 否则先刷新或增长各自年龄，两个边界使用更新后、收缩前同一个中点作指数收缩；上界更新不能改变下界所用中点。 仅当窗内成对有效点数>0时收缩并夹到窗极值；返回上下两界合记一个构造。periodAverage虽计算但未被输出算法使用。 边界：hi或lo任一na则该对不参与窗极值，但已有状态仍会在相应比较false时增加年龄；若整个窗无有效对则不收缩，旧状态可继续保留。 初始化可给当前单边值或na；任一边界na会在后续bar重新走双界初始化。 年龄是距当前衰减边界被刷新以来的棒数，不是距真实滚动最高/最低出现以来的年龄。 用年龄增大的收缩率逐bar复合，并非历史极值直接乘一个固定半衰期衰减；L是率参数不保证边界距离恰好L棒减半。 输出：一个完整构造；多方向/价格箱/状态/参数/输出坐标均不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-66cab09005ec4da9a09b8738"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "让没有被新价格刷新的一侧向通道中点收缩，同时受滚动高低范围约束。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-66cab09005ec4da9a09b8738"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "λ=ln2/L。保存最近L根hi/lo且只纳入hi与lo同时有效的成对观测，得H_L和L_L。状态U,D及年龄a_U,a_D：若当前hi>=U则U=hi,a_U=0，否则a_U加1；若当前lo<=D则D=lo,a_D=0，否则a_D加1。在存在有效窗样本时，先固定m=(U+D)/2，r_U=1−exp(−λa_U)，r_D=1−exp(−λa_D)；U←U−r_U(U−m)，D←D−r_D(D−m)，最后U=min(U,H_L)，D=max(D,L_L)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-66cab09005ec4da9a09b8738"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "hi,lo（two time-aligned Pine series floats, normally high/low）：正常使用要求有限且hi>=lo；源码仅判断na；bar_index（chronological integer bar counter）：环形缓冲写入位置。参数：period：环形窗与年龄衰减尺度；范围integer>0; UI min1；源码默认100；hi：上界输入；范围Pine series float；源码默认high；lo：下界输入；范围Pine series float；源码默认low"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-66cab09005ec4da9a09b8738"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "tradingview/public-script",
+  "lab": null,
+  "missing_information": [
+    "未运行Pine源码或金融回测",
+    "Pine内建/外部依赖的具体运行构建未冻结",
+    "数据供应商/PIT修订/跨市场时钟/实际标的采样周期未固定",
+    "没有收益方向/经济有效性证据"
+  ],
+  "name": "极值年龄驱动的中点收缩通道",
+  "native_source_id": "BZUkyow6",
+  "one_line": "让没有被新价格刷新的一侧向通道中点收缩，同时受滚动高低范围约束。",
+  "record_id": "BZUkyow6",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B83ccadd83d3041daa072b8a765a67cb3/1"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "mihakralj",
+      "id": "harvest-source-66cab09005ec4da9a09b8738",
+      "license": "Apache-2.0",
+      "locator": "author/version and positive period requirement:L1-L15; state and exact decay update:L16-L64; default parameter and call:L68-L72",
+      "revision": "PUB;83ccadd83d3041daa072b8a765a67cb3@1.0",
+      "sha256": "be28a2cfeb9133136b09efbb58da14a46270c062864114e694721ee4f1af2a3f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B83ccadd83d3041daa072b8a765a67cb3/1",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "mihakralj",
+      "id": "harvest-source-24e2f5595bcde60e4ded7230",
+      "license": "NOT_ESTABLISHED",
+      "locator": "Pinned author publication or identity listing",
+      "revision": "content-sha256:3574acfcedc46e0898811796ba64f6bedbacc7e438cdc655648106374f3dbb2c",
+      "sha256": "3574acfcedc46e0898811796ba64f6bedbacc7e438cdc655648106374f3dbb2c",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://www.tradingview.com/script/BZUkyow6-Decay-Min-Max-Channel-DECAYCHANNEL/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "mihakralj",
+      "id": "harvest-source-7190682a437edc53e9b7d652",
+      "license": "NOT_ESTABLISHED",
+      "locator": "Pinned author publication or identity listing",
+      "revision": "content-sha256:63226672eeda2c36e3d4126f75b1a74ed96fcd7108cb3f49ffedf4b3549cbe1f",
+      "sha256": "63226672eeda2c36e3d4126f75b1a74ed96fcd7108cb3f49ffedf4b3549cbe1f",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-7/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

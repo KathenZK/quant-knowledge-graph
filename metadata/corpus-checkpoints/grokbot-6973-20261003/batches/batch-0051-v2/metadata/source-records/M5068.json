@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5068",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5022,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b52bf67a28818ace0f050e1c220cf7a666d2166099d635e04825241daa4e993e",
+    "rule_sha256": "c57e3cdf94bfda859b93e667333d0e3f89f05a18ceb1a208a05182be0806dbfa"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5068",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5068"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bestfolio.app/strategies/rp3-trend-tilted-core"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Beyond Passive (adapted) / BestFolio"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-217/W2279"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BeyondPassive·三资产逆波风险调整倾斜：月末；SPY/TLT/GLD·63日逆波；12月收益/波动映射[-1,1]后权×(0.5+0.5×trend)余权BIL（RP3·RiskAdj12m）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "RP3 Trend-Tilted Core (Standard risk_adj_12m)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Beyond Passive / BestFolio《RP3 Trend-Tilted Core》**Standard** 变体：对 **SPY、TLT、GLD** 按近 **63** 日波动 **逆波加权** 得风险平价目标权。各腿趋势 = 将 **(12月总分收益 / 自身波动)** **截断映射到 [-1,+1]**（页：Scale…to [-1,+1]；trend_signal=risk_adj_12m）。持仓权 = 目标权 × **(0.5 + 0.5 × trend)**（上行满仓、中性半仓、下行零）；未用满的权停 **BIL**。不是二元 AbsMom12（M4974）；不是 SMA10 带（W2280）。计入美股/ETF。提出日期 2026。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BestFolio RP3 · InvVol63 · risk_adj_12m · tilt 0.5+0.5×trend · BIL"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

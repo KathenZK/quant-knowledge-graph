@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3448",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3402,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "add65734416e41c805489bbd43f51428bf54a2eed427d5c105a76d0600cb00e3",
+    "rule_sha256": "937ef2c6e896e7782ca0cb1e7a6a96c4837ade93759f606e56c0c9ac27f7120a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3448",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3448"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.fmz.com/strategy/482904"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "FMZ 策略社区"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密现货：Binance BTC_USDT 日线；日收>周线EMA(20)+0.25×ATR(5)做多（可选RSI(7)>70过滤默认关）；caution时暂停开仓；追踪止损=7日最高低点−ATR（caution则−0.2×ATR）（FMZ Bitcoin Regime Filter）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-02-20"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密现货：Binance BTC_USDT 日线；日收>周线EMA(20)+0.25×ATR(5)做多（可选RSI(7)>70过滤默认关）；caution时暂停开仓；追踪止损=7日最高低点−ATR（caution则−0.2×ATR）（FMZ Bitcoin Regime Filter）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写发明者量化《Multi-Timeframe Bitcoin Trading Strategy Based on EMA and RSI Dynamic Momentum Strength》（策略 ID 482904）Principles 与可见 Pine 默认。回测头：Binance BTC_USDT、1d。高周期 `res=W`，EMA Length=**20**；分析周期 `marketTF=D`。`regimeFilter`：日收盘 > 周线 EMA + **0.25×ATR(5)**。可选 RSI 动量过滤：`useRSI` 默认 **false**，阈值 rsiMom=**70**，RSI 长度 **7**。caution：bullish 且 (7日最高−当日低) > **1.5×ATR** → 暂停新开仓。入场：bullish 且空仓且非 caution → 做多。追踪止损：`ta.highest(low,7) − ATR`（若前棒 caution 则减 **0.2×ATR**），只上移。不是裸周线均线核。提出日期取页 Created 2025-02-20。FMZ 482904：日收>周EMA20+0.25×ATR5 体制过滤+caution+7日低−ATR追踪 ≠ 裸周均线。计入加密。提出日期按源文件原样保留2025-02-20。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Strategy Principles + Pine input/regime/trail"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

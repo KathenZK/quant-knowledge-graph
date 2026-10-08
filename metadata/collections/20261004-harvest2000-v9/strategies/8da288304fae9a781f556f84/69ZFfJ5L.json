@@ -1,0 +1,173 @@
+{
+  "economic_basis": {
+    "hypothesis": "用非线性树分裂组合量价状态，预测随后两棒上涨方向；概率门与趋势门筛选多头。此为研究假说，源码模型名和概率输出不证明校准、预测能力或经济有效性。",
+    "missing": [
+      "未证明预测有效、概率校准、盈利或样本外表现。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未执行或编译上游源码，未下载行情或做回测；计算和实际成交未验证。",
+    "未冻结标的、周期、行情版本、市场日历、实际成本和随机seed。",
+    "主源码与固定依赖未见明确许可通知；自撰元数据与上游代码、数据授权分别判断，商用REVIEW_REQUIRED。"
+  ],
+  "name": "六特征二棒方向梯度树与重复信号权益参考退出",
+  "native_source_id": "69ZFfJ5L",
+  "one_line": "以当前标的的六个技术特征训练固定版本浅层梯度树概率；高概率且价高于均线时请求固定现金多头，低概率盈利时间门或高水位回落退出。",
+  "record_id": "69ZFfJ5L",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测或经济效果结论。",
+    "metadata": "仅自撰规则、出处与定位。发布者身份是原站声明，未独立核验。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/script/69ZFfJ5L-XGBoost-Mini-Strategy-The-Quant-Science/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "thequantscience",
+      "id": "tradingview-69ZFfJ5L-published-code",
+      "license": "NOASSERTION; saved source has no explicit license notice; commercial use REVIEW_REQUIRED",
+      "locator": "decoded json.source lines; review.field_spans",
+      "revision": "PUB;ff7254d98ef349e795fbc38e0ebce119@3.0",
+      "sha256": "ea3e9e3c147a9d1063fa2b76f5e675cbdbee255b9d640da74235d2b8e537d7c3",
+      "supports": [
+        "默认输入、训练调用、仓位与实际控制流"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3Bff7254d98ef349e795fbc38e0ebce119/3",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "thequantscience",
+      "id": "tradingview-list-47a66a6e69e9d2be0edf",
+      "license": "NOASSERTION; saved source has no explicit license notice; commercial use REVIEW_REQUIRED",
+      "locator": "公开页面身份对象；快照内容hash定位",
+      "revision": "sha256:47a66a6e69e9d2be0edfc00cd7f6672e31c29d4f11e40a892c876da376c42c1a",
+      "sha256": "47a66a6e69e9d2be0edfc00cd7f6672e31c29d4f11e40a892c876da376c42c1a",
+      "supports": [
+        "公开发布ID、PUB ID、版本与发布用户"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-2/?script_access=open&script_type=strategies&sort=latest_popular",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "thequantscience",
+      "id": "tradingview-SQ2QIdN6-library-v1-code",
+      "license": "NOASSERTION; saved source has no explicit license notice; commercial use REVIEW_REQUIRED",
+      "locator": "decoded json.source lines; review.field_spans",
+      "revision": "PUB;25e99ee831a044ea8ac91104704b9df0@1.0",
+      "sha256": "27ac64bcce1c36f4bab48d65bbe1b194040d0c45cc671b6db5fa01a2046d0191",
+      "supports": [
+        "固定依赖库的分裂、叶值、训练、预测与边界"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B25e99ee831a044ea8ac91104704b9df0/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "thequantscience",
+      "id": "tradingview-SQ2QIdN6-library-identity",
+      "license": "NOASSERTION; saved source has no explicit license notice; commercial use REVIEW_REQUIRED",
+      "locator": "公开页面身份对象；快照内容hash定位",
+      "revision": "sha256:eceaaa151c3ab630bcbd7d5562693dc0df9ea38f18208223345d073b2b67d652",
+      "sha256": "eceaaa151c3ab630bcbd7d5562693dc0df9ea38f18208223345d073b2b67d652",
+      "supports": [
+        "lib_id与公开PUB/version精确绑定"
+      ],
+      "url": "https://www.tradingview.com/script/SQ2QIdN6/",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView",
+      "id": "tradingview-pine-v6-default-margin",
+      "license": "NOASSERTION; official documentation, source script licenses do not apply",
+      "locator": "官方Pine v6迁移文档 Default margin percentage；保存HTTP原字节及解码HTML，解码字符124092起",
+      "revision": "sha256:3acd5123cab2f0448fb1f8be4d8391a3bb77bd0466d49cfeb383ce2576cc57eb",
+      "sha256": "3acd5123cab2f0448fb1f8be4d8391a3bb77bd0466d49cfeb383ce2576cc57eb",
+      "supports": [
+        "Pine v6默认margin_long/short为100；可用资金不足不开放entry；空头亏损可能margin call"
+      ],
+      "url": "https://www.tradingview.com/pine-script-docs/migration-guides/to-pine-version-6/",
+      "verification": "FETCHED_PINNED_OFFICIAL_DOCUMENTATION_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "tradingview-69ZFfJ5L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "订单仅作用于当前图表标的，没有冻结交易所/代码或多资产池。声明账户计价 USDT 并不限定图表必须是某个加密货币，也不证明其报价币与账户币一致；公开列表图表资产不作策略冻结资产。"
+    },
+    "cost": {
+      "evidence": [
+        "tradingview-69ZFfJ5L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "明确百分比佣金0.05、滑点5 ticks；手续费真实适用范围、价差、资金费、融资、税费、数据费、换汇和容量均缺失。未用网页回报宣传判断质量。"
+    },
+    "entry": {
+      "evidence": [
+        "tradingview-69ZFfJ5L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只做多。模型已存在、bar_index>300、prob>0.54、距上次可见多仓转空仓棒超过1棒、C>SMA15时请求XGB-Mini多头。last_exit_bar初−999；只在前棒pos>0且本棒pos==0时更新。入口不要求空仓：每次条件满足都先把price_entry设为当时strategy.equity、bar_filter设为当前棒+3，再发entry；即使pyramiding限制阻止新增成交，这两状态赋值仍在源码路径上。"
+    },
+    "execution_time": {
+      "evidence": [
+        "tradingview-69ZFfJ5L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "process_orders_on_close=true；未显式calc_on_every_tick/calc_on_order_fills。一次源码调用顺序是先计算特征并可能重训→预测→更新退出冷却→买入条件赋值并发entry→模型close→更新可见仓位高水位→回落close。绘图多头圆点另检查opentrades==0，这个显示限制没有加到真实entry分支。只确认请求控制流；没有运行、编译、回测或核对实际成交。"
+    },
+    "exit": {
+      "evidence": [
+        "tradingview-69ZFfJ5L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "模型退出：prob<0.46且账户equity严格高于最近一次合格买入信号保存的equity，且bar_index>该信号棒+3，调用strategy.close；参考值不是成交价或必然是建仓时权益。另维护10%高水位回落：第一次观察到多仓时high_water=position_avg_price、trail=0.9×均价；后续在仓每棒先high_water=max(旧值,H)，trail=max(旧trail,0.9×high_water)。非首次可见在仓棒且L<=trail时市价close；当前H更新在L测试之前。空仓清高水位和trail。没有固定止盈，没有strategy.exit价格止损单，不能称会在trail价格成交。"
+    },
+    "position": {
+      "evidence": [
+        "tradingview-69ZFfJ5L-published-code",
+        "tradingview-pine-v6-default-margin"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "声明strategy.cash、default_qty_value=500、账户初始10000 USDT、pyramiding=1；entry不覆盖qty，即每次请求名义现金500，不是500单位或每次5%当前权益。Pine v6未显式声明保证金；官方迁移文档默认margin_long/short=100，资金、币种换算和手数约束仍可能影响成交。源码没有另做最小量、点值、容量或组合风险校验。"
+    },
+    "risk": {
+      "evidence": [
+        "tradingview-69ZFfJ5L-published-code",
+        "tradingview-SQ2QIdN6-library-v1-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅静态源码审阅。重复多头信号可刷新退出盈利基准与等待钟；10%回落是当棒高后低条件触发市价平仓，并无盘内顺序或10%损失上界保证，首次观察到持仓棒明确不触发该退出。库的零阈值跳过、分裂哨兵及缺失填0会影响边界；未固定随机seed，不能承诺相同输入一定复现同一模型细节。无样本外验证、无概率校准或收益证据；库名不等于官方XGBoost实现/许可证。依赖版本、默认保证金和实际运行资源/成交尚未验证，C为0等异常输入未专门保护。"
+    },
+    "signal": {
+      "evidence": [
+        "tradingview-69ZFfJ5L-published-code",
+        "tradingview-SQ2QIdN6-library-v1-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认阈值0.54。每次重训用50×6输入；第i=0..49行o=60−i，y=1{C[o−2]−C[o]>0}，等于0和比较不成立归0。调用固定库 train_model(X,y,3,0.1,1,4,10,1,1,0,1)：至多3棵深度3树、学习率0.1、L2=1、4分箱、分裂至少10样本、行列全采样、验证比例0；没有验证早停。库先对每特征50值排序，用nearest-rank的25/50/75百分位作静态阈值，第四槽0，所有等于0的阈值均跳过。训练logit初0；每轮p=sigmoid(clip(logit,−20,20))，g=p−y，h=max(p(1−p),1e−6)。对子集每阈按x<th分左，否则右，两侧各至少5；选择严格较大的 gain=0.5[GL²/(HL+1)+GR²/(HR+1)−G²/(H+1)]，初bestGain=−1e9而不是0，所以没有强制gain>0；叶值−G/(H+1)。每树最多根、左右子及四孙节点三级分裂；根无可用分裂则结束后续树。子节点无分裂时，数据划分沿父/根阈值回退，存储节点用根特征和0阈值，末叶按最近有效祖先对应叶权回填（详见依赖定义定位）；不能补造别的剪枝。每树后logit加0.1×该树值。行列均全采样仍用未显式seed的math.random打乱顺序，平增益取先遇到者。预测沿严格<左/否则右取叶，prob=sigmoid(clip(Σ0.1×叶值,−20,20))；无模型时prob=0.5，空ensemble也输出0.5。"
+    },
+    "timeframe": {
+      "evidence": [
+        "tradingview-69ZFfJ5L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前图表周期未固定。bar_index>300才允许训练/交易；仅bar_index可被50整除时重训，因此正常从0开始的序列第一次训练在350。每次50个样本偏移60..11，标签读取各样本后2棒的价格差正负；最新标签截至当前前9棒，源码索引不读取当前之后实际价格。"
+    },
+    "universe": {
+      "evidence": [
+        "tradingview-69ZFfJ5L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "单图表 OHLCV；六特征为 RSI14/100、(C−EMA50)/C、ROC5/10、ATR14/C、nz(V/SMA20(V))−1，以及当14棒H−L>0时(C−L14)/(H14−L14)、否则0.5。训练和预测取各特征时另以nz填0，因此不能把缺成交量简单当作中性：该第五特征先nz比值再减1，可为−1。不请求外部证券或更高周期数据。"
+    }
+  }
+}

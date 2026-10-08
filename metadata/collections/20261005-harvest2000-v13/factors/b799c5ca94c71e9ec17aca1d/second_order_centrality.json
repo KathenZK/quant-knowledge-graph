@@ -1,0 +1,200 @@
+{
+  "economic_basis": {
+    "hypothesis": "先给低连接强度节点加自环，使图上游走的每个节点总强度相同，再解析计算返回各节点的时间标准差；描述给定图的回访规则性，值低表示该定义下更居中，不是市场风险或收益已得到验证。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-bfce55a158de743d5abe510d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-ccf25230e742494fbf72a9ff",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-2686be91fc4ef09734a080df"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-bfce55a158de743d5abe510d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-ccf25230e742494fbf72a9ff",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-2686be91fc4ef09734a080df"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源先检查非空、无向连通及所选属性是否有负边。本条额外限定N>=2、无输入自环、简单图及有限正权；不将没有显式检查的零权、NaN或自环含义理想化。 用nx.DiGraph(G)复制无向图，每条非自环边变成两条反向弧并保留属性。加权in_degree以缺属性1求每节点强度；由于原图无向，入强度等于出强度。 取最大入强度d*，给每个d_i<d*节点新增weight=d*−d_i的自环；原图不被修改。所有行和变成d*，图变为平衡且对应均匀稳态，但函数并不返回稳态权重。 nx.to_numpy_array(G)不传weight实参，硬用默认字符串\"weight\"和节点迭代顺序；因此本条只审weight=\"weight\"。传其它属性名或None时，前面的degree与新增自环和最终矩阵可能使用不一致的字段，不能把其它参数视为已闭合加权算法。 矩阵逐行除以行和形成P。对每个j复制P、把整列j置0，解(I−Q)m=1；不是删除行/列j的(N−1)维系统，也不是把第j行置0。 把各列解的全体节点和带入返回时间标准差公式，直接np.sqrt后转float并映射原节点。这里是解析解，不模拟随机游走，不涉及随机seed、轨迹长度或Monte Carlo误差。 均匀稳态下平均返回时间为N，区分节点的是回返波动；不能将本条简单称为PageRank/稳态权重的新输出，也不在未来将等价电阻距离/首达时间代数变形再计新族。 边界：N=1无边图源码未在连通检查排除，后续行和0可退化；本合同不收该情形。原自环会在add_edge被覆盖而不是累加，故排除输入自环来保证所写平衡矩阵一致。 源码仅拒绝负权，没有拒绝NaN/Inf、零权连通但有效图断开或零行和；数值合同不能冒称上游进行了这些校验。 计算表达式直接开平方，没有max(0,·)修复。精确值为0的图也可能受浮点误差影响产生微小负数、NaN；未验证具体NumPy版本和数值结果。 本记录固定默认weight路径，不能只复制签名便声称所有权重属性参数有效；后续修复源版本应作为新快照审核，不覆盖现有字节。 文件头为Thomson Licensing/Technicolor的BSD-3-Clause-Clear文本，含不授予专利权条款；共同NetworkX helper为BSD-3-Clause。不得只沿用仓库总许可证覆盖这个文件，也不由此推论文或金融数据授权。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-bfce55a158de743d5abe510d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-ccf25230e742494fbf72a9ff",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-2686be91fc4ef09734a080df"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "先给低连接强度节点加自环，使图上游走的每个节点总强度相同，再解析计算返回各节点的时间标准差；描述给定图的回访规则性，值低表示该定义下更居中，不是市场风险或收益已得到验证。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-bfce55a158de743d5abe510d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-ccf25230e742494fbf72a9ff",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-2686be91fc4ef09734a080df"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条明确weight=\"weight\"（原生默认），输入无向简单无自环连通图，N>=2且有效边权有限严格正；缺weight属性按1。令W为原图对称权重邻接，d_i=Σ_jW_ij，d*=max_i d_i。A=W+diag(d*−d)，P=A/d*。对每个节点j，Q^(j)由P把第j列置0而成，m^(j)=(I−Q^(j))^(-1)1；实际实现用np.linalg.solve。输出SOC_j=sqrt[2Σ_i m_i^(j)−N(N+1)]。每个m_j^(j)对应从该节点出发的首次正返回时间而非0时刻已到达，故不能把它强置0或误把最后常数改成N(N−1)。所有节点组成一个完整族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-bfce55a158de743d5abe510d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-ccf25230e742494fbf72a9ff",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-2686be91fc4ef09734a080df"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in connected undirected simple networkx.Graph, loop-free input, N>=2; finite strictly positive edge weight attribute when present, missing=>1; stable during call）：完整图和原始边强度；内部新增自环只为定义游走。金融节点、关系/权重估计、PIT和观测时间均未提供。。参数：weight：原生默认字段；缺失值1。其它字符串或None仅保留为未审/字段不一致边界；范围reviewed only string \"weight\"；源码默认weight"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-bfce55a158de743d5abe510d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-ccf25230e742494fbf72a9ff",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-2686be91fc4ef09734a080df"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/边/电导/权重的构建、完整节点全集、观测发布时点与PIT均缺失",
+    "外部backend与Python/NumPy/SciPy具体运行依赖未冻结，未执行上游",
+    "没有金融收益、真实信息传播或风险有效性证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "平衡随机游走的节点返回时间离散度",
+  "native_source_id": "second_order_centrality",
+  "one_line": "先给低连接强度节点加自环，使图上游走的每个节点总强度相同，再解析计算返回各节点的时间标准差；描述给定图的回访规则性，值低表示该定义下更居中，不是市场风险或收益已得到验证。",
+  "record_id": "second_order_centrality",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。电流介数概念归属Brandes–Fleischer与Newman；二阶中心性文件注明Erwan Le Merrer及Thomson Licensing版权、引用Kermarrec/Le Merrer/Sericola/Trédan论文。自撰定义保留这些归属，不称已全文复现论文。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。电流介数概念归属Brandes–Fleischer与Newman；二阶中心性文件注明Erwan Le Merrer及Thomson Licensing版权、引用Kermarrec/Le Merrer/Sericola/Trédan论文。自撰定义保留这些归属，不称已全文复现论文。",
+      "id": "harvest-source-bfce55a158de743d5abe510d",
+      "license": "BSD-3-Clause-Clear",
+      "locator": "Thomson BSD-3-Clause-Clear notice, named author, native signature and graph restriction:L1-L43; return-time target and native weight default:L44-L56; original attribution and entire balanced-walk analytic implementation:L79-L141",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "e024dba0ff7907a814b40b5228b7de784e2cf68ab4ff7857b17733c4be9cfe0f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/centrality/second_order.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。电流介数概念归属Brandes–Fleischer与Newman；二阶中心性文件注明Erwan Le Merrer及Thomson Licensing版权、引用Kermarrec/Le Merrer/Sericola/Trédan论文。自撰定义保留这些归属，不称已全文复现论文。",
+      "id": "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+      "license": "BSD-3-Clause",
+      "locator": "DiGraph constructor input:L343-L354; construct graph from incoming data:L376-L391; weighted in-degree contract:L1122-L1141; in-degree view binding:L1166-L1167",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "212a06e63ba05bfbf2ce48f038acd4cf1057ed26ce49342b3e586427892e58a2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/digraph.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。电流介数概念归属Brandes–Fleischer与Newman；二阶中心性文件注明Erwan Le Merrer及Thomson Licensing版权、引用Kermarrec/Le Merrer/Sericola/Trédan论文。自撰定义保留这些归属，不称已全文复现论文。",
+      "id": "harvest-source-ccf25230e742494fbf72a9ff",
+      "license": "BSD-3-Clause",
+      "locator": "native NetworkX graph conversion retains graph and node data:L73-L91; destination initialization preserves nodes:L402-L405; simple graph adjacency entries copied to directed edges:L441-L457",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "5e692169cbb2c3d083be205364f947ea7983f8969b4a4d1a3dc5661a0a782de6",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/convert.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。电流介数概念归属Brandes–Fleischer与Newman；二阶中心性文件注明Erwan Le Merrer及Thomson Licensing版权、引用Kermarrec/Le Merrer/Sericola/Trédan论文。自撰定义保留这些归属，不称已全文复现论文。",
+      "id": "harvest-source-11d15da2a54528d863a1305b",
+      "license": "BSD-3-Clause",
+      "locator": "degree view stores/changes weight name:L597-L623; weighted in-degree iteration missing weights default1:L759-L779",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "60d216370be05f02407138ddec4e23e26073a8e2085144261254f24a393835df",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/reportviews.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。电流介数概念归属Brandes–Fleischer与Newman；二阶中心性文件注明Erwan Le Merrer及Thomson Licensing版权、引用Kermarrec/Le Merrer/Sericola/Trédan论文。自撰定义保留这些归属，不称已全文复现论文。",
+      "id": "harvest-source-ee984db19528f53267982e96",
+      "license": "BSD-3-Clause",
+      "locator": "to_numpy_array hard default weight string and nonedge0:L893-L901; node order, matrix allocation and valid nodes:L1054-L1086; simple graph actual edge weights and array filling:L1099-L1128",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "704777808d7ebe0dcc09412066d25a1564e5ac4a83f8ecac3c78ccea0b82570e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/convert_matrix.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的固定内置实现。电流介数概念归属Brandes–Fleischer与Newman；二阶中心性文件注明Erwan Le Merrer及Thomson Licensing版权、引用Kermarrec/Le Merrer/Sericola/Trédan论文。自撰定义保留这些归属，不称已全文复现论文。",
+      "id": "harvest-source-2686be91fc4ef09734a080df",
+      "license": "BSD-3-Clause",
+      "locator": "undirected component input:L15-L34; complete component enumeration:L82-L88; connected graph entry:L151-L160; empty graph check and connected predicate:L201-L206; complete connected-component BFS:L265-L280",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "746aad8200f5abc45535c7f96bfac1a6d943ed67a8d9db656ea2bac54aebc383",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/components/connected.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

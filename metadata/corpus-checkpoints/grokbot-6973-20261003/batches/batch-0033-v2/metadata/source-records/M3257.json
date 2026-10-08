@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3257",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3211,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "870abb0233f28ffdb583c1473499f1a130c797f66284066589d6b2e2526c6577",
+    "rule_sha256": "f69d595586cb3126a1205230b06faa599ef417113d990cd4ecf0f27081d7024a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3257",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3257"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CustomDataNIFTYAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "印度指数自定义：NIFTY+USDINR日线；仅周三；开盘≥近约50日NIFTY高点则调仓至约90%保证金多，开盘≤低点则对称空（Lean CustomDataNIFTY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "印度指数自定义：NIFTY+USDINR日线；仅周三；开盘≥近约50日NIFTY高点则调仓至约90%保证金多，开盘≤低点则对称空（Lean CustomDataNIFTY）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `CustomDataNIFTYAlgorithm.py`。自定义 `Nifty`/`DollarRupee` 日线；维护 `prices` 窗（`minimum_correlation_history=50`）。仅 `weekday==2`（周三）交易：`quantity=int(margin_remaining*0.9/close)`；`hi/lo=max/min(nifty_price)`；`open≥hi_nifty` → `order(NIFTY, quantity−cur)` 做多；`open≤lo_nifty` → `order(NIFTY, −quantity−cur)` 做空。不是 SPY Donchian/突破核，也不是 IBS 全球ETF核（W480）。提出日期未知。NIFTY+USDINR 自定义日线仅周三开盘≥近50日高做多/≤低做空 ≠ SPY Donchian/IBS全球ETF（W480）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

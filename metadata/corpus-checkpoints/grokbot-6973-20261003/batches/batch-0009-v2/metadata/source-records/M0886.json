@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0886",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 886,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "dfdd990e927f4491a737cab4897829e498f037a7538c9e72106f035df7dfd182",
+    "rule_sha256": "697b66ff357cf93a5d1c227ec62c84acf286ef70b936bdb7b67092bd2f957ef3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0886",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0886"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/505/Bullish-ETF-Oversold-Rebound-Strategy/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Will Sleiman"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "看涨ETF超卖反弹：SPY高于200日才开仓，收盘低于或等于下方20日布林且RSI(14)<30，每仓25%最多4，上轨或较入场下跌5%；SPDR行业名单未列全"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-05-18"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Bullish ETF Oversold Rebound Strategy"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：已点名 SPY、QQQ、IWM、DIA，SPDR 行业 ETF 未列全，不能把未写出的行业代码补成规则。下方与上方 20 日布林带的标准差倍数页面未印出，本条不补，也不写成 2 倍。本条只写已印出的开仓门、超卖与仓位，不是已收的标普 500 ETF 日线只做 SPY：那边中轨为 20 日简单移动平均、上下轨为 2 倍滚动标准差，怀尔德 RSI(14) 低于 30 且收盘低于下轨做多，收盘回到中轨或 RSI 高于 50 离场，仓位为 1 或 0，没有 SPY 高于 200 日才开新仓，没有每仓 25%、最多 4 仓，也不是回到上方布林带或较入场价下跌 5% 离场。日线。仅当 SPY 高于 200 日均线时开新仓；ETF 收盘价低于或等于下方 20 日布林带且 RSI(14)<30 时做多。每仓 25% 资金，最多 4 仓；价格回到上方布林带止盈，或较入场价下跌 5% 止损。计入美股/ETF。提出日期按源文件原样保留2026-05-18。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。SPDR行业名单未列全，布林标准差倍数未印出"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

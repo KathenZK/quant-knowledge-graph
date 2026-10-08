@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2365",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2365,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4e16dcfc7657d62504ea028fba87de0067896d57c554634655f05e4b92268ce4",
+    "rule_sha256": "9506d5e456e0f71cce68fd95cb57800cd95f9970c2878dd0f56d69768bac6012"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2365",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2365"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/liquidate-on-universe-removal"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：粗选日成交额Top5各配10%，证券被移出宇宙则清仓（EasyQuant宇宙剔除）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股（成交额Top5各10%+宇宙剔除清仓；EasyQuant）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-04"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：粗选日成交额Top5各配10%，证券被移出宇宙则清仓（EasyQuant宇宙剔除）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Liquidate on Universe Removal》已印 UniverseRemovalLiquidation。日线；add_universe(coarse)：按 dollar_volume 降序取前5。on_data：对 active_securities 中未持仓且当日有数据者 SetHoldings(0.10)。on_securities_changed：removed 且 invested 则 Liquidate(tag=\"Universe Removal\")。不是细选 PE/市值+SMA200 核（W258/W241）。提出日期取页面 Published on。 不是W258细选+SMA200：本条为粗选日成交额Top5各配10%、移出宇宙则清仓。 计入美股/ETF。 提出日期按源文件原样保留2025-12-04。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

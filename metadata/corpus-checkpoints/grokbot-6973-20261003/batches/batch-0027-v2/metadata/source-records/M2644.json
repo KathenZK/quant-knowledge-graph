@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2644",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2644,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e5fc52722b45b0786592d0ca1fae2061b09aedece4f3d123d96906aaacbeb533",
+    "rule_sha256": "4dc673cfdf147b28cc03ca1b3f95c9790d5918cd3961da1fdc3fc4c64d016074"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2644",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2644"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/intraday-greeks-based-options-selection/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：RUT价上穿EMA(60)买约0.4-delta最近到期call，下穿买约0.4-delta put；同向间隔≥10分钟（QC Documentation target delta）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（RUT穿越EMA60买0.4-delta近月call/put；QC Documentation target delta）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：RUT价上穿EMA(60)买约0.4-delta最近到期call，下穿买约0.4-delta put；同向间隔≥10分钟（QC Documentation target delta）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `intraday-greeks-based-options-selection/main.py`。`add_index(\"RUT\")`；`ema(...,60)`；`updated` 回调：距上次成交不足600秒则返回。若 spot>EMA现价且 spot>EMA前值 → 取最近到期、行权价距现价最近的10张 call，选 |delta−0.4| 最小者 `market_order(1)`（未持该合约时）；若 spot<EMA现且 spot<EMA前 → 对称买 put。Delta 用 `Delta(..., target_delta=0.4)`。不是 W306 周度10-delta铁鹰，也不是备兑核。提出日期未知。 不是W306周度10-delta铁鹰，也不是备兑核：本条为RUT价上穿EMA(60)买约0.4-delta最近到期call，下穿买约0.4-delta put；同向间隔≥10分钟。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

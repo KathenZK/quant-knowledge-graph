@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1702",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1702,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3f3007ce2244d528428c31c387a2e35cdf84628f5fcfc30e25adc99fb82c5d5a",
+    "rule_sha256": "ce98f16710027824d4266c2f057f5254f784d9603dc65005b3ee618174b66704"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1702",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1702"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Gumbo1/Gumbo1.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Gumbo1.py；raph92系）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Gumbo1：5m，EWO(5,35)<0且1h布林中轨≥1h T3且T3(5)≤EMA做多；StochSMA(80)>80或T3≥BB(40)中轨平多；止损−25%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Gumbo1；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Gumbo1：5m，EWO(5,35)<0且1h布林中轨≥1h T3且T3(5)≤EMA做多；StochSMA(80)>80或T3≥BB(40)中轨平多；止损−25%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写davidzr仓strategies/Gumbo1/Gumbo1.py默认参数。timeframe=5m；stoploss=−0.25；minimal_roi约0/20/64/168分钟对应10%/5%/3%/0。EWO=(EMA5−EMA35)/low×100（文件内EWO默认）。主图EMA为ta.EMA(dataframe)（未另写周期）。T3为HPotter式六重EMA加权，b=0.7，默认length=5。1h信息对：T3与BBANDS(20)中轨。做多：EWO<ewo_low默认0，且bb_middleband_1h≥T3_1h，且T3_5≤EMA。平多两支或：stoch_sma(window=80)>80（stoch慢K/D均值再SMA10），或T3_5≥bb_middleband_40。提出日期未知。 不是单EWO或单布林中轨：本条是5m Gumbo1，EWO(5,35)<0且1h布林中轨≥1h T3且T3(5)≤EMA做多，StochSMA(80)>80或T3≥BB(40)中轨平多，止损−25%。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

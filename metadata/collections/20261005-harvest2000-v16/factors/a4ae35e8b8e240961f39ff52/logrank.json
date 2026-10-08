@@ -1,0 +1,174 @@
+{
+  "economic_basis": {
+    "hypothesis": "在合并事件时间上比较一组的实际事件数与按仍在观察中的人数预期的事件数，保留右删失；事件与分组的金融含义尚须另定。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-aa5fa3d6e67003077caf93fe",
+        "harvest-source-10b4db46206ddf8072b83be2",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "全部观测、分组与事件/删失标签在计算时已经发布后才可提取；金融输入、窗口、事件口径和发布时间另行固定。未运行来源函数、采集市场数据或回测，p值没有金融时序校准。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-aa5fa3d6e67003077caf93fe",
+        "harvest-source-10b4db46206ddf8072b83be2",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "显式CensoredData(uncensored=u,right=c)，left/interval为空；也允许全部未删失数组。64位NumPy计数路径并附加合并总观察数N<=32767，保证源码整数连乘在int64内；不是源接口自动施加的规模限制。 _iv_CensoredData先规范输入。合并xy只拼接_uncensored/_right，因此不能把任意左删失/区间删失对象当支持；本条先排除，不依赖源码在两组上对称抛错。 ecdf分别对合并样本和x求每个不同时间的仍在观察人数与事件数。无删失用unique计数，右删失路径把事件/删失合并排序，取每个时间第一个at_risk和该组总事件数；同点删失在该时点事件前仍在risk-set。 只保留合并的真实事件时间，以searchsorted默认left在x时间网格取其事件前人数；x已无后续观察时取附加0。y人数由合并减x，而非把另一组所有删失都当事件。 按超几何式累加方差，n_j=1的项跳过；分子直接用x全部已发生事件数量减预期总数。sf内部同时计算Kaplan-Meier乘积但此检验只使用_n/_d；原函数输出Z/p，不返回风险集或生存曲线。 边界：删失应为非信息性/独立观察机制才能使用通常的生存解释；退市、停牌、止损或主动终止可能与结果相关，不能直接声称无偏。 全删失、所有事件在最后一起发生、两组风险期完全不重叠等可能令方差和0；源码会除0或产生NaN，没有统一返回“无差异”的保护。 原生数组计数连乘未先转float，故加入64位计数与N<=32767的明确范围；其它平台整数宽度/大规模样本未审未运行。 这是风险集事件数差，不是给事件概率拟合logit/Cox回归，也不产生未来持仓/收益或个体存活预测。 输入共同时间原点，未提供延迟入组/左截断处理；不能把尚未进入观察的对象预先纳入风险人数。 全部观测、分组与事件/删失标签在计算时已经发布后才可提取；金融输入、窗口、事件口径和发布时间另行固定。未运行来源函数、采集市场数据或回测，p值没有金融时序校准。 输出：一个完整统计构造族；统计量、p值、内部量和全部原生选项不拆计数"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-aa5fa3d6e67003077caf93fe",
+        "harvest-source-10b4db46206ddf8072b83be2",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在合并事件时间上比较一组的实际事件数与按仍在观察中的人数预期的事件数，保留右删失；事件与分组的金融含义尚须另定。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-aa5fa3d6e67003077caf93fe",
+        "harvest-source-10b4db46206ddf8072b83be2",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "两组x/y分别有已发生事件时长u及右删失时长c，均有限非负float64；每组非空，仅这两种观察。合并所有实际事件的不同时间t_j。n_xj=#{u_x>=t_j}+#{c_x>=t_j}，n_yj同式，n_j=n_xj+n_yj；d_xj=#{u_x=t_j}，d_yj同式，d_j=d_xj+d_yj。E_xj=d_j n_xj/n_j。n_j>1时V_j=n_xj n_yj d_j(n_j−d_j)/[n_j²(n_j−1)]；n_j=1的项取0。Z=[Σ_j d_xj−Σ_j E_xj]/sqrt(Σ_j V_j)，要求正有限方差和。原生statistic返回有符号Z，非Z²；双侧p=2Φ(−|Z|)，less=Φ(Z)表示x事件率更低/生存较好，greater=Φ(−Z)。风险集同点先包含事件及删失者，再向后移除；同族不另计Z²、方向、删失比例或生存曲线辅助输出。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-aa5fa3d6e67003077caf93fe",
+        "harvest-source-10b4db46206ddf8072b83be2",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x,y observation records（two nonempty groups of finite nonnegative float64 durations; only uncensored and right-censored; no left/interval; common duration unit and time origin）：事件已发生或仅知直到此时未发生。需要另定事件、观察终止原因和分组，未知结果不能当0事件时长；integer and variance domain（64-bit NumPy integer counts; pooled total N<=32767; sum_var>0 finite）：限制整数乘法溢出及无可比较事件的退化；并不表示金融独立删失条件已成立。参数：alternative：按x相对y的事件率定义符号；不是x平均时长大小的无条件检验；范围two-sided/less/greater；源码默认two-sided"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-aa5fa3d6e67003077caf93fe",
+        "harvest-source-10b4db46206ddf8072b83be2",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "scipy/scipy",
+  "lab": null,
+  "missing_information": [
+    "未执行来源算法、未回测、未冻结数值运行环境",
+    "金融输入、市场、窗口、组标签生成/PIT发布时间缺失",
+    "p值在金融序列下的校准和多重检验未审",
+    "不证明收益方向、经济独立性或商业许可"
+  ],
+  "name": "含右删失风险集的两组 Logrank 事件率诊断",
+  "native_source_id": "logrank",
+  "one_line": "在合并事件时间上比较一组的实际事件数与按仍在观察中的人数预期的事件数，保留右删失；事件与分组的金融含义尚须另定。",
+  "record_id": "logrank",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_survival.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-aa5fa3d6e67003077caf93fe",
+      "license": "BSD-3-Clause",
+      "locator": "EDF constructor used by ECDFResult:L19-L56; result wrapper and CensoredData coercion:L222-L251; ECDF dispatch and complete uncensored/right-censored risk counts:L399-L469; native direction, statistic and variance definition:L490-L570; complete logrank computation:L640-L687",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "b52a923262910586ce1c85315b2ee90846eb07b84ce8adfb5444d14ba70b4601",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_survival.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-10b4db46206ddf8072b83be2",
+      "license": "BSD-3-Clause",
+      "locator": "constructor input and interval validation:L1-L44; constructor arrays and explicit empty left/interval scope:L232-L254; censor count:L301-L310; uncensored conversion called only when no censoring:L441-L452",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "417f0b6c7bf24d896cbd900f388a934c81f60238382c17150d42092c2728bd94",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_censored_data.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-dcaa4b2ca5e08690e90c3e75",
+      "license": "BSD-3-Clause",
+      "locator": "tail direction helper:L1559-L1575; normal cdf/sf:L11231-L11243",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "f83fbd7a76afa61a865820917184eabd67d5ebc04cde4db102ba1ba86e94d0cb",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-bbbecde791dfaaebacee469f",
+      "license": "BSD-3-Clause",
+      "locator": "1D input, defaults, finite path, paired NaN policy:L433-L620; factory defaults:L365-L370; ordinary 1D result return:L621-L623",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "a1650feb6cfcf6f9a1c764c824e725b39f039a2e19001fb60f48f88c354d102f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_axis_nan_policy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-088c1d9c7042eaaa4ba39300",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_scope:L1-L81",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "6a4d55e53007e0d509dc30f5a8d460c280f0f5bcf2567c910948e7eb23047b10",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

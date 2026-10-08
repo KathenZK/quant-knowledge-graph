@@ -1,0 +1,105 @@
+{
+  "economic_basis": {
+    "hypothesis": "在已给定的过滤复形中描述连通分量、环与更高维空洞跨过滤阶段的存续；可作为结构诊断，不是已证明金融风险或收益信号。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-cd54147d6a822d9dbff41ee0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "必须在给定整条有限过滤序列及其全部原始输入都已观测/发布后才能给完整死亡配对与最终essential判定。过滤顺序可以是尺度而非时间；若输入由完整历史窗估计，不可把最终条形码回填窗内当时已知。金融对象、构图/补面/尺度、供应商和修订/PIT MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-cd54147d6a822d9dbff41ee0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入是已明确的有限抽象单纯复形和面相容插入顺序；非空单纯形是互异顶点组成的有限集合，维数=顶点数−1。所有非空真面都必须存在且更早；顶点边界为0，不额外把空单纯形作为维度−1列。审普通同调，不改成去掉常数分量的约化同调。 取F2即系数只0/1且加减都为异或。各维chain由该维单纯形作基，boundary把一个单纯形映为全部余维1面之和；cycle=ker boundary，boundary-space=im下一维boundary，同调H_p=cycle/boundary-space。这是模2线性代数，不用实数SVD求秩或浮点小量阈值。 采用原文允许的面相容过滤中特定每步一单纯形子合同，过滤坐标就是插入序号，不是自动日历时间。一般多单纯形同级过滤、非整数值映射和同级零寿命处理未另审，不默默为金融数据选择距离或阈值。 构造N×N combined-boundary D。因所有面先于上胞，非零行号严格小于列号；不同维度同时存于同一矩阵，不将图的邻接矩阵当D。R初始复制D，按左到右逐列，只用已经约化的更早列进行模2列加。 当两个非零列最低非零行同为i时，把早列异或进当前列，消去当前最低位。每次消元当前low严格降低，或列变零；每列结束后非零low互异。算法不做任意列置换，也不从未来列往前消元。定义是有限精确算法，原文立方最坏上界不作为本库已测资源保证。 low(j)=i>0表示j的负单纯形杀死由正单纯形i代表的一类，输出[i,j)；维度取i的维数，不取j维数。R列i为零但其行从不成为任何low时，对应在最终K仍存活的essential类，输出[i,∞)。ordinary H0一般含一个或多个无穷区间，不自动删除最后连通分量。 输出按维度分组的多重集合，重复区间须保留重数。每步一单纯形合同下有限pair满足i<j；源图中无限对角点用于图比较约定，本计算输出不额外枚举无限多个对角点。∞是未在给定有限过滤内死亡，不是预测它在未来市场永不消失。 由全部区间可查每对a<=b的持久Betti/rank以及每级Betti(beta^(a,a))；这些是同一整族的查询或摘要，不单独计因子。生成cycle代表基和约化矩阵R可能有多种，而给定有序过滤的配对不因合法消元选择改变；本条不把某一cycle代表当唯一经济对象。 本条没有从行情、距离矩阵、点云或网络自动选择单纯复形的规则。Rips/Cech/clique扩展、窗口/尺度、坐标/维度、不同语言和更快算法不因为本条未实现就另拆新增。一般高维计算可形成结构状态特征，收益方向和金融解释尚为研究用途假设。 边界：严格面相容顺序、完整非空面闭包、无重复simplex和F2是已审数学输入域；论文伪代码不是实际输入验证器，不能宣称坏输入会自动被拒绝。 0维连通分量合并与MST/单链接共享核，不能以新增名称/输出坐标计数；本族的新提名限完整一般高维boundary/quotient生灭定义。 同一图的三边环和加入填充三角面的复形有不同H1；不可默认看到三条边就已经存在2-simplex。金融图如何补面仍MISSING。 R本身/cycle代表不唯一，essential∞不能截成任意常数，过滤序号不能默认解释为交易时间或盈利持有期。 2004作者会议稿Fig8的有限区间维度标号疑点单独保留；核心仅依据2008§3明确F2列约化与正负配对，不默默纠正不同版本。2005journalURL403不是已取得其内容。 已给图到Landscape表示与从过滤复形计算PH是上下游关系；既有Landscape合同只接有限death，不能无规则地消费本条∞区间。 仅固定来源和数学算法，未锁具体库/运行环境、存储策略/容量或实际数值测试；未回测、未收行情。 作者主页公开可读与不完整版权模板均不等于开放/商业授权；2004有限个人课堂许可也不授权公开全文再分发或行情。 输出：各p的有限多重生灭区间集合B_p及essential∞端点；等价持久rank/Betti查询不另计。非金融下单输出。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-cd54147d6a822d9dbff41ee0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在已给定的过滤复形中描述连通分量、环与更高维空洞跨过滤阶段的存续；可作为结构诊断，不是已证明金融风险或收益信号。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-cd54147d6a822d9dbff41ee0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定互异非空单纯形sigma_1,…,sigma_N的有限序列，所有非空面也在序列且真面先于其上胞；K_t={sigma_1,…,sigma_t}，K_0为空。本合同每步仅加入一个单纯形，系数F2。D_ij=1当且仅当sigma_i是sigma_j的余维1面，否则0。R←D；low(j)=max{i:R_ij=1}，零列low=0。从j=1到N，只要存在k<j且low(k)=low(j)>0，作R_:j←R_:j XOR R_:k。每个非零列j、i=low(j)输出维度p=dim(sigma_i)=dim(sigma_j)−1的区间[i,j)；每个零列i且无任何j以i为low，输出[i,∞)。全部区间组成各p的多重集B_p。beta_p^(a,b)=#{[u,v)∈B_p:u<=a且v>b}，0<=a<=b<=N；这等于rank(H_p(K_a;F2)→H_p(K_b;F2))。条形码、各维区间及其rank/Betti查询合计一族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-cd54147d6a822d9dbff41ee0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "ordered_simplices（finite sequence length N>=1 of distinct nonempty finite vertex sets; every nonempty proper face present earlier）：顶点标识仅用于确定同一对象；顺序完全指定、面闭包完整，不能只给邻接矩阵/点云而缺高维面。；dimensions（derived nonnegative integer dim(sigma)=cardinality(sigma)−1）：由顶点集合确定，不是任意另输入的类别；所有维度同时计一族，非每维另收条目。。参数：coefficient_field：综述明确的binary列加路径；不是软件默认，不推广到整数/PID或一般域；范围explicit F2/modulo2 review scope；来源默认值None；本条选定F2；filtration_coordinate：明确有限子合同，非日历时间；一般同级多simplex及重标号不另计族；范围one simplex per step; insertion integer1..N；来源默认值None；本条选定insertion_index"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-cd54147d6a822d9dbff41ee0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "pub.ista.ac.at/~edels/Papers",
+  "lab": null,
+  "missing_information": [
+    "金融输入与过滤复形/高维面/尺度构造规则和PIT未定义",
+    "软件实现、运行环境、内存预算与实际计算验证未固定",
+    "原作者文档具体商业再使用许可及输入数据权利未核定",
+    "不审一般系数域、同级多simplex过滤或后续relative/extended等扩展",
+    "未验证风险/收益解释或市场可用性"
+  ],
+  "name": "过滤单纯复形中环与空洞的产生和消失",
+  "native_source_id": "2008-02-PersistentHomology.pdf",
+  "one_line": "用模2边界矩阵列约化，把逐步加入点、边、面形成的拓扑结构转为各维生灭区间。",
+  "record_id": "2008-02-PersistentHomology.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://pub.ista.ac.at/~edels/Papers/2008-02-PersistentHomology.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Herbert Edelsbrunner and John Harer, Persistent homology — a survey, Contemporary Mathematics453, AMS2008, pp257–282; exact author-hosted filename2008-02-PersistentHomology.pdf. Original algorithm attribution and supplemental2004 Zomorodian/Carlsson conference-paper discrepancy retained. Self-authored Chinese mathematical metadata.",
+      "id": "harvest-source-cd54147d6a822d9dbff41ee0",
+      "license": "NOASSERTION_SPECIFIC_REUSE_GRANT_NOT_ESTABLISHED",
+      "locator": "author/title attribution and unfilled copyright template; not an open license: physical PDF p1-p1; F2 chains, boundary map and cycle-boundary spaces: physical PDF p3-p3; homology quotient, ordinary homology and Betti dimension: physical PDF p4-p4; finite face-closed simplicial complex, filtration and birth/death definition: physical PDF p5-p5; essential intervals, persistence multiplicity and rank of inclusion map: physical PDF p6-p6; face-compatible total order and complete combined binary boundary matrix: physical PDF p8-p8; left-to-right column additions, low pivot, finite pairs and essential classes: physical PDF p9-p9; fixed-order pairing versus nonunique reduced matrices and exclusion of later variants: physical PDF p10-p10",
+      "revision": "Author-hosted 2008 survey; content SHA256 80bf55c1b0e1dfc7b52ab09b5e04584d840191bf4e8aef91da37f041bf0ae893",
+      "sha256": "80bf55c1b0e1dfc7b52ab09b5e04584d840191bf4e8aef91da37f041bf0ae893",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://pub.ista.ac.at/~edels/Papers/2008-02-PersistentHomology.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Herbert Edelsbrunner and John Harer, Persistent homology — a survey, Contemporary Mathematics453, AMS2008, pp257–282; exact author-hosted filename2008-02-PersistentHomology.pdf. Original algorithm attribution and supplemental2004 Zomorodian/Carlsson conference-paper discrepancy retained. Self-authored Chinese mathematical metadata.",
+      "id": "harvest-source-290000da9bae4c483d33d081",
+      "license": "NOASSERTION_WEBPAGE_SHELL",
+      "locator": "exact author list, title, AMS volume453 year2008 pp257–282 and PDF filename:L586-L591",
+      "revision": "Author publication-index HTTP snapshot SHA256 63465a17d226479bcf80bb6818efbbd653042ca1841a22ba4ea997f04b8474b3",
+      "sha256": "63465a17d226479bcf80bb6818efbbd653042ca1841a22ba4ea997f04b8474b3",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://pub.ista.ac.at/~edels/Papers/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

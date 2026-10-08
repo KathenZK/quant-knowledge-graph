@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2814",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2814,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b29b151045b9b71221e5358e79804252338dfdb7f325c8e4f46f4006e5346688",
+    "rule_sha256": "f5d926321225167d10c1d569febf70a9080e58939a69dbd9de294b36e9ac5db3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2814",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2814"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/alternative-data-chain-universe-braincompanyfilinglanguagemetricsuniverseall/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：Brain年报全文与MD&A情绪均>0且成交额Top100，每日09:00单票上限10%（QC Documentation chain filing language）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（Brain年报与MD&A情绪均>0且成交额Top100每日09:00单票上限10%；QC Documentation chain filing language）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：Brain年报全文与MD&A情绪均>0且成交额Top100，每日09:00单票上限10%（QC Documentation chain filing language）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `alternative-data-chain-universe-braincompanyfilinglanguagemetricsuniverseall/main.py`。选：`report_sentiment.sentiment>0` 且 MD&A（`management_discussion_analyasis_of_financial_condition_and_results_of_operations`）`sentiment>0`；交集基本面按成交额取前100。每日 09:00：权重=`min(1/N, 0.1)`。不是 W332（等权、无成交额Top100、无单票10%上限）核。提出日期未知。 不是W332（等权、无成交额Top100、无单票10%上限）核：本条为Brain年报全文与MD&A情绪均>0且成交额Top100，每日09:00单票上限10%。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

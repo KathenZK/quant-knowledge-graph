@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "趋势结构与新高低扩张的共振可能减少单指标噪声；并无收益或因果证据。",
+    "missing": [
+      "没有经过核实的原始论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "作者原始发布URL、原始版本与镜像一致性尚未核实。",
+    "依赖Pine内建函数及运行时；未编译、执行、下载行情或回测。",
+    "基线近邻经正文比较，但还没有独立复核的全库机制去重结论。",
+    "实际市场、周期、价格调整、合约规格及可交易约束未冻结。",
+    "tradeDirection输入当前未接入订单限制。",
+    "日期范围由timenow动态决定，复现必须冻结。"
+  ],
+  "name": "均线排列积分与新高低积分共振的超趋势策略",
+  "native_source_id": "432793",
+  "one_line": "均线排列评分和新高低事件各累积10根，二者方向与SuperTrend一致时入场，SuperTrend翻向时退出。",
+  "record_id": "432793",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果。未断言源码、论文、数据或商业内部使用权；没有把镜像发布权限扩展为原作者授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E9%AB%98%E4%BD%8E%E6%8C%87%E6%A0%87%E4%B8%8E%E5%9D%87%E7%BA%BF%E9%85%8D%E5%90%88%E6%8C%87%E6%A0%87%E7%AD%96%E7%95%A5Aligned-Moving-Average-and-Cumulative-High-Low-Index-Combination-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ仓库发布账号 ChaoZhang；源码署名声明 HeWhoMustNotBeNamed；转载链与原作者发布版本未核实，不把上传者视为实现作者。",
+      "id": "fmz-432793-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "e340e629b089682cae3f5861a25541e44ff71e008ee635b72009458968e03aed",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E9%AB%98%E4%BD%8E%E6%8C%87%E6%A0%87%E4%B8%8E%E5%9D%87%E7%BA%BF%E9%85%8D%E5%90%88%E6%8C%87%E6%A0%87%E7%AD%96%E7%95%A5Aligned-Moving-Average-and-Cumulative-High-Low-Index-Combination-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-432793-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表当前标的；策略主体没有固定证券代码。FMZ回测注释的BTC_USDT配置仅是转载包装，未确认为原作者适用市场。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-432793-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "显式strategy.commission.percent，commission_value=0.01；这是源码模拟佣金设定。滑点、点差和持仓费用未给。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-432793-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "SuperTrend dir=−1且排列积分方向=1且新高低积分方向=1，提交Buy；三者相反提交Sell。默认tradeDirection输入为long，但限制调用被注释，不能描述为默认仅多。只在当前timenow年份向前10年的动态起始界限之后开仓。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-432793-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v4，calc_on_order_fills=true；订单成交后可重算，历史/实时重算与成交顺序未验证。当前bar也参与新高低与均线评分。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-432793-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "dir=1关闭Buy，dir=−1关闭Sell；入口共振条件消失本身不触发清仓。反向入口和对应close的成交顺序未核。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-432793-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认100%权益、pyramiding=1、初始资本1000；买卖入口没有单独qty覆盖。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-432793-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "未见固定价止损或最长持有；SuperTrend这里只作状态和退出条件，没有把线价作为止损单。动态timenow日期过滤会随复现日期变化，研究前须冻结。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-432793-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认SMA5/10/20/30/50/100/200。七项比较是C>MA5、MA5>MA10、MA10>MA20、MA20>MA30、MA30>MA50、MA50>MA100、MA100>MA200，成立数记u。完全多排给1，全部严格反向给−1；否则includePartiallyAligned默认true时按u>5给0.5、u<2给−0.5、u>3给0.25、其余给−0.25（关闭开关则这些部分排列给0）。滚动10根合计，增减分别给方向±1，持平延续上次方向，初值0。另当high等于近50根最高价记1，否则low等于近50根最低价记−1，否则0；滚动10根合计用相同增减/持平规则定方向。SuperTrend默认长度10、倍数2。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-432793-published-code"
+      ],
+      "status": "MISSING",
+      "text": "计算窗口均以图表bar为单位；策略主体未强制周期。FMZ回测包装周期与原作者要求没有等价证明，原始运行周期为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-432793-published-code"
+      ],
+      "status": "MISSING",
+      "text": "没有跨资产选股或动态股票池；源码运算针对当前图表序列。具体交易品种、合约乘数、交易日历和调整规则仍须另行冻结。"
+    }
+  }
+}

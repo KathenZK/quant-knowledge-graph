@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2809",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2809,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "782a9237c3934fd92fcb49bab78ddc77183b6476f9d5fa65f687b79c1f2c1cd8",
+    "rule_sha256": "1ffbb836979fe911b0b2c169dffd6fe300a4b977edf0a98420aa5491c43c6e34"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2809",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2809"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/alternative-data-chain-universe-eodhdupcomingsplits/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：EODHD未来3日内正向拆股（split_factor>1）且成交额Top100，每日09:00单票上限10%（QC Documentation chain splits）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（EODHD未来3日正向拆股且成交额Top100每日09:00单票上限10%；QC Documentation chain splits）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：EODHD未来3日内正向拆股（split_factor>1）且成交额Top100，每日09:00单票上限10%（QC Documentation chain splits）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `alternative-data-chain-universe-eodhdupcomingsplits/main.py`。选：`split_date≤now+3日` 且 `split_factor>1`；交集基本面按成交额取前100。每日 09:00：权重=`min(1/N, 0.1)`。不是 W326（等权、无成交额Top100、无单票10%上限）核。提出日期未知。 不是W326（等权、无成交额Top100、无单票10%上限）核：本条为EODHD未来3日内正向拆股split_factor>1且成交额Top100，每日09:00单票上限10%。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

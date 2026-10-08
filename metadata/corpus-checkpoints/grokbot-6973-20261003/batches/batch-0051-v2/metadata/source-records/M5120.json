@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5120",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5074,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4593a2ecb09a72ea5ea39f7b4f01cbfa4da73fef0fa22bd7b354b2f9489749eb",
+    "rule_sha256": "2c4f578d978a8de22933f1549cb3cfa8bca7174b316db717fef83f5feddbb9e9"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5120",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5120"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://jayonthemarkets.com/2019/09/06/a-simple-alternative-to-buy-and-hold/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Jay Kaeppel"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-223/W2331"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Kaeppel·LBR动量择时：LBR=SMA3−SMA10自负转正且SPX>SMA21m则持SPY十八月，否则IEF（LBRMomentum）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2019-09-06"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A Simple Alternative to Buy-and-Hold – LBRMomentum"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Jay Kaeppel《A Simple Alternative to Buy-and-Hold》(2019-09-06) 之 **Monthly LBRMomentum**：月线；LBRMomentum = SMA(收盘,3) − SMA(收盘,10)（Linda Bradford Raschke 式）；买入：LBR 落入负值后当月转升（自负转正方向），且 SPX（代理 **SPY**）当月或随后收盘 **>** 自身 SMA(21月)——若 LBR 转正时价仍低于 SMA21m，则等到价上穿才生效；买信号生效后持有 **18** 个月；期内再出新买信号则自该新信号日起重计 18 月；18 月内无新买信号 → 清仓改持 **中间国债**（Bloomberg Intermediate Treasury → **IEF**）直至下一买信号。不是 JTIM 双均线卖（W2332）；不是 SMA10m 单闸。计入美股/ETF。提出日期 2019-09-06。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Kaeppel LBRMomentum · SMA3−SMA10 turn-up · SPX>SMA21m · hold 18m · else IEF"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "有限幅度的连续买盘可能有短期延续，但低价格阈值对成本敏感，未给有效性证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "源码标题3 high不代表高点递增。",
+    "止损为收盘条件市价退出，不是预挂保证价格。"
+  ],
+  "name": "滞后三阳线有限涨幅与盈利阴线退出",
+  "native_source_id": "442082",
+  "one_line": "过去三根均收阳且开收端点间幅度处于窄范围时做多，以固定均价阈值或盈利后的前棒收阴清仓。",
+  "record_id": "442082",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E4%B8%89%E9%AB%98K%E7%BA%BF%E5%8F%8D%E8%BD%AC%E7%AD%96%E7%95%A5Three-High-Candle-Reversal-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 nonametr；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-442082-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "6baef2d9b4be4198d7f2007e75b0f8fd4c2457735e79047921a2fc91ae95f825",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E4%B8%89%E9%AB%98K%E7%BA%BF%E5%8F%8D%E8%BD%AC%E7%AD%96%E7%95%A5Three-High-Candle-Reversal-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-442082-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-442082-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未显式手续费、滑点、点差或持仓费，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-442082-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "上述三阳及幅度条件成立即Enter Long多头，qty=1；未显式空仓条件或首次事件限制。源码未指定pyramiding或按账户风险缩放。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-442082-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5，先entry，再低收盘阈值close，再检查前阴线浮盈/上阈值close；无显式收盘成交、逐tick或成交后重算，实际入口与平仓成交未核。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-442082-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前C<=持仓均价×0.996时市价close；或C>=均价×1.01；或前一棒C[1]<O[1]且strategy.openprofit>0.47时close。0.47是账户浮盈绝对额，不是0.47%。这些都是条件close，非预挂stop/limit价格单。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-442082-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每次入口固定1单位；初始资本、账户币种、合约乘数和保证金未明确，实际0.47浮盈的经济尺度未冻结。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-442082-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "没有最长持有；检查当前收盘而非最低价触碰4‰止损，不保证限制到0.4%。信号棒均滞后但退出使用当前C/openprofit；重复入口受平台默认金字塔配置影响。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-442082-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只用已过去的[1]/[2]/[3]三棒：每棒open<close，P=100×(1−min(O[1],O[2],O[3])/max(C[1],C[2],C[3]))，要求0.2<P<0.5。不是三个high连创新高，也不是当前bar参与三阳；targetPercent=0.5变量未实际引用。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-442082-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-442082-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

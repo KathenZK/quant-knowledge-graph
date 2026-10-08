@@ -1,0 +1,140 @@
+{
+  "economic_basis": {
+    "hypothesis": "来源在给定完整价格模型和初始预算下，选择真实概率质量相对风险中性支付成本更有利的到期状态，并复制其索赔支付。其目标是增加负债被足额覆盖的概率，不是最大化交易利润，也不限制失败状态的损失金额；模型最优性不代表真实概率、数字期权报价或扣费后账户结果已验证。",
+    "missing": [
+      "未运行复制策略、概率估计、求解或回测；模型最优性不充作经济验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "www2.mathematik.hu-berlin.de/~foellmer",
+  "lab": null,
+  "missing_information": [
+    "本条仅选择r=0、常数σ>0、m≤σ²的完整Black–Scholes模型；x0、K、T及预算均须事先给定。原稿未提供漂移/波动估计、市场宇宙、样本和模型检验合同。",
+    "原生PDF没有日期版本号且首页写to appear；以内容hash锁定作者稿，作者网页将同题文列为1999发表。不冒充已核对期刊终版。",
+    "只在到期判断X_T<c，不能因盘中穿过c提前敲出或平仓；Eq3.13在X_T=c的支付与严格A有差别，所选连续分布下该点概率零，现实结算边界须另明确。",
+    "数字期权名义为c−K个货币支付单位，不是c−K张任意交易所合约；合约乘数、短腿抵押、保证金及上市可得性未给。",
+    "复制资产支付非负不等于负债账户安全：在未覆盖高价区域，原认购负债仍需支付且损失金额不受成功概率目标约束。",
+    "权利金V0/H0及零利率属于模型的支付定价，不是佣金/滑点/融资或保证金费用为零；离散执行合同和交易成本缺项。",
+    "一般原理用动态自融资表示；本条可核腿组合为原Eq3.13，未补某个未印出的delta数值算法。未运行源代码、求解、仿真或回测。",
+    "论文作者机构可读不等于取得文稿全文、数据或商业使用许可。未发现本文开放许可证，commercial状态REVIEW_REQUIRED，原文与图像不入公开Git。"
+  ],
+  "name": "Föllmer–Leukert：预算受限的到期支付区域选择与分位数对冲",
+  "native_source_id": "hedging_54.pdf",
+  "one_line": "按初始预算确定可覆盖的到期状态，用认购价差和数字期权复制该区域内的负债支付。",
+  "record_id": "hedging_54.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行来源实现、优化器、仿真或回测。",
+    "metadata": "来源原生身份、精确定位及自撰中文规则；不发布原论文、图像、代码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www2.mathematik.hu-berlin.de/~foellmer/publications.html"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Hans Föllmer and Peter Leukert, Quantile Hedging. Author HU manuscript hedging_54.pdf; frontpage says to appear, no date/revision number printed. Author publication page identifies Finance and Stochastics3(3),251–273 (1999). No claim that this PDF is the journal final version.",
+      "id": "foellmer-leukert-quantile-hedging-pdf",
+      "license": "Author manuscript is publicly readable on an institutional page; no explicit open redistribution or commercial-use license found. Original Chinese rule metadata and source locators only; original PDF, images and website fulltext are not published. Market-data, derivative contracts, implementation and commercial integration remain REVIEW_REQUIRED.",
+      "locator": "Author manuscript physicalpp3–6 complete-model probability/budget selection; pp10–12 Eq3.1–3.20 selected m<=sigma² Black–Scholes call construction; p13 excluded high-drift branch. Lines refer to pinned pdftotext derivative; formulas visually reviewed because old PDF font encoding is imperfect.",
+      "revision": "Undated author manuscript, frontpage to appear in Finance and Stochastics; author-page1999 bibliographic identity; sha256:728c6861d826600fd8cdfc7fbb1896a359d0e1c8a0cf23692f06a8241e5c2bb6",
+      "sha256": "728c6861d826600fd8cdfc7fbb1896a359d0e1c8a0cf23692f06a8241e5c2bb6",
+      "supports": [
+        "完整市场负债覆盖概率目标及初始预算",
+        "真实概率与风险中性概率",
+        "单终值阈值及两认购和数字期权支付分解",
+        "模型假设及短缺金额风险"
+      ],
+      "url": "https://www2.mathematik.hu-berlin.de/~foellmer/papers/hedging_54.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_MANUSCRIPT_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Hans Föllmer, Humboldt-Universität zu Berlin author publications page",
+      "id": "foellmer-author-publications-html",
+      "license": "Author manuscript is publicly readable on an institutional page; no explicit open redistribution or commercial-use license found. Original Chinese rule metadata and source locators only; original PDF, images and website fulltext are not published. Market-data, derivative contracts, implementation and commercial integration remain REVIEW_REQUIRED.",
+      "locator": "HTML L354–357 lists Quantile Hedging with P.Leukert, Finance and Stochastics3(3),251–273 (1999), and exact link papers/hedging_54.pdf. Identity only, not rule evidence.",
+      "revision": "Author publications HTML HTTP snapshot sha256:82a3238c6e201f638e16d43fea3a1d3e9c29a0ccbcbcd736b3ed5e056d480727",
+      "sha256": "82a3238c6e201f638e16d43fea3a1d3e9c29a0ccbcbcd736b3ed5e056d480727",
+      "supports": [
+        "作者托管原稿链接",
+        "发表题名和文献身份"
+      ],
+      "url": "https://www2.mathematik.hu-berlin.de/~foellmer/publications.html",
+      "verification": "FETCHED_PINNED_AUTHOR_PUBLICATIONS_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "foellmer-leukert-quantile-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X为论文贴现价格；§3明确利率r=0，所以该示例不另加未定义的计息现金回报。dX_t=X_t(σdW_t+m dt)，σ>0及真实概率P下漂移m为常数；风险中性P*使W*_t=W_t+(m/σ)t为布朗运动。按一单位欧式认购负债记账，所选复制资产是同标的同到期两份认购和现金数字期权。负债本身与复制资产分开，不能把复制资产净值当卖出负债后的账户利润。"
+    },
+    "cost": {
+      "evidence": [
+        "foellmer-leukert-quantile-hedging-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：H0是完整认购的模型复制资本，V0是修改支付的净权利金预算，不是交易费用。源在无摩擦复制模型和r=0示例下定价，但没有交易佣金、买卖价差、冲击、数字期权额外报价、短腿保证金或实际融资成本合同，不能将V0节省称为扣费收益。"
+    },
+    "entry": {
+      "evidence": [
+        "foellmer-leukert-quantile-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "为一单位预先指定的认购负债，先冻结0<V0<H0并算出c，然后按原Eq3.13建立+1份认购(K,T)、−1份认购(c,T)、−(c−K)份支付1{X_T>c}的现金数字期权；各腿同一标的和T。其模型净权利金为V0，目标终值为H·1_A。没有趋势、价格突破或等待先触c才建仓；该组合也不要求同时卖出原始负债才能被定义，外部负债交易价格未给。"
+    },
+    "execution_time": {
+      "evidence": [
+        "foellmer-leukert-quantile-hedging-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：模型在0冻结参数并定义可预测自融资持仓，Eq3.13明确终值构件；没有现实观察、委托、三腿同步成交、到期结算钟点和无法交易时的顺序。原文也提示knockout复制的实务不便。静态支付恒等式不证明数字腿可按模型价格成交，也未给离散delta复制时钟。"
+    },
+    "exit": {
+      "evidence": [
+        "foellmer-leukert-quantile-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "三腿按已固定的名义持有至T并结算：K<X_T<c时组合支付X_T−K，X_T≤K或X_T>c时为0。不是T以前触到c就提前敲出；论文称knockout，但本分支A明确按终值定义。源没有止损、提前清盘或到期续作。严格A在X_T=c排除该点，而Eq3.13的1{X_T>c}使该点仍支付c−K；两者仅在所选连续终值分布的零概率点不同，此实务边界不擅改。"
+    },
+    "position": {
+      "evidence": [
+        "foellmer-leukert-quantile-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每单位负债的原始腿数为+1 call(K)、−1 call(c)及−(c−K)现金数字支付单位；不是权益100%或任意整张订单。一般复制理论给V_t=E*[H1_A|F_t]=V0+∫_0^t ξ_s dX_s≥0，这个模型非负财富条件不等于所有腿均多头；本组合明确有两个空头腿。源未给交易所乘数、保证金或现实融资安排。0<V0<H0时c>K，随预算增大c增大，预算至H0的极限为完整认购复制；本条不把这些预算值拆成新身份。"
+    },
+    "risk": {
+      "evidence": [
+        "foellmer-leukert-quantile-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在给定模型和预算下最大化P(V_T≥H)，所选分支成功概率为Φ((b−(m/σ)T)/√T)，不是盈利概率。若改输入短缺概率ε，原Eq3.17给b=√TΦ^−1(1−ε)+(m/σ)T；仅在得到c>K且0<V0<H0时属于本条内部情形，零预算/完全覆盖边界不补成同一数值求解。P中的漂移与P*中的定价不同。作者明确目标不考虑短缺金额：X_T>c时复制资产零支付但原认购负债仍在，高尾损失可很大。该区域只在到期判断，不能当盘中止损。m>σ²另有双尾区域，不把单阈值式外推；模型错配、跳跃、参数估计和实际执行均未验证。"
+    },
+    "signal": {
+      "evidence": [
+        "foellmer-leukert-quantile-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一般先选A使P(A)最大且E*[H·1_A]≤V0；Neyman–Pearson构造A={dP/dP*>aH}，阈值使预算用满。选定分支m≤σ²中，H0=x0Φ(d+)−KΦ(d−)，d±=ln(x0/K)/(σ√T)±σ√T/2。解b使V0=H0−x0Φ((−b+σT)/√T)+KΦ(−b/√T)，再令c=x0exp(σb−σ²T/2)>K，覆盖区域A={X_T<c}。等价定义是V0=∫_K^c(z−K)f*(z)dz；f*为风险中性终值密度。Φ是标准正态分布函数，P为真实概率、P*用于定价，不能互换。预算确定阈值，不是把未来X_T当当前信号；λ/a的比例常数不另外拟合成因子。"
+    },
+    "timeframe": {
+      "evidence": [
+        "foellmer-leukert-quantile-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先固定起始0与到期T，在0用已给模型和预算一次确定b/c。原§2的复制持仓是[0,T]上的自融资过程；本条记录的Eq3.13三腿支付分解在起始选定后保持各腿名义至T。T是负债的到期时间，不是日/月滚动窗口；不在知道X_T后重选c，也不按每天新估漂移自动续作。"
+    },
+    "universe": {
+      "evidence": [
+        "foellmer-leukert-quantile-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一个符合所选完整Black–Scholes模型的正价标的X及其共同到期T的欧式认购/现金数字期权；目标负债H=(X_T−K)_+，x0=X0>0、K>0、T>0。源没有具体股票、交易所、链上筛选或动态成员表，不能把论文数值例X0=100/K=110指定成某上市合约。本条限制m≤σ²、0<V0<H0。"
+    }
+  }
+}

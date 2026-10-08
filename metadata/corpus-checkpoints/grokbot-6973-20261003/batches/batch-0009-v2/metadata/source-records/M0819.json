@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0819",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 819,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "386d0ab1edd7f91959874dd43fb2880a860cbc5e5a4664200956b669bc51670c",
+    "rule_sha256": "1969efbf6336c33fd0076db0c020fcffa7014d76d4ec4a3ce4de6a4da22a4cb0"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0819",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0819"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.pythonandtrading.com/bollinger-bands-rsi-mean-reversion-python/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Python And Trading（该文页面）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "标普500ETF日线：收盘低于20日两倍标准差下轨且怀尔德RSI(14)低于30做多，收盘回到中轨或RSI高于50离场，仓位滞后一根"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Mean-Reversion in Python: Bollinger Bands and RSI"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该页已印出的标普500ETF日线只做多，不是已收的加密小时线RSI低于30且收盘低于布林下轨、ATR止损，也不是加密%B小于0再加ADX与带宽过滤。标的是SPY，日线，用收盘价。中轨为20日简单移动平均。标准差为收盘的20日滚动标准差，页面写成rolling(window).std()，未另写自由度。上轨等于中轨加2倍该标准差，下轨等于中轨减2倍该标准差。RSI为14期怀尔德定义：涨跌差分成上涨与下跌，各自用alpha等于1/14、adjust为假的指数平均，RS等于平均涨幅除以平均跌幅，RSI等于100减100除以（1加RS）。空仓且当日收盘低于下轨并且RSI低于30，则进入多头。已持多且当日收盘大于等于中轨，或RSI高于50，则离场。否则维持原有仓位。仓位为1或0。计算收益前把仓位向后移一根，页面写今日是否在场由昨日收盘决定。只做多，没有印出做空。仓位节没有印出不足一手或现金比例以外的名义上限；循环里持有时记1.0，否则0.0。第10节提到可用上轨加RSI高于70做空，但那是“Where to go next”的建议，不是本页已实现的规则，本条不写。页面未印提出日期。文中2005年1月1日至2025年1月1日是示例下载区间，不是提出日。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "第2节写布林中轨通常20日、上下轨加减两个标准差，RSI经典14日、低于30为超卖；第4节用SPY日线，window等于20、n_std等于2；第5节RSI周期14、怀尔德平滑alpha等于1除以周期；第6节写下三条规则，并写决策用昨日收盘、仓位shift(1)。文中download的2005-01-01至2025-01-01是示例区间。"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

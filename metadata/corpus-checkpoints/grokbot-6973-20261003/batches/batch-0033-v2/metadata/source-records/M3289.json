@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3289",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3243,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f78389f0db2206abdb89b3321f6af2b8e0d00cbbbe3fd8940bd2b4d7a8b27468",
+    "rule_sha256": "99b24f0ddd2aad0df26f0942fec09e38f5a20ebb26cd62e84dbb040699a6acc0"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3289",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3289"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/IndexOptionShortCallITMExpiryRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；保证金空；2021-01链上 strike≤3200 最高行权欧式 CALL（预期3200）；次日开盘后卖1张，ITM到期指派（Lean IndexOptionShortCallITMExpiry）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX分钟；保证金空；2021-01链上 strike≤3200 最高行权欧式 CALL（预期3200）；次日开盘后卖1张，ITM到期指派（Lean IndexOptionShortCallITMExpiry）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `IndexOptionShortCallITMExpiryRegressionAlgorithm.py`。`set_cash(1e6)`；`MarginCallModel.NULL`；自定义 security_initializer 避免提前指派。筛 `strike≤3200` 且 CALL 且 2021-01，降序取首（预期 3200）。次日开盘后 `market_order(option,−1)`。不是卖 OTM 看涨核（W531），也不是期货卖 ITM 看涨核（W529）。提出日期未知。SPX ITM 卖看涨指派 ≠ 卖 OTM 看涨（W531）/期货卖 ITM 看涨（W529）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

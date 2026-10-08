@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说：效率比自适应平滑穿过量价驱动的滞回双线，配一次分批退出可能平衡趋势持有和锁定部分收益；经济有效性未验证。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "首次信号棒减半请求可能早于entry成交；没有真实仓位回报同步，独审前不计accepted。"
+  ],
+  "name": "KAMA跨AlphaTrend双线的方向记忆与一次减半",
+  "native_source_id": "458150",
+  "one_line": "KAMA穿过AlphaTrend当前线和两棒滞后线的共同区间时切换方向，信号价达到10%有利触及后仅减半一次。",
+  "record_id": "458150",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/AlphaTrend%E4%B8%8EKAMA%E7%BB%93%E5%90%88%E7%9A%84%E8%87%AA%E9%80%82%E5%BA%94%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E4%B8%8E%E9%A3%8E%E9%99%A9%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5Adaptive-Trend-Following-Strategy-Combining-AlphaTrend-and-KAMA-with-Risk-Management.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-458150-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "9e58fbac7f4d630bc62664e5b01bd204f0f4ddfe85d4e91821fbbdb07aa5fd49",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/AlphaTrend%E4%B8%8EKAMA%E7%BB%93%E5%90%88%E7%9A%84%E8%87%AA%E9%80%82%E5%BA%94%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E4%B8%8E%E9%A3%8E%E9%99%A9%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5Adaptive-Trend-Following-Strategy-Combining-AlphaTrend-and-KAMA-with-Risk-Management.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-458150-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-458150-published-code"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：未声明佣金、滑点或融资费用。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-458150-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "currentPosition持久初flat；buy且当前标签非long时，如旧标签short先close Short，再entry Long，保存entryPrice=C、标签long、partialTarget=C×1.1；sell反向先close Long再entry Short，标签short、target=C×.9。同向信号不刷新目标，不用真实position_size判断标签。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-458150-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "同棒先计算AT/K及cross，再按方向标签执行close旧/entry新，最后检查高低触及并close50%；没有显式tick/收盘成交或成交重算。未运行，不把当棒触及目标等同已成交半仓。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-458150-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "标签long且H>=partialTarget时close Long qty_percent=50，并将target=na；short且L<=target则对应减半和清target。每次方向切换只一次减半请求，剩余等反向信号整仓close/entry；无固定stop或价格限价TP，触及后是市价close。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-458150-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始100000，声明每笔100%权益；没有显式qty、点值或杠杆限制。50%是退出调用的百分比，不是入口半仓。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-458150-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "AT和K递归使用nz前值0，预热行为不同于SMA种子KAMA。标签按请求更新；若入口信号棒已触10%幅度，后面的partial块可在真实entry成交前发close并将target清na，不能保证每次实际减半。无止损/账户闸。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-458150-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认AlphaTrend使用MFI14(hlc3)>=50判断：a=SMA14(ta.tr)，u=L−a，d=H+a，AT=强侧时max(u,nz(AT[1]))，弱侧时min(d,nz(AT[1]))，初递归0；novolumedata=false，RSI替代支不启用。KAMA21：noise=sum(i=0..20,abs(C[i]−C[i+1]))，er=noise!=0?abs(C−C[21])/noise:0；alpha=(er×(.666−.0645)+.0645)^2，K=nz(K[1])+alpha×(C−nz(K[1]))。buy=(K上穿AT且上穿AT[2])或(K上穿AT且K>AT[2])或(K上穿AT[2]且K>AT)；sell三式镜像下穿/<。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-458150-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称或注释中的建议周期不等于冻结交易周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-458150-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

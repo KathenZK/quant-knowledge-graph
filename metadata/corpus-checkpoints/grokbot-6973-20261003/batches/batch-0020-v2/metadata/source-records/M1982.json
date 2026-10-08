@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1982",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1982,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0bdafce7cf2046bee4ef0118a42d0c1d51f56368b0ea2d4448f0584f9a07d28b",
+    "rule_sha256": "191f503ecf0fa967de9eec8824a0fd477219aad9305731aae92899538d70ae70"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1982",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1982"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/TrixV15Strategy/TrixV15Strategy.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（TrixV15Strategy.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区TrixV15Strategy：1h，卖侧TRIX% >其信号SMA且StochRSI<0.901且收盘>0.85×EMA(10,open)，且买侧TRIX%上穿信号做多；StochRSI>0.183且卖侧TRIX%<信号平多；止损−31%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区TrixV15Strategy；1h）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区TrixV15Strategy：1h，卖侧TRIX% >其信号SMA且StochRSI<0.901且收盘>0.85×EMA(10,open)，且买侧TRIX%上穿信号做多；StochRSI>0.183且卖侧TRIX%<信号平多；止损−31%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/TrixV15Strategy/TrixV15Strategy.py以 buy_params/sell_params 为准（load=True）。timeframe=1h；stoploss=−0.31；minimal_roi约0/423/751/1342分钟对应55.3%/14.4%/5.9%/0；trailing_stop=False。买参：buy_stoch_rsi_enabled=True，buy_stoch_rsi=0.901；buy_ema_timeperiod_enabled=True，buy_ema_timeperiod=10，buy_ema_src=open，buy_ema_multiplier=0.85；buy_trix_timeperiod=8，buy_trix_src=low，buy_trix_signal_timeperiod=19，buy_trix_signal_type=trigger。卖参：sell_stoch_rsi_enabled=True，sell_stoch_rsi=0.183；sell_trix_timeperiod=10，sell_trix_src=high，sell_trix_signal_timeperiod=19，sell_trix_signal_type=trailing。StochRSI：stochrsi(window=14,smooth1=3,smooth2=3)。TRIX 为三重 EMA 后再 pct_change×100，信号为该%的 SMA。做多须同时：volume>0；trix_s_pct > trix_s_signal_19；stoch_rsi<0.901；close > ema_b_10×0.85；且 trix_b_pct 上穿 trix_b_signal_19。平多须同时：volume>0；stoch_rsi>0.183；trix_s_pct < trix_s_signal_19。不是 W126 TrixStrategy（柱符号+StochRSI 阈值）。提出日期未知。 不是W126 TrixStrategy柱符号+StochRSI阈值：本条是1h TrixV15，卖侧TRIX%>信号且StochRSI<0.901且收盘>0.85×EMA(10,open)，且买侧TRIX%上穿信号做多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

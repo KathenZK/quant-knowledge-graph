@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "把同一金融输入生成的持久图表达为可对齐向量，用于结构比较或后续模型；未确定收益方向、风险概率或独立经济驱动。",
+    "missing": [
+      "金融图构造、PIT、参数冻结和经济关系未验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-2f2cb65c2d2bae3001304f55"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "图及参数所依赖的全部输入已公布后才计算；b0/sigma/grid训练估计仅可用当时已公布样本，未来固定。禁止全trial/未来定标后回填。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-2f2cb65c2d2bae3001304f55",
+        "harvest-source-72dc6ebc1a23e5705e859078"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按2017原刊§4的Definition1/2及明示Gaussian、截顶线性权重构造。输入是已形成的各维持久图多重集，点为出生a和死亡d，保留重复点。d=+infinity的essential特征按p8脚注7省略，不能替换为某个任意大数；对角d=a点权重0。生灭图如何从行情、距离或过滤复形生成另有输入合同，本条不补。 将每个有限点映射为(a,l=d−a)，这是birth-persistence坐标；l不是交易持有期。各维独立形成一张图像后按明确维度顺序串接，不能将H0/H1或某个像素作为新的因子。 选择显式有限sigma>0与b0>0，所有点用相同的二维各向同性Gaussian，其每坐标方差sigma²。权重w(l)为0若l<=0、l/b0若0<l<b0、1若l>=b0。原文允许其他合规权重/分布，本代表不批量展开；b0不是Gaussian带宽。 在每个点中心放置总质量1的Gaussian，再乘点权重并求和；不除点数、不除总权重。重复点按多重性重复贡献，所以整体面不是自动积分为1的概率密度。不能把表面强度直接当金融事件概率。 在事先给定的有限矩形网格每个格上积分整个连续表面，得到像素值。不是在格中心采样、也不是先把点硬分箱再对直方图卷积；不按像素面积再相除。即使中心在显示范围外，高斯尾部仍可能贡献，不能先删范围外中心。 公式里的两个标准正态CDF差的乘积，是二维独立Gaussian在矩形上的精确积分的自撰等价展开；它说明数学数值对象，不代表任何现成库已运行或浮点差值可靠。全平面质量为sum w；有限不重叠网格的像素和不超过该值且一般小于它，不再归一。 原论文p9的实验选择b0为该实验全部trial里最大的有限持久长度。该说明完整保留，但不是金融PIT协议；若原样拿全历史含未来图来定b0/网格再回填，会泄漏信息。本条把b0、sigma、网格作为本次计算前已给的输入；由训练集确定时必须只用已公布训练期，并对未来固定。 原§4没有给一套普适默认sigma、像素分辨率或金融最优参数。p15脚注10称variance sigma=.1，而p8Gaussian方程明确方差sigma²；本合同以p8公式定义sigma为标准差，不借脚注把实验值推成默认，也未声称复现该实验。 原p9说当全部birth为0（常见于H0）实验采用1D分布/图像；本代表合同始终为明确的2D积分，不能声称与该1D实验自动等值。1D与替代坐标/分布/权重、分辨率、同调维度、窗口、语言实现均保守并在一个PI构造族，不另拆数。 官方链接的三页erratum更正§6.4.1的linked twist map：第二步应使用第一步更新后坐标的复合映射G(F(x,y))，而不是两式都用旧坐标。勘误称实验代码/图本已正确。其没有修改§4的PI定义；这里不采动力系统映射为额外策略或收益证据。 空图、只含对角点或只含被省略essential点得到全零图像；固定sigma/b0/grid下添加对角点不影响结果。若重新用全批数据定参数则须单独检查，不能把固定参数结论套到任何autofit实现。数值溢出、极小sigma、CDF相减消减误差及实际计算器未测试。 当前只审核原论文定义与勘误，不把giotto/GUDHI/persim/MATLAB同名实现当作等价已复现。特征源可追溯、数学定义明确，但金融数据许可、PIT、经济有效性、回测和商业用途均未获完成证明。 边界：无限持久点按原文明确省略；不以任意上限代替，原PH条目保留的essential信息在PI中丢弃。 空/纯对角/仅essential图为0；重复点重复贡献，不归一为概率。 输入finite birth和finite death>=birth或death=+infinity；NaN、−infinity、非法维度或负寿命不在数学合同，不声称有软件自动检查。 sigma和b0必须正有限，边界数组严格递增有限；没有价格生成、自动网格拟合或通用默认参数。 所有点的Gaussian尾部都参与积分，不裁掉中心在网格外的点；有限网格会丢失网格外质量。 全部trial设b0是原实验描述；金融应用不能将测试期或未来图纳入后再回填历史。 2D代表与原H0的1D实验路径分开标注；各维、pixels、分辨率和实现不拆新增。 原文实验variance sigma措辞与核心sigma²方程分开保留，未通过猜测补默认值。 论文CC-BY4.0只覆盖该文材料，erratum和代码/输入数据权利分别判断；无市场或商业授权推定。 输出：各维固定矩形网格上的非负像素积分及其确定顺序的完整拼接向量；整个PI一族"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-2f2cb65c2d2bae3001304f55"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把同一金融输入生成的持久图表达为可对齐向量，用于结构比较或后续模型；未确定收益方向、风险概率或独立经济驱动。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-2f2cb65c2d2bae3001304f55"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定有限有序维度集Q。每维持久图B_q是有限多重集(a,d)，a有限、d>=a且可为+infinity；先省略d=+infinity，剩余l=d−a>=0。固定sigma>0、b0>0及各q的严格递增有限网格x_q,0..m和y_q,0..n。w(l)=0(l<=0)，l/b0(0<l<b0)，1(l>=b0)。g_(a,l)(x,y)=exp(−((x−a)²+(y−l)²)/(2sigma²))/(2pi sigma²)。rho_q(x,y)=Σ_((a,d)∈B_q,d<∞) w(d−a)g_(a,d−a)(x,y)。I_q,ij=∫_(x_i)^(x_(i+1))∫_(y_j)^(y_(j+1))rho_q(x,y)dy dx。自撰等价式：I_q,ij=Σ w(l)[Φ((x_(i+1)−a)/sigma)−Φ((x_i−a)/sigma)][Φ((y_(j+1)−l)/sigma)−Φ((y_j−l)/sigma)]，Φ为标准正态CDF。按事先指定q和格序串接所有I为一个完整特征；无点数、总权重或像素面积归一。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-2f2cb65c2d2bae3001304f55"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "B_q（finite ordered set of nonnegative integer q; finite multisets of (birth,death), finite birth, death>=birth finite or +infinity）：已得到的持久图，保留重复点；原行情到图、数据许可与PIT须另固定；sigma,b0,grid_and_dimension_order（explicit finite mathematical inputs satisfying above domains）：所有样本比较须共用同一坐标合同；论文未给金融参数学习器。参数：sigma：p8方程每坐标方差sigma²；无普适默认，不等同p15variance文字；范围finite positive; common isotropic Gaussian standard deviation；来源默认值null；b0：权重饱和寿命；p9实验为全部trial最大寿命，不自动当金融PIT默认；范围finite positive; supplied before evaluation；来源默认值null；grid_and_dimension_order：包括网格范围与分辨率；全维全格合为一个特征，不从待测未来图自动估计；范围finite strictly increasing rectangular edges per given q; fixed deterministic output order；来源默认值null"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-2f2cb65c2d2bae3001304f55"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "将有限生灭图变成出生与寿命坐标，以寿命加权高斯表面在固定网格内的积分形成完整数值特征。 用途限定为定义层结构表示；金融输入、时点和经济作用仍未验证。"
+    }
+  },
+  "identity_namespace": "jmlr.org/papers/v18",
+  "lab": null,
+  "missing_information": [
+    "金融输入/持久图构建/参数估计和PIT合同MISSING",
+    "实际数值实现、稳定计算、运行环境与结果未验证",
+    "收益/风险经济效用未测，原合成数据实验不作金融证明",
+    "代码/erratum/金融输入商用许可各自另审"
+  ],
+  "name": "持久图的加权高斯像素积分表示",
+  "native_source_id": "16-337",
+  "one_line": "将有限生灭图变成出生与寿命坐标，以寿命加权高斯表面在固定网格内的积分形成完整数值特征。",
+  "record_id": "16-337",
+  "relations": [],
+  "rights": {
+    "derived_results": "静态描述审阅不等于数值复现或收益验证；原刊CC-BY4.0不外推erratum、代码或市场数据授权，商业REVIEW_REQUIRED。",
+    "metadata": "自撰中文数学定义与来源事实；保留原作者、版本、许可及勘误边界。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://jmlr.org/papers/volume18/16-337/16-337.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Henry Adams, Tegan Emerson, Michael Kirby, Rachel Neville, Chris Peterson, Patrick Shipman, Sofya Chepushtanova, Eric Hanson, Francis Motta, Lori Ziegelmeier; JMLR18(8):1–35,2017, officiallinkederratum. Chinese mathematical metadata selfauthored.",
+      "id": "harvest-source-facc3cb3a0abcc2cce711428",
+      "license": "NOT_SEPARATELY_ESTABLISHED",
+      "locator": "HTML L145–147 identity, L159–161 observed original PDF and official erratum links",
+      "revision": "Official JMLR article landing page exact HTTP snapshot",
+      "sha256": "63f528bf9f5f8c61c13ebf24b43b382b1803456c8b7e6d350f335143b31ae2aa",
+      "supports": [
+        "SOURCE_IDENTITY_AND_LINK_CHAIN_ONLY"
+      ],
+      "url": "https://jmlr.org/papers/v18/16-337.html",
+      "verification": "PINNED_REFERENCE_DESCRIPTION_REVIEWED"
+    },
+    {
+      "attribution": "Henry Adams, Tegan Emerson, Michael Kirby, Rachel Neville, Chris Peterson, Patrick Shipman, Sofya Chepushtanova, Eric Hanson, Francis Motta, Lori Ziegelmeier; JMLR18(8):1–35,2017, officiallinkederratum. Chinese mathematical metadata selfauthored.",
+      "id": "harvest-source-2f2cb65c2d2bae3001304f55",
+      "license": "CC-BY-4.0",
+      "locator": "physical p1: title/license; physical p4: selected source formula/context page; see definition and review; physical p7: selected source formula/context page; see definition and review; physical p8: selected source formula/context page; see definition and review; physical p9: selected source formula/context page; see definition and review; physical p15: selected source formula/context page; see definition and review",
+      "revision": "JMLR 18(8) 2017 published article, exact HTTP snapshot",
+      "sha256": "972051d9051524a3f7d11cc9f53439e0d582ace039b20c95c4f3522b15da6c1b",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://jmlr.org/papers/volume18/16-337/16-337.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Henry Adams, Tegan Emerson, Michael Kirby, Rachel Neville, Chris Peterson, Patrick Shipman, Sofya Chepushtanova, Eric Hanson, Francis Motta, Lori Ziegelmeier; JMLR18(8):1–35,2017, officiallinkederratum. Chinese mathematical metadata selfauthored.",
+      "id": "harvest-source-72dc6ebc1a23e5705e859078",
+      "license": "NOT_SEPARATELY_ESTABLISHED",
+      "locator": "physical p1: selected source formula/context page; see definition and review; physical p2: selected source formula/context page; see definition and review; physical p3: selected source formula/context page; see definition and review",
+      "revision": "Official article-linked erratum, exact HTTP snapshot; issue date not printed",
+      "sha256": "28d4a595ba85e8fb1c3572ba994d7e50912a0b08ba2d7ae32d6242cb17f24cf5",
+      "supports": [
+        "OFFICIAL_ERRATUM_BOUNDARY_NOT_PI_FORMULA_CHANGE"
+      ],
+      "url": "https://jmlr.org/papers/volume18/16-337/pi_erratum.pdf",
+      "verification": "PINNED_REFERENCE_DESCRIPTION_REVIEWED"
+    }
+  ]
+}

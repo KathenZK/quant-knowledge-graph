@@ -1,0 +1,220 @@
+{
+  "economic_basis": {
+    "hypothesis": "在给定关系图上计算每条边的局部曲率，再按邻接边平均形成节点值；完整记录维护者的1d、augmented和balanced分支为一个构造族，不把无权度数组合、分支或节点另算新增。金融构图和经济用途尚未固定。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-92c9f85ed4c65bf9a219acc0",
+        "harvest-source-37862644c7a2ebe3dc585109",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-92c9f85ed4c65bf9a219acc0",
+        "harvest-source-37862644c7a2ebe3dc585109",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "使用原生类FormanRicci；其方法compute_ricci_curvature把结果写入实例.G的边/节点formanCurvature属性，实际没有return语句，Python返回None。docstring称返回图不能替代实际行为；输入G先copy为独立浅拷贝，数值属性属于拷贝图。 构造器先检查指定weight名字是否至少在一条边/一个节点上出现。若某一类完全没有该属性，给该类全部对象赋1；若只有部分对象缺失则不会逐项补1。本审输入须分别全有有限正标量或全无，不能把所有缺值自动默认1作为事实。 1d按两个端点的各自邻居去掉另一端点，再用端点权除相邻边权几何均值求和；它使用实际边和点属性，尽管docstring仍说unweighted only/ignore edge weights。合同以执行代码为准。 默认augmented把两个端点的共同邻居看作三角面，面权在源码内固定为1，不读取用户face权。非平行的公共面项sum_ehef直接定0；剩余邻边只用各侧排除共同邻居后的集合，按公式计算绝对差。 balanced分支在两端最小度为1时先输出0并continue。否则先数共同邻居T，再逐个两侧独有邻居寻找无对角四环；q_u/q_v计参与至少一个四环的节点，而不是四环总个数。γ为一个参与节点对应的对侧结点数最大值，初值1。 balanced内部用G.degree(node)和集合关系，不用边/点weight；给定图属性仍经过构造器，不能把原参数weight误解释为balanced的加权曲率。完整一组边和节点结果属于同一构造，不分成多条因子。 最后遍历全部节点，累加已写入的邻接边曲率，再除无权度数；孤立点0。空图无边无节点则不写输出并仍返回None；本合同允许孤立点但以至少一条边为有效特征图。 依赖参考显式固定NetworkX 31b74e96903d7f873b30c8ff36d71a4c9252b107的属性/邻居/degree/copy实现进行静态边界核对。GraphRicciCurvature仅声明networkx>=2.0，不把该参考字节冒充上游曾安装的历史依赖，也未执行此组合环境。 边界：输入键冲突：1d/augmented若weight=\"formanCurvature\"，逐边写结果会覆盖同名输入边权，后续邻边求和会读到已更新曲率，静态原权公式便不再适用。因此本合同明确weight不得等于该输出键，源代码没有防护；balanced只看拓扑，原权值被覆盖不改变该分支公式，但不会据此扩张到有权支路。 无权1d代数上正是4−d_u−d_v；无权augmented正是4−d_u−d_v+3T。明确属于端点度和三角数的重写，不把这两个退化式包装成两个新的经济因子。整族候选的进一步信息来自来源明确的非均匀权重或balanced的无对角四环参与/退化度结构；最终新增仍须独立审核。 balanced对叶边设0，不是将一般公式直接代入；无三角和无四环的非叶边仍有2/d_u+2/d_v−2。不能用曲率正负宣称已识别金融风险、系统重要性或社群。 部分缺属性不会统一补1；1d/augmented会在访问缺项时报KeyError。0/负权可能导致除0/平方根域错误；NaN/Inf不被主动拒绝，均不在本合同。研究输入限制不是源码已验证承诺。 默认augmented的面权固定1，改变边/点权单位会改变结果；它没有自动相似度变距离、金融标准化或阈值选择。balanced忽略数值权重，与相同图的加权分支不能暗中替换。 非法method分支写的是assert True，实际不会按错误消息抛异常；可能继续按旧边属性作节点汇总。只审三种合法method，不能宣称所有非法参数均被拦截。 数据图由G.copy复制并保留其它属性；该拷贝对容器属性是浅的，本审只用数值标量。compute方法返回None，图结果须取实例.G；日志末尾不是返回图。 没有Ollivier最优运输、Ricci flow迭代或自动社区识别，也不把相关README统计/实验宣称当本因子的经济有效性。Python/NetworkX版本兼容、数值溢出和依赖可安装性未执行验证。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-92c9f85ed4c65bf9a219acc0",
+        "harvest-source-37862644c7a2ebe3dc585109",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在给定关系图上计算每条边的局部曲率，再按邻接边平均形成节点值；完整记录维护者的1d、augmented和balanced分支为一个构造族，不把无权度数组合、分支或节点另算新增。金融构图和经济用途尚未固定。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-92c9f85ed4c65bf9a219acc0",
+        "harvest-source-37862644c7a2ebe3dc585109",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "无向简单无自环图。对边e=(u,v)，A=N(u)\\{v}，B=N(v)\\{u}，S=A∩B，T=|S|，d_u=|N(u)|；正边权w_e，正点权a_u。1d：F_e=w_e[a_u/w_e+a_v/w_e−Σ_(k∈A)a_u/sqrt(w_e w_uk)−Σ_(k∈B)a_v/sqrt(w_e w_vk)]。augmented（原生默认）：面权固定1，仅计含e三角，F_e=w_e[T w_e+(a_u+a_v)/w_e−|0−(Σ_(k∈A\\S)a_u/sqrt(w_e w_uk)+Σ_(k∈B\\S)a_v/sqrt(w_e w_vk))|]。正权合同下绝对值内对应非负和；不是任意多边形复形。balanced只使用无权拓扑：若min(d_u,d_v)=1，F_e=0；否则对k∈N(u)\\(N(v)∪{v})定义c_k=|(N(k)∩N(v))\\(N(u)∪{u})|，对w∈N(v)\\(N(u)∪{u})定义c_w=|(N(w)∩N(u))\\(N(v)∪{v})|。q_u=Σ_k1[c_k>0]、q_v=Σ_w1[c_w>0]；γ=max(1,所有c_k,所有c_w)。F_e=2/d_u+2/d_v−2+2T/max(d_u,d_v)+T/min(d_u,d_v)+(q_u+q_v)/(γ max(d_u,d_v))，无四环时最后项0。三分支的节点输出均为F_u=(Σ_(v∈N(u))F_uv)/d_u，孤立节点为0；平均分母为边数，不是权重和。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-92c9f85ed4c65bf9a219acc0",
+        "harvest-source-37862644c7a2ebe3dc585109",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in undirected simple loop-free networkx.Graph, at least one edge; isolated nodes permitted; 1d/augmented selected node and edge attributes each all absent or all finite positive numeric scalars; for 1d/augmented the selected attribute name must not be formanCurvature）：完整已观察关系图，不是价格数组。balanced只用无权拓扑；原构造器会转换有向图，但有向/多重/自环转换不在已审合同。金融节点、边、权重与关系生效时间尚缺。 1d/augmented须排除输出保留键formanCurvature作为输入weight；这是额外静态研究合同，源码未主动保护。。参数：weight：1d/augmented的点权和边权同名；balanced不使用权重，只保留拓扑；范围reviewed string attribute name; for 1d/augmented it must not equal reserved output key formanCurvature; node and edge attributes each entirely absent or entirely finite positive；源码默认weight；method：默认为含三角面的augmented；三分支、窗口和节点输出不拆新增；范围source branches 1d / augmented / balanced bundled as one family；源码默认augmented；verbose：只影响日志；helper还导入其它库，但本计算路径不调用社区划分；范围ERROR/INFO/DEBUG/TRACE log choices; not a numeric factor parameter；源码默认ERROR"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-92c9f85ed4c65bf9a219acc0",
+        "harvest-source-37862644c7a2ebe3dc585109",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "saibalmars/GraphRicciCurvature",
+  "lab": null,
+  "missing_information": [
+    "金融构图规则、资产宇宙、阈值、点权/边权单位与PIT来源尚未冻结",
+    "实际Python及依赖环境未运行固定；所引用NetworkX是显式静态参考而非上游历史依赖证明",
+    "原论文全文公式的单独视觉核对与论文许可未取得；仅审固定维护者代码及其归属引用",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "Forman 图曲率：边邻接权重与三角、四环结构",
+  "native_source_id": "FormanRicci",
+  "one_line": "在给定关系图上计算每条边的局部曲率，再按邻接边平均形成节点值；完整记录维护者的1d、augmented和balanced分支为一个构造族，不把无权度数组合、分支或节点另算新增。金融构图和经济用途尚未固定。",
+  "record_id": "FormanRicci",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/saibalmars/GraphRicciCurvature/blob/8942e46fe8eec3238d5a39385336878d677cb36a/GraphRicciCurvature/FormanRicci.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Chien-Chun Ni及GraphRicciCurvature维护者；源码分别引Forman2003、Sreejith等2016、Samal等2018、Topping等2022。维护者代码身份不等于这些算法论文由同一人创作。",
+      "id": "harvest-source-92c9f85ed4c65bf9a219acc0",
+      "license": "Apache-2.0",
+      "locator": "author attribution, native class parameters and graph/weight initialization:L1-L69; native method identity and complete 1d implementation:L71-L108; complete augmented triangle-face implementation:L110-L139; complete balanced triangles/chordless squares implementation:L141-L192; invalid-method behavior and node average; no return statement:L194-L211",
+      "revision": "8942e46fe8eec3238d5a39385336878d677cb36a",
+      "sha256": "01e235cb2b887313590d2027dd35715c55e14d591186237f77107759571f050f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/saibalmars/GraphRicciCurvature/blob/8942e46fe8eec3238d5a39385336878d677cb36a/GraphRicciCurvature/FormanRicci.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Chien-Chun Ni及GraphRicciCurvature维护者；源码分别引Forman2003、Sreejith等2016、Samal等2018、Topping等2022。维护者代码身份不等于这些算法论文由同一人创作。",
+      "id": "harvest-source-37862644c7a2ebe3dc585109",
+      "license": "Apache-2.0",
+      "locator": "imports and logging helper used by constructor:L1-L37",
+      "revision": "8942e46fe8eec3238d5a39385336878d677cb36a",
+      "sha256": "4c6808a752c87cd4d9a91d52d73222648fcc9213737d18e058d9c96553cdfc0c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/saibalmars/GraphRicciCurvature/blob/8942e46fe8eec3238d5a39385336878d677cb36a/GraphRicciCurvature/util.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Chien-Chun Ni及GraphRicciCurvature维护者；源码分别引Forman2003、Sreejith等2016、Samal等2018、Topping等2022。维护者代码身份不等于这些算法论文由同一人创作。",
+      "id": "harvest-source-426723d0d6fd93272f6040fb",
+      "license": "Apache-2.0",
+      "locator": "maintainer, Apache license and dependency lower bound:L5-L23",
+      "revision": "8942e46fe8eec3238d5a39385336878d677cb36a",
+      "sha256": "da354b16dcb1e97fae63cfd01e220a470d5dc7d81f26fcfb2b49463ca6b66f5f",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/saibalmars/GraphRicciCurvature/blob/8942e46fe8eec3238d5a39385336878d677cb36a/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Chien-Chun Ni及GraphRicciCurvature维护者；源码分别引Forman2003、Sreejith等2016、Samal等2018、Topping等2022。维护者代码身份不等于这些算法论文由同一人创作。",
+      "id": "harvest-source-411758e8df9aa696734a6fb1",
+      "license": "Apache-2.0",
+      "locator": "project and distinction between curvature and flow:L1-L26; original paper attribution and code maintainer citation:L109-L139",
+      "revision": "8942e46fe8eec3238d5a39385336878d677cb36a",
+      "sha256": "8ce936a04437210a30c7f3eb1abc38d8fecdaf1eb92b5bdeaa1ee7d84f19555e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/saibalmars/GraphRicciCurvature/blob/8942e46fe8eec3238d5a39385336878d677cb36a/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Chien-Chun Ni及GraphRicciCurvature维护者；源码分别引Forman2003、Sreejith等2016、Samal等2018、Topping等2022。维护者代码身份不等于这些算法论文由同一人创作。",
+      "id": "harvest-source-2b6822d2d8aa5d170e9d5937",
+      "license": "Apache-2.0",
+      "locator": "complete Apache-2.0 terms and notice requirement:L1-L201",
+      "revision": "8942e46fe8eec3238d5a39385336878d677cb36a",
+      "sha256": "ad94aaf13725c60803e5c331206d332f7f7d7fb7a2df14566f28465eea3932e7",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/saibalmars/GraphRicciCurvature/blob/8942e46fe8eec3238d5a39385336878d677cb36a/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Chien-Chun Ni及GraphRicciCurvature维护者；源码分别引Forman2003、Sreejith等2016、Samal等2018、Topping等2022。维护者代码身份不等于这些算法论文由同一人创作。",
+      "id": "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+      "license": "BSD-3-Clause",
+      "locator": "selected dependency: missing node attributes excluded:L723-L756; selected dependency: missing edge attributes excluded:L939-L978",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "e836dd94f419dbb9beb8a44e2db14f7e8f632d44972da9c366ab9620e554e852",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/function.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Chien-Chun Ni及GraphRicciCurvature维护者；源码分别引Forman2003、Sreejith等2016、Samal等2018、Topping等2022。维护者代码身份不等于这些算法论文由同一人创作。",
+      "id": "harvest-source-9bc7c4ec626786f0185a037d",
+      "license": "BSD-3-Clause",
+      "locator": "selected dependency: native adjacency neighbor iterator:L1343-L1384; selected dependency: degree property:L1510-L1545; selected dependency: built-in simple undirected type:L1583-L1589; selected dependency: independent shallow graph copy:L1668-L1678",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6708c0bdc9aa744e0c70d57c4b75ea517cfe6a183d589c737baca4333c241734",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/graph.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Chien-Chun Ni及GraphRicciCurvature维护者；源码分别引Forman2003、Sreejith等2016、Samal等2018、Topping等2022。维护者代码身份不等于这些算法论文由同一人创作。",
+      "id": "harvest-source-11d15da2a54528d863a1305b",
+      "license": "BSD-3-Clause",
+      "locator": "selected dependency: degree defaults to weight=None:L597-L604; selected dependency: node-call degree lookup:L619-L631; selected dependency: ordinary neighbor-count degree:L713-L734",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "60d216370be05f02407138ddec4e23e26073a8e2085144261254f24a393835df",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/reportviews.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Chien-Chun Ni及GraphRicciCurvature维护者；源码分别引Forman2003、Sreejith等2016、Samal等2018、Topping等2022。维护者代码身份不等于这些算法论文由同一人创作。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX dependency license conditions:L1-L30",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

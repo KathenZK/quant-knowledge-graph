@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3410",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3364,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "83ce3a5423f540ff0bc70aa5db97196cd4aefbe71664ff30e3083525daf45e15",
+    "rule_sha256": "415689ba2560dbaa3d3c8ba80302640a04b6b39dd08c36bd42ca7286b4e6052e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3410",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3410"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/MarketOnCloseOrderBufferRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；MOC提交缓冲=10分钟；15:49 提交 MOC 买2（有效）、15:51 再提 MOC 买2（预期拒单）；同日17:00延时再提 MOC 买2（Lean MarketOnCloseOrderBuffer）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；MOC提交缓冲=10分钟；15:49 提交 MOC 买2（有效）、15:51 再提 MOC 买2（预期拒单）；同日17:00延时再提 MOC 买2（Lean MarketOnCloseOrderBuffer）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `MarketOnCloseOrderBufferRegressionAlgorithm.py`。`MarketOnCloseOrder.submission_time_buffer=timedelta(minutes=10)`。`on_data`：15:49 首次 `market_on_close_order(SPY,2)` 预期成交；15:51 再提同向 2 预期 INVALID。`schedule` 当日 17:00 再 `market_on_close_order(SPY,2)` 预期成交。结束时恢复默认缓冲。不是 W595 每日 MOO+100/MOC−100 核，也不是仅订单属性无数量规则演示。提出日期未知。SPY MOC缓冲10分钟：15:49买2有效、15:51拒单、17:00延时再买2 ≠ 每日MOO+100/MOC−100（M3399）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

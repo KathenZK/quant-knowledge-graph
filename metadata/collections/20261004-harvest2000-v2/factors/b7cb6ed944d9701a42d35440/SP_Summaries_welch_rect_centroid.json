@@ -1,0 +1,212 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述序列频域能量一半落在哪个频率以下。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-7785c21e293c820522d42bac",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341",
+        "harvest-source-9c8bdf4cfd5153253d8492de",
+        "harvest-source-691b215a8ad09519f0d61403",
+        "harvest-source-8822d2f67300fdb63f267ee3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "等时间间距样本；均值、标准差及所有统计量使用整个输入窗口；只在整个窗口样本已观测并发布后可得，不允许把全窗口输出回填为早先时点的已知特征。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-7785c21e293c820522d42bac",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341",
+        "harvest-source-9c8bdf4cfd5153253d8492de",
+        "harvest-source-691b215a8ad09519f0d61403",
+        "harvest-source-8822d2f67300fdb63f267ee3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入按相等时间间隔采样；按原C入口先要求n>=10且输入有限；z_i=(x_i-mean(x))/s，s=sqrt(Σ(x_i-mean(x))²/(n-1))。窗口必须非恒定，单独原生C函数接收的是已标准化z。 Welch helper在此wrapper中只有一个完整矩形窗，未分成多个短窗平均。 采用零填充至二次幂的单边功率谱，转为角频率单位。 找累计谱严格超过一半的位置，不计算频率的功率加权算术均值。 边界：虽然原生名称叫centroid，实际输出是离散半能量频点，不是通常定义的谱重心。 不做频点间插值；源码π用3.14159265359。 含NaN时返回NaN；若谱为Inf返回0，若总能量0也会留下0；这些不是有意义的低频证据。 输出：一个标量；窗口、分箱、正负方向和API语言绑定不另算新条"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-7785c21e293c820522d42bac",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341",
+        "harvest-source-9c8bdf4cfd5153253d8492de",
+        "harvest-source-691b215a8ad09519f0d61403",
+        "harvest-source-8822d2f67300fdb63f267ee3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述序列频域能量一半落在哪个频率以下。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-7785c21e293c820522d42bac",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341",
+        "harvest-source-9c8bdf4cfd5153253d8492de",
+        "harvest-source-691b215a8ad09519f0d61403",
+        "harvest-source-8822d2f67300fdb63f267ee3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入按相等时间间隔采样；按原C入口先要求n>=10且输入有限；z_i=(x_i-mean(x))/s，s=sqrt(Σ(x_i-mean(x))²/(n-1))。窗口必须非恒定，单独原生C函数接收的是已标准化z。 N=nextpow2(n)，单个长度n的矩形窗，Fs=1。对去均值z作零填充DFT；单边P_k=|F_k|²/n，内部频点乘2。ω_k=2πk/N，S_k=P_k/(2π)。返回使Σ_(j<=k)S_j>0.5Σ_jS_j的首个ω_k，无则0。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-7785c21e293c820522d42bac",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341",
+        "harvest-source-9c8bdf4cfd5153253d8492de",
+        "harvest-source-691b215a8ad09519f0d61403",
+        "harvest-source-8822d2f67300fdb63f267ee3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（evenly sampled ordered double vector）：有限、非恒定、等时间间隔采样的按时间排列数值窗口，n>=10；市场变量、真实采样间距、缺失处理和时间戳需另行绑定，不可把不规则事件序列直接当等间距样本。参数：sampling_frequency：每采样步的频率单位；范围fixed unit-spaced samples；源码默认1.0；window：整段矩形窗；范围fixed；源码默认full rectangular"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-7785c21e293c820522d42bac",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341",
+        "harvest-source-9c8bdf4cfd5153253d8492de",
+        "harvest-source-691b215a8ad09519f0d61403",
+        "harvest-source-8822d2f67300fdb63f267ee3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "DynamicsAndNeuralSystems/catch22",
+  "lab": null,
+  "missing_information": [
+    "未编译/执行来源C代码或验证平台数值一致性",
+    "C运行时、编译器、浮点及内存安全未做复现验证",
+    "实际等采样间距、缺失插补约定、市场变量/时间戳/供应商/PIT历史未冻结",
+    "没有金融预测收益有效性证据"
+  ],
+  "name": "矩形窗功率谱的累计半能量频率",
+  "native_source_id": "SP_Summaries_welch_rect_centroid",
+  "one_line": "描述序列频域能量一半落在哪个频率以下。",
+  "record_id": "SP_Summaries_welch_rect_centroid",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/C/SP_Summaries.c"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-7785c21e293c820522d42bac",
+      "license": "GPL-3.0-or-later",
+      "locator": "welch:L11-L112; rectangular spectrum and centroid branch:L114-L206; native centroid wrapper:L213-L217",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "a051b5cd93e0736c2b5f1b38839b9ddf4e289192d7f4a4cd6f763fbac6eda6d9",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/C/SP_Summaries.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-597240971e17f8f9d1c6e29e",
+      "license": "GPL-3.0-or-later",
+      "locator": "canonical input quality checks and z-score preprocessing:L27-L70",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "295b06e810fb00507f52bdf4dc7bd46b4f304f3f423a2f99d700ad11d1dffc55",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/C/main.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-40fd2cfd3831b7fe559fc341",
+      "license": "GPL-3.0-or-later",
+      "locator": "mean:L29-L37; sample stddev:L94-L103; zscore_norm2:L181-L189; cumsum:L48-L56; norm_:L257-L270",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "13ce45289a86c0287acdfd61b7d2cf97043a38b72241860ab0df1bc11cfa0ad3",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/C/stats.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-3cfc6a3a24a21c9116b1479b",
+      "license": "GPL-3.0-or-later",
+      "locator": "GPL v3 license:L1-L674",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-5880de6029391154f8aed213",
+      "license": "GPL-3.0-or-later",
+      "locator": "authorship and GPLv3-or-later declaration:L1-L60",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "53368c86b844f521e9d0a85e5d388a3f59b1826a666a5d99a22915285269108b",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-9c8bdf4cfd5153253d8492de",
+      "license": "GPL-3.0-or-later",
+      "locator": "nextpow2:L29-L39; complex conjugate multiply:L59-L64; FFT autocorrelation and first nonpositive crossing:L114-L177",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "3ed5547c84bc9bc99b0a325a714f8bbd942d0f1e8c0a291bfdfb0f38c48b4f8e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/C/CO_AutoCorr.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-691b215a8ad09519f0d61403",
+      "license": "GPL-3.0-or-later",
+      "locator": "twiddles and FFT implementation:L24-L159",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "1ae80df6d8f018ee19d9853028ab7e7ada213da1b77956222af9078eea60de7d",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/C/fft.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-8822d2f67300fdb63f267ee3",
+      "license": "GPL-3.0-or-later",
+      "locator": "complex arithmetic helpers:L119-L179",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "aa1a6733581a8fc0a5a81d841854882d004b44de5fc453dcb0bfa65efffb1839",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/C/helper_functions.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

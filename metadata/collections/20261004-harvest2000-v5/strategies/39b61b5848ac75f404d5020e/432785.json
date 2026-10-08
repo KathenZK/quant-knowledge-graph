@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "将方向动量和与过去绝对动量压力比较可能提前识别方向恢复；相比TDI为正的常规门槛是否有价值仅是假说。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "同一Pee因子已见M6030；是否接受不同交叉用途须独审，不能靠名称或市场差异计数。",
+    "仅保留源码MPL声明范围，不延伸为Pee文章/其他实现或数据的许可。"
+  ],
+  "name": "Pee TDI 动量和与绝对趋势差值交叉的 ATR 限仓策略",
+  "native_source_id": "432785",
+  "one_line": "默认只用Pee TDI模式，以动量和上穿TDI开多、下穿平仓；数量取权益价格上限与ATR点值预算的较小整数。",
+  "record_id": "432785",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E8%B6%8B%E5%8A%BF%E5%B9%B3%E5%9D%87%E7%BA%BF%E7%9A%84%E5%A4%9A%E9%87%8D%E5%8F%8D%E8%BD%AC%E7%AD%96%E7%95%A5Trend-Reversal-Strategy-Based-on-Multiple-Moving-Averages.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 kruskakli; kruskakli, Markdown L181; indicator implementation attribution everget L186; conceptual attribution M.H. Pee / Stocks & Commodities L183–184; distinct scopes, identities unverified；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-432785-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "343a0407bab9eee5eaaf80435253351e78aec9a84fb9f02b664489a2b6950c8c",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E8%B6%8B%E5%8A%BF%E5%B9%B3%E5%9D%87%E7%BA%BF%E7%9A%84%E5%A4%9A%E9%87%8D%E5%8F%8D%E8%BD%AC%E7%AD%96%E7%95%A5Trend-Reversal-Strategy-Based-on-Multiple-Moving-Averages.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-432785-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-432785-published-code"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：strategy未声明手续费、滑点、融资或借券费用，没有获得真实交易成本。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-432785-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "在time≥timestamp(2016,1,1,0,0)且time≤timestamp(2028,12,31,0,0)的窗口内调用strategy.entry(\"Long\",long=true,qty=posSize0,when=多事件)。没有显式空仓门/做空/加仓控制；平台未显式pyramiding限制应单独核实。端点按源码timestamp默认时区，截止并不是2028-12-31全天。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-432785-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先计算所有指标分支并选默认TDI事件，确定日期窗和数量后按entry→close_all顺序调用；未显式收盘成交/逐tick/成交重算。原Pine v4代码仅静态阅读，首值和数量边界、实际订单时点未核。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-432785-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "同一日期窗内strategy.close_all(when=下穿事件)；窗外不发新入场也不发这个退出请求，没有到期自动平仓。maxLossPerc=5、stopOffset=1.5、limitOffset=1.0仅输入未用于任何exit，不存在由这些名称暗示的5%止损或ATR括号。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-432785-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "riskPerc=float20。maxPos=floor(0.2×equity/C)，atrCurrency=ATR14×syminfo.pointvalue，posSize0=min(floor(0.2×equity/atrCurrency),maxPos)。entry实际用posSize0，虽然源码另算max(posSize0,1)的posSize却未使用，因此不强制至少1单位。预算是20%权益的两个上限，非最大亏损20%保证。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-432785-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "无显式价格止损；小权益/高价可能得到0数量，ATR为0或na的行为未运行。源码声称过去选OMXS30中15家公司测试只是未核作者背景，没有完整证券池，不继承收益表或市场有效性。Pee概念、everget指标实现署名和kruskakli聚合源码许可分别保留。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-432785-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认use=\"TDI\"。m=C−C[20]，A=sum20(m)，T=abs(A)−sum40(abs(m))+sum20(abs(m))，等价abs(A)减去此前第20至39棒的绝对动量和。多事件crossover(A,T)，退出crossunder(A,T)，并非T>0且A>0的状态规则。另TCF/TTF/TII分支不属于默认定义，也不拆四条策略计数。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-432785-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-432785-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

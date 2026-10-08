@@ -1,0 +1,182 @@
+{
+  "economic_basis": {
+    "hypothesis": "不先把各资产强制放到同一时间网格，只累加时间区间相交的两资产增量乘积，描述完整观测窗口内的联合变动；不把同一算法的资产对或相关归一另算因子。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整窗口内的各资产对数价格水平与原始观测时点均已到达并可用后才可计算；不能用最终窗口长度、刷新网格或晚到修订回填早期值。当前缺具体数据供应商、观测时间精度与时区、交易日界、输入发布时间/修订和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "实际原生内部函数名HY，参数是list of zoo series；不是新造ID。公共cce以method=\"HY\"（默认）分派到该函数。本记录审HY→已登记C例程HayashiYoshida的完整协方差核心；公共包装的其它估计器、psd=True修复和cormat归一不算已审输出或新增族。 对每一列zoo分别as.numeric取水平值、as.numeric(time(...))取时点，再相邻diff；没有公共合并网格、插值、时间取整或截去不相同时点。输入已验证有限、时间单调且至少两点，避免将核心没有做的缺失处理当作事实。 对每对不同资产，C例程先从两列第一个区间开始，用起点>=另一区间终点或终点<=另一区间起点跳过不相交的前缀。首次重叠后把两增量乘积加到初值0的累计值。 主循环每次推进终点较早的那一列；两个终点相等则两列同时推进，直到任一列没有下一段。这保留了一个长观测区间与另一资产多段重叠时的全部交叉项，不把它缩成一一匹配。 对角直接用该资产全部差分平方和；非对角回填对称位置。资产不同起止边界时，非对角只取有重叠的区间对，但每个被选增量仍是原整段增量，不按重叠比例裁切；对角仍涵盖各自全窗口。 公共cce包装会各列删除NA并检查剩余点数，再调用HY；本条选择无NA的预验证核心合同，因此不把跨缺口差分或包装对Inf的行为推广为已安全。时间/值/长度必须在进入C前一致，C没有全面输入验证。 边界：HY核心不保证有限样本协方差矩阵半正定；公共包装psd=TRUE才会把特征值取绝对值，本记录没有默默加修复，也不宣称相关系数总在[-1,1]。 窗口没有交叠时非对角累计为0，对角仍是各自平方和；0不证明资产经济独立。观测支持不同会影响比较，应在研究阶段明确共同交易时段。 原算法处理不同步，不能据此宣称对市场微观结构噪声、价格跳跃、陈旧报价或选择性缺失已稳健；预平均/阈值方法在同文件中有其它原生分支，未自动计作新族。 函数不识别输入是原价格还是对数价格。将原价格传入得到价格增量协变差，不能当对数收益协方差；将收益直接传入会再差分成为另一对象。 时间采用double比较，没有epsilon容差或自动时区/单位换算；过大数值精度、重复时点、乱序/非有限值不在合同，未执行R/C/zoo环境复现。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "不先把各资产强制放到同一时间网格，只累加时间区间相交的两资产增量乘积，描述完整观测窗口内的联合变动；不把同一算法的资产对或相关归一另算因子。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "第a资产的有限水平值X_i^a在严格递增时刻t_i^a观测，i=0…n_a。设ΔX_i^a=X_i^a−X_(i−1)^a，区间I_i^a=(t_(i−1)^a,t_i^a]。非对角C_ab=Σ_(i=1..n_a)Σ_(j=1..n_b) ΔX_i^a ΔX_j^b ·1[max(t_(i−1)^a,t_(j−1)^b)<min(t_i^a,t_j^b)]；对角C_aa=Σ_i(ΔX_i^a)²。只接触一个边界时点不算重叠，条件为严格小于。矩阵对称；不去均值、不除样本数、不按持续时间加权、不年化，也不自动取对数。本研究输入合同已是对数价格水平，所以差分才是对数收益。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "data（R list of p>=2 univariate numeric zoo objects; each length>=2, finite log-price levels and finite strictly increasing numeric time index, common time unit; no missing values or duplicate times after as.numeric conversion）：每个资产独立观测的对数价格水平和时刻，不是预先计算好的收益；不要求各列观测数或时刻相同。值和时间一一对应、长度可由R整数表示；样本可用时点与数据修订另缺。。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-3af81e9f818144da17ac5596",
+        "harvest-source-bcc89ebff686bed91e41c1de",
+        "harvest-source-c1e6ff2220085d90b6e9d90c"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "yuimaproject/yuima",
+  "lab": null,
+  "missing_information": [
+    "市场数据供应商、PIT修订规则、观测时间精度/单位、交易日界和完整资产宇宙未冻结",
+    "R/zoo/C编译依赖和数值环境未执行固定，函数为内部native core而非新建对外API",
+    "原论文全文逐式复核与统计假设适用性未完成；没有收益方向、回测或真实噪声稳健性证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "按异步观测区间重叠累加的 Hayashi–Yoshida 协变差",
+  "native_source_id": "HY",
+  "one_line": "不先把各资产强制放到同一时间网格，只累加时间区间相交的两资产增量乘积，描述完整观测窗口内的联合变动；不把同一算法的资产对或相关归一另算因子。",
+  "record_id": "HY",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/DESCRIPTION"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-ff0019a5394f47012be8a421",
+      "license": "GPL-2.0-only",
+      "locator": "fixed package version, team/maintainer and GPL-2 declaration:L1-L25",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "97a61c26e3d1271ce6a24aff808ed9456e4cd94a9dc1d61d91dd4e0250905c2b",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-f20388cbd5bc257e031ae3bd",
+      "license": "GPL-2.0-only",
+      "locator": "GPL version2 copyright and license identity:L1-L7; copying modification and distribution conditions:L59-L195; version options and warranty disclaimer:L237-L280",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-e904fad824130bdff7b3371a",
+      "license": "GPL-2.0-only",
+      "locator": "official repository scope:L1-L5; project acknowledgment:L36-L39",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "9a3f3dd089d39134ad43f042588c18adc3f24ff58b55a8f11084f46bea066655",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-3af81e9f818144da17ac5596",
+      "license": "GPL-2.0-only",
+      "locator": "native HY identity, value/time differencing and zero matrix allocation:L631-L655; C dispatch, diagonal sums, symmetry and return:L671-L697; public generic native HY and psd defaults:L2654-L2662; finite-sample public wrapper relation and HY dispatch:L2681-L2709; wrapper PSD and correlation outputs distinguished from reviewed core:L2724-L2752",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "c88f91b131b9a1e7999598a0a9f881aefae5f23f48149c6b91e155f627af32b3",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/R/cce.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-bcc89ebff686bed91e41c1de",
+      "license": "GPL-2.0-only",
+      "locator": "complete native overlap two-pointer covariance algorithm:L222-L252",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "7c8369808ad7bdc19b945e8ec16bd100e66af282977bffa17de19e188ec30494",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/src/cce_functions.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-c1e6ff2220085d90b6e9d90c",
+      "license": "GPL-2.0-only",
+      "locator": "seven-argument native declaration:L13-L13; registered HY symbol and arity:L66-L66; native routine registration and dynamic-symbol policy:L120-L124",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "89ea63624d215a38717af906db7344f960863341fc2ca28a6f988b29805c691b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/src/yuima_init.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "YUIMA Project Team / 维护者Yuta Koike，按man/cce.Rd保留实现归属；HY概念归Hayashi–Yoshida，SIML归Kunitomo–Sato。此为固定维护者源码静态事实，不称全部为原论文作者本人代码或已复现论文数值结果。",
+      "id": "harvest-source-8c076969a48aacc0b5ad7838",
+      "license": "GPL-2.0-only",
+      "locator": "official covariance entry and supported public objects:L1-L25; HY identity and attribution:L169-L169; original HY paper references:L263-L269; implementation team attribution:L303-L306",
+      "revision": "c6761c78258807ebab36418cabf0b2bc5aa32532",
+      "sha256": "29e53d2964a8ca4eeb8a366966f1d98c3857bd2eeefa7289ffc48df38d90d2a4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/yuimaproject/yuima/blob/c6761c78258807ebab36418cabf0b2bc5aa32532/man/cce.Rd",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

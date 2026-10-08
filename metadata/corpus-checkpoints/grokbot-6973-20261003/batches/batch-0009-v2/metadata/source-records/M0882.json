@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0882",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 882,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f8e5125cbcd66140ba0fcca64d84d4145740ca747cee8bb5e1dff80284221352",
+    "rule_sha256": "a3aabc1ca7748c5f13aeec9e9894f20d096f020e88b0fe9afaf7beef8f2143e5"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0882",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0882"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/534/break-strategy/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "taimyn m frazier"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "break strategy：BTCUSDT永续，100 EMA背景，20周期滚动高低，1%风险，止损±2×14 ATR，回撤5%终止；入场边未锁"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-05-29"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "break strategy"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：页面写价格触及局部极值时做反转或突破，入场边未锁，不能把未写出的一侧编成做多突破、做空突破、做多反转或做空反转。周期写成分钟或 5 分钟，未锁哪一种，本条不改成单一周期。本条只保留已印出的风险数字与背景：标的为 BTCUSDT 永续。用 100 EMA 作方向背景，20 周期滚动最低/最高价划定区间。每笔风险为权益的 1%，止损为入场价±2×ATR（ATR 为 14 周期），数量按波动率调整；组合回撤达到 5% 时清仓并终止算法。不是已收的 DOGE 日线双模式：那边 ADX>25 为趋势、否则震荡，震荡用 RSI(14) 的 35/70，趋势才是收盘突破 20 期最高或最低收盘，止损 1.2 倍 ATR、追踪 1.5 倍 ATR，不是 BTCUSDT 永续，也没有 1% 风险与 5% 回撤终止。也不是比特币永续小时线斐波那契 50–79 与 ADX>18。计入加密。提出日期按源文件原样保留2026-05-29。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。入场边未锁，分钟或5分钟未锁"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

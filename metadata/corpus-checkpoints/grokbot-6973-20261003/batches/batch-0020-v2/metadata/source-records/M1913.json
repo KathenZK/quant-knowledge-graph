@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1913",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1913,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3e0bfabcf72e8e77da8400c9c0faa3a36e9de69622567470951228b0131bc30a",
+    "rule_sha256": "cb25d9420e3214864bd38d1c60c1b5883254fb836790da0d9de381b6f5d87c08"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1913",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1913"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/MADisplaceV3/MADisplaceV3.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（MADisplaceV3.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区MADisplaceV3：5m，1h快EMA>慢EMA为升势、RSI慢连降且RSI快<35且收盘<0.96×SMA15做多；升势结束或收盘>1.01×SMA20或下穿0.995×SMA30平多；止损−20%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区MADisplaceV3；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区MADisplaceV3：5m，1h快EMA>慢EMA为升势、RSI慢连降且RSI快<35且收盘<0.96×SMA15做多；升势结束或收盘>1.01×SMA20或下穿0.995×SMA30平多；止损−20%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/MADisplaceV3/MADisplaceV3.py默认 buy_params/sell_params。timeframe=5m，informative_timeframe=1h；stoploss=−0.2；minimal_roi={\"0\":1}；trailing_stop=True，positive=0.01，offset=0.025且only_offset_is_reached=True；use_custom_stoploss=True（浮亏>4%且持仓>35分钟则收紧至−1%）。买参：ma_lower_length=15、offset=0.96；informative_fast/slow=20/25；rsi_fast_length=4、threshold=35；rsi_slow_length=20、confirmation=1。卖参：ma_middle_1_length=30、offset=0.995；ma_upper_length=20、offset=1.01。1h uptrend=ema_fast>ema_slow。做多：rsi_slow_descending 近 confirmation 根之和等于 confirmation，且 rsi_fast<threshold，且 uptrend>0，且 close<ma_lower，且 volume>0。平多：uptrend==0 或 close>ma_upper 或 close 下穿 ma_middle_1，且 volume>0。灵感注释写 SMAOffset，但本条参数与 NotAnotherSMAOffset 族不同核。提出日期未知。 不是NotAnotherSMAOffset族默认核：本条是5m MADisplaceV3，1h快>慢EMA升势下RSI慢连降且RSI快<35且收盘<0.96×SMA15做多，升势结束或收盘>1.01×SMA20或下穿0.995×SMA30平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

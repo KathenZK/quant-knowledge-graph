@@ -1,0 +1,186 @@
+{
+  "admission": {
+    "membership": {
+      "curated": false,
+      "historical_public_export": false
+    },
+    "reasons": [
+      "NOT_PRIMARY_CONCRETE_DEFINITION",
+      "NOT_SIGNAL"
+    ],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "REVIEW_REQUIRED"
+  },
+  "category": "value",
+  "definition": {
+    "content_origin": "PROJECT_AUTHORED_MATHEMATICAL_SUMMARY",
+    "definition_sha256": "820d9baff7a23c1d7109069df0db79e698e64c81c232ff2515829f6a8996ee0e",
+    "formula": "(small_value + big_value - small_growth - big_growth) / 2",
+    "formula_dialect": "portfolio",
+    "formula_sha256": "bc1111684a77185d24eaa2121b84bac8d9fd9d727b88045d71568e32d635f358",
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "numeric_literals": [
+        "2"
+      ],
+      "operators": []
+    },
+    "required_fields": [
+      "big_growth",
+      "big_value",
+      "small_growth",
+      "small_value"
+    ],
+    "required_fields_status": "syntax_extracted_unexpanded",
+    "status": "FORMULA_AVAILABLE",
+    "text": "Size-balanced value portfolio spread.",
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "monthly",
+    "holding_period": {
+      "scope": "reported return interval; not annual formation schedule",
+      "unit": "month",
+      "value": 1
+    },
+    "lookback": null,
+    "rebalance": "annual June formation",
+    "universe": "US equities: eligible NYSE/AMEX/NASDAQ; details vary by sort"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": null,
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:31c46b3f-b108-5255-b900-3b2b6a12247f"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:5400c3ef-df52-5f7a-8f3c-6962390b45d0"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:5400c3ef-df52-5f7a-8f3c-6962390b45d0"
+    ],
+    "source_record_ids": [
+      "qkg:record:49e34e0e-88ac-578b-bd2a-4b430379dc25"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "本条类型为 factor_portfolio，不能作为已准入的正式单因子统计。"
+  ],
+  "name": "HML 价值多空组合",
+  "native_source_ids": [
+    "HML"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 4254,
+        "line_ordinal": 1567,
+        "line_sha256": "53c766de678afc5dcf906bc38466b11133b50f0049812e74e5ffcabbf3cb6491",
+        "record_id": "qkg:record:49e34e0e-88ac-578b-bd2a-4b430379dc25"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "parsed"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "reviewed_reference"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:31c46b3f-b108-5255-b900-3b2b6a12247f",
+  "record_kind": "factor_portfolio",
+  "rights": {
+    "attribution_required": false,
+    "commercial_use": [
+      "REVIEW_REQUIRED"
+    ],
+    "derivative_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "license_labels": [
+      "Copyright Eugene F. Fama and Kenneth R. French; no explicit open redistribution license verified"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [
+          "NOT_PRIMARY_CONCRETE_DEFINITION",
+          "NOT_SIGNAL"
+        ],
+        "status": "REVIEW_REQUIRED"
+      },
+      "attribution": [
+        "Eugene F. Fama",
+        "Kenneth R. French"
+      ],
+      "code_url": null,
+      "license": "Copyright Eugene F. Fama and Kenneth R. French; no explicit open redistribution license verified",
+      "locator": "Construction section",
+      "name": "HML 价值多空组合",
+      "native_id": "HML",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": "A Five-Factor Asset Pricing Model",
+        "url": null,
+        "year": 2014
+      },
+      "parameters": {
+        "numeric_literals": [
+          "2"
+        ],
+        "operators": []
+      },
+      "primary_source": true,
+      "record_id": "qkg:record:49e34e0e-88ac-578b-bd2a-4b430379dc25",
+      "response_sha256": "1d794afe7fb55290e7046c57fc03fd6b113954ad47c2eaec67e04bc603e7050c",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": null,
+      "rights": {
+        "attribution_required": null,
+        "commercial_use": "REVIEW_REQUIRED",
+        "derivative_allowed": "REVIEW_REQUIRED",
+        "license": "Copyright Eugene F. Fama and Kenneth R. French; no explicit open redistribution license verified",
+        "license_id": "qkg:license:a733f275-1ea0-5b8a-9613-6c7268a2790e",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "REVIEW_REQUIRED",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "REVIEW_REQUIRED",
+        "terms_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html"
+      },
+      "sha256": "88a4ff87c812b4ce53a5a41e8141cfcebc03dae653291f41af1279a7528a1982",
+      "source_id": "french",
+      "source_name": "Kenneth French Data Library",
+      "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_5_factors_2x3.html"
+    }
+  ]
+}

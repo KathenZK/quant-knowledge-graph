@@ -1,0 +1,102 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述方向路径效率与价格极值保护共同作用下的追踪状态；追踪线的名字不保证支撑阻力有效，也不构成交易收益证据。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-d5b9Xvft-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "引用当前H/L/src且没有barstate.isconfirmed门，盘中追踪与翻转可变化。历史缺值以当前src代入路径差分，会影响预热；ATR为na时max(ATR,tick)不提供明确有效重置距离，预热不算可用观测。需非负正常高低价和正tick；未执行Pine。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-d5b9Xvft-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "前方向缺失时沿用初始方向，前极值缺失时用当前src，前追踪线缺失时用src−R（正态）或src+R（负态）。先计算当前极值和保护后的T，再检查翻转：原负态且src>T则置+1、E=H、T=src−R；原正态且src<T则置−1、E=L、T=src+R；否则保持方向。保护窗含当前H/L，ATR只用于初始化与翻转重置，不连续作为追踪距离。p及方向、双态追踪线作为一个原生构造计数，不把基础效率比另计新增。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-d5b9Xvft-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述方向路径效率与价格极值保护共同作用下的追踪状态；追踪线的名字不保证支撑阻力有效，也不构成交易收益证据。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-d5b9Xvft-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "对i=0..19，d_i=nz(src[i],src_t)−nz(src[i+1],src_t)，U=Σmax(d_i,0)，D=Σmax(−d_i,0)；p=(U−D)/(U+D)，分母0时p=0，再夹在[−1,1]。a=min(a_min,a_max)+|p|×|a_max−a_min|；R=2×max(ATR_14,tick)。初始方向由p>=0取+1否则−1，极值E初始src。正态E=max(E前值,H)，候选T*=T前值+a(E−T前值)，T=max(T前值,min(T*,lowest_21(L)))；负态E=min(E前值,L)，T=min(T前值,max(T前值+a(E−T前值),highest_21(H)))。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-d5b9Xvft-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前图表H/L/C、tick；src默认C；路径窗20，加速下限0.5、上限1（输入会先排序）；极值保护窗21，重置ATR窗14、倍数2。参数仅为同一构造的设置。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-d5b9Xvft-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用于状态划分和后续研究的技术输入。没有策略仓位、成交、止盈或执行成本规则，按指标登记。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未执行Pine，预热缺失值与实时更新需另行验证。",
+    "未绑定市场数据或证明收益有效性。"
+  ],
+  "name": "方向路径效率驱动的极值保护追踪线（Adaptive Persistence Trail）",
+  "native_source_id": "d5b9Xvft",
+  "one_line": "用方向路径效率调节向区间极值靠拢的速度，再以最近高低点约束追踪线，反转时按ATR重置。",
+  "record_id": "d5b9Xvft",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SchizoQuant",
+      "id": "tradingview-d5b9Xvft-published-code",
+      "license": "MPL-2.0 source notice",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;302cf70ff3cb4fceb4097189b14d7a4a@1.0",
+      "sha256": "aa300079359ba1711d23db8cede45f5138a489ecfa90746ee78a65289f65b337",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B302cf70ff3cb4fceb4097189b14d7a4a/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / SchizoQuant",
+      "id": "tradingview-list-0dd974a023fd2721cd42",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=d5b9Xvft；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:0dd974a023fd2721cd42a5951462b46c75ff72cd7cb036da7b2bae28bcdf69b9",
+      "sha256": "0dd974a023fd2721cd42a5951462b46c75ff72cd7cb036da7b2bae28bcdf69b9",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-9/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

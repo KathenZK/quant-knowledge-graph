@@ -1,0 +1,116 @@
+{
+  "economic_basis": {
+    "hypothesis": "用距离加权的局部线性拟合平滑已观测窗口。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-eacdf7dd95cdc8363c50c573"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "收盘后输入才固定；源码未锁定市场、交易所或bar周期；实时柱内的输出可变。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-eacdf7dd95cdc8363c50c573"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "构造以历史窗口中心为零坐标的三立方权重。 只累加非缺失价格对应的加权和及交叉积。 返回局部加权线性回归在坐标0处的截距；若权重和为0则返回当前输入。 边界：坐标0对应窗口中点，即约 h 根前；输出虽画在当前柱，含义是延迟的中心拟合值。 length=3只有中心权重非0，回归分母为0；源码未兜底，不能称全参数域可用。 仅少量有效价格时也可能奇异；默认7并不免除缺失数据问题。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-eacdf7dd95cdc8363c50c573"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用距离加权的局部线性拟合平滑已观测窗口。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-eacdf7dd95cdc8363c50c573"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "L=max(3,长度下调到奇数)，h=(L-1)/2；z_i=i-h，w_i=(1-|z_i/h|³)³；W=Σw，Sx=Σwz，Sy=Σwx，Sxx=Σwz²，Sxy=Σwzx；y=[(Sy/W)*Sxx-(Sx/W)*Sxy]/[Sxx-(Sx/W)*Sx]。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-eacdf7dd95cdc8363c50c573"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src：每根已完成柱的价格或数值输入；默认close。参数：length：偶数向下取奇数后的回看根数；范围integer >=3 (UI)；源码默认7"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-eacdf7dd95cdc8363c50c573"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "mihakralj/pinescript",
+  "lab": null,
+  "missing_information": [
+    "Pine运行环境与ta.*内建语义未另冻结",
+    "未编译或执行Pine代码",
+    "市场数据、时间周期、调整方式和成本未选择"
+  ],
+  "name": "三立方核局部线性中心平滑",
+  "native_source_id": "loess",
+  "one_line": "用距离加权的局部线性拟合平滑已观测窗口。",
+  "record_id": "loess",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/loess.pine"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-eacdf7dd95cdc8363c50c573",
+      "license": "MIT",
+      "locator": "loess:L11-L44; UI defaults and input selectors:L49-L50; native function invocation and selected source:L53-L53",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "389d226e0b827e0af4acf8eacfe7f97f30b3b31e7da351318c193ec08641cb2b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/loess.pine",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-804bcf21463c75493a5520e3",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "19436752dbc325b6013c778a438efa521d0fefe0eb53aebf83d7753543052936",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-cba1b487e37af753465030d8",
+      "license": "MIT",
+      "locator": "author notes:L1-L59",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "bfa6636e1565956cc9819d8ef36334a308ab0899e3e715337588ac1a5e1df896",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/loess.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

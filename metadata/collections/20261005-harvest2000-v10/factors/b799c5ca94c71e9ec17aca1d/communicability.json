@@ -1,0 +1,124 @@
+{
+  "economic_basis": {
+    "hypothesis": "对给定图的每对节点，把各长度的走步数量按阶乘衰减后加总；描述连接结构，不把“可通信”命名当作市场信息真实传播证据。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-644687840c896ebd85b4a3e5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图方式、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-644687840c896ebd85b4a3e5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "decorators拒绝有向和多重图。本条额外固定无自环（源不主动拒绝自环）；完整节点迭代顺序决定矩阵行列映射，但返回值用原节点作为键。 communicability忽略全部边属性，以weight=None生成0/1邻接矩阵。np.linalg.eigh取得正交特征向量与实特征值；(vec*np.exp(w))@vec.T是逐列乘expλ后回乘，不是把每个A元素单独取exp。 communicability_exp采用另一条同族实现：默认weight=\"weight\"生成矩阵后把A!=0位置置1，再sp.linalg.expm。未冻结SciPy内部指数算法和实际安装版本，数学目标及上游调用已审，但浮点结果未执行。 将每个矩阵元素转float，返回dict-of-dict；孤立节点对角数学值1、对其他节点0。不能将对角1解释为有一条真实自环，它来自零长度走步。 完整构造使用任意长度walk，允许重复经过节点/边，不是只算简单路径、最短路径或三角形。不同节点对、特征值坐标、语言实现及输出摘要不计新。 边界：两实现对零weight边存在源码差异：spectral版本仍计边，exp版本A!=0不选它。不能无条件声称任何带属性图上两个函数都等价。 不对节点度归一，不对所有C值归一为概率；大图/高连通度使expλ溢出或放大数值误差，源未裁剪或修复。 空图的底层eigh/expm行为依赖运行环境未验证；本条有效研究合同建议至少一个节点，不以没有异常实测作保证。 任意多长walk在数学上由完整输入图定义；未来关系/未来阈值不能回填过去图。此定义不是已验证系统风险或收益因子。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-644687840c896ebd85b4a3e5"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对给定图的每对节点，把各长度的走步数量按阶乘衰减后加总；描述连接结构，不把“可通信”命名当作市场信息真实传播证据。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-644687840c896ebd85b4a3e5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条无向简单无自环图，A_uv=1若uv有边、否则0。C=exp(A)=Σ_(ell=0)^∞ A^ell/ell!；C_uv计全部长度走步的衰减和，ell=0给对角1。原生communicability取A=to_numpy_array(G,weight=None)，用对称分解A=V diag(λ)Vᵀ，C=V diag(expλ)Vᵀ；communicability_exp以SciPy矩阵指数计算，二者算同族。exp版本先按默认weight属性建矩阵再把所有非零元素置1，因此本条要求exp路径边上weight缺失或有限严格正值，避免零权边与另一实现出现不同拓扑。全矩阵、对角与其trace摘要不拆多个因子。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-644687840c896ebd85b4a3e5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in undirected simple networkx.Graph, loop-free; communicability ignores weights, communicability_exp audited only if weight missing or finite>0 on every edge）：给定完整关系图；金融节点/边、阈值、样本宇宙及PIT缺失，源函数不负责估计关系。。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-644687840c896ebd85b4a3e5"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/边/权重/方向及阈值构图、节点宇宙和PIT缺失",
+    "数值依赖/NetworkX backend版本与浮点输出未执行冻结",
+    "没有金融收益、风险有效性或因果传播证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "按阶乘衰减累积路径的图可通信性",
+  "native_source_id": "communicability",
+  "one_line": "对给定图的每对节点，把各长度的走步数量按阶乘衰减后加总；描述连接结构，不把“可通信”命名当作市场信息真实传播证据。",
+  "record_id": "communicability",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers固定内置实现，原文献归属按源码References保留；只公开自撰定义与精确来源定位，没有取得或复制原论文全文。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现，原文献归属按源码References保留；只公开自撰定义与精确来源定位，没有取得或复制原论文全文。",
+      "id": "harvest-source-ee984db19528f53267982e96",
+      "license": "BSD-3-Clause",
+      "locator": "dense adjacency arguments and directed convention:L893-L962; node order, zero fill and simple graph edge assignment:L1052-L1128",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "704777808d7ebe0dcc09412066d25a1564e5ac4a83f8ecac3c78ccea0b82570e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/convert_matrix.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现，原文献归属按源码References保留；只公开自撰定义与精确来源定位，没有取得或复制原论文全文。",
+      "id": "harvest-source-644687840c896ebd85b4a3e5",
+      "license": "BSD-3-Clause",
+      "locator": "spectral implementation exact unweighted adjacency and authors:L1-L79; exponential implementation and nonzero-weight threshold:L82-L152",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "d6840323e35d11370a01f8d9cb65f15e7cb9fd5511a9c8c815431cc737de07a0",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/communicability_alg.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

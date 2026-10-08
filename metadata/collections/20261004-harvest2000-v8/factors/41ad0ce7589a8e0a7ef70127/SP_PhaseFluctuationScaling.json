@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "隔离完整窗口的主频附近信号，移除平均相位转速，再描述相位波动随时间间隔变大的速度；不据此宣称混沌、非混沌或金融可预测性。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ba2f58b6ba57ffb28aafc28e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ba2f58b6ba57ffb28aafc28e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认halfWidthFrac=.01、numWindows16、maxN10000；输入超maxN只取最早样本，不能误称最后10000点。N随后按裁后长度更新。 h最少2；若|U|<4h则返回单一NaN。峰在谱边时选带裁到有效频点，不保证峰两侧各含h点，不按累计能量扩带。未显式减输入均值，但频域DC最终为0。 解析信号只保留正频并加倍，没有补负频共轭、没有边界裁剪；是整窗循环FFT带通。默认unwrap相位，再用全窗线性趋势去除平均转速。 若phi有非有限值返回单一NaN；之后若floor(N/4)<=8、去重尺度少于6或有效正波动尺度少于6，则只将三个斜率设NaN，meanFreq仍保留。 短/长分组在删除无效尺度之后按有效尺度数量中分，共用一尺度；各组用普通含截距最小二乘，不作稳健回归或方差加权。 原作者文献采用EMD选择模态，锁定实现明确用FFT单主峰带通替代，因此这是该官方实现的计算构造，不称原论文完整复现。 边界：全零输入的angle(0)仍可能为有限0，不能靠phi有限性门槛识别无能量带；此时F为0，斜率因缺有效尺度而NaN，meanFreq可为0。不得把退化输出称相位稳定性已证实。 源码说明窄带会让短间隔相位平滑，短尺度斜率易接近1，短长差也主要跟长斜率相连；这些不是独立新增特征或金融局部不稳定性的证据。 固定FFT窄带、全窗unwrap与线性去趋势受整个窗口影响；所有字段仅在窗口结束后计算，不能逐棒回填为当时已知。 不是标准DFA：未积分原始去均值序列，也未按每尺度分段局部拟合后求RMS；这里对主频解析相位只做一次全局去线性趋势，再求跨步绝对增量平均。 round、unwrap阈值/相位跳跃、FFT及并列峰的数值依赖环境没有运行冻结；只审其固定源调用结构。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ba2f58b6ba57ffb28aafc28e"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "隔离完整窗口的主频附近信号，移除平均相位转速，再描述相位波动随时间间隔变大的速度；不据此宣称混沌、非混沌或金融可预测性。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ba2f58b6ba57ffb28aafc28e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先取最早min(N,maxN)点。Y=FFT(y)，U为正频整数bin，排除DC和偶数N的Nyquist。p取|Y_U|²首个最大点；h=max(2,round(halfWidthFrac*|U|))，选[p−h,p+h]裁到U边界。Z频域仅该带置2Y，其余0；z=IFFT(Z)，φ=unwrap(angle(z))。用t=1..N全窗OLS拟合φ_t=a t+b，meanFreq=a/(2π)，d_t=φ_t−a t−b。W=unique(round(logspace(log10(2),log10(floor(N/4)),numWindows)))；F(w)=mean_(t=1..N−w)|d_(t+w)−d_t|。只保留F正且log10F有限的尺度，至少6个；在log10w对log10F做含截距OLS，以ceil(有效尺度数/2)划分短、长两组并共用边界点，输出两斜率与短减长。四个输出为一个族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ba2f58b6ba57ffb28aafc28e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（finite real ordered evenly sampled vector with meaningful nonzero oscillatory band）：完整窗口；采样周期固定后meanFreq单位才可换成每小时/日，源码单位是每样本周期。无能量带必须判无效，源码没有幅度门槛。。参数：halfWidthFrac：谱半带宽占有效频点数比例；范围research finite fraction>0 satisfying |U|>=4*max(2,round(fraction*|U|))；源码默认0.01；numWindows：候选对数尺度数量；范围research integer>=6, also require at least6 distinct valid scales；源码默认16；maxN：最早样本裁剪长度；范围research positive integer sufficient for gates; default10000；源码默认10000"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ba2f58b6ba57ffb28aafc28e"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "主频相位去趋势后的多尺度增量",
+  "native_source_id": "SP_PhaseFluctuationScaling",
+  "one_line": "隔离完整窗口的主频附近信号，移除平均相位转速，再描述相位波动随时间间隔变大的速度；不据此宣称混沌、非混沌或金融可预测性。",
+  "record_id": "SP_PhaseFluctuationScaling",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SP_PhaseFluctuationScaling.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-ba2f58b6ba57ffb28aafc28e",
+      "license": "GPL-3.0-or-later",
+      "locator": "native outputs, EMD substitution, short-slope caveat and GPL:L1-L94; defaults, crop, frequency band, phase and full-window detrend:L99-L166; scale grid, valid filters and overlapping OLS fits:L173-L225",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "327566d6621d600859137235c043a932613c1bb65845fbf196efd8bc5669ef37",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SP_PhaseFluctuationScaling.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2977",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2967,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "fa840aeb11222799388fc0d905f1d3ed6b8c69d803c15218f4a58ccbc4f4fa38",
+    "rule_sha256": "56a50d6ff9bf38922f183cf457816ba4c1fb005be1faff6a10b7c542a87199a8"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2977",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2977"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateOptionEquityStrategyAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；空仓时买最近到期三档看涨蝶式10组（Lean BasicTemplateOptionEquityStrategy）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（GOOG空仓买最近到期三档看涨蝶式10组；Lean BasicTemplateOptionEquityStrategy）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；空仓时买最近到期三档看涨蝶式10组（Lean BasicTemplateOptionEquityStrategy）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateOptionEquityStrategyAlgorithm.py`。标的 GOOG 股票期权；过滤 `standards_only().strikes(-2,+2).expiration(0,180)`。已投资或未开市则返回；取链上最近到期 calls 按行权价排序取低/中/高三档，`OptionStrategies.call_butterfly(..., higher, middle, lower, expiry)` 后 `order(...,10)`。不是 SPXW 指数蝶式（W423）核，也不是 W393 ATM 跨式核。提出日期未知。 不是SPXW指数蝶式（W423）核，也不是W393 ATM跨式核：本条为GOOG空仓买最近到期三档看涨蝶式10组。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

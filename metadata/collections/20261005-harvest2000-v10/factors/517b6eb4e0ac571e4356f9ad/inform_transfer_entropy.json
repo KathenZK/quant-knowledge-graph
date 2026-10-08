@@ -1,0 +1,175 @@
+{
+  "economic_basis": {
+    "hypothesis": "统计源序列的上一步状态，在目标自身历史之外提供了多少下一步信息；是按经验频数计算的方向性依赖特征，不据此宣称因果作用或可获利预测。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-fe5be33c6c172748354de296",
+        "harvest-source-c2c3976a3f07d7d72b7fa95e",
+        "harvest-source-777c14542321ba89c1fa3580",
+        "harvest-source-2a4fe9dea5f4ea21c9f87436"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "全部行、全部时点的状态窗口已观测并发布后可计算；局部信息值也使用整窗口分布，只能作窗口末回溯描述。市场绑定、状态离散化/PIT与阈值冻结缺失，不能回填为历史实时信号。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-fe5be33c6c172748354de296",
+        "harvest-source-c2c3976a3f07d7d72b7fa95e",
+        "harvest-source-777c14542321ba89c1fa3580",
+        "harvest-source-2a4fe9dea5f4ea21c9f87436"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "参数检查要求src/dst非NULL，n>=1，m>=2，b>=2，k>0且m>k，逐个检查n*m状态在[0,b)。C入口接收指针与外部长度，不自动检查真实分配数组大小、对齐时间或整数溢出。所有参数由调用者传入，没有Python式默认k。 每行先将目标前k个状态编码为base-b整数history；j=k开始逐步使用源j−1、目标j更新四张频数表，再删除目标最旧状态滚动history。新行重新初始化history，不跨行拼接；统计分布则汇总所有行，不是各行转移熵的简单平均。 密集频数表预分配大小b^(k+2)、b^k、b^(k+1)、b^(k+1)。即使某状态没有出现仍占支持空间；对零history/predicate/source/state频数跳过，不加伪计数、不做贝叶斯平滑或有限样本偏差修正。 整体函数在累计频数后遍历非零联合状态，累加频数乘log2比率并除N。局部函数另记每个有效观测的四个编码，最后用整段合并频数计算N个值，按行连续输出，每行只有m−k项、前k个时点没有输出。 本条显式令back=NULL/l=0以避开背景分支；源码整体背景寻址back[j+m*(i+n*u)−1]与局部back[j+n*(i+m*u)−1]不一致，不能把它们冒充已核对等价的有背景估计。背景数、条件变量或正反向今后补审也不自动新增族。 局部结果可以为负；整体值没有显式裁零、显著性检验、重采样null或因果识别。未执行C编译/二进制，不声称PyInform当前预编译库恰好绑定这个commit。 边界：输入合同还要求所有指数/乘法/分配大小可表示，状态编码不超过C int、每个uint32频数不溢出；源码未完整检查这些限制，过大b/k/n/m不是已安全支持。 整体错误返回NaN并在err非NULL时设错误码；局部错误返回NULL。调用者提供局部输出缓存时必须足够容纳N个double，源函数不检查缓存长度；NULL则尝试分配。 calloc/malloc失败有报错路径；局部频数分配失败分支未释放此前可能已分配的te，资源失败行为不等于纯数学定义。 常量源或无额外依赖理论上可给0，但小样本离散频数偏差会让总体方向依赖估计偏正；没有统计检验或阈值，不把0或正值变成交易指令。 局部值用全输入窗口及全部行的频率；不能将j处输出回填为j时点已知值。N个值只是窗口末可得的回溯描述。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-fe5be33c6c172748354de296",
+        "harvest-source-c2c3976a3f07d7d72b7fa95e",
+        "harvest-source-777c14542321ba89c1fa3580",
+        "harvest-source-2a4fe9dea5f4ea21c9f87436"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "统计源序列的上一步状态，在目标自身历史之外提供了多少下一步信息；是按经验频数计算的方向性依赖特征，不据此宣称因果作用或可获利预测。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-fe5be33c6c172748354de296",
+        "harvest-source-c2c3976a3f07d7d72b7fa95e",
+        "harvest-source-777c14542321ba89c1fa3580",
+        "harvest-source-2a4fe9dea5f4ea21c9f87436"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "明确审原生back=NULL、l=0分支。src/dst是n行、每行m步的等间隔对齐整数状态，0<=state<b，b>=2，1<=k<m，N=n(m−k)。每行i独立形成j=k..m−1的观测：h=(dst[i,j−k],...,dst[i,j−1])，x=src[i,j−1]，y=dst[i,j]。把所有行的观测合并频数C(h,x,y)、C(h,x)、C(h,y)、C(h)。T=(1/N)Σ_(C(h,x,y)>0) C(h,x,y) log2[C(h,x,y)C(h)/(C(h,x)C(h,y))]。局部值t_(i,j)为同一括号的log2，不乘频率；全体局部值的平均在精确算术下等于T。b为字母表大小，单位始终bits，不是以b为对数底。正反方向、历史k、局部/整体输出不拆新增。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-fe5be33c6c172748354de296",
+        "harvest-source-c2c3976a3f07d7d72b7fa95e",
+        "harvest-source-777c14542321ba89c1fa3580",
+        "harvest-source-2a4fe9dea5f4ea21c9f87436"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src（non-NULL contiguous C int buffer containing n*m states in row-major order, each 0<=x<b）：按同一时间栅格观测的源序列组；离散化/分箱/阈值和市场变量未给定，不能直接把任意浮点价格传入或先全样本拟合状态后当PIT。；dst（non-NULL contiguous C int buffer containing n*m aligned states, each 0<=x<b）：与src逐行逐步对齐的目标序列组；每行完整已观测窗口。不同方向换src/dst仍为同一算法族。。参数：n：合并估计的行数；各行内部产生转移，不跨行；范围required integer>=1; number of separate equal-length series；源码默认None；m：每行状态数；范围required integer>=2；源码默认None；b：共同状态字母表大小；不改变bits单位；范围required integer>=2；源码默认None；k：目标连续历史长度；源只取紧邻一步；范围required integer 1<=k<m；源码默认None；back：本次不使用额外背景序列；范围explicit NULL reviewed; native required argument has no default；源码默认None；l：背景序列数量；范围explicit 0 reviewed; native required argument has no default；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-fe5be33c6c172748354de296",
+        "harvest-source-c2c3976a3f07d7d72b7fa95e",
+        "harvest-source-777c14542321ba89c1fa3580",
+        "harvest-source-2a4fe9dea5f4ea21c9f87436"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "ELIFE-ASU/Inform",
+  "lab": null,
+  "missing_information": [
+    "金融变量、离散化方法、阈值拟合样本、供应商、市场时钟和PIT缺失",
+    "实际C编译器/整数宽度/二进制及高层包装链接版本未冻结",
+    "没有偏差校准、独立显著性或因果识别证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "目标历史条件下的离散转移熵",
+  "native_source_id": "inform_transfer_entropy",
+  "one_line": "统计源序列的上一步状态，在目标自身历史之外提供了多少下一步信息；是按经验频数计算的方向性依赖特征，不据此宣称因果作用或可获利预测。",
+  "record_id": "inform_transfer_entropy",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/ELIFE-ASU/Inform/blob/bf5017ad708bd8e21a70767938110a15d4408feb/README.adoc"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Inform / ELIFE，Douglas G. Moore及固定README列明的共同作者；本条从官方C实现自撰定义。README列原项目文献仅用于归属，不声称已核对或取得论文全文授权。",
+      "id": "harvest-source-6789507575925642b7f1b2c1",
+      "license": "MIT",
+      "locator": "official C library identity and wrapper scope:L1-L13; software license and reference attribution:L116-L131",
+      "revision": "bf5017ad708bd8e21a70767938110a15d4408feb",
+      "sha256": "5551e8cc3a5794cc86526989216fa171630c8ee19ed33777d753faaeccf826d0",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/ELIFE-ASU/Inform/blob/bf5017ad708bd8e21a70767938110a15d4408feb/README.adoc",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Inform / ELIFE，Douglas G. Moore及固定README列明的共同作者；本条从官方C实现自撰定义。README列原项目文献仅用于归属，不声称已核对或取得论文全文授权。",
+      "id": "harvest-source-771526b91ae8872dadee9522",
+      "license": "MIT",
+      "locator": "MIT full license:L1-L21",
+      "revision": "bf5017ad708bd8e21a70767938110a15d4408feb",
+      "sha256": "478a11ac4efea4a4955802e774ddb379430537c0c409f071f2aa0292150a8d6f",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/ELIFE-ASU/Inform/blob/bf5017ad708bd8e21a70767938110a15d4408feb/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Inform / ELIFE，Douglas G. Moore及固定README列明的共同作者；本条从官方C实现自撰定义。README列原项目文献仅用于归属，不声称已核对或取得论文全文授权。",
+      "id": "harvest-source-fe5be33c6c172748354de296",
+      "license": "MIT",
+      "locator": "histogram support and uint32 counters:L16-L55",
+      "revision": "bf5017ad708bd8e21a70767938110a15d4408feb",
+      "sha256": "d2c06e42b9fd488b65a1995354f91145674f524a6085095c47805ed30bb7e064",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/ELIFE-ASU/Inform/blob/bf5017ad708bd8e21a70767938110a15d4408feb/include/inform/dist.h",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Inform / ELIFE，Douglas G. Moore及固定README列明的共同作者；本条从官方C实现自撰定义。README列原项目文献仅用于归属，不声称已核对或取得论文全文授权。",
+      "id": "harvest-source-c2c3976a3f07d7d72b7fa95e",
+      "license": "MIT",
+      "locator": "error enum and error-return macro:L18-L54",
+      "revision": "bf5017ad708bd8e21a70767938110a15d4408feb",
+      "sha256": "23df3aa35e1d36096a9ea0ae8e5360fddef21d423b558faca95a30071f38ab3e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/ELIFE-ASU/Inform/blob/bf5017ad708bd8e21a70767938110a15d4408feb/include/inform/error.h",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Inform / ELIFE，Douglas G. Moore及固定README列明的共同作者；本条从官方C实现自撰定义。README列原项目文献仅用于归属，不声称已核对或取得论文全文授权。",
+      "id": "harvest-source-777c14542321ba89c1fa3580",
+      "license": "MIT",
+      "locator": "exact global and local observation encoding, no-background path and differing background offsets:L1-L96; argument checks:L98-L162; dense histograms and average bits formula:L164-L234; local allocation exact frequency ratio and output order:L236-L302",
+      "revision": "bf5017ad708bd8e21a70767938110a15d4408feb",
+      "sha256": "02841f5c1fec5db88810be6b33582d07a72b958439848723b1cdbb5c7af0cb5c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/ELIFE-ASU/Inform/blob/bf5017ad708bd8e21a70767938110a15d4408feb/src/transfer_entropy.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Inform / ELIFE，Douglas G. Moore及固定README列明的共同作者；本条从官方C实现自撰定义。README列原项目文献仅用于归属，不声称已核对或取得论文全文授权。",
+      "id": "harvest-source-2a4fe9dea5f4ea21c9f87436",
+      "license": "MIT",
+      "locator": "native C API explicit arguments and outputs:L13-L48",
+      "revision": "bf5017ad708bd8e21a70767938110a15d4408feb",
+      "sha256": "6b183dc5efda51f5dd1fbb1e65f76c5b29dc8d84934b9d3b4f4c29c3fe1f8b7c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/ELIFE-ASU/Inform/blob/bf5017ad708bd8e21a70767938110a15d4408feb/include/inform/transfer_entropy.h",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

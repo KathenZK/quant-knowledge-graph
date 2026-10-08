@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3539",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3493,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5301e4be415f9a43e039283992107c2e39cf59cdcef9471c25ea5492b1dca01b",
+    "rule_sha256": "325f948a4f68ae397def784abdc0e35fdce594cc6cd61560d4eb3d22049cb041"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3539",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3539"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://funds.alphaarchitect.com/wp-content/uploads/2018/05/VMOT_vF.pdf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Wesley Gray 等 / Alpha Architect"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": ""
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AA VMOT美股对冲：月末；对美股价值+动量多头组合；若标普12月收益≤国债则计1条、若价<SMA(12月)再计1条；对冲比例=触发条数×50%（0/50%/100%）（AA VMOT·US Trend）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2018-04-04"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AA VMOT美股对冲：月末；对美股价值+动量多头组合；若标普12月收益≤国债则计1条、若价<SMA(12月)再计1条；对冲比例=触发条数×50%（0/50%/100%）（AA VMOT·US Trend）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Alpha Architect《Our Value Momentum Trend Philosophy》（PDF **2018-04-04**）美股趋势对冲。信号指数：**S&P 500 Total Return**。两条规则各权重 **50%**：(1) **TMOM**：过去 **12** 个日历月总回报 ≤ 同期美国国债（T-bill）回报则触发；(2) **MA**：当前价低于 **12** 个月移动平均则触发（文：twelve month moving average exceeds current prices）。触发0条→不对冲；1条→对冲 **50%** 美股价值+动量多头敞口（做空代表性美股宽基ETF）；2条→**100%** 对冲。**每月**评估一次（月末收盘）。不是 RAA 四对内各50/50（M0790），也不是仅绝对动量满仓切换。提出日期取 PDF 头 **2018-04-04**（博客哲学文亦见 2017-06-06）。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Trend-Following Rules for the U.S. Value and Momentum Equity Portfolio；月度评估段"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

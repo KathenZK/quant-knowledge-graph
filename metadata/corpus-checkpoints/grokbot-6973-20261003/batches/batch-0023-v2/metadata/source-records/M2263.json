@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2263",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2263,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "186f85a3bdefeee56db4b3af56cabe1df0dee4882c06ca276c90a3ac966624a9",
+    "rule_sha256": "f4c2d49985301245d3cc55b6e8b3c9b232d921d96086137a02d15d969b8e3439"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2263",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2263"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/PrawnstarOBV/PrawnstarOBV.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（PrawnstarOBV.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区PrawnstarOBV：1h，OBV上穿其SMA(7)且RSI<50，或OBV升且OBV_SMA升且RSI<50等OR做多；卖出信号关，靠ROI/止损−15%/追踪止损"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区PrawnstarOBV；1h）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区PrawnstarOBV：1h，OBV上穿其SMA(7)且RSI<50，或OBV升且OBV_SMA升且RSI<50等OR做多；卖出信号关，靠ROI/止损−15%/追踪止损"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/PrawnstarOBV/PrawnstarOBV.py默认。timeframe=1h；stoploss=−0.15；minimal_roi约0/179/810/1024分钟对应29.6%/13.7%/2.5%/0；trailing_stop=True，positive=0.001，offset=0.04且only_offset_is_reached=True；use_sell_signal=False；sell_profit_only=True；startup_candle_count=30。指标：RSI默认、OBV、obvSma=SMA(OBV,7)。做多源码条件为：(OBV上穿obvSma 且 rsi<50) | ((obvSma−close)/obvSma>0.1) | (obv>obv.shift(1) 且 obvSma>obvSma.shift(5) 且 rsi<50)（按 Python 运算符优先级结合；卖侧 loc 空）。提出日期未知。 不是单RSI或单均线：本条是1h PrawnstarOBV，OBV上穿其SMA(7)且RSI<50等OR做多、卖出信号关。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

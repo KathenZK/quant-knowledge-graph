@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3371",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3325,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3764cff93ec3c854064d90a419bae9fdfb6899cd91959d0d08d8d48d44e5f957",
+    "rule_sha256": "ab8fd42f4fe169b72f1f70fbc43c46140a6e3866f18c0bf80d1c4bd3a81742e1"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3371",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3371"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/TensorFlowNeuralNetworkAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；每周一开盘后28分钟用近30日开盘价训TF单隐层(10,ReLU)；开盘后30分钟：开盘>预测+σ买入，开盘<预测−σ清仓（Lean TensorFlowNeuralNetwork）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；每周一开盘后28分钟用近30日开盘价训TF单隐层(10,ReLU)；开盘后30分钟：开盘>预测+σ买入，开盘<预测−σ清仓（Lean TensorFlowNeuralNetwork）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `TensorFlowNeuralNetworkAlgorithm.py`。分钟 SPY；`lookback=30`；仅 `DayOfWeek.MONDAY`：`after_market_open(28)` 训 200 步得 `y_pred_final`，`buy=y_pred+std`，`sell=y_pred−std`；同日 `after_market_open(30)` 按开盘与买卖阈值满仓/清仓（权重 `1/N`）。不是 Keras 周一重训但每日交易核（W418），也不是 Pytorch 每日重训核（W563）。提出日期未知。SPY仅周一重训且周一交易TF开盘±σ ≠ Keras周一重训每日交易多票（M2966）/Pytorch每日重训（W563）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "高低价分轴通道可能改变极端偏离的选择；没有证据证明其优于普通布林回归。",
+    "missing": [
+      "没有经过核实的论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像一一对应尚未核实。",
+    "依赖Pine内建函数和运行时；未编译、执行、下载行情或回测。",
+    "基线近邻已按正文比较，但全库机制去重仍待独立复核。",
+    "实际标的、频率、合约单位、成交模型与完整成本未冻结。",
+    "同属布林回归家族，新增机制边界尚待独立判断。",
+    "摘要只冻结默认增强模式；同时启用两套系统的相互影响未作为新候选。",
+    "exit_source输入闲置，日期过滤恒true。"
+  ],
+  "name": "高低价分轴布林通道的下轨回归多头",
+  "native_source_id": "430749",
+  "one_line": "默认用最高价EMA和最低价EMA分别构造上下轨，收盘低于下轨时买入，挂固定信号价止损与动态中轨目标。",
+  "record_id": "430749",
+  "relations": [],
+  "rights": {
+    "derived_results": "没有回测结果；未宣称上游源码、论文、数据或商业内部研究使用已获授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%8F%8C%E9%87%8D%E5%9D%87%E7%BA%BF%E5%B8%83%E6%9E%97%E5%B8%A6%E8%B6%8B%E5%8A%BF%E8%B7%9F%E9%9A%8F%E7%AD%96%E7%95%A5Dual-Moving-Average-Bollinger-Bands-Trend-Following-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 JCGMarkets ；原始发布版本与转载授权未核，上传者不等同实现作者。",
+      "id": "fmz-430749-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "32e48852ca1d0c8da91df61bfc713d9d556bf02789d0685e6093ec385e963c8d",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%8F%8C%E9%87%8D%E5%9D%87%E7%BA%BF%E5%B8%83%E6%9E%97%E5%B8%A6%E8%B6%8B%E5%8A%BF%E8%B7%9F%E9%9A%8F%E7%AD%96%E7%95%A5Dual-Moving-Average-Bollinger-Bands-Trend-Following-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-430749-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一当前图表标的；策略主体没有固定证券代码。FMZ回测头的BTC_USDT是转载包装，未证明原作者只适用于该标的。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-430749-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码commission_value=0.075且slippage=1，未显式commission_type；佣金类型依赖Pine默认，不宣称已核完整费用。点差、融资/资金费率与滑点最小变动单位映射缺失。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-430749-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "检测到没有多头仓位且默认增强模式信号成立时，数量round(strategy.equity/close)开多Entry_A，并把SL固定为信号close×0.97。不是以最终成交均价计算3%止损。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-430749-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v4；默认仅增强通道生效，先按可见持仓计算in_position，再入场或为已有仓位更新exit。没有显式成交后重算/收盘成交设置；成交与保护单首次生效未核。In_date恒true，配置的日期上下限不限制订单。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-430749-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "检测到持有多仓后，每bar为Entry_A更新止损SL和限价目标；默认take_profit=middle、sell_profit=false，目标为当前EMA20(close)。opposite选项改为当前增强上轨；sell_profit=true时，仅openprofit>0才提交对应limit，否则limit=na且stop仍有。默认trailing=false；打开后SLT=max(entry_source×0.94,SLT[1])且持仓内递增，空仓归0，low<=SLT触发strategy.close，不是预挂该跟踪价的stop单。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-430749-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每次qty=round(equity/close)，初始资本5000。以信号价估数量并取整，不能保证成交后恰为100%权益；未设基于止损距离的风险预算。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-430749-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "保护单在检测到持仓后才创建；信号止损距离可能受成交跳空改变。动态中轨目标可移动；价格宽度20000跨标的不具相同含义。exit_source输入未参与退出，日期函数恒true。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-430749-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本记录冻结默认show_simp=false、show_augm=true。m=EMA(close,20)，u=EMA(high,20)+2×stdev(close,20)，l=EMA(low,20)−2×stdev(close,20)。默认entry_source=close；信号为close<=l且u−l<20000，宽度阈值以原始价格单位计。非默认simple模式则以SMA(close,20)±相同dev作上下轨；两模式可同时启用，但本条不把双开模式当已复核合同。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-430749-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口以图表bar计，策略未强制单一运行周期；标题与FMZ回测配置没有原作者适用性证明，原始频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-430749-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未见跨资产筛选或动态池逻辑；计算和交易对象是当前图表。具体市场、交易日历、价格调整、合约乘数与可交易约束尚未冻结。"
+    }
+  }
+}

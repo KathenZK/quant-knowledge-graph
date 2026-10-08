@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2364",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2364,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9b6a493501a84b97a32ddb5a0ebe7efba379d7454c6c4ad03b7f7cb51bfaf639",
+    "rule_sha256": "9c484ce0fe816c373de9d719e7efacfe8f30c0064956b885734736046b2fc467"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2364",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2364"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/custom-fixed-fractional-portfolio-model"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY/QQQ/IWM/TLT/GLD/VNQ/EEM/LQD 连续两日收涨则各发向上Insight，固定5%组合模型（EasyQuant）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（八只ETF两日连涨Insight+5%组合；EasyQuant）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-05"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY/QQQ/IWM/TLT/GLD/VNQ/EEM/LQD 连续两日收涨则各发向上Insight，固定5%组合模型（EasyQuant）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Custom Fixed Fractional Portfolio Model》已印 FixedAllocationStrategy + FixedFractionPortfolioConstructionModel(fraction=0.05)。日线八只 ETF；每日开盘后30分钟 generate_momentum_insights：history(3) 若 closes[-1]>closes[-2] 且 closes[-2]>closes[-3] 则 Insight.price(..., UP, 5日)；emit_insights。组合模型对每个非 FLAT Insight 目标权重=方向×0.05。ImmediateExecutionModel。不是 ROC20+SMA50 括号动量核（W208）。提出日期取页面 Published on。 不是W208 ROC20+SMA50括号：本条为八只ETF连续两日收涨发向上Insight、固定5%组合模型。 计入美股/ETF。 提出日期按源文件原样保留2025-12-05。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

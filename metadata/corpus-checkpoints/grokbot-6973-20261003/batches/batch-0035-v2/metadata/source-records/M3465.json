@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3465",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3419,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "cc9c9c3953f6c88366a7eba58d8df26fb3cd22ab139bf924623531758af2068e",
+    "rule_sha256": "2f113a057fccd9c9479c5038041c26c2410abcbd742d786342b7d7fea8e9c3da"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3465",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3465"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/strategy/Strategy-FAA"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Wouter J. Keller & Hugo S. van Putten；实现 Systematic Investor（Michael Kapler）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF：日/期末；VTI/VEU/EEM/IEF/VNQ/DBC（现金BND）；80日动量·波动·平均相关加权排名；持有综合秩≤3且动量>0者等权，其余进现金（Systematic Investor FAA）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2012"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF：日/期末；VTI/VEU/EEM/IEF/VNQ/DBC（现金BND）；80日动量·波动·平均相关加权排名；持有综合秩≤3且动量>0者等权，其余进现金（Systematic Investor FAA）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Systematic Investor《Flexible Asset Allocation (FAA)》页内已印代码默认（对应 Keller & van Putten 2012 FAA）。代理宇宙：US.STOCKS=VTI、FOREIGN=VEU、EM=EEM、US.10YR=IEF、RE=VNQ、COMMODITIES=DBC；现金=BND（宇宙内不主动配置，作残差）。`n.top=3`；`mom/vol/cor.lookback=80`；权重向量 `c(1, 0.5, 0.5)` 分别加权动量秩、−波动秩、−平均相关秩得综合分再排名；持仓=（综合秩 ≤3）且（**mom>0**）的等权；其余权重进 CASH。不是仅相对动量无绝对动量过滤的轮动核。提出日期取论文年 2012（页未另印发帖日）。SI FAA：mom/vol/cor.lookback=80 加权秩≤3且mom>0等权其余现金 ≠ 仅相对动量无绝对过滤 / Keller其他变体。计入美股/ETF。提出日期按源文件原样保留2012。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Code Strategy Rules（n.top/lookbacks/weight/absolute momentum filter）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

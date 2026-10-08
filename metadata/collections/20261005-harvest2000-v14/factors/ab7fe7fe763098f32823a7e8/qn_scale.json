@@ -1,0 +1,156 @@
+{
+  "economic_basis": {
+    "hypothesis": "把一个样本内部所有不同观测对的绝对差按大小排序，取由样本数确定的阶次并乘校准常数，描述分散程度；它不先围绕均值或中位数取单点偏差。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-168502f9b2dd82f6baa74022",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随样本及配对变量均已观测并发布后才可计算；不把全窗统计回填到窗内更早时刻。当前缺金融输入、数据供应商、bar收盘/修订时点、市场时钟和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-168502f9b2dd82f6baa74022",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条选公共qn_scale的有限一维float64输入、axis=0路径。array_like以np.require转换为C连续、可写数组；c经float_like转float。源也支持沿高维axis逐切片，本条不扩展其它轴/后端。 公共入口先拒绝零维标量，整个数组为空则直接返回NaN。逐片_qn_finite若任一元素NaN或Inf即返回NaN，不把缺失元素删除或补零；全部有限才进入Cython_qn。 _qn先要求n>=2；计算h和k，排序样本。实现利用有序差分矩阵的每行左右候选边界、64位总候选计数，不显式展开全部n(n−1)/2对。它的目标仍是完整不同样本对的指定阶次，不能把辅助矩阵对角零当作目标额外样本。 每次从非空候选行取一个中部差分作为trial候选，并按该行剩余候选数量赋权。_whimed求高加权中位数：所有<=该值的权重总和必须严格超过总权重的一半；内部Quickselect用中位三点支轴及区间缩小。 对trial统计严格小于与小于等于的候选边界计数；目标阶次落在低侧或高侧时收缩相应左右边界，落在trial相等区域即结束。剩余候选不超过n时列出这些差分，用_psort取调整到0基的目标阶次。 最后仅返回c×trial。候选缓冲区意外超过n会抛RuntimeError；本条未编译/运行Cython或验证性能。_qn_naive是文件内测试参考，不是公共qn_scale真正执行的实现，本条未用它冒充原路径。 边界：公共函数空数组返回NaN；有限单元素进入_qn后抛ValueError。单元素若本身非有限，会先在_qn_finite返回NaN；不能笼统称所有长度1都先报错。 重复值保留重数；足够多相同观测可使第k个差为0，即使样本不完全常量。0表示该阶次为0，不证明没有尾部波动。 源没有拒绝c<=0或c为NaN/Inf；正有限c是本条额外研究合同，不声称上游已验证。有限输入仍可能在极端量级差分溢出；本合同另要求相关运算可表示。 计数总和用int64，但每行边界和权重缓冲仍为C int。本条不把文件注释中的大n能力视为无限容量/性能验证，不提供大样本完成保证。 c仅为正态分布校准表达式，不代表在相关、厚尾或异方差金融样本上已验证无偏/有效。Qn本身对顺序置换不敏感，不是时间趋势或预测信号。 输出：一个完整构造族；窗口、方向、语言实现和同族原生输出/选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-168502f9b2dd82f6baa74022",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把一个样本内部所有不同观测对的绝对差按大小排序，取由样本数确定的阶次并乘校准常数，描述分散程度；它不先围绕均值或中位数取单点偏差。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-168502f9b2dd82f6baa74022",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "有限一维样本x_1,…,x_n，n>=2。令h=floor(n/2)+1，k=h(h−1)/2，D为所有i<j的|x_i−x_j|组成的含重复值多重集合。Q_n=c×D_(k)，其中D_(k)为从1开始的第k小值；默认c=[sqrt(2)Φ^−1(5/8)]^−1，约2.219144465985076。固定源码没有再乘依赖n的有限样本校正因子，没有中心化、平方、年化或除n。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-168502f9b2dd82f6baa74022",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "a（one-dimensional ordinary real NumPy ndarray, converted to float64; finite n>=2, n<2^31−1; pairwise differences and scaled output representable）：一个完整已发布观测窗口，可为价格变动或别的数值样本。按有限一维合同审核，不传复数、masked/单位数组或其它后端；n上界为避免C int边界溢出的额外研究限制，不是源码主动检查。。参数：c：尺度校准倍数；固定实现没有自动有限样本修正，改变c不另计构造；范围research finite real >0; source only float_like conversion；源码默认1 / (sqrt(2) * norm.ppf(5/8))；axis：公共函数默认轴；高维切片不在已审输入合同；范围reviewed 0 on a 1D array only；源码默认0"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-2e09bf535b5d9c8a2930a68f",
+        "harvest-source-168502f9b2dd82f6baa74022",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "statsmodels/statsmodels",
+  "lab": null,
+  "missing_information": [
+    "金融输入、窗口、供应商、发布/修订时点及PIT未固定",
+    "SciPy正态分位数和NumPy/Cython运行依赖的实际安装版本/数值误差未冻结",
+    "原论文全文/商用权利未独立审核",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "成对绝对差指定阶次的 Qn 稳健尺度",
+  "native_source_id": "qn_scale",
+  "one_line": "把一个样本内部所有不同观测对的绝对差按大小排序，取由样本数确定的阶次并乘校准常数，描述分散程度；它不先围绕均值或中位数取单点偏差。",
+  "record_id": "qn_scale",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/robust/scale.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "statsmodels developers（LICENSE署Jonathan E. Taylor、Scipy Developers、statsmodels Developers）；源码将Qn算法归于Croux与Rousseeuw 1992。仅核维护者固定实现，不宣称已逐式复现该论文全文。",
+      "id": "harvest-source-2e09bf535b5d9c8a2930a68f",
+      "license": "BSD-3-Clause",
+      "locator": "attribution, native helper import and exact Gaussian calibration expression:L1-L29; finite guard, definition, axis wrapper and return:L115-L168",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "49c8c09800fabe71a0bb6a2bdb7fbf8634b43fad3edec4a1d46fbccd98ccbf37",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/robust/scale.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels developers（LICENSE署Jonathan E. Taylor、Scipy Developers、statsmodels Developers）；源码将Qn算法归于Croux与Rousseeuw 1992。仅核维护者固定实现，不宣称已逐式复现该论文全文。",
+      "id": "harvest-source-168502f9b2dd82f6baa74022",
+      "license": "BSD-3-Clause",
+      "locator": "Croux attribution, Quickselect and weighted high median helper:L1-L88; complete native Qn rank-selection implementation:L108-L215",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "acc0a9c06a8fa16db4353140b06e31d335860b2d67f4b125c59c048a8bbcba65",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/robust/_qn.pyx",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels developers（LICENSE署Jonathan E. Taylor、Scipy Developers、statsmodels Developers）；源码将Qn算法归于Croux与Rousseeuw 1992。仅核维护者固定实现，不宣称已逐式复现该论文全文。",
+      "id": "harvest-source-95eec514513ea721429660bb",
+      "license": "BSD-3-Clause",
+      "locator": "array conversion signature:L42-L55; np.require and dimensional checks:L145-L181; float_like conversion:L375-L422",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "862d8b1cf1411aaae0b397e2421109fa5e33c32efe7dcacdb88ae2eeca55fa5b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tools/validation/validation.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels developers（LICENSE署Jonathan E. Taylor、Scipy Developers、statsmodels Developers）；源码将Qn算法归于Croux与Rousseeuw 1992。仅核维护者固定实现，不宣称已逐式复现该论文全文。",
+      "id": "harvest-source-c42f2a259c3bd67e2e7d65e6",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 attributions and conditions:L1-L34",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "1ca78e1dec9dcebc55f3b96a862317f23e76422c5fc943568d955aad1f6b5fad",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels developers（LICENSE署Jonathan E. Taylor、Scipy Developers、statsmodels Developers）；源码将Qn算法归于Croux与Rousseeuw 1992。仅核维护者固定实现，不宣称已逐式复现该论文全文。",
+      "id": "harvest-source-6e63435ca23d4d69f63a6da6",
+      "license": "BSD-3-Clause",
+      "locator": "official project identity:L1-L37",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "d430fa04083d240c9f0e75aa90bc73c13cb1a874f4c7b4ce29bddbb6366c4a42",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

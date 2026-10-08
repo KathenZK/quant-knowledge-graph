@@ -1,0 +1,181 @@
+{
+  "economic_basis": {
+    "hypothesis": "汇总多张同坐标风险/关系矩阵的一种几何中心；输入本身的金融解释与估计器没有在此固定，源码近似返回不等于精确最优证明。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ce659a59dff4942cad778825",
+        "harvest-source-cbc9f12a4c935ad8833aa45d",
+        "harvest-source-ea6e6c5f23d883226e324c49"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在所有输入矩阵已形成且已发布、坐标对齐后可得；矩阵估计窗口、供应商、修订和金融PIT缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ce659a59dff4942cad778825",
+        "harvest-source-cbc9f12a4c935ad8833aa45d",
+        "harvest-source-ea6e6c5f23d883226e324c49"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入是普通NumPy float64形状(m,d,d)，无额外批轴，m>=3,d>=2，全部X_i真实对称正定、有限且同一坐标/单位体系。此合同由研究者额外限制，源函数不主动验证所有条件。不得把未定金融协方差估计器当输入已固定。 固定原生默认init=None、sample_weight=None、tol=10e−9、maxiter=50。check_weights先造全1再除总和；mean_euclid接到该向量后再次归一，并tensordot成初始算术矩阵均值。数学上等权，但不省略源中的第二次浮点归一。 每轮用对称特征分解求M的平方根/逆平方根，广播做每张X_i的合同变换R X_i R，再取主对数和等权和J。对称exp(nu J)使用同一eigh重建，不是逐元素exp/log。 以本轮旧nu先形成并接受S exp(nu J) S；随后计算旧点J的Frobenius范数与步长乘积h。h严格小于tau才把tau设h并nu乘.95，否则只让下一步nu减半。源码没有目标函数比较、回滚或重试当前这一步。 停止检查在更新nu之后进行：旧点crit<=tol或新nu<=tol。即便仅因nu很小而停，也返回已接受的新矩阵，不附收敛证书或残差。50轮全部完成则发Convergence not reached警告后同样返回最后矩阵。 distance_riemann同commit用广义特征值定义d_R，仅作目标含义的独立同源依据；实际均值迭代不调用它，不计算或输出目标值。没有把文档“minimizes”当成有限50轮必到精确最优。 整个矩阵中心、其坐标/谱、权重/容差/初始化变化与同目标其他求解器保守只一个家族。本记录不是资产选择、风险模型训练或已经有收益方向的因子。 边界：源_matrix_operator只检查维数/方阵及浮点非有限值；它的错误信息说positive definite，但没有显式验证对称或正特征值。所选域要求调用中M与R X_i R保持可用的正谱且所有中间量有限；这不是源代码的保护，也不是已执行证明。 矩阵指数的docstring写SPD/HPD，但实际eigh+exp也用于可能不正定的对称J；只对exp输入不施加正谱条件。平方根/对数不自动裁谱、加epsilon或修复PSD。奇异协方差、整数/complex/PyTorch/批轴/自定义init或负权路径未审。 源码浮点矩阵乘法没有显式对称化。不同backend/eigh三角选择、特征值误差、BLAS/依赖版本可能改变迭代结果；只冻结静态数学操作链，未冻结array-api-compat/NumPy安装环境，未执行复现。 tol原生10e−9等于1e−8；nu判断使用当轮调整后的值，crit对应调整前旧M的J。没有把最后M的真实梯度、目标下降或误差界从旧crit推出来。 数学目标具有共同可逆合同变换下的几何意义；实际有限迭代、Frobenius停止和数值误差不自动继承严格仿射不变输出保证。名称不是运行验证。 共同可交换/同时正交对角化输入时，数学目标的各坐标均值退化为标量几何平均；d=1更是普通几何平均。这些不是新增族依据。一般非交换矩阵不能直接把exp(mean(log X))当成本条目标或源迭代。 m=2的解析矩阵几何均值、换初值/权重/迭代器和返回谱均归此完整家族，不另计；本选定执行合同m>=3不是靠排除退化例制造新概念。 与Gaussian信息几何、矩阵谱、Wasserstein/Bures存在数学联系，但本目标使用log广义特征值距离，不把普通Wasserstein的Gaussian子域或其Bures均值另作新增。也不声明与全部已知算法数学或经济独立。 金融资产坐标、协方差来源/估计窗口、单位、时间对齐、PSD修复与PIT没有固定；必须全部矩阵已观测且发布后才能研究，不能使用未来矩阵回填过去。 输出：一个(d,d)最后迭代矩阵M；包括未收敛50轮后伴warning返回，未返回目标值/误差或精确argmin证书。整族计1。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ce659a59dff4942cad778825",
+        "harvest-source-cbc9f12a4c935ad8833aa45d",
+        "harvest-source-ea6e6c5f23d883226e324c49"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "汇总多张同坐标风险/关系矩阵的一种几何中心；输入本身的金融解释与估计器没有在此固定，源码近似返回不等于精确最优证明。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ce659a59dff4942cad778825",
+        "harvest-source-cbc9f12a4c935ad8833aa45d",
+        "harvest-source-ea6e6c5f23d883226e324c49"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "给定m>=3张同维d>=2实对称正定矩阵X_i，原生默认sample_weight=None得到w_i=1/m。定义参照为F(M)=Σ_i w_i||log(M^(−1/2)X_i M^(−1/2))||_F²，M为SPD；d_R²(A,B)=Σ_j log²λ_j(A,B)。本条实际返回不是精确argmin承诺，而是以下固定源迭代。初始化M=Σ_i normalized(w)_i X_i（mean_euclid再次归一权），nu=1，tau=float64最大有限值。每轮先取S=M^(1/2)、R=M^(−1/2)，J=Σ_i w_i log(R X_i R)，并立即令M_new=S exp(nu J) S。crit=||J||_F，h=nu*crit；若h<tau则nu_new=.95nu且tau_new=h，否则nu_new=.5nu且tau不变。接受M_new后，若crit<=1e−8或nu_new<=1e−8就返回新M；否则用新nu继续。最多50轮，耗尽时warn但仍返回最后M。matrix_function(Y)=V diag(f(λ)) Vᵀ来自eigh；log/sqrt/invsqrt要求相应SPD，exp用于对称J无需J正定。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ce659a59dff4942cad778825",
+        "harvest-source-cbc9f12a4c935ad8833aa45d",
+        "harvest-source-ea6e6c5f23d883226e324c49"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X（ordinary NumPy float64 ndarray (m,d,d), m>=3,d>=2, no leading batch axes; finite exactly symmetric positive definite matrices in a common coordinate system; all selected-path intermediates finite and required spectra positive）：给定矩阵集合，不是原始收益观察；对称/正谱和数值可表示域由额外研究合同要求，不声称原函数全验证或已数值运行。。参数：tol：旧点J范数或调整后nu的停止阈值，不是返回点目标误差；范围selected original literal10e-9；源码默认1e-08；本条选定1e-08；maxiter：耗尽只警告并返回最后迭代；范围selected original50；源码默认50；本条选定50；init：算术矩阵均值初始化；自定义初值未审；范围selected None；源码默认None；本条选定None；sample_weight：等权；权重变体同族，任意显式权错误分支未审；范围selected None；源码默认None；本条选定None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ce659a59dff4942cad778825",
+        "harvest-source-cbc9f12a4c935ad8833aa45d",
+        "harvest-source-ea6e6c5f23d883226e324c49"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "pyRiemann/pyRiemann",
+  "lab": null,
+  "missing_information": [
+    "金融矩阵构建、供应商、窗口/对齐/修订和PIT MISSING",
+    "固定依赖运行环境、BLAS与实测收敛/误差缺失",
+    "原论文全文/许可未由代码许可证覆盖",
+    "收益与经济有效性、交易成本和商用批准未建立"
+  ],
+  "name": "按仿射不变对数距离汇总正定矩阵的黎曼均值",
+  "native_source_id": "mean_riemann",
+  "one_line": "以矩阵对数距离定义一组正定矩阵的中心，记录固定源码实际迭代和返回边界，作为多矩阵状态汇总特征。",
+  "record_id": "mean_riemann",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/pyriemann/geometry/mean.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "pyRiemann authors; package metadata names Alexandre Barachant. Fixed mean docstring attributes objective to Fletcher/Lu/Pizer/Joshi2004 and stopping method to Congedo/Afsari/Barachant/Moakher2015; neither paper full text was reviewed for this candidate.",
+      "id": "harvest-source-ce659a59dff4942cad778825",
+      "license": "BSD-3-Clause",
+      "locator": "imports and native dependency boundary:L1-L15; Euclidean initializer and second normalization of existing weights:L364-L405; full native Riemann mean: objective, references, defaults, update and stop:L854-L946",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "8dbcef8336800934e517ffec650ef8912183ba468e3cef7ef36465f79f132a00",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/pyriemann/geometry/mean.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors; package metadata names Alexandre Barachant. Fixed mean docstring attributes objective to Fletcher/Lu/Pizer/Joshi2004 and stopping method to Congedo/Afsari/Barachant/Moakher2015; neither paper full text was reviewed for this candidate.",
+      "id": "harvest-source-cbc9f12a4c935ad8833aa45d",
+      "license": "BSD-3-Clause",
+      "locator": "namespace/device imports and check_like:L1-L39; shape check used by supporting metric, not called by mean:L42-L73; weight construction and normalization; positivity not default:L81-L130; Entire check_like including selected non-None namespace/device return; collector span stopped one line before it:L19-L40",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "ef70a8bd2a16aff9698aaa666fce15c2e9b8247fdbf66e00a2e50de1af9eb8e0",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/pyriemann/geometry/_check.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors; package metadata names Alexandre Barachant. Fixed mean docstring attributes objective to Fletcher/Lu/Pizer/Joshi2004 and stopping method to Congedo/Afsari/Barachant/Moakher2015; neither paper full text was reviewed for this candidate.",
+      "id": "harvest-source-ea6e6c5f23d883226e324c49",
+      "license": "BSD-3-Clause",
+      "locator": "conjugate transpose and generalized symmetric eigenvalues for supporting distance:L1-L81; no leading batch axes gives direct native call:L111-L144; matrix operator checks and spectral reconstruction:L150-L167; matrix exponential via eigenvalues:L170-L203; inverse symmetric square root:L206-L241; principal symmetric matrix logarithm:L244-L278; principal symmetric square root:L319-L353",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "567e1923d97dae06d99323cd8de0189536d390342fa2869116b04c411f47be66",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/pyriemann/geometry/base.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors; package metadata names Alexandre Barachant. Fixed mean docstring attributes objective to Fletcher/Lu/Pizer/Joshi2004 and stopping method to Congedo/Afsari/Barachant/Moakher2015; neither paper full text was reviewed for this candidate.",
+      "id": "harvest-source-8b6a7ec74b5ba402c63aff13",
+      "license": "BSD-3-Clause",
+      "locator": "imports connecting supporting metric to eigenvalue helper:L1-L13; squared AIRM distance definition and generalized eigenvalue implementation:L506-L562",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "7e0af00bcdc65f3108bd81eb3954592eb1e65525f6fc8e08c6c89e439c84063e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/pyriemann/geometry/distance.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors; package metadata names Alexandre Barachant. Fixed mean docstring attributes objective to Fletcher/Lu/Pizer/Joshi2004 and stopping method to Congedo/Afsari/Barachant/Moakher2015; neither paper full text was reviewed for this candidate.",
+      "id": "harvest-source-a463defb0a9ad835f47c4c31",
+      "license": "BSD-3-Clause",
+      "locator": "pyRiemann BSD3 copyright and complete license:L1-L24",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "13a48740065e33cddef33a67c8e06ce9cd27d9e9f7d5fd0271d2b77d5d979694",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors; package metadata names Alexandre Barachant. Fixed mean docstring attributes objective to Fletcher/Lu/Pizer/Joshi2004 and stopping method to Congedo/Afsari/Barachant/Moakher2015; neither paper full text was reviewed for this candidate.",
+      "id": "harvest-source-9f76cfea42bd1b6fc9ab3646",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer project purpose and license reference:L11-L42",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "71ba26697ba78dea774ff8ed68f5814d8e92cf2f33d330763a72088fcf12353f",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors; package metadata names Alexandre Barachant. Fixed mean docstring attributes objective to Fletcher/Lu/Pizer/Joshi2004 and stopping method to Congedo/Afsari/Barachant/Moakher2015; neither paper full text was reviewed for this candidate.",
+      "id": "harvest-source-137cfaedd164fdac320c42d5",
+      "license": "BSD-3-Clause",
+      "locator": "author, BSD license and declared but unpinned numerical dependencies:L1-L71",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "ea6892e5d024ad09a9ca0ccc2c49d34d6cf5a767caa7421c9c066da4f7ecd653",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/setup.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

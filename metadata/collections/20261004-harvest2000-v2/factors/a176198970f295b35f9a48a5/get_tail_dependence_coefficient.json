@@ -1,0 +1,104 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述一个资产进入极端状态时另一个资产同步进入其尾部的程度。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-f295515783673247a0ccebb8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅在整个估计窗口/分组结束、所有输入已观测并发布后可得；拟合系数及统计量不得回填为窗口内的实时因子。PIT数据与发表延迟缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-f295515783673247a0ccebb8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "按索引取两条序列交集并成对删除缺失，计算Pearson相关。 经验分支分别按各自边际分位数构造上/下尾事件，以A尾事件为条件求联合频率。 上下尾、相关及样本数合并登记；高斯/Student-t是同接口内估计方法，不额外拆数。 边界：成对样本n<=2返回NaN；A某尾部无样本则相应依赖为NaN。 默认是有限q的条件频率，不是已识别的q趋于1/0极限；上下尾条件不对称于交换A/B。 常量序列导致ρ为NaN时，高斯分支的比较可能落入else返回1，不能把该退化输出解释为完全依赖。 输出：一个完整统计构造；参数、窗口及多输出分量不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-f295515783673247a0ccebb8"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述一个资产进入极端状态时另一个资产同步进入其尾部的程度。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-f295515783673247a0ccebb8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "经验默认：λU=Σ1[A>Qq(A),B>Qq(B)]/Σ1[A>Qq(A)]；λL=Σ1[A<=Q(1-q)(A),B<=Q(1-q)(B)]/Σ1[A<=Q(1-q)(A)]。高斯分支ρ<1则0否则1；Student-t分支2*t_sf(sqrt((ν+1)*(1-ρ)/(1+ρ)),ν+1)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-f295515783673247a0ccebb8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "series_a（pandas Series only）：条件变量的同频率收益；series_b（pandas Series only）：被条件变量的同频率收益。参数：q：经验上尾分位数；范围0.5<q<1；源码默认0.95；method：估计方法；范围empirical/gaussian/student-t；源码默认empirical；dof：t分支自由度；范围Student-t自由度应>0；源码未单独验证；源码默认4.0"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-f295515783673247a0ccebb8"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "JerBouma/FinanceToolkit",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或进行数值复现",
+    "NumPy/Pandas/SciPy/sklearn版本及默认行为未冻结",
+    "金融数据、无风险收益与基准、供应商、数据发布时点和修订快照未选定",
+    "未验证经济收益有效性或市场适用假设"
+  ],
+  "name": "成对收益的有限阈值尾部依赖",
+  "native_source_id": "get_tail_dependence_coefficient",
+  "one_line": "描述一个资产进入极端状态时另一个资产同步进入其尾部的程度。",
+  "record_id": "get_tail_dependence_coefficient",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/risk/copula_model.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-f295515783673247a0ccebb8",
+      "license": "MIT",
+      "locator": "get_tail_dependence_coefficient:L20-L157; imports and explicit constants:L1-L19",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "c78d5e7dad02c87669b9850441b7145dc032116cdae20606172b016097e2e914",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/risk/copula_model.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-cb2abb9f4ee81dee928c5ef7",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "20f27d76a82699c1a5926ed41e8d1d8681ab3d554492559a9bfbd6f0d1ee2eef",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

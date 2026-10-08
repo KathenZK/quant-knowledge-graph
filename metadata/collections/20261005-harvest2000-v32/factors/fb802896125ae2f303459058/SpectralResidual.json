@@ -1,0 +1,238 @@
+{
+  "economic_basis": {
+    "hypothesis": "谱背景被削弱后的时域突出形状，可用于数据异常或形态变化研究；不等于可交易异常/风险概率或已验证超额收益。",
+    "missing": [
+      "金融收益、概率校准与异常真实性均未验证；原Ren论文逐式复现及权利未确认。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-daaa82af4eca6bfcb8bdbb02"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "整窗及所有列可得之后；每个历史位置受整窗未来样本影响，只能回顾描述或在窗末使用当时已经形成的完整窗。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-daaa82af4eca6bfcb8bdbb02",
+        "harvest-source-9be65698fb17cca930957570",
+        "harvest-source-9b21f56b2c648fb5219f4ecc",
+        "harvest-source-7cb895a064335cbbc568f7b5",
+        "harvest-source-46ad965d76adc385daec11c0",
+        "harvest-source-d418cd21b9a95d6ff16b8582",
+        "harvest-source-00c0939cacf23a5d058028b1",
+        "harvest-source-251754c69d341f446ac05301"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "validate_ts_input将输入转为普通float64，1D重排N×1，仅检查维数1/2；它没有finite、非空列或等时距校验。本文研究输入为有限普通稠密N×C、N>=3、C>=1，时序等间隔和列身份由外部冻结。 只选择原生默认q=3和max聚合；构造器实际不主动校验q正整数或aggregation枚举，文档不等于保护代码。fit检查N>=max(q,2)，decision_function只检查已拟合标志再重算query，没有同样最短长度检查；q>N时convolve same长度不符可能报错。 FFT不去均值、不加时域窗，不做fftshift、rfft或截频。按原序号含DC、正频和负频排列做长度3的线性same卷积；谱两端补0是补log幅度0而不是补原幅度0，不能改成周期平滑。 先算abs(F)+epsilon再取自然log，不把epsilon只用在零点；angle对复数以arctan2为准，零幅度遵守有符号零约定，不能宣称相位被删除。R经实指数恢复，与原phase合成复杂数后逆变换，再取绝对值而不是模平方。 单通道直接返回非负s；多通道则helper按每一列整个N点的总体均值/总体std进行Z标准化，再按行max。标准化使多通道score可为负，不能把所有输出都称非负saliency。σ=0只去均值变成零列；NaN std分支并不是修复缺失。 已拟合对象decision_function(Xquery)只对query自己全窗变换，未拼训练数据、未用训练均值std；训练状态仅作check_is_fitted门。query列数未主动同训练核对。不能当固定训练映射的逐点在线外推器。 fit还把rawscore的90百分位用于严格大于阈值标签（默认contamination=.1），并储存score均值std给泛型概率包装；本条只审核score及此包装语境，未审核predict_proba/置信度/拒绝等通用API，不把它们拆新因子。 固定NumPy2.2.2源码文档辅助解释DFT符号/默认归一、convolve same、angle、mean/std。PyOD依赖仅有下界，未证明作者历史环境即该NumPy，也没有编译FFT或执行源代码。底层浮点误差/平台依赖仍未知。 整窗信息同时进入每个时间位置的分数；历史前端位置使用其后输入，属回顾性窗口描述。若用于决策，只有整窗结束后计算的结果才可用，不得一次全样本FFT后给旧bar回填成当时可得特征。 这是PyOD维护者的SR实现，不是原Ren2019完整Microsoft服务/CNN；原文章未在本候选作逐式等价核查，亦不能把此库许可证当原论文授权。 边界：零/常量输入不必输出全零：epsilon、谱端log补0和phase复合可能产生确定性时域形状；不能把伪边界峰自动叫真实异常。 默认q3,N>=3的shape合同有原生fit门支持；不通过限制正常重复/常量输入来隐藏算法行为。有限输入仍可能FFT/exp溢出，源码不兜底，未数值验证。 多通道和单通道输出尺度不连续：加一重复通道会切换Z标准化分支。mean与max都为同族不同聚合，不能宣称通道复制不影响默认输出。 原代码不检查规则等时距；缺失/不等时距插补会改变频谱，数据合同MISSING。 q=1时R=0而仅保留phase，为参数退化；其它q不计新。q0/负/非整数、C0、空输入或对象数组不在已审有效主合同，真实错误不被描述为正确支持。 固定epsilon与非循环谱边界使全域平移/缩放不变性不能默认成立；score不是概率/p值/可比较的金融风险量，也没有收益方向。 不执行上游源算法或市场回测，不承诺无数值错误、无假峰、有效报警率或经济有效性。 输出：N个时间位置的rawscore；单通道非负，C>1默认取各通道整窗Z分数的max，可为负。 补充独审边界：默认q=3的query若只有1行，标量广播可产生3个score；2行则卷积长度3导致残差shape不匹配；空query进入FFT无效长度。这是静态路径判断，未执行；主合同仍为N>=3。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-daaa82af4eca6bfcb8bdbb02",
+        "harvest-source-9be65698fb17cca930957570"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "谱背景被削弱后的时域突出形状，可用于数据异常或形态变化研究；不等于可交易异常/风险概率或已验证超额收益。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-daaa82af4eca6bfcb8bdbb02",
+        "harvest-source-9be65698fb17cca930957570",
+        "harvest-source-9b21f56b2c648fb5219f4ecc",
+        "harvest-source-7cb895a064335cbbc568f7b5",
+        "harvest-source-46ad965d76adc385daec11c0",
+        "harvest-source-d418cd21b9a95d6ff16b8582",
+        "harvest-source-00c0939cacf23a5d058028b1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "代表固定PyOD原生score_window=3、channel_aggregation=max完整rawscore。X∈R^(N×C)，N>=3,C>=1。各列x：F_k=Σ_(t=0..N−1)x_t exp(−2πikt/N)；A_k=ln(|F_k|+10^−10)，P_k=atan2(ImF_k,ReF_k)。按原FFT标准频点顺序，Abar_k=(A_(k−1)+A_k+A_(k+1))/3，超出0..N−1的A置0而不环绕；R_k=A_k−Abar_k，S_k=exp(R_k+iP_k)，s_t=|N^−1Σ_kS_k exp(2πikt/N)|。C=1直接返回s_t。C>1每列先μ_c=mean_t s_tc、σ_c=sqrt(mean_t(s_tc−μ_c)^2)；σ_c>0时z_tc=(s_tc−μ_c)/σ_c，否则z_tc=s_tc−μ_c；最后score_t=max_c z_tc。mean聚合、窗口参数、逐通道分量与阈值标签全部同族，不能另计。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-daaa82af4eca6bfcb8bdbb02",
+        "harvest-source-9be65698fb17cca930957570",
+        "harvest-source-251754c69d341f446ac05301"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X（ordinary dense finite real float64 N by C array,N>=3,C>=1;or1D lengthN）：完整等间距时序窗；金融字段/供应商/单位/时点待冻结。允许常量、重复和全零，边界原样保留。。参数：score_window：频点上的均匀卷积宽度，不是时域滚动窗。；范围selected native default3;other windows samefamily not separatelycounted；源码默认3；本条选定3；channel_aggregation：仅多通道先Z标准化再聚合；单通道绕过helper。；范围default max;native else branch mean noted not separatelynominated；源码默认max；本条选定max；contamination：仅标签阈值包装，未进入rawscore公式。；范围numeric0<c<=.5 basegate；源码默认0.1；本条选定0.1；epsilon：固定加到每个FFT幅度，不能当可调参。；范围hardcoded not exposed constructor parameter；源码默认1e-10；本条选定1e-10"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-daaa82af4eca6bfcb8bdbb02",
+        "harvest-source-9be65698fb17cca930957570"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "原生SpectralResidual完整rawscore族，含单/多通道；默认q3,max作为唯一代表，不冒充完整SR-CNN。 作为整窗形态和异常诊断的研究输入；金融数据时点、异常标注、误报及经济用途仍需单独验证。"
+    }
+  },
+  "identity_namespace": "yzhao062/pyod",
+  "lab": null,
+  "missing_information": [
+    "金融字段/供应商/等时距与PIT MISSING",
+    "完整依赖环境/FFT数值行为未执行",
+    "经济有效性/入出场/成本 MISSING",
+    "原Ren论文逐式复现与授权未确认"
+  ],
+  "name": "对数幅谱残差重建的时间显著度",
+  "native_source_id": "SpectralResidual",
+  "one_line": "从幅谱中扣去邻频背景，再用原相位重建整窗显著度；多通道保留源码的先标准化后汇总分支。",
+  "record_id": "SpectralResidual",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅静态源码审阅；未执行算法、行情计算或回测，商业使用REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义、边界和来源摘要；保留原生署名及许可条件，不包含源码、论文全文或市场数据。PyOD BSD-2-Clause与NumPy BSD-3-Clause分别按原来源记录，不推及原论文、供应商或输入数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/pyod/models/ts_spectral_residual.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "PyOD YueZhao maintained implementation cites Ren etal2019;NumPy maintainers for mathematical helper references. No claim PyOD author is the original SR paper author.",
+      "id": "harvest-source-daaa82af4eca6bfcb8bdbb02",
+      "license": "BSD-2-Clause",
+      "locator": "attribution and selected helpers:L1-L17; native output and parameter scope:L20-L50; complete constructor and spectral multichannel core:L70-L150; fit lifecycle and query recomputation:L152-L200",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "be32ba0216250a29f675f3b5ea565ea3ee733e8b02e2a522f802bc3a9148a298",
+      "supports": [
+        "PRIMARY_SPECTRAL_RESIDUAL_INPUT_AND_CHANNEL_HELPER"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/pyod/models/ts_spectral_residual.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD YueZhao maintained implementation cites Ren etal2019;NumPy maintainers for mathematical helper references. No claim PyOD author is the original SR paper author.",
+      "id": "harvest-source-9be65698fb17cca930957570",
+      "license": "BSD-2-Clause",
+      "locator": "ordinaryfloat64 inputreshape no finitecheck:L1-L25; complete conditional perchannel Znormalization andaggregation:L93-L121",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "4c60c78b112b0427ea10d1efa89fd11016c7f49ed686cb9c4cce57056da915d2",
+      "supports": [
+        "PRIMARY_SPECTRAL_RESIDUAL_INPUT_AND_CHANNEL_HELPER"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/pyod/models/_ts_utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD YueZhao maintained implementation cites Ren etal2019;NumPy maintainers for mathematical helper references. No claim PyOD author is the original SR paper author.",
+      "id": "harvest-source-251754c69d341f446ac05301",
+      "license": "BSD-2-Clause",
+      "locator": "base dependencies:L1-L24; numeric contamination gate:L60-L70; yNone and generic threshold context:L537-L588",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "cf5040ab8e00da741d439983788571a2103682d449d7020b04377026369804a5",
+      "supports": [
+        "SELECTED_FIT_LIFECYCLE_AND_THRESHOLD_CONTEXT_NOT_RAW_SCORE"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/pyod/models/base.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD YueZhao maintained implementation cites Ren etal2019;NumPy maintainers for mathematical helper references. No claim PyOD author is the original SR paper author.",
+      "id": "harvest-source-8a44d7d9fb784551f753288a",
+      "license": "BSD-2-Clause",
+      "locator": "complete BSD2 terms:L1-L24; supplemental complete license and final disclaimer:L1-L25 (historical L1-L24 locator retained)",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "2aad003d1faca304e013f82e5088e8cb1c364470d4755e1e2175922a9872bf56",
+      "supports": [
+        "LICENSE_ONLY"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PyOD YueZhao maintained implementation cites Ren etal2019;NumPy maintainers for mathematical helper references. No claim PyOD author is the original SR paper author.",
+      "id": "harvest-source-c836bf35c62894bb980aab6a",
+      "license": "BSD-2-Clause",
+      "locator": "lowerbound dependencies not runtime lock:L1-L6",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "b9e9430eed989340693502ffd4c919dd0051f4ffc390f565eb84ab9578491498",
+      "supports": [
+        "DEPENDENCY_LOWER_BOUNDS_NOT_ENVIRONMENT_LOCK"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/requirements.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PyOD YueZhao maintained implementation cites Ren etal2019;NumPy maintainers for mathematical helper references. No claim PyOD author is the original SR paper author.",
+      "id": "harvest-source-9b21f56b2c648fb5219f4ecc",
+      "license": "BSD-3-Clause",
+      "locator": "DFT forwardinverse signs normalization phase andstandard binorder:L75-L145",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "716f28251a2b1e51b5d2686784007538e920e07a46d8d1981c38289c5348d38b",
+      "supports": [
+        "SUPPLEMENTARY_MATHEMATICAL_SEMANTICS_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/numpy/fft/__init__.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD YueZhao maintained implementation cites Ren etal2019;NumPy maintainers for mathematical helper references. No claim PyOD author is the original SR paper author.",
+      "id": "harvest-source-7cb895a064335cbbc568f7b5",
+      "license": "BSD-3-Clause",
+      "locator": "native norm andcomplex forwardinverse dispatch withdirection swap:L51-L105; forward wrapper defaults andlength:L206-L216; inverse wrapper:L310-L316",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "43a2798a75f5d283c1b57fa56e53e5604c6ecf2728bc6afe2c5313ed061ef697",
+      "supports": [
+        "SUPPLEMENTARY_MATHEMATICAL_SEMANTICS_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/numpy/fft/_pocketfft.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD YueZhao maintained implementation cites Ren etal2019;NumPy maintainers for mathematical helper references. No claim PyOD author is the original SR paper author.",
+      "id": "harvest-source-46ad965d76adc385daec11c0",
+      "license": "BSD-3-Clause",
+      "locator": "linear convolution same middle crop zero boundary anddelegate:L769-L870",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "bec88470c8a0e101f031ff473f999aa8e845b1b96a19b87c02d138717d3c0fbc",
+      "supports": [
+        "SUPPLEMENTARY_MATHEMATICAL_SEMANTICS_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/numpy/_core/numeric.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD YueZhao maintained implementation cites Ren etal2019;NumPy maintainers for mathematical helper references. No claim PyOD author is the original SR paper author.",
+      "id": "harvest-source-d418cd21b9a95d6ff16b8582",
+      "license": "BSD-3-Clause",
+      "locator": "phase arctan2 andsignedzero convention:L1649-L1700",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "79e65a8b3169b022de8ac2dcc6b43e78ae11fbc7a7c3a60a3d5d637833f00b35",
+      "supports": [
+        "SUPPLEMENTARY_MATHEMATICAL_SEMANTICS_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/numpy/lib/_function_base_impl.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD YueZhao maintained implementation cites Ren etal2019;NumPy maintainers for mathematical helper references. No claim PyOD author is the original SR paper author.",
+      "id": "harvest-source-00c0939cacf23a5d058028b1",
+      "license": "BSD-3-Clause",
+      "locator": "populationmean variance ddof0 andstd:L118-L233",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "a6398fd7201bb557ac5d3cadbaea46217a233b9e72f0b052fbc7c440fbac3485",
+      "supports": [
+        "SUPPLEMENTARY_MATHEMATICAL_SEMANTICS_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/numpy/_core/_methods.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD YueZhao maintained implementation cites Ren etal2019;NumPy maintainers for mathematical helper references. No claim PyOD author is the original SR paper author.",
+      "id": "harvest-source-2ba9c9fa57c4e2708e63a8fd",
+      "license": "BSD-3-Clause",
+      "locator": "complete NumPy BSD3:L1-L30",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "01fb016849aa427edb1bbbbd55f91c26ca6cadb32a5b20e7f000655dd05b0760",
+      "supports": [
+        "LICENSE_ONLY"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

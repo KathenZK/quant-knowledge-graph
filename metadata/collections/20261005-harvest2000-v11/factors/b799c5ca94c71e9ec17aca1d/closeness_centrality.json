@@ -1,0 +1,124 @@
+{
+  "economic_basis": {
+    "hypothesis": "用一个节点到其它可达节点的平均最短距离倒数，描述其在给定图中的接近程度；默认再按可达节点占全图的比例缩放。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-f89db8c38c3ea57a38c0dc84",
+        "harvest-source-ffef41f69875fbefcd196002"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图方式、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-f89db8c38c3ea57a38c0dc84",
+        "harvest-source-ffef41f69875fbefcd196002"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条只审内置无向Graph，故不执行有向图reverse分支。distance=None选single_source_shortest_path_length；sp=None强制由当前图计算，不使用外部缓存距离。 u=None按图节点顺序逐个计算并返回dict；若显式给有效u，只返回该节点的标量。将这两种输出形态视为同一构造。 BFS helper先验证源在图中，seen从源开始，按层扩展此前未见邻居。cutoff=None变为无穷，不截断距离；返回字典仅含可达节点，包含源的0距离。 求距离和及可达节点数，再按公式计算；wf_improved=True的额外缩放压低小连通分量，即使其内部平均距离很短，也不直接与全图连通节点同尺度。 空图且u=None返回{}；单节点、孤立节点返回0；给不在图中的u由路径helper抛NodeNotFound，不自动添加节点。 方向、带权距离、缓存sp均保留原生参数信息但不冒称已审其运行分支；它们也不会仅因参数变化被拆为新算法数量。 边界：孤立点的值为0是原生分支，不把1/0解释成无穷或缺失。空图all-node模式为空dict。 新增孤立点影响默认分母n−1，但不影响已有分量内部距离；关闭wf_improved与开启为同族不同归一。 不取所有walk、不按路径条数加权，也不按1/d逐项累积；与harmonic centrality/graph efficiency不能仅凭近似名称当作相同公式。 有向图原生会先reverse并测入向距离，但本条未把reverse view实现和该分支作为已审合同；外部backend和运行依赖仍未冻结。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-f89db8c38c3ea57a38c0dc84",
+        "harvest-source-ffef41f69875fbefcd196002"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用一个节点到其它可达节点的平均最短距离倒数，描述其在给定图中的接近程度；默认再按可达节点占全图的比例缩放。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-f89db8c38c3ea57a38c0dc84",
+        "harvest-source-ffef41f69875fbefcd196002"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条无向简单无自环图，distance=None且sp=None。总节点数n；R_u为从u可达的节点集合（含u），r_u=|R_u|，D_u=Σ_(v∈R_u)d(u,v)，d为最短边数且d(u,u)=0。若D_u>0且n>1，c_u=(r_u−1)/D_u；默认wf_improved=True再乘(r_u−1)/(n−1)。否则返回0。此处是距离平均值的倒数，不是逐对倒距离的平均（harmonic centrality）。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-f89db8c38c3ea57a38c0dc84",
+        "harvest-source-ffef41f69875fbefcd196002"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in undirected simple networkx.Graph, loop-free; distance=None, sp=None）：冻结关系图及全部节点宇宙。图可不连通，金融构图与时点缺失；边权属性不参与。。参数：u：输出全图dict或单节点标量；范围None=>all nodes; otherwise one existing graph node；源码默认None；distance：无权最短边数，命名权重Dijkstra不在已审子合同；范围only None reviewed；源码默认None；wf_improved：是否乘可达其它节点占全图其它节点比例；范围bool；源码默认True；sp：不使用缓存全源最短距离；范围only None reviewed；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-f89db8c38c3ea57a38c0dc84",
+        "harvest-source-ffef41f69875fbefcd196002"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/边/权重/方向和阈值构图、完整节点宇宙及PIT缺失",
+    "外部backend与具体运行依赖版本未冻结，未执行上游实现",
+    "没有金融收益、风险有效性或因果传播证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "按可达最短距离计算的接近中心性",
+  "native_source_id": "closeness_centrality",
+  "one_line": "用一个节点到其它可达节点的平均最短距离倒数，描述其在给定图中的接近程度；默认再按可达节点占全图的比例缩放。",
+  "record_id": "closeness_centrality",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers固定内置实现；Brandes/Freeman、Wasserman–Faust、Burt等原概念归属按各源码References保留。公开内容为自撰计算定义与固定源码定位，未复制论文全文。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现；Brandes/Freeman、Wasserman–Faust、Burt等原概念归属按各源码References保留。公开内容为自撰计算定义与固定源码定位，未复制论文全文。",
+      "id": "harvest-source-f89db8c38c3ea57a38c0dc84",
+      "license": "BSD-3-Clause",
+      "locator": "native defaults, Freeman/Wasserman attribution and complete closeness function:L1-L161",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "4f030f96273ae6c9d5f7fcb270d58007859a4fe7871d84b335754cccb80539b3",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/centrality/closeness.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现；Brandes/Freeman、Wasserman–Faust、Burt等原概念归属按各源码References保留。公开内容为自撰计算定义与固定源码定位，未复制论文全文。",
+      "id": "harvest-source-ffef41f69875fbefcd196002",
+      "license": "BSD-3-Clause",
+      "locator": "single-source distance wrapper and complete unweighted BFS helper:L21-L113",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "8ae2403b75b3075a7e7f0a43c86338b27b85079939eca22c546700254842a62d",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/shortest_paths/unweighted.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

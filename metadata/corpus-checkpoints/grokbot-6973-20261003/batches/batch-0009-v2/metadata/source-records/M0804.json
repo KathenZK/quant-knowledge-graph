@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0804",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 804,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5f7493b63d35cee583ac8943c8d478f8400ce84ee3a3e9d136f21ee64b5642ac",
+    "rule_sha256": "dec26791dae61bbe84cfcfa1148fea4f3cd6b4fed88b7ed01ad136271f048825"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0804",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0804"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/21160/momentum-in-capital-gain-stocks/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "不派息股票12减1动量：流动性最高1000只里留美国普通股、纽交所或纳斯达克或美国证交所、股价至少5美元并剔除公用事业与金融，近365日未派息且动量高于纽交所第95百分位者月末等权"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Momentum in Capital-Gain Stocks"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该研究页已写出的不派息动量，不是已收的市值与过去2至12个月收益做成2乘3多空，也不是过去一年最好10只对最差10只，也不是标普500里12减1动量约100只按市值乘分数加权，也不是费雪用远期市盈率相对预期增长并要求预期不派息。先取至少有一年月末价格历史、流动性最高的1000只美国股票。留下：有基本面数据、公司国别为美国、公司状态为U、证券类型为普通股、主份额、主上市在纽交所或纳斯达克或美国证交所、股价大于或等于5美元；标准行业分类4900至4949的公用事业与6000至6999的金融剔除。近365日派过至少一次股息的视为派息股，其余为资本利得股。动量等于t减2月末复权价除以t减13月末复权价再减1，窗口覆盖十一个月并跳过最近一个月。阈值只用纽交所上市股票的动量第95百分位。买入动量高于该阈值的资本利得股。每个月最后一个交易日美东8:00把入选股票等权，并清算离开名单的持仓。页面写等权用1除以入选只数，没有在入选为空时写持有现金以外的替代，本条不补。未写动量并列时是否仍全部买入。提出日期取未知；文中2016年7月至2026年7月是回测区间，不是刊出日。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Background中动量式与95分位；Implementation中1000只、股价5美元、行业分类、365日股息与月末等权。回测区间July 2016至July 2026"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

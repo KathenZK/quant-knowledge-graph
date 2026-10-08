@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3512",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3466,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "42af63a6b620e10306d002827a7aa91075b5cab8d35fd77658fe1e1e245eb9ce",
+    "rule_sha256": "c07258ffcfcb6c2dd8163fcae6fbd618eb3bbf019346d1433d2ab5187c100f47"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3512",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3512"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Logical-Invest-Strategy"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor（复现 Logical Invest / Frank Grossmann UIS）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；SPY与TLT；回看80日在0/10/…/100%配比对上最大化 mean/(sd^2)，取最优权重持有至下月末（SI Logical Invest UIS）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2014-12-02"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；SPY与TLT；回看80日在0/10/…/100%配比对上最大化 mean/(sd^2)，取最优权重持有至下月末（SI Logical Invest UIS）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Systematic Investor《Logical Invest Universal Investment Strategy (UIS)》代码模型 `UIS`（`adaptive.weight` 默认）。标的 **SPY、TLT**。月末：在回看 **lookback=80** 个交易日上，对配比网格 `seq(0,100,10)`（SPY 权重 0%…100%，余为 TLT）计算组合日收益的 mean 与 sd，目标 `metric = mean / (sd ^ f)`，默认 **f=2**，取 metric 最大的一档权重，持有至下月末。不是 BestFolio 目录 72 日、波动^2.5 的转写核（M0756）。提出日期取页头 **02 Dec 2014**。SI UIS：SPY/TLT月末；lookback80网格0/10/…/100%最大化mean/(sd^2) ≠ BestFolio72日波动^2.5（M0756）。计入美股/ETF。提出日期按源文件原样保留2014-12-02。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Code Strategies, Logical Invest UIS（adaptive.weight lookback=80, f=2；models$UIS）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

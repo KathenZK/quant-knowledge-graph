@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "上一期相对跌幅较大的资产可能出现反转，而惩罚调仓距离与集中持仓可能限制成本和不稳定权重；这是原文构造动机，未验证净收益或经济独立性。",
+    "missing": [
+      "论文回报报道没有作为本次规则准入或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi:10.1038/s41598-023-46059-2",
+  "lab": null,
+  "missing_information": [
+    "仅审论文定义；SOURCE_DESCRIPTION_REVIEWED不表示源码复现、数值运行、收益或经济有效性。",
+    "模型给相对已有漂移持仓的更新，初始实际b_1、真实γ及价格期到可成交时间的映射未冻结。",
+    "不是为每种预测器、求解器或参数另收一条；本条只选择单期倒数预测的完整DENRPO目标。",
+    "原论文CC-BY-4.0不自动覆盖代码、第三方数据或投资产品权利，商业状态REVIEW_REQUIRED。",
+    "作者仓库固定源码和编码转换留ignored补充报告，无源码全文入Git、无.mat行情采集、无外来代码执行。"
+  ],
+  "name": "DENRPO：价格比反转与双重弹性网调仓组合",
+  "native_source_id": "DENRPO",
+  "one_line": "在满仓长多约束下，用上一期价格比倒数预测，与漂移持仓距离和持仓平方和共同决定下一期权重。",
+  "record_id": "DENRPO",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、求解器或回测。",
+    "metadata": "原生模型标识、来源定位和自撰中文定义；不发布论文全文、图、源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Xiaoting Yao and Na Zhang; Scientific Reports 13:18937 (2023), DOI10.1038/s41598-023-46059-2; Chinese paraphrase by catalog curator.",
+      "id": "denrpo-s41598-023-46059-2-pdf",
+      "license": "Article CC-BY-4.0 per physicalpage17, credit Xiaoting Yao and Na Zhang, DOI and license; Chinese definitions are original paraphrases, no source text/images republished. Third-party materials/data and separate GitHub code rights are not inherited. Commercial financial/data/product scope REVIEW_REQUIRED.",
+      "locator": "Problem setting physicalpages2–3; Eq13 page4, Theorem1 page5, experimental parameters pages9–10; author code link page16 and articlelicense page17. Evidence line spans refer to fixed pdftotext stdout, formula signs visually checked.",
+      "revision": "Scientific Reports 13:18937; published2023-11-02; DOI10.1038/s41598-023-46059-2; PDF sha256:2a99d6d0c1b5d1739b19e532eafa247d6aaf8f4c1795b01d7ee1ac26c354c78d",
+      "sha256": "2a99d6d0c1b5d1739b19e532eafa247d6aaf8f4c1795b01d7ee1ac26c354c78d",
+      "supports": [
+        "原论文长多组合、上一漂移持仓、单期价格比预测、双重正则权重目标、参数和比例交易成本"
+      ],
+      "url": "https://www.nature.com/articles/s41598-023-46059-2.pdf",
+      "verification": "FETCHED_PINNED_PUBLISHER_RESEARCH_PAPER_AND_VISUAL_FORMULAS_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "denrpo-s41598-023-46059-2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "论文的形式化对象为m个可配置资产的相邻期收盘价格比；实证包含NYSE股票、Toronto股票和24国MSCI股指矩阵。本条只收长多组合构造，不把论文另做的DJIA波形特征多空实验或指数数据自动视为可交易证券。"
+    },
+    "cost": {
+      "evidence": [
+        "denrpo-s41598-023-46059-2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "论文按双侧同费率γ的比例成本建模：调仓后净财富比例w满足1=w+γ||h−w b_next||₁；每期净财富乘数为(b_next·x_next)w。λ=10γ使该费率也进入目标的调仓惩罚，但两者不是重复扣同一费用：前者影响目标，后者为财富会计。γ未冻结为单一现实费率；原文只讨论显式费用，不覆盖市场冲击/滑点/资金/券商最低费。不得用λ||b−h||₁直接替代实际成本方程。"
+    },
+    "entry": {
+      "evidence": [
+        "denrpo-s41598-023-46059-2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每期结束得到h和f后求上述优化目标，在下一期开始时持有新b。目标权重非零表示持有该资产，调仓交易量要结合成本后的净财富确定；没有逐票价格突破/排名入场条件。论文模型给的是以已有b_t及其漂移状态为输入的更新映射；未在该模型段明确整个投资路径的初始b_1，不能把求解器内层等权初值当成首期实际持仓。"
+    },
+    "execution_time": {
+      "evidence": [
+        "denrpo-s41598-023-46059-2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先完成t期收盘价格比并将b_t漂移为h_t，再以f=1/x_t形成t+1期权重；形式化账户在下一期开始再平衡、期内持仓不变，然后按下一期价格比计收益。论文没有把已知收盘后信号安排到可成交的同一收盘价，也没给时区、延迟、订单类型或开盘价填充规则；本条不补这些执行假设。"
+    },
+    "exit": {
+      "evidence": [
+        "denrpo-s41598-023-46059-2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "下一次再平衡重新求b；若某项目标归零则退出该项，目标降低则减持。全组合始终受Σb_i=1约束，不附加总仓空仓、止盈/止损或持有固定若干日的规则；无需把同一反转预测改成机械多空方向。"
+    },
+    "position": {
+      "evidence": [
+        "denrpo-s41598-023-46059-2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "权重b在非负、总和为1的单纯形上，按该期成本后净财富占比持有；不做空、不使用保证金，未给单票额外上限。h由旧目标与当期价格变化计算，是漂移持仓，不能换成旧目标b_t。论文Theorem1：λ、η、τ非负时存在最优解；η>0或τ>0时唯一。本条选取两者正的参数方案；不将LALM/ADMM有限迭代的数值结果宣称为已经得到精确argmin。"
+    },
+    "risk": {
+      "evidence": [
+        "denrpo-s41598-023-46059-2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "选定η与τ均正保证该有限输入下目标强凸且理论解唯一；若改为η=τ=0，论文只保证存在，可能出现多解，未替它补并列规则。本构造的调仓/集中度惩罚不是损失、波动或回撤上限。缺全路径初始b_1、零/缺失价格比处理、数值求解失败与可成交约束。论文参数是历史实验中选出的，不能当样本外有效或本次调参结果；没有执行优化器、作者代码或回测。"
+    },
+    "signal": {
+      "evidence": [
+        "denrpo-s41598-023-46059-2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先计算x_{t,i}=P_{t,i}/P_{t−1,i}，以及已有t期目标b_t的期末漂移权重h_i=b_{t,i}x_{t,i}/Σ_j b_{t,j}x_{t,j}。预测f_i=1/x_{t,i}。下一期目标为单纯形Δ={b_i≥0,Σb_i=1}上的argmin：−Σ_i f_i b_i + λΣ_i|b_i−h_i| + (η/2)Σ_i(b_i−h_i)^2 + (τ/2)Σ_i b_i^2。λ惩罚调仓绝对量、η惩罚调仓平方量、τ惩罚目标集中度；这里没有样本协方差矩阵或独立信号阈值。选原文参数方案λ=10γ、η=0.00025、τ=0.00005，γ仍是需外部确定的交易费率，不填成真实券商成本。"
+    },
+    "timeframe": {
+      "evidence": [
+        "denrpo-s41598-023-46059-2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个离散价格期重新形成下一期权重，期内不再调仓。选择单期倒数预测f_i=1/x_{t,i}，无多期形成窗口；使用截至t期收盘的价格比及t期结束后的漂移权重，决定t+1期。本条不将论文求解器的内层迭代次数当成交易频率。"
+    },
+    "universe": {
+      "evidence": [
+        "denrpo-s41598-023-46059-2-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入是由调用方确定的固定m资产、T期价格比矩阵x_{t,i}=P_{t,i}/P_{t−1,i}。论文列出的NYSE/TSE/MSCI历史数据集不构成实时选股或滚动成分规则；未给上市/退市、公司行动、缺价和可成交资产映射。倒数预测需要当期价格比非零；有限正价格比及有效长多持仓是本条数学构造的适用条件。"
+    }
+  }
+}

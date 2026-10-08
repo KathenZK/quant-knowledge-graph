@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3409",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3363,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "404b87c668cfde1e24b4fe68b8005c39aef61e179f0c4999fc81504dc64ece1b",
+    "rule_sha256": "e1175ae5959925b8628bae6909f18ed323fe17da14e85614f176ef9e5f506be2"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3409",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3409"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/OptionRenameRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：TFCFA；过滤行权−1..+1、到期0–3650日；6/28 9:00后空仓买行权33到期2013-08-17的Call 1张并买正股100；7/2 14:00后清仓（Lean OptionRename）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：TFCFA；过滤行权−1..+1、到期0–3650日；6/28 9:00后空仓买行权33到期2013-08-17的Call 1张并买正股100；7/2 14:00后清仓（Lean OptionRename）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `OptionRenameRegressionAlgorithm.py`。`add_option(\"TFCFA\")`；`set_filter(−1,1,0,3650日)`。未投资且日=28 hour>9：链上 CALL、`strike==33`、到期日=2013-08-17 → `buy(option,1)` 且 `buy(underlying,100)`（断言 ask=1.1）。已投资且日=2 hour>14 → `liquidate`（断言 bid=0.05）。不是备兑工厂 covered_call 核（W472），也不是 GOOG 指派核（W569）。提出日期未知。TFCFA买行权33到期2013-08-17 Call1+正股100；7/2清仓（更名回归） ≠ 备兑工厂covered_call（M3178）/GOOG指派。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

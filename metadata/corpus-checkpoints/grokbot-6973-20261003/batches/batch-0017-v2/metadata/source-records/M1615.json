@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1615",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1615,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1ef05aef9c5326b525dffd7fa2a5ede5b86a3aa6e6d06a15ebaf186e1f79efaf",
+    "rule_sha256": "ba42b700f417bdf48393cea16da0da03e4318e5f1b523a07c28122a67f292ebe"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1615",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1615"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Elliotv8/Elliotv8.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Elliotv8.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Elliotv8：5m，RSI(4)<35且收盘<EMA买长×0.975，且(EWO高支或低支)做多；HMA50与卖出EMA偏移平多；止损−32%，追踪止损开"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Elliotv8；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Elliotv8：5m，RSI(4)<35且收盘<EMA买长×0.975，且(EWO高支或低支)做多；HMA50与卖出EMA偏移平多；止损−32%，追踪止损开"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写davidzr仓strategies/Elliotv8/Elliotv8.py默认（以文件头buy_params/sell_params为准）。timeframe=5m；stoploss=−0.32；minimal_roi约0/40/87/201分钟对应21.5%/3.2%/1.6%/0；trailing_stop=True，trailing_stop_positive=0.001，offset=0.02且only_offset_is_reached=True。buy_params：base_nb_candles_buy=14、ewo_high=2.327、ewo_low=−19.988、low_offset=0.975、rsi_buy=69。sell_params：base_nb_candles_sell=24、high_offset=0.991、high_offset_2=0.997。EWO用EMA(50)−EMA(200)相对收盘×100（fast_ewo=50、slow_ewo=200）。做多两支或均需rsi_fast=RSI(4)<35、收盘<ma_buy_14×0.975、volume>0、收盘<ma_sell_24×0.991：一支EWO>2.327且RSI(14)<69；一支EWO<−19.988。平多：收盘>hma_50且收盘>ma_sell×0.997且RSI(14)>50且rsi_fast>rsi_slow；或收盘<hma_50且收盘>ma_sell×0.991且rsi_fast>rsi_slow（hma_50为Hull MA50）。提出日期未知。 不是单RSI超卖或单EWO：本条是5m Elliotv8，RSI(4)<35且收盘<买长EMA×0.975且(EWO高支或低支)做多，HMA50与卖出EMA偏移平多，追踪止损开。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

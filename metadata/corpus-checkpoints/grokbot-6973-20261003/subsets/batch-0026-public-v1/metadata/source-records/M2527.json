@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2527",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2527,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "80eb1fffca3614ff97f34c9f32b2044ebb506e0a82fdbc3c5a2bbb34a25c0adb",
+    "rule_sha256": "7bd313a70d4808ce87eb86e639b8f251164d6e487c93b096defdc64539f9419d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2527",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2527"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-cmf-money-flow/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：XLF分钟CMF(20)>0.10满仓多，<−0.10满仓空，否则清仓；开盘后30分钟评估（QC Documentation Chaikin）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（XLF分钟CMF20±0.10；QC Documentation Chaikin）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：XLF分钟CMF(20)>0.10满仓多，<−0.10满仓空，否则清仓；开盘后30分钟评估（QC Documentation Chaikin）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-cmf-money-flow/main.py`。`add_equity(\"XLF\", MINUTE)`；`cmf(symbol, 20, Resolution.MINUTE)`。`_long_threshold=0.10`，`_short_threshold=-0.10`。每日开盘后30分钟：CMF>0.10 → signal=1 满仓多；CMF<−0.10 → signal=−1 满仓空；否则 signal=0 清仓。仅当 signal 相对 `_previous_signal` 变化才下单。不是 CMF 零轴仅多头核，也不是加密 CMF 组合核。提出日期未知。 不是CMF零轴仅多头：本条为XLF分钟CMF(20)>0.10满仓多、<−0.10满仓空，否则清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

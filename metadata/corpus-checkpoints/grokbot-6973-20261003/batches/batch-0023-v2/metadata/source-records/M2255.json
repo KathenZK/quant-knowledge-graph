@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2255",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2255,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1379408daf5276f919b434f013659e221b21e5c2511e2522e631022aa3db36de",
+    "rule_sha256": "2880158767384ac20760c9c91bb86e4b0d00c6c20a4e69fd8591be88cca378c3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2255",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2255"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/machine-learning-trading-strategy-sklearn"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线月末重训随机森林（1日/5日收益+10日波动），收盘前30分钟预测次日上涨则满仓否则清仓（EasyQuant sklearn）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY；月末随机森林次日上涨满仓；EasyQuant sklearn）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-10"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线月末重训随机森林（1日/5日收益+10日波动），收盘前30分钟预测次日上涨则满仓否则清仓（EasyQuant sklearn）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Machine Learning Trading Strategy with Scikit-Learn》已印 ScikitLearnIntegrationAlgorithm。标的 SPY，日线。RandomForestClassifier(n_estimators=100, min_samples_leaf=5, random_state=42)；lookback=252。每月开盘后30分钟 train_model：取 history(lookback+10) 造特征 return_1d、return_5d、volatility=日收益10日滚动标准差，标签为次日收盘是否更高。每日收盘前30分钟 trade：用近15日重算特征取末行，predict==1 则 SetHoldings(1.0)，否则 Liquidate。不是动量/均线状态核。提出日期取页面 Published on。 不是动量/均线状态核：本条是EasyQuant SPY日线月末重训随机森林（1日/5日收益+10日波动）收盘前30分钟预测次日上涨则满仓。 计入美股/ETF。 提出日期按源文件原样保留2025-12-10。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3926",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3880,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "cebb94d12a8da84e6afbef8b531e30a64a0be82bdd54c1ac484c97aa8013ca78",
+    "rule_sha256": "544cb7c0d4d5cb7440679472a8db38630cfb43d0105e4b343a732596a8f2545d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3926",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3926"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15226/fade-the-trend-strategy-mean-reversion-algorithm-by-perry-j-kaufman/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect 社区（转述 Perry Kaufman）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-97/W1133"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·Kaufman淡化短趋势：日频；SPY/QQQ/IWM 各自慢均线向上时反向短趋势做多，短趋势转上或高点>入场+3.5×ATR10止盈，年化波∈[0.10,0.50]（QC FadeTrend·SPY/QQQ/IWM）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·Kaufman淡化短趋势：日频；SPY/QQQ/IWM 各自慢均线向上时反向短趋势做多，短趋势转上或高点>入场+3.5×ATR10止盈，年化波∈[0.10,0.50]（QC FadeTrend·SPY/QQQ/IWM）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect《Fade The Trend Strategy》（Kaufman 思路社区实现）：**SPY** 慢窗 **50** 日、短窗 **4** 日；**QQQ** 慢 **90**/短 **4**；**IWM** 慢 **100**/短 **10**。仅当慢趋势向上时，对短趋势做反向（淡化）开多；短趋势转向上则平仓；另若当日高点 > 入场价 + **3.5×10** 日 ATR 则止盈/卖出；年化波动过滤要求约在 **0.10–0.50**。不是隔夜反向日内（M3886）。计入美股/ETF。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 15226 SPY50/4 QQQ90/4 IWM100/10"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

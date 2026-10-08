@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0655",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 655,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1f3e589f4f0a845bb979edaff78eea9f1196584b7632500c1706aaa263d132e5",
+    "rule_sha256": "24c8e5bc5cbfb661fca1f7e2d2fd96c73118113fa720109dcb1be3f3c1fe7af8"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0655",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0655"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/testing-trendycmacro-from-durian-and-vojtko-of-quantpedia/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Ďurian；Vojtko / Quantpedia（Allocate Smartly实测）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "TrendYCMacro：三项同比经济指标加Rachev与期限利差"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Avoid Equity Bear Markets with a Market Timing Strategy；TrendYCMacro"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "每月最后一个交易日收盘。先用上月末数据计算三项同比：实际零售与餐饮销售RRSFS、工业生产指数INDPRO、新屋开工HOUST。若三项同比都为正且当前已持多，则收盘继续做多SPY。否则须同时满足：SPY现价高于200日平均；SPY的200日Rachev比率大于1；10年期美国国债收益率大于3个月期国债收益率。Rachev比率为过去200日中高于中位日收益的平均日百分比收益，除以低于中位的平均日百分比收益，再乘以-1。上述两项趋势指标用的是SPY日收益减去BIL无风险利率。满足经济维持条件或三项趋势与曲线条件则做多SPY，否则持现金。持有至下月最后一个交易日。页面写明RRSFS与HOUST未覆盖全样本时作者改用其他FRED序列，精确替换未在该页列出。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Strategy rules tested；脚注*"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

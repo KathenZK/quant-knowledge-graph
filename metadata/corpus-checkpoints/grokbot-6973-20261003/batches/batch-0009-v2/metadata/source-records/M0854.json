@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0854",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 854,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "da87173b5e405cb30a6b123b866458440ad8ecb278cd6041acfa7526dc46a19a",
+    "rule_sha256": "dd8927d6a9ff9000140e03649c58698e8e715c0548cb3db0fba6b31e25d06e69"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0854",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0854"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/371/Daily-VIX-Regime-Switching-Volatility-Carry-Hedge"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Sunny Nagam"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "日频VIX体制切换波动率套息对冲：温和100% SVXY，风险100% UVXY，否则TQQQ；温和与风险截止未印成数字"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-03-04"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Daily VIX Regime-Switching Volatility Carry-Hedge"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：需要VIX、VIX9D、VIX3M期限结构，不能只凭SVXY/UVXY/TQQQ价格回测。温和与风险的截止页面未印成完整数字，本条不补阈值。本条只写该公开策略页已印出的三状态整仓切换，不是已收的VIX挂钩ETN日频波动率风险溢价：那边用eVRP = VIX² − RV30²，期限结构contango且eVRP>0做全仓short vol、eVRP<0减半short、backwardation且eVRP<0做全仓long vol、其他空仓，页面示例short VIXY/long SVXY并以SPY作短波动替代，印出状态与本条100% SVXY、100% UVXY、否则TQQQ并不相同。也不是多只哨兵RSI在UVXY、VIXM与2倍ETF间切换。每日计算VIX期限结构及短期/长期波动率关系，并用VIX、VIX9D、VIX3M的日开盘数据及SPY的25日SMA、MACD判断状态。波动率温和时持有100% SVXY；风险状态时轮换至100% UVXY；若两种状态都不活跃或前一状态退出，则转入TQQQ作为默认风险配置。始终单一工具持仓，每日SPY开盘后再平衡，状态改变时全额清仓/换仓。MACD快慢与信号长度页面未印出，本条不补。提出日期按页面原样保留2026-03-04。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。温和与风险截止未印成数字"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

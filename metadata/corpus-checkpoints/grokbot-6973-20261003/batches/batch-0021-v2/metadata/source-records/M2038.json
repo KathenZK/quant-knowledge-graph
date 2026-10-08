@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2038",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2038,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "659223f174d9a099ac9833b609e3bb573c2cf4f539b7e383e4c05762e7346081",
+    "rule_sha256": "8da36adc25720ef52d2f7a9c4fa8950aff6abe9e52326d0ab3c0addf7f02576d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2038",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2038"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/roll/2025-06-18/doc-infamzsp5854942.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华安证券金融工程（新浪转载《临界相变：探寻传统因子中的非线性基因》；原报告约2025-06-12）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华安金工非线性挖掘字段流水线（覆盖率≥60%；单季/TTM/累计；七类算子；5MAD⊕Z⊕行业市值中性；筛|RankIC|>2%且|ICIR|>1.5）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（三大报表字段；训练2010–2019筛选，2020后验证）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-06-12"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华安金工非线性挖掘字段流水线（覆盖率≥60%；单季/TTM/累计；七类算子；5MAD⊕Z⊕行业市值中性；筛|RankIC|>2%且|ICIR|>1.5）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。（1）剔全市场覆盖率<60%字段；（2）统一加工单季度/TTM/累计；（3）七类算子：原始值、市值比、净资产比、总资产比、同比、环比、超预期幅度；（4）预处理：行业中位数填缺失→5MAD去极值→Z-score→行业市值中性；（5）非线性转换后，筛选期要求月度|Rank IC|均值>2%且年化|ICIR|>1.5。相对单一转换式：本条为字段⊕算子⊕筛阈流水线。 不是单一转换式：本条为覆盖率≥60%字段⊕七类算子⊕5MAD/Z/中性⊕|RankIC|>2%且|ICIR|>1.5筛阈流水线。 计入其他。 提出日期按源文件原样保留2025-06-12。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

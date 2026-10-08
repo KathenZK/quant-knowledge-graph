@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2133",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2133,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "446609bf622e07ae11a887de47e9aa1229bc755c3cdd580d2275020493e0a671",
+    "rule_sha256": "3770a13dc1b224f36dbecc5351cde56670cc3cab002b42edfd4a7c7fa2889825"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2133",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2133"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/donchian-channel-breakout-strategy"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线收盘≥唐奇安(20)上轨做多、≤下轨做空，回到中轨平仓（EasyQuant唐奇安突破）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY；唐奇安20多空回中轨；EasyQuant）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-11"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线收盘≥唐奇安(20)上轨做多、≤下轨做空，回到中轨平仓（EasyQuant唐奇安突破）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Implementing a Donchian Channel Breakout Strategy with QuantConnect》已印 DonchianChannelBreakout。标的 SPY，日线，ADJUSTED；period=20；WarmUp=20。self.dch 得 upper/lower/middle。空仓：price≥upper 则 SetHoldings(1.0)；price≤lower 则 SetHoldings(−1.0)。持多且 price<middle 则 Liquidate；持空且 price>middle 则 Liquidate。不是 master 海龟/XOM 唐奇安单边核。提出日期取页面 Published on。 不是海龟/XOM唐奇安单边：本条是EasyQuant SPY日线唐奇安(20)上轨做多下轨做空、回到中轨平仓。 计入美股/ETF。 提出日期按源文件原样保留2025-12-11。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

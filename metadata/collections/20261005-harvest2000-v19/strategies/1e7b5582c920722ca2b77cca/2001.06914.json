@@ -1,0 +1,139 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者把市场权重按排名颠倒，试图利用低价格排名资产与高价格排名资产不同的长期增长特征；理论结论依赖一阶排名模型及额外增长条件。这里仅采定义，不验证现实商品市场满足假设，也不沿用论文绩效作为盈利或安全性证据。",
+    "missing": [
+      "未执行、未回测，理论模型和论文历史图表不构成现实经济验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "arxiv.org",
+  "lab": null,
+  "missing_information": [
+    "月频数据及每月持有合约选择明确，但月内观测时点、滞后、下单/成交价格和具体再平衡钟点未给；不默补月末收盘或下一开盘。",
+    "归一化价格用于排名，实际合约收益另有carry差异；不能将隐含两个月价格的变动直接当持仓收益。",
+    "权重是理论商品敞口分配，不是期货保证金比例；保证金、抵押现金收益、乘数、整张取整、融资和交割避免安排未闭合。",
+    "价格严格为正；零负期货价格、缺失期限报价、品种退出/停牌、多个同月新进入者的初始化顺序未给处理规则。",
+    "5年是每条序列入池等待，不是滚动5年价值回看。1968年初始共同正水平不改变权重；每条新序列相对既有的起点会影响后续排名。",
+    "原文对用于Delta的两个最近整数期限写法保留，不擅自强制一近一远夹住2月；实际挂牌日期向整数月期限的映射未给。",
+    "没有执行来源代码、优化器、模拟或回测。arXiv non-exclusive distribution只说明平台展示权利，不等于商业或原文再分发许可；许可为REVIEW_REQUIRED。"
+  ],
+  "name": "Fernholz Reverse-Weighted：归一化商品期货价格权重的逆序置换组合",
+  "native_source_id": "2001.06914",
+  "one_line": "按两个月隐含期货价格的归一化水平排序，将整组价格权重倒序分配给全部合格商品。",
+  "record_id": "2001.06914",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行模型、求解器或回测。",
+    "metadata": "来源原生身份、精确定位及自撰中文规则；不发布原论文/图像/源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Ricardo T. Fernholz and Robert Fernholz, Permutation-Weighted Portfolios and the Efficiency of Commodity Futures Markets, arXiv:2001.06914v3. PDF title date December29,2020; revision submitted December28,2020. Chinese paraphrase by curator.",
+      "id": "arxiv-2001-06914v3-pdf",
+      "license": "arXiv perpetual non-exclusive distribution notice on versioned abstract; not a general redistribution or commercial license. Underlying paper/data rights not established; REVIEW_REQUIRED. Publish only source identity/locators and original Chinese definition metadata.",
+      "locator": "PDF pp3/9–15/19: positive asset model, rank tie convention, Eq5.6, Definition6.1, initialization/eligibility and actual futures selection. Lines refer to pinned pdftotext derivative. No empirical returns imported.",
+      "revision": "arXiv:2001.06914v3, submitted revision 2020-12-28; PDF title date2020-12-29; sha256:9fe4a0bc35065d84253dd0efe81c4075c27c69dbbb818fed9c7f35a2e6eb1b67",
+      "sha256": "9fe4a0bc35065d84253dd0efe81c4075c27c69dbbb818fed9c7f35a2e6eb1b67",
+      "supports": [
+        "逆序权重映射",
+        "隐含两个月期货价格及归一化",
+        "品种入池与实际持有合约",
+        "模型边界"
+      ],
+      "url": "https://arxiv.org/pdf/2001.06914v3",
+      "verification": "FETCHED_PINNED_AUTHOR_SUBMITTED_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "arXiv versioned abstract for authors Ricardo T. Fernholz and Robert Fernholz.",
+      "id": "arxiv-2001-06914v3-abstract",
+      "license": "arXiv perpetual non-exclusive distribution notice on versioned abstract; not a general redistribution or commercial license. Underlying paper/data rights not established; REVIEW_REQUIRED. Publish only source identity/locators and original Chinese definition metadata.",
+      "locator": "HTML title/authors, dateline v3 Dec28,2020 and abs-license link nonexclusive-distrib/1.0; identity and rights only.",
+      "revision": "arXiv:2001.06914v3 abstract HTTP snapshot sha256:9e9f7492efc5d097e46487fb3b4d92ba90051ccb10222b14c7a2cebc2d0b1b61",
+      "sha256": "9e9f7492efc5d097e46487fb3b4d92ba90051ccb10222b14c7a2cebc2d0b1b61",
+      "supports": [
+        "来源版本与署名",
+        "arXiv非排他展示许可链接"
+      ],
+      "url": "https://arxiv.org/abs/2001.06914v3",
+      "verification": "FETCHED_PINNED_VERSIONED_ABSTRACT"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "arxiv-2001-06914v3-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "交易品种是所选商品期货，不是把归一化的合成价格直接当可下单资产。每月有恰好两个月后到期合约时持该合约；没有则持到期时间大于两个月的下一份合约。用于构建价格水平的临近期限可以与实际持有合约不同；同商品F_i(t,τ)表示t时观察、τ到期报价。源未将名义权重映射到合约乘数、张数和保证金。"
+    },
+    "cost": {
+      "evidence": [
+        "arxiv-2001-06914v3-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：论文说明实际合约对数收益与隐含两个月价格变动的差额为carry，C_i(t)dt=dlogF_i(t,τ)−dlogX_i(t)，组合carry按π加权；这是持有收益分解，不是手续费或滑点。所选定义没有佣金、点差、冲击、保证金融资、现金抵押收益及整张成本合同，不把这些设为0。"
+    },
+    "entry": {
+      "evidence": [
+        "arxiv-2001-06914v3-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "达到至少10条各满5年的品种序列后，按当时逆序权重建立全部合格商品的正向敞口；新增达到5年者加入后，按当前合格集合重新排名和配权。没有要求某个价值阈值、动量为负、波动率或相关性状态；低价格排名被分配较大的现有价格权重，但高排名也保持正权重。5年以前可用于初始化既有价格面板，不代表提前持有。"
+    },
+    "execution_time": {
+      "evidence": [
+        "arxiv-2001-06914v3-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：月频观察和各月所持到期合约可定位，但源未规定观察价与成交价先后、月内日期/时刻、是否滞后一棒、同月新进入者的委托次序及跨市场成交同步。连续t理论权重与月频样本没有给出可直接执行的统一时钟；本条不补月末收盘、T+1开盘或市场单。"
+    },
+    "exit": {
+      "evidence": [
+        "arxiv-2001-06914v3-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "这是持续配置规则：随着价格排名和整组μ变化，把各腿调到新的π；每月按两个月/下一可用远月规则换持期货。没有因为价格排名高就将该腿清零或反向做空，也没有止盈止损或固定持有满5年即退出。源未给品种退市、缺价、全部暂停或终止组合的处理；这些不从权重公式推补。"
+    },
+    "position": {
+      "evidence": [
+        "arxiv-2001-06914v3-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "合格集合大小为n，X_i严格为正；先得μ_i=X_i/ΣX，然后把这n个数按原X排名倒序置换：最大X品种拿最小μ，次大拿次小，依此类推。于是全部π_i>0且Σπ_i=1，并保留μ原有的集中度数值集合；n=2时退化为互换两资产权重。没有可调指数p、目标波动或均值方差优化器。这里的和1为论文组合权重，不足以证明期货账户无杠杆、已全额抵押或初始本金/数量已确定。"
+    },
+    "risk": {
+      "evidence": [
+        "arxiv-2001-06914v3-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "权重公式可复述，但理论增长结论有限定：严格正价格、连续半鞅、一阶排名模型，且逆序组合超额增长率不低于市场；排名对称方差为另一个充分条件，不是现实数据已验证的事实。作者明确一阶模型过于受限，且没有正式的渐近稳定性检验。商品合约carry可能抵消隐含价格优势，收益不能直接用X变化替代。原文没有个别权重帽、止损、保证金或资金边界，零负价格使log及正权模型失效；未来异常报价/品种退出处理未定义。整条未运行或回测，论文历史图表不作为准入的经济有效性证据。"
+    },
+    "signal": {
+      "evidence": [
+        "arxiv-2001-06914v3-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先构造当月两个月隐含期货价：ν1<ν2为可取得到期月份中最接近2且不等于2的两个非负整数期限；Δ_i(t)=[lnF_i(t,t+ν2)−lnF_i(t,t+ν1)]/(ν2−ν1)。ν取最接近2的可得期限，并列取较小；F̃_i(t,t+2)=exp[(2−ν)Δ_i(t)]F_i(t,t+ν)。恰有两个月合约时F̃=F(t,t+2)。把1968-11初始三品种的F̃设为同一水平，之后保留其价格相对变化；后来新进入品种的初始log价格设为当月既有面板log价格均值，之后保留自身变化，得X_i(t)。在当前合格品种中按X降序排名r_t(i)，相同X按较小品种索引在先；μ_i=X_i/Σ_jX_j，输出π_i=μ_(n+1−r_t(i))。括号下标是排序后的权重，不是品种索引；不采用1/X归一，也不使用Δ的大小另做carry选股信号。"
+    },
+    "timeframe": {
+      "evidence": [
+        "arxiv-2001-06914v3-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "理论Eq5.6为随t变化的权重；§6实际构造使用月频期货价格并逐月选择持有合约。初始归一化从1968-11开始，后来品种随自身数据起点进入价格面板，再等5年进入组合。此处5年为暖机/入池年龄，不是每月重设的5年回看窗口；样本1977-11至2018-01不是强制交易终点。准确月内再平衡和成交时间仍MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "arxiv-2001-06914v3-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原论文商品应用列26类期货：豆粕、豆油、大豆、小麦、玉米、生猪、棉花、白银、橙汁、铂、糖、木材、咖啡、燕麦、黄金、活牛、堪萨斯小麦、育肥牛、取暖油、可可、明尼阿波利斯小麦、钯、原油、糙米、铜、天然气。表1逐项给交易所和数据开始月份，不把现时交易所名称或代码替换进历史合同。每品种需至少5年自身数据才入组合，至少10个合格品种才形成组合；作者样本首次为1977-11，并在1995-04后全部26个合格。仅登记该形成规则，不采集其行情。"
+    }
+  }
+}

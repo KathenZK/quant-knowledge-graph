@@ -1,0 +1,124 @@
+{
+  "economic_basis": {
+    "hypothesis": "用每个资产的全窗双幂波动设定截断门槛，再累计保留收益的交叉乘积，作为连续风险协方差的候选估计；不据名称保证已识别真实跳跃。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅审numeric vector/matrix单一有限窗口，alignBy=NULL、alignPeriod=NULL、makeReturns=FALSE、cor=FALSE。输入已经是按序同频对齐收益，不进入xts跨日、data.table分日或重采样/价格转收益分支。 as.matrix后取原始行数N，令delta=1/N。RBPVar逐列累加相邻绝对收益乘积并乘π/2，既不除N也不加N/(N−1)修正。 按u_j构造每行相同的列门槛；condition=abs(R)>u，严格超过才置0，因此等于门槛保留。逐资产单独剔除，若某行一列被剔除，不同时删除该行的其它列。 对Z调用rCov：多列返回t(Z)%*%Z；一列转rRVar的列平方和。保留原N的矩阵/时间行，不压缩删除大收益后的时间轴。 cor=True的求逆标准化路径存在但不在本条已审合同；不把相关后处理、资产列或阈值常数改动计为新族。固定源码3和0.49为常数，不是入口可调参数。 门槛估计使用完整输入窗口，因此即使得到逐时点是否剔除的中间掩码，也只能在窗口结束后知道，不能回填为当时已知跳跃标签。 边界：B_j=0时门槛0，只保留等于0的收益，其它非零收益均置0；源不设最小门槛或样本量诊断。 有限输入下ZᵀZ在精确算术中半正定，但不保证严格正定、可逆或数值稳定；这是代数性质，不是实盘组合风险验证。 缺失值不在合同内：B_j和比较掩码可能含NA，源码不提供统一有效样本处理。N<2的R索引不是所写相邻空和。 源文档的r²阈值表述与实际abs收益阈值3sqrt(B)N^−.49不一致；本条忠实保留固定实现，不擅自更正代码，也不声称原论文逐式复现。 多个资产同时小幅跳跃可能未被逐列门槛排除；不能把被置0的样本当已证实非经济观测，缺行情验证。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用每个资产的全窗双幂波动设定截断门槛，再累计保留收益的交叉乘积，作为连续风险协方差的候选估计；不据名称保证已识别真实跳跃。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "单窗N×d有限收益矩阵R，N>=2、d>=1。每列B_j=(π/2)Σ_(t=2..N)|R_(t−1,j)||R_(t,j)|；u_j=3 sqrt(B_j) N^(−0.49)。令Z_tj=R_tj·1[|R_tj|<=u_j]，输出C=ZᵀZ（d=1为ΣZ_t1²）。等价平方收益阈为9B_j N^(−0.98)，不是文档行2315措辞可能暗示的3B_j N^(−0.49)。无去均值、无除N、无年化。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "rData（finite numeric vector or N-by-d matrix, N>=2, d>=1; ordered equally sampled aligned returns for one complete intraday window）：各列为同一时间网格资产收益，研究选自然对数收益；函数不验证排序、频率、缺失和金融单位。。参数：alignBy：不重采样；范围reviewed NULL only；源码默认None；alignPeriod：不重采样；范围reviewed NULL only；源码默认None；makeReturns：输入已是收益；范围reviewed FALSE only；源码默认False；cor：协方差，不进入求逆相关分支；范围reviewed FALSE only；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "jonathancornelissen/highfrequency",
+  "lab": null,
+  "missing_information": [
+    "实际行情、采样日历、输入收益定义与PIT未冻结",
+    "文档/源码阈值表述差异尚未由原作者论文逐式裁定",
+    "R运行环境和数值/市场适用性未验证",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "按双幂波动阈值剔除逐资产大收益的协方差",
+  "native_source_id": "rThresholdCov",
+  "one_line": "用每个资产的全窗双幂波动设定截断门槛，再累计保留收益的交叉乘积，作为连续风险协方差的候选估计；不据名称保证已识别真实跳跃。",
+  "record_id": "rThresholdCov",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "highfrequency维护实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；固定源码归属Gobbi/Mancini阈值协方差，并列Barndorff-Nielsen/Shephard、Jacod/Todorov及Mancini/Gobbi文献。仅核固定实现，未核原论文全文。",
+      "id": "harvest-source-1028bcab3647a0fae74441ed",
+      "license": "GPL-2.0-or-later",
+      "locator": "package identity, maintainers, GPL >=2 and original package paper:L1-L24; unfrozen runtime dependencies:L26-L45",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d8d98b0df5ea59c9488f6af78a6246dbbbabb593d56ef92e84eb7516dadce0b3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency维护实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；固定源码归属Gobbi/Mancini阈值协方差，并列Barndorff-Nielsen/Shephard、Jacod/Todorov及Mancini/Gobbi文献。仅核固定实现，未核原论文全文。",
+      "id": "harvest-source-5f01e4e89a90ac43d08c6870",
+      "license": "GPL-2.0-or-later",
+      "locator": "threshold documentation discrepancy and original attribution:L2301-L2341; native defaults and xts branch gate:L2360-L2364; type branch gate and complete finite-matrix core:L2379-L2440; rCov defaults and branch gate:L1278-L1283; rCov data.table branch gate:L1296-L1297; rCov numeric branch and single-column delegation:L1328-L1360; rRVar defaults and branch gates:L2667-L2673; rRVar numeric column-square sum:L2705-L2722",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "47103e0f8a9f72ae6cdac845655c22a976e2aece49f7bb672302b33338354a32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency维护实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；固定源码归属Gobbi/Mancini阈值协方差，并列Barndorff-Nielsen/Shephard、Jacod/Todorov及Mancini/Gobbi文献。仅核固定实现，未核原论文全文。",
+      "id": "harvest-source-b5a2f57468a7eff5e05fd791",
+      "license": "GPL-2.0-or-later",
+      "locator": "complete bipower variance helper:L256-L262",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "5f38e15d48ae103a5e9db0715647b0dbc053e7d08ce67aa8b4e620799989d4e2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/internalRealizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

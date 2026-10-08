@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3347",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3301,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f532803ba0dfa5c35e78f77602b7d8dbdc3de734a257efa46b9e76dde85c63c6",
+    "rule_sha256": "fd1638bf9be110c79847e872d679a5e4a43c342550b78fe441dd625a66ad09cd"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3347",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3347"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CustomVolatilityModelAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；自定义收益标准差波动率模型(窗口10，年化√252)；空仓且 volatility>0 则满仓（Lean CustomVolatilityModel）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；自定义收益标准差波动率模型(窗口10，年化√252)；空仓且 volatility>0 则满仓（Lean CustomVolatilityModel）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `CustomVolatilityModelAlgorithm.py`。`add_equity(\"SPY\",Daily)`；`set_volatility_model(CustomVolatilityModel(10))`：按日价比收益入 `RollingWindow(10)`，就绪后 `volatility=std*sqrt(252)`。`on_data`：未投资且 `volatility>0` → `set_holdings(\"SPY\",1)`。不是文档 CustomVolatility(3×21) 升降满仓/清仓核，也不是 ATR 吊灯核。提出日期未知。自定义收益标准差波动窗10年化；空仓且 volatility>0 满仓 ≠ 文档波动升满仓/降清仓（M2684）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

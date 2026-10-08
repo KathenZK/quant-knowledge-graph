@@ -1,0 +1,146 @@
+{
+  "economic_basis": {
+    "hypothesis": "多尺度价格平滑序列的斜率展开或描述趋势加速；这是研究假说，未证明排序、量确认或压缩退出能产生净收益。",
+    "missing": [
+      "无盈利、样本外、因果归因或经济独立性证明。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "没有执行/编译上游源码或下载行情；计算数值、实际成交和回测未验证。",
+    "具体标的、行情版本、会话/日历和真实交易成本需另行冻结。",
+    "版权声明只按源码记录，不扩展覆盖论文、数据或商业内部研究；商业状态 REVIEW_REQUIRED。"
+  ],
+  "name": "五均线百分比斜率扇形排序与压缩退出",
+  "native_source_id": "X0F9OE4L",
+  "one_line": "要求五条EMA的五棒百分比斜率同号且严格快慢排序，斜率差越门并获RSI/量确认后开仓，排序破坏或扇形压缩时退出。",
+  "record_id": "X0F9OE4L",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行策略与回测，没有绩效结果。",
+    "metadata": "本记录只保存自撰规则和来源定位；保留发布用户与源码署名，身份真实性未独立核验。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/script/X0F9OE4L-Gradient-Ribbon-EMA-Ribbon-Slope-Acceleration-System/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "blitz_locked",
+      "id": "tradingview-X0F9OE4L-published-code",
+      "license": "NOASSERTION; no explicit license notice in saved published script",
+      "locator": "公开Pine JSON的source字段；精确decoded行段见本记录review.field_spans",
+      "revision": "PUB;a69e6b01d8e542cdac7e1c4c7a55ac73@1",
+      "sha256": "383998ef8c1a9109e14284724ade8151c3c933d71b356df9e390ec82ecba259b",
+      "supports": [
+        "源码默认公式、真实控制流与下单请求"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3Ba69e6b01d8e542cdac7e1c4c7a55ac73/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "blitz_locked",
+      "id": "tradingview-list-0932ebc84fe37b322b19",
+      "license": "REVIEW_REQUIRED",
+      "locator": "公开列表init-data image_url=X0F9OE4L; script_id_part/version/user/chart_url",
+      "revision": "sha256:0932ebc84fe37b322b193371829c0758ec61d15f2dc054710ba1e6027d68f106",
+      "sha256": "0932ebc84fe37b322b193371829c0758ec61d15f2dc054710ba1e6027d68f106",
+      "supports": [
+        "公开脚本ID、发布版本、发布用户与原页身份；不支持交易规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-3/?script_access=open&script_type=strategies&sort=latest_popular",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    },
+    {
+      "attribution": "TradingView",
+      "id": "tradingview-pine-v6-default-margin",
+      "license": "NOASSERTION; official documentation, source script licenses do not apply",
+      "locator": "官方Pine v6迁移文档 Default margin percentage；保存HTTP原字节及解码HTML，解码字符124092起",
+      "revision": "sha256:3acd5123cab2f0448fb1f8be4d8391a3bb77bd0466d49cfeb383ce2576cc57eb",
+      "sha256": "3acd5123cab2f0448fb1f8be4d8391a3bb77bd0466d49cfeb383ce2576cc57eb",
+      "supports": [
+        "Pine v6默认margin_long/short为100；可用资金不足不开放entry；空头亏损可能margin call"
+      ],
+      "url": "https://www.tradingview.com/pine-script-docs/migration-guides/to-pine-version-6/",
+      "verification": "FETCHED_PINNED_OFFICIAL_DOCUMENTATION_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "tradingview-X0F9OE4L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "使用当前图表C和V，未固定市场、证券、交易所或合约。实际数量公式没有乘合约点值，不能把其1%风险声明无条件外推到各种期货。"
+    },
+    "cost": {
+      "evidence": [
+        "tradingview-X0F9OE4L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码佣金为百分比0.05，滑点1 tick。未给资金费、借券/融资、点差、税费、最低佣金和容量；没有成本实测。"
+    },
+    "entry": {
+      "evidence": [
+        "tradingview-X0F9OE4L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "实际空仓时多/空条件成立即市价请求对应方向，没有要求F刚穿阈值；两套入口独立if，但默认严格全正/全负不能同时成立。每次信号以当前C与ATR冻结保护价和目标。"
+    },
+    "execution_time": {
+      "evidence": [
+        "tradingview-X0F9OE4L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "声明未开启收盘处理、逐tick或成交后重算，也未显式barstate.isconfirmed。记录实际语句顺序：本棒计算条件，先提交entry/bracket，再检查可见持仓的排序/压缩平仓。没有执行引擎，不能宣称信号C即成交价或已验证下一棒及同棒保护先后。"
+    },
+    "exit": {
+      "evidence": [
+        "tradingview-X0F9OE4L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多初始stop=C−2ATR14、limit=C+4ATR14；空初始stop=C+2ATR、limit=C−4ATR，随入场发布。已有多仓若严格排序s8>s13>s21>s34>s55被破坏，或F<.2，另市价平多；空排序破坏或F>−.2平空。退出排序条件不另外要求全斜率同号；无追踪更新、固定期限或再平衡。"
+    },
+    "position": {
+      "evidence": [
+        "tradingview-X0F9OE4L-published-code",
+        "tradingview-pine-v6-default-margin"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "entry显式qty=权益×1%/(2ATR14)，覆盖声明固定1默认，初始10000。未设数量上限、手数取整、pointvalue或币种换算，也未检查ATR>0后才除法/下单；风险百分比是这个原式而非已核真实账户损失。 Pine v6 声明未覆写 margin_long/short，官方默认均为100%；公式没有名义本金上限，若某次请求超过可用资金，该入口不会开放，不等于所有信号必然被拒。"
+    },
+    "risk": {
+      "evidence": [
+        "tradingview-X0F9OE4L-published-code",
+        "tradingview-pine-v6-default-margin"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "ATR为0或缺失、EMA五棒前值为0/缺失、V缺失均没有额外保护；没有显式warmup门。保护和目标以信号C冻结，实际成交可能不同。各斜率的历史调用为五个独立全局书写位置，已静态核对；Pine未编译或运行，合约数量语义、缺失值行为与实际成交未复现。 已知买力限制：v6默认100%保证金会拒绝资金不足的开仓，且空头损失过大可触发保证金平仓；这与始终提交300%权益的固定冲突不同，具体哪些信号被拒尚未运行核验。"
+    },
+    "signal": {
+      "evidence": [
+        "tradingview-X0F9OE4L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "分别在五个全局书写调用处计算 s_n=100×(EMA_n(C)−EMA_n(C)[5])/EMA_n(C)[5]，n=8,13,21,34,55；不是循环中单一带历史函数调用。多头要求全部s>0且s8>s13>s21>s34>s55，空头全部s<0且严格反向排序。扇形差F=s8−s55，多入需F>.8、RSI14严格在(50,70)、V>SMA20(V)；空需F<−.8、RSI严格在(30,50)、同量门。比较的是各EMA五棒百分比斜率，不是EMA价格的大小顺序，也未直接计算二阶时间加速度。"
+    },
+    "timeframe": {
+      "evidence": [
+        "tradingview-X0F9OE4L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "EMA长度8/13/21/34/55；斜率回看5、RSI14、量SMA20、ATR14均为图表棒数，未固定周期或日期窗；没有security或外部库请求。"
+    },
+    "universe": {
+      "evidence": [
+        "tradingview-X0F9OE4L-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "单标的时序系统；不存在资产池、排名或跨标的轮换。所有五条EMA都对同一图表收盘计算。"
+    }
+  }
+}

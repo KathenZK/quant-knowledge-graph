@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3934",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3888,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "46bf623f10f62faad47c06ce13f5bb46ae5334f1400f89bdd0ab862bfa1aec6f",
+    "rule_sha256": "2e4d0a2ccbd03fef8b2668455ba3c668cab26279f98a53b14af327c5cd452673"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3934",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3934"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/21289/dual-moving-average-csi-300/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect 社区"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-98/W1141"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·沪深300双均线ATR过滤波动目标：日频；510300；SMA30>SMA120且(SMA差)/ATR20>1才入场，目标年化波12%、权重0.1网格、杠杆≤1（QC CSI300·DualMA·Vol12%）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "其他"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·沪深300双均线ATR过滤波动目标：日频；510300；SMA30>SMA120且(SMA差)/ATR20>1才入场，目标年化波12%、权重0.1网格、杠杆≤1（QC CSI300·DualMA·Vol12%）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect《Dual-MA Trend with Volatility Targeting on CSI 300 ETF》：标的 **510300**（沪深300 ETF，静qfq）；**入势**当且仅当 **SMA(30)>SMA(120)** 且 (SMA30−SMA120)/ATR20>1；实现波动为近 **20** 日收盘收益总体标准差×√252；目标权重 w=round_0.1(min(1,0.12/σ))，否则 **0**；杠杆上限 **1**。不是 PMI/CPI 择时 510300（近 M1337/M1338）；不是无 ATR 过滤的双均线。计入其他。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 21289 510300 SMA30/120 ATR vol12%"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1974",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1974,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "06424e66fc7ab7e1fb63e58e5e150fc669cfc6e19c2fa40823d793d0cb89bf63",
+    "rule_sha256": "0083ced1f50c70209bf31521bdbb0fbb4d6bb1f6d7b9e7d034194b1fb3276666"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1974",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1974"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/hansencandlepatternV1/hansencandlepatternV1.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（hansencandlepatternV1.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区hansencandlepatternV1：1h，指定K线形态之一且HA开SMA6<HA收SMA6做多；开SMA6>收SMA6平多；止损−10%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区hansencandlepatternV1；1h）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区hansencandlepatternV1：1h，指定K线形态之一且HA开SMA6<HA收SMA6做多；开SMA6>收SMA6平多；止损−10%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/hansencandlepatternV1/hansencandlepatternV1.py默认。timeframe=1h；stoploss=−0.1；minimal_roi={\"0\":10}。形态：CDL3LINESTRIKE<0，或 CDLEVENINGSTAR>0，或同函数赋值的 ABANDONEDBABY>0，或 CDLHARAMI>0，或 CDLENGULFING>0（源码 ABANDONEDBABY 列实际调用 CDLEVENINGSTAR，本条按文件所印）。hclose=(O+H+L+C)/4；hopen=(O.shift(2)+C.shift(2))/2；emac=SMA(hclose,6)，emao=SMA(hopen,6)。做多：上述形态或成立 且 emao<emac。平多：emao>emac。提出日期未知。 不是单HA均线：本条是1h hansencandlepatternV1，指定K线形态之一且HA开SMA6<HA收SMA6做多，开SMA6>收SMA6平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

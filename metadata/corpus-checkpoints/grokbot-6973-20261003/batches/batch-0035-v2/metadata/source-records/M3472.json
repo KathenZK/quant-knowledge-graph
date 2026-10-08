@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3472",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3426,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b9e6c4d00ede259a80168e82f64c793f16a4c365e993c21b17a75a8785ebffc1",
+    "rule_sha256": "339420f3915746ab16d605ae0b095f78afcb6fa05c999dba71fc1dc30105c9aa"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3472",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3472"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://quantpedia.com/dual-vs-single-momentum-in-commodities-enhancing-risk-adjusted-returns-through-absolute-trend-filtering/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cyril Dujava / Quantpedia"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "商品ETF：月频；DBA/DBB/DBE/DBP；3月RoC相对动量取Top3，且收盘>各自SMA(3月)才等权持有，否则该席位现金（Quantpedia Dual Momentum Commodities·Case B）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（商品板块 ETF）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-06-15"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "商品ETF：月频；DBA/DBB/DBE/DBP；3月RoC相对动量取Top3，且收盘>各自SMA(3月)才等权持有，否则该席位现金（Quantpedia Dual Momentum Commodities·Case B）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Quantpedia《Dual vs. Single Momentum in Commodities…》Case B 与最优示范格点。宇宙：**DBA、DBB、DBE、DBP**。月末按 **X=3** 个月 Rate of Change 排序，取前 **M=3** 只等权；但对每只候选另施绝对过滤：月末收盘须 **严格高于** 其 **X=3** 个月 SMA（文约束 SMA 回看=动量回看，防过拟合）；未过过滤者以现金（0% 收益）替代。月频再平衡。不是无绝对过滤的 Case A，也不是跨资产股票动量核。提出日期取文首 15.June 2026。Quantpedia商品双动量Case B：DBA/DBB/DBE/DBP 3月RoC Top3且收盘>SMA(3月)否则现金 ≠ Case A纯相对 / 股票双动量。计入美股/ETF。提出日期按源文件原样保留2026-06-15。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "§2.3 Case B + §3.2（最优 X=3, M=3）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

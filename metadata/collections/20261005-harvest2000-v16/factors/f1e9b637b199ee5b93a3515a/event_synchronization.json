@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "对两列事先定义的二元事件，按各事件前后间隔产生局部匹配容差，计算有方向的邻近发生量，并修正同刻和双向重复计数。它度量窗口事件时序联系，不定义事件阈值，也不证明预测或因果。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-04379bb1bbbfa2999dcf1360"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口内的标量观测或外部定义事件及其时刻均已到达和可用后计算。可视图未来节点/局部事件的下一事件间隔包含窗内未来，严禁回填到内部事件当时的信息集。具体金融输入、供应商、发布时间与PIT缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-04379bb1bbbfa2999dcf1360"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审静态方法EventSeries.event_synchronization，不实例化EventSeries；显式传ts1和ts2，避免默认np.where索引转int16的窄整数路径。两个二元0/1NumPy数组可有不同长度，各自时间数组与观察网格同长度，而不是已筛好的事件时刻数组。 源码对ts1[eventseriesx==1]与ts2[eventseriesy==1]筛选，再包成1×L的float数组。第二列事件时间加lag；正lag将y推迟。本文要求每列至少3个事件、全部float时间/差值/倍差有限且严格递增；这些是额外研究合同，不声称函数主动验证。 删去每列第一和最后事件作为待匹配点，但这两个端点仍参与相邻间隔最小值。不同事件的局部容差是其两侧间隔和另一列两侧间隔的最小值的一半，且不超过taumax；源码使用全部距离与容差乘2的等价形式。 构造全部内部事件对的正/负方向布尔矩阵。等号落在容差边界算匹配，同刻另计E；每个被正方向匹配的事件对，如果任一端还参与反方向匹配，则该对只加一次double计数（逻辑OR，不是行列计数和）。反方向同理。 每一方向加一半同刻对，再减一半本方向double数，除两列内部事件数几何平均。实际返回二元tuple，虽然docstring写rtype list；不把返回名XY直接解读为X引起Y。 未调用make_event_matrix/事件分位数阈值、矩阵优化event synchronization、event coincidence analysis、显著性/surrogates或平行路径；这些不能自动继承本次静态pairwise审核。二方向、lag/taumax、窗口和后续同族实现不拆新增条目。 边界：某列0个事件实际返回(NaN,NaN)，1或2个返回(0,0)，这些分支的0不等于足够样本的无关联；本研究主合同要求每列>=3个事件。 ts=None时源码np.where结果被转int16，长序列索引或差值倍增可能溢出；本条强制显式float64时间且不把默认分支的结果说成已验证。 源码对事件值明确==1筛选，未验证0/1之外的值；输入必须预先验证，不能把其它非零数解释为事件。时间排序也由输入保证，函数不会排序或删除重复时刻。 匹配规则含下一事件间隔以及整窗事件数归一；只在窗口完整且所需事件均已观察/发布后可得，不能把最终匹配量回填为某个内部事件发生时已知信息。 正xy项代表移位后的Y事件较早，方向是时间顺序且受lag选择影响；不是因果方向或已验证领涨关系。双向输出及其和/差只属一个整族。 完整事件对矩阵耗费(Lx−2)*(Ly−2)空间；极多事件可耗尽内存，本源没有流式或自动截断保护。浮点严格相等及边界比较无epsilon容差。 没有拒绝概率、基准发生率校正、置信区间或收益有效性；不能把返回同步量当p值或经济独立证据。 输出：一个完整构造族；自然/水平或双方向、节点坐标、窗口/参数与语言实现均不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-04379bb1bbbfa2999dcf1360"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对两列事先定义的二元事件，按各事件前后间隔产生局部匹配容差，计算有方向的邻近发生量，并修正同刻和双向重复计数。它度量窗口事件时序联系，不定义事件阈值，也不证明预测或因果。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-04379bb1bbbfa2999dcf1360"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "显式全观测时间网格ts1/ts2按eventseries==1筛选后转float，得到严格递增事件时刻x_0..x_(Lx−1)、y_0..y_(Ly−1)，再令全部y加lag。只配内点i=1..Lx−2、j=1..Ly−2：d_ij=2(x_i−y_j)，tau2_ij=min(x_i−x_(i−1),x_(i+1)−x_i,y_j−y_(j−1),y_(j+1)−y_j,2taumax)。Axy_ij=1[0<d_ij<=tau2_ij]，Ayx_ij=1[−tau2_ij<=d_ij<0]；E=Σ1[d_ij=0]。Dxy=Σ_(Axy_ij=1)1[该i行或该j列存在Ayx=1]，Dyx对调Axy/Ayx。Cxy=ΣAxy+.5E−.5Dxy，Cyx=ΣAyx+.5E−.5Dyx。原生返回tuple(Cxy/sqrt((Lx−2)(Ly−2)),Cyx/sqrt((Lx−2)(Ly−2)))。这里正向xy判x晚于已移位y，勿只凭变量名说X领先Y。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-04379bb1bbbfa2999dcf1360"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "eventseriesx,eventseriesy（two1D NumPy ndarrays containing only0/1, each with at least3 ones; lengths may differ）：事件生成规则必须另行固定；本函数只使用哪些观察为事件，不从收益/价格自动定义极端。当前金融事件定义、阈值与数据发布MISSING。；ts1,ts2（explicit full-observation-grid NumPy float64 arrays matching the respective binary array; finite, strictly increasing, common clock/unit; shifted event times and all differences/doubled differences finite）：每个观测位置都有时刻，再依事件mask筛选。过大时间值的浮点差值精度、时区和发布延迟需研究层另核；不使用None的int16索引路径。。参数：ts1：按eventseriesx==1筛选；不是只含事件的紧缩数组；范围source default None excluded; reviewed explicit full observation-grid1D NumPy float64 array；源码默认None；ts2：按eventseriesy==1筛选；同一时间单位及对齐时钟；范围source default None excluded; reviewed explicit full observation-grid1D NumPy float64 array；源码默认None；taumax：最大匹配延迟；默认无限仍受局部四间隔限制；范围positive finite scalar or positive infinity, finite arithmetic except this sentinel；源码默认inf；lag：只向第二事件列时刻加lag；不是自动寻优延迟或预测方向；范围finite real scalar with shifted times and differences finite；源码默认0.0"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-04379bb1bbbfa2999dcf1360"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "pik-copan/pyunicorn",
+  "lab": null,
+  "missing_information": [
+    "金融标量/事件生成规则、市场数据供应商、时间单位和PIT输入发布/修订均MISSING",
+    "NumPy/SciPy/igraph/Cython实际执行环境未冻结；未执行上游、未数值验证",
+    "原始算法论文全文及其权利未由代码BSD自动取得；经济用途RESEARCH_ASSUMPTION",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "按局部事件间隔匹配的双向事件同步量",
+  "native_source_id": "event_synchronization",
+  "one_line": "对两列事先定义的二元事件，按各事件前后间隔产生局部匹配容差，计算有方向的邻近发生量，并修正同刻和双向重复计数。它度量窗口事件时序联系，不定义事件阈值，也不证明预测或因果。",
+  "record_id": "event_synchronization",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-e0277d411ceacbb16abcd0bc",
+      "license": "BSD-3-Clause",
+      "locator": "full BSD3 notice conditions and disclaimer:L1-L31",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "d28c8c473c386e2cae45d19cec1af874dac3f414cc42c8897df1827056fdd0ff",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-95a040e9059ef366c72746a3",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer scope differentiating time series graph and event constructors:L20-L39",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "901a43d6d51dcec559faa7ba7637c5a1a20e1075113c25c67270dd17cf152202",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-04379bb1bbbfa2999dcf1360",
+      "license": "BSD-3-Clause",
+      "locator": "copyright contributor attribution and imports:L1-L47; complete static pairwise event synchronization including empty cases local windows double counts and return:L681-L765",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "036e83fad44fda9e1bcf12dd5838910be2cd47ea35b1bd2cfb5dc2501b737d72",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/src/pyunicorn/eventseries/event_series.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3034",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3013,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "14cf58e955d81910e5cdd3a6eca5dd345395755a75ede1670e735052144b14a7",
+    "rule_sha256": "c299ab1b19bfaad99c5f48ab62def3222bed117adcea5245e4a9455586aa0514"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3034",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3034"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/Alphas/GasAndCrudeOilEnergyCorrelationAlpha.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：天然气ETF(UNG/BOIL/FCG)与原油ETF(USO/UCO/DBO)；90日Kendall相关选领先对，领先ROCP(5)>0.75跟随UP、<−0.75跟随DOWN（Lean GasAndCrudeOilEnergyCorrelation）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：天然气ETF(UNG/BOIL/FCG)与原油ETF(USO/UCO/DBO)；90日Kendall相关选领先对，领先ROCP(5)>0.75跟随UP、<−0.75跟随DOWN（Lean GasAndCrudeOilEnergyCorrelation）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `Alphas/GasAndCrudeOilEnergyCorrelationAlpha.py`。每月重算 `pairs`：天然气组为 leading、原油组为 following，用日收益 Kendall 相关取最大相关对。`lookback=5` 的 `RateOfChangePercent`；`difference_trigger=0.75`。若领先 `rate_of_return>0.75` → 对跟随发 UP；`<−0.75` → DOWN；预测期=5×分钟分辨率；等权。不是 W390 股票协整核。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

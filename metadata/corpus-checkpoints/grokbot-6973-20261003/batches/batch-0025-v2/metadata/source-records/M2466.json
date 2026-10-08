@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2466",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2466,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c30f897c34800185f7c55c348fc25c7cc02f24fb4f426a00b86970184aa43462",
+    "rule_sha256": "f996f414135b94fbbf837a3731d62d04f01b31113ea7d9a8245dacf43809d660"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2466",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2466"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/21143/harvesting-the-volatility-risk-premium-with-a-dual-vix-signal/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect 研究）；规则按 Zarattini, Mele, Aziz 2025"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：每日收盘前16分钟，eVRP=VIX−年化10日实现波动，结合VIX对VIX3M；VIXY目标±VIX/100，短波时余仓进SPY（QC Dual VIX Signal）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（VIXY±VIX/100 + eVRP/VIX3M；QC Dual VIX Signal）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：每日收盘前16分钟，eVRP=VIX−年化10日实现波动，结合VIX对VIX3M；VIXY目标±VIX/100，短波时余仓进SPY（QC Dual VIX Signal）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect 研究《Harvesting the Volatility Risk Premium With a Dual VIX Signal》已印实现（Zarattini/Mele/Aziz 2025）。标的 SPY、VIXY；指数 VIX、VIX3M。每日 `before_market_close(SPY,16)`：用 ROC(1) 窗口9值加当日相对昨收共10日，`e_rv30=std(ddof=1)*sqrt(252)*100`，`e_vrp=VIX−e_rv30`。若 e_vrp>0 且 VIX<VIX3M → VIXY=`−VIX/100`；若 e_vrp<0 且 VIX<VIX3M → `−0.5*VIX/100`；若 e_vrp<0 且 VIX>VIX3M → `+VIX/100`；否则0。同号且权重差≤2% 则不交易；否则 MOC 调 VIXY。目标为负（短波）时余仓 MOC 配 SPY=`1+target_weight`；否则若持有 SPY 则 MOC 清掉。不是 master 中 eVRP=VIX²−RV30² 核，也不是 SVXY/UVXY/TQQQ 三状态核。提出日期未知。 不是单VIX或PutWrite：本条为每日收盘前16分钟eVRP=VIX−年化10日实现波动结合VIX对VIX3M；VIXY目标±VIX/100。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

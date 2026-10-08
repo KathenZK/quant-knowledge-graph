@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2323",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2323,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "28f15a176799e63fb87dda59e06de403c6a99aea2170bace744eb07e1269578d",
+    "rule_sha256": "2fbb72f8588544e927f5958d6cc455472e2ff5b02dc9529e8287025a2c6713db"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2323",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2323"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/roll/2025-01-09/doc-ineekkkx3116993.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰证券金工（林晓明、徐特、韩永蔚、刘依苇等；新浪转载《红利因子择时与2025Q1行业ETF投资建议》；2025-01-09）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰金工红利因子45组双均线三指标打分择时（短1–20/长5–250共45组；≥0.55得+1/≤0.45得−1；总分≥+1开仓/≤−1清仓）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股风格（中证红利样本空间十分组红利因子净值；日频；低换手）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-01-09"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰金工红利因子45组双均线三指标打分择时（短1–20/长5–250共45组；≥0.55得+1/≤0.45得−1；总分≥+1开仓/≤−1清仓）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。三序列：红利因子净值、银行间市场成交量（Wind M0041739，正相关）、期限利差（S0059749−S0059744，负相关）。各用45组双均线（短窗∈{1,5,10,15,20}，长窗∈{5,10,15,20,30,40,60,90,120,180,250}且长>短）。对净值与成交量统计金叉比例，对期限利差统计死叉比例；比例≥0.55记+1、≤0.45记−1、否则0；三指标得分和∈[−3,+3]。首次和≥+1开仓红利因子；回落至≤−1清仓。页首页展示开仓阈值0.70敏感性亦鲁棒。相对firms-5三指标抽象打分：本条为45组显式阈值核。 不是M1137抽象三指标打分：本条为短1–20/长5–250共45组双均线对三序列打分核。 计入其他。 提出日期按源文件原样保留2025-01-09。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

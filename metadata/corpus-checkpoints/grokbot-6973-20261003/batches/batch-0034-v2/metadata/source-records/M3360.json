@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3360",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3314,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5c5d07742e3e8248ea6c9e0e48e8a4f2795b3ae3408d77fe274a52d35c61ea2e",
+    "rule_sha256": "3f7fa2da14a2b583615978a9b3ea2e9073cbd71ce363ac640e88d8a414d184db"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3360",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3360"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FutureStopMarketOrderOnExtendedHoursRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：ES迷你分钟延长时段；每日19:00对 mapped 市价买1手并挂 stop_market 卖1手（止损价=现价×1.1）（Lean FutureStopMarketOrderOnExtendedHours）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：ES迷你分钟延长时段；每日19:00对 mapped 市价买1手并挂 stop_market 卖1手（止损价=现价×1.1）（Lean FutureStopMarketOrderOnExtendedHours）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FutureStopMarketOrderOnExtendedHoursRegressionAlgorithm.py`。`add_future(ES,Minute,extended_market_hours=True)`；`schedule.every_day` @ 19:00：若非结束日前一日且有 mapped → `market_order(mapped,1)` 与 `stop_market_order(mapped,−1, price*1.1)`。断言止损成交时交易所在延长时段仍开放。不是仅 RTH 期货核，也不是连续月切换多空核（W558）。提出日期未知。ES延长时段19:00买1+止损×1.1 ≠ 连续月切换（W558）/仅RTH。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

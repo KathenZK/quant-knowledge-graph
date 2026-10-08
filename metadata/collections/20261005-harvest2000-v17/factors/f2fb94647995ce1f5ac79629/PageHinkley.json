@@ -1,0 +1,174 @@
+{
+  "economic_basis": {
+    "hypothesis": "逐个接收标量，以更新后的运行均值为中心累计双向离差，比较累计量与过去极值的距离，达到阈值后在下一次更新前重置。输出为变化检测状态，金融输入和交易用途尚待研究。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-f5165382211a090136741163",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc",
+        "harvest-source-d71ad582f913856d3736848b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "第t次update及drift_detected只依赖已输入的前缀和固定参数；只有本次x已经发布后才可用。若x是预测误差，必须等真实标签到达。市场供应商、时钟、修订及采样MISSING；不把触发时点回填为此前已知变点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-f5165382211a090136741163",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc",
+        "harvest-source-d71ad582f913856d3736848b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审PageHinkley直接实例化后按到达顺序每点调用一次update，随后读取drift_detected；不使用mutate、clone、revert、update_many、外部包装器或直接修改私有状态。所有参数在一段流运行期间固定。 _BaseDriftDetector.__init__及_reset把flag设False；PageHinkley._reset同时创建全新的Mean、累计离差归零并以正负无穷初始化极值，再依据mode绑定严格比较函数。 Mean.update的默认权重为1，n以浮点数保存，均值为自上次重置起全部已接收点的等权递推平均；alpha只乘旧累计离差U/D，不对运行均值或历史极值作指数衰减。文档的fading mean措辞不能替代实际代码。 先加入当前观测更新均值，再算当前离差。随后先更新U/D和极值，再判断min_instances；不是用前一时点均值，也不是等到暖机完成才开始累计。 触发时本次flag=True并保留本次统计状态；直到下一次update开始才重置，因此下一点成为新段第一点。该首点离差为0、两距离均为0；它不会同时被旧段重复计入。 只对mode显式做枚举校验。本文额外约定正整数min_instances、delta>=0、threshold>0、0<alpha<=1、有限输入及有限中间算术，不称这些都由源码主动保护。 不从原始价格自动计算收益/误差，不提供p值、置信区间、警告区间、漂移起点定位或订单。源码引用Page1954与Sebastiao/Fernandes2017，本文是River固定维护者实现的静态定义，不声称原论文全部版本复现。 边界：极值初始化为±Inf仅用于首步；首点更新后极值等于当次累计量，不把首点当漂移。阈值用严格>，等于阈值不触发。 达到min_instances之前flag仍False，但均值、累计和、极值均已经更新；不能把False当成证明稳定。 发生NaN/Inf或数值溢出时源码无统一拒绝/修复保护，可能损坏均值与状态；本条只审有限合同。n是float，额外限制每段计数<2**53避免超长流计数不能逐1增加。 改变alpha、delta或单位会改变触发路径；没有阈值误报率校准，也不保证检测到真实经济制度变化。方向、参数、检测次数/间隔摘要不另外计因子。 这是时序到状态的在线递推。若输入本身来自完整窗口拟合或未来标签，算法在线形式也不能消除输入前视；PIT与模型训练边界仍缺。 输出：布尔变化状态以及完整同族方向/阈值/暖机变体；不把运行均值或各方向计数另外登记"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-f5165382211a090136741163",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc",
+        "harvest-source-d71ad582f913856d3736848b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "逐个接收标量，以更新后的运行均值为中心累计双向离差，比较累计量与过去极值的距离，达到阈值后在下一次更新前重置。输出为变化检测状态，金融输入和交易用途尚待研究。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-f5165382211a090136741163",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc",
+        "harvest-source-d71ad582f913856d3736848b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每段初始化n=0、μ=0、U=D=0、u_min=+∞、d_max=−∞、flag=False。新x到达时，若上一次flag=True，先做上述重置；再n←n+1、μ←μ+(x−μ)/n、e←x−μ（使用更新后的μ）。U←αU+e−δ，D←αD+e+δ；u_min←min(u_min,U)，d_max←max(d_max,D)。n>=m时令a=U−u_min，b=d_max−D；up模式flag=(a>H)，down模式flag=(b>H)，both模式flag=(a>H or b>H)。n<m时保持False。update返回None，读原生drift_detected属性取得布尔状态；α、δ、H、m及方向均是同族参数，不拆新增。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-f5165382211a090136741163",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc",
+        "harvest-source-d71ad582f913856d3736848b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（one finite Python float per update; stream in fixed arrival order; finite arithmetic and each segment count <2**53）：每次一个已可得标量。可研究已实现收益或预测误差的分布变化，但当前金融字段、单位、采样间隔、模型生成与发布时点MISSING；误差需标签真实到达后才能输入。。参数：min_instances：检测前至少接受的本段样本数，累计从第一点就开始；范围research positive integer；源码默认30；delta：上/下方向累计离差的负/正偏置；范围research finite real >=0；源码默认0.005；threshold：累计量偏离其本段历史极值的严格阈值；范围research finite real >0；源码默认50.0；alpha：只衰减累计离差，不衰减均值或历史极值；范围research 0<alpha<=1；源码默认0.9999；mode：方向选择；全部只计一族；范围up/down/both；源码默认both"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-f5165382211a090136741163",
+        "harvest-source-3989767f7bc74ce08db4520c",
+        "harvest-source-346008edd6c2eae8b647e5fc",
+        "harvest-source-d71ad582f913856d3736848b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "online-ml/river",
+  "lab": null,
+  "missing_information": [
+    "具体市场输入、固定单位/采样、阈值误报与经济状态解释未研究",
+    "Python及依赖实际运行环境未冻结，未执行数值验证",
+    "经济用途为RESEARCH_ASSUMPTION；未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予原论文/书籍、输入数据或其他第三方素材权利"
+  ],
+  "name": "递推均值离差累计量的 Page–Hinkley 变化状态",
+  "native_source_id": "PageHinkley",
+  "one_line": "逐个接收标量，以更新后的运行均值为中心累计双向离差，比较累计量与过去极值的距离，达到阈值后在下一次更新前重置。输出为变化检测状态，金融输入和交易用途尚待研究。",
+  "record_id": "PageHinkley",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/drift/page_hinkley.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "River developers维护者实现；源码归引E. S. Page1954与Sebastiao/Fernandes2017，不称本Python代码由原论文作者编写。",
+      "id": "harvest-source-f5165382211a090136741163",
+      "license": "BSD-3-Clause",
+      "locator": "native identity and documented scope:L1-L28; attribution complete initialization reset mode tests and update:L48-L127",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "4ea2ab8221352111532d34cd84f074611d13d2fd76f0913d7d3412614723f60e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/drift/page_hinkley.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "River developers维护者实现；源码归引E. S. Page1954与Sebastiao/Fernandes2017，不称本Python代码由原论文作者编写。",
+      "id": "harvest-source-3989767f7bc74ce08db4520c",
+      "license": "BSD-3-Clause",
+      "locator": "base flag initialization reset and public property:L1-L33; direct detector base interface:L57-L69",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "0747f5410fe3998075fd572f85f1677d37ca0e4d0d8503d133c6023ac1c87995",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/base/drift_detector.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "River developers维护者实现；源码归引E. S. Page1954与Sebastiao/Fernandes2017，不称本Python代码由原论文作者编写。",
+      "id": "harvest-source-346008edd6c2eae8b647e5fc",
+      "license": "BSD-3-Clause",
+      "locator": "native Mean and float count semantics:L1-L17; complete mean initialization and unit-weight update:L61-L67; get returns running mean:L84-L85",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "aac63673e4dda4a96e8380466fa80cf9fa631aef37ae3775896bf53ce3858c32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/stats/mean.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "River developers维护者实现；源码归引E. S. Page1954与Sebastiao/Fernandes2017，不称本Python代码由原论文作者编写。",
+      "id": "harvest-source-d71ad582f913856d3736848b",
+      "license": "BSD-3-Clause",
+      "locator": "Mean parent ABC and no update override:L1-L63",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "96e3c8a97171de4b7d3c021d03b6eaa8b01c9eaa0a940a9f0ecb322ad2ef6c42",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/stats/base.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "River developers维护者实现；源码归引E. S. Page1954与Sebastiao/Fernandes2017，不称本Python代码由原论文作者编写。",
+      "id": "harvest-source-8875f3a78361024dd65c3e18",
+      "license": "BSD-3-Clause",
+      "locator": "official online-streaming library identity:L38-L40",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "bd2997b2e2a67a910ec2011430a650692743233abfaeb23cf7c3d4faff5566a5",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "River developers维护者实现；源码归引E. S. Page1954与Sebastiao/Fernandes2017，不称本Python代码由原论文作者编写。",
+      "id": "harvest-source-6ce3661632a351443efcc654",
+      "license": "BSD-3-Clause",
+      "locator": "complete BSD3 attribution conditions and disclaimer:L1-L29",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "e87f2c8f1ba611702af10cba745e6ceb773d32310135ed55aa2722c55dd0d077",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4507",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4461,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "64db419f5c599487d9de1950393e924cf6aab487cf324a04337cd8035d11e853",
+    "rule_sha256": "0c084022b71a942c015b10f0b54b473ccb7ae0a4925efac2276a52908156c023"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4507",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4507"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://doi.org/10.1093/rfs/hhm014"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Amit Goyal / Ivo Welch"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-161/W1717"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Goyal·Welch·股息价格比单变量择时：月末；递推D/P回归溢价；预测>历史均值满仓美股，否则T-bill；持1月（GW DP·vsHA）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2008-07"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Goyal·Welch·股息价格比单变量择时：月末；递推D/P回归溢价；预测>历史均值满仓美股，否则T-bill；持1月（GW DP·vsHA）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Goyal/Welch《A Comprehensive Look at the Empirical Performance of Equity Premium Prediction》（RFS 2008）框架下 **单一股息价格比（D/P）** 可钉死择时核（对照其十四变量清单中的 dp）。每月用扩展窗把下月股权溢价对 **滞后 log D/P**（或 D/P）做 OLS；若 **一步预测溢价高于同期历史平均溢价**（或预测>0 的严格版；本条钉 **vs 历史均值**，与 RSZ 十四变量等权合成对照）则满仓美股指数，否则 **T-bill**；持有 **1月**。不是 Rapach–Strauss–Zhou 十四宏观等权组合（M4489）；不是 Campbell–Thompson 约束 E/P（M4493）；不是合计 BM（M4497）。计入美股/ETF。提出日期 2008-07。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "RFS 2008 · single dp forecast vs hist avg → equity/T-bill"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

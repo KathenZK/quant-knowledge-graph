@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "趋势内反转形态配合改善挂价可能改变成交选择；没有执行或收益证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "保护与目标使用条件市价平仓，不是对应价位挂单。",
+    "空头止损窗口写死3，只有多头使用stop_lookback输入。",
+    "挂单有效期和过滤失效后的取消不完整。"
+  ],
+  "name": "趋势内两棒极值反转与可改价突破挂单",
+  "native_source_id": "434959",
+  "one_line": "在EMA趋势方向内出现两棒极值反转时挂突破单，可在尚未成交的回撤中改善挂价；成交后以此前低高点定风险并用两倍目标退出。",
+  "record_id": "434959",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E9%98%BB%E5%8A%9B%E7%AA%81%E7%A0%B4%E7%8E%AF%E5%BD%A2%E5%81%9C%E6%8D%9F%E7%AD%96%E7%95%A5Reversal-Closing-Price-Breakout-Strategy-with-Oscillating-Stop-Loss.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 EduardoMattje；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-434959-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "a8bf91f975a8b506aa3a9492a286a0c7584e2ba513931e5fc771d312588241da",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E9%98%BB%E5%8A%9B%E7%AA%81%E7%A0%B4%E7%8E%AF%E5%BD%A2%E5%81%9C%E6%8D%9F%E7%AD%96%E7%95%A5Reversal-Closing-Price-Breakout-Strategy-with-Oscillating-Stop-Loss.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-434959-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-434959-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未显式提供佣金、滑点、点差或融资费用，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-434959-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多形态在H+mintick挂Long stop，空在L−mintick挂Short stop。默认allow_retracing=true：若空仓、趋势仍同向、距最近形态至少1bar、距最近closed的bar数>距形态bar数，并且新多挂价低于最近形态挂价且低于前bar挂价，则撤Long再挂较低新价；空头以两次比较均更高为镜像。首次尚无closed事件时barssince缺失会阻止这条可选改价分支，不补为允许。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-434959-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v4；先挂单/改价，随后基于可见仓位变化保存保护与目标，再按bar高低触碰提交close；未显式逐tick/成交重算/收盘成交。订单成交与有多个未成交方向时行为未核。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-434959-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "bought为从0升至正仓，sold为从0降至负仓。多stop保存bought时前bar的lowest(low,3)−tick；空保存sold时前bar的highest(high,3)+tick（空头3写死）。目标在bought/sold时保存：成交均价±2×abs(均价−stop)。low<=stop平Long、high>=stop平Short；high>=多目标或low<=空目标平对应仓。全部是条件strategy.close，非预挂stop/limit；默认EMA反向还平仓。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-434959-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始10000，默认10%权益，未显式qty覆盖。风险比2用于目标，不用于按止损距离缩放仓位。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-434959-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "未成交挂单在EMA反向或新形态失效时没有明确统一撤销。止损/目标触及之后提交市价close，成交不保证在触及价；同bar双触及的调用和成交顺序未验。首次改价依赖曾有closed事件，不能理想化。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-434959-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认src=hl2；快EMA8、慢EMA80，快>慢为bull、快<慢为bear。多反转L<L[1]且L<L[2]且C>C[1]；空反转H>H[1]且H>H[2]且C<C[1]。入口要求相应趋势、当前position_size==0，默认Both。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-434959-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-434959-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

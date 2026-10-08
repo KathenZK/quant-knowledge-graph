@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0715",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 715,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d44b566511541bc1c700fd9630f0de43914286c3715c2e4971c2560d7b9eeec8",
+    "rule_sha256": "1bedebbbc7c39c8b5bf96874113dcb69f87a633fccc474acafa6263f9db741cc"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0715",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0715"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/299/RSI-Triggered-Risk-Rotation-EquitiesVolatility"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Josh Crawford"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "RSI触发的股票波动率风险轮动"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-02-18"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "RSI-Triggered Risk Rotation EquitiesVolatility"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "日线、单一持仓。若多个分散“过热哨兵”的 10 日 RSI 升高（约 75–80，随标的而定），100% 切换到 UVXY。否则：UVXY 的 21 日 RSI 高时，若 SPY 21 日 RSI >30 切到 VIXM；正常状态用高 beta 基准 10 日 RSI <30 的超卖信号，切到 QLD/USD/SSO 等 2x ETF；否则持有默认核心 ETF（SPY）。每次 100% 重新配置前先规则化切换/清仓；每日一次。核心/候选包括 UVXY、VIXM、SPXL、QLD、USD、SSO、SPY。与已有单资产RSI均值回归不同：用多只哨兵RSI在波动率ETF与杠杆ETF间整仓切换。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2601",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2601,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d933e2ce4b290715c6b4f4fd2cad1153f6bd9b0230a6db0501a0dc2ee329e432",
+    "rule_sha256": "0b8acd2a2ff4abff7965474a9f1998185f06d2df19cb23a2ff3cd9b4d95010f0"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2601",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2601"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/crypto-fred-rates-toggle/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：Kraken BTCUSD/PAXGUSD；FRED FEDFUNDS 的ROC(3)<0满仓BTC，≥0满仓PAXG（QC Documentation Fed funds toggle）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（Kraken BTC/PAXG按FRED FEDFUNDS ROC3切换；QC Documentation Fed funds toggle）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密：Kraken BTCUSD/PAXGUSD；FRED FEDFUNDS 的ROC(3)<0满仓BTC，≥0满仓PAXG（QC Documentation Fed funds toggle）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `crypto-fred-rates-toggle/main.py`。`add_crypto(\"BTCUSD\", KRAKEN)` 与 `PAXGUSD`；`add_data(Fred,\"FEDFUNDS\",DAILY)`；`RateOfChange(3)`（注释：约3个月利率变化，因 FEDFUNDS 月频发布）。仅在 FRED 新点到达且 ROC 更新成功时：ROC<0 且未持 BTC → `set_holdings(BTC,1,True)`；ROC≥0 且未持 PAXG → `set_holdings(PAXG,1,True)`。不是价格动量或链上哈希核。提出日期未知。 不是价格动量或链上哈希核：本条为Kraken BTCUSD/PAXGUSD按FRED FEDFUNDS的ROC(3)<0满仓BTC、≥0满仓PAXG。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

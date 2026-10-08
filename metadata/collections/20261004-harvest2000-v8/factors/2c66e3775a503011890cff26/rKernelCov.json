@@ -1,0 +1,162 @@
+{
+  "economic_basis": {
+    "hypothesis": "把收益平方和及多个滞后交叉积按核函数组合，研究含微观结构噪声的窗口方差；本条只审单变量，核/带宽/自由度开关同族。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-6495b4c847e1ad63a93b3f83",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-6495b4c847e1ad63a93b3f83",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "冻结输入为有限收益向量或N×1矩阵，N>=2，整数1<=H<N，alignBy/alignPeriod=NULL、makeReturns=FALSE。价格转换、跨日拆分和重采样路径不在本条已审合同。 kernelType按小写映射为C++码：rectangular0、Bartlett1、Parzen9。本条仅审三者；其它核和非法字符串fallback存在但不据此声称已审。 C++分别累加正/负滞后交叉积。单变量两者相同；h=0只计一次Γ0，h>0合计两方向。核参数明确是(h−1)/H，不能替换成h/H或h/(H+1)。 DOF按每个滞后乘N/(N−h)，不使用统一N−1分母。原函数不中心化收益，文档称autocovariance不代表实际已减均值。 单变量负值只warning并原样返回，cor参数不生效。多变量非cor路径会强制makePsd，相关路径另求逆；两者未纳入本条，不借矩阵修复逻辑解释单变量。 边界：没有删NA/Inf；非有限输入不属已审合同。H>=N有零分母/无效滞后风险，未内置完整验证。 负V只警告，不截0；rectangular或DOF调整不保证非负，不能直接当可开方风险。 Γ为原始交叉积和，不能加去均值或除N后仍称同一固定实现。 与HAC长期方差同属滞后核加权家族，不因金融用途另造经济概念；未来发现同核应合并，不按库/核选项重复计。 其它核、多变量投影和运行环境未审；输出只在全窗结束后可用，未证明收益预测。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-6495b4c847e1ad63a93b3f83",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把收益平方和及多个滞后交叉积按核函数组合，研究含微观结构噪声的窗口方差；本条只审单变量，核/带宽/自由度开关同族。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-6495b4c847e1ad63a93b3f83",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N项收益r，Γ_h=Σ_(i=1..N−h)r_i r_(i+h)。V=Γ_0+2Σ_(h=1..H)a_h k((h−1)/H)Γ_h；kernelDOFadj=True时a_h=N/(N−h)，否则1。无去均值、无除N。已审核rectangular k(x)=1；Bartlett k(x)=1−x；Parzen在x<=.5时1−6x²+6x³，x>.5时2(1−x)³。默认H=1、rectangular、DOF调整开启，故V=Σr_i²+2N/(N−1)Σ_(i=1..N−1)r_i r_(i+1)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-6495b4c847e1ad63a93b3f83",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "rData（finite real numeric vector or N-by-1 matrix; N>=2, 1<=H<N; ordered returns）：单窗口内按观测时间排序的收益。源文允许不等间隔，但核仅用观测滞后；采样/收益单位由外部约定。。参数：kernelType：同族核选项；范围reviewed rectangular, bartlett, parzen；源码默认rectangular；kernelParam：最大观测滞后；范围integer 1<=H<N；源码默认1；kernelDOFadj：逐滞后自由度调整；范围boolean；源码默认True；alignBy/alignPeriod：无重采样；范围reviewed NULL；源码默认None；makeReturns：输入已是收益；范围reviewed FALSE；源码默认False；cor：无相关后处理；范围ignored by single-variable path；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-6495b4c847e1ad63a93b3f83",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "jonathancornelissen/highfrequency",
+  "lab": null,
+  "missing_information": [
+    "仅审单变量指定三种核；其余核/PSD/运行未审",
+    "金融采样、PIT、依赖版本缺失",
+    "HAC同族边界保留，不宣称独立经济概念",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "滞后收益交叉积核加权的已实现方差",
+  "native_source_id": "rKernelCov",
+  "one_line": "把收益平方和及多个滞后交叉积按核函数组合，研究含微观结构噪声的窗口方差；本条只审单变量，核/带宽/自由度开关同族。",
+  "record_id": "rKernelCov",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "实现：Scott Payseur、Onno Kleen、Emil Sjoerup。原方法：Barndorff-Nielsen、Hansen、Lunde、Shephard (2008), Designing realized kernels to measure the ex post variation of equity prices in the presence of noise；另引Hansen–Lunde (2006)、Zhou (1996)。",
+      "id": "harvest-source-5f01e4e89a90ac43d08c6870",
+      "license": "GPL-2.0-or-later",
+      "locator": "native formula and method attribution:L1512-L1555; actual defaults:L1569-L1571; single-variable bridge and negative warning:L1620-L1656; matrix postprocessing outside contract:L1658-L1687",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "47103e0f8a9f72ae6cdac845655c22a976e2aece49f7bb672302b33338354a32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Scott Payseur、Onno Kleen、Emil Sjoerup。原方法：Barndorff-Nielsen、Hansen、Lunde、Shephard (2008), Designing realized kernels to measure the ex post variation of equity prices in the presence of noise；另引Hansen–Lunde (2006)、Zhou (1996)。",
+      "id": "harvest-source-b5a2f57468a7eff5e05fd791",
+      "license": "GPL-2.0-or-later",
+      "locator": "kernel names and fallback:L265-L293",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "5f38e15d48ae103a5e9db0715647b0dbc053e7d08ce67aa8b4e620799989d4e2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/internalRealizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Scott Payseur、Onno Kleen、Emil Sjoerup。原方法：Barndorff-Nielsen、Hansen、Lunde、Shephard (2008), Designing realized kernels to measure the ex post variation of equity prices in the presence of noise；另引Hansen–Lunde (2006)、Zhou (1996)。",
+      "id": "harvest-source-6495b4c847e1ad63a93b3f83",
+      "license": "GPL-2.0-or-later",
+      "locator": "compiled dependency:L1-L3; rectangular and Bartlett:L15-L27; Parzen:L57-L63; full lag sum, weights and DOF adjustment:L76-L111",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "87ddd9d4e4cbe81e85e30386b4894d679088e08b0d0147bb028801fa34c46386",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/src/realizedMeasures.cpp",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Scott Payseur、Onno Kleen、Emil Sjoerup。原方法：Barndorff-Nielsen、Hansen、Lunde、Shephard (2008), Designing realized kernels to measure the ex post variation of equity prices in the presence of noise；另引Hansen–Lunde (2006)、Zhou (1996)。",
+      "id": "harvest-source-2f821f16db9cc7f4b73af0c0",
+      "license": "GPL-2.0-or-later",
+      "locator": "compiled kernel bridge:L106-L108",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "3930bffdcaf6ab6ef070bb1c5682be16e4907cb185db4f89f00e919361e33f4e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/RcppExports.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Scott Payseur、Onno Kleen、Emil Sjoerup。原方法：Barndorff-Nielsen、Hansen、Lunde、Shephard (2008), Designing realized kernels to measure the ex post variation of equity prices in the presence of noise；另引Hansen–Lunde (2006)、Zhou (1996)。",
+      "id": "harvest-source-1028bcab3647a0fae74441ed",
+      "license": "GPL-2.0-or-later",
+      "locator": "package identity, maintainers, GPL >=2 and original package paper:L1-L24; unfrozen runtime dependencies:L26-L45",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d8d98b0df5ea59c9488f6af78a6246dbbbabb593d56ef92e84eb7516dadce0b3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

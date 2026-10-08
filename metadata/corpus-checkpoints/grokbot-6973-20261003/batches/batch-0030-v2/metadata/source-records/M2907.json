@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2907",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2903,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c0a659e8054340e9354509dbf88f0f704822873c6afd340d19add3d47e7406cf",
+    "rule_sha256": "28d5d317edf46bb73aeae23820df853dd9a7bc10756e8ea02e550973e06f2a58"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2907",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2907"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FuturesMomentumAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：SPY日线EMA(20/60)定势；升势买到期>90日最远ES迷你1张，降势清仓（Lean FuturesMomentumAlgorithm）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY EMA20/60定势升势买到期>90日最远ES1张降势清仓；Lean FuturesMomentumAlgorithm）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：SPY日线EMA(20/60)定势；升势买到期>90日最远ES迷你1张，降势清仓（Lean FuturesMomentumAlgorithm）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FuturesMomentumAlgorithm.py`。信号标的 SPY 日线 `ema(20)`/`ema(60)`，`tolerance=1.001`；升势=fast>slow×tolerance，降势=fast<slow×tolerance。未投资且升势：在 ES（SP_500_E_MINI）链中筛 `expiry>now+90日`，取到期最远合约 `market_order(...,1)`；已投资且降势则 `liquidate`。不是黄金前月 EMA100/300（W411）核。提出日期未知。 不是黄金前月EMA100/300（W411）核：本条为SPY日线EMA(20/60)定势，升势买到期>90日最远ES迷你1张、降势清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

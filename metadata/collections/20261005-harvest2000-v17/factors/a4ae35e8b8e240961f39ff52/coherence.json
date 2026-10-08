@@ -1,0 +1,168 @@
+{
+  "economic_basis": {
+    "hypothesis": "把两条等时距序列切成相同重叠段，在每个频率对跨谱求段均值，再按两列功率谱归一，描述同频分量的线性联系。它不提供因果方向、相位领先、显著性或交易规则。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-d03481dc8320b39a47a5bf4a",
+        "harvest-source-2184e6387288ab116f5ecc49",
+        "harvest-source-1ef0d0d7acb67481cd215790"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整窗口结束且两列所有已用观测都已到达/发布后可用；每次估计需事先冻结窗长、窗权、重叠和输入变换。源不解决供应商/PIT、停盘和等间隔对齐，均MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-d03481dc8320b39a47a5bf4a",
+        "harvest-source-2184e6387288ab116f5ecc49",
+        "harvest-source-1ef0d0d7acb67481cd215790"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入合同为两个长度相同的有限一维NumPy float64序列，观察时点一一对齐、等间隔；显式window为非零能量的有限实数float64一维数组，L>=3，N>=L+(L−o)确保至少两个完整段。窗口必须由研究层事先固定；源默认字符串hann_periodic及get_window生成分支不在本条已审合同。 coherence分别调用welch(x)、welch(y)及csd(x,y)，都默认average=mean、scaling=density、return_onesided=True；welch又调用csd(x_np,x_np)。不是先逐段求相干再平均，也不使用median平均或偏差校正。 csd显式窗分支按len(window)确定L，nfft默认L，noverlap默认L//2；ShortTimeFFT的hop=L−o、phase_shift=None，使用原窗乘1/sqrt(fsΣw²)的PSD缩放。原窗数组可能因初始化setflags(write=False)被改为只读；这是真实外部副作用，不称纯函数。 csd传p0=0、p1=(N−o)//hop、k_offset=L//2。_x_slices起点p0·hop−floor(L/2)+k_offset=0，依hop取K个完整L段；末尾不足段的观测不用于输出。内部准备缓冲时可以补零，但本合同实际使用的这些段不含边界补零。 每段先按constant减该段均值，再乘缩放窗，做未经前向归一的rFFT。False映射detr=None，不减均值。phase_shift=None不旋转段，FFT长度固定L；本条不审线性去趋势、自定义callable、复数、不同长度自动补齐或其他axis。 ShortTimeFFT.spectrogram本身算Sx·conj(Sy)，csd故意交换调用参数(y,x)，得到conj(X)Y。单边谱对非DC、非偶数Nyquist项乘2，再沿段轴取算术平均；最后按输入类型转complex128，auto谱取real。 coherence最后abs(Pxy)**2/Pxx/Pyy，未加epsilon也未clip到[0,1]。在正功率及精确算术下各频率Cauchy–Schwarz给0<=C<=1；这是公式性质，不是本次浮点执行验证。 固定源码FFT公开接口给出DFT/归一和单边频率语义；实际NumPy、FFT后端、编译器与线程数环境未执行固定，不声称逐位复现。原生频谱数组整组登记，不拆每个频点或跨市场参数。 边界：两列在某频点功率为0时分母0，输出可NaN/Inf；源码不加epsilon、不删除该频点，也不把缺失填为0。constant对常数段可产生全零谱，这不是证明无相关。 若仅一个完整段，任意非零两频率系数会给相干1而缺乏估计意义；本合同要求K>=2，仍不保证独立段、足够统计功效或金融校准。 重叠段共享观测，因此K不等于独立样本数；没有置信带、显著性阈值、多频比较校正或因果方向。C为幅度平方，丢弃跨谱相位。 CSD原路径允许输入不同长度并尾补0，coherence三个调用还可能使用不同n；本条只审等长度成对输入，不把自动补齐当有效金融时间对齐。 窗置只读、DFT精度、极小功率除法及输出略超[0,1]均需实际环境验证；本条不得截断结果后仍称原算式。 频谱求段平均使用完整窗口，可随着新段改变此前频率估计；只能在窗口结束和两输入均已发布后可得，不能回填到窗内时点。 输出：频率f与整条相干曲线C为一个构造族；各频率、阈值、重叠/窗口及相关实现不拆新增"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-d03481dc8320b39a47a5bf4a",
+        "harvest-source-2184e6387288ab116f5ecc49",
+        "harvest-source-1ef0d0d7acb67481cd215790"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把两条等时距序列切成相同重叠段，在每个频率对跨谱求段均值，再按两列功率谱归一，描述同频分量的线性联系。它不提供因果方向、相位领先、显著性或交易规则。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-d03481dc8320b39a47a5bf4a",
+        "harvest-source-2184e6387288ab116f5ecc49",
+        "harvest-source-1ef0d0d7acb67481cd215790"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审显式实数窗w_0..w_(L−1)、nperseg=None或L、nfft=None或L、detrend=constant或False、axis=−1。等长x,y各N点，0<=o<L，h=L−o，K=floor((N−o)/h)>=2，取段起点qh（q=0..K−1）。constant时x̃_(q,j)=x_(qh+j)−mean_(j=0..L−1)x_(qh+j)，False时不去均值；y同理。X_(q,k)=Σ_j w_j x̃_(q,j)exp(−2πi kj/L)，Y同式。频率f_k=k·fs/L，k=0..floor(L/2)。E=fsΣw_j²，c_k为1（DC及偶数L的Nyquist）或2（其余单边频点）。Pxx_k=c_kΣ_q|X_qk|²/(K E)，Pyy类似，Pxy_k=c_kΣ_q conj(X_qk)Y_qk/(K E)。返回C_k=|Pxy_k|²/Pxx_k/Pyy_k，实际为顺次两次除法，零功率未兜底。窗口、重叠、频率坐标和语言实现只计一个构造族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-d03481dc8320b39a47a5bf4a",
+        "harvest-source-2184e6387288ab116f5ecc49",
+        "harvest-source-1ef0d0d7acb67481cd215790"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x,y（two1D finite NumPy float64 arrays of equal lengthN, equally spaced and pointwise aligned; N>=L+(L−o); finite arithmetic except undefined zero-power normalization）：完整窗口内两个已发布标量序列。具体金融字段、复权/收益变换、时钟对齐、停盘补齐与数据供应商MISSING。；window（explicit1D finite real NumPy float64 ndarray, lengthL>=3 and finite strictly positive sum(window**2)）：固定分段加权函数；允许正负值但必须有有效能量，输入数组可能被源置只读。窗口不能根据本窗口结果事后选择。。参数：fs：同一采样频率；若用bar为单位，返回频率是每bar周期，不自动转交易日；范围research positive finite scalar；源码默认1.0；window：事先固定实际窗权，不补造默认Hann实现；范围reviewed explicit finite real float64 ndarray lengthL>=3 with sum(w*w)>0; source string default excluded；源码默认hann_periodic；nperseg：None对显式窗取len(window)，不是默认256字符串支路；范围reviewed None or exact integer len(window)；源码默认None；noverlap：None取L//2，hop=L−o；范围reviewed None or integer0<=o<L；源码默认None；nfft：本合同不零填充FFT；其它FFT长度仍为同族参数；范围reviewed None or exact L；源码默认None；detrend：逐段去均值或不去趋势；线性/自定义函数不审；范围reviewed constant or False；源码默认constant；axis：只审单一配对序列，不审多轴广播；范围reviewed −1 with1D inputs；源码默认-1"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-d03481dc8320b39a47a5bf4a",
+        "harvest-source-2184e6387288ab116f5ecc49",
+        "harvest-source-1ef0d0d7acb67481cd215790"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "scipy/scipy",
+  "lab": null,
+  "missing_information": [
+    "NumPy/FFT编译后端、数值误差、时间相关样本的显著性与金融收益有效性未验证",
+    "市场输入映射、采样频率、数据版权、PIT和具体窗口权重/研究参数未固定",
+    "经济用途为RESEARCH_ASSUMPTION；未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予原论文/书籍、输入数据或其他第三方素材权利"
+  ],
+  "name": "两序列分段跨谱的幅值平方相干度",
+  "native_source_id": "coherence",
+  "one_line": "把两条等时距序列切成相同重叠段，在每个频率对跨谱求段均值，再按两列功率谱归一，描述同频分量的线性联系。它不提供因果方向、相位领先、显著性或交易规则。",
+  "record_id": "coherence",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/signal/_spectral_py.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SciPy社区维护实现，coherence源码归引Welch1967及Stoica/Moses2005；不称维护者源码为这些论文作者原版或论文全文复现。",
+      "id": "harvest-source-d03481dc8320b39a47a5bf4a",
+      "license": "BSD-3-Clause",
+      "locator": "imports and native spectral interfaces:L1-L17; welch signature defaults:L494-L498; welch-to-csd exact call and csd defaults:L660-L679; complete csd finite-array window path and final averaging:L854-L958; coherence native contract and defaults:L1910-L1958; algorithm attribution:L1972-L1988; complete coherence core and final two sequential divisions:L2018-L2029",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "dc3d6cefbdc08902d135b85e016d28f21b5eebd608c34f13c8c35c253b8e0a55",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/signal/_spectral_py.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy社区维护实现，coherence源码归引Welch1967及Stoica/Moses2005；不称维护者源码为这些论文作者原版或论文全文复现。",
+      "id": "harvest-source-2184e6387288ab116f5ecc49",
+      "license": "BSD-3-Clause",
+      "locator": "FFT and detrend imports:L1-L32; class initialization defaults window readonly and scale setup:L402-L459; window and hop getters:L790-L825; sampling interval fs getters and positivity:L827-L878; FFT mode getters setter and FFT length validation:L881-L965; scaling status and applied PSD window normalization:L967-L1039; phase shift getter/setter and full segment slicing:L1042-L1111; detrend dispatch and all selected STFT execution:L1173-L1259; spectrogram defaults:L1261-L1270; complete auto/cross-spectrogram core:L1397-L1404; PSD factor lengths midpoint and lower range boundary:L1574-L1646; lower index getter and complete upper boundary helper:L1671-L1726; upper index return:L1757-L1788; explicit slice range validation:L1929-L1976; frequency count grid and selected rFFT path:L2087-L2165",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "d67a521ddaf015d69d6e676850f92303e48624a212dc4e2742aa633366883d17",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/signal/_short_time_fft.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy社区维护实现，coherence源码归引Welch1967及Stoica/Moses2005；不称维护者源码为这些论文作者原版或论文全文复现。",
+      "id": "harvest-source-1ef0d0d7acb67481cd215790",
+      "license": "BSD-3-Clause",
+      "locator": "detrend identity default axis and constant meaning:L4367-L4386; complete selected constant detrend path:L4450-L4462",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "c4e581e82c7d12e11b5c1753054d0914312171534abbf7a20f8fbe63dc18fcf0",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/signal/_signaltools.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy社区维护实现，coherence源码归引Welch1967及Stoica/Moses2005；不称维护者源码为这些论文作者原版或论文全文复现。",
+      "id": "harvest-source-ba70304d82d061c467858865",
+      "license": "BSD-3-Clause",
+      "locator": "FFT norm convention:L27-L65; explicit DFT formula:L90-L105; real FFT signature zero padding default normalization and bins:L279-L353",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "01acbe7588d6b94989cb216aea50f555bbb1e0716ea71a0ca01a93e7b49e8476",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/fft/_basic.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy社区维护实现，coherence源码归引Welch1967及Stoica/Moses2005；不称维护者源码为这些论文作者原版或论文全文复现。",
+      "id": "harvest-source-91905c90f53e8c608601667b",
+      "license": "BSD-3-Clause",
+      "locator": "complete real frequency grid contract and dispatch:L199-L251",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "ccfc621113af3ea11ee0a9356c3b7a0d2a3cf4b4052542e9a17c1f08e394edff",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/fft/_helper.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy社区维护实现，coherence源码归引Welch1967及Stoica/Moses2005；不称维护者源码为这些论文作者原版或论文全文复现。",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "complete BSD3 notice:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

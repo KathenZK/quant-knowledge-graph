@@ -1,0 +1,135 @@
+{
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "identity_namespace": "QuantConnect/Lean",
+  "record_id": "MovingAverageCrossAlgorithm",
+  "native_source_id": "MovingAverageCrossAlgorithm",
+  "entity_type": "strategy",
+  "name": "QuantConnect SPY 日线 EMA15/30 实现",
+  "one_line": "SPY 日线 EMA15 高于 EMA30 的1.00015倍时目标权重1.0，低于EMA30时清仓；这是固定版本源码规则，未回测。",
+  "relations": [],
+  "sources": [
+    {
+      "id": "lean-algorithm-python-movingaveragecrossalgorithm-py",
+      "url": "https://github.com/QuantConnect/Lean/blob/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Algorithm.Python/MovingAverageCrossAlgorithm.py",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "1db7156684722fd9ddeefdffa2a20d5c60bb02bca39cf973027378ea0c660edf",
+      "locator": "Algorithm.Python/MovingAverageCrossAlgorithm.py; L30-L40：标的、参数、示例区间; L53-L78：就绪门槛、每日去重、建平仓",
+      "supports": [
+        "标的、参数、示例区间",
+        "就绪门槛、每日去重、建平仓"
+      ],
+      "license": "Apache-2.0",
+      "attribution": "QuantConnect Corporation 与仓库 contributors",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "id": "lean-license",
+      "url": "https://github.com/QuantConnect/Lean/blob/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/LICENSE",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "522cf0a716ce03f67d46f8fceb5bf78c5b84400ec5cd8d14bf9f02cddc1cb6ba",
+      "locator": "LICENSE; L1-L191：仓库许可证及保留归属义务，仅覆盖该软件和相应文档。",
+      "supports": [
+        "源码许可证标识、归属和保留通知义务；不证明行情或论文许可。"
+      ],
+      "license": "Apache-2.0",
+      "attribution": "QuantConnect Corporation 与仓库 contributors",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "text": "美国股票ETF：SPY。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-movingaveragecrossalgorithm-py"
+      ]
+    },
+    "universe": {
+      "text": "固定单标的SPY，不按历史成分股选池。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-movingaveragecrossalgorithm-py"
+      ]
+    },
+    "signal": {
+      "text": "自动更新日线EMA(15)、EMA(30)，慢线就绪后每天最多判断一次。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-movingaveragecrossalgorithm-py"
+      ]
+    },
+    "entry": {
+      "text": "决策前数量<=0且EMA15>EMA30×1.00015时，set_holdings目标1.0。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-movingaveragecrossalgorithm-py"
+      ]
+    },
+    "exit": {
+      "text": "决策前数量>0且EMA15<EMA30时清仓；相等及容忍区间不操作。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-movingaveragecrossalgorithm-py"
+      ]
+    },
+    "position": {
+      "text": "目标权重1.0；实际股数与现金预留依赖LEAN。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-movingaveragecrossalgorithm-py"
+      ]
+    },
+    "risk": {
+      "text": "该文件没有给出独立的止损、回撤限制或完整风险预算规则；引擎默认风控尚未核验。",
+      "status": "MISSING",
+      "evidence": [
+        "lean-algorithm-python-movingaveragecrossalgorithm-py"
+      ]
+    },
+    "cost": {
+      "text": "文件未显式设置费率、滑点、买卖价差。 不能把未设置解释为实际费用等于零。",
+      "status": "MISSING",
+      "evidence": [
+        "lean-algorithm-python-movingaveragecrossalgorithm-py"
+      ]
+    },
+    "execution_time": {
+      "text": "on_data中每天首个合格事件；不是明确声明在当日收盘成交。 已审查事件内的源码分支，实际成交时点、成交价格及事件先后仍未复现核验。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-movingaveragecrossalgorithm-py"
+      ]
+    },
+    "timeframe": {
+      "text": "信号使用日线EMA15与EMA30；on_data每天最多判断一次，add_equity未显式指定订阅周期。示例设置2009-01-01至2015-01-01、起始资金100000。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-movingaveragecrossalgorithm-py"
+      ]
+    }
+  },
+  "economic_basis": {
+    "hypothesis": "研究假说：快慢均线关系可能捕捉持续趋势，也可能在震荡期反复交易；本次源码核验不证明收益或因果机制。",
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN",
+    "paper_support": [],
+    "missing": [
+      "没有本次策略的经审核原始论文支持。",
+      "没有冻结样本、交易成本和成交规则后的回测，也没有样本外或前瞻执行证据。"
+    ]
+  },
+  "missing_information": [
+    "需核实固定版本LEAN订阅默认值、日线指标更新时间和订单成交模型。",
+    "未锁定行情、复权和商业数据许可。",
+    "来源源码、公式调用、计算语义和经济有效性分别判断；本次只审核所列源码行为。",
+    "源码许可证不等于行情、原始论文或商业内部研究数据授权；相关商业使用仍为REVIEW_REQUIRED。",
+    "未执行上游代码、未采集市场数据、未回测；实际成交和引擎默认行为尚未完整核验。"
+  ],
+  "lab": null,
+  "rights": {
+    "metadata": "本记录是自行撰写的事实摘要、源文件定位及限制说明。所列软件源码许可证为Apache-2.0；不把软件许可扩展为行情、论文或其他材料的商业使用许可。",
+    "derived_results": "没有回测或衍生收益结果。经济解释仅为研究假说；商业数据和相关依赖的许可尚待审核（REVIEW_REQUIRED）。",
+    "terms_url": "https://github.com/QuantConnect/Lean/blob/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/LICENSE",
+    "raw_data_included": false,
+    "source_fulltext_included": false
+  }
+}

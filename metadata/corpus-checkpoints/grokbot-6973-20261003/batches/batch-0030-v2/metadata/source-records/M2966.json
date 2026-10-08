@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2966",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2956,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6e888613c9c8b574b5af4102a4e8f729ab25fbf45eb14ee4c214340f2032b1af",
+    "rule_sha256": "84a54353d5da2438a8cee287900a2df04a3e40de9b8ad441625ad050cbc5d3cb"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2966",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2966"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/KerasNeuralNetworkAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY/QQQ/TLT；周一重训Keras开盘价网络，每日开盘后30分钟：开盘>预测+σ等权买入，开盘<预测−σ清仓（Lean KerasNeuralNetwork）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY/QQQ/TLT周一重训Keras开盘>±σ买卖；Lean KerasNeuralNetwork）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY/QQQ/TLT；周一重训Keras开盘价网络，每日开盘后30分钟：开盘>预测+σ等权买入，开盘<预测−σ清仓（Lean KerasNeuralNetwork）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `KerasNeuralNetworkAlgorithm.py`。标的 SPY/QQQ/TLT；`_lookback=30`。每周一开盘后 `neural_network_training`：用日线开盘序列 Sequential(Dense10-relu→Dense1)+SGD(lr=0.01) 批训 200 步。每日 `after_market_open(SPY,30)`：对已训模型 `predict` 得预测价，`history_std=std(30日开盘)`；`target=1/N`。已持仓且开盘 < 预测−σ → `liquidate`；未持仓且开盘 > 预测+σ → `set_holdings(symbol,target)`。不是 W349 TensorFlow 5阶差价MLP 核。提出日期未知。 不是W349 TensorFlow五阶差价MLP核：本条为SPY/QQQ/TLT周一重训Keras开盘价网络，开盘>预测+σ等权买入、<预测−σ清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

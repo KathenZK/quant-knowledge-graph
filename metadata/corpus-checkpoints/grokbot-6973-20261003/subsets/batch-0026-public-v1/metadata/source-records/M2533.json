@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2533",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2533,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "79cdad71888774b8c08ecd2a45e42a5c49b0fdc758edd8feea5a7414caf6bbd7",
+    "rule_sha256": "7537c865920b2f7fc6bbe01741b1214e504ed2304129c41b778cefb5effe3277"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2533",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2533"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15340/asset-growth-effect/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Gurumeher Sawhney（QuantConnect 研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：非金融美股按年总资产增长率排序，6月末做空最高十分位、做多最低十分位（QC Asset Growth Effect）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（非金融资产增长十分位6月末多空；QC Asset Growth Effect）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：非金融美股按年总资产增长率排序，6月末做空最高十分位、做多最低十分位（QC Asset Growth Effect）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect 研究《Asset Growth Effect》已印实现。年频再平衡；粗选有基本面的美股；细选 NYSE/NASDAQ/AMEX、`total_assets>0`、剔除金融/保险行业模板（industry_template_code 非 B/I）。`delta_assets=(本年总资产−上年总资产)/上年总资产`，升序排序。OnData：做空排序最高十分位、做多最低十分位；每年 **6 月末** 再平衡。不是 M0073：那边是先保留资产增长最高十分位再叠十一个月动量多空、且仅2–12月持有。提出日期未知。 不是M0073资产增长叠动量：本条为非金融美股按年总资产增长率6月末空最高十分位、多最低十分位。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

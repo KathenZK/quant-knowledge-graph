@@ -1,0 +1,234 @@
+{
+  "classification": {
+    "evidence": [
+      "embedded-backtest.html",
+      "lean-IchimokuKinkoHyo.cs"
+    ],
+    "kind": "strategy",
+    "reason": "官方目录到同名教程再到完整嵌入代码的来源链路成立，源码明确选股、方向Insight、等权组合及执行模型，归为策略。",
+    "subtype": "energy_ichimoku_portfolio_strategy"
+  },
+  "commercial_use": "REVIEW_REQUIRED",
+  "computation_semantics": "NOT_EXECUTED",
+  "corrections": [
+    "补充每月能源市值前10选池及Chikou对云区的方向规则。",
+    "云内保持上次方向，不能补写成入云立即退出。",
+    "教程业绩表与嵌入代码的起止日期不同，未采用其收益结论。"
+  ],
+  "economic_validity": "NOT_TESTED",
+  "fields": {
+    "assets": {
+      "evidence": [
+        "embedded-backtest.html"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "股票能源行业；基准XLE。不是把XLE当作唯一交易标的。"
+    },
+    "cost": {
+      "evidence": [
+        "embedded-backtest.html"
+      ],
+      "status": "MISSING",
+      "text": "设置AlphaStreams经纪模型，未在策略文件中显式给佣金、滑点和借券费率；不能按零成本处理。"
+    },
+    "entry": {
+      "evidence": [
+        "embedded-backtest.html"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "存在previous_location时：由非+1进入+1设置Up；由非−1进入−1设置Down。方向非空时，每个有效日线bar续发有效期1个自然日的Insight.Price。"
+    },
+    "execution_time": {
+      "evidence": [
+        "embedded-backtest.html"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "配置ImmediateExecutionModel，由框架处理持仓目标；日线有效bar更新，非固定某个盘中时刻。实际成交、假期与1自然日Insight过期顺序需在原引擎上复现。"
+    },
+    "exit": {
+      "evidence": [
+        "embedded-backtest.html"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "进入云内不发Flat，也不显式清仓；保持上次方向，直到反方向云边突破。移出股票池会删除该symbol状态；移池平仓及Insight过期处置交给框架，未在源码写独立出场单。"
+    },
+    "position": {
+      "evidence": [
+        "embedded-backtest.html"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "调用无参数EqualWeightingPortfolioConstructionModel；不应将10只候选直接等同始终各占10%，实际有效Insight数和框架版本影响权重。初始资金1000000。"
+    },
+    "risk": {
+      "evidence": [
+        "embedded-backtest.html"
+      ],
+      "status": "MISSING",
+      "text": "收集到的main/alpha没有独立止损、止盈或自定义RiskManagementModel；默认框架/经纪模型风控未作运行验证。"
+    },
+    "signal": {
+      "evidence": [
+        "embedded-backtest.html",
+        "lean-IchimokuKinkoHyo.cs"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "IchimokuKinkoHyo()默认构造；以引擎输出Chikou与max/min(SenkouA,SenkouB)比较，分云上+1、云下−1、云内0（边界相等也为0）。不能把Chikou擅自改为当前收盘价。2026固定Lean参考默认9/26/26/52/26/26，但历史嵌入未锁引擎版本。"
+    },
+    "timeframe": {
+      "evidence": [
+        "embedded-backtest.html"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "UniverseSettings.Resolution=Daily，预热请求WarmUpPeriod+1根日线。嵌入示例区间2015-08-05至2020-08-05。"
+    },
+    "universe": {
+      "evidence": [
+        "embedded-backtest.html"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每个月首次选池时，从有基本面数据的股票中筛Morningstar Energy行业，再按当时市值降序取前10；同月返回Universe.Unchanged。"
+    }
+  },
+  "identity_match": {
+    "evidence": [
+      "official-directory.php",
+      "tutorial-04.html",
+      "embedded-backtest.html"
+    ],
+    "reason": "原CSV官方strategy-library目录的条目标题/能源大盘股说明对应Tutorials/1028；固定教程04 Algorithm指向指定嵌入ID。没有以当前同名模板或泛化Ichimoku示例替换。",
+    "status": "OFFICIAL_SOURCE_CHAIN"
+  },
+  "missing_information": [
+    "原始Lean引擎、组合/执行/经纪模型的运行版本未被历史嵌入固定；当前Lean源码仅作有版本的依赖参考。",
+    "历史时点基本面、退市/复权、数据快照、成交与借券成本尚未冻结。",
+    "新成分股预热缺历史、移出池、缺bar、节假日及Insight到期的运行行为未验证。",
+    "未执行源码、未复现文章业绩或完成独立回测。"
+  ],
+  "name": "能源股一目均衡",
+  "origin": {
+    "bytes": 2298,
+    "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0115.json",
+    "row_sha256": "2d1b3bc5f439bb1bc30033262f9de16347d23d507501781bbacc186fe6376daf",
+    "rule_sha256": "a2a4fa7889de8f69c0b13e1a8434831f054d8897f634c1cfc616bf9f8013d5db",
+    "sha256": "6526b0e9ed699ee37b19dda4dd002fc6636928df6515a7bcbf22c76afb56314e"
+  },
+  "outcome": "SOURCE_CODE_REVIEWED",
+  "record_id": "M0115",
+  "reviewed_at": "2026-10-04T11:24:47.542821+00:00",
+  "schema_version": "quantgraph-source-review/v1",
+  "source_fulltext_included": false,
+  "sources": [
+    {
+      "attribution": "QuantConnect Corporation / Tutorials contributors",
+      "bytes": 6333,
+      "http_status": 200,
+      "id": "tutorial-03.html",
+      "kind": "source_page",
+      "license": "Apache-2.0",
+      "locator": "03 Method.html中的选池、Ichimoku逻辑与源码片段",
+      "retrieved_at": "2026-10-04T11:06:54.968162+00:00",
+      "revision": "4a341890296f7e79e095508f06170c72ccaa629c",
+      "sha256": "5af1786a05b49c54c93bf1e6ef19b6ac4eeb1a6d1ff7baeebabf8cd56d62b890",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0115/tutorial-03.html",
+      "url": "https://github.com/QuantConnect/Tutorials/blob/4a341890296f7e79e095508f06170c72ccaa629c/04%20Strategy%20Library/1028%20Ichimoku%20Clouds%20in%20the%20Energy%20Sector/03%20Method.html"
+    },
+    {
+      "attribution": "QuantConnect Corporation / Tutorials contributors",
+      "bytes": 571,
+      "http_status": 200,
+      "id": "tutorial-04.html",
+      "kind": "source_page",
+      "license": "Apache-2.0",
+      "locator": "04 Algorithm.html指向embedded_backtest_93f0df937ca928a3aae0da169142b0b5",
+      "retrieved_at": "2026-10-04T11:06:54.924840+00:00",
+      "revision": "4a341890296f7e79e095508f06170c72ccaa629c",
+      "sha256": "32e53fa1fdcb910b9a5752f24912a5dfdac61c4bdf6924f3e152463f47028933",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0115/tutorial-04.html",
+      "url": "https://github.com/QuantConnect/Tutorials/blob/4a341890296f7e79e095508f06170c72ccaa629c/04%20Strategy%20Library/1028%20Ichimoku%20Clouds%20in%20the%20Energy%20Sector/04%20Algorithm.html"
+    },
+    {
+      "attribution": "QuantConnect Corporation / Tutorials contributors",
+      "bytes": 11357,
+      "http_status": 200,
+      "id": "tutorials-LICENSE",
+      "kind": "license",
+      "license": "Apache-2.0",
+      "locator": "许可证全文，仅证明其所覆盖的软件/文档许可",
+      "retrieved_at": "2026-10-04T11:06:55.925766+00:00",
+      "revision": "4a341890296f7e79e095508f06170c72ccaa629c",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0115/tutorials-LICENSE",
+      "url": "https://github.com/QuantConnect/Tutorials/blob/4a341890296f7e79e095508f06170c72ccaa629c/LICENSE"
+    },
+    {
+      "attribution": "QuantConnect Corporation / Tutorials contributors",
+      "bytes": 39184,
+      "http_status": 200,
+      "id": "official-directory.php",
+      "kind": "source_page",
+      "license": "Apache-2.0",
+      "locator": "Ichimoku Clouds in the Energy Sector的目录项及官方教程链接",
+      "retrieved_at": "2026-10-04T11:06:55.852883+00:00",
+      "revision": "fc50f126f5c47748e0667b898c9af4c7583da5e3",
+      "sha256": "9cfb51960796f517f1973f74d8ef1d9e6ceff33905c91bcb488814a863f62cd0",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0115/official-directory.php",
+      "url": "https://github.com/QuantConnect/Documentation/blob/fc50f126f5c47748e0667b898c9af4c7583da5e3/03%20Writing%20Algorithms/42%20Strategy%20Library/02%20Tutorials.php"
+    },
+    {
+      "attribution": "QuantConnect Corporation / Tutorials contributors",
+      "bytes": 849448,
+      "http_status": 200,
+      "id": "embedded-backtest.html",
+      "kind": "public_code",
+      "license": "main.py有Apache-2.0头；其他嵌入文件无独立许可头，商业使用仍REVIEW_REQUIRED",
+      "locator": "PRE元素后缀_source_mainpy、_source_BigEnergyUniverseSelectionModelpy、_source_IchimokuCloudCrossOverAlphaModelpy；原HTML字节固定，派生源码按HTML字符引用解码阅读",
+      "retrieved_at": "2026-10-04T11:07:43.175099+00:00",
+      "revision": "content-sha256:6fe05db9b7d3a0dfdaf6985ba4fd5aa26e87eabbf48bb568622d0fd39d5ce802",
+      "sha256": "6fe05db9b7d3a0dfdaf6985ba4fd5aa26e87eabbf48bb568622d0fd39d5ce802",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0115/embedded-backtest.html",
+      "url": "https://www.quantconnect.com/terminal/processCache?request=embedded_backtest_93f0df937ca928a3aae0da169142b0b5.html"
+    },
+    {
+      "attribution": "QuantConnect Corporation / Tutorials contributors",
+      "bytes": 435211,
+      "http_status": 200,
+      "id": "current-directory.html",
+      "kind": "source_page",
+      "license": "NOASSERTION",
+      "locator": "原CSV指向的官方策略目录；用于同源链路核验",
+      "retrieved_at": "2026-10-04T11:07:46.664262+00:00",
+      "revision": "content-sha256:683618a669cf912c1ad3a1021596f4a5d9af0401288ef87a96e546c41ead65ad",
+      "sha256": "683618a669cf912c1ad3a1021596f4a5d9af0401288ef87a96e546c41ead65ad",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0115/current-directory.html",
+      "url": "https://www.quantconnect.com/docs/v2/writing-algorithms/strategy-library"
+    },
+    {
+      "attribution": "QuantConnect Corporation / Tutorials contributors",
+      "bytes": 9586,
+      "http_status": 200,
+      "id": "lean-IchimokuKinkoHyo.cs",
+      "kind": "github_code",
+      "license": "Apache-2.0",
+      "locator": "当前固定版本构造器默认值，仅作依赖参考，不证明2020原运行时",
+      "retrieved_at": "2026-10-04T11:11:32.483803+00:00",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "c47110c98ad884adf0f2faf32a589c343a1318ea1426686b4e428747dbbcc46e",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0115/lean-IchimokuKinkoHyo.cs",
+      "url": "https://github.com/QuantConnect/Lean/blob/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Indicators/IchimokuKinkoHyo.cs"
+    },
+    {
+      "attribution": "QuantConnect Corporation / Tutorials contributors",
+      "bytes": 10737,
+      "http_status": 200,
+      "id": "lean-LICENSE",
+      "kind": "license",
+      "license": "Apache-2.0",
+      "locator": "许可证全文，仅证明其所覆盖的软件/文档许可",
+      "retrieved_at": "2026-10-04T11:11:32.484197+00:00",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "522cf0a716ce03f67d46f8fceb5bf78c5b84400ec5cd8d14bf9f02cddc1cb6ba",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0115/lean-LICENSE",
+      "url": "https://github.com/QuantConnect/Lean/blob/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/LICENSE"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6040",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5994,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "47f982c40f901c9b4483a5339f8801a875fe39f0426cdfc36752fe3ccdabf936",
+    "rule_sha256": "fba9b5985332a8ebfb2223e84473e2b13a8ae0bbe424c8b44da425a45bf91637"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6040",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6040"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://toslc.thinkorswim.com/center/reference/Tech-Indicators/studies-library/M-N/MovAvgBands"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Vitali Apirine / thinkorswim"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-315/W3251"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Apirine/thinkorswim·移动均线带快线上轨：日频；MovAvgBands快线>上轨持SPY否则BIL（MovAvgBands·FastAboveUpper·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2021-07-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Moving Average Bands Fast Above Upper — SPY"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Vitali Apirine《Moving Average Bands》（TASC 2021-07；thinkorswim MovAvgBands）之 **快均线位于上轨之上** 新核。先算快/慢均线，慢线为中轨；再以两均线差的均方根为波动度，上轨=慢线+mult×RMS。日频：若 **FastAverage > UpperBand**（默认 fast=10, slow=50, mult=1, average type=EMA）→ 满仓 SPY，否则 BIL。不是慢线价上；不是快线>慢线金叉；不是布林上轨；不是 Keltner/STARC。计入美股/ETF。提出日期 2021-07-01。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "MovAvgBands·FastAboveUpper·SPY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

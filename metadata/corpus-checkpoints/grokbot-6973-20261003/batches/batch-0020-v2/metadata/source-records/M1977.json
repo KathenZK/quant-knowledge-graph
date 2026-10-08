@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1977",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1977,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5f867338906714412aceaba8a89617744ac7198e254cb574bb57a29cfc351e6e",
+    "rule_sha256": "8702250871ea2ebde847ef14e2a7218a17561486f99ce373689bc13bde8b8c16"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1977",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1977"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/FRAYSTRAT/FRAYSTRAT.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（FRAYSTRAT.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区FRAYSTRAT：15m，三支或（RSI上穿46且TEMA7在BB中轨下上行并<EMA7；或EMA7<EMA12且RSI>40升且信号>MACD；或MACD>信号且EMA12<EMA7且TEMA升）做多；对称三支或平多；止损−10%，追踪止损开"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区FRAYSTRAT；15m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区FRAYSTRAT：15m，三支或（RSI上穿46且TEMA7在BB中轨下上行并<EMA7；或EMA7<EMA12且RSI>40升且信号>MACD；或MACD>信号且EMA12<EMA7且TEMA升）做多；对称三支或平多；止损−10%，追踪止损开"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/FRAYSTRAT/FRAYSTRAT.py默认 IntParameter（buy_rsi默认46，sell_rsi默认70，load=True）。timeframe=15m；stoploss=−0.1；minimal_roi约60/30/0分钟对应12%/8%/6%；trailing_stop=True，positive=0.02，offset=0.03且only_offset_is_reached=True。指标：RSI；典型价BB(16,1σ)；EMA7/12/30/100；TEMA(7)；默认MACD。做多三支或：(1) RSI 上穿 buy_rsi 且 tema<bb_middleband 且 tema>tema.shift 且 tema<ema7 且 volume>0；(2) ema7<ema12 且 rsi>40 且 rsi>rsi.shift 且 macdsignal>macd 且 volume>0；(3) macdsignal<macd 且 ema12<ema7 且 tema>tema.shift 且 volume>0。平多三支或：(1) RSI 上穿 sell_rsi 且 tema>bb_middleband 且 tema<tema.shift 且 volume>0；(2) ema7>ema12 且 tema>ema7 且 rsi<rsi.shift 且 macdsignal>macd 且 volume>0；(3) macdsignal>macd 且 macd>macdsignal.shift 且 tema>ema7 且 tema<tema.shift 且 volume>0。提出日期未知。 不是单RSI或单MACD交叉：本条是15m FRAYSTRAT三支或买卖核（RSI/TEMA/BB与EMA/MACD组合）。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

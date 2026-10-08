@@ -1,0 +1,105 @@
+{
+  "economic_basis": {
+    "hypothesis": "统计特征可描述已观测序列；金融预测用途和收益方向尚未验证。",
+    "missing": [
+      "无收益有效性、因果识别或样本外复现证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只能在输入窗口全部样本已观测且发布后计算；若用于金融研究，窗口必须仅包含决策时已知值。 窗口/采样频率/资产域/缺失处理未指定为市场实施；这不是已能直接回测的交易策略。"
+    },
+    "calculation": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "构造 bins+1 个等距边界，去掉最左边界，用 searchsorted(side=left) 映射每个样本为整数符号。 从当前位置先读一个符号；若该词已在集合中则延长一位；读到新词后加入字典并跳过该词。 输出字典中不同词的个数除以原样本数；末尾未形成新词的残余不另加词。 边界：空序列、非有限输入和不合理 bins 没有统一源端校验。 分箱数量改变同一算法的参数，全部合并为本条，不另计新因子。 函数注释另引用 Naereen 的 Lempel-Ziv 实现；该第三方来源的独立许可未在本次追索，商用仍 REVIEW_REQUIRED。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用压缩词典大小描述数值序列符号模式的丰富程度。 这是统计序列特征，未声称解释或预测投资收益。"
+    },
+    "formula": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "将 x 按 [min(x),max(x)] 等宽分成 bins 个符号区间；由左到右增量字典解析得到 D 个新词；输出 D/n。"
+    },
+    "inputs": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入x为按时间排序的一维有限数值样本；源码不绑定某资产或价格/收益变量。bins：positive integer，数值到符号的等宽分箱数；源码默认值=无默认值，调用时传入"
+    },
+    "use_cases": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可以为数值序列的描述、聚类或后续研究提供输入；市场绑定、窗口和采样频率需单独确定，不把参数或输出分量展开为新因子。"
+    }
+  },
+  "identity_namespace": "blue-yonder/tsfresh",
+  "lab": null,
+  "missing_information": [
+    "市场输入绑定、窗口与采样频率尚未选择",
+    "数据供应商、时间戳与修订政策缺失",
+    "NumPy/Pandas 等依赖环境未冻结",
+    "未执行源代码或进行数值交叉验证",
+    "没有经济收益有效性证据"
+  ],
+  "name": "分箱序列的 Lempel–Ziv 复杂度",
+  "native_source_id": "lempel_ziv_complexity",
+  "one_line": "用压缩词典大小描述数值序列符号模式的丰富程度。",
+  "record_id": "lempel_ziv_complexity",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行源码，未生成行情计算或回测结果；综合商业状态REVIEW_REQUIRED。",
+    "metadata": "自撰数学定义、参数与源码定位；保留tsfresh与贡献者归属，不复制来源全文。源码MIT不扩张至引用论文或输入数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2016 Maximilian Christ, Blue Yonder GmbH; tsfresh contributors",
+      "id": "tsfresh-tsfresh-feature_extraction-feature_calculators-py",
+      "license": "MIT",
+      "locator": "lempel_ziv_complexity:L1825-L1862",
+      "revision": "6af3c0030b6c9f02c3862a20e00cce87c984aa5b",
+      "sha256": "af78b02ff7d99d1e1c8fb0d56711fab00c0f84f63aeec969c091dd52fbdb228f",
+      "supports": [
+        "原生计算器定义、输入、参数与边界"
+      ],
+      "url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/tsfresh/feature_extraction/feature_calculators.py",
+      "verification": "PINNED_SOURCE_CODE_INDEPENDENTLY_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2016 Maximilian Christ, Blue Yonder GmbH; tsfresh contributors",
+      "id": "tsfresh-LICENSE-txt",
+      "license": "MIT",
+      "locator": "LICENSE.txt:L1-L16",
+      "revision": "6af3c0030b6c9f02c3862a20e00cce87c984aa5b",
+      "sha256": "1804283622c8e51a4427aaa772d5ca522f89932fd610b294055435922af1c748",
+      "supports": [
+        "源码版权和许可声明；不支持公式或经济有效性"
+      ],
+      "url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/LICENSE.txt",
+      "verification": "PINNED_LICENSE_NOTICE_READ"
+    }
+  ]
+}

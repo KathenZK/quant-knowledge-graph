@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3469",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3423,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "cd53f08044f3ccb95041123051d87805425016b7f58eb783476c60850d5c2ce8",
+    "rule_sha256": "1db9a88cd8d0e4e73a1913adf7ec76a9f75337fc2d5010fc716f9dce211912ac"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3469",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3469"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.fmz.com/strategy/545792"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "ianzeng123 / FMZ"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密TradFi永续：15m；ln(EWY)=c+β1·ln(三星)+β2·ln(海力士)+ε；z(ε)窗480；z>1空价差、z<−1多价差，|z|<0.5或满48h平（FMZ EWY三腿配对）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（币安 TradFi 永续：EWYUSDT / SAMSUNGUSDT / SKHYNIXUSDT）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-07-15"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密TradFi永续：15m；ln(EWY)=c+β1·ln(三星)+β2·ln(海力士)+ε；z(ε)窗480；z>1空价差、z<−1多价差，|z|<0.5或满48h平（FMZ EWY三腿配对）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写发明者量化《三腿配对统计套利策略》（ID **545792**）原理与默认参数表。目标腿 EWY，对冲腿三星电子、SK 海力士。OLS：`ln(EWY)=c+β1·ln(三星)+β2·ln(海力士)+ε`；残差在滚动 **LOOKBACK=480** 根 **15m** K 线上标准化为 z。`z>ENTRY_Z(1.0)` → SHORT_SPREAD（空 EWY / 多对冲）；`z<−1.0` → LONG_SPREAD；`|z|<EXIT_Z(0.5)` 或持仓满 **MAX_HOLD_HOURS=48** 出场。β 漂移超 **DRIFT_THRESHOLD=0.20** 则重新对冲；杠杆默认 **3**，三腿合计名义上限 **GROSS_EXPOSURE=0.7**。提出日期取 Created 2026-07-15。FMZ EWY三腿OLS残差z窗480：z>1空价差/z<−1多价差 |z|<0.5或48h平 ≠ 单腿配对/股指套利。计入加密。提出日期按源文件原样保留2026-07-15。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "核心原理 + 参数表 LOOKBACK/ENTRY_Z/EXIT_Z/MAX_HOLD_HOURS"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

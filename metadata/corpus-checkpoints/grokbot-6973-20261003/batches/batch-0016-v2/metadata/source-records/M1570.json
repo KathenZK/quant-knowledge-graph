@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1570",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1570,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "783278fee57f0079e8d845b7a35a3905595d28a096825ddf66ee0076bf7d83b0",
+    "rule_sha256": "6b31e82deb53a4a69c9e5a87f2f6f7c3c645b56592f2797f7ac4d7c0c201563d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1570",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1570"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/stock/stockzmt/2025-11-14/doc-infximrk3274904.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "国盛证券金工（沈芷琦、刘富兵、阮俊烨；新浪转载《量价淘金》系列十四）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "国盛金工逐笔羊群效应事件识别（委托/撤单量>当日同向90%分位；类型1最激进买/类型6最激进卖；主买/主卖量>90%分位；价变>90%或<10%分位；共10种）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（逐笔委托+逐笔成交；事件识别层）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-11-13"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "国盛金工逐笔羊群效应事件识别（委托/撤单量>当日同向90%分位；类型1最激进买/类型6最激进卖；主买/主卖量>90%分位；价变>90%或<10%分位；共10种）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。委托侧6种：买入/卖出挂单量、买入/卖出撤单量分别大于当日该股同向该类量的90%分位数；另将买单按相对买卖一价量关系划类型1–5（类型1=挂单价≥卖一且量≥卖一，最激进），卖单对称类型6–10，取类型1买与类型6卖为事件。成交侧4种：主买/主卖成交量>当日同向90%分位；单笔成交价变动（当笔价/上笔价−1）>当日价变90%分位或<10%分位。合计10种趋势资金行动识别。相对已收分钟羊群k=5,m=90%：本条为逐笔事件识别枚举。 不是M1143跟随5分钟最大量/趋势量比值20日均值羊群：本条为逐笔委托+成交事件识别层（委托/撤单量>当日同向90%分位等共10种）。 计入其他。 提出日期按源文件原样保留2025-11-13。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

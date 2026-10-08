@@ -1,0 +1,137 @@
+{
+  "economic_basis": {
+    "hypothesis": "比较连续多点模板同时接近的频率与独立同分布下单点接近概率的幂，并按该差的理论方差标准化，描述整个观测窗口的联合依赖。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-30b5d261bae5c5486cd985e1",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-30b5d261bae5c5486cd985e1",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "把一维输入转换成NumPy double。保留原顺序与所有观测；没有去均值、自动拟合模型或删掉缺值。本次合同要求N>=3、固定等时间间隔、非退化有限数据。 distance_indicators先检查显式epsilon>0（若提供）及distance>0（即使显式epsilon已给仍检查distance）。epsilon未给时用全窗样本标准差ddof=1乘distance；比较是严格<，距离恰好等于阈值不匹配。 先建立N×N布尔矩阵I。correlation_sum在严格上三角求均值；多维模板通过相邻右下和左上子矩阵逐元素逻辑乘积递推，等价同时要求每个对应坐标差小于epsilon。保留时间重叠模板之间的匹配，没有Theiler时间排除带。 _var用原始N×N矩阵行匹配数（含自身）和全窗单点匹配概率计算K及各V_m。主函数另对每个m裁去最早m−1行/列再计算单点概率，用于C_m−c_tail,m^m；这是源码明确采用的有限样本处理。 以sqrt(N−m+1)标准化效应，输出z及标准正态双侧尾面积。max_dim=2时squeeze为标量，更大维度为按m=2..M排序的向量；不按坐标扩为不同因子。 边界：默认epsilon遇常数序列为0；源没有再次检查自动epsilon正性，I连对角都可能为false，不能把退化输出当独立性通过。显式epsilon很大使全矩阵匹配，也可使V_m为0。 缺值不自动删：NaN参与距离比较会变成false，破坏匹配和对角假设；本合同排除所有NaN/Inf，不把所得有限数当有效统计量。 源只检查2<=max_dim<N，不保证方差正、有限样本校准或足够统计功效。sqrt负V/零V可能NaN/Inf；本条不截负、填零或挑选事后有效维度。 零假设为独立且同分布，拒绝可能来自线性依赖、异方差、非平稳或其它变化；不能把大z直接叫混沌、非线性盈利信号或明确经济机制。未在金融样本验证校准。 全N²距离矩阵和各嵌入矩阵需要平方级内存；输入规模预算由调用方限制，源码没有自动分块/抽样。epsilon依赖全窗，不能把中间匹配表回填成窗内实时信号。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-30b5d261bae5c5486cd985e1",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "比较连续多点模板同时接近的频率与独立同分布下单点接近概率的幂，并按该差的理论方差标准化，描述整个观测窗口的联合依赖。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-30b5d261bae5c5486cd985e1",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "有限实数序列x_0..x_(N−1)，整数2<=M<N。默认ε=1.5·sqrt[Σ(x−mean(x))²/(N−1)]，或显式正ε。令I_ij=1[|x_i−x_j|<ε]，含主对角线。c=Σ_(i<j)I_ij/C(N,2)，K=[Σ_i(Σ_jI_ij)²−3Σ_ijI_ij+2N]/[N(N−1)(N−2)]。对m=2..M，n_m=N−m+1，C_m=Σ_(0<=i<j<n_m)Π_(k=0..m−1)I_(i+k,j+k)/C(n_m,2)，c_tail,m=Σ_(m−1<=i<j<N)I_ij/C(n_m,2)。V_m=4[K^m+2Σ_(j=1..m−1)K^(m−j)c^(2j)+(m−1)²c^(2m)−m²Kc^(2m−2)]。z_m=√n_m·(C_m−c_tail,m^m)/√V_m，p_m=2[1−Φ(|z_m|)]。方差使用全窗c，而效应使用删去最早m−1点后的c_tail,m，不能混用。要求各V_m>0且中间量有限；所有m坐标及p值合为一个族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-30b5d261bae5c5486cd985e1",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（finite real one-dimensional numeric array-like, N>=3, ordered equally spaced observations）：可以是收益或已冻结模型的残差；若输入残差，模型估计窗口/可得时点另行登记，函数不拟合或过滤模型。；valid_variances（epsilon>0 and V_m>0 for all m=2..max_dim; all arithmetic finite）：正尺度和正统计方差的研究有效域，不是源码统一实现的入口保护。。参数：max_dim：最大模板维度；返回2..M所有坐标，一个族；范围integer2<=M<N, every V_m>0 for reviewed finite output；源码默认2；epsilon：绝对距离门槛；None按全窗样本标准差定；范围None or finite positive scalar；源码默认None；distance：仅epsilon=None时参与门槛数值；范围finite positive scalar, checked even with explicit epsilon；源码默认1.5"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-30b5d261bae5c5486cd985e1",
+        "harvest-source-95eec514513ea721429660bb"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "statsmodels/statsmodels",
+  "lab": null,
+  "missing_information": [
+    "残差模型/市场输入和等时距日历、数据发布/修订时点未冻结",
+    "IID渐近近似在实际样本的检验大小与功效未验证",
+    "NumPy/SciPy运行环境、浮点/内存规模和原论文逐式等价未执行核验",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "延迟模板匹配偏离独立同分布的 BDS 诊断",
+  "native_source_id": "bds",
+  "one_line": "比较连续多点模板同时接近的频率与独立同分布下单点接近概率的幂，并按该差的理论方差标准化，描述整个观测窗口的联合依赖。",
+  "record_id": "bds",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "statsmodels维护者实现；源码归因Broock、Scheinkman、Dechert、LeBaron (1996)，Kanzler (1999)与LeBaron (1997)。只审该固定实现，不宣称原论文全部版本等价。",
+      "id": "harvest-source-c42f2a259c3bd67e2e7d65e6",
+      "license": "BSD-3-Clause",
+      "locator": "copyright attribution and complete BSD3 redistribution terms:L1-L34",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "1ca78e1dec9dcebc55f3b96a862317f23e76422c5fc943568d955aad1f6b5fad",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；源码归因Broock、Scheinkman、Dechert、LeBaron (1996)，Kanzler (1999)与LeBaron (1997)。只审该固定实现，不宣称原论文全部版本等价。",
+      "id": "harvest-source-be0109a36a3ea6ee8a8a3ee3",
+      "license": "BSD-3-Clause",
+      "locator": "official statistical library scope and documentation:L16-L30",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "d430fa04083d240c9f0e75aa90bc73c13cb1a874f4c7b4ce29bddbb6366c4a42",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；源码归因Broock、Scheinkman、Dechert、LeBaron (1996)，Kanzler (1999)与LeBaron (1997)。只审该固定实现，不宣称原论文全部版本等价。",
+      "id": "harvest-source-30b5d261bae5c5486cd985e1",
+      "license": "BSD-3-Clause",
+      "locator": "original paper attribution and imports:L1-L23; threshold input rules and unbiased sample std:L26-L67; complete correlation-sum recursion and strict-upper aggregation:L70-L129; complete full-window variance formula:L132-L168; public defaults, hypothesis, tail truncation and all returned statistics:L171-L251",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "5af0914e7847241883ef2a689a87310643f40918e7de86345fa297692c4f559f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tsa/_bds.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；源码归因Broock、Scheinkman、Dechert、LeBaron (1996)，Kanzler (1999)与LeBaron (1997)。只审该固定实现，不宣称原论文全部版本等价。",
+      "id": "harvest-source-95eec514513ea721429660bb",
+      "license": "BSD-3-Clause",
+      "locator": "right singleton squeeze helper:L13-L39; array_like dtype and shape defaults:L42-L55; complete conversion and dimensional validation path:L145-L181",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "862d8b1cf1411aaae0b397e2421109fa5e33c32efe7dcacdb88ae2eeca55fa5b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tools/validation/validation.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2256",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2256,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b8ef918ebd9da3acacf5656b972f7efcb21001dc26b47418ca7b219e5bfdac67",
+    "rule_sha256": "95bfaf94a807851e855e4a5db0db6d24e28826b4642e0d9aee23418dbba95a36"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2256",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2256"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/fundamental-data-stock-selection"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：粗选价>5且日成交额>100万取流动性前200，细选PE>0按PE升序取10只等权持有（EasyQuant基本面选股）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股（流动性前200→PE升序Top10等权；EasyQuant基本面选股）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-11"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：粗选价>5且日成交额>100万取流动性前200，细选PE>0按PE升序取10只等权持有（EasyQuant基本面选股）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Fundamental Data Stock Selection》已印 FundamentalSelectionAlgorithm。universe_settings.resolution=DAILY；add_universe(coarse, fine)。coarse：has_fundamental_data 且 price>5 且 dollar_volume>1_000_000，按 dollar_volume 降序取前200。fine：valuation_ratios.pe_ratio>0，按 pe_ratio 升序取前10写入 _target_symbols。on_data：不在目标列表的持仓 Liquidate；目标内可交易标的各 SetHoldings(1.0/count)。不是 Connors/RSI 均值回归核。提出日期取页面 Published on。 不是Connors/RSI均值回归：本条是EasyQuant粗选流动性前200、细选PE>0升序Top10等权基本面选股核。 计入美股/ETF。 提出日期按源文件原样保留2025-12-11。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

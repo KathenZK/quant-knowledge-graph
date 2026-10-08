@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说：纽约时窗内首个三棒不重叠缺口可能提供回补后延续入口；来源没有独立经济有效性证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "fvgDrawn初始na、日切时区、收盘撤单后再次exit的具体订单语义未运行；不把共享名称或时段参数本身算新增。"
+  ],
+  "name": "纽约时窗每日首个FVG边缘限价与2R括号",
+  "native_source_id": "438776",
+  "one_line": "纽约工作日10至16点只使用当日首个三棒缺口，边缘限价、两棒前极值止损及2R目标，16点后清仓撤单。",
+  "record_id": "438776",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E7%AE%B1%E4%BD%93%E7%AA%81%E7%A0%B4%E7%9A%84%E9%93%B6%E5%BC%B9%E7%AD%96%E7%95%A5Box-Breakout-Based-Silver-Bullet-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 Dvitash；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-438776-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "2d2859aeaed6543bca6b258e51e91502bcba957d137165156ad6a7805cd28a86",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E7%AE%B1%E4%BD%93%E7%AA%81%E7%A0%B4%E7%9A%84%E9%93%B6%E5%BC%B9%E7%AD%96%E7%95%A5Box-Breakout-Based-Silver-Bullet-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-438776-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-438776-published-code"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：strategy声明无佣金/滑点，未给点差、限价队列与资金费。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-438776-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "bull时entryPrice=L、stop=L[2]、target=L+2abs(L[2]−L)，limit=L请求long 2单位；bear时entryPrice=H、stop=H[2]、target=H−2abs(H[2]−H)，limit=H请求short 2单位。发单立即fvgDrawn=true，非成交后才消耗当日机会；没有额外空仓门。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-438776-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "calc_on_order_fills=true，入口要求barstate.isconfirmed；先日切重置、再先bull后bear检测并发限价、再16点清仓撤单、最后发括号。未运行，不宣称入口棒、同棒止盈止损和订单取消后重发的真实成交结果。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-438776-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每棒无条件用持久stop/target分别对long和short发专属from_entry的qty2括号。NY小时h>=16先close_all再cancel_all，之后仍执行两条exit调用；保留源码顺序，不声称在取消后没有新exit请求。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-438776-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "contractAmt默认2，entry与exit均显式2；无权益比例、风险距离定量或合约点值。每天限的是首次发单事件，并非一次成交。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-438776-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "止损取两棒前外侧极值，目标信号边缘2R；数量固定，实际账户风险随缺口距离变化。首次bar fvgDrawn=na须待日切重置；日切时区与纽约时窗不同，需按实际交易所日历核对；缺少当日16点后bar可能无法及时发清仓。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-438776-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "allowedTime=not na(time(timeframe.period,\"1000-1600:23456\",\"America/New_York\"))，h=hour(time(\"1\"),\"America/New_York\")；newDay=bool(change(time(\"D\")))，并未给该D日切指定纽约时区。fvgDrawn持久初值na，新日改false；allowedTime且barstate.isconfirmed且h<=16时，H[2]<L为bullFVG、L[2]>H为bearFVG，只在not fvgDrawn时处理首个。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-438776-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称或注释中的建议周期不等于冻结交易周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-438776-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

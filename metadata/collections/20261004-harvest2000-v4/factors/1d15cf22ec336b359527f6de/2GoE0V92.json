@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "衡量同一bar中一组币各自假突破近期高低界的普遍程度，并区分图表币单独发生与篮子共同发生。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-18111c9dcdc8481a51f42a95"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "请求lookahead_off并以bar起始时间匹配，图表barstate.isconfirmed后才显示/发事件；这不能证明所有外部币种bar的供应商最终发布同步完成。要使用最终值须另冻结跨币收盘/延迟与修订策略。篮子为当前固定字符串，非历史PIT宇宙。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-18111c9dcdc8481a51f42a95"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入字符串去空格转大写按逗号切分，只用前20项，不自动去重；默认20币。交易所默认图表前缀，请求EXCHANGE:COINUSDT.P。 每币request.security取当前时间及前一bar时间与编码，lookahead_off且ignore_invalid_symbol=true；选与图表time恰相等的当前或前一返回，均不等或na记不可用。历史bar_index<N同样不可用。 高/低扫荡基于各自前N根的高低界，严格突破且收盘严格回到界内，双边均触发则在两个分子各算1，不对两个百分比强制和为100。 去掉名称等于图表basecurrency的篮子行，另算其他币高/低占比。整体数据门满足且其他币数>0才给其他占比。确认bar总占比>=40%记整体事件；图表本身对应扫荡且其他占比<=10%、且非同侧整体事件，记单独扫荡。 仅确认bar输出柱状值及事件；低侧绘图为−B_L是显示方向，不是另一新因子。高/低、全体/其他、阈值事件合并一个定义。 边界：无效合约、缺时间匹配或不足N根从分母排除，因此分母随时间变；达到最少可用数也不等于全篮子。 重复币名不会去重，可能重复加权；图表币按basecurrency文本全部剔除。研究须明确去重输入约束，不能说原实现自动做了。 编码没有另行检查OHLC各字段是否NaN，bar_index足够但比较无效时可能编码0而列入分母；缺数据并不全被-1捕获。 事件只是OHLC形态，不证明真实订单簿流动性、止损成交或机构行为。 默认币名单/交易所只是原作者例子，不证明合约历史存在或均可交易。 输出：一个完整构造；多方向/价格箱/状态/参数/输出坐标均不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-18111c9dcdc8481a51f42a95"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "衡量同一bar中一组币各自假突破近期高低界的普遍程度，并区分图表币单独发生与篮子共同发生。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-18111c9dcdc8481a51f42a95"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "对篮子每个币种j，在对齐图表bar时间的本币OHLC上求PH_j=highest(H_j,N)[1]，PL_j=lowest(L_j,N)[1]。高扫荡I_H=1[H_j>PH_j且C_j<PH_j]，低扫荡I_L=1[L_j<PL_j且C_j>PL_j]，可同时为1。可用币数n_d达到min(n,max(5,ceil(n/2)))时输出B_H=100ΣI_H/n_d，B_L=100ΣI_L/n_d；否则na。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-18111c9dcdc8481a51f42a95"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "basket OHLC/time/bar_index（per-symbol aligned Pine time series at chart timeframe）：每币OHLC及bar起始时间；精确时间匹配；chart high/low/close/time/basecurrency/prefix（chart market series and symbol metadata）：自身扫荡、其他币集合与默认交易所定义。参数：basketIn：静态手工币种篮子，不保证历史PIT成分；范围comma-separated names, first20；源码默认BTC,ETH,SOL,XRP,BNB,DOGE,ADA,TRX,AVAX,LINK,DOT,LTC,BCH,SUI,NEAR,APT,ARB,OP,UNI,ATOM；exIn：市场数据前缀；范围Chart/BITGET/BINANCE/BYBIT/OKX；源码默认Chart；poolLen：前期高低界窗口；范围5..200；源码默认20；thrPc：整体扫荡阈值；范围10..100；源码默认40.0；alonePc：其余币占比上限；范围0..50；源码默认10.0"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-18111c9dcdc8481a51f42a95"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "tradingview/public-script",
+  "lab": null,
+  "missing_information": [
+    "未运行Pine源码或金融回测",
+    "Pine内建/外部依赖的具体运行构建未冻结",
+    "数据供应商/PIT修订/跨市场时钟/实际标的采样周期未固定",
+    "没有收益方向/经济有效性证据"
+  ],
+  "name": "同步币种篮子的高低区间扫荡广度",
+  "native_source_id": "2GoE0V92",
+  "one_line": "衡量同一bar中一组币各自假突破近期高低界的普遍程度，并区分图表币单独发生与篮子共同发生。",
+  "record_id": "2GoE0V92",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3Bbd49ab30ba7346be8f1b09c0666a4b54/2"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "ChartZenFX",
+      "id": "harvest-source-18111c9dcdc8481a51f42a95",
+      "license": "MPL-2.0",
+      "locator": "author/license and basket parameters:L1-L19; identity alignment, sweep code and shares:L37-L94; closed-bar output and wave markers:L98-L109",
+      "revision": "PUB;bd49ab30ba7346be8f1b09c0666a4b54@2.0",
+      "sha256": "9510d7a81b9ada144d2d1dc8cf4767dba1cec6cf55c7064bc1559ce20da6950c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3Bbd49ab30ba7346be8f1b09c0666a4b54/2",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ChartZenFX",
+      "id": "harvest-source-bb3f3b6b0bc3b7d71f5b6b86",
+      "license": "NOT_ESTABLISHED",
+      "locator": "Pinned author publication or identity listing",
+      "revision": "content-sha256:75efb1c98250dce5e4deb11e88da72604fd6376b234546f8e39e0d95ea87078c",
+      "sha256": "75efb1c98250dce5e4deb11e88da72604fd6376b234546f8e39e0d95ea87078c",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://www.tradingview.com/script/2GoE0V92-Liquidity-Sweep-Breadth-Zen/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "ChartZenFX",
+      "id": "harvest-source-7190682a437edc53e9b7d652",
+      "license": "NOT_ESTABLISHED",
+      "locator": "Pinned author publication or identity listing",
+      "revision": "content-sha256:63226672eeda2c36e3d4126f75b1a74ed96fcd7108cb3f49ffedf4b3549cbe1f",
+      "sha256": "63226672eeda2c36e3d4126f75b1a74ed96fcd7108cb3f49ffedf4b3549cbe1f",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-7/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2464",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2464,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b89683cbf55ff4b3f16886651bb802f0de3153fd247faddf6ebc40b8cecfa762",
+    "rule_sha256": "7a333526fa7b8616928fb524f4ff30b626bd6b45f23d650bd198cefc034123ac"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2464",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2464"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15348/intraday-etf-momentum/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect 研究）；规则按 Gao et al. 2017"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY/IWM/IYR，开盘后前30分钟收益符号决定收盘前最后30分钟多空，收盘市价平仓（QC Intraday ETF Momentum）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY/IWM/IYR日内动量；QC Intraday ETF Momentum）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY/IWM/IYR，开盘后前30分钟收益符号决定收盘前最后30分钟多空，收盘市价平仓（QC Intraday ETF Momentum）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect 研究《Intraday ETF Momentum》已印实现（Gao, Han, Li, Zhou 2017 复现）。分钟线；手动宇宙 SPY、IWM、IYR；`return_bar_count=30`。第30根 bar 用相对昨收算 `morning_return`；距下一收盘剩 `return_bar_count+1` 分钟时发 `Insight.price`，方向为 morning_return 的符号。执行模型入场市价单同时挂 `market_on_close` 反向平仓。不是 Baltussen 日终反转截面，也不是开盘区间突破 ORB。提出日期未知。 不是Baltussen日终反转亦非ORB：本条为SPY/IWM/IYR开盘后前30分钟收益符号决定收盘前最后30分钟多空。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

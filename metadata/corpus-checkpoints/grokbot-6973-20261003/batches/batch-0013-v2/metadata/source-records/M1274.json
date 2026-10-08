@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1274",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1274,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "37dc19e9d5823e7b5784a77b4799958d52c2f10a3a2ebf36b6653b442407802c",
+    "rule_sha256": "4300f8e7d3bbc1cfbb18710b2e584ac722677065914826b9de63cfe02a69b828"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1274",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1274"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/roll/2026-09-06/doc-iniqwnkx0140930.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "开源证券金工（魏建榕、高鹏；新浪转载《高频资金流分布因子的构建方法》；报告2026-09-04）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "开源金工SIGN资金流日间分布路径（日内mean/std/skew/kurt→日间再分布；优选mean-mean与skew-mean）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（分钟大单主动SIGN；月频叙述）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-09-04"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "开源金工SIGN资金流日间分布路径（日内mean/std/skew/kurt→日间再分布；优选mean-mean与skew-mean）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。降频路径：逐笔→分钟后，先对每日分钟SIGN序列算日内分布得日频mean/std/skew/kurt特征，再对日频特征做日间分布（均值、标准差、偏度、峰度），得16个资金流分布因子。页述该路径下mean-mean与skew-mean表现优异，信息比率分别为3.33与3.44。相对已收「分钟直接月度」kurt/第1小时std/情景mean·skew：本条为分钟→日→月两段分布路径。 不是M1232 SIGN峰度20日kurt、也不是M1233第1小时std、也不是M1234符号成交额情景mean·skew（均为分钟序列直接月度构造）：本条是分钟→日频分布→日间再分布的两段路径，优选mean-mean与skew-mean。 计入其他。 提出日期按源文件原样保留2026-09-04。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

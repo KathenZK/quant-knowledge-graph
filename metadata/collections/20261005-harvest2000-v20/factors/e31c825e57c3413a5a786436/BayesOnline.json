@@ -1,0 +1,247 @@
+{
+  "economic_basis": {
+    "hypothesis": "保留从上次变化至今的所有可能长度，用各长度的 Student t 预测密度和重启概率逐点更新整条后验分布。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-a49f72767bc95972949a059d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每一步只有在当前x及此前全部所需观测已发布后可计算q_t；不使用未来样本或包装的延迟结果回填。金融价格/收益口径、修订策略和可得时间MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-a49f72767bc95972949a059d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "明确使用BayesOnline(engine=\"python\")，其他参数取固定源码默认const、student_t、time_scale250、alpha.1、beta.01、kappa1、mu0；原生engine默认numba。只审reset后按顺序update标量x并读probabilities[-1]，不把安装环境决定的JIT路径当已审运行。 初始后验q0=[1]；每个超参数数组只有一个先验位置。处理第t个数据前，r=0..t-1共有t个假设。先用旧的alpha/beta/kappa/mu得到各自Student t密度，输入只含此点以前的信息。 把旧q乘预测密度后分成h=1/250重启质量与1-h继续增长质量，r0收全部重启质量，各旧r唯一流向新r+1，然后以新向量sum归一。源直接在概率域乘法，没有log-sum-exp、剪枝、固定最大长度或零归一兜底。 归一之后才增长超参数：新r0重设先验；每个r+1更新mu、kappa、alpha、beta。beta的平方差使用旧mu和旧kappa，不是先改mu再平方。q长度每次增加1，已存历史后验全部保留。 在精确算术且归一和正的情况下，恒定h导致每次q_t(0)=h，与新数据无关；有效数据结构在其余run-length质量分布，不能把r0>阈值冒称自适应报警。所有r坐标和后验历史只计一族。 这里的r0为空新段，先验参数不吸收刚处理的x；新x经旧预测后进入各增长分支。不得改成另一种“新x先按新段先验评分”的变点约定而仍称相同源码。 find_changepoints/get_probabilities是另有延迟切片与局部极大值的包装；本条不使用它们，不回填未到达时点。update本身返回None，后验由公开属性读出，reset清空以前数据。 SciPy固定参考源码核对t.pdf的df/loc/scale顺序、标准化和密度公式；它是补充数学语义参考，不是sdt源要求的历史安装锁。项目只声明scipy>.18、numpy>=2.1；未安装、导入或执行任何上游模块。 边界：本合同要求顺序有限float64标量、正有限中间尺度及正有限归一和；源没有统一输入/超参数域校验，极值下溢和NaN不会自动被修复。 scale是Student t尺度而非标准差；初始df=.2，没有有限预测均值和方差，不能把mu/scale直接标为预测均值/波动率。 固定hazard的r0概率恒为.004；未定义交易阈值、确认延迟或报警解释。 原生Numba默认与本条显式Python分支、其他hazard/likelihood以及离线分段不得默认为运行等价；参数/实现变体不拆族。 每步支持长度随t增长，probabilities保存全部历史，存储总量呈二次数量级；没有固定窗口或已测性能保证。 分段独立/模型和先验只是该算法假设；实际金融重尾、自相关、发布修订和收益有效性未核验。 输出：第t步长度t+1的完整后验q_t，通过probabilities[-1]获取；所有长度/时点合为一族"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-a49f72767bc95972949a059d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "保留从上次变化至今的所有可能长度，用各长度的 Student t 预测密度和重启概率逐点更新整条后验分布。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-a49f72767bc95972949a059d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始化q0(0)=1和(alpha,beta,kappa,mu)=(.1,.01,1,0)，h=1/250。对第t个有限标量x_t及旧r=0..t-1：nu_r=2alpha_r，s_r=sqrt[beta_r(kappa_r+1)/(alpha_r kappa_r)]，z_r=(x_t-mu_r)/s_r，ell_r=Gamma((nu_r+1)/2)/[Gamma(nu_r/2)sqrt(pi nu_r)s_r]*(1+z_r²/nu_r)^(-(nu_r+1)/2)。令a_r=q_(t-1)(r)ell_r，u_0=h sum_r a_r，u_(r+1)=(1-h)a_r，q_t=u/sum(u)。然后新r0置先验；新r+1的mu=(kappa*mu+x_t)/(kappa+1)，kappa=kappa_old+1，alpha=alpha_old+.5，beta=beta_old+kappa_old(x_t-mu_old)²/[2(kappa_old+1)]。输出q_t全向量；在精确算术中q_t(0)=h，不能把它单独当数据驱动变化报警。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-a49f72767bc95972949a059d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x_1,...,x_T（ordered finite scalar float64 observations, T>=1; finite positive predictive scales and total normalizers; finite core arithmetic）：逐点到达的同一序列；不自动排序/补值，金融字段、重采样、供应商和PIT合同MISSING。。参数：hazard：恒定重启概率；范围reviewed const；源码默认const；obs_likelihood：每个run长度的预测密度；范围reviewed student_t；源码默认student_t；time_scale：平均间隔参数，h=1/time_scale；范围reviewed fixed250, native general values not validated；源码默认250.0；alpha：密度自由度的一半，按观测加.5；范围reviewed fixed.1；源码默认0.1；beta：预测尺度参数，按旧残差更新；范围reviewed fixed.01；源码默认0.01；kappa：位置更新的先验权重；范围reviewed fixed1；源码默认1.0；mu：位置参数，不保证预测均值存在；范围reviewed fixed0；源码默认0.0；engine：选分支，不按实现新增；范围selected explicit python; source default numba；源码默认numba"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-a49f72767bc95972949a059d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "schuetzgroup/sdt-python",
+  "lab": null,
+  "missing_information": [
+    "金融输入、先验校准、发布时点及PIT合同MISSING",
+    "报警/交易决策阈值未提供，后验不是策略",
+    "实际安装环境、数值下溢和性能未运行验证",
+    "原论文、行情和商业研究授权另审"
+  ],
+  "name": "逐点更新的贝叶斯区段长度后验",
+  "native_source_id": "BayesOnline",
+  "one_line": "保留从上次变化至今的所有可能长度，用各长度的 Student t 预测密度和重启概率逐点更新整条后验分布。",
+  "record_id": "BayesOnline",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/schuetzgroup/sdt-python/blob/c9d1c09641e7d781a39a36e6fc89e429bf191ca9/sdt/changepoint/bayes_online.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-a49f72767bc95972949a059d",
+      "license": "BSD-3-Clause AND MIT",
+      "locator": "authors mixed source notices and imports:L1-L20; constant hazard:L23-L46; StudentT prior reset predictive density and complete parameter growth:L53-L118; prediction hazard growth reset normalization and after-observation parameter update:L157-L205; public class defaults explicit engine dispatch and reset/update:L221-L302; separate lookback and local-maximum wrappers excluded from selected output:L304-L380",
+      "revision": "c9d1c09641e7d781a39a36e6fc89e429bf191ca9",
+      "sha256": "b7ca6635fdc65ac9dd1e0c0e91531760c4f33beb6fde3158f831d3eeef3242a8",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/schuetzgroup/sdt-python/blob/c9d1c09641e7d781a39a36e6fc89e429bf191ca9/sdt/changepoint/bayes_online.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-8fd9192a58307be794158651",
+      "license": "BSD-3-Clause",
+      "locator": "public online family documentation:L148-L172; method attribution and public export:L185-L206",
+      "revision": "c9d1c09641e7d781a39a36e6fc89e429bf191ca9",
+      "sha256": "58fd8fa28b1a2af3ddf186ff9ae79496c4472b178b19e1f98bfd0345c3d384e9",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/schuetzgroup/sdt-python/blob/c9d1c09641e7d781a39a36e6fc89e429bf191ca9/sdt/changepoint/__init__.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-3ab49495002a0412ec24709a",
+      "license": "BSD-3-Clause",
+      "locator": "import availability and wrapper stubs; selected engine avoids JIT numeric route:L1-L108",
+      "revision": "c9d1c09641e7d781a39a36e6fc89e429bf191ca9",
+      "sha256": "24055ff5130bc5d0cf532f59b77b8bb58136a8390b978861558fd2776c295d9c",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/schuetzgroup/sdt-python/blob/c9d1c09641e7d781a39a36e6fc89e429bf191ca9/sdt/helper/numba.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-e6feaec27d582667b80e80f0",
+      "license": "BSD-3-Clause",
+      "locator": "project name versions dependencies authors licenses and official repository:L1-L57",
+      "revision": "c9d1c09641e7d781a39a36e6fc89e429bf191ca9",
+      "sha256": "f904ea10af432f160b0c46d99d8cef8c6a0a218bed48474c8ec8fb60b8eae565",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/schuetzgroup/sdt-python/blob/c9d1c09641e7d781a39a36e6fc89e429bf191ca9/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-48aa4869113b8f21c419154e",
+      "license": "CC-BY-4.0",
+      "locator": "CCBY source notice, microscopy origin and project citation:L1-L42",
+      "revision": "c9d1c09641e7d781a39a36e6fc89e429bf191ca9",
+      "sha256": "ac03278b1cb61ddc5200242470585d45286d457901e9f2ee8f0a9b07dff2f60c",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/schuetzgroup/sdt-python/blob/c9d1c09641e7d781a39a36e6fc89e429bf191ca9/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-b3e1ef23e347a0798db0cee7",
+      "license": "BSD-3-Clause",
+      "locator": "BSD license text template; actual owners in per-file notices:L1-L26",
+      "revision": "c9d1c09641e7d781a39a36e6fc89e429bf191ca9",
+      "sha256": "e11af671c491efac2f94c1d752bea92f4308ca2450c7d11e582e4b48c40e4de1",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/schuetzgroup/sdt-python/blob/c9d1c09641e7d781a39a36e6fc89e429bf191ca9/LICENSES/BSD-3-Clause.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-5dae07df7e22b2fbe157daf1",
+      "license": "MIT",
+      "locator": "MIT license template; original contribution attribution in source header:L1-L19",
+      "revision": "c9d1c09641e7d781a39a36e6fc89e429bf191ca9",
+      "sha256": "8f25018489d6fe0dec34a352314c38dc146247b7de65735790f4398a92afa84b",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/schuetzgroup/sdt-python/blob/c9d1c09641e7d781a39a36e6fc89e429bf191ca9/LICENSES/MIT.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-15cc77796c440ed2a9f723d3",
+      "license": "CC-BY-4.0",
+      "locator": "README documentation license retained separately:L1-L10",
+      "revision": "c9d1c09641e7d781a39a36e6fc89e429bf191ca9",
+      "sha256": "b89aeb7c2a164a0576786dd2a8b57f2fb628b23981f0a06bd77e2f99a9befa0f",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/schuetzgroup/sdt-python/blob/c9d1c09641e7d781a39a36e6fc89e429bf191ca9/LICENSES/CC-BY-4.0.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-5b80023f01457dd4f6ba1cc9",
+      "license": "BSD-3-Clause",
+      "locator": "Student t standard density and finite-df log-density implementation:L8077-L8130; native t singleton:L8188-L8189; public names constructed:L12668-L12673",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "639d6293c2b0c97636209414a732bd494d4c5c3e420f00c1f906dd0afb17947a",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_continuous_distns.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-96bee2ad9310b3fbd9843335",
+      "license": "BSD-3-Clause",
+      "locator": "generic shape location scale argument template:L667-L675; shape positivity and support mask:L1004-L1041; pdf standardization and division by scale:L2052-L2089",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "25e06eb30585b32c1b9dc26528275ec2927e9ee750a1c8cb274ec214cdae5eea",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_distn_infrastructure.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-a14950af70817e5ac0dd0885",
+      "license": "BSD-3-Clause",
+      "locator": "distribution name exports:L1-L24",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "f4ab767f24e8868ac971fe9aeccf43607f0dbb88c453aea728fd3571184a9ae1",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/distributions.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-9550ecea3308fed9e596b7eb",
+      "license": "BSD-3-Clause",
+      "locator": "public scipy.stats distribution import:L603-L610",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "dc27625396f73cbfc098b0f09ea4e70719b72e203f88c02560ab6eb267d44960",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/__init__.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "sdt-python maintainers, Lukas Schrangl; original adapted implementation notice Johannes Kulick2014 and hildensia/bayesian_changepoint_detection. The source attributes the method to Adams and MacKay2007. SciPy contributors supply supplementary distribution reference; their revision is not a historical sdt environment lock.",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "SciPy notice and BSD3 terms:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

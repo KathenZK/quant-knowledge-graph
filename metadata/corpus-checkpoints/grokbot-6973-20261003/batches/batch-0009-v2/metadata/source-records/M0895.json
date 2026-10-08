@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0895",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 895,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9be47412bfa916a4272e9c509be60d7dac09cbbe58f5afe63c0063d8745972ab",
+    "rule_sha256": "509f0315cc88e9c214cec9d425329b859ee1fd64d7d906f8f343455e6f7124ba"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0895",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0895"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/536/Dual-Engine-Leveraged-Rotation-and-Momentum"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "sanchari"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "双引擎杠杆轮动与动量：75%四模型杠杆ETF轮换，QQQ十日低于-10%该袖去杠杆至50%；25%按21–252日动量选前10，EMA-189与ADX-35；四模型、广度与Fibonacci未印出"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股及ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-05-30"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dual-Engine Leveraged Rotation and Momentum"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：四模型定义、广度规则与 Fibonacci 波动率带页面未印出，不能把未写出的模型、广度截止或波动率带补成规则。已印出的 75/25、QQQ 过去 10 日收益低于 -10% 时将该部分去杠杆至 50%、21–252 日动量前 10、EMA-189 与 ADX-35 保留。本条只写这组分配与过滤，不是已收的四袖 T11、T10、S3、S2 各四分之一、QQQ 过去 10 日回报低于 -10% 时组合降至半仓、回报恢复至 -4% 以上才恢复：那边没有 75/25，没有只把该袖去杠杆至 50%，也没有 21–252 日前 10 与 EMA-189/ADX-35。崩溃保护的 -10% 数字接近，分配与恢复条件不同，不并入，也不改写那一行。也不是未印出机会集的杠杆 ETF 每日动量轮换。每日聚合信号并次日开盘执行；75% 资金用于四模型杠杆 ETF 轮换，依据短期 RSI、均线趋势和波动率期限结构；其余 25% 按 21–252 日动量选前 10 大盘股，经 EMA-189 趋势及 ADX-35 过滤；广度风险信号触发时全防御；180 日硬重置。市场已点名 TQQQ、SOXL、UVXY、SQQQ 等，其余名单按未印出处理，本条不补。计入美股/ETF。提出日期按源文件原样保留2026-05-30。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。四模型、广度与Fibonacci未印出"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

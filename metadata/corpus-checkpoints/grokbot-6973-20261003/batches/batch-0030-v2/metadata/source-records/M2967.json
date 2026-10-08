@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2967",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2957,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "478f658761cd25295c14387157fcb1f37efe20f07928a34ab51010c1badf1428",
+    "rule_sha256": "a43b928eb6f91250089b034b4f9c643265d2f6592cb65ddb0420163ca2e5e9b8"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2967",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2967"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/IndexOptionBullCallSpreadAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：先市价买100股SPY；空仓时买SPXW到期40–60日周权牛市看涨价差1组（Lean IndexOptionBullCallSpread）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（先买100股SPY空仓买SPXW 40–60日周权牛市看涨价差1组；Lean IndexOptionBullCallSpread）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：先市价买100股SPY；空仓时买SPXW到期40–60日周权牛市看涨价差1组（Lean IndexOptionBullCallSpread）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `IndexOptionBullCallSpreadAlgorithm.py`。`add_equity(\"SPY\")`；`add_index_option(SPX,\"SPXW\")`，过滤 `weeklys_only().strikes(-5,5).expiration(40,60)`。若未持有 SPY → `market_order(SPY,100)`。若价差票据仍有持仓则返回；否则取链上最近到期 calls 按行权价排序，至少 2 张，`OptionStrategies.bull_call_spread(spxw, calls[0].strike, calls[-1].strike, expiry)` 后 `buy(...,1)`。不是 W342 ES 牛市看涨价差核，也不是 W412 铁鹰核。提出日期未知。 不是W342 ES牛市看涨价差核，也不是W412铁鹰核：本条为先买100股SPY，空仓买SPXW到期40–60日周权牛市看涨价差1组。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

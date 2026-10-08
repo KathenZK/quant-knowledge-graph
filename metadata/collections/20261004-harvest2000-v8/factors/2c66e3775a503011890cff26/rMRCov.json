@@ -1,0 +1,200 @@
+{
+  "economic_basis": {
+    "hypothesis": "对局部收益作三角权预平均，再由预平均平方和扣除噪声偏差；本条只审rMRCov单资产默认crv路径，未验证市场有效性。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-383414ff685291fcd359b00c",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-383414ff685291fcd359b00c",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "冻结合同为单资产N×1正有限价格矩阵，N>=7，或同日单列xts。crv使用nrow确定N，无dim普通向量不在已审合同。 makeReturns先log再相邻差分，保留N行且首行强制0；这一个补0收益也进入预平均，不按理想论文公式擅删。 hatreturn将收益class置zoo，coredata交C++。C++局部N=ret.n_rows+1，输出ret.n_rows−k+2行；每行取连续k−1个收益乘三角权，故实际共N−k+2个B。 crv两处sum都na.rm=TRUE，但hatreturn遇NaN另有回填分支；本条有限价格合同不声称已冻结缺失处理。 公开rMRCov单资产调用crv(pData)，不传theta，所以用户向外层传入其它theta在该路径不生效，仍用.8。pairwise、makePsd、crossAssetNoiseCorrection也不参与单资产结果。 多资产同步/矩阵修正未审，不能将默认矩阵校正表达式中diag(矩阵)向量相减照注释称只扣对角；本条只登记单资产算法，后续同族补证不另计。 边界：θ=.8且N>=7保证k>=2；k=1时虽hatreturn直返收益，ψ2仍为0，并非良性估计。 V可负，首0及N−k+2个B的有限样本约定照源码保留。 缺失、非法价格、多资产及无dim向量不在已审合同，不能把na.rm当完整稳健处理。 外层theta忽略为当前冻结源码事实；未修复或声称执行验证。R/zoo/RcppArmadillo、PIT、交易时段与数据许可未冻结。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-383414ff685291fcd359b00c",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对局部收益作三角权预平均，再由预平均平方和扣除噪声偏差；本条只审rMRCov单资产默认crv路径，未验证市场有效性。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-383414ff685291fcd359b00c",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N×1价格P：r_1=0，r_i=lnP_i−lnP_(i−1)，i=2..N。公开单资产路径使用crv默认θ=.8，k=floor(θsqrt(N))；g(x)=min(x,1−x)，g_j=g(j/k)。ψ1=kΣ_(j=1..k)(g_j−g_(j−1))²，ψ2=(1/k)Σ_(j=1..k)g_j²。k>=2时B_i=Σ_(j=1..k−1)g_j r_(i+j)，i=0..N−k+1，共N−k+2项。返回V=ΣB_i²/(sqrt(N)θψ2)−[ψ1/(2Nθ²ψ2)]Σ_(i=1..N)r_i²。无截负、开方或年化。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-383414ff685291fcd359b00c",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "pData（N-by-1 positive finite numeric matrix or single-column single-day xts; N>=7）：按观测顺序排列的单资产原价列；函数取log并保留首个补0收益。不支持将无dim向量当已审输入。。参数：theta：带宽k=floor(.8sqrt(N))；范围public single-asset supplied theta ignored; internal crv .8 actually used；源码默认0.8；pairwise：多资产选项未审；范围not used in single-asset path；源码默认False；makePsd：负V不修复；范围not used in single-asset path；源码默认False；crossAssetNoiseCorrection：多资产选项未审；范围not used in single-asset path；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-383414ff685291fcd359b00c",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "jonathancornelissen/highfrequency",
+  "lab": null,
+  "missing_information": [
+    "仅审单资产有限价格主路径",
+    "原论文未逐式核；公式绑定当前源码而非理想化论文",
+    "zoo/RcppArmadillo运行、行情PIT与数据许可缺失",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "三角权预平均与噪声偏差扣除的方差估计",
+  "native_source_id": "rMRCov",
+  "one_line": "对局部收益作三角权预平均，再由预平均平方和扣除噪声偏差；本条只审rMRCov单资产默认crv路径，未验证市场有效性。",
+  "record_id": "rMRCov",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "实现：Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup等highfrequency维护者。原方法：Nikolaus Hautsch、Mark Podolskij (2013), Preaveraging-based estimation of quadratic variation in the presence of noise and jumps, JBES 31:165–183。",
+      "id": "harvest-source-5f01e4e89a90ac43d08c6870",
+      "license": "GPL-2.0-or-later",
+      "locator": "preaveraging meaning, weights and source attribution:L559-L620; single-asset dispatch ignores external theta:L642-L663",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "47103e0f8a9f72ae6cdac845655c22a976e2aece49f7bb672302b33338354a32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup等highfrequency维护者。原方法：Nikolaus Hautsch、Mark Podolskij (2013), Preaveraging-based estimation of quadratic variation in the presence of noise and jumps, JBES 31:165–183。",
+      "id": "harvest-source-383414ff685291fcd359b00c",
+      "license": "GPL-2.0-or-later",
+      "locator": "crv, hatreturn and triangular weight exact definitions:L1-L44",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "bf766d8ed6c153a570494965e429f7403c32385a51ed9a8ee05cb59e58bf3f34",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/internalPreaveringEstimators.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup等highfrequency维护者。原方法：Nikolaus Hautsch、Mark Podolskij (2013), Preaveraging-based estimation of quadratic variation in the presence of noise and jumps, JBES 31:165–183。",
+      "id": "harvest-source-3e5fa2fa2037090eea1dfd5e",
+      "license": "GPL-2.0-or-later",
+      "locator": "makeReturns retains first zero and N rows:L921-L936",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "96d0708297f7b3fe2c7e07379c0fc064834fd5a738734b42dfdc22ee38147b0f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/dataHandling.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup等highfrequency维护者。原方法：Nikolaus Hautsch、Mark Podolskij (2013), Preaveraging-based estimation of quadratic variation in the presence of noise and jumps, JBES 31:165–183。",
+      "id": "harvest-source-b5a2f57468a7eff5e05fd791",
+      "license": "GPL-2.0-or-later",
+      "locator": "single argument multi-day xts check:L151-L156",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "5f38e15d48ae103a5e9db0715647b0dbc053e7d08ce67aa8b4e620799989d4e2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/internalRealizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup等highfrequency维护者。原方法：Nikolaus Hautsch、Mark Podolskij (2013), Preaveraging-based estimation of quadratic variation in the presence of noise and jumps, JBES 31:165–183。",
+      "id": "harvest-source-199eefbd4c9a56cd77a78f1d",
+      "license": "GPL-2.0-or-later",
+      "locator": "RcppArmadillo:L1-L3; exact preaveraging windows and row count:L81-L106",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "e73731f67e6cf6c30b78a43da3efdadd95a1d38abac13bb670126e846f59c0b2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/src/internals.cpp",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup等highfrequency维护者。原方法：Nikolaus Hautsch、Mark Podolskij (2013), Preaveraging-based estimation of quadratic variation in the presence of noise and jumps, JBES 31:165–183。",
+      "id": "harvest-source-2f821f16db9cc7f4b73af0c0",
+      "license": "GPL-2.0-or-later",
+      "locator": "compiled helper bridge:L50-L52",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "3930bffdcaf6ab6ef070bb1c5682be16e4907cb185db4f89f00e919361e33f4e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/RcppExports.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup等highfrequency维护者。原方法：Nikolaus Hautsch、Mark Podolskij (2013), Preaveraging-based estimation of quadratic variation in the presence of noise and jumps, JBES 31:165–183。",
+      "id": "harvest-source-1028bcab3647a0fae74441ed",
+      "license": "GPL-2.0-or-later",
+      "locator": "package identity, maintainers, GPL >=2 and original package paper:L1-L24; unfrozen runtime dependencies:L26-L45",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d8d98b0df5ea59c9488f6af78a6246dbbbabb593d56ef92e84eb7516dadce0b3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

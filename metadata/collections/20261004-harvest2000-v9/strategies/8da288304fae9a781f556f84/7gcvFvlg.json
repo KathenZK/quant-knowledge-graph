@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "相似历史收益路径之后的方向可能给当前翻向提供条件信息；这仅是研究假说，不证明模式重复、样本外有效或分档退出改善收益。",
+    "missing": [
+      "未证明盈利、样本外有效、因果归因或经济独立性。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未执行/编译上游源码或下载行情，数值、实际成交与回测未验证。",
+    "具体市场、行情快照、会话/日历、融资和其他真实摩擦需另行冻结。",
+    "许可证范围只按源码通知保留，不延伸至论文、数据或商业内部研究。"
+  ],
+  "name": "ATR翻向与历史收益路径匹配方向确认",
+  "native_source_id": "7gcvFvlg",
+  "one_line": "ATR尾线翻向时从历史寻找最相似的30棒收益路径，用该历史路径之后50棒的方向确认，再分三档退出。",
+  "record_id": "7gcvFvlg",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行回测，不含经济绩效结论。",
+    "metadata": "只发布自撰规则与来源定位；发布用户及源码署名是来源声明，非身份真实性证明。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://mozilla.org/MPL/2.0/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "JayadevRana",
+      "id": "tradingview-7gcvFvlg-published-code",
+      "license": "MPL-2.0 source header notice; scope/authorship not independently verified",
+      "locator": "json.source decoded lines; see review.field_spans",
+      "revision": "PUB;fa59590d49934a019c0979b90c65084d@1.0",
+      "sha256": "4b53b83d8e0f0f13010d73542f3cf3fbc69731a2b380e0901b6bb2ff952c6b22",
+      "supports": [
+        "源码默认公式、控制流与下单请求"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3Bfa59590d49934a019c0979b90c65084d/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "JayadevRana",
+      "id": "tradingview-list-34e2b2b6d3019163cc44",
+      "license": "REVIEW_REQUIRED",
+      "locator": "公开列表init-data image_url=7gcvFvlg; script_id_part/version/user/chart_url",
+      "revision": "sha256:34e2b2b6d3019163cc4473978a53d9f1ccd973705eab8d71a9593e5ec6f1282c",
+      "sha256": "34e2b2b6d3019163cc4473978a53d9f1ccd973705eab8d71a9593e5ec6f1282c",
+      "supports": [
+        "公开发布ID、用户与版本身份"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-6/?script_access=open&script_type=strategies&sort=latest_popular",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "tradingview-7gcvFvlg-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "使用当前图表C、OHLC；没有证券、交易所、币种或合约白名单。源以log(C/C[1])建收益路径，对非正价未单独防护。"
+    },
+    "cost": {
+      "evidence": [
+        "tradingview-7gcvFvlg-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码百分比佣金0.01、滑点2 ticks；资金费、融资、点差、税费、容量和最小量缺失，没有真实成本验证。"
+    },
+    "entry": {
+      "evidence": [
+        "tradingview-7gcvFvlg-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认双向且Require Forecast Agreement=true；翻多且fcAgreeDir>=0开多，翻空且fcAgreeDir<=0开空。因此搜索暖机未到，或搜索没有得到击穿误差哨兵1e20的有效候选时，0均会同时放行两侧确认，不能说一直强制历史方向一致。入口先close相反ID再entry本方向，未另要求flat；翻向未获确认时也不会仅因dir变化去平掉旧仓。"
+    },
+    "execution_time": {
+      "evidence": [
+        "tradingview-7gcvFvlg-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "声明process_orders_on_close=true、calc_on_every_tick=false。交易确认在翻向棒用已存历史，入口先close反向再entry本向并发三个exit；最后一棒未来绘图在交易计算之外，不能当作提前成交证据。未执行引擎，收盘处理和分批订单次序/成交量只按声明保留。"
+    },
+    "exit": {
+      "evidence": [
+        "tradingview-7gcvFvlg-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "入场信号C=eP、当时R冻结：多三个exit目标eP+R、eP+2R、eP+3R，共同stop=eP−1.5R；空镜像。前两exit分别qty_percent=33，第三不指定数量，由剩余可预留量承接；不把第三解释成额外全仓。这些保护只在对应入口分支发一次，不随ATR/trail持续更新；trail主要产生翻向事件，未单独作为订单止损价。反向入口先平已有相反ID。"
+    },
+    "position": {
+      "evidence": [
+        "tradingview-7gcvFvlg-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始10000、percent_of_equity默认10、entry无qty覆盖；pyramiding=0，margin_long/short显式100。前两目标33%/33%，第三剩余；平台exit预留、成交后订单缩量与实际手数均未运行。"
+    },
+    "risk": {
+      "evidence": [
+        "tradingview-7gcvFvlg-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "暖机前以及搜索后bOff仍−1的无有效候选分支均令fcAgreeDir=0，使确认放行；不能把已暖机等同于必有有效预测，R里的ATR百分位若na则下单保护可能na，源码无额外门。历史匹配全部使用同一个当前sd缩放，未按每个历史窗口波动归一化。交易仅搜索300，但最后一棒绘图另搜索最多750，且按当前ATR/匹配ATR缩放投影，所以显示Forecast不必等于真实交易过滤。默认参数下偏移最大329；可调输入边界、na收益填0、分档订单和实际成交均未执行。"
+    },
+    "signal": {
+      "evidence": [
+        "tradingview-7gcvFvlg-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "ATR=A=ATR14；R=A×(1.2+percentrank(A,200)/100)。dir初1、trail初na；每棒先在dir=1时trail=max(nz(trail,C−4A),C−4A)，否则min(nz(trail,C+4A),C+4A)。旧dir=1且C<trail翻−1，旧dir=−1且C>trail翻1；翻多重置trail=C−4A、翻空重置C+4A，再保存dir。收益r=log(C/C[1])，sd=stdev(r,30)。仅翻向且bar_index>30+50+300时计算确认：j依次51..300，对k=0..29累计e(j)=Σ[(nz(r[k])−nz(r[j+k]))/(nz(sd,1e−10)+1e−10)]²；初始bErr=1e20、bOff=−1；仅e<bErr才更新，平局保留最早j。至少一次严格击穿1e20并得到bOff>0才读取该j的后续收益：s=Σ(i=1..50)nz(r[j−i])，s>0则fcAgreeDir=1，否则−1。所有偏移>=1，不取当前之后真实数据。每棒fcAgreeDir先置0；未满足搜索门，或虽已搜索但所有误差均未严格小于1e20/不可比较、bOff仍−1时，仍为0。"
+    },
+    "timeframe": {
+      "evidence": [
+        "tradingview-7gcvFvlg-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认匹配窗口30棒、输入scanDepth750、预测长度50棒。真实交易确认filtDepth=min(scanDepth,300)，不是750；所有ATR14、200棒分位和收益长度使用当前图表周期，无跨周期请求。"
+    },
+    "universe": {
+      "evidence": [
+        "tradingview-7gcvFvlg-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "单标的历史模式匹配。没有跨资产近邻、选股或横截面轮换；不把可视化的未来幽灵K线当作实际可读取未来价格。"
+    }
+  }
+}

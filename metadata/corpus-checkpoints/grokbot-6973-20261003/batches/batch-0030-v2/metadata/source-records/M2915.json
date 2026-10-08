@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2915",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2911,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3c84998bc01cb2deee8b4b44e5b79d6b6211e9f1b26afd2d6c98403d04ddb1af",
+    "rule_sha256": "5fd551570e65fa1405ba2ffc44f1e29da06aaa12c5da35860d4395643c8a8da8"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2915",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2915"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/IndexOptionIronCondorAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPXW；BB(10,2)外则数量−1、否则+1，近月OTM call/put 各远近两档组合铁鹰10组（Lean IndexOptionIronCondor）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPXW BB10×2外quantity−1否则+1近月OTM铁鹰10组；Lean IndexOptionIronCondor）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPXW；BB(10,2)外则数量−1、否则+1，近月OTM call/put 各远近两档组合铁鹰10组（Lean IndexOptionIronCondor）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `IndexOptionIronCondorAlgorithm.py`。标的 SPX 分钟 + SPXW 周权，过滤 `weeklys_only().strikes(-5,5).expiration(0,14)`；`bb(SPX,10,2,Daily)`。空仓时取最近到期：calls 按行权价降序、puts 升序；`quantity=1`，若价在布林上轨之上或下轨之下则 `quantity=-1`；腿为 calls[0]/puts[0] 各 quantity 与 calls[2]/puts[2] 各 −quantity，`combo_market_order(...,10)`。不是周一 SPY 铁鹰（W306）核。提出日期未知。 不是周一SPY铁鹰（W306）核：本条为SPXW近月OTM call/put各远近两档，BB(10,2)外quantity−1否则+1，combo 10组。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

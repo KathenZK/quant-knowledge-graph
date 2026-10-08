@@ -1,0 +1,207 @@
+{
+  "economic_basis": {
+    "hypothesis": "按原生时间间隔准则排列资产，逐步扩大共同观测集合，在每个集合上重估收益投影与残差风险，最后组成半正定协方差候选；不代表自动消除异步交易或微观结构噪声。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "研究输入为至少2个命名、单列xts正有限价格序列的list，单个共同分析日，各自严格升序且无重复时间戳；允许交易时点异步。默认排序按原生as.numeric(diff(index))平方和升序，保留R时间差单位口径，不擅自称已换算秒。其它duration/count排序不在本条已审子合同。 每轮d=1..D都对完整前缀1..d调用refreshTime(sort=FALSE)。单序列直接返回；多序列先按时间并集merge，未出现报价的位置为NA。C++ helper逐行收集每个资产自上次完成后最新非缺失值；一旦全部有限，就在当前并集时间输出一行并清空缓存，必须等待所有资产再次更新才输出下一行。首并集行若全部已有值会立即输出。 补充固定xts官方lag/diff源码核实默认na.pad=TRUE；本合同要求xts.compat.zoo.lag为FALSE或未设。对本轮刷新价格取diff(log(dat))[-1,]，去掉xts差分的首个填充行，形成相邻对数收益；在本轮公共网格上依次重算所有l<=d的投影。源码并非对每一对资产各自只刷新{1,..,m,l}最小集合；本文按实际完整前缀循环，不把注释的理想流程替代执行路径。 cholCovrMRCov helper计算上述V_d。三角权重通过原生C++逐窗口加权收益；psi2用mean(c(0,g,0)^2)，分母k+1而非k。它没有一般rMRCov中的额外噪声差分校正项，只用该修正系数乘预平均Gram。 一轮中h_lm全部依据当前r_l与先前已求f_m的二元V_d；分母是f_m的预平均平方量。f_l在该轮重算；结束仅保存该轮最后一行L[d,]和最后残差的G[d,d]。之前保存的L/G行不回写成最新网格估计。 最终用L G t(L)组合，输出list含CholCov、L、G，行列名沿排序后的资产名；不会自动按原始输入顺序还原。成分维度、矩阵坐标或两类辅助输出不拆计数。 本条冻结源生默认preaverage路径；其他IVest/COVest虽公开可选，所调用转换/噪声/投影分支不纳入本次已审计算，不把换基估计器计新族。 边界：零残差波动使投影分母0，L可能Inf/NaN；源码没有统一fallback、岭惩罚或删资产规则。不能凭输出叫CholCov就保证实际数值半正定。 在各V_d有限且G_dd非负的精确算术下LGLᵀ半正定；不保证严格正定或可逆。这个性质来自构造，不是市场风险/经济有效性验证。 k<2会产生空权重及异常索引；k>M可能产生负窗口维数。默认很短刷新样本也可能失败，所以研究域要求每个前缀有效，不以原入口未拒绝解释为合法。 各前缀刷新后样本量和覆盖时点可能不同；本条不人为补齐统一频率或修改可用样本来平衡，也不把更多数据宣称为已获金融预测收益。 完整日/窗口的排序准则、刷新网格与估计共同使用全窗观测，只能在窗口结束后计算；无法当作窗口内实时资产排序或因果信息。 若xts.compat.zoo.lag=TRUE，diff默认不填首NA，源码仍[-1,]会再去掉一个有效差分，不满足此合同；补充xts源码只证明所述参数语义，不证明原作者当时安装版本。原注释描述逐对最小集合的CholCov流程，实际循环是完整前缀网格；原论文全文未逐式核对，保留实现差异。xts/RcppArmadillo运行及时间单位、浮点输出仍未冻结执行。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "按原生时间间隔准则排列资产，逐步扩大共同观测集合，在每个集合上重估收益投影与残差风险，最后组成半正定协方差候选；不代表自动消除异步交易或微观结构噪声。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "明确审IVest=COVest=\"rMRCov\"、criterion=\"squared duration\"、theta=1、delta=.1，并要求xts.compat.zoo.lag为FALSE或未设。按a_j=Σ(as.numeric(diff(index(P_j))))²升序排列资产。第d步将前d个价格序列作refresh-time匹配，得M_d条价格观测和收益r^(d)_(t,j)=ln(P_(t+1,j)/P_(t,j))。令k_d=floor(theta M_d^(.5+delta))，g_h=min(h/k_d,1−h/k_d)，h=1..k_d−1，psi2=Σ_h g_h²/(k_d+1)。对任意M_d−1行输入X，barX_i=Σ_(h=1..k_d−1)g_h X_(i+h−1)，i=1..M_d−k_d+1；V_d(X)=[M_d/(M_d−k_d+2)]·[barXᵀbarX/(psi2 k_d)]。第d步f_1=r_1；对l=2..d，逐m<l令h_lm=V_d([r_l,f_m])_12/V_d([r_l,f_m])_22，再f_l=r_l−Σ_(m<l)h_lm f_m。保存L_dm=h_dm（m<d）、L_dd=1及G_dd=V_d(f_d)。不同d使用各自刷新网格，最终输出C=L G Lᵀ，G为对角；L/G/C全部为同族输出。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "pData（named list of D>=2 one-column xts price series; finite positive values, one common day, strictly increasing unique timestamps within each series）：各资产原始价格时点可异步；names唯一完整以绑定输出。不是已经对数化的价格，也不是收益矩阵；报价可用/修订时间和交易日口径仍缺。；valid_prefix_samples（for every prefix refresh grid: M>=4, 2<=floor(M^.6)<=M; all projection V(f_m)>0 and all arithmetic finite）：这些是研究有效域约束，源码没有统一提前检查；需每轮有足够刷新观测和非退化投影分母，不能只检查原各序列长度。；xts_options（R option xts.compat.zoo.lag is FALSE or absent; default diff.xts arithmetic=TRUE, lag=1, differences=1, na.pad=TRUE）：补充官方依赖源码支持此差分/首NA合同，不表示已经冻结或运行原研究的xts二进制。。参数：IVest：残差对角风险的原生专用helper，不等于直接调用同名通用函数；范围only source default rMRCov reviewed；源码默认rMRCov；COVest：投影系数所用二元预平均Gram；范围only source default rMRCov reviewed；源码默认rMRCov；criterion：原生时间差数值平方和升序排序；范围only squared duration reviewed；源码默认squared duration；theta：kn=floor(theta*M^(.5+delta))；范围source default from ... options; only1 reviewed；源码默认1；delta：预平均窗口规模指数的额外项；范围source default from ... options; only.1 reviewed；源码默认0.1"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-3e5fa2fa2037090eea1dfd5e",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "jonathancornelissen/highfrequency",
+  "lab": null,
+  "missing_information": [
+    "异步行情供应商、报价可用/修订时点、共同交易日、市场采样合同与PIT缺失",
+    "实际R/xts/RcppArmadillo版本、时间差单位与数值输出未执行冻结",
+    "其他基估计器路径和原论文逐式等价性未核验",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "按流动性前缀刷新与残差投影估计协方差",
+  "native_source_id": "rCholCov",
+  "one_line": "按原生时间间隔准则排列资产，逐步扩大共同观测集合，在每个集合上重估收益投影与残差风险，最后组成半正定协方差候选；不代表自动消除异步交易或微观结构噪声。",
+  "record_id": "rCholCov",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "实现：Emil Sjoerup / highfrequency维护者；固定源码引用Boudt、Laurent、Lunde、Quaedvlieg、Sauri (2017)，Positive semidefinite integrated covariance estimation, factorizations and asynchronicity, Journal of Econometrics196:347–367。仅绑定实际代码，不称原文完整复现。",
+      "id": "harvest-source-1028bcab3647a0fae74441ed",
+      "license": "GPL-2.0-or-later",
+      "locator": "package identity, maintainers, GPL >=2 and original package paper:L1-L24; unfrozen runtime dependencies:L26-L45",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d8d98b0df5ea59c9488f6af78a6246dbbbabb593d56ef92e84eb7516dadce0b3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "实现：Emil Sjoerup / highfrequency维护者；固定源码引用Boudt、Laurent、Lunde、Quaedvlieg、Sauri (2017)，Positive semidefinite integrated covariance estimation, factorizations and asynchronicity, Journal of Econometrics196:347–367。仅绑定实际代码，不称原文完整复现。",
+      "id": "harvest-source-5f01e4e89a90ac43d08c6870",
+      "license": "GPL-2.0-or-later",
+      "locator": "native algorithm explanation original attribution and defaults:L3150-L3218; class and sorting gates and option defaults:L3220-L3263; complete default estimator branch loops and final covariance:L3265-L3345; allowed estimator names gate:L3513-L3524",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "47103e0f8a9f72ae6cdac845655c22a976e2aece49f7bb672302b33338354a32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Emil Sjoerup / highfrequency维护者；固定源码引用Boudt、Laurent、Lunde、Quaedvlieg、Sauri (2017)，Positive semidefinite integrated covariance estimation, factorizations and asynchronicity, Journal of Econometrics196:347–367。仅绑定实际代码，不称原文完整复现。",
+      "id": "harvest-source-b5a2f57468a7eff5e05fd791",
+      "license": "GPL-2.0-or-later",
+      "locator": "complete dedicated CholCov preaverage helper:L648-L666",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "5f38e15d48ae103a5e9db0715647b0dbc053e7d08ce67aa8b4e620799989d4e2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/internalRealizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Emil Sjoerup / highfrequency维护者；固定源码引用Boudt、Laurent、Lunde、Quaedvlieg、Sauri (2017)，Positive semidefinite integrated covariance estimation, factorizations and asynchronicity, Journal of Econometrics196:347–367。仅绑定实际代码，不称原文完整复现。",
+      "id": "harvest-source-3e5fa2fa2037090eea1dfd5e",
+      "license": "GPL-2.0-or-later",
+      "locator": "refreshTime native gates single-series return and xts merge branch:L2583-L2648",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "96d0708297f7b3fe2c7e07379c0fc064834fd5a738734b42dfdc22ee38147b0f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/dataHandling.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Emil Sjoerup / highfrequency维护者；固定源码引用Boudt、Laurent、Lunde、Quaedvlieg、Sauri (2017)，Positive semidefinite integrated covariance estimation, factorizations and asynchronicity, Journal of Econometrics196:347–367。仅绑定实际代码，不称原文完整复现。",
+      "id": "harvest-source-199eefbd4c9a56cd77a78f1d",
+      "license": "GPL-2.0-or-later",
+      "locator": "native matrix runtime dependency:L1-L3; complete refreshing matcher reset and output timestamp logic:L23-L72; complete preaverage triangular window helper:L83-L106",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "e73731f67e6cf6c30b78a43da3efdadd95a1d38abac13bb670126e846f59c0b2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/src/internals.cpp",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Emil Sjoerup / highfrequency维护者；固定源码引用Boudt、Laurent、Lunde、Quaedvlieg、Sauri (2017)，Positive semidefinite integrated covariance estimation, factorizations and asynchronicity, Journal of Econometrics196:347–367。仅绑定实际代码，不称原文完整复现。",
+      "id": "harvest-source-2f821f16db9cc7f4b73af0c0",
+      "license": "GPL-2.0-or-later",
+      "locator": "generated calls for refresh and preaverage helpers:L45-L52",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "3930bffdcaf6ab6ef070bb1c5682be16e4907cb185db4f89f00e919361e33f4e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/RcppExports.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Emil Sjoerup / highfrequency维护者；固定源码引用Boudt、Laurent、Lunde、Quaedvlieg、Sauri (2017)，Positive semidefinite integrated covariance estimation, factorizations and asynchronicity, Journal of Econometrics196:347–367。仅绑定实际代码，不称原文完整复现。",
+      "id": "harvest-source-fd31be42963d12cd0914cbe8",
+      "license": "GPL-2.0-or-later",
+      "locator": "source GPL2-or-later copyright and terms:L1-L19; lag option and default padding:L23-L35; documented positive lag and padded alignment:L47-L77; complete default diff and zoo-compat option path:L100-L142",
+      "revision": "84c92f4998d1cfda502e728711c6aafcab68017d",
+      "sha256": "367257e64423cd2f169bbf9be22bca79e56aa591cb2c2d781241c2744dd1a175",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/joshuaulrich/xts/blob/84c92f4998d1cfda502e728711c6aafcab68017d/R/lag.xts.R",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "实现：Emil Sjoerup / highfrequency维护者；固定源码引用Boudt、Laurent、Lunde、Quaedvlieg、Sauri (2017)，Positive semidefinite integrated covariance estimation, factorizations and asynchronicity, Journal of Econometrics196:347–367。仅绑定实际代码，不称原文完整复现。",
+      "id": "harvest-source-7e0df2de49e1c3c420b6746f",
+      "license": "GPL-2.0-or-later",
+      "locator": "dependency identity license and unpinned runtime scope:L1-L19",
+      "revision": "84c92f4998d1cfda502e728711c6aafcab68017d",
+      "sha256": "9fe07f22f0c9e50d8ccf3742cbe8dff5e68ed21b2386166f2f427fcbafb0ce25",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/joshuaulrich/xts/blob/84c92f4998d1cfda502e728711c6aafcab68017d/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

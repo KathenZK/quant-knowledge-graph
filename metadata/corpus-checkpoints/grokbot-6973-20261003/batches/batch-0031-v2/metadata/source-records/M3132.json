@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3132",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3099,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f2475ee3642cecbf529c9bebb29a9af007ef0401df499483c9c98dd8ce625005",
+    "rule_sha256": "85a6200bca828dbfb95acb9afd43c6dcd5e6fd469b25061fd88ce50af186465a"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3132",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3132"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bigquant.com/square/ai/24b98fc9-6f64-1723-6277-b07aeab48c66"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区（square/ai《单股满仓策略》；页更新约2026-08-08）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区：单股满仓日频执行（外部选股表日名单；最多持仓1只；最低持有天数默认0；买开卖收；可用现金<组合市值50%则停买）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（日频；持仓最多1只；开盘买/收盘卖）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区：单股满仓日频执行（外部选股表日名单；最多持仓1只；最低持有天数默认0；买开卖收；可用现金<组合市值50%则停买）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。页印：每日从用户表(user_data_kaikie090501)读取当日候选股票作为买入名单，最多持仓1只。若持仓标的不在当日买入名单且已持仓超过可配置的最低持有天数（默认0天）则全部清仓；买入时将可用资金（以组合市值/现金为准）一次性下单买入单只标的，若可用现金小于组合市值50%则停止买入以避免分散小仓位；买入按开盘价，卖出按收盘价执行。相对已收持10替1或多股等权：本条为外部日名单⊕单股满仓⊕现金/市值50%停买核。 不是随机森林TRAIN240·Top30/20日或小市值4因子：本条为量价RF半自动赋权⊕Top10/6日⊕剔科创北交所金融核。 计入其他。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

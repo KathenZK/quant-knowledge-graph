@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6598",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6552,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "36aac5992ef38fa2bded8a138a1f50ccc5ff2012e5c554b1a179bba434161c67",
+    "rule_sha256": "3e7040199f03729cf6c4d4b4324b5230f388e73374254c89a89244f9defca6e7"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6598",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6598"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/NetDebtFinance.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Bradshaw / Richardson / Sloan / OpenSourceAP Chen-Zimmermann"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-370/W3809"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Bradshaw·净债务融资十分位多空：年6月末；NetDebtFinance=(dltis−dltr+dlcch)/均资产；等权多最低空最高持12月（Bradshaw·NetDebtFinance·DecileL/S）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2006-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Net Debt Financing (Bradshaw-Richardson-Sloan) decile long-short"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Bradshaw/Richardson/Sloan（JAE 2006）净债务融资之 OpenSourceAP 可钉执行核（非目录字段）。NetDebtFinance=(长期债务发行dltis − 长期债务偿还dltr + 流动债务变动dlcch)/平均总资产(0.5·(at+l12.at))；dlcch缺省置0；|比值|>1置缺失。每年6月末按NetDebtFinance分十分位；等权做多最低十分位、做空最高十分位（Sign为负），持有12月。不是综合股权发行CompEquIss（近M6559）；不是XFIN/NetEquityFinance近核；不是French·NSI十分位。代码与SignalDoc：LSQuantile=0.1、StockWeight=EW、PortfolioPeriod=12、StartMonth=6。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Bradshaw·NetDebtFinance·DecileL/S"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

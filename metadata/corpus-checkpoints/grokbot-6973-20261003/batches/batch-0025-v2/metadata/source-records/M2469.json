@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2469",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2469,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "60e8890d268c01fdac28d9c8ed09eb7ecc613a382b8b090fedc2fa643bff6f7f",
+    "rule_sha256": "6e2560547eb81f420e2517d46e65d187930126f728e0da64eab59c5fa262a309"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2469",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2469"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/forum/discussion/18200/weekly-bull-put-credit-spread-strategy/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Mia Alissi / Warren chapman（QuantConnect 论坛示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY>SMA(200)才卖出周期权认沽价差——短肢delta最近−0.35、长肢更低行权价，浮亏达权利金1.5倍止损（QC论坛Bull Put）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY>SMA200周期权牛市认沽价差；QC论坛Bull Put）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY>SMA(200)才卖出周期权认沽价差——短肢delta最近−0.35、长肢更低行权价，浮亏达权利金1.5倍止损（QC论坛Bull Put）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect 论坛讨论《Weekly Bull Put Credit Spread strategy》中 Mia Alissi 已印修订实现。SPY 日线 SMA(200)；期权分钟，`include_weeklys`、`strikes(−1,1)`、`expiration(1,7)`日。未持仓且价>SMA200：取链上最近到期认沽，按 `|delta+0.35|` 最小为短认沽，再在更低行权价认沽中取行权价最小者为长肢；`OptionStrategies.bull_put_spread` 买1组；权利金=`short.bid−long.ask`。持仓时若未实现盈亏相对入场权利金浮亏 ≤`−1.5×credit` 则清算并重置。不是 EasyQuant 备兑/铁鹰核，也不是 Cboe PutWrite 指数方法论。提出日期未知。 不是备兑/铁鹰：本条为SPY>SMA(200)才卖出周期权认沽价差（短肢delta≈−0.35；浮亏达权利金1.5倍止损）。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

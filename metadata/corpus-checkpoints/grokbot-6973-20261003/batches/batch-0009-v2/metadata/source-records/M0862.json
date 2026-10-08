@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0862",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 862,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b1b7eb4715e5917e917bfd70f8700e94668748a6015b5d6fc5411937e0cbcada",
+    "rule_sha256": "831cf4433a1b75d41acbcb48651d6d133e24958275be9aab47210ce221e6f380"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0862",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0862"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/470/Cross-Sectional-Momentum-Hierarchical-Risk-Parity"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Jianbin"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "横截面动量层次风险平价：每季度252日总收益前20，252日相关做HRP，4/7/10月首个交易日收盘前5分钟出信号、下一开盘交易；名单未印全"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-04-18"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cross-Sectional Momentum Hierarchical Risk Parity"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：美国流动股票及大型ETF名单页面未印全，不能把未写出的大盘科技、小盘股、长期国债或黄金ETF代码补成规则。本条只写该公开策略页已印出的252日总收益前20、252日相关层次风险平价，以及4/7/10月首个交易日收盘前5分钟、下一交易日开盘，不是已收的加密层次风险平价：那边每月取Coinbase美元成交量前10的非稳定币、约12个月收益层次聚类后逆方差、敞口缩放到约90%。页面写每季度，信号月只印出4月、7月与10月，本条不把1月补进去。每季度以过去252个交易日总收益做横截面动量，保留前20个领先者；用同一252日窗口的日收益相关距离做层次聚类、准对角化和递归二分，以逆簇方差分配风险。信号在4/7/10月首个交易日收盘前5分钟计算，下一交易日开盘交易；非新目标持仓清仓，其余按目标权重再平衡。提出日期按页面原样保留2026-04-18。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。名单未印全"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

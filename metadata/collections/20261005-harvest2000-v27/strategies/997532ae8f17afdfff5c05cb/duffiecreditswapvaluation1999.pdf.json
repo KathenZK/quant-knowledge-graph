@@ -1,0 +1,137 @@
+{
+  "economic_basis": {
+    "hypothesis": "当相同信用事件、本息与交割条件确实可匹配时，合成保护的票息代价和市场保护报价若不一致，理想组合可能留下固定利差。现实借券、回购、应计、流动性、资本与对手方约束会破坏这条简单等价；没有用论文定价恒等式证明实际收益。",
+    "missing": [
+      "只审阅来源合约现金流定义；无行情、交易、回测或现实无风险收益证明。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "darrellduffie.com/publications",
+  "lab": null,
+  "missing_information": [
+    "仅1999出版版Starter Case，不拼1998稿、2017BIS阈值回归或2020NYFed监管收益公式成为新策略。当前定义不等于现代标准化CDS的upfront/固定coupon合同。",
+    "要求实际存在与保护期限相同的平价C-FRN及可匹配的无违约FRN，票息分别R_t+S及R_t；S为给定参考par spread，不用收益率、ASW或信用评级替代。一般资产互换在违约后仍有利率互换现金流，不能直接代换。",
+    "原Starter Case无嵌入利率互换、事件不支付应计保费、按后续票息日结算且实物交割，并假设所有保护对手方无违约、无税和无现金市场摩擦。超出这些假设，U=S并非精确现实边界。",
+    "原文将tau写信用事件时点、D=100−Y(tau)，同时Starter Case把清算/支付放在事件后的票息日；保留这两个表述。当前采用明确的实物交割和票息日约定，不把事件日行情Y(tau)当实际后续结算价，不补两日间资金或违约应计处理。",
+    "作者随后讨论普通合同应计利息使前述简式不精确；本条不默删此警告，也不采其约hr/(2n)近似作为新的交易阈值。",
+    "起始卖空收入等于购券支出、CDS初始零对价，仅是理论现金流，不证明零资本、无保证金、可无限卖保护或真实能借到整段期限的债。",
+    "回购special Z与双边费用K会改变报价或边界；回购不在信用事件终止时，S+Z也仅近似。未给真实借券、repo、信用限额、券商margin、税/fee数据，不称小正U−S可交易。",
+    "未给具体付款日历、利息日计数、盘中报价与成交顺序、信用事件认定争议、部分交割和结算失败处理。execution_time=MISSING；不是回测就绪、实盘建议或保证无风险。",
+    "整个现金债/合成CDS复制家族至多提名1；方向反转、面额、发行人、期限、spread模型不另算。未执行源代码、优化或回测，未下载市场数据。版权与金融数据许可独立，商用REVIEW_REQUIRED。"
+  ],
+  "name": "Duffie：同票息与实物交割约定下的信用互换复制套利",
+  "native_source_id": "duffiecreditswapvaluation1999.pdf",
+  "one_line": "短同期限平价信用浮息债、长等面额无违约浮息债，并卖出相同信用保护，在论文理想假设下收取互换保费与浮息债信用利差之差。",
+  "record_id": "duffiecreditswapvaluation1999.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；理论合约复制不等于可交易或无风险收益。",
+    "metadata": "原生身份、定位及自撰中文定义；原文/图像/源码/市场数据不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.darrellduffie.com/uploads/1/4/8/0/148007615/duffiecreditswapvaluation1999.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Darrell Duffie. Credit Swap Valuation. Financial Analysts Journal55(1),January/February1999,pp73–87. Author-hosted published paper.",
+      "id": "duffie-credit-swap-valuation-1999-pdf",
+      "license": "Published PDF physicalp2/p4/p6/p12 copyright Association for Investment Management and Research. Author-hosted availability is not a blanket redistribution or commercial license. Metadata is self-authored; no source fulltext or market data distributed; commercial use REVIEW_REQUIRED.",
+      "locator": "Publishedpp74–75 Starter Case andFigure2; physicalp5–6 repo/accrual limitations; physicalp12–13 Fig9 and asset-swap warning. Field lines refer to pinned derived text.",
+      "revision": "Financial Analysts Journal55(1),January/February1999,pp73–87; author-hosted published PDF sha256:904b576ff3af9f7c2ac1ff24b2800e6ea15c4d3489714a05001fec1b23ce0d41",
+      "sha256": "904b576ff3af9f7c2ac1ff24b2800e6ea15c4d3489714a05001fec1b23ce0d41",
+      "supports": [
+        "来源Starter Case完整持仓/现金流及限制"
+      ],
+      "url": "https://www.darrellduffie.com/uploads/1/4/8/0/148007615/duffiecreditswapvaluation1999.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_DOCUMENT_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Stanford Graduate School of Business official Darrell Duffie faculty page.",
+      "id": "stanford-darrell-duffie-faculty-page",
+      "license": "Stanford site content; no blanket license inferred. Identity facts only; paper rights separate.",
+      "locator": "Official Stanford faculty page links personal website darrellduffie.com and lists Credit Swap Valuation, Darrell Duffie, FAJ1999; identity evidence only.",
+      "revision": "Stanford official faculty HTML HTTP sha256:dd1799cd6b379a1765e3da1b89bf9b882920bf9998fc3ff1f4a1826baa7d7658",
+      "sha256": "dd1799cd6b379a1765e3da1b89bf9b882920bf9998fc3ff1f4a1826baa7d7658",
+      "supports": [
+        "作者身份与个人网站/出版物链"
+      ],
+      "url": "https://www.gsb.stanford.edu/faculty-research/faculty/darrell-duffie",
+      "verification": "FETCHED_PINNED_ORIGINAL_HTML"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "duffie-credit-swap-valuation-1999-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一组同币种、等面额的三腿：卖空主体C发行的平价浮息债C-FRN，买入无违约平价浮息债，再作为卖方提供以该C-FRN为交割标的的信用保护。两债都到T，浮动基准相同；有信用债付R_t+S，无违约债付R_t。保护腿是收保费并承担信用事件后的付款义务，不是买保险。"
+    },
+    "cost": {
+      "evidence": [
+        "duffie-credit-swap-valuation-1999-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "选定Starter Case明确假设现金市场无买卖价差等交易成本、忽略税，并按理想卖空合同复制；这是源模型假设，不能等同已知现实费率为0。信用互换U和信用债S是现金流本身。作者后续把term repo special记Z，给约S+Z并以K表达双边交易等费用；若repo未随信用事件终止便不精确。本候选不把那些近似拼成已闭合收费方案，真实佣金、借券、margin融资和资本成本仍缺。"
+    },
+    "entry": {
+      "evidence": [
+        "duffie-credit-swap-valuation-1999-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在Starter Case条件成立的起始时点，按来源面额100归一：短卖100面额C-FRN收100现金，全部买入100面额无违约FRN；同时卖100面额、引用同券的信用保护，保护在原假设下起始无现金对价。持有期间收无违约浮动票息及U、付C-FRN浮动票息加S。U>S仅是理想报价判据；缺少真实成本和信用安排时不声称可立即成交。"
+    },
+    "execution_time": {
+      "evidence": [
+        "duffie-credit-swap-valuation-1999-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：逻辑时间是起始建立三腿、合同票息日收付、T或信用事件后的约定票息日结算。原文未给时区、具体日期/日计数、报价同步、委托顺序、借券/保证金确认、部分交割及结算失败处置；没有执行或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "duffie-credit-swap-valuation-1999-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "若T前没有信用事件，两债在T按面额偿付，长债收到的本金用于偿还C-FRN短头寸，保护到期无赔付。若有约定信用事件，按照Starter Case在其后的票息日结算：无违约FRN按par变现；作为保护卖方支付面额并接收C-FRN，将该券交回以消除短头寸。这是文中复制篮子与实物交割合并的持仓解释；不把事件日Y(tau)擅作稍后成交价。结算后结束，不补价差回归止盈、止损或自动续做。"
+    },
+    "position": {
+      "evidence": [
+        "duffie-credit-swap-valuation-1999-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "源按100面额一对一：−100面额C-FRN、+100面额无违约FRN、卖100名义保护。一般给定正名义N可同比缩放三腿；保持票息和事件交割的同名义匹配，不使用统计beta或不断重估的Delta。净固定spread为U−S；若按同一合同计息分数alpha，则相应票息金额换算为N(U−S)alpha。100只是面额归一，不是100%权益；起始现金抵消不代表真实保证金/监管资本为零，源没有账户规模函数。"
+    },
+    "risk": {
+      "evidence": [
+        "duffie-credit-swap-valuation-1999-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对手方无违约、税与摩擦忽略、可持续借券及共同票息日实物交割都是来源限制。普通合同的应计利息/保费、参考债回收与实际交割债差异、repo special和期限不匹配会破坏简单等价。源把tau写事件时刻，却在本分支规定后续票息日清算；此处保留实际实物交割约定，不默补等待期现金和会计。既不将信用事件当价格止损，也不把恒等式或历史基差宣传作为经济验证。"
+    },
+    "signal": {
+      "evidence": [
+        "duffie-credit-swap-valuation-1999-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "比较固定保护保费率U与参考C-FRN相对同一无违约浮动基准的固定利差S。短C-FRN/长无违约FRN每期净付S，卖保护净收U，源理想净利差为U−S，无套利等式为U=S。只提名文中这一个方向：U>S出现正理想利差，U≤S不构成该方向机会；这是原现金流恒等式的符号含义，不是已扣现实成本的自动下单阈值。无需预测未来违约或拟合hazard，也不把ASW价差直接当S。"
+    },
+    "timeframe": {
+      "evidence": [
+        "duffie-credit-swap-valuation-1999-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "建仓后保持三腿名义到共同到期T，或约定信用事件导致的提前终止结算；期间按共同票息合同收付。信用事件后的支付/清算在紧接的C-FRN票息日，来自Starter Case明确假设。没有日/月再排名或价差收敛平仓；T、票息频率和日计数作为所选合同输入，论文不冻结一个统一运行日历。"
+    },
+    "universe": {
+      "evidence": [
+        "duffie-credit-swap-valuation-1999-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定实际可交易的平价C-FRN、匹配的无违约FRN及引用同券的信用互换。须满足源Starter Case：共同到期；无嵌入利率互换；事件不支付应计保费；信用事件后下一票息日实物交割；保护双方无违约；可按模型条款建空和终止。来源没有按评级、收益率或default probability排名选券，不扩到任意固定息债或非平价债。"
+    }
+  }
+}

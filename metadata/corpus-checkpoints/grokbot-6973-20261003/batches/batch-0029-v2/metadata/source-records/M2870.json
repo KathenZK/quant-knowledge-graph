@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2870",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2870,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b441e319a54fca3bc05fd745c80ea015d9b1250e924874cd32fad4625d75be14",
+    "rule_sha256": "b7a5259ab868358c64cdf21f2181a4cb8f42021ec45937e4a4c2f43df4a3d075"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2870",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2870"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/PearsonCorrelationPairsTradingAlphaModelFrameworkAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY/AIG/BAC/IBM；Pearson相关最高配对，比率偏离均线±1%发多空组Insight，等权执行（Lean PearsonCorrelationPairsTrading）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY/AIG/BAC/IBM Pearson最高配对比率偏离±1%多空Insight等权；Lean PearsonPairs）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY/AIG/BAC/IBM；Pearson相关最高配对，比率偏离均线±1%发多空组Insight，等权执行（Lean PearsonCorrelationPairsTrading）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `PearsonCorrelationPairsTradingAlphaModelFrameworkAlgorithm.py`：手工宇宙先 SPY+AIG，再按日程扩至 SPY/AIG/BAC/IBM；Alpha=`PearsonCorrelationPairsTradingAlphaModel(252, Resolution.DAILY)`（lookback=252，日频；基类默认 `threshold=1` 即比率相对 EMA(500) 均线 ±1%；`minimum_correlation=0.5`）。组合=`EqualWeightingPortfolioConstructionModel`；即时执行。配对按 Pearson 相关排序取最高且相关≥0.5。不是 W224/W390 的 KO-PEP OLS 价差Z核。提出日期未知。 不是W224/W390的KO-PEP OLS价差Z核：本条为SPY/AIG/BAC/IBM Pearson相关最高配对，比率偏离EMA均线±1%发多空组Insight，等权执行。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

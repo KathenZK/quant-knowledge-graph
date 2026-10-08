@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4516",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4470,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "aa50bfa7f9807ca4987fa9540f78776ee47989eea7d3901b1e089f8535d95d7c",
+    "rule_sha256": "df1c35621fabe2b6e97e22600825cd644a99e8c8cefd4545b54ef02c70adb6df"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4516",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4516"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://doi.org/10.1111/j.1540-6261.2007.01226.x"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Jacob Boudoukh / Roni Michaely / Matthew Richardson / Michael R. Roberts"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-162/W1726"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Boudoukh·Michaely·Richardson·Roberts·合计净派息率择时：月末；递推AggNPY回归溢价；预测>历史均值满仓美股，否则T-bill；持1月（BMRR AggNPY·vsHA）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2007-06"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Boudoukh·Michaely·Richardson·Roberts·合计净派息率择时：月末；递推AggNPY回归溢价；预测>历史均值满仓美股，否则T-bill；持1月（BMRR AggNPY·vsHA）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Boudoukh/Michaely/Richardson/Roberts《On the Importance of Measuring Payout Yield》（JF 2007 / NBER w10651）之 **合计净派息率（Net Payout Yield）时序择时** 可钉死核。定义市场合计 NPY=(股息+回购−股权增发)/市值。每月用扩展窗把下月股权溢价对 **滞后合计 NPY** 做 OLS；若 **一步预测溢价高于同期历史平均溢价** 则满仓美股指数，否则 **T-bill**；持有 **1月**。不是截面净派息率十分位多头（M3571/M0436）；不是 Lamont 派息率 D/E 择时（M4498）；不是单变量 D/P（M4507）。计入美股/ETF。提出日期 2007-06。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "JF 2007 · aggregate net payout yield forecast vs HA → equity/T-bill"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

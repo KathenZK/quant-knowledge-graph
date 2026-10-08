@@ -1,0 +1,166 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者假说是根据已实现收益递归调整预测的相对权重，并以价格均值回归尺度改善下一组合；该假说没有在本仓库得到样本外或经济验证。",
+    "missing": [
+      "来源规则已静态梳理，未做计算语义执行、经济有效性或账户回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "github.com/laizhr/RPRT",
+  "lab": null,
+  "missing_information": [
+    "只静态读固定作者代码与明确依赖，没有执行 MATLAB、外来代码、求解器、历史行情或账户回测。",
+    "输入是外部给定资产收益倍数矩阵；未给持续可交易股票池、成分历史、复权/退市处理、缺价修补、交易日历、真实成交和资金约束。",
+    "原作者仓库的引用/免责文字不是完整开源许可证；仅发布自撰定义与来源定位，代码/论文/市场数据授权分别保留 REVIEW_REQUIRED。",
+    "对每输入行恢复目标只是源模型的比例配置，不是交易所订单、成交价格或可实际无摩擦调仓保证。",
+    "冻结runner成本为0；不把另改tran_cost的实验当已核版本。"
+  ],
+  "name": "RPRT：递归重加权价格预测与对角缩放组合更新",
+  "native_source_id": "RPRT.m",
+  "one_line": "把上一预测和已实现价格倍数递归重加权，再以均价预测对角矩阵缩放目标权重更新。",
+  "record_id": "RPRT.m",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED; no claim of reproduced paper optimum or economic validation.",
+    "metadata": "原生函数ID、固定commit及自撰中文规则/定位；不发布上游源码、论文全文、图像或市场数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/laizhr/RPRT/blob/4566c1ed3eeb1a77fb435f8f591a46874fc02186/README.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-rprt-readme-md",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "README.md native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "4566c1ed3eeb1a77fb435f8f591a46874fc02186",
+      "sha256": "6b11af5e567c0c7ada707cfa475e18ebf728dcd320d80232f2497bf7034f856e",
+      "supports": [
+        "作者署名/论文定位及免责文字"
+      ],
+      "url": "https://github.com/laizhr/RPRT/blob/4566c1ed3eeb1a77fb435f8f591a46874fc02186/README.md",
+      "verification": "FETCHED_PINNED_REPOSITORY_DOCUMENT"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-rprt-rprt-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "RPRT.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "4566c1ed3eeb1a77fb435f8f591a46874fc02186",
+      "sha256": "e8d8ccc69d0633e7103372092774e90d0585a32db4856fb28d6b61f7b2db4b80",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/RPRT/blob/4566c1ed3eeb1a77fb435f8f591a46874fc02186/RPRT.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-rprt-rprt_run-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "RPRT_run.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "4566c1ed3eeb1a77fb435f8f591a46874fc02186",
+      "sha256": "24eaec5e884fc5924696ba377e106e745acb3d11b1ea69244dee5bdfb7d0ae61",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/RPRT/blob/4566c1ed3eeb1a77fb435f8f591a46874fc02186/RPRT_run.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-rprt-simplex_projection_selfnorm2-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "simplex_projection_selfnorm2.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "4566c1ed3eeb1a77fb435f8f591a46874fc02186",
+      "sha256": "dd9edbdd42c21040a57d5411f27508a3da8a37eb4a62016fcad7ad63418d221d",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/RPRT/blob/4566c1ed3eeb1a77fb435f8f591a46874fc02186/simplex_projection_selfnorm2.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "lai-rprt-rprt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "外部给定n期×m资产的价格收益倍数data；同一列为同一资产。源代码没有固定ticker、市场或股票池筛选，不能把通用矩阵接口扩写成某特定市场实证策略。"
+    },
+    "cost": {
+      "evidence": [
+        "lai-rprt-rprt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "所选作者runner把tran_cost硬设为0，形式上仍计g_t=(x_t·b_t)*(1−c/2*Σ|b_t−h_old|)，h_t=b_t⊙x_t/g_t、h_0=0。由于冻结c=0，此h等于通常收益后归一权重；若改c，代码却除以含费g而不是毛收益，不能默称非零费版本也为同一正常漂移。这里零费仅源模型选择，现实费用/冲击/融资未闭合。"
+    },
+    "entry": {
+      "evidence": [
+        "lai-rprt-rprt-m",
+        "lai-rprt-rprt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "第一行按1/m配置，预测状态phi为全1。后续在下行收益发生前计算目标并归一到和1；正权重为持有，增量意味着增持。phi跨期延续，但权重更新基础是上一目标，而不是按已实现收益漂移后的份额。"
+    },
+    "execution_time": {
+      "evidence": [
+        "lai-rprt-rprt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "t≥2先只传截至t−1的历史去更新b_t/phi，再计算第t行倍数，没有把同一期未来x用于形成b_t。源模型一次完成比例替换；数据发布/订单/成交时点、整数份额及资本占用未核。"
+    },
+    "exit": {
+      "evidence": [
+        "lai-rprt-rprt-m",
+        "lai-rprt-rprt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每期以新目标替代旧目标，权重降至0表示该期不持有该资产；无独立止损止盈或到期强平。在最后输入行计收益后结束，未加终点卖出或税费模型。"
+    },
+    "position": {
+      "evidence": [
+        "lai-rprt-rprt-m",
+        "lai-rprt-rprt_run-m",
+        "lai-rprt-simplex_projection_selfnorm2-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "最终目标非负和为1；RPRT_run还再除以sum(b)。归一助手先在 max(abs(v))>10^6 时反复把整个 v 除以10，再降序排列u、累加s_j，取最后满足u_j>(s_j−1)/j的j，令a=(s_j−1)/j、b=max(v−a,0)。因此极端输入下是先缩小再投影，不能无条件称为对原v的欧氏投影。 没有空头、借贷、现金袖或单项比例上限。"
+    },
+    "risk": {
+      "evidence": [
+        "lai-rprt-rprt-m",
+        "lai-rprt-simplex_projection_selfnorm2-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "若phi截面相同则lambda=0，保留上一目标经投影；否则epsilon50的步长可造成集中。正有限输入下phi的更新分母为正，但源码没有异常输入/溢出保障，也没有最大回撤或保证金约束。D缩放后不能称为未加权的标准PAMR闭式解；只描述原实际递推。"
+    },
+    "signal": {
+      "evidence": [
+        "lai-rprt-rprt-m",
+        "lai-rprt-rprt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "对已观察历史长度T，取x=data(T,:)及上一目标b=daily_port_total(T,:)；theta=.8，epsilon=50，window=5。逐分量gamma=.8*x/(.8*x+phi_old)，phi=gamma+(1−gamma)*(phi_old/x)。若T<6，a=x；否则a=(1/5)Σ_(j=0)^4[Π_(k=0)^(j−1)x_(T−k)]^(-1)，空乘积为1。D=diag(a)，u=phi−mean(phi)；ell=max(0,50−phi·b)，lambda=ell/||u||²（零分母取0）；v=b+lambda*D*u，最后归一助手。这里分母未改成||D*u||²，phi和a是两个不同向量。"
+    },
+    "timeframe": {
+      "evidence": [
+        "lai-rprt-rprt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每输入期重算一次；t=1等权，t≥2用data(1:t−1,:)与上一phi形成当期b_t，再承接data(t,:)收益。所谓daily仅变量命名，不含实际交易日历。"
+    },
+    "universe": {
+      "evidence": [
+        "lai-rprt-rprt-m",
+        "lai-rprt-rprt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只使用输入的m列，不做流动性/市值排名。价格倍数须有限正值，递归含x除法及theta*x+phi分母；源码不校验缺值、零值、公司行为或成分变化。phi初值是全1，不是首行x；该初始化与第三方端口可能不同。"
+    }
+  }
+}

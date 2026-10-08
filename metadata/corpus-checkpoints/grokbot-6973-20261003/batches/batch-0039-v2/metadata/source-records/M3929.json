@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3929",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3883,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b426fefc717ec684c2226cb27b50bef15fa364078c27133d0350d73e09eb8ed8",
+    "rule_sha256": "e07c854716f2aa20e1a543e8b50b15252c246a895f0c60658af358f63f46ca9c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3929",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3929"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/18513/using-the-transient-impact-model-to-spot-reversals/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect 社区（Transient Impact Model）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-97/W1136"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·瞬时冲击局部底反转：日频；SPY；252窗估(α,β,λ)瞬时冲击，近3值局部最小且昨收>今收则多、昨收<今收则空，仓位约50%（QC TI·LocalMin·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·瞬时冲击局部底反转：日频；SPY；252窗估(α,β,λ)瞬时冲击，近3值局部最小且昨收>今收则多、昨收<今收则空，仓位约50%（QC TI·LocalMin·SPY）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect《Using The Transient Impact Model To Spot Reversals》：标的 **SPY**；用近 **252** 日量价拟合瞬时冲击参数 (α,β,λ)；对冲击序列取对数后看长度 **3** 的窗是否局部最小；若局部最小且昨收 **高于** 今收则 **做多约 50%**，若昨收 **低于** 今收则 **做空约 50%**。不是 PCA 残差 z（近 M3902）。计入美股/ETF。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 18513 SPY TI local-min 50%"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

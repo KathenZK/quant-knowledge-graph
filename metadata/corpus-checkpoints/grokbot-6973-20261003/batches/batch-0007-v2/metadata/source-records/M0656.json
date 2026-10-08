@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0656",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 656,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0640ab1673cc615f7c6dc204c21d51ca3905c2938df9c1d2aad44ca05283cd5e",
+    "rule_sha256": "d8deac659edc8640bb05e1edce0dfea9d4a78749f9001b03b8a417f9d4a68cf2"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0656",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0656"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/countercyclical-trend-following/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Allocate Smartly（原论文作者未在该页公开）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "逆周期三状态组合加SPY与黄金连五日200日均线"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Countercyclical Trend Following"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "月末最后一个交易日收盘，用滞后2日的读数，把高收益利差和10年减1年国债收益率斜率各自与自身过去10年中位数比较。高收益利差高于10年中位数为增长状态，此时不看斜率。利差低于中位数时，斜率低于10年中位数为通胀状态，斜率高于中位数为放缓状态。该状态用于当日至下月收盘。增长：50% SPY（带趋势）、40% IWN、10% GLD（带趋势）。通胀：50% SPY（带趋势）、10% IWN、40% GLD（带趋势）。放缓：50% LQD、40% IEF、10% IWN。SPY与GLD若连续5日收盘高于200日移动平均为上升趋势，连续5日收于其下为下降趋势；下降趋势时该部分改配IEF，月中可因趋势变化买卖。全部在收盘成交。1990年前因数据不足用IWM代替IWN。高收益利差1996年12月后用BofA美国高收益OAS，此前用穆迪BAA与10年国债常值利率之差。页面写明原论文作者未公开，且不能确定与原文逐条一致。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Strategy rules tested；Calculation notes（1）（2）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

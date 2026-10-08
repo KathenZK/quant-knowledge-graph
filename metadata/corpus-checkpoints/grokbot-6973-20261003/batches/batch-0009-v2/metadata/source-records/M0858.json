@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0858",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 858,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8ab58eee5c0b32b0819ede6b7bbc5aa0786278d628cdf0b64f7b01c70bc8ff23",
+    "rule_sha256": "05f4f05d5f376b6c5e1aaea0282bba94098c032b186952f0bc3824a4778683ee"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0858",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0858"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/493/Multi-Asset-Dual-Momentum-Rotation"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Neo Futurism"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "多资产双动量轮动：约126日总回报，每月第一天过滤非正动量后取前4等权，否则短期国债ETF；名单未印出"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-05-09"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Multi-Asset Dual Momentum Rotation"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：覆盖美国行业/主题的流动性ETF、长期国债、黄金及短期国债ETF名单页面未印出，不能把未写出的代码补成规则。本条只写该公开策略页已印出的约126个交易日、前4与非正则短期国债现金代理，不是已收的十三只按3、6、9、12个月总收益平均取前四等权、只在20日平均两两相关高于250日时把最差一只空30%。也不是Hybrid Asset Allocation用1、3、6、12个月平均、TIP为正才从八只里选动量最高4只。也不是双动量行业轮动在SPY趋势向上时持1年动量最高的4个SPY行业、向下则100% AGG。用日价格计算约6个月（126个交易日）总回报动量；每月第一天开盘后30分钟决策，过滤非正动量，在剩余标的中按动量选前4个等权配置；若没有正动量，则转入短期国债ETF现金代理。每月再平衡，仅在目标集合变化时发生，并退出不再入选的持仓。提出日期按页面原样保留2026-05-09。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。名单未印出"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

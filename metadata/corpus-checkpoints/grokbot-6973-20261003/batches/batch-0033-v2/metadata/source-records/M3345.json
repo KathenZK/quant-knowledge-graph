@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3345",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3299,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7bc3e1f453c9a651e3e8a42dd9388735058f1a0c14f4a760dcdc81cd2fa14edd",
+    "rule_sha256": "9e9621c89e79571fd63221f9ba9fd1012c514fbdd9b758d545f90a6c8b7db0b4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3345",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3345"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CoarseFineFundamentalRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线粗选固定票池（4/1前 AAPL/AIG/IBM、之后 GOOG/BAC/SPY）再按市值取Top2；新增且一年EPS增速>0.25则各配50%，剔除清仓（Lean CoarseFineFundamentalRegression）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线粗选固定票池（4/1前 AAPL/AIG/IBM、之后 GOOG/BAC/SPY）再按市值取Top2；新增且一年EPS增速>0.25则各配50%，剔除清仓（Lean CoarseFineFundamentalRegression）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `CoarseFineFundamentalRegressionAlgorithm.py`。日线宇宙；粗选按日期返回三票固定列表；精选按 `market_cap` 降序取 2。`on_securities_changed` 记变更；`on_data`：removed 已投资则 `liquidate`；added 若 `equity_per_share_growth.one_year > 0.25` 则 `set_holdings(...,0.5)`。不是仅 PE Top2 各配20%核（master CoarseFineFundamentalCombo），也不是 SectorExposure 框架核（W513）。提出日期未知。粗选固定三票+市值Top2且一年EPS增速>0.25各配50% ≠ PE Top2各配20%（M3038）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

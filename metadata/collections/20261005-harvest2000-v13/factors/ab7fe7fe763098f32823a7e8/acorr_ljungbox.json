@@ -1,0 +1,156 @@
+{
+  "economic_basis": {
+    "hypothesis": "把同一序列多个滞后的自相关强度合成一个序列相关诊断，保留有限样本尺度调整和模型消耗的自由度；不以单个显著滞后代替整个检验。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅审有限非恒定一维序列，固定等时距N>=5。period=None、auto_lag=False；lags为正整数或None，不含季节/自动选滞后及任意滞后列表路径。入口不拟合残差模型，不按数据内容自动计算model_df。 acorr_ljungbox调用acf(...,nlags=q,fft=False)，acf再调用acovf(adjusted=False,demean=True,missing=\"none\")。原生不通过FFT，也没有逐滞后N−k自由度修正；全窗去均值后的线性互相关均除N，再除零阶量得到ρ。 按滞后逐项累加ρ_k²/(N−k)，乘N(N+2)。Box–Pierce可选值是同一组自相关平方和的另一缩放，不另计一种因子。 同库q_stat直接接收已估计的ACF而非原始序列，返回同一Q_LB累积公式及未扣模型自由度的卡方p；只在model_df=0且输入同一ACF时对应，本条保留原ID为同族入口，不称所有包装参数等价。 model_df只减去卡方分布自由度，不改变Q值或去均值。自由度<=0时对应p设NaN。return_df参数为兼容保留，固定版本总是返回pandas DataFrame，行索引为1..q。 边界：源不统一拒绝NaN/Inf，missing=\"none\"直接运算，缺失常传播；全常数序列零阶协方差为0，ρ可能NaN。本合同主动排除退化输入，不把无p值当未拒绝。 默认N<5时q=0可导致空滞后max失败；本条N>=5。新固定版本明确拒绝q>=N；负数/0等不在研究合同。 返回p的卡方近似和模型自由度扣除依赖正确残差模型及样本条件，未证明独立同分布，更不能从未拒绝推导“无任何非线性依赖”。多h的表格不是多次独立发现。 序列去均值、全部自相关与累加都使用全窗，只能窗口结束后可用；未锁市场数据、样本有效性和NumPy/SciPy运行数值。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把同一序列多个滞后的自相关强度合成一个序列相关诊断，保留有限样本尺度调整和模型消耗的自由度；不以单个显著滞后代替整个检验。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N项有限序列x，z_i=x_i−mean(x)。ρ_k=Σ_(i=k+1..N)z_i z_(i−k)/Σ_(i=1..N)z_i²，不乘N/(N−k)。对h=1..q：Q_LB(h)=N(N+2)Σ_(k=1..h)ρ_k²/(N−k)。默认boxpierce=FALSE；True同族额外给Q_BP(h)=NΣ_(k=1..h)ρ_k²。令ν_h=h−model_df，ν_h>0时p_h为χ²_νh的上尾概率，否则p_h=NaN而Q_h仍保留。已审period=None、auto_lag=False，整数lags=q满足1<=q<N；若lags=None，q=min(10,floor(N/5))。所有h、LB/BP及p值为同一构造族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（finite real one-dimensional numeric array-like, ordered equally spaced, N>=5 and positive centered sum of squares）：整个完成的观测窗口或已冻结模型残差；样本顺序/频率和模型选择必须外部确定，缺失不能删后当时间连续。。参数：lags：None给min(10,N//5)；每一滞后输出不拆族；范围None or integer1<=q<N only reviewed；源码默认None；boxpierce：可选同族Box–Pierce缩放；范围boolean；源码默认False；model_df：外部模型估计消耗的自由度，源不自动推断；范围integer>=0; h<=model_df retains Q but p=NaN；源码默认0；period：季节最大滞后选法不在已审合同；范围only None reviewed；源码默认None；return_df：不影响公式；范围compatibility argument; always DataFrame at fixed revision；源码默认True；auto_lag：不进行数据驱动滞后选择；范围only False reviewed；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-95eec514513ea721429660bb",
+        "harvest-source-a16eeb5c7d35bdd4bc271363",
+        "harvest-source-c10cd2e93be9b0ea6ea9719d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "statsmodels/statsmodels",
+  "lab": null,
+  "missing_information": [
+    "原残差模型、参数估计时点与model_df选择未冻结",
+    "实际市场输入/PIT、近似检验大小及多滞后推断合同未验证",
+    "自动滞后/季节/任意列表分支和NumPy/SciPy执行环境未审",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "多滞后自相关平方和的 Ljung–Box 诊断",
+  "native_source_id": "acorr_ljungbox",
+  "one_line": "把同一序列多个滞后的自相关强度合成一个序列相关诊断，保留有限样本尺度调整和模型消耗的自由度；不以单个显著滞后代替整个检验。",
+  "record_id": "acorr_ljungbox",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "statsmodels维护者实现；函数文档列Greene (2003)以及Escanciano/Lobato (2009)。本条按固定Ljung–Box/Box–Pierce执行公式；自动选滞后论文分支未审核，不宣称全部论文复现。",
+      "id": "harvest-source-c42f2a259c3bd67e2e7d65e6",
+      "license": "BSD-3-Clause",
+      "locator": "copyright attribution and complete BSD3 redistribution terms:L1-L34",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "1ca78e1dec9dcebc55f3b96a862317f23e76422c5fc943568d955aad1f6b5fad",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；函数文档列Greene (2003)以及Escanciano/Lobato (2009)。本条按固定Ljung–Box/Box–Pierce执行公式；自动选滞后论文分支未审核，不宣称全部论文复现。",
+      "id": "harvest-source-be0109a36a3ea6ee8a8a3ee3",
+      "license": "BSD-3-Clause",
+      "locator": "official statistical library scope and documentation:L16-L30",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "d430fa04083d240c9f0e75aa90bc73c13cb1a874f4c7b4ce29bddbb6366c4a42",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；函数文档列Greene (2003)以及Escanciano/Lobato (2009)。本条按固定Ljung–Box/Box–Pierce执行公式；自动选滞后论文分支未审核，不宣称全部论文复现。",
+      "id": "harvest-source-95eec514513ea721429660bb",
+      "license": "BSD-3-Clause",
+      "locator": "right singleton squeeze helper:L13-L39; numeric conversion defaults:L42-L55; complete numeric conversion path:L145-L181",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "862d8b1cf1411aaae0b397e2421109fa5e33c32efe7dcacdb88ae2eeca55fa5b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tools/validation/validation.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；函数文档列Greene (2003)以及Escanciano/Lobato (2009)。本条按固定Ljung–Box/Box–Pierce执行公式；自动选滞后论文分支未审核，不宣称全部论文复现。",
+      "id": "harvest-source-a16eeb5c7d35bdd4bc271363",
+      "license": "BSD-3-Clause",
+      "locator": "public defaults:L608-L616; meaning, lag rules and source attribution:L618-L692; conversion and parameter gates:L703-L714; complete explicit/default lag path, finite-sample statistics and p values:L755-L796",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "74cd47732a5d77363ba46265f64d6ec71464c44e3982fc27e4a11ceb1b18ee5e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/stats/diagnostic.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "statsmodels维护者实现；函数文档列Greene (2003)以及Escanciano/Lobato (2009)。本条按固定Ljung–Box/Box–Pierce执行公式；自动选滞后论文分支未审核，不宣称全部论文复现。",
+      "id": "harvest-source-c10cd2e93be9b0ea6ea9719d",
+      "license": "BSD-3-Clause",
+      "locator": "autocovariance defaults and missing boundary:L488-L511; complete finite-input centering path:L530-L566; lag gate and alternate branch exclusion:L568-L596; direct non-FFT full correlation and normalization:L598-L625; same-family q_stat receives ACF and uses unadjusted dof:L777-L822; acf defaults:L854-L865; acf conversion and main normalization:L997-L1027; single-output ACF return path:L1041-L1074",
+      "revision": "15d85ecd4e9daa67820f7c8318e7c8d578b21d5f",
+      "sha256": "5f0ea18331381af17c3c55a00bd32c66ec384693aef013dd58c4c5d5219cd020",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/statsmodels/statsmodels/blob/15d85ecd4e9daa67820f7c8318e7c8d578b21d5f/statsmodels/tsa/stattools/_stattools.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

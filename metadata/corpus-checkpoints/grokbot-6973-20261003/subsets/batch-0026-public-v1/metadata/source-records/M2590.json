@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2590",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2590,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3d4a74fc472365df25a728685a1583d89f2912cb93d6e779a80f7a4cd2cd0f22",
+    "rule_sha256": "10f4fac87534361e6e6db0105ab0836438fa064bf11db44bfc6f9d7232b1d826"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2590",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2590"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-keltner-squeeze/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY/QQQ/IWM/DIA 日线BB(20,1.5σ)嵌入KC(20,2ATR)挤压武装后，破上/下轨等权±1/4，回到BB中轨平仓（QC Documentation Keltner squeeze）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（四ETF BB⊂KC挤压武装破轨±1/4；QC Documentation Keltner squeeze）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY/QQQ/IWM/DIA 日线BB(20,1.5σ)嵌入KC(20,2ATR)挤压武装后，破上/下轨等权±1/4，回到BB中轨平仓（QC Documentation Keltner squeeze）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-keltner-squeeze/main.py`。四只 ETF 如上；各挂 `bb(...,20,1.5,DAILY)` 与 `kch(...,20,2.0,DAILY)`；权重 `1/4`。开盘后1分钟：挤压定义=BB上轨<KC上轨且 BB下轨>KC下轨；由非挤压进入挤压则 `armed=True`。持仓：多头价≤BB中轨或空头价≥BB中轨则清仓。未持仓且不在挤压且已武装：价>BB上轨 → `set_holdings(+weight)` 并撤武装；价<BB下轨 → `set_holdings(−weight)` 并撤武装。不是加密 LazyBear/BB⊂KC 动量挤压核，也不是 W284 CMF。提出日期未知。 不是加密LazyBear/BB⊂KC动量挤压核，也不是W284 CMF：本条为四ETF BB嵌入KC挤压武装后破轨等权±1/4，回中轨平仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

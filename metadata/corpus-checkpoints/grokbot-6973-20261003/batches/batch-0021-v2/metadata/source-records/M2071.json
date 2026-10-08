@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2071",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2071,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "51d313e3a95d9c08fefb7d8dd96a2ff922056657af4be3a1397443200995aa14",
+    "rule_sha256": "157e454c7cc28be729d7c98eab343f8dfd73081c255f649dfb94ae75d68d5097"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2071",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2071"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/bollinger-bands-strategy-python"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线收盘跌破布林(20,2σ)下轨做多、升破上轨做空，回到中轨平仓（EasyQuant多空均值回归）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY；BB20·2σ多空均值回归；EasyQuant/QC）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-11-28"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线收盘跌破布林(20,2σ)下轨做多、升破上轨做空，回到中轨平仓（EasyQuant多空均值回归）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《How to Implement a Bollinger Bands Strategy in Python with QuantConnect》已印 BollingerMeanReversionStrategy。标的 SPY，日线。BB(20, 2, MovingAverageType.SIMPLE)；WarmUp=20。空仓时：price<lower_band 则 SetHoldings(1.0)；price>upper_band 则 SetHoldings(−1.0)。持仓时：多头且 price≥middle_band 则 Liquidate；空头且 price≤middle_band 则 Liquidate。不是 W161 QC 行为金融示例的仅做多下轨→中轨核。提出日期取页面 Published on。 不是W161 QC行为金融仅做多下轨→中轨：本条是EasyQuant SPY日线跌破BB(20,2σ)下轨做多、升破上轨做空、回到中轨平仓的多空均值回归。 计入美股/ETF。 提出日期按源文件原样保留2025-11-28。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,181 @@
+{
+  "admission": {
+    "membership": {
+      "curated": true,
+      "historical_public_export": false
+    },
+    "reasons": [],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "ADMITTED"
+  },
+  "category": "unclassified",
+  "definition": {
+    "content_origin": "ATTRIBUTED_SOURCE_DEFINITION_EXCERPT",
+    "definition_sha256": "0c580fbd0039c90178cee1472287867051de91aef1e16b95beee3e33ba935b40",
+    "formula": null,
+    "formula_dialect": null,
+    "formula_sha256": null,
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "filter": null,
+      "long_short_quantile": "0.1",
+      "portfolio_period_months": 12.0,
+      "sign": 1.0,
+      "start_month": 7.0,
+      "stock_weight": "EW"
+    },
+    "required_fields": [
+      "mktrf",
+      "ret"
+    ],
+    "required_fields_status": "partial_definition_extraction",
+    "status": "DEFINITION_EXCERPT",
+    "text": "Each July regress daily stock return (ret) on market return (mktrf) in $t, t-1, \\ldots, t-4$ with observations over the previous year. Define PriceDelaySlope as the ratio of ]1*beta on mktrf$_t-1$ + 2*beta on mktrf$_t-2$ + 3*beta on mktrf$_t-3$ + 4*beta on mktrf$_t-4$], and [beta on mktrf$_t$ + beta on mktrf$_t-1$ + beta on mktrf$_t-2$ + beta on mktrf$_t-3$ + beta on mktrf$_t-4$].",
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "monthly",
+    "holding_period": {
+      "scope": "OSAP original-paper portfolio configuration",
+      "unit": "months",
+      "value": 12.0
+    },
+    "lookback": null,
+    "rebalance": null,
+    "universe": "US equities; original-paper filters and licensed inputs vary by signal"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": "qkg:concept:7f354cc2-ff9a-5e5b-a1ec-dc927170794e",
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:8f10c0e2-c528-5b6b-a3e0-ae5a5141a7f6"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:7f354cc2-ff9a-5e5b-a1ec-dc927170794e"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:7f354cc2-ff9a-5e5b-a1ec-dc927170794e"
+    ],
+    "source_record_ids": [
+      "qkg:record:b97428cb-6a01-5e61-95fc-78d6a432c3bd"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "输入字段提取不完整，不得视为完整数据需求合同。"
+  ],
+  "name": "Price delay coeff",
+  "native_source_ids": [
+    "PriceDelaySlope"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 4524,
+        "line_ordinal": 716,
+        "line_sha256": "a4b27549be5f6d9849e7cd7e63cf70179a06534d1bc8db6dc54fe5a5703a511d",
+        "record_id": "qkg:record:b97428cb-6a01-5e61-95fc-78d6a432c3bd"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "not_applicable"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "primary_definition"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:8f10c0e2-c528-5b6b-a3e0-ae5a5141a7f6",
+  "record_kind": "signal",
+  "rights": {
+    "attribution_required": true,
+    "commercial_use": [
+      "CONDITIONAL"
+    ],
+    "derivative_allowed": [
+      "CONDITIONAL"
+    ],
+    "license_labels": [
+      "GPL-2.0"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "CONDITIONAL"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [],
+        "status": "ADMITTED"
+      },
+      "attribution": [
+        "Hou and Moskowitz"
+      ],
+      "code_url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/Signals/pyCode/Predictors/ZZ2_PriceDelaySlope_PriceDelayRsq_PriceDelayTstat.py#L1",
+      "license": "GPL-2.0",
+      "locator": "CSV record 198; Acronym=PriceDelaySlope",
+      "name": "Price delay coeff",
+      "native_id": "PriceDelaySlope",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": null,
+        "url": null,
+        "year": 2005
+      },
+      "parameters": {
+        "filter": null,
+        "long_short_quantile": "0.1",
+        "portfolio_period_months": 12.0,
+        "sign": 1.0,
+        "start_month": 7.0,
+        "stock_weight": "EW"
+      },
+      "primary_source": true,
+      "record_id": "qkg:record:b97428cb-6a01-5e61-95fc-78d6a432c3bd",
+      "response_sha256": "f6c055120bad7afe97c16e23e0f49bce0982269026605a955e8064bd661cf415",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": "8db892442c2c3a3779b0f1eac4370d3655be15a1",
+      "rights": {
+        "attribution_required": true,
+        "commercial_use": "CONDITIONAL",
+        "derivative_allowed": "CONDITIONAL",
+        "license": "GPL-2.0",
+        "license_id": "qkg:license:9d6cc42c-065b-5687-87f6-b1e384dea14c",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "CONDITIONAL",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "REVIEW_REQUIRED",
+        "terms_url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/LICENSE"
+      },
+      "sha256": "f6c055120bad7afe97c16e23e0f49bce0982269026605a955e8064bd661cf415",
+      "source_id": "osap",
+      "source_name": "Open Source Asset Pricing",
+      "url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/SignalDoc.csv"
+    }
+  ]
+}

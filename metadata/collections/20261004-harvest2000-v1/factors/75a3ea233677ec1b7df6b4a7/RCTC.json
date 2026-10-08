@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "对比全网最近移动成本基准与协议历次支付给矿工的美元收入规模。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-c27c5b98a857281d4bf1a0b4",
+        "harvest-source-cf4d0813a7e06af73f5e3730",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "源文间隔 1 day；须在区间结束、原件及必要价格/分类标签发布后使用，实际发布延迟/PIT快照缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-c27c5b98a857281d4bf1a0b4",
+        "harvest-source-cf4d0813a7e06af73f5e3730",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "计算按每笔原生币最后移动日价格计价的全网已实现市值。 将历次矿工收入按各发生期美元价值累积得到Thermo Cap，作为分母。 边界：累计收入不是把历史发行量按今日价格一次重估。 分母为0及账本早期缺失价格如何处理未在本节给出。 RevNtv/RevUSD严格按本次供应商文档：排除创始人奖励/社区基金发行；ETH合并后只含优先费；SOL含验证者投票、质押、手续费及租金收入。该定义不等于通用的链上全部经济收入。RevUSD按PriceUSD换算，RevAllTimeUSD累计历史RevUSD。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-c27c5b98a857281d4bf1a0b4",
+        "harvest-source-cf4d0813a7e06af73f5e3730",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对比全网最近移动成本基准与协议历次支付给矿工的美元收入规模。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-c27c5b98a857281d4bf1a0b4",
+        "harvest-source-cf4d0813a7e06af73f5e3730",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CapRealUSD / RevAllTimeUSD。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-c27c5b98a857281d4bf1a0b4",
+        "harvest-source-cf4d0813a7e06af73f5e3730",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CapRealUSD：按冻结原始文档定义，原生名称/作用见公式和计算步骤；RevAllTimeUSD：按冻结原始文档定义，原生名称/作用见公式和计算步骤。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-c27c5b98a857281d4bf1a0b4",
+        "harvest-source-cf4d0813a7e06af73f5e3730",
+        "harvest-source-343fb5fbf507e64183a4a476"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "coinmetrics/product-docs",
+  "lab": null,
+  "missing_information": [
+    "供应商数据获取与商用授权未确认",
+    "区间时间边界、发布延迟和修订历史未冻结",
+    "未获取行情/链上数据或执行任何回测",
+    "供应商内部算法/分类标签仅有文档层定义，未取得完整源码"
+  ],
+  "name": "已实现市值与累计矿工收入比",
+  "native_source_id": "RCTC",
+  "one_line": "对比全网最近移动成本基准与协议历次支付给矿工的美元收入规模。",
+  "record_id": "RCTC",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/economics/valuation.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Coin Metrics, product-docs official repository",
+      "id": "harvest-source-c27c5b98a857281d4bf1a0b4",
+      "license": "NOASSERTION",
+      "locator": "Realized Cap to Thermo Cap (RCTC):L84-L126",
+      "revision": "8489126ae94aff995d01be44f965327f2640f51e",
+      "sha256": "d1d90ee3c70e9f7fddbe495fd8d980f76258858843333c92b9af4a336617f2cb",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/economics/valuation.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Coin Metrics, product-docs official repository",
+      "id": "harvest-source-cf4d0813a7e06af73f5e3730",
+      "license": "NOASSERTION",
+      "locator": "market/market-capitalization.md:L1-L462",
+      "revision": "8489126ae94aff995d01be44f965327f2640f51e",
+      "sha256": "61d2ea32d8a3e3c337da8ebc04d25cafaaa5a6ddbaa85b4f2ca7d0a12a2c53d8",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/market/market-capitalization.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Coin Metrics, product-docs official repository",
+      "id": "harvest-source-343fb5fbf507e64183a4a476",
+      "license": "NOASSERTION",
+      "locator": "fees-and-revenue/revenue.md:L1-L135",
+      "revision": "8489126ae94aff995d01be44f965327f2640f51e",
+      "sha256": "75caa2f337fa2d236184f98cf2ebd0e8ada58c2ca9086eac3cc7d8d891e92dde",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/fees-and-revenue/revenue.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

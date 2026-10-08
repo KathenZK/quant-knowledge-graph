@@ -1,0 +1,137 @@
+{
+  "economic_basis": {
+    "hypothesis": "如果同到期普通看涨和触价时的远期交易确实可按约定获得，这个逐路径不等式可能为给定或有负债提供不依赖波动率预测的覆盖。它讨论模型内支付上界和覆盖成本，不证明实际交易有正收益，也不代表对手方、跳空成交及融资风险已消除。",
+    "missing": [
+      "只审来源模型内支付覆盖定义；无行情、交易、求解、回测或现实无风险收益证明。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "warwick.ac.uk/hobson/publications",
+  "lab": null,
+  "missing_information": [
+    "只采2009-07-20作者原讲义的Eq1–2及§2.4–2.7。作者出版页把该讲义列为2010 Paris–Princeton；这是不同的版本标签，不把下载文件伪称2001期刊原件或1998PS。讲义把one-touch例子归于Brown/Hobson/Rogers2001[10]。",
+    "价格S=exp(−rt)P与C(k)=普通现货call价格(行权价k exp(rT))来自原文。障碍B及数字支付1均保留源归一化口径；不能把S当未折现现货、把固定B当固定P障碍、或把归一化单位直接当一元到期现金。实际合约、分红/持有成本与货币转换仍需另订。",
+    "源Eq1只需给定可交易K<B与零起始代价的触价远期。Eq2对实际可交易档位取inf；若最小值不达到或无可交易K，原文未定义可实施最优订单，不虚构最近档插值/边界选择。有限档能形成覆盖，不据此宣称§2.7连续行权价框架的尖锐上界已实现。",
+    "B>S0保证起始尚未触价；H_B记录第一次触价，触价后下跌/再上升不重置；支付发生在T，不在H_B。q在起始决定，触价后不按剩余距离重新放大。",
+    "对跳过障碍的路径保留实际S_HB≥B。p10证明文字把去掉正部后的结果称为等号，但在S_HB>B时是(S_HB−K)/(B−K)>1；此处保留Eq1有效不等式，不把原文泛化等号当成立或改写原PDF。",
+    "并非每条路径恰好复制：未触价时call仍可能付正值，触价但S_T<K时也可超额覆盖。相等需要附加路径条件；不把复制差额视为免费确定利润，也未定义卖出目标数字负债的成交价/入场溢价。",
+    "模型假设可在首次触价按实际S_HB开远期并持到T、远期零初始代价且交易摩擦为零或可忽略。零代价不是零保证金、无限信用或无中途现金需求。流动性、滑点、延迟、停牌、保证金、借券与对手方风险未冻结。",
+    "原Remark2.8允许静态期权按买/卖价估覆盖费用；本条为多call可用其ask，但来源未给实际费率与报价同步实现。未估计现实费用；仅规则定义审阅，不是回测/执行准备完成。",
+    "完整鲁棒障碍/回望保守覆盖族至多1候选；本文后续上下界、嵌入、lookback积分及不同K/T/B不拆策略或因子。原件/图像不入Git，市场数据许可不由讲义获得，commercial REVIEW_REQUIRED。"
+  ],
+  "name": "Hobson：看涨价选档与首次触价远期的保守支付覆盖",
+  "native_source_id": "sepmib.pdf",
+  "one_line": "按看涨价格与距障碍距离选择行权价，先买等比例看涨，首次触及上障碍后做同量远期空头，持至到期覆盖一次触价数字支付。",
+  "record_id": "sepmib.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；理论支付覆盖不等于真实成交或盈利。",
+    "metadata": "原生身份、定位及自撰中文定义；原文/图像/源码/市场数据不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://warwick.ac.uk/fac/sci/statistics/staff/academic-research/hobson/publications/sepmib.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "David Hobson, The Skorokhod Embedding Problem and Model-Independent Bounds for Option Prices, lecture datedJuly20,2009. §1 attributes one-touch example to H.Brown,D.Hobson,L.C.G.Rogers, Robust hedging of barrier options, MathematicalFinance11(3),285–314,2001.",
+      "id": "hobson-sepmib-2009-pdf",
+      "license": "No blanket redistribution/commercial license located in the pinned author lecture or publication entry. Original rule attribution in lecture is Brown,Hobson,Rogers2001[10]. Author hosting is not a license grant. Only self-authored metadata and locators; no fulltext/images/market data distributed; commercial REVIEW_REQUIRED.",
+      "locator": "Physicalp2–3 Eq1–2; p7 discountednotation; p8–9 financial assumptions; p10 one-touch construction; p46[10]/p47[31,33] attribution. Field lines refer to the exact pinned derived UTF8 text.",
+      "revision": "DavidHobson authorlecture dated2009-07-20; publication index lists Paris-Princeton2010; PDFsha256:b64a48eb1c5250473412132a9f5912b2b02fddd1ad5c34c5f10c3a88f9c2ce87",
+      "sha256": "b64a48eb1c5250473412132a9f5912b2b02fddd1ad5c34c5f10c3a88f9c2ce87",
+      "supports": [
+        "原作者讲义逐路径覆盖、份额、触发、到期与限制"
+      ],
+      "url": "https://warwick.ac.uk/fac/sci/statistics/staff/academic-research/hobson/publications/sepmib.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_DOCUMENT_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "University of Warwick, David Hobson author publications page.",
+      "id": "hobson-author-publications",
+      "license": "Author university page; no blanket license inferred. Identity facts only; paper and marketdata rights separate.",
+      "locator": "Author publications list links sepmib.pdf as Paris-PrincetonLectures2010 and barriers.pdf as Brown,Hobson,Rogers2001; identity/attribution only, not another source of unreviewed trading rules.",
+      "revision": "Warwick author publication page HTTP sha256:2c3e00b37ea3a1ec0a6d319b45790ab7307bc2cd48437e6e4aea29c66c169dec",
+      "sha256": "2c3e00b37ea3a1ec0a6d319b45790ab7307bc2cd48437e6e4aea29c66c169dec",
+      "supports": [
+        "作者身份与讲义版本/引用出版链"
+      ],
+      "url": "https://warwick.ac.uk/fac/sci/statistics/staff/academic-research/hobson/publications/",
+      "verification": "FETCHED_PINNED_ORIGINAL_HTML"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "hobson-sepmib-2009-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一单位在T支付的单次上触障碍数字负债，以普通同到期看涨多头与触价时才建立的远期空头覆盖。源用折现价格S_t=exp(−rt)P_t，C(k)为对应call现价，等于普通现货call在行权价k exp(rT)的价格；本条所有B、K和支付1都沿用这个口径。它不直接指定股票代码、实际合约乘数或一元现金支付。"
+    },
+    "cost": {
+      "evidence": [
+        "hobson-sepmib-2009-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "源起始覆盖价格为C(K)/(B−K)，远期为零起始代价，并明确假设其交易费用为零或可忽略；这是理论假设，不是已核现实费率。Remark2.8说静态期权可用相应bid/ask估值，本条为买call时可按ask估初始支出；远期最多建一次只限制收费次数，未给费用金额。佣金、保证金融资、滑点、税及合约乘数均未冻结，未计算实际净成本或收益。"
+    },
+    "entry": {
+      "evidence": [
+        "hobson-sepmib-2009-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定要覆盖的一单位负债，起始买q=1/(B−K)份同到期call，支付qC(K)。起始不建远期；若第一次触价发生在T之前，按当时实际S_HB建立q份卖出方向的零初始代价远期，锁定到期增益q(S_HB−S_T)。跳过B时使用S_HB，不能以B伪造成交。即使触价后又回落，仍是这一次远期；没有再次触价重复开仓，也没有额外的价格择时入口。"
+    },
+    "execution_time": {
+      "evidence": [
+        "hobson-sepmib-2009-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：逻辑顺序是0时买call、第一次H_B<T建立一次远期、T统一结算；源没有交易所、时区、报价时间戳、延迟和成交价确认、停牌/部分成交/保证金处置。不能把连续触价规则直接宣称为已核的某根K线收盘成交，未执行来源算法或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "hobson-sepmib-2009-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "call保留至T；触价建立的远期也在T结算，而不是触价就平掉call或当场支付负债。若从未触价，只有非负call支付且负债为0；若触价，call与远期合计至少1以覆盖到期负债。H_B=T时远期差额为0，call本身已至少支付1。没有重置障碍、提前止盈止损或T后自动续作；来源模型终端支付不等于实际交割流程已经定义。"
+    },
+    "position": {
+      "evidence": [
+        "hobson-sepmib-2009-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每单位归一化负债，静态call份额+q=1/(B−K)，初始投入qC(K)；远期份额θ_t=−q·1{H_B<t≤T}，触价前0、触价后固定空头q。它是按支付单位缩放的合约份额，不是100%权益或delta不断对冲；未规定账户净值占比、整数张数、合约乘数和保证金。负债规模若为N>0可同比缩放全部支付与份额，这是来源线性支付的解释，不新增策略。"
+    },
+    "risk": {
+      "evidence": [
+        "hobson-sepmib-2009-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "覆盖依赖源交易条件和正确单位，不能推成实盘无风险。即使不指定波动模型，仍须call确实可买、首次触价可及时做远期且能维持到T；延迟、费用、信用与保证金可能破坏账面覆盖。源只保证≥：p10称去掉正部后得到等号，在跳过障碍S_HB>B时按其原式应严格大于1，本条保留不等式和实际触价值，不默改原件。最小值不达到/有限档/价格单位与现金支付变换等缺项也不靠假设补齐。"
+    },
+    "signal": {
+      "evidence": [
+        "hobson-sepmib-2009-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "这是覆盖成本选择，不是预测信号。对每个可交易K<B计算D(K)=C(K)/(B−K)，有可实现最小值时取其任一达到最小值的K*；源Eq2严格写inf，§2.7另写arg inf，不提供无最小值或并列时的实盘选档程序。冻结K后q=1/(B−K)，H_B记录第一次S≥B。到期Pi=q(S_T−K)^++q(S_HB−S_T)1{H_B≤T}≥1{H_B≤T}；无触价时第二项按0处理。只用当时call报价和后续已发生触价，不用未来S_T决定起始K。"
+    },
+    "timeframe": {
+      "evidence": [
+        "hobson-sepmib-2009-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "起点0一次选择静态call，监测0至T中的第一次H_B=inf{u>0:S_u≥B}，仅在H_B<T时建立一次远期，所有支付到T结算。不是按每根bar不断调q或按月滚动；源事件时间连续监测，日/分钟OHLC不能自动等同真实首次触价。B>S0的选定范围不含起始已触价。"
+    },
+    "universe": {
+      "evidence": [
+        "hobson-sepmib-2009-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定一条可观测的右连续S路径、起始S0、到期T及上障碍B>S0；在可交易的同到期call档位中选K<B且B−K>0，并要求可以在首次触价时建立源约定的远期交易。§2.7证明最紧价格界另假定所有非负行权价连续可交易、价格曲线凸递减等；不把这些证明假设冒充真实上市链，也不把不存在的档位插值成可成交合约。"
+    }
+  }
+}

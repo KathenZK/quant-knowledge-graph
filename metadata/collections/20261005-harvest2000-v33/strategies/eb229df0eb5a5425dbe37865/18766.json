@@ -1,0 +1,271 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者假设期权行权价供给扩张和隐波同时升高提示未来下跌风险，非高态较适合提供认沽保险；这里只保留其研究假说，没有因果/收益验证。",
+    "missing": [
+      "不复述绩效图为证据；不承认正态触价概率或稳赚保证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "www.quantconnect.com/research",
+  "lab": null,
+  "missing_information": [
+    "原embed的Lean、scikit-learn、NumPy/pandas及行情版本未锁，补充代码/文档不冒充历史runtime。",
+    "调用和缺陷原样保留，不修理成理想策略；没有上游执行、回测、订单或经济效力验证。",
+    "期权IV模型、PIT链、订单购买力/取整、手续费/滑点/资金利息、成交失败后状态恢复仍待研究。",
+    "商业权利REVIEW_REQUIRED；不分发源码、全文或行情。"
+  ],
+  "name": "QC：隐波与行权价数量变化双聚类的认沽卖出状态机",
+  "native_source_id": "18766",
+  "one_line": "分别聚类ATM隐波与每单位指数点行权价数量的变化率，两者均非高态才卖认沽；双高态、近到期或触及执行价退出。",
+  "record_id": "18766",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED; no reproduced performance.",
+    "metadata": "原生身份、哈希、定位与自撰定义；未主张完整源码/文章分发权。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.quantconnect.com/terms/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Derek Melchin / QuantConnect research18766",
+      "id": "qc-research-18766-mainpy",
+      "license": "NOASSERTION: public first-party embed has no standalone code license; commercial REVIEW_REQUIRED; Lean license does not transfer.",
+      "locator": "div#636703bc3b8a733917abac5be2978da1_source_mainpy pre decoded native UTF8 lines 1–113",
+      "revision": "public embed 636703bc3b8a733917abac5be2978da1; HTTP sha256 141c384f090c2527e92e906fc7599c43dd1d63c40a26fe21b5a2118286503b9d",
+      "sha256": "141c384f090c2527e92e906fc7599c43dd1d63c40a26fe21b5a2118286503b9d",
+      "supports": [
+        "PRIMARY_AUTHOR_EMBED_CONTROL_FLOW"
+      ],
+      "url": "https://www.quantconnect.com/terminal/processCache?request=embedded_backtest_636703bc3b8a733917abac5be2978da1.html",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "lean-indicators-rateofchange-cs",
+      "license": "Apache-2.0 in source header; scope limited to this file, not primary embed/data.",
+      "locator": "UTF8 source physical lines; explicit field spans / supplementary evidence",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "4c737e8adf073fd150022ef7f7d240ec4564f2bce7388a91edf8188cdb54a0ed",
+      "supports": [
+        "SUPPLEMENTARY_API_MATH_REFERENCE_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Indicators/RateOfChange.cs",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "lean-indicators-maximum-cs",
+      "license": "Apache-2.0 in source header; scope limited to this file, not primary embed/data.",
+      "locator": "UTF8 source physical lines; explicit field spans / supplementary evidence",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "28701a251495742cc4cafcfc55091160b094f4aa38c22b4a16ff49de08c5b7f5",
+      "supports": [
+        "SUPPLEMENTARY_API_MATH_REFERENCE_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Indicators/Maximum.cs",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "lean-indicators-minimum-cs",
+      "license": "Apache-2.0 in source header; scope limited to this file, not primary embed/data.",
+      "locator": "UTF8 source physical lines; explicit field spans / supplementary evidence",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "110fde4a6dbc545b4525b620f11846d97b5408789365812d0aa5e83fe0fdff37",
+      "supports": [
+        "SUPPLEMENTARY_API_MATH_REFERENCE_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Indicators/Minimum.cs",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "lean-indicators-standarddeviation-cs",
+      "license": "Apache-2.0 in source header; scope limited to this file, not primary embed/data.",
+      "locator": "UTF8 source physical lines; explicit field spans / supplementary evidence",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "b8c8cd9b70448bea9020859d68d2d2bd6b1cf39a98ec31620998f76106981e58",
+      "supports": [
+        "SUPPLEMENTARY_API_MATH_REFERENCE_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Indicators/StandardDeviation.cs",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "lean-indicators-variance-cs",
+      "license": "Apache-2.0 in source header; scope limited to this file, not primary embed/data.",
+      "locator": "UTF8 source physical lines; explicit field spans / supplementary evidence",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "dd4b7bc3aef610e10484a28ce75b819983cb2b5755d3f2e5e1f3e1b3c7bd3410",
+      "supports": [
+        "SUPPLEMENTARY_API_MATH_REFERENCE_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Indicators/Variance.cs",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "lean-indicators-indicatorbase-cs",
+      "license": "Apache-2.0 in source header; scope limited to this file, not primary embed/data.",
+      "locator": "UTF8 source physical lines; explicit field spans / supplementary evidence",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "efee6ce502fdae4cef75c5414401534880f3398f6dd4912a785d97c79d5ce16b",
+      "supports": [
+        "SUPPLEMENTARY_API_MATH_REFERENCE_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Indicators/IndicatorBase.cs",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect Lean maintainers",
+      "id": "lean-qcalgorithm-trading",
+      "license": "Apache-2.0 in source header; scope limited to this file, not primary embed/data.",
+      "locator": "UTF8 source physical lines; explicit field spans / supplementary evidence",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "a8c279c5568d5d67773f3064f1551b4b269613a82d3032ef49279cc0428f4d6f",
+      "supports": [
+        "SUPPLEMENTARY_API_MATH_REFERENCE_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Algorithm/QCAlgorithm.Trading.cs",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect",
+      "id": "lean-license",
+      "license": "REVIEW_REQUIRED; see locked text; no cross-source inheritance.",
+      "locator": "Original native HTML/text",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "522cf0a716ce03f67d46f8fceb5bf78c5b84400ec5cd8d14bf9f02cddc1cb6ba",
+      "supports": [
+        "许可边界或官方接口说明"
+      ],
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/LICENSE",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "QuantConnect",
+      "id": "qc-terms",
+      "license": "REVIEW_REQUIRED; see locked text; no cross-source inheritance.",
+      "locator": "Original native HTML/text",
+      "revision": "HTTP content snapshot",
+      "sha256": "6ce81f2329fb75295f21ec4a2864f47e650c19a4601de1a18c08b3b33b186611",
+      "supports": [
+        "许可边界或官方接口说明"
+      ],
+      "url": "https://www.quantconnect.com/terms/",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "scikit-learn developers",
+      "id": "sklearn15-kmeans-document",
+      "license": "Versioned API documentation; no transfer to primary source or data; commercial REVIEW_REQUIRED.",
+      "locator": "UTF8 source physical lines; explicit field spans / supplementary evidence",
+      "revision": "1.5.2 versioned documentation; supplemental not historical runtime",
+      "sha256": "d1a9e6525f4caf3ef01b576d12775978c69f18f6268a7969261ff4cf0cc7694f",
+      "supports": [
+        "VERSIONED_API_DOCUMENT_NOT_HISTORICAL_RUNTIME"
+      ],
+      "url": "https://scikit-learn.org/1.5/modules/generated/sklearn.cluster.KMeans.html",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "Derek Melchin / QuantConnect",
+      "id": "qc-research-18766-author-page",
+      "license": "NOASSERTION; metadata only; commercial REVIEW_REQUIRED.",
+      "locator": "UTF8 source physical lines; explicit field spans / supplementary evidence",
+      "revision": "HTTP sha256 46ef8494ddeec1af135c34ee75cb16884fca66c23f7492d9598aa8f71e2c4ff9",
+      "sha256": "46ef8494ddeec1af135c34ee75cb16884fca66c23f7492d9598aa8f71e2c4ff9",
+      "supports": [
+        "AUTHOR_ATTRIBUTION_AND_SOURCE_CODE_DESCRIPTION_CONFLICT"
+      ],
+      "url": "https://www.quantconnect.com/research/18766/reducing-option-writing-risk-with-iv-rank-and-strike-clusters/",
+      "verification": "PINNED_BYTES_STATIC_SOURCE_REVIEW_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "qc-research-18766-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "作者公开实现只交易SPX指数期权认沽空头；SPX指数订阅提供现值和日价格标准差，没有买入指数或国库券作为覆盖腿。初始化资金1000000，起止2016-01-01至2025-02-14属于源回测配置，不是本项目回放结果。"
+    },
+    "cost": {
+      "evidence": [
+        "qc-research-18766-mainpy"
+      ],
+      "status": "MISSING",
+      "text": "没有显式固定佣金、点差、滑点、市场冲击、融资或现金利息参数。SecurityInitializer使用当前brokerage_model与last-known-price seeder，但源码没有声明具体brokerage model版本或费表；缺项不能作零成本。源网页的回报数字和优化结果未复现，也不作为本条质量或收益依据。"
+    },
+    "entry": {
+      "evidence": [
+        "qc-research-18766-mainpy",
+        "lean-indicators-standarddeviation-cs",
+        "lean-indicators-variance-cs"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "经过非空全链、存在订阅链、IV.update返回true及非暖机门槛后，仅在portfolio.invested为false且两个标签都<2时开仓。按universe筛选认沽并行权价升序排，设m为数量，s为STD22当前值，实际取Python索引−min(int(3s/5),m)的合约，随后add_option_contract、set_holdings(contract,−0.25)。这不是直接找K≤S−3s；代码假定档距5但不检查。int项为0时−0=0会选最小K；m=0时索引报错，没有空链回退。不得按文章“超过3标准差”改写实际序号选档。"
+    },
+    "execution_time": {
+      "evidence": [
+        "qc-research-18766-mainpy",
+        "lean-qcalgorithm-trading"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "调度时先更新全链StrikeAvailability，再更新当时Slice订阅链的IV；只有后者ready且非暖机才进入交易。StrikeAvailability.update的真假只控制画图，没有作为交易总门槛，因此IV先ready但SA尚无label时会读取未定义属性。信号和选档使用本次可取链/现值，不额外假设其为昨日或开盘前快照。发送set_holdings/liquidate请求与实际成交分开：补充Lean版本会按市场开闭发送Market/MarketOnOpen，但原历史调度、链时间、报价可得性、暖机期间调度及成交未验证。"
+    },
+    "exit": {
+      "evidence": [
+        "qc-research-18766-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "若已投资，按顺序检查：两个标签同时==2→liquidate全部组合；否则当前contract到期时间−当前时间严格小于7日→liquidate；否则SPX现值≤该contract执行价→liquidate。只有一个标签为2不会触发第一项，仍可持仓至后两项。开仓要求两者都非高，平仓要求同时高，两者不是互为补集。if已持仓/elif空仓结构使本次调用清仓后不再同次开仓；无逐笔止盈/百分比止损，也无作者自定义成交/指派回调。"
+    },
+    "position": {
+      "evidence": [
+        "qc-research-18766-mainpy",
+        "lean-qcalgorithm-trading"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "开仓只传set_holdings(selected_contract,−0.25)，并且只在无持仓分支调用，不在每天持有时重置权重。所锁Lean补充接口把目标比例传给CalculateOrderQuantity再减未完成市价单数量，形成Market或MarketOnOpen委托；目标属于证券持仓价值/组合价值语义，不是标的delta敞口、每笔最大亏损25%或现金足额覆盖25%。实际张数取决于价格、合约乘数、购买力模型、最低门槛和已有委托，原作者没有固定这些历史环境；不能据−.25宣称真实成交量或保证金安全。"
+    },
+    "risk": {
+      "evidence": [
+        "qc-research-18766-mainpy",
+        "lean-indicators-standarddeviation-cs"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "无指数多头、现金抵押或买入保护认沽的显式腿，卖沽存在尾部损失和保证金风险。保留未处理边界：rank的max==min零分母；全链第一行标的价为0/缺失；无合格到期或认沽导致空索引；当前STD未单独检查ready；NaN/无效IV与少于3个不同样本/并列中心的聚类行为依赖未锁版本；SA未ready的label读取；portfolio有外部持仓但contract仍None；拒单后contract引用与实际持仓关系；两个链更新不齐。源码没有补救以上情况。源文章说聚类IVRank与3σ价外，但实际是原始IV聚类和离散序号选档；s是价格水平标准差，不能把正态收益/1%触及概率当已验证风控。"
+    },
+    "signal": {
+      "evidence": [
+        "qc-research-18766-mainpy",
+        "lean-indicators-rateofchange-cs",
+        "lean-indicators-maximum-cs",
+        "lean-indicators-minimum-cs",
+        "lean-indicators-indicatorbase-cs"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "定义u_t=全链不同strike个数/第一行underlyinglastprice，传给RateOfChange(10)。所锁Lean补充版本在暖机后算(u_t−u_{t−10})/u_{t−10}，分母0返回0，暖机阶段分母为最早已有值；当前ROC输出加入它的252输出窗口，窗口ready后以由旧到新的252点拟合KMeans(n_clusters=3,random_state=0)。另取上述ATM同到期合约IV中位数v_t，先加入252窗口；Minimum/Maximum(252)更新后，把(v_t−min)/(max−min)记作展示用IV Rank。但用于第二个KMeans拟合的实际数组是原始v历史，并非每期Rank。两个KMeans各自把cluster_centers_升序映射为0/1/2，并取当前样本重映射标签。当前样本先进入训练再取自身标签，是滚动分态而非未来标签预测。源只设簇数与随机种子，未固定库版本、n_init、初始化及停止细节；官方1.5.2文档说明n_init默认自1.4改auto，不能把补充版本默认冒充历史运行设置。"
+    },
+    "timeframe": {
+      "evidence": [
+        "qc-research-18766-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每个SPX交易日开盘后1分钟调用一次_rebalance，预热timedelta(365)。价格标准差为22日频价格点；IV聚合值历史长度252，StrikeAvailability的ROC period10且输出window大小252。这里252是成功更新窗口的点数，不保证等于连续252个有效交易日，两个来源链缺失会使更新日集合不同。"
+    },
+    "universe": {
+      "evidence": [
+        "qc-research-18766-mainpy"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "两个期权链用途不同：订阅链include_weeklys、到期30–90日、strikes(-1,1)，用于IV取样；每日option_chain(SPX,flatten=True).data_frame全链用于行权价数量及实际选认沽。IV取样以chain.end_time为时点，选到期至少30日的最近到期，再选abs(underlying_last_price−strike)最小的全部并列合约，不另限Call/Put，取IV中位数。开仓从全链选expiry−当前时间≥30日的最早到期、Put且K≤当前SPX；没有再加90日上限，也没有delta、成交量、买卖价或正IV过滤。"
+    }
+  }
+}

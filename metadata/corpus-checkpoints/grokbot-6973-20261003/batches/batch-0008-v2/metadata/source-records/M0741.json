@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0741",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 741,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ec73753ae388d6081bba1ca2c1f5a22cebefdf04755f6adef8f10f1a0bffe2e3",
+    "rule_sha256": "a7efa7f89fb35fd4dd3c3af826c26352b768c879183b51013c23ea54c23bb3eb"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0741",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0741"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/nlx-finances-hybrid-asset-allocation-60-40/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "NLX Finance（Allocate Smartly实测；金丝雀定义沿用Keller与Keuning的HAA-Simple实测页）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "NLX混合资产配置60/40：与HAA-Simple同一金丝雀，风险开启改持SPY 60%、IEF 40%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "NLX Finance's Hybrid Asset Allocation 60/40"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写Allocate Smartly对NLX Finance版本的实测，不是已收的HAA-Simple在风险开启时100%持有SPY，也不是静态60/40基准。该页写规则与此前HAA-Simple几乎相同，唯一差别是风险开启时不把100%给美国股票，而是60%给SPY、40%给IEF。动量定义不在本页重印，按该站HAA-Simple实测页照记：月末最后交易日收盘，动量是1、3、6、12个月百分比收益的不加权平均；TIP与SPY动量都为正才是风险开启。任一为负则为风险关闭，再比较IEF与BIL的动量，IEF较高则100%持有IEF，否则现金。持有至下月最后一个交易日。计算用分红调整收盘价。与原论文相同，1973年年底之前因没有TIPS历史，用IEF代替TIPS。页面写即使配置不变也每月再平衡。本页写原作者论文在1973年年底前如此替换，本条不把该替换写成另一套信号。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "唯一差别句；Calculation notes。动量公式见 https://allocatesmartly.com/dr-keller-keunings-simple-variation-of-hybrid-asset-allocation/ 的Strategy rules tested"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

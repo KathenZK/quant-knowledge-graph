@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述一个观测相对于其局部参考点的稀疏程度，保留非均匀密度场景；没有收益方向或异常阈值的自动结论。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-af8098e29ade33bf01294cab"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "完整样本集合所有坐标均已发布后才可计算；全窗评分不得回填窗口内早期时点。金融变量、缩放、时间/横截面样本定义、供应商与PIT均MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-af8098e29ade33bf01294cab"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源固定SIGMOD原站下载PDF的原字节，原生身份DOI10.1145/335191.335388；CrossRef DOI/四作者/页码与发布页PDF链接共同核身份。发布页日期2000-06-07与CrossRef2000-05-16各保留，不自行选一个冒称算法首提时间。 论文通式允许给定距离。本条为清楚可计算输入选互异有限实向量的欧氏距离，n>=3和2<=k<=n−1为研究域限制；不冒称论文软件主动验证。输入单位、坐标尺度及金融映射必须事先固定，不自动标准化。 对每个p，排除它自己再求第k距离；邻域是所有距离不超过该半径的其他点，不是只取k个数组索引。若多个点位于同一边界，|N_k(p)|可能大于k，所有平均分母使用实际基数。 先求所有点的d_k和N_k。对p的每个邻居o，用o自己的d_k(o)作为距离下限，得到max{d_k(o),d(p,o)}；不是p的半径，也不是两端半径平均。这一有向可达距离通常不对称，不把它叫新的度量。 按p邻域对可达距离求算术均值后再取倒数，得到lrd(p)。不是先取每条距离倒数再平均，也不是用k除一个球体积的普通核密度估计。每个邻居o的lrd同样由o自身完整邻域计算，全部使用同一个D和同一k。 最终先取lrd(o)/lrd(p)，再按p的全部邻居平均。可等价写成p的平均可达距离乘邻居平均可达距离倒数的均值，不能简化为p与邻居平均距离的单一比。该等价式是代数解释，未运行计算。 原文p4为避免lrd无穷明确不处理重复坐标；此合同也不接收重复向量。互异有限向量在精确欧氏算术下使所有分母严格正，但有限浮点差平方/求和仍可能溢出或下溢，数值实现及容差未固定。距离并列不等于坐标重复，前者保留。 LOF在内部近似均匀密度区域可接近1，但不是概率、不是强制>=1，也没有统一有限上界或自动二元分类阈值。高值仅表示相对于当前局部邻居的稀疏程度，不能视为价格将反转或收益驱动证据。 p7–8说明k变化不保证LOF单调。论文给MinPts下限10等经验建议和范围内最大LOF排序启发式；这些来自原实验而非通用默认。当前只定义显式给定单一k的整组评分，不替用户挑k/阈值，也不以多k最大值或每个p另计因子。 这是同样本集合内的transductive定义。新样本加入D会改变距离次序、邻域与密度；不能自动套为固定训练集novelty接口或把训练集内负LOF软件字段当原定义。论文的索引加速实现、后来库的固定k并列选择/eps均未审核。 距离由整个D共同决定。若D包含时间窗口的各状态，窗口结束前不可使用最终LOF回填历史时点；若D为横截面，全部实体字段必须已发布。邻居关系不自动带时间排除、因果或经济解释。 边界：重复坐标、缺值、NaN/Inf、空样本、k越界均不在所审合同；没有源实现的自动修复或错误返回承诺。 边界距离并列全部纳入；使用恰k条返回结果的库即使函数同名也不能未经比较宣称与论文完全一致。 半径用邻居o，均值用|N_k(p)|；lrd单位为距离倒数，LOF无量纲；整体正比例缩放距离不改精确LOF，逐坐标异比例缩放通常会改。 k是显式输入没有统一软件默认；论文经验10–20不是金融标准。评分大小、排序及阈值都未做金融检验。 已有MatrixProfile/局部维度/kNN-KL共享近邻及距离原语；本条完整多邻域密度相对构造的区别不代表数学或经济独立性。 纸面有限计算已审，未执行来源代码、实现评分、采集行情或回测；后续执行需选与全并列合同相符的实现及数值环境。 ACM原PDF仅有个人/课堂、非牟利等限制的复制许可；公开发布、改编或商业再使用未获一般授权。原文/数据不入Git，公开只保留自撰定义、归属及证据pin。 输出：全部样本的原始正向LOF评分向量一个完整族；逐点、参数、排序/阈值包装不拆新增。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-af8098e29ade33bf01294cab"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述一个观测相对于其局部参考点的稀疏程度，保留非均匀密度场景；没有收益方向或异常阈值的自动结论。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-af8098e29ade33bf01294cab"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定n>=3个互异有限实向量D={x1,...,xn}，本研究选欧氏d(p,q)=||p−q||₂，显式整数k=MinPts∈[2,n−1]。d_k(p)是排除p后的第k个距离次序统计量；N_k(p)={q∈D\\{p}:d(p,q)<=d_k(p)}，所有边界并列都保留。reach_k(p,o)=max{d_k(o),d(p,o)}；a_k(p)=Σ_(o∈N_k(p))reach_k(p,o)/|N_k(p)|；lrd_k(p)=1/a_k(p)。LOF_k(p)=Σ_(o∈N_k(p))[lrd_k(o)/lrd_k(p)]/|N_k(p)|=a_k(p)·Σ_(o∈N_k(p))[1/a_k(o)]/|N_k(p)|。全部p的评分向量及任何k变化保守计一个LOF构造族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-af8098e29ade33bf01294cab"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "D（n>=3 pairwise-distinct finite real vectors of common positive dimension; positive finite distances and all finite intermediate arithmetic）：完整观察样本集合；不做标签监督、自动归一、去重、补缺或时间排除。。参数：MinPts：原文k邻域参数，调用者必须预先给定；经验区间不当默认，也不拆参数族；范围explicit integer k with2<=k<=n−1；来源默认值None；本条选定None；distance：原文使用给定d；本研究选欧氏子合同，输入缩放和字段含义另需固定；范围selected distance on finite real vectors；来源默认值None；本条选定Euclidean"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-af8098e29ade33bf01294cab"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "doi.org/10.1145",
+  "lab": null,
+  "missing_information": [
+    "金融输入样本、字段单位/缩放、距离选择依据、k、供应商与PIT未固定",
+    "未选实际数值实现和误差/退化处理，未运行算法",
+    "阈值、金融异常含义与收益/风险有效性未验证",
+    "新样本novelty与训练内评分差异未做实现审计",
+    "原论文/市场数据商业再使用许可未建立"
+  ],
+  "name": "以邻居局部密度为参照的离群评分",
+  "native_source_id": "335191.335388",
+  "one_line": "先用邻居自身半径平滑距离并估计各点局部密度，再将本点密度与全部邻居密度比较。",
+  "record_id": "335191.335388",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://sigmodrecord.org/?download_id=6631&smd_process_download=1"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Markus M. Breunig, Hans-Peter Kriegel, Raymond T. Ng, Jörg Sander; LOF: Identifying Density-Based Local Outliers, ACM SIGMOD Record29(2),2000,pp93–104, DOI10.1145/335191.335388. Self-authored Chinese definition.",
+      "id": "harvest-source-af8098e29ade33bf01294cab",
+      "license": "ACM_COPYRIGHT_PERSONAL_CLASSROOM_LIMITED_PERMISSION",
+      "locator": "original title authors and ACM2000 copying permission limits: physical PDF p1-p1; comparison with global distance/depth approaches and distance notation: physical PDF p2-p2; Definitions3–5 kth distance, boundary ties and neighbor-oriented reachability distance: physical PDF p3-p3; Definitions6–7 local reachability density and average density ratio; duplicate-coordinate exclusion: physical PDF p4-p4; section6.1 parameter changes need not be monotonic: physical PDF p7-p7; section6.2 MinPts range recommendations and optional maximum-over-range ranking heuristic: physical PDF p8-p8",
+      "revision": "ACM SIGMOD Record29(2),2000,pp93-104; publisher-hosted original PDF snapshot",
+      "sha256": "aa774384792d93548994bda170ab96a895c4c17125821a5db78789f0aed8bde2",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://sigmodrecord.org/?download_id=6631&smd_process_download=1",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Markus M. Breunig, Hans-Peter Kriegel, Raymond T. Ng, Jörg Sander; LOF: Identifying Density-Based Local Outliers, ACM SIGMOD Record29(2),2000,pp93–104, DOI10.1145/335191.335388. Self-authored Chinese definition.",
+      "id": "harvest-source-25e3f61cfee00e24f4319bee",
+      "license": "NOASSERTION_WEBPAGE_SHELL",
+      "locator": "exact title four authors and original PDF download link:L253-L265; publisher journal issue date; differs from CrossRef publication date:L278-L278",
+      "revision": "SIGMOD Record publication page current HTTP snapshot",
+      "sha256": "58d9bce54e399a88d289b79af84a006d1d8ab6b870ddb9aa4d9ae9a5781c328c",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://sigmodrecord.org/2000/06/07/lof-identifying-density-based-local-outliers/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Markus M. Breunig, Hans-Peter Kriegel, Raymond T. Ng, Jörg Sander; LOF: Identifying Density-Based Local Outliers, ACM SIGMOD Record29(2),2000,pp93–104, DOI10.1145/335191.335388. Self-authored Chinese definition.",
+      "id": "harvest-source-8091e19f8a7b5759cf57fdf2",
+      "license": "NOASSERTION_REGISTRY_METADATA",
+      "locator": "DOI four authors volume29 issue2 pages93-104 published2000-05-16; license URL is not CC grant:JSON pointer /message",
+      "revision": "CrossRef current bibliographic HTTP response for exact DOI",
+      "sha256": "a0c2730a6eeae2434ff67bc08485ba67f375d321529b96568a17fdaaa1a9b391",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://api.crossref.org/works/10.1145/335191.335388",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

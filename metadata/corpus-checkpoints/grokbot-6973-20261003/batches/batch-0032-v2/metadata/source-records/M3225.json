@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3225",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3179,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "24fe78e8e5083acdd1332ac00ba7d43685534b7ad831a4acfb6a1e9649a78054",
+    "rule_sha256": "3242aff522c8c9d06707afc884c9c7f4485a34893a1b6a6c5adfc2434876f77b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3225",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3225"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BybitCryptoRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密现货：Bybit；BTCUSDT分钟EMA(30)>EMA(60)且BTC现金=1未清仓则再买1；慢头且BTC>1则清仓，清仓后对剩余BTC限价×1.01卖出（Lean BybitCrypto）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密货币"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密现货：Bybit；BTCUSDT分钟EMA(30)>EMA(60)且BTC现金=1未清仓则再买1；慢头且BTC>1则清仓，清仓后对剩余BTC限价×1.01卖出（Lean BybitCrypto）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BybitCryptoRegressionAlgorithm.py`。`add_crypto(\"BTCUSDT\")`；`fast/slow=ema(30/60,Minute)`。快>慢：若 `cash_book[BTC].amount==1` 且未标记已清仓 → `buy(BTCUSDT,1)`。否则：若 BTC>1 → `liquidate(BTCUSDT)` 并标记；若已清仓且 BTC>0 且无未完成订单 → `limit_order(..., −btc_amount, price×1.01)`。不是永续双合约核（W491），也不是 GDAX LTC 核（W410）。提出日期未知。Bybit 现货 BTCUSDT EMA30/60+限价×1.01清仓余量 ≠ 永续双合约（W491）/GDAX LTC（W410）。计入加密。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

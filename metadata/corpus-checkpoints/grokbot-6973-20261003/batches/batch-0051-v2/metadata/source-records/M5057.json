@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5057",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5011,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a67716966aac80cbee89c5306dcfd74f2429fd3518ebbbef51dc801bc0f15cf2",
+    "rule_sha256": "af73af5c348fccb781242a21145eea75b4ab2c741bbfcc4a7bbbbe14ba7992a6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5057",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5057"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bestfolio.app/blog/volatility-scaled-trend-band"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BestFolio Research"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-216/W2268"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BestFolio·波动率缩放TQQQ带：日频；QQQ对SMA200；缓冲=clip(0.09−0.075×20日波百分位,0.005,0.20)；上破TQQQ下破BIL（VolScaled·TQQQ/BIL·Band）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Volatility-Scaled TQQQ Trend Band (QQQ→TQQQ/BIL)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 BestFolio 博文《A wider trend band…》研究变体钉死核：日频信号标的 **QQQ** 相对 **SMA200**；算 **20** 日已实现波动率相对过去 **756** 交易日的百分位 p∈[0,1]；对称缓冲 **buffer=clip(0.09−0.075×p, 0.005, 0.20)**（平静约 ±9%，高波约 ±1.5%）。若 QQQ **> SMA200×(1+buffer)** → **100% TQQQ**；若 **< SMA200×(1−buffer)** → **100% BIL**；带内维持前日仓位。不是固定 +4%/−3% 改 QQQ（W2265）；不是 DualGate。计入美股/ETF。提出日期 2026。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BF blog VolScaled Band · QQQ SMA200 · buffer=clip(0.09-0.075p) · TQQQ/BIL · daily"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

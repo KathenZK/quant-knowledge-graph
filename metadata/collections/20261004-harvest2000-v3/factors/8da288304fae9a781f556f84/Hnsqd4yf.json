@@ -1,0 +1,103 @@
+{
+  "economic_basis": {
+    "hypothesis": "记录已发生波动冲击恢复到指定超额比例的实际观测时长；不拟合指数衰减或OU过程，也不是对未来恢复期的预测。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-Hnsqd4yf-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "事件状态按确认bar更新；f/b等绘图值仍用发展中的当前收盘。成功时长在终点才可用，持续保留的旧值不可当成当前事件估计；若把事件时长与未来收益关联，须按实际可得时点对齐。未执行源码或回测。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-Hnsqd4yf-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅收线时更新事件。每根先记是否已活动：已活动且数据无效则取消；否则优先判断新峰并重置峰时，再判断回落命中，最后才在t−s>=40时超时。因此新峰或命中会优先于超时，40不是无条件硬截止；活动结束当根不再新开事件。所谓冻结基线实际含冲击当根，不是严格冲击前基线。10%升温只决定标签，不决定是否重置峰时，任何更高峰都重置。最近成功时长被保留到下一次成功，未完成/超时/缺失事件不赋值0；所有辅助量计作一个事件特征族。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-Hnsqd4yf-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "记录已发生波动冲击恢复到指定超额比例的实际观测时长；不拟合指数衰减或OU过程，也不是对未来恢复期的预测。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-Hnsqd4yf-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "r=ln(C/C[1])（可选C/C[1]−1），f=stdev_10(r)，b=stdev_100(r)；两者有效且b>0时q=f/b。新冲击为q>=1.75且前q<1.75且前q有效。非活动状态遇新冲击时冻结B=b_t，P=f_t，峰时p=t、起点s=t，目标G=B+0.5(P−B)。活动期f>P则更新P=f、p=t、G重算；首次t>p且f<=G时观测时长=t−p。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-Hnsqd4yf-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "正收盘C；默认对数收益（可选简单收益），短窗10、长窗100且短窗必须小于长窗；冲击比1.75，剩余超额比例0.5，显著升温阈10%，事件观察窗40棒。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-Hnsqd4yf-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可用于事后事件描述及风险状态研究。成功时长仅在恢复命中时可知，不能回填冲击起点做交易输入；失败和未结束事件需保留删失状态，不能只看成功样本平均。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未执行Pine或检验收益作用。",
+    "源码40棒限制并非硬截止、冻结基线含冲击当根；已按实际分支说明。",
+    "不存在对未完成事件可提前取得的半衰期预测。"
+  ],
+  "name": "波动冲击峰值到固定比例回落的事件时长（Volatility Shock Half-Life Monitor）",
+  "native_source_id": "Hnsqd4yf",
+  "one_line": "短长收益波动比向上穿阈值后冻结基线，追踪新峰值，并记录从最新峰值回落一半超额波动所用棒数。",
+  "record_id": "Hnsqd4yf",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "BotTradeLab",
+      "id": "tradingview-Hnsqd4yf-published-code",
+      "license": "MPL-2.0 source notice",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;1f7eed99a9f64ba6a6a7a88c60e2b981@2.0",
+      "sha256": "bdfacfa0ad16e9070975255251928ad539e715f1deeee1ece787f3a4a93ccd13",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B1f7eed99a9f64ba6a6a7a88c60e2b981/2",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / BotTradeLab",
+      "id": "tradingview-list-f001594224a4cfd31194",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=Hnsqd4yf；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:f001594224a4cfd3119447919254577e40056dc955e66b1871798390afc558e4",
+      "sha256": "f001594224a4cfd3119447919254577e40056dc955e66b1871798390afc558e4",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-34/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

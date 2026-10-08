@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3359",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3313,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a288da1cd9f07a8120a7a1419064d1085dddf538ee3a5edea23c543d8544c134",
+    "rule_sha256": "fac91bcd9cd08ab8d36b220dcfb538be5b68f47c78160ee5364f1bb6fd28a0f5"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3359",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3359"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ContinuousFutureRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：ES连续（BACKWARDS_RATIO + LAST_TRADING_DAY 映射）；每月首次有数据时：已投资则清仓，否则买当前映射合约1手（Lean ContinuousFutureRegression）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：ES连续（BACKWARDS_RATIO + LAST_TRADING_DAY 映射）；每月首次有数据时：已投资则清仓，否则买当前映射合约1手（Lean ContinuousFutureRegression）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ContinuousFutureRegressionAlgorithm.py`。`add_future(ES, BACKWARDS_RATIO, LAST_TRADING_DAY, depth=0)`。`on_data`：仅期望连续符号一根；记录 `symbol_changed_events`；当月份变化且 mapped 有数据：已投资 → `liquidate()`；否则 `buy(mapped,1)`。不是连续期货 EMA 换月核（harvest-30），也不是延长时段连续模板核。提出日期未知。ES连续月切换：有仓清仓否则买映射1手 ≠ 连续SMA换月（M2974）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

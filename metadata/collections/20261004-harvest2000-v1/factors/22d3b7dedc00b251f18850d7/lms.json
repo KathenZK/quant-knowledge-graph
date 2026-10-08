@@ -1,0 +1,116 @@
+{
+  "economic_basis": {
+    "hypothesis": "在线学习历史样本的线性组合，输出一步先验预测。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ff648fb8953bcfba39b04dfa"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "收盘后输入才固定；源码未锁定市场、交易所或bar周期；实时柱内的输出可变。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ff648fb8953bcfba39b04dfa"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "权重向量初始化为0。 先用前 p 根输入和旧权重产生当前预测值。 看到当前输入后，用按输入能量归一化的误差梯度更新权重；函数返回的是更新前的预测 y_t。 边界：初期缺失历史被置0，首批输出受零初始化影响。 用于预测评价时不得用更新后权重重算同一个 y_t，避免把当前目标泄漏进预测。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ff648fb8953bcfba39b04dfa"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在线学习历史样本的线性组合，输出一步先验预测。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ff648fb8953bcfba39b04dfa"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "u_t=(nz(x_(t-1),0),...,nz(x_(t-p),0))；y_t=w_(t-1)^T u_t；e_t=nz(x_t,0)-y_t；w_t=w_(t-1)+μ*e_t*u_t/(1e-10+u_t^T u_t)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ff648fb8953bcfba39b04dfa"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src：每根已完成柱的价格或数值输入；默认close。参数：order：历史输入维度；范围integer 2..128 (UI)；源码默认16；mu：归一化学习率；范围0.01..1.99 (UI)；源码默认0.5"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ff648fb8953bcfba39b04dfa"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "mihakralj/pinescript",
+  "lab": null,
+  "missing_information": [
+    "Pine运行环境与ta.*内建语义未另冻结",
+    "未编译或执行Pine代码",
+    "市场数据、时间周期、调整方式和成本未选择"
+  ],
+  "name": "归一化最小均方自适应预测滤波",
+  "native_source_id": "lms",
+  "one_line": "在线学习历史样本的线性组合，输出一步先验预测。",
+  "record_id": "lms",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/lms.pine"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-ff648fb8953bcfba39b04dfa",
+      "license": "MIT",
+      "locator": "lms:L12-L35; UI defaults and input selectors:L40-L42; native function invocation and selected source:L45-L45",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "2f1390909a8e5b83f8d85b4e0cc1fa30a0fc66b86a2efd95faea730e8811b8a3",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/lms.pine",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-804bcf21463c75493a5520e3",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "19436752dbc325b6013c778a438efa521d0fefe0eb53aebf83d7753543052936",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-79c1ce86e1fef2c7dbe90551",
+      "license": "MIT",
+      "locator": "author notes:L1-L61",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "ca7f6d2e47751007771df0d4b1d3e4cbbb4a43192c60e283c5ca3ec6f7c56f59",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/lms.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

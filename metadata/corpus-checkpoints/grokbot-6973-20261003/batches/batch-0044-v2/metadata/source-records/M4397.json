@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4397",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4351,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "eea8c7f47e4effc064da6fcfad29fd83b9323d061a5ba7bf04b7f32ba85dabac",
+    "rule_sha256": "b253cf4aca7573f6793bacf58f6ef00d481345103a0b81ad987470fa97562087"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4397",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4397"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://usekeel.io/strategies/funding-carry"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel Research"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-149/W1607"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel·永续资金费截面套息：日频；Hyperliquid成交额Top100永续；资金费10期EWMA后截面z；多负费空高费、美元中性毛杠杆1×；仓位漂移>15%才再平衡（Keel FundCarry·HL·Top100）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-08"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel·永续资金费截面套息：日频；Hyperliquid成交额Top100永续；资金费10期EWMA后截面z；多负费空高费、美元中性毛杠杆1×；仓位漂移>15%才再平衡（Keel FundCarry·HL·Top100）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Keel 公开 **Funding Carry（Cross-Sectional, Hyperliquid）** 可钉死核。宇宙：Hyperliquid 永续按成交额 **Top100**（公开配置可剔 PURR）。日频：取资金费率经目标时框重采样均值后**取负**（高正费率→空头信号），再 **EWMA(10)** 平滑，做截面 z-score；映射到预测后按目标平均绝对暴露缩放并封顶，最后归一使组合**美元多空平衡、目标毛杠杆约 1×**。执行用相对缓冲：**仓位相对目标漂移超过约 15%** 才再平衡至边界，以降换手。收益主来自截面资金费差而非方向性β。相对库内单币资金费 z/拥挤过滤：本核为**多币永续截面资金费多空+缓冲再平衡**。计入加密。提出日期 2024-08。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keel Funding Carry · HL perps top100 · funding EWMA10 · XS z · $neutral 1x · 15% drift buffer"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

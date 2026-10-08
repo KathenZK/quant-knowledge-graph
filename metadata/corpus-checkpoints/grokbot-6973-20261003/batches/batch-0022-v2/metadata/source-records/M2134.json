@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2134",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2134,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "efb28bff104929954f27d41badd01c636bef1eb33463b8b89cd1848ecb29c740",
+    "rule_sha256": "4c925cb24b13944f0b2ebc8b526a81484d8e259b37b145da8b8b96e80f0f2b1e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2134",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2134"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Uptrend/Uptrend.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Uptrend.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Uptrend：5m，RSI(14)<80且MAMA>FAMA且(mama−fama)/hl2>0.04做多；(mama−fama)/hl2<0.01平多；止损−10%，自定义止损开"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Uptrend；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Uptrend：5m，RSI(14)<80且MAMA>FAMA且(mama−fama)/hl2>0.04做多；(mama−fama)/hl2<0.01平多；止损−10%，自定义止损开"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/Uptrend/Uptrend.py默认。timeframe=5m；stoploss=−0.10；minimal_roi={\"60\":0.1,\"30\":0.02,\"0\":0.04}；use_custom_stoploss=True。hl2=(H+L)/2；MAMA(hl2, fastlimit=0.5, slowlimit=0.05)。做多：rsi<80 且 mama>fama 且 mama_diff_ratio>0.04 且 volume>0。平多：mama_diff_ratio<0.01 且 volume>0。custom_stoploss：浮盈>20%/10%/6%/3%/1.5% 时分别返回 0.05/0.03/0.02/0.015/0.0075，否则 1。不是 adaptive 的 KAMA/FAMA/CTI 组合核。提出日期未知。 不是本批W216 adaptive：本条是5m Uptrend，RSI<80且MAMA>FAMA且(mama−fama)/hl2>0.04做多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

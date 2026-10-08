@@ -1,0 +1,134 @@
+{
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "identity_namespace": "QuantConnect/Documentation",
+  "record_id": "EquityRsiOverboughtOversoldAlgorithm",
+  "native_source_id": "EquityRsiOverboughtOversoldAlgorithm",
+  "entity_type": "strategy",
+  "name": "QuantConnect QQQ 小时 RSI 多空模板",
+  "one_line": "QQQ小时RSI14按30/50/70阈值控制目标多空仓，保留源码if/elif顺序，未验证交易效果。",
+  "relations": [],
+  "sources": [
+    {
+      "id": "qc-docs-project-templates-python-equity-rsi-overbought-oversold-main-py",
+      "url": "https://github.com/QuantConnect/Documentation/blob/fc50f126f5c47748e0667b898c9af4c7583da5e3/project-templates/python/equity-rsi-overbought-oversold/main.py",
+      "revision": "fc50f126f5c47748e0667b898c9af4c7583da5e3",
+      "sha256": "4e24b218ea5b6f6900210cc2c332c50f95656be7931102ec91f2a1537f2d1a4b",
+      "locator": "project-templates/python/equity-rsi-overbought-oversold/main.py; L8-L20：区间、数据、指标及预热; L21-L33：完整elif优先级",
+      "supports": [
+        "区间、数据、指标及预热",
+        "完整elif优先级"
+      ],
+      "license": "Apache-2.0",
+      "attribution": "QuantConnect Corporation 与仓库 contributors",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "id": "qc-docs-license",
+      "url": "https://github.com/QuantConnect/Documentation/blob/fc50f126f5c47748e0667b898c9af4c7583da5e3/LICENSE",
+      "revision": "fc50f126f5c47748e0667b898c9af4c7583da5e3",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "locator": "LICENSE; L1-L201：仓库许可证及保留归属义务，仅覆盖该软件和相应文档。",
+      "supports": [
+        "源码许可证标识、归属和保留通知义务；不证明行情或论文许可。"
+      ],
+      "license": "Apache-2.0",
+      "attribution": "QuantConnect Corporation 与仓库 contributors",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "text": "美国股票ETF：QQQ。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "qc-docs-project-templates-python-equity-rsi-overbought-oversold-main-py"
+      ]
+    },
+    "universe": {
+      "text": "固定单标的QQQ。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "qc-docs-project-templates-python-equity-rsi-overbought-oversold-main-py"
+      ]
+    },
+    "signal": {
+      "text": "RSI14，Wilder平滑；自动预热并要求指标就绪。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "qc-docs-project-templates-python-equity-rsi-overbought-oversold-main-py"
+      ]
+    },
+    "entry": {
+      "text": "分支依序互斥：数量<=0且RSI<30→目标+1；否则数量>0且RSI>50→清仓；否则数量>=0且RSI>70→目标-1；否则数量<0且RSI<50→清仓。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "qc-docs-project-templates-python-equity-rsi-overbought-oversold-main-py"
+      ]
+    },
+    "exit": {
+      "text": "按上述elif优先级；已有多头RSI>70先清仓而不会同事件转空；已有空头RSI<30首分支可以直接转多。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "qc-docs-project-templates-python-equity-rsi-overbought-oversold-main-py"
+      ]
+    },
+    "position": {
+      "text": "set_holdings目标+1或-1；实际借券、保证金/现金预留由LEAN处理。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "qc-docs-project-templates-python-equity-rsi-overbought-oversold-main-py"
+      ]
+    },
+    "risk": {
+      "text": "该文件没有给出独立的止损、回撤限制或完整风险预算规则；引擎默认风控尚未核验。",
+      "status": "MISSING",
+      "evidence": [
+        "qc-docs-project-templates-python-equity-rsi-overbought-oversold-main-py"
+      ]
+    },
+    "cost": {
+      "text": "模板未显式设置费用、滑点或借券费用。 不能把未设置解释为实际费用等于零。",
+      "status": "MISSING",
+      "evidence": [
+        "qc-docs-project-templates-python-equity-rsi-overbought-oversold-main-py"
+      ]
+    },
+    "execution_time": {
+      "text": "on_data内按互斥if/elif次序执行：已有多头且RSI>70时本次先清仓，不会在同一事件直接转空；已有空头且RSI<30时首分支可直接转多。实际成交时点、成交价格与小时指标更新顺序未复现核验。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "qc-docs-project-templates-python-equity-rsi-overbought-oversold-main-py"
+      ]
+    },
+    "timeframe": {
+      "text": "QQQ小时数据与RSI14 Wilder平滑；要求指标就绪。示例2024-09-01至2024-12-31，资金100000。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "qc-docs-project-templates-python-equity-rsi-overbought-oversold-main-py"
+      ]
+    }
+  },
+  "economic_basis": {
+    "hypothesis": "研究假说：RSI极端区间可能对应短期均值回归；这个解释不是已证明的收益驱动，也不证明30/50/70阈值有效。",
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN",
+    "paper_support": [],
+    "missing": [
+      "没有本次策略的经审核原始论文支持。",
+      "没有冻结样本、交易成本和成交规则后的回测，也没有样本外或前瞻执行证据。"
+    ]
+  },
+  "missing_information": [
+    "缺行情、费用、借券可得性、实际成交/时区约定的审核。",
+    "来源源码、公式调用、计算语义和经济有效性分别判断；本次只审核所列源码行为。",
+    "源码许可证不等于行情、原始论文或商业内部研究数据授权；相关商业使用仍为REVIEW_REQUIRED。",
+    "未执行上游代码、未采集市场数据、未回测；实际成交和引擎默认行为尚未完整核验。"
+  ],
+  "lab": null,
+  "rights": {
+    "metadata": "本记录是自行撰写的事实摘要、源文件定位及限制说明。所列软件源码许可证为Apache-2.0；不把软件许可扩展为行情、论文或其他材料的商业使用许可。",
+    "derived_results": "没有回测或衍生收益结果。经济解释仅为研究假说；商业数据和相关依赖的许可尚待审核（REVIEW_REQUIRED）。",
+    "terms_url": "https://github.com/QuantConnect/Documentation/blob/fc50f126f5c47748e0667b898c9af4c7583da5e3/LICENSE",
+    "raw_data_included": false,
+    "source_fulltext_included": false
+  }
+}

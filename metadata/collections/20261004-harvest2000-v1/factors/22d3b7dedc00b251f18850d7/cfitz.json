@@ -1,0 +1,116 @@
+{
+  "economic_basis": {
+    "hypothesis": "用非对称端点权重估计当前可得的周期分量。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-40ef78bd78f854b13d540386"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "收盘后输入才固定；源码未锁定市场、交易所或bar周期；实时柱内的输出可变。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-40ef78bd78f854b13d540386"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "第一根返回0，两根时返回0.5B0*(x_t-x_(t-1))。 一般情形只使用当前与过去数据，在有效回看边界计算修正权重。 即使最大回看截断了历史，也重新计算最老端点权重使总和为0。 边界：此源码只实现每个时点作为最后观测时的单侧端点输出，不声称复现整段样本平滑器的全部内部点。 不同于Baxter–King的延迟对称卷积；端点权重结构变了，非只换窗口。 历史缺失经nz置0。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-40ef78bd78f854b13d540386"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用非对称端点权重估计当前可得的周期分量。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-40ef78bd78f854b13d540386"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "wl=2π/pHigh,wh=2π/pLow；B0=(wh-wl)/π，Bj=(sin(jwh)-sin(jwl))/(πj)；d=min(bar_index,maxLookback)；btilde=-0.5B0-Σ_(j=1..d-1)Bj；y_t=0.5B0*x_t+Σ_(j=1..d-1)Bj*x_(t-j)+btilde*x_(t-d)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-40ef78bd78f854b13d540386"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src：每根已完成柱的价格或数值输入；默认close。参数：pLow：最短通过周期；范围integer >=2；源码默认6；pHigh：最长通过周期；范围integer >pLow；源码默认32；maxLookback：最多历史根数；范围integer 10..5000 (UI)；源码默认500"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-40ef78bd78f854b13d540386"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "mihakralj/pinescript",
+  "lab": null,
+  "missing_information": [
+    "Pine运行环境与ta.*内建语义未另冻结",
+    "未编译或执行Pine代码",
+    "市场数据、时间周期、调整方式和成本未选择"
+  ],
+  "name": "端点修正 Christiano–Fitzgerald 带通",
+  "native_source_id": "cfitz",
+  "one_line": "用非对称端点权重估计当前可得的周期分量。",
+  "record_id": "cfitz",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/cfitz.pine"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-40ef78bd78f854b13d540386",
+      "license": "MIT",
+      "locator": "cfitz:L39-L92; UI defaults and input selectors:L96-L99; native function invocation and selected source:L102-L102",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "bcab6cafadaf87672d139e73640e4890fb2dc95988a59b4ede0b5475778c9223",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/cfitz.pine",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-804bcf21463c75493a5520e3",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "19436752dbc325b6013c778a438efa521d0fefe0eb53aebf83d7753543052936",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-d5c0d3288e6a223edabbad78",
+      "license": "MIT",
+      "locator": "author notes:L1-L61",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "0b75b18e95f4ba5d3b0cf1a7c097aaf63d00a771b67102b91e953f88de3c1efd",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/cfitz.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0466",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 466,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6441e66986c36f7f528788a5d87e62efa5df9838dd7ad32603fefce251aaa649",
+    "rule_sha256": "bdbc21f152653a21927e8614e46c340326aae520b5a07006c1b3b69c7a8d10b2"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0466",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0466"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/tang.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Hahn and Lee (2009, JF)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://openassetpricing.com/SignalDoc-Browser.html"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Tangibility（tang）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美国股票（CRSP/Compustat；Chen-Zimmermann 复制）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2009"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Tangibility"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "信号（Signal Browser Definition）：Cash and short-term investments (che) plus .715*receivables (rect) + .547*inventory (invt) + .535* property, plant and equipment (ppent), scaled by total assets (at). Only defined for manufacturing firms (SIC $\\geq$ 2000 and SIC <4000). Exclude the lowest tercile of manufacturing firms by total assets. 组合规则（该页字段）：StockWeight=EW；LSQuantile=未写；PortfolioPeriod=1.0个月；StartMonth=6.0；Sign=1.0；TestInOP=univariate reg。股票池/过滤：过滤列为空；定义/注释中的股票池限制：Cash and short-term investments (che) plus .715*receivables (rect) + .547*inventory (invt) + .535* property, plant and equipment (ppent), scaled by total assets (at). Only defined for manufacturing firms (SIC $\\geq$ 2000 and SIC <4000). Exclude the lowest tercile of manufacturing firms by total assets.。 Notes：Paper is very painful to read. Defines tangibility using formula we follow and used by Almeida and Campello. Measures financial constraints using either asset size, payout ratio, etc, with bottom 30% classified as constrained. Table 4 finds that tangibility only predicts returns in constrained firms in fm reg. Table 7 forms FF3-style LS ports using only constrained firms and finds mixed results. We follow Table 4.。 基线为原论文分组的多空组合（FAQ：baseline follows the original paper split）。未在该行写出的细节不补。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "signalname=tang; KeyTable=4A Constrained"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,251 @@
+{
+  "economic_basis": {
+    "hypothesis": "在固定频率处比较两组样本的经验特征函数，并以组内协方差校正后形成一个分布差异统计量；不提供金融预测方向或交易阈值。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-e31abc06a2639e11cb2f8da6",
+        "harvest-source-e0b76f289a0f2cc8d361f1e3",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "全部输入样本已观测并发布之后才能得到整窗输出；不得回填为窗内早期实时值。若y绑定未来标签，仅能在标签完全实现后做诊断。上游是静态估计函数，无自动滚动、排序或PIT保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-e31abc06a2639e11cb2f8da6",
+        "harvest-source-e0b76f289a0f2cc8d361f1e3",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先合并两组确定同一个半四分位距，默认linear分位插值；不能分别给两组标准化，否则改变了比较对象。σ=0不在本条有效输入合同中。 按先全部cos后全部sin的顺序形成2k维实向量。xpx.cov默认correction=1，源码再乘(n_x−1)/n_x，因此这里C_x除以n_x。固定依赖Git子模块已审，不把普通无偏协方差直接代入公式。 用每组样本数的倒数加权协方差，再用伪逆形成均值差的二次型；不是直接欧氏距离，也不是对原始x/y求Mahalanobis距离。 秩取自伪逆矩阵本身；少于2k时发警告，仍继续计算。伪逆截断与秩容差使用后端默认，未锁运行环境或证明数值复现。 小样本校正要求两组都小于25，任一组达到25就不乘该因子；样本不必等长。原生参数t及轴、p值均归一个构造族。 边界：源码只检查t维数和非正元素，未完整检查有限、非空或互异；本条显式限制为默认有效t，不能宣称原生接口替调用者拒绝所有不良频率。 非有限输入先替成1并在末尾把结果设NaN，但替换后若σ=0或线性代数失败，不能保证必然走到末尾返回NaN；本条只审有限且σ>0输入。 频率向量映射可失去部分分布差异；W小不能证明两个分布等价。协方差秩不足时χ²参考与一致性有来源警告，不能隐藏。 线性代数、三角函数及χ²函数的后端版本与容差没有运行冻结；数值语义已静态核对，不等于源代码已执行。 来源允许离散数据，但渐近校准仍不自动处理金融自相关、窗口重叠、选择偏差或多重检验。市场PIT、输入绑定及经济有效性另审。 输出：一个完整算法族；W、参考p值、频率向量与轴不拆新增"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-e31abc06a2639e11cb2f8da6",
+        "harvest-source-e0b76f289a0f2cc8d361f1e3",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在固定频率处比较两组样本的经验特征函数，并以组内协方差校正后形成一个分布差异统计量；不提供金融预测方向或交易阈值。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-e31abc06a2639e11cb2f8da6",
+        "harvest-source-e0b76f289a0f2cc8d361f1e3",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条锁定一维有限实数样本x、y，各有n_x,n_y>=5点，N=n_x+n_y，默认t=(0.4,0.8)。合并样本升序z_(0)..z_(N−1)，Q(p)按h=(N−1)p、j=floor(h)、a=h−j计算(1−a)z_(j)+az_(j+1)；σ=[Q(.75)−Q(.25)]/2>0。g(z)=(cos(t_1 z/σ),...,cos(t_k z/σ),sin(t_1 z/σ),...,sin(t_k z/σ))^T。μ_x=mean_i g(x_i)，C_x=(1/n_x)Σ_i[g(x_i)−μ_x][g(x_i)−μ_x]^T，y同理。Σhat=(N/n_x)C_x+(N/n_y)C_y，Δ=μ_x−μ_y，W=N Δ^T pinv(Σhat) Δ。仅当max(n_x,n_y)<25时，W再乘[1+N^(−.45)+10.1(n_x^(−1.7)+n_y^(−1.7))]^−1。源码伴随p值为χ²(r)上尾，r=rank(pinv(Σhat))；本条主要特征为W，p值及频率变体不另计。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-e31abc06a2639e11cb2f8da6",
+        "harvest-source-e0b76f289a0f2cc8d361f1e3",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（finite real 1D array, n_x>=5）：第一已完成样本窗口，与y相同单位，未自动处理时间依赖；y（finite real 1D array, n_y>=5; pooled IQR>0）：第二已完成样本窗口，可不同长度；不是配对观测。参数：t：经验特征函数频率；不同频率不拆新增；范围reviewed default; finite positive distinct 1D frequencies for extension；源码默认[0.4, 0.8]；axis：样本轴；范围reviewed 1D finite arrays；源码默认0；nan_policy：缺值装饰器，不当金融数据清洗；范围propagate/omit/raise via decorator; finite input reviewed；源码默认propagate；keepdims：输出形状；范围bool；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-54c1579ccfb5d53208dfa426",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-e31abc06a2639e11cb2f8da6",
+        "harvest-source-e0b76f289a0f2cc8d361f1e3",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "scipy/scipy",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "NumPy/array API backend及special函数运行环境未冻结，固定源码不代表平台数值已重现",
+    "金融输入绑定、窗口/频率、市场PIT/供应商/发布时间缺失",
+    "无收益方向、样本外预测能力与经济有效性证据"
+  ],
+  "name": "经验特征函数差异的 Epps–Singleton 二次统计量",
+  "native_source_id": "epps_singleton_2samp",
+  "one_line": "在固定频率处比较两组样本的经验特征函数，并以组内协方差校正后形成一个分布差异统计量；不提供金融预测方向或交易阈值。",
+  "record_id": "epps_singleton_2samp",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_hypotests.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文；array-api-extra Copyright (c) 2024 Consortium for Python Data API Standards",
+      "id": "harvest-source-54c1579ccfb5d53208dfa426",
+      "license": "BSD-3-Clause",
+      "locator": "fixed dependency import:L11-L16; signature defaults, scope and original attribution:L34-L106; full finite-input statistic, covariance and correction path:L129-L199",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "dd177c500f0d8ab3a4da0c6b4bf7ffd87bb30ef63437902ed5887616b80b504b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_hypotests.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文；array-api-extra Copyright (c) 2024 Consortium for Python Data API Standards",
+      "id": "harvest-source-dcaa4b2ca5e08690e90c3e75",
+      "license": "BSD-3-Clause",
+      "locator": "IQR signature and defaults:L3070-L3099; quartile probabilities and default quantile call:L3183-L3216; chi2 upper-tail dispatcher:L1559-L1575; chi2 reference helper:L11246-L11259",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "f83fbd7a76afa61a865820917184eabd67d5ebc04cde4db102ba1ba86e94d0cb",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文；array-api-extra Copyright (c) 2024 Consortium for Python Data API Standards",
+      "id": "harvest-source-e31abc06a2639e11cb2f8da6",
+      "license": "BSD-3-Clause",
+      "locator": "quantile sorting/count and linear default:L80-L163; quantile dispatch:L386-L409; linear quantile interpolation:L428-L465",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "5708ee84cb155a1326216e225bd33e72169984412bd63a49b3d8c6087da2fb9f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_quantile.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文；array-api-extra Copyright (c) 2024 Consortium for Python Data API Standards",
+      "id": "harvest-source-e0b76f289a0f2cc8d361f1e3",
+      "license": "MIT",
+      "locator": "covariance correction default and interpretation:L10-L62; default NumPy delegation and agnostic fallback:L168-L220",
+      "revision": "1c9100b354b5874956624759d81e1d98f1bed521",
+      "sha256": "42acd3ed8b47d1dad8cd3701aa889d687b2a5ddee951605099c642b1baac46d7",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/data-apis/array-api-extra/blob/1c9100b354b5874956624759d81e1d98f1bed521/src/array_api_extra/_statistical.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文；array-api-extra Copyright (c) 2024 Consortium for Python Data API Standards",
+      "id": "harvest-source-4098fed964a880b9e5e29e27",
+      "license": "MIT",
+      "locator": "unweighted mean and covariance normalization in generic path:L14-L114",
+      "revision": "1c9100b354b5874956624759d81e1d98f1bed521",
+      "sha256": "9fd47f55949b98fc7b085857a5f1f681dececdadb5c47bc34e6c4bd39422adaa",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/data-apis/array-api-extra/blob/1c9100b354b5874956624759d81e1d98f1bed521/src/array_api_extra/_agnostic/_statistical.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文；array-api-extra Copyright (c) 2024 Consortium for Python Data API Standards",
+      "id": "harvest-source-284d423b919244e8fd5c1d1c",
+      "license": "BSD-3-Clause",
+      "locator": "submodule presence and fixed vendoring destination:L160-L194",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "ae2fe6fbd554fc3286b2640a93c418df16e628d5f72e6be4cb9ca1eee7c8621c",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/meson.build",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文；array-api-extra Copyright (c) 2024 Consortium for Python Data API Standards",
+      "id": "harvest-source-91d25ce9d48f4b74551f120e",
+      "license": "MIT",
+      "locator": "MIT dependency notice:L1-L21",
+      "revision": "1c9100b354b5874956624759d81e1d98f1bed521",
+      "sha256": "58494398fe147fdce76a68b2decd4c08ce3a1ea237b6d6785001c15f822c6ed6",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/data-apis/array-api-extra/blob/1c9100b354b5874956624759d81e1d98f1bed521/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文；array-api-extra Copyright (c) 2024 Consortium for Python Data API Standards",
+      "id": "harvest-source-bbbecde791dfaaebacee469f",
+      "license": "BSD-3-Clause",
+      "locator": "axis/NaN defaults and paired handling:L530-L620",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "a1650feb6cfcf6f9a1c764c824e725b39f039a2e19001fb60f48f88c354d102f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_axis_nan_policy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文；array-api-extra Copyright (c) 2024 Consortium for Python Data API Standards",
+      "id": "harvest-source-8b75a55d87853f7f61280e73",
+      "license": "BSD-3-Clause",
+      "locator": "sample count and shared masks:L677-L693",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "14dbc9a53b4f6bb8dffe8fb302574fed5a522b619ce15696b1e29766d81b238c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_array_api.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文；array-api-extra Copyright (c) 2024 Consortium for Python Data API Standards",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers；算法文献归属保留在固定源码docstring，未转存论文全文；array-api-extra Copyright (c) 2024 Consortium for Python Data API Standards",
+      "id": "harvest-source-088c1d9c7042eaaa4ba39300",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_scope:L1-L81",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "6a4d55e53007e0d509dc30f5a8d460c280f0f5bcf2567c910948e7eb23047b10",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

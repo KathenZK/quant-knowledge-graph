@@ -1,0 +1,169 @@
+{
+  "economic_basis": {
+    "hypothesis": "已有仓位会影响下一笔调仓费用，把这段费用与到期负债损失一起优化，可能得到不同于无摩擦delta或逐期价格预测的对冲政策。神经网络是求解政策的表示工具；CVaR、指数效用、半递归和自融资都不是这里新发明的数学原语。只记录完整有限期负债对冲构造，不验证训练效果或经济优势。",
+    "missing": [
+      "未训练/执行原作者代码、生成情景、模拟成交或回测；论文图表和近似最优性不是本仓库的计算/经济验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "arxiv.org",
+  "lab": null,
+  "missing_information": [
+    "这里只审原论文已描述的持仓/目标/成本构造，未取得或训练该论文的固定权重，不具备完整复现实验或直接回测条件。随机初始化种子/分布参数、训练样本数与生成器细节、训练停止、Adam其他超参数及批归一推断状态未全部冻结。",
+    "选定参考例的30个交易步却按t_k=k/365、T=30/365计时，照源保留；不能默改252年化或自动映射某证券的30个日历营业日。Heston与CVaR原文都用α，本说明把Heston回复速度写κ以区分。",
+    "参考样本来自风险中性Heston分布，而非现实收益预测分布；通用方法可换统计分布不表示本例已核真实概率、风险溢价、校准或实盘有效性。",
+    "V是模型方差状态，论文明确它不直接可观测；由估计累计方差和方差证券价格反求V的现实误差、报价和时点未闭合。S2是Eq5.4有价累计方差支付证券；不是把V或VIX当可直接交易资产，也不把真实零初值互换代入。",
+    "本条所选§4.3无额外交易约束，δ为可正可负的实数份额；没有保证金、信用、仓位上限或可借券合同。一般H映射和永久冲击扩展未作为本例已审执行机制；若另加裁剪则须记录为新版本。",
+    "基础CT总和包括到期清仓，但原p6明确数值例到期费用为0；不把ε=0.01套到末期，也不把论文的模型费用当完整现实佣金/冲击/税/融资账本。",
+    "原p10 Lemma3.6及其证明的效用公式把CT写为加号，与p6 Eq2.1和p15 Eq4.6的扣费现金流不同。本条选CVaR Eq4.6，不用这段指数效用等价式修补成本或另建策略；raw保留。",
+    "原Theorem4.2/§4.2证明以有界激活为条件，而数值例用无界ReLU；不宣称该证明直接保证本例训练、全局最优或经济表现。p15也明确没有一般的合理时间全局收敛保证。",
+    "作者后期GitHub Network.md明确默认代理并非原论文代理；代码按增量动作和后续到期回报计账的合同不同。本次只是另存快照/版本界限，没有把该实现标为本论文复现或运行通过。",
+    "arXiv托管许可不等于商用或原文/图片再分发许可；repo GPL-3.0不覆盖原论文、市场数据或第三方模型。自撰元数据之外的全文/图像/代码不入Git，商用REVIEW_REQUIRED。"
+  ],
+  "name": "Deep Hedging：按路径费用与到期尾部损失学习的半递归持仓对冲",
+  "native_source_id": "1802.03042",
+  "one_line": "为给定衍生负债，用当前市场状态与上期持仓输出新份额，并联合优化整条路径的交易费用和到期损失尾部。",
+  "record_id": "1802.03042",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未验证尾损改善、优化收敛、经济表现或可成交。",
+    "metadata": "原生身份、定位与自撰中文规则；原文、图像、源码及行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Hans Buehler, Lukas Gonon, Josef Teichmann and Ben Wood, Deep Hedging, fixed author-submitted arXiv v1. Upload and manuscript footer dates kept separately.",
+      "id": "buehler-gonon-teichmann-wood-1802-03042v1-pdf",
+      "license": "arXiv nonexclusive-distrib/1.0 is the hosting distribution permission, not an established public commercial reuse/fulltext/figure license. Only self-authored Chinese metadata and source identity/locators are proposed; commercial REVIEW_REQUIRED.",
+      "locator": "Physical pp4–6 §2 finite information/grid/holdings and Eq2.1 costs; p11 Example3.9 CVaR; p13 Eq4.1; pp14–16 unconstrained Eq4.6/4.7; pp19–23 §5 Heston/two-tool example and footnote7 costs; p27 Eq5.7. p10 cost-sign conflict and bounded-activation proof scope excluded from chosen objective.",
+      "revision": "arXiv:1802.03042v1 uploaded2018-02-08; manuscript footer dated2018-02-12; sha256:745d3ad829cc0b7734d550ee3dfe5ffdb35074983d41381936b207b3182a0c1e",
+      "sha256": "745d3ad829cc0b7734d550ee3dfe5ffdb35074983d41381936b207b3182a0c1e",
+      "supports": [
+        "有限期负债/持仓/成本账",
+        "半递归政策与CVaR目标",
+        "参考例输入与风险范围"
+      ],
+      "url": "https://arxiv.org/pdf/1802.03042v1",
+      "verification": "FETCHED_PINNED_AUTHOR_SUBMISSION_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "arXiv fixed-version author-submitted abstract.",
+      "id": "arxiv-1802-03042v1-abstract",
+      "license": "arXiv nonexclusive-distrib/1.0 is the hosting distribution permission, not an established public commercial reuse/fulltext/figure license. Only self-authored Chinese metadata and source identity/locators are proposed; commercial REVIEW_REQUIRED.",
+      "locator": "Original HTML metadata title/authors L44; L123 submitted2018-02-08 and L176 v1 time; L188 nonexclusive-distrib/1.0 link. Identity/rights only, not model formula evidence.",
+      "revision": "arXiv:1802.03042v1 abstract HTTP snapshot sha256:9b3f900c74272b962dae3a5a400405acc92a2854f7bfafb9e692f4043039f65f",
+      "sha256": "9b3f900c74272b962dae3a5a400405acc92a2854f7bfafb9e692f4043039f65f",
+      "supports": [
+        "版本身份",
+        "许可链接定位"
+      ],
+      "url": "https://arxiv.org/abs/1802.03042v1",
+      "verification": "FETCHED_PINNED_VERSIONED_ABSTRACT"
+    },
+    {
+      "attribution": "Hans Buehler maintained deephedging repository, fixed commit fe53fd9a7e402d4ba18bd5b9ec704e0361554f7c",
+      "id": "hansbuehler-deephedging-network-md",
+      "license": "GPL-3.0 repository license; no transfer of paper, third-party model, or market-data rights; commercial assessment REVIEW_REQUIRED.",
+      "locator": "UTF8 L1–4 explicitly states default agent is not the original paper agent; L24 action means incremental units, L28 extra initial delta, L33 prior action and aggregate position. Only version boundary evidence; its L10 cost sign is not selected paper formula.",
+      "revision": "fe53fd9a7e402d4ba18bd5b9ec704e0361554f7c",
+      "sha256": "b515c05b56109fbc06790899ea2fcef3aa4afd6aef088d0eef113a8c3ff0230f",
+      "supports": [
+        "作者后续实现版本界限"
+      ],
+      "url": "https://raw.githubusercontent.com/hansbuehler/deephedging/fe53fd9a7e402d4ba18bd5b9ec704e0361554f7c/Network.md",
+      "verification": "FETCHED_PINNED_DOCUMENT_NOT_ORIGINAL_PAPER_IMPLEMENTATION"
+    },
+    {
+      "attribution": "Hans Buehler maintained deephedging repository, fixed commit fe53fd9a7e402d4ba18bd5b9ec704e0361554f7c",
+      "id": "hansbuehler-deephedging-license",
+      "license": "GPL-3.0 repository license; no transfer of paper, third-party model, or market-data rights; commercial assessment REVIEW_REQUIRED.",
+      "locator": "Fixed repository LICENSE is GNU GPL version3, L1–9 identity; applies to repository code under stated terms, not original paper or market data.",
+      "revision": "fe53fd9a7e402d4ba18bd5b9ec704e0361554f7c",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "supports": [
+        "后续代码许可证身份"
+      ],
+      "url": "https://raw.githubusercontent.com/hansbuehler/deephedging/fe53fd9a7e402d4ba18bd5b9ec704e0361554f7c/LICENSE",
+      "verification": "FETCHED_PINNED_DOCUMENT_NOT_ORIGINAL_PAPER_IMPLEMENTATION"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "buehler-gonon-teichmann-wood-1802-03042v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "任务先给定一单位欧式认购负债Z=(S¹_T−100)^+；并非根据网络预测决定先卖哪只期权。按参考例，d=2个对冲工具：基础资产S¹，及到期T支付累计方差的理想有价证券S²_t=∫₀ᵗV_sds+(V_t−b)/κ*(1−exp(−κ(T−t)))+b(T−t)。δ¹、δ²是这些工具的有符号份额，不是财富百分比。第二项照Eq5.4保留，不能以不可直接交易的V或VIX替代，也不是一开始价值为0的真实互换合约；交易所乘数与模型单位换算未给。"
+    },
+    "cost": {
+      "evidence": [
+        "buehler-gonon-teichmann-wood-1802-03042v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "本例对k<n使用c_k(a)=εΣ_i S^i_k|a_i|，ε=0.01；a是持仓变化，不能按总持仓每天重复收费。总C_T=Σ_(k=0..n)c_k(δ_k−δ_(k−1))，原数值例明确c_n=0。按Eq2.1从终值减C，在Eq4.6损失中加C；本金交易通过自融资G计账，成本不是收益。没有将p10效用段的+CT移入本现金流。模型比例费不含另行冻结的最低佣金、冲击、税费、借券或现实融资价差，不能声称已核完整净收益。"
+    },
+    "entry": {
+      "evidence": [
+        "buehler-gonon-teichmann-wood-1802-03042v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在t₀面对已给定负债，从δ_−1=0按F₀(I₀,0)得到初始对冲份额并交易；以后t_k观察当前I_k，把此前δ_(k−1)输入该时点网络，交易a_k=δ_k−δ_(k−1)，正分量买入、负分量卖出。不是把网络输出直接当下单增量，也没有价格上穿阈值、预测收益排行或等待止损的开仓门。借入/卖空可行性不由无约束模型保证。"
+    },
+    "execution_time": {
+      "evidence": [
+        "buehler-gonon-teichmann-wood-1802-03042v1-pdf",
+        "hansbuehler-deephedging-network-md"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：理论在t_k观察I_k后取得δ_k，并以S_k及指定成本模型调仓，δ_k承担当期到下一时点的价格变化；到期归零和支付在T计值。没有真实撮合时钟、可交易报价、下单/成交先后、延迟/滑点、部分成交、整手取整、失败回退或融资检查。原2018参数和后期GitHub实现并非同版本，本次没有执行任一代码、训练、模拟或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "buehler-gonon-teichmann-wood-1802-03042v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每步以新δ替换旧δ，减持或翻空来自同一持仓差；没有另加止盈/止损。最后t_n=T固定δ_n=0清空对冲工具并结算负债Z；这使总交易费账中包含最后一次数量变化，但选定数值例c_n=0。终值为−Z+p₀+G−C，p₀为初始现金/负债对价，不是额外的策略收益；不另假定到期续卖负债或自动滚仓。"
+    },
+    "position": {
+      "evidence": [
+        "buehler-gonon-teichmann-wood-1802-03042v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持仓δ_k∈R²为实数工具份额，取§4.3无额外交易约束的设定，不做Σw=1归一化，不限制只多或对冲比例在[0,1]。各期网络直接给目标持仓，已有份额通过输入影响下一步费用和决策；中间现金是自融资残余。原文把利率/中间支付折算到T并视零利率、外汇即期兑换无费；不等于实际信用无限或无融资成本。p₀及合约可交易性、杠杆/信用/保证金合同仍未冻结。"
+    },
+    "risk": {
+      "evidence": [
+        "buehler-gonon-teichmann-wood-1802-03042v1-pdf",
+        "hansbuehler-deephedging-network-md"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CVaR99%目标关注最差尾部终端损失，不能解释为99%保证不亏；模型的风险中性情景、理想方差证券和V估计都限制实际用途。股票/方差工具的可借款与杠杆未设硬帽。所有α、ε、网络层宽及市场特例属于同族，不增加数量；若选无费平方误差，会共享已有均方对冲目标。训练种子、批归一状态、停止条件与权重尚缺，局部优化不是验收证明。p10指数效用段的成本加号和有界激活证明/无界ReLU例的范围差异原样保留，本条仅按明确CVaR Eq4.6解释。后期作者实现明确并非论文代理，不拿其GPL许可或源码替原论文缺项。"
+    },
+    "signal": {
+      "evidence": [
+        "buehler-gonon-teichmann-wood-1802-03042v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先固定n、情景、成本与风险参数。每个k有独立θ_k，δ_k=F_k(I_k,δ_(k−1))；参考d=2，输入4维，两个17节点隐藏层，ReLU=max(x,0)，输出2维仿射层，隐藏激活前做批归一；δ_−1=0。形成G=Σ_(k=0..n−1)δ_k·(S_(k+1)−S_k)，C=Σ_(k=0..n)c_k(δ_k−δ_(k−1))，δ_n=0。CVaR取α=0.99，联合优化w和全部网络参数：J(w,θ)=w+E[100*max(Z−G+C−w,0)]。w是损失分位辅助标量，不是持仓。均匀抽N_batch条情景时损失项权重为N/N_batch乘P(ω)，通过整段δ递推链反向传播；原Eq4.7给梯度步，参考实现用Adam学习率0.005、batch256及随机初始化。这里没有训练或给出唯一已学权重，不承诺得到全局极小值。"
+    },
+    "timeframe": {
+      "evidence": [
+        "buehler-gonon-teichmann-wood-1802-03042v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "参考例n=30，t_k=k/365、T=30/365，逐期调整到期负债的对冲份额；原文称30个交易日但用365分母，照记。训练在给定完整模拟路径与对应支付上形成政策，应用时每步只依当时状态及上一期持仓；没有作者冻结的真实滚动训练窗、样本截止、再训练日历或市场开收盘执行分钟。不是每根棒读到最终负债后才更新仓位。"
+    },
+    "universe": {
+      "evidence": [
+        "buehler-gonon-teichmann-wood-1802-03042v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "没有证券排名池。给定可交易工具的价格路径、负债支付及有限情景权重P(ω)>0。选定作者例用风险中性Heston：dS¹=√V*S¹dB，dV=κ(b−V)dt+ν√VdW，corr(dB,dW)=−0.7，κ=1、b=0.04、ν=2、V₀=0.04、S¹₀=100；S²依上述条件期望定价。论文用CIR精确转移和简化Brodie–Kaya采样；这里只钉这些来源输入，未生成情景。当前输入I_k=(log S¹_k,V_k)，V在模型可知、现实只可估计；不将风险中性P/Q当真实净收益概率，也不借未来实现值充当前状态。"
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "动量负区恢复而价格仍高于趋势线可能对应回撤结束，收益及空头追踪常数的适用范围未验证。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "KST转向不是直接平仓条件，退出靠追踪和反向entry。"
+  ],
+  "name": "KST异侧交叉与价格趋势确认追踪交易",
+  "native_source_id": "431413",
+  "one_line": "KST负区上穿信号且价格高于EMA时做多，正区下穿且价格低于EMA时做空，持仓后按收盘百分比追踪。",
+  "record_id": "431413",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8EKST%E6%8C%87%E6%A0%87%E5%92%8CEMA%E6%8C%87%E6%A0%87%E7%9A%84%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5KST-EMA-Momentum-Trend-Following-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-431413-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "5fbc5ba632709f1d0a7162ff7a61ec04fdd7b6f389fa7008db91be8a6092981b",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8EKST%E6%8C%87%E6%A0%87%E5%92%8CEMA%E6%8C%87%E6%A0%87%E7%9A%84%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5KST-EMA-Momentum-Trend-Following-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-431413-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-431413-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未明确手续费、滑点、点差及融资成本，成本MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-431413-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多EL、空ES，默认100%权益、初始资本1000，反向entry可反转；没有空仓或日期门。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-431413-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v4，先根据可见仓位更新追踪线，再entry，后按可见方向挂stop。未指定逐tick/收盘成交/成交重算，首次保护覆盖与实际成交未运行。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-431413-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "可见多仓T_L=max(C×0.99,T_L[1])，非多时重置0；可见空仓T_S=min(C×1.01,T_S[1])，非空时重置999999。分别有对应仓位才strategy.exit(stop=T)，未指定from_entry。无固定止盈或KST自身反交叉close。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-431413-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "100%权益、初始资本1000，入口无qty覆盖；1%用于跟踪价格距离，不是账户风险预算。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-431413-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "空头追踪初值常数999999，不能保证适用价格高于该值的标的；两线在首次看见持仓后才更新。百分比基于当前收盘，不是持仓最高高点，不能承诺最多亏1%。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-431413-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "K=SMA10(ROC10(C))+2SMA10(ROC15(C))+3SMA10(ROC20(C))+4SMA15(ROC30(C))；S=SMA9(K)，Δ=K−S，E=EMA50(C)。多Δ上穿0且K<0且C>E；空Δ下穿0且K>0且C<E。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-431413-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-431413-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

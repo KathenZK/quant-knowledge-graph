@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "在一个完整窗口内降低局部拟合误差大的观测权重，输出重加权趋势及拟合诊断；这只是数值特征构造。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-bf39e84d09d6cc514a9a75d8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前窗口完整输入可得后才能计算全部同窗权重和拟合输出；历史窗口内拟合值不能回填成过去已知量。Pine未要求barstate.isconfirmed，当前bar内会变动；研究用收盘快照。投射到未来P根的是当前直线外推，非未来观测或已验证预测。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-bf39e84d09d6cc514a9a75d8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N点必须全部非na才进入两阶段拟合，先OLS再在同窗每个残差平方上估局部方差；不是用当时已冻结的历史残差序列。 局部方差EMA/RMA从最老残差平方起递推；Rolling Mean对每位置取截至该位置的最多V项，早期使用较短分母。三分支为同族参数，不另计。 相对权重裁剪之后不重新归一；固定权重拟合WLS。SSE=Σw(y−a−bi)²；SST=Σw(y−S_y/S_w)²；R²=SST>0时clip(1−SSE/SST,0,1)，否则0；weighted RMS=sqrt(SSE/S_w)。 σ²=SSE/(N−2)，Sxx_c=S_xx−S_x²/S_w；slopeSE=sqrt(σ²/Sxx_c)，fitSE=sqrt(σ²[1/S_w+(N−1−S_x/S_w)²/Sxx_c])，仅σ²与Sxx_c均正时计算；|b|/slopeSE无有效正SE则0。有效N=(Σw)²/Σw²，仅诊断；分母仍N−2。 状态从0初始化：b非na时按b>=0初设+1否则−1；之后b>0且旧态<=0时转+1、b<0且旧态>=0时转−1，零斜率保持。可选质量确认要求R²>=.15且斜率/SE>=.5；默认关闭。通道基宽默认2×weighted RMS或2×fitSE，可选乘1+(1−R²)×.5，默认关闭。 边界：仅检查na，未统一检查Inf；N点不全时拟合曲线/斜率等保持na，但R²与斜率分数等保护分支可能为0，不能把它们当有效零拟合证据。 p=0退为等权对照，不另作新条。方差平滑每一窗口重新初始化，不等于跨bar连续EWMA。 标准误按来源σ²=SSE/(N−2)，不是异方差稳健协方差，也不采用有效N自由度；不能附会统计显著性。 import TradingView/ta/12未另取依赖快照，但本条核心hwRegression与状态/通道仅用原生array/math计算；完整脚本其他显示调用不算已冻结运行环境。 输出：一个完整构造；多方向/价格箱/状态/参数/输出坐标均不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-bf39e84d09d6cc514a9a75d8"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在一个完整窗口内降低局部拟合误差大的观测权重，输出重加权趋势及拟合诊断；这只是数值特征构造。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-bf39e84d09d6cc514a9a75d8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "取N个连续有效值y_i（i=0最早、N−1当前）。先拟合OLS a0+b0 i，e_i²=(y_i−a0−b0 i)²；f=max(mean(e²)×r,tick²)。将e²由早到晚平滑为q_i，默认EMA α=2/(V+1)并从第一项初始化；v_i=q_i+f。u_i=1/max(v_i,1e−12)^p（p=0时为1），w_i=clip(u_i/mean(u),w_min,w_max)。S_w=Σw，S_x=Σwi，S_y=Σwy，S_xx=Σwi²，S_xy=Σwiy。b=(S_w S_xy−S_x S_y)/(S_w S_xx−S_x²)，a=(S_y−bS_x)/S_w；当前估计a+b(N−1)，投射a+b(N−1+P)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-bf39e84d09d6cc514a9a75d8"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "source（Pine series float; ordered full window of N finite observations）：默认close；其他输入绑定须单独冻结；syminfo.mintick（positive finite scalar）：方差地板用tick平方。参数：source：拟合输入；范围Pine series float；源码默认close；regLen：拟合窗；范围10..300；源码默认60；varianceLen：局部残差方差平滑窗；范围2..100；源码默认20；varianceMode：RMA系数1/V，其余见计算；范围EMA/RMA/Rolling Mean；源码默认EMA；weightPower：反方差幂；范围0..3；源码默认1.0；varianceReg：平均残差方差地板比例；范围0..1；源码默认0.05；minWeight：相对权重下限；范围.01..1；源码默认0.1；maxWeight：相对权重上限；范围1..100；源码默认10.0；projectionBars：直线向前投射步数；范围1..50；源码默认5；channelMult：通道倍数；范围.1..10；源码默认2.0；qualityConfirm：状态转向附加质量门；范围bool；源码默认False；minR2：质量门R²；范围0..1；源码默认0.15；minSlopeScore：质量门斜率/SE；范围0..10；源码默认0.5；channelMode：通道宽度口径；范围Weighted Residual RMS/Regression Standard Error；源码默认Weighted Residual RMS；expandPoorFit：低拟合优度扩宽；范围bool；源码默认False；poorFitExpansion：扩宽比例；范围0..3；源码默认0.5"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-bf39e84d09d6cc514a9a75d8"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "tradingview/public-script",
+  "lab": null,
+  "missing_information": [
+    "未运行Pine源码或金融回测",
+    "Pine内建/外部依赖的具体运行构建未冻结",
+    "数据供应商/PIT修订/跨市场时钟/实际标的采样周期未固定",
+    "没有收益方向/经济有效性证据"
+  ],
+  "name": "同窗残差方差加权的线性趋势估计",
+  "native_source_id": "9KcWvaBf",
+  "one_line": "在一个完整窗口内降低局部拟合误差大的观测权重，输出重加权趋势及拟合诊断；这只是数值特征构造。",
+  "record_id": "9KcWvaBf",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B9410078a82ee4673b180a5633bcb016b/1"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "BackQuant",
+      "id": "harvest-source-bf39e84d09d6cc514a9a75d8",
+      "license": "MPL-2.0",
+      "locator": "author license/version:L1-L7; numerical parameters:L19-L41; same-window OLS pilot, local residual variance, WLS and diagnostics:L56-L194; trend state and channel:L196-L224",
+      "revision": "PUB;9410078a82ee4673b180a5633bcb016b@1.0",
+      "sha256": "1da14e6a26970d6ca61d4d2db6bd821b9f44f168bca3d6dd247fe5e19585854b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B9410078a82ee4673b180a5633bcb016b/1",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "BackQuant",
+      "id": "harvest-source-f01084131573ced7ecd27d2e",
+      "license": "NOT_ESTABLISHED",
+      "locator": "Pinned author publication or identity listing",
+      "revision": "content-sha256:6b5a1840f4f48b251207fcb545a8dbb3d59079ab3b8bad4bfc36eae1c642c8e5",
+      "sha256": "6b5a1840f4f48b251207fcb545a8dbb3d59079ab3b8bad4bfc36eae1c642c8e5",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://www.tradingview.com/script/9KcWvaBf-Variance-Weighted-Regression-Trend-BackQuant/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "BackQuant",
+      "id": "harvest-source-5de8c8f61d3470456455d75d",
+      "license": "NOT_ESTABLISHED",
+      "locator": "Pinned author publication or identity listing",
+      "revision": "content-sha256:9beb932030f909428bde4cc2b2701164fc2ef3ae33c58dc03cbd5cf3a11a19a4",
+      "sha256": "9beb932030f909428bde4cc2b2701164fc2ef3ae33c58dc03cbd5cf3a11a19a4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-55/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

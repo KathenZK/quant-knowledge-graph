@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6790",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6744,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "bf2b373b151bb664ce0eb50dbbb56c7ea85d5bfc2e0b513b168b9fd3567909ca",
+    "rule_sha256": "a424162fada9ded314697b4b2c544245714ce5a80dd40fd95672078c62cb6cbb"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6790",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6790"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/NetDebtPrice.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Penman, Richardson and Tuna / OpenSourceAP CrossSection"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-390/W4001"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Penman·净债务价格五分位多空：年6月末；NetDebtPrice=(dltt+dlc+pstk+dvpa−tstkp−che)/市值；剔金融与BM最低两分位；等权多最低空最高持12月（Penman·NetDebtPrice·QuintileL/S）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2007-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Net debt to price (NetDebtPrice) quintile long-short"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 OpenSourceAP/CrossSection 可执行核 Penman, Richardson and Tuna (2007) NetDebtPrice。年6月末：NetDebtPrice=(长期债务dltt+流动负债中的债务dlc+优先股pstk+拖欠优先股息dvpa−库存股tstkp−现金及短投che)/市值；剔除SIC 6000–6999金融；按BM=log(ceq/市值)剔最低两五分位（仅留BM第3–5分位）；等权五分位做多最低NetDebtPrice、做空最高，持12月。Sign=−1。不是目录核M0435（仅Signal Browser定义）；不是NetDebtFinance/CompositeDebtIssuance近核；不是SMA200闸。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Penman·NetDebtPrice·QuintileL/S"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

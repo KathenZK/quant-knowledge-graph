@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3417",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3371,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1f03e0e020f3f40069ec8ce09070b9c4630fc5b84deb2539160fb72e3df091d9",
+    "rule_sha256": "10cee6e0e31b4c5e200f5945865d6ed651346aa23334676568c87c39838f36bb"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3417",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3417"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://cssanalytics.wordpress.com/2020/12/23/how-should-trend-followers-adjust-to-the-modern-environment-enter-adaptive-momentum/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "David Varadi / CSS Analytics"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线收盘；回撤=自历史高点；P=(近6个月回撤序列上当前回撤百分位)^2；EMA α=P·α(50)+(1−P)·α(200)，α(n)=2/(n+1)；SMA(10)>自适应EMA则满仓SPY，否则现金（CSSA Adaptive Momentum）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2020-12-23"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线收盘；回撤=自历史高点；P=(近6个月回撤序列上当前回撤百分位)^2；EMA α=P·α(50)+(1−P)·α(200)，α(n)=2/(n+1)；SMA(10)>自适应EMA则满仓SPY，否则现金（CSSA Adaptive Momentum）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CSS Analytics《Enter Adaptive Momentum》（2020-12-23）已印构造与评论澄清。每日收盘：用自历史高点的回撤序列；在近约6个月回撤样本上对**当前**回撤做百分位排名得 P0，再令 P=P0²。短/长参考回看 50 与 200（作者称参数不关键，示例取此）：把回看换成指数均线 α=2/(n+1)，最优 α=P·α_ST+(1−P)·α_LT，以此 α 递归计算自适应 EMA（AMA）。价格过滤用 10 日简单均线；**同一收盘**若 SMA(10)>AMA → 满仓 SPY，若 SMA(10)<AMA → 现金。作者评论确认：不做 AMA 滞后一日。不是固定 200 日价上均线核，也不是本轮 Adaptive VIX MA（用 VIX 调 α）核。提出日期取文首 December 23, 2020。CSSA Adaptive Momentum：回撤6月百分位²调 α(50/200) 得 AMA；SMA10>AMA→SPY ≠ 固定价≷SMA200 / Adaptive VIX MA（W618）。计入美股/ETF。提出日期按源文件原样保留2020-12-23。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "The Simple Solution 段 + 评论澄清"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

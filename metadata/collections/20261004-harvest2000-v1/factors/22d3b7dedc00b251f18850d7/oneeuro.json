@@ -1,0 +1,116 @@
+{
+  "economic_basis": {
+    "hypothesis": "在变化缓慢时加强平滑，变化快速时加快响应。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-8a2f83585e391b5882a733c7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "收盘后输入才固定；源码未锁定市场、交易所或bar周期；实时柱内的输出可变。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-8a2f83585e391b5882a733c7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当 bar_index==0 或前一计算留下的 xHat 为 na 时，以 nz(src,0) 重置原始前值和输出，平滑差分也重置为0。 由相邻原始输入之差估计速度，不使用前一滤波输出替代原始前值。 平滑速度绝对值提高截止频率，再据此更新单极平滑输出。 边界：实现固定每柱采样间隔为1，没有按真实秒数重标频率。 当前缺失会传播到输出；下一根若 xHat 缺失则以 nz(src,0) 重新初始化，历史状态丢失。低延迟不代表已证明预测能力。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-8a2f83585e391b5882a733c7"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在变化缓慢时加强平滑，变化快速时加快响应。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-8a2f83585e391b5882a733c7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "α(f)=2πf/(1+2πf)；d_t=α(fd)*(x_t-x_(t-1))+(1-α(fd))*d_(t-1)；fc=fmin+β*|d_t|；y_t=α(fc)*x_t+(1-α(fc))*y_(t-1)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-8a2f83585e391b5882a733c7"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src：每根已完成柱的价格或数值输入；默认close。参数：minCutoff：最低截止频率；范围>0; UI >=0.001；源码默认1.0；beta：速度系数；范围>=0；源码默认0.007；dCutoff：速度估计的截止频率；范围>0; UI >=0.001；源码默认1.0"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-8a2f83585e391b5882a733c7"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "mihakralj/pinescript",
+  "lab": null,
+  "missing_information": [
+    "Pine运行环境与ta.*内建语义未另冻结",
+    "未编译或执行Pine代码",
+    "市场数据、时间周期、调整方式和成本未选择"
+  ],
+  "name": "速度驱动截止频率的 One Euro 滤波",
+  "native_source_id": "oneeuro",
+  "one_line": "在变化缓慢时加强平滑，变化快速时加快响应。",
+  "record_id": "oneeuro",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/oneeuro.pine"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-8a2f83585e391b5882a733c7",
+      "license": "MIT",
+      "locator": "oneeuro:L32-L65; UI defaults and input selectors:L69-L75; native function invocation and selected source:L78-L78",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "8d7cdb7b23fca7887195a00595fd34e1675135fc2db98e9f4b395cb867212154",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/oneeuro.pine",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-804bcf21463c75493a5520e3",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "19436752dbc325b6013c778a438efa521d0fefe0eb53aebf83d7753543052936",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-32b12ac38ded7cc52cc655af",
+      "license": "MIT",
+      "locator": "author notes:L1-L60",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "a0cc09214c4613bf430b8c90ae70d23c65c3410379f09773a34b256c3f849ffb",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/oneeuro.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

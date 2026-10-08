@@ -1,0 +1,103 @@
+{
+  "economic_basis": {
+    "hypothesis": "表示价格相对一目转换线的偏移，在转换线与基准线拉开时被放大；这是原作者复合技术定义，没有经济收益验证。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-6kdpJFfO-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前H/L/C参与计算且没有收线确认门；历史排名和EMA盘中会变。未绑定数据源、复权、交易日历、初始化与缺失值运行版本。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-6kdpJFfO-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先算未位移的滚动中点、ATR、价格偏移及绝对结构间距，再相乘和EMA。分位作用于未经EMA的|u|，不是平滑主线。平滑主线的符号可能滞后于当前C−T，因此源码注释所称方向始终同步不能当成计算保证。Pine v6中含na的比较返回false，故源码在ATR为0或na时把两者置0；不能把暖机0当有效观测。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-6kdpJFfO-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "表示价格相对一目转换线的偏移，在转换线与基准线拉开时被放大；这是原作者复合技术定义，没有经济收益验证。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-6kdpJFfO-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "T=(最高H_18+最低L_18)/2；K=(最高H_52+最低L_52)/2；A=ATR_14。A有效且非零时p=(C−T)/A，g=|T−K|/A；A为0或na时两者均0。u=p×(1+g)，主线为EMA_2(u)；辅助极端性q=percentrank_104(|u|)，q>=90/95用于标记。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-6kdpJFfO-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前图表H/L/C；转换线T默认18根高低中点、基准线K默认52根高低中点，ATR窗14，结构间距权重1，EMA平滑2，绝对伸展历史分位窗104。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-6kdpJFfO-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用于单资产结构偏移与历史极端程度描述，没有一目云位移、交叉订单或仓位规则。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未验证Pine数值语义与ATR缺失行为。",
+    "源码部分符号说明与平滑主线存在差异，按计算保留。",
+    "未验证预测用途。"
+  ],
+  "name": "一目结构伸展振荡（Ichimoku Structural Stretch）",
+  "native_source_id": "6kdpJFfO",
+  "one_line": "将价格偏离转换线的ATR倍数，再按转换线与基准线的距离放大并平滑。",
+  "record_id": "6kdpJFfO",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Powerslider",
+      "id": "tradingview-6kdpJFfO-published-code",
+      "license": "NOASSERTION; no license header in this saved script",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;1c7fd056ab1647edacb9bb550ed0403a@1.0",
+      "sha256": "ca2cdc5ce5896d7b8b0d9f89cbfb4634735af5e2f1727c4cde73bf010cfb38a6",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B1c7fd056ab1647edacb9bb550ed0403a/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / Powerslider",
+      "id": "tradingview-list-9686ce31895f9dc710d0",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=6kdpJFfO；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:9686ce31895f9dc710d06f57753b6d926f28f65f207d2ee30b8aea08482ac710",
+      "sha256": "9686ce31895f9dc710d06f57753b6d926f28f65f207d2ee30b8aea08482ac710",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-51/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2599",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2599,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e7af69fa98f1e21e4d9526c14f6625a84e03ac2099354b9fade7ef041448a72b",
+    "rule_sha256": "1a6858b1602cce69c9ba6829cdb1ba4196015c273e744474e093669138d9454e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2599",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2599"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-donchian-breakout-turtle/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY/QQQ/IWM/EFA/EEM 日线唐奇安(20)上破按ATR风险1%与等权上限取小开多，唐奇安(10)下破清仓（QC Documentation turtle）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（五ETF唐奇安20入场10出场ATR1%；QC Documentation turtle）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY/QQQ/IWM/EFA/EEM 日线唐奇安(20)上破按ATR风险1%与等权上限取小开多，唐奇安(10)下破清仓（QC Documentation turtle）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-donchian-breakout-turtle/main.py`。五只如上；各挂入场 `dch(20,20,DAILY)`、出场 `dch(10,10,DAILY)`、`ATR(20,SIMPLE,DAILY)`；`_risk_per_trade=0.01`。开盘后1分钟：空仓且价>入场上轨 → 股数=`min(组合价值×1%/ATR, 等权1/5对应股数)` 的整数，`market_order`；持多且价<出场下轨 → `liquidate`。不是 W211 单标的唐奇安中轨平仓多空核，也不是 XOM 仅20日通道核。提出日期未知。 不是W211单标的唐奇安中轨平仓多空核，也不是XOM仅20日通道核：本条为五ETF唐奇安(20)入场按ATR风险1%与等权上限取小，唐奇安(10)出场。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

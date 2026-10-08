@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6536",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6490,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "2b01afc0402751b671e16d685a90594d6dde14ede216e61cb2996bfb310f597d",
+    "rule_sha256": "eba49cfbd8ae8b801b66c66f38b89f83e0dc449b449138f5a96fbaa554ad1570"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6536",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6536"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/ZZ1_OrgCap_OrgCapNoAdj.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Eisfeldt / Papanikolaou / OpenSourceAP CrossSection"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-364/W3747"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Eisfeldt·组织资本五分位多空：年6月末；行业调整OrgCap/资产；市值加权多最高空最低持12月（Eisfeldt·OrgCap·QuintileL/S）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2013-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Organization capital industry-adjusted quintile L/S (Eisfeldt & Papanikolaou 2013 Table 4A.1 lineage)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Eisfeldt/Papanikolaou《Organization Capital and the Cross-Section of Expected Returns》（JF 2013）组织资本之可钉五分位多空（OpenSourceAP OrgCap可执行核，非目录字段）。SG&A按GNP平减；组织资本存量递归：首年≈4×SG&A，此后OrgCap_t=0.85×OrgCap_{t−1}+SG&A_t（年频十二月财年），再除以总资产；仅十二月财年末、非金融、非缺失SIC；1%缩尾后减同月FF17行业均值并除以行业标准差得OrgCap。每年6月末按OrgCap分五分位；市值加权做多最高五分位、做空最低五分位，持有12月。Sign为正。不是French·OP/Size×OP或NM GP/A（近M6455/M6500/M6489）。代码与SignalDoc：LSQuantile=0.2、StockWeight=VW、PortfolioPeriod=12、StartMonth=6。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Eisfeldt·OrgCap·QuintileL/S"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

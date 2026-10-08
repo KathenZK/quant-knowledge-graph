@@ -1,0 +1,150 @@
+{
+  "economic_basis": {
+    "hypothesis": "将排序后的样本用组合系数加权，描述分布的尺度及高阶形状；整个阶数族只登记一次，不把均值、Gini或各阶比率另算因子。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入经过np.array(ndmin=2)；单行多列转置，多行多列或非有限数值抛ValueError。按样本轴排序后，与owa_l_moment(T,k)输出的T×1权重作点积，最后.item()返回标量。 helper以range(k)逐项构建每个排序位置的权重，组合数来自scipy.special.binom；函数并不主动校验k>=1或k<=T，本条明确合理研究合同。 所有阶数使用同一线性顺序统计量公式，不把k3/k4、L3/L2、L4/L2、不同窗口或资产单列拆成独立算法。默认k2的尺度描述不是本族新颖性的单独依据。 不按时间顺序加权，不累积复利、不产生持仓规则；只在所有样本观察与发布完成后取分布摘要。原始输出仍具输入收益的量纲，不能标成无量纲偏度/峰度。 边界：k>T使C(T,k)=0，k非整数会在range报错，源码没有统一友好校验；本条不会将其解释为有意义风险值。 组合数和交替加总用浮点数，大T/高k可能溢出或相消，未验证数值稳定性；金融使用应另行固定有足够样本的有限k。 常量样本没有被拒绝；高阶矩数学上可为0，但浮点残差不保证严格零。没有额外去均值或按样本标准差归一。 L矩理论中归一化的L-skewness/L-kurtosis不等于本函数原始L3/L4；不能把名字相近的传统三/四阶中心矩当作等价，也不把这些比率再计新族。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "将排序后的样本用组合系数加权，描述分布的尺度及高阶形状；整个阶数族只登记一次，不把均值、Gini或各阶比率另算因子。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "设升序样本x_(1)..x_(T)，整数1<=k<=T。w_i(k)=[1/(k*C(T,k))] Σ_(j=0..k−1)(−1)^j C(k−1,j) C(i−1,k−1−j) C(T−i,j)；L_k=Σ_(i=1..T)w_i(k)x_(i)。C(n,j)为二项组合系数，j>n时取0。源码默认k2，给原始L矩标量；没有自动除以L2或L1。L1=样本均值，L2=同库Gini mean difference/2，只保留这些关系而不新增两条。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X（nonempty finite real return series, 1D or Tx1/1xT array-like; recommended T>=2）：同一采样频率的完整收益窗口；函数把1xT转为Tx1，拒绝多行多列及NaN/Inf。价格到收益、simple/log口径、成本与时间发布规则均不由本函数生成。。参数：k：L矩阶数；所有阶数算同一族；范围integer1<=k<=T; novelty reviewed at family level including k>=3；源码默认2"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "dcajasn/Riskfolio-Lib",
+  "lab": null,
+  "missing_information": [
+    "实际Python/NumPy/SciPy版本与数值重现未冻结",
+    "收益定义/采样频率/数据PIT与市场发布时间未固定",
+    "未回测或证明收益方向、预测能力及稳健性",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "顺序统计量线性组合的 L 矩族",
+  "native_source_id": "L_Moment",
+  "one_line": "将排序后的样本用组合系数加权，描述分布的尺度及高阶形状；整个阶数族只登记一次，不把均值、Gini或各阶比率另算因子。",
+  "record_id": "L_Moment",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/riskfolio/src/RiskFunctions.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Riskfolio-Lib 固定实现及配套文档，copyright 2020–2026 Dany Cajas；理论文献归属单列，不据实现维护者署名宣称首创 L 矩。",
+      "id": "harvest-source-33a1babff54280c7a77dbbc0",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 maintainer and imports:L1-L17; L moment identity, validation and sorted dot product:L1961-L2003",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "2156737cc64527f439b172f0a448b6aa48fbfd1f0b1710b02454dff722ceb7c7",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/riskfolio/src/RiskFunctions.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib 固定实现及配套文档，copyright 2020–2026 Dany Cajas；理论文献归属单列，不据实现维护者署名宣称首创 L 矩。",
+      "id": "harvest-source-11791aea7816b756ed448e86",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 and scipy binom dependency:L1-L10; exact L-moment weights and Gini relationship:L27-L80",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "03a05d27b12d44d42aa175b97bb1b3c6279f4bcc11d53019a50f25ceb6442b05",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/riskfolio/src/OwaWeights.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib 固定实现及配套文档，copyright 2020–2026 Dany Cajas；理论文献归属单列，不据实现维护者署名宣称首创 L 矩。",
+      "id": "harvest-source-62293b58121f24792ab9c2bb",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer L-moment optimization reference:L878-L886",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "68b06232402ae268774ae715806c79271fa691c476b657d352123f838197d734",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/docs/source/riskfoliolib/biblio.bib",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib 固定实现及配套文档，copyright 2020–2026 Dany Cajas；理论文献归属单列，不据实现维护者署名宣称首创 L 矩。",
+      "id": "harvest-source-d716f1091c2d4ef07fac883d",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 license:L1-L27",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "7f7a68d261604e432e818993f92b74b636c632e31f207730dd189267044aa5e6",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib 固定实现及配套文档，copyright 2020–2026 Dany Cajas；理论文献归属单列，不据实现维护者署名宣称首创 L 矩。",
+      "id": "harvest-source-4f72c990401395c3f1dc6c92",
+      "license": "BSD-3-Clause",
+      "locator": "dependency lower bounds:L1-L15",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "999b816f857730883e03b6455426e4a635e36822d1b3bc2e04aa2b6b29fe4955",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/requirements.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

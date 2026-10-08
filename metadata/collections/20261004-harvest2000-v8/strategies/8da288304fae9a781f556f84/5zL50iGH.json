@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "固定整数格附近的方向穿越或有延续特征；这是待验证的形态与风险结构假说，不代表整数价格造成收益。",
+    "missing": [
+      "无盈利、样本外、因果归因或经济独立性证明。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "没有执行/编译上游源码或下载行情；计算数值、实际成交和回测未验证。",
+    "具体标的、行情版本、会话/日历和真实交易成本需另行冻结。",
+    "版权声明只按源码记录，不扩展覆盖论文、数据或商业内部研究；商业状态 REVIEW_REQUIRED。"
+  ],
+  "name": "固定价格格偏移穿越与冻结格边界退出",
+  "native_source_id": "5zL50iGH",
+  "one_line": "按固定50点格生成上下偏移10点触发线，确认15分钟方向棒穿越且剩余收益风险比合格才开一笔，固定相邻格止盈止损。",
+  "record_id": "5zL50iGH",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行策略与回测，没有绩效结果。",
+    "metadata": "本记录只保存自撰规则和来源定位；保留发布用户与源码署名，身份真实性未独立核验。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/script/5zL50iGH-TZ-Gold-Round-Levels-Strategy/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "TradZoo",
+      "id": "tradingview-5zL50iGH-published-code",
+      "license": "NOASSERTION; no explicit license notice in saved published script",
+      "locator": "公开Pine JSON的source字段；精确decoded行段见本记录review.field_spans",
+      "revision": "PUB;9e9691bb9d8c4cb1a0f684c63b08ce79@1",
+      "sha256": "94e4bbe5618b3b3cb838ba1980446b50b07ee2065bad2cab2102e05a3db88a25",
+      "supports": [
+        "源码默认公式、真实控制流与下单请求"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B9e9691bb9d8c4cb1a0f684c63b08ce79/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradZoo",
+      "id": "tradingview-list-01269c2d29150855064a",
+      "license": "REVIEW_REQUIRED",
+      "locator": "公开列表init-data image_url=5zL50iGH; script_id_part/version/user/chart_url",
+      "revision": "sha256:01269c2d29150855064ac1e98002b5afa57dceb9620adccc6262d72d08e17676",
+      "sha256": "01269c2d29150855064ac1e98002b5afa57dceb9620adccc6262d72d08e17676",
+      "supports": [
+        "公开脚本ID、发布版本、发布用户与原页身份；不支持交易规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/?script_access=open&script_type=strategies&sort=latest_popular",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "tradingview-5zL50iGH-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "作者策略标题为Gold，但源码没有限制XAUUSD、期货合约、交易所或币种；使用当前图表开收盘与最小价格跳动。USD只是策略账户币种，不能当作已冻结行情身份。"
+    },
+    "cost": {
+      "evidence": [
+        "tradingview-5zL50iGH-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码明确佣金百分比0、滑点0。这是未计交易摩擦的配置，不是真实成本为零；融资/资金费/点差/税费/容量缺失。"
+    },
+    "entry": {
+      "evidence": [
+        "tradingview-5zL50iGH-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "canEnter=15分钟且确认棒且实际空仓且lastSignalBar为na或本bar_index>上次信号。多需阳线C>O、上述多穿越及RR合格；空需阴线C<O、空穿越及RR合格。if多/else if空以市价请求开仓，记录信号C与当时基线/最终格价，写lastSignalBar。持仓两方向均阻止新开；不是每一格维持多张挂单。"
+    },
+    "execution_time": {
+      "evidence": [
+        "tradingview-5zL50iGH-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "声明 process_orders_on_close=true、calc_on_every_tick=false、calc_on_order_fills=false、use_bar_magnifier=true；信号限确认棒。入场与保护单同一计算分支请求，源码意图可在信号棒收盘处理；未运行引擎，收盘成交、同棒保护与更细数据顺序均未核实。"
+    },
+    "exit": {
+      "evidence": [
+        "tradingview-5zL50iGH-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "开仓同分支发布完整 bracket：多 stop=冻结B、limit=冻结T；空同理。持仓后反复发布相同冻结价，不随新格移动。源码的TP1=信号C±风险只是1R绘图参考，没有部分退出、保本移动或独立订单。反向信号不平仓，退出依赖该固定括号订单。"
+    },
+    "position": {
+      "evidence": [
+        "tradingview-5zL50iGH-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "strategy.fixed 默认数量1单位，entry无qty覆盖；pyramiding=0，初始100000 USD，margin_long/short=100。不是固定美元金额1，也没有风险百分比缩量。源码没有合约最小量/步长适配。"
+    },
+    "risk": {
+      "evidence": [
+        "tradingview-5zL50iGH-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "首棒校验偏移<格距一半且S、d不小于mintick；未校验格距、偏移必须为mintick整数倍。格价逐步round后的结果按原式保存。RR仅按信号C计算，不保证成交后的RR；保护价固定，无日终退出。使用bar magnifier的实际低周期数据覆盖与同棒止盈止损先后未复现。"
+    },
+    "signal": {
+      "evidence": [
+        "tradingview-5zL50iGH-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认格距S=50、偏移d=10、最低最终收益/风险R=1.5。round表示四舍五入到mintick：多基线 B=round(floor((C−d)/S)S)，多触发 G=round(B+d)，多最终价 T=round(B+S−d)；风险r=C−B、收益w=T−C。空基线 B=round(ceil((C+d)/S)S)，触发 G=round(B−d)，最终T=round(B−S+d)，r=B−C、w=C−T。多穿越需前C<=本棒G且本C>G；空需前C>=本棒G且本C<G，均比较同一个本棒固定格线，非 ta.crossover 的两时点格线。多空各要求r>0、w>0、w+mintick×.000001>=1.5r。"
+    },
+    "timeframe": {
+      "evidence": [
+        "tradingview-5zL50iGH-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "硬限制15分钟图：timeframe.isminutes 且 multiplier==15，否则首棒 runtime.error。只在确认棒和空仓时入场。"
+    },
+    "universe": {
+      "evidence": [
+        "tradingview-5zL50iGH-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "单图表标的，无选股或资产排名。相对固定价格原点生成格线，不是对若干资产建网格组合。"
+    }
+  }
+}

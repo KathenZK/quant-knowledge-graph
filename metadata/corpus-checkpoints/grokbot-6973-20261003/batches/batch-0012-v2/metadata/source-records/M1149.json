@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1149",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1149,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7fd15c3c46b19b438d7baa56f280e4e25bc1baa089e000965a8e39770055ace2",
+    "rule_sha256": "06c8f85115d6193ef9dec0d87806a67c74dec3e4c402dcf8db344ad328562f6c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1149",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1149"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bigquant.com/wiki/doc/pwbrtZP3tE"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区（bq5973r5）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-cn-firms-9 C183（同核未另开）"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区：ICIR动态加权创业板多因子（120日窗，Top30每5日）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（创业板300/301；流通市值≤15亿等过滤）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-01-06"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区：ICIR动态加权创业板多因子（120日窗，Top30每5日）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。过滤：非ST/非停牌、float_market_cap≤1.5e9、list_days>90、净利TTM同比>30%、营收TTM同比>30%、0<pe_ttm<50、0<pb<5。五因子（行业内percent_rank）：小市值1−rank(市值)、EP=1/pe、BP=1/pb、ROE、近5日动量。未来HORIZON=5日收益为标签；LOOKBACK=120日算ICIR，有效IC数<30则权重0，只保留正ICIR并归一化。综合得分Top HOLD_N=30等权；每REBALANCE_DAYS=5日调仓。手续费买万三卖千1.3最低5元。 不是M1077滚动ICIR动态加权Top200每5日：那边约4因子、中证1000基准例、Top200；本条是创业板过滤池五因子、120日ICIR、Top30每5日。 计入其他。 提出日期按源文件原样保留2026-01-06。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3361",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3315,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "49147b96b7f080f239a6c3748131097f9088d881701e1bba7786d219bf15be3c",
+    "rule_sha256": "6728bf779959dd0bea828b4cc8c9de4a1b14ce07fa7a9e34ab7661d59f48588f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3361",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3361"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/DividendAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：MSFT日线 RAW + Tradier；首单 set_holdings 50%，并挂止损卖(低/2)与限价卖(高×2)各约25%量；收股息现金（Lean DividendAlgorithm）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：MSFT日线 RAW + Tradier；首单 set_holdings 50%，并挂止损卖(低/2)与限价卖(高×2)各约25%量；收股息现金（Lean DividendAlgorithm）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `DividendAlgorithm.py`。`add_equity(\"MSFT\",Daily)` + `RAW`；`BrokerageName.TRADIER_BROKERAGE`。`on_data`：若 `orders_count==0` → `set_holdings(\"MSFT\",0.5)`；`quantity=calculate_order_quantity(...,0.25)` → `stop_market_order(MSFT,−quantity, bar.low/2)` 与 `limit_order(MSFT,−quantity, bar.high*2)`。日志股息与拆股；拆股调整未成交单。不是空仓满仓无保护单核，也不是仅自定义波动率满仓核（W546）。提出日期未知。MSFT RAW半仓+止损(低/2)+限价(高×2)收股息 ≠ 空仓满仓无保护单/自定义波动满仓（W546）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

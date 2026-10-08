@@ -1,0 +1,135 @@
+{
+  "economic_basis": {
+    "hypothesis": "在无方向预测、稳定价格波动及指数成交强度近似成立时，库存偏移报价可能改善累计成交收益与库存风险的权衡。这是模型研究假说；原文模拟与效用推导不证明现实撮合、费用和逆向选择下盈利。",
+    "missing": [
+      "未运行、未回测；论文模型最优性和实证不是仓库验收结论。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi:10.1080/14697680701381228",
+  "lab": null,
+  "missing_information": [
+    "仅原论文有限期限、算术布朗中价、对称指数到达的一阶近似报价；不冒充完整HJB数值解、无限期/GBM版本或现代实现端口。",
+    "σ是绝对价格波动，q是股数；单位、初始现金、输入校准、期限与刷新节奏必须另行固定，示例参数不构成通用默认。",
+    "每笔1股、库存可跨零；未给硬库存/现金/保证金/杠杆约束，不能因偏移报价而称风险已封顶。",
+    "终值X_T+q_T S_T是中价估值；无强制零库存或真实中价清算保证，论文解释中的清算说法与交易假设边界同时保留。",
+    "真实手续费、返佣、融资借券、订单队列、延迟、撤改、部分成交与终点行为未闭合；NOT_EXECUTED/NOT_TESTED。",
+    "M3138 明称AS离散网格改写，已锁其当前源但不保证历史CSV版本一致；本条与同族是否为不同完整构造由独审裁定，不按作者、论文或参数增加计数。",
+    "NYU作者页定位最终期刊版，PDF明确Taylor & Francis2008版权；公开可读取不等于商业转载/源码/数据授权。原文、图片与源码不入Git，商业REVIEW_REQUIRED。"
+  ],
+  "name": "Avellaneda–Stoikov：有限期限的库存保留价与成交强度双边报价",
+  "native_source_id": "HighFrequencyTrading",
+  "one_line": "在单股、单股数成交模型中，以库存和剩余期限偏移报价中心，并用风险厌恶与指数成交强度共同确定买卖价差。",
+  "record_id": "HighFrequencyTrading",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、优化器或回测。",
+    "metadata": "作者原生文件/DOI身份、定位及自撰中文规则；不发布论文原文、图像、源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://math.nyu.edu/inmemoriam/avellaneda/Papers.html"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Marco Avellaneda and Sasha Stoikov, High-frequency trading in a limit order book, Quantitative Finance8(3),April2008,217–224, DOI10.1080/14697680701381228. NYU author archive links journalcopy. Chinese paraphrase by catalog curator.",
+      "id": "avellaneda-stoikov-2008-pdf",
+      "license": "NYU author archive links journal edition. PDFpage1 states Taylor & Francis2008copyright; no open redistribution license established. Public access is not commercial permission. No source fulltext or images distributed; commercialuse REVIEW_REQUIRED.",
+      "locator": "Physicalpp2–6 §2.1/2.4/3.2 Eq29/30 and stateupdates; p1authors/DOI/copyright. Finitehorizon arithmeticmodel only. Derivedtext fontmapping has controlglyphs; formulas visuallytranscribed from retained PDFpages, raw unchanged.",
+      "revision": "Quantitative Finance8(3),April2008,217–224; author-hosted final PDF sha256:71fa9268339ae82365171caa7416833b3a5d584f05e4f4c087c4ae72d7121a8d",
+      "sha256": "71fa9268339ae82365171caa7416833b3a5d584f05e4f4c087c4ae72d7121a8d",
+      "supports": [
+        "有限期限库存偏移报价、对称指数成交强度及单股现金/库存状态"
+      ],
+      "url": "https://math.nyu.edu/inmemoriam/avellaneda/HighFrequencyTrading.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_UNIVERSITY_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Marco Avellaneda NYU inmemoriam publications archive.",
+      "id": "as2008-nyu-author-page",
+      "license": "Publisher/institution page; no permission inferred from public accessibility. Fulltext not redistributed.",
+      "locator": "NYU author archive identifies paper title, Stoikovcoauthor, April2008QuantitativeFinance citation and directPDF link.",
+      "revision": "HTTP snapshot 2026-10-04T21:27:02.245818+00:00; sha256:deadcf4624a015673171849989928fc99353e4bce02df849bf6c638d8f7d6a45",
+      "sha256": "deadcf4624a015673171849989928fc99353e4bce02df849bf6c638d8f7d6a45",
+      "supports": [
+        "作者、题名、期刊版本及许可缺项定位"
+      ],
+      "url": "https://math.nyu.edu/inmemoriam/avellaneda/Papers.html",
+      "verification": "FETCHED_PINNED_AUTHOR_AFFILIATED_BIBLIOGRAPHIC_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "avellaneda-stoikov-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一个限价订单簿中的股票及现金。s为股票中间价，q为持有股数，X为现金金额；每笔被动买入或卖出都是1股。现金不计利息。原文没有给实际股票、交易所或永久有效的合约乘数，也未把1股改为1%权益。模型dS=σdW中的σ为绝对价格单位/时间平方根，不是收益率百分比波动；时间单位须与T、t及成交强度统一。"
+    },
+    "cost": {
+      "evidence": [
+        "avellaneda-stoikov-2008-pdf"
+      ],
+      "status": "MISSING",
+      "text": "模型假设报价可以连续、无成本更新，并假定现金无利息；这不等于真实成交费用为0。所选规则没有给交易所手续费、返佣、排队成本、撤改单费用、融资/借券、行情或系统延迟成本，故完整成本合同MISSING。价差是优化输出，不可再称作已经扣除全部真实交易成本后的净利润。"
+    },
+    "entry": {
+      "evidence": [
+        "avellaneda-stoikov-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在当前状态计算p_b、p_a，各以1股意愿双边报价。买单被打中时q←q+1、X←X−p_b；卖单被吃掉时q←q−1、X←X+p_a，然后依据新的库存/中间价/剩余时间重算报价。这是做市成交状态反馈，没有额外趋势信号或先选多空的入场阈值；成交过程由λb(s−p_b)、λa(p_a−s)的模型描述，不是触价即保证成交。"
+    },
+    "execution_time": {
+      "evidence": [
+        "avellaneda-stoikov-2008-pdf"
+      ],
+      "status": "MISSING",
+      "text": "定义流程为读取当前s/q/X/t→给出各1股的p_b/p_a→按实际买卖成交更新现金和库存→重报价。原文的泊松到达及离散模拟不是某个交易所的撮合、队列或撤改单接口；实盘时间戳、行情可用时点、排队优先级、部分成交、tick限制、延迟、终点撤单和剩余库存处理均未闭合，因此实际执行合同MISSING。未执行外来代码、模拟成交或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "avellaneda-stoikov-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "反方向的报价成交可以减少已有库存，也可以穿过零转为反向库存；没有逐笔止盈价或固定持有若干棒。期限结束按X_T+q_T S_T评价，未强制q_T=0。由Eq29/30可知t接近T时中心趋近s，但W趋近(2/γ)ln(1+γ/k)而非0。§2.3以到期中价清算解释风险缩短，而§2.1明确中价用于估值且不能无成本在该价交易；本条保留这一区别，不补出有保证的市价清仓执行。"
+    },
+    "position": {
+      "evidence": [
+        "avellaneda-stoikov-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "报价单位是每侧1股，q按净买入股数减净卖出股数记录；按论文展示状态取初始q=0，初始现金X由下游给定。报价不依赖账户总财富比例，所选有限期Eq29/30没有硬库存上限、现金非负、融资额度、保证金或最大杠杆约束；不得把另一个无限期ω版本的q_max移植过来。库存正负通过r反馈调整下一报价，并非同时持有两份独立多/空子账户。"
+    },
+    "risk": {
+      "evidence": [
+        "avellaneda-stoikov-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只有在所选无漂移价格、固定绝对波动与对称指数成交假设下使用该近似。现实波动、成交强度估计、逆向选择及参数校准未验收。公式不提供库存硬帽、亏损止损、tick舍入、负价格或异常输入处理；大库存偏移可能使一侧报价越过中价，不能擅自加clamp并称为原版。到期估值不是库存现金化证据；原论文P&L模拟与最优性讨论不是本仓库的回测或经济验证。PDF字体映射含控制字符，公式按原页视觉核对，自撰文本与未改写的提取原件同时保留。"
+    },
+    "signal": {
+      "evidence": [
+        "avellaneda-stoikov-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "采用§3.2库存展开及订单到达项一阶近似的Eq29/30：r=s−qγσ²(T−t)，全价差W=γσ²(T−t)+(2/γ)ln(1+γ/k)，在r两侧对称报p_b=r−W/2、p_a=r+W/2。q>0使两价下移，q<0使两价上移；在所选假设下W不随q改变。A虽影响成交到达数量，但在此近似报价公式中消去，不能据此把A设为0。这里的r是报价中心，不把“冻结库存”边际保留买价/卖价直接当真实挂单；本条也不宣称Eq29/30是完整HJB精确解。"
+    },
+    "timeframe": {
+      "evidence": [
+        "avellaneda-stoikov-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "连续时间、给定有限终点T的报价控制，在t<T根据当前中间价和库存重算；剩余期限为T−t。未固定交易日长度、交易时段或生产刷新频率。原文模拟dt=0.005属于单位化T=1的算例，并提醒步长太小会缺少成交、太大可能多单到达；这里不把它解读为0.005秒或某根K线。"
+    },
+    "universe": {
+      "evidence": [
+        "avellaneda-stoikov-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "所选版本假设单资产中间价为无漂移、常数σ的算术布朗运动；对价格方向及自相关不作预测。两侧成交到达强度相同：λa(δ)=λb(δ)=A exp(−kδ)，A>0、k>0，δ分别是卖价减中间价、或中间价减买价。风险厌恶γ>0。具体s、σ、A、k、γ及期限T必须由下游提供；本文模拟的一组数值仅为示例，不当作普适默认。几何布朗运动附录和无限期ω版本不并入本条。"
+    }
+  }
+}

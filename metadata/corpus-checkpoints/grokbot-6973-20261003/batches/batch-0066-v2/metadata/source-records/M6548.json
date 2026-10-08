@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6548",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6502,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "df466acbe2a7c69c54b5ff8e8716384ca9823f5e171079fd18eb8ee1673ba1a4",
+    "rule_sha256": "c86ead481437eeb651051e6d4080cf87c45857713c2e26d89661c2c85ddf5fd6"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6548",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6548"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/OScore.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dichev / OpenSourceAP CrossSection"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-365/W3759"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dichev·O-Score高违约十分位空对低七成多：月末；OScore公式；等权多最低70%空最高10%持1月（Dichev·OScore·Top10S/Bot70L）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "1998-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "O-Score high-default short vs low-70% long (Dichev 1998 Table 5 lineage)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Dichev《Is the Risk of Bankruptcy a Systematic Risk?》（JF 1998）O-Score之可钉多空（OpenSourceAP OScore可执行核，非目录字段）。OScore=−1.32−0.407·ln(AT/GNP平减)+6.03·(LT/AT)−1.43·((ACT−LCT)/AT)+0.076·(LCT/ACT)−1.72·I(LT>AT)−2.37·(IB/AT)−1.83·(FOPT/LT)+0.285·I(IB+IB_{t−12}<0)−0.521·((IB−IB_{t−12})/(|IB|+|IB_{t−12}|))；FOPT缺失用OANCF；剔除SIC∈(3999,5000)∪(>5999)；|价|>5。每月末：等权做多OScore最低70%、做空最高10%，持1月。Sign为负。不是French·OP/Distress或Z-Score近核；不是本批EntMult。代码与SignalDoc：StockWeight=EW、PortfolioPeriod=1、Filter=|prc|>5。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dichev·OScore·Top10S/Bot70L"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2231",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2231,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "519fb5cc2ec5a6ba270e1959915daa9e4d8210c4ef17fc8adc33c073c756da32",
+    "rule_sha256": "8db9ba1e1e6911056afadcdd493abf02d533cee140415b6cacd62c7b02ccda7b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2231",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2231"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/stock/stockzmt/2024-08-28/doc-incmcvrs5356600.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰证券金工（林晓明、徐特、何康；新浪转载；前期报告《基于全频段量价特征的选股模型》2023-12-08）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰金工全频段量价行业轮动（个股10日收益仅市值中性；流通市值加权合成行业；span=5 EMA；周频Top5）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（中信行业；周频多头Top5）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-08-20"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华泰金工全频段量价行业轮动（个股10日收益仅市值中性；流通市值加权合成行业；span=5 EMA；周频Top5）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。底层同全频段量价端到端选股模型，但预测个股未来10日收益后只做市值中性、不做行业中性以保留行业信息；按中信行业成分流通市值将日频选股因子合成为日频行业得分；对行业得分做span=5指数移动平均降换手，取每周最后一个有效值为周频行业得分并配置Top5。相对选股因子行业中性版：本条为行业轮动落地核。 不是M1163跟踪叙述Top5等权：本条为市值中性（不做行业中性）+流通市值加权合成行业+span=5 EMA周频Top5构造核。 计入其他。 提出日期按源文件原样保留2024-08-20。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

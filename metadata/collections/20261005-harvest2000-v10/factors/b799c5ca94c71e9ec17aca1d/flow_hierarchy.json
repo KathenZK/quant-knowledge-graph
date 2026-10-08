@@ -1,0 +1,143 @@
+{
+  "economic_basis": {
+    "hypothesis": "度量给定有向关系图中有多少边权没有落入任何环路，可描述关系结构的单向层次程度；不把方向解释为已证明的金融因果。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-2ab285636ea0349104ff78fe",
+        "harvest-source-5b89d2b6dffd61a0a927e331",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图方式、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-2ab285636ea0349104ff78fe",
+        "harvest-source-5b89d2b6dffd61a0a927e331",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "原函数先以nx.is_empty检查无边图，再检查G.is_directed；任一不符合即抛NetworkXError。没有主动检查正权、有限数值或总权重非零，研究合同明确这些前提。 固定内置strongly_connected_components使用迭代Tarjan深度优先/lowlink求强连通分量；它判断可达性，不以权重大小作为边是否可达的门槛。 对每个分量建立G.subgraph(c)诱导视图，保留两端都在c的边，按Graph.size(weight)求边数或权重和；跨分量边只进入总分母。视图共享属性，调用期间应固定图不变。 原文算法归因Luo/Magee2011，但此维护者实现用强连通分量替代论文描述的矩阵指数检测；本条审固定实现，不宣称原论文所有算法步骤完全一致。 无环有向图h=1，全体边都在环中h=0是定义层含义；不能据值高低给收益、风险或控制权方向结论。不同weight属性或图窗口不拆算法。 边界：有边但总权重为0时仍可能除0；负权可让结果超出[0,1]，源未防护。本条正权合同不能当作源码校验。 自环算循环；长度>=3的有向环即使无任何反向边也算循环，因此与既有OrdinalNetwork互惠率不是同一组件。 源码也声明支持MultiDiGraph，但本条不审多重边包装和外部NetworkX backend；所述内置简单图数学定义不替它们保证运行。 只输出整体图统计，节点数量、权重尺度和构图规则对解读有影响；没有金融网络有效性或实时可用性证明。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-2ab285636ea0349104ff78fe",
+        "harvest-source-5b89d2b6dffd61a0a927e331",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "度量给定有向关系图中有多少边权没有落入任何环路，可描述关系结构的单向层次程度；不把方向解释为已证明的金融因果。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-2ab285636ea0349104ff78fe",
+        "harvest-source-5b89d2b6dffd61a0a927e331",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "令G=(V,E)，研究合同为有限有向简单图，至少一条边；若weight=None，每边w_e=1，否则使用指定属性、缺失属性为1，要求全部有限正值。将V分成强连通分量C_1…C_K（任意两节点彼此有有向路径可达的最大集合）。h=1−[Σ_k Σ_(e∈E且两端都在C_k) w_e]/[Σ_(e∈E)w_e]。自环属于单节点分量内边并计为循环边。等价不参与任意长度有向环的边权占总边权比例，不能用仅反向二元边比例替代。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-2ab285636ea0349104ff78fe",
+        "harvest-source-5b89d2b6dffd61a0a927e331",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in networkx.DiGraph, nonempty edge set; positive finite selected weights; stable during call）：已观测的有向关系图，节点/边/方向/权重如何由金融数据构建尚未定义；不在函数中下载数据、估计网络或处理PIT。。参数：weight：默认按边计数；缺失权重按1，零/负/非有限权不在研究合同；范围None or an edge attribute name; reviewed finite positive weights；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-2ab285636ea0349104ff78fe",
+        "harvest-source-5b89d2b6dffd61a0a927e331",
+        "harvest-source-9bc7c4ec626786f0185a037d"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融图的节点、边、方向、权重构建方法及数据时间版本均缺失",
+    "Python/NumPy/SciPy/NetworkX backend实际运行环境未冻结",
+    "原论文全文复现、经济有效性、预测收益或实际金融应用没有验证",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "不参与有向环路的边权比例",
+  "native_source_id": "flow_hierarchy",
+  "one_line": "度量给定有向关系图中有多少边权没有落入任何环路，可描述关系结构的单向层次程度；不把方向解释为已证明的金融因果。",
+  "record_id": "flow_hierarchy",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers维护的内置实现，许可归属按LICENSE保留；各算法原论文在固定源码References列明。仅整理自撰数学定义和实现事实，不称原论文作者本人代码或完整论文复现。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的内置实现，许可归属按LICENSE保留；各算法原论文在固定源码References列明。仅整理自撰数学定义和实现事实，不称原论文作者本人代码或完整论文复现。",
+      "id": "harvest-source-2ab285636ea0349104ff78fe",
+      "license": "BSD-3-Clause",
+      "locator": "full flow hierarchy definition guards and SCC aggregation:L1-L57",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "fca161085d407ebd93ae43e1ab1fb53d751712d7d82e16d14a10b9f1929b0c61",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/hierarchy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的内置实现，许可归属按LICENSE保留；各算法原论文在固定源码References列明。仅整理自撰数学定义和实现事实，不称原论文作者本人代码或完整论文复现。",
+      "id": "harvest-source-5b89d2b6dffd61a0a927e331",
+      "license": "BSD-3-Clause",
+      "locator": "complete built-in iterative Tarjan SCC path:L1-L147",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "53f2e30104287bfc40d2d90046a43db2a8c27e2c558918459bc57a604a65bf91",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/components/strongly_connected.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers维护的内置实现，许可归属按LICENSE保留；各算法原论文在固定源码References列明。仅整理自撰数学定义和实现事实，不称原论文作者本人代码或完整论文复现。",
+      "id": "harvest-source-9bc7c4ec626786f0185a037d",
+      "license": "BSD-3-Clause",
+      "locator": "induced subgraph and shared-view contract:L1793-L1812; subgraph view creation:L1865-L1875; edge weight totals via degree sum:L1917-L1958",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6708c0bdc9aa744e0c70d57c4b75ea517cfe6a183d589c737baca4333c241734",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/graph.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

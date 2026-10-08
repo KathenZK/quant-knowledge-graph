@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0849",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 849,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "393bbe0257bb531ebda3e0a50c338349e739968e2bfc611a05b06afe057ca184",
+    "rule_sha256": "55546ac4b6f70c9142a023aa641736d8b6f37ca060ccc15662d97bcb5e0aea41"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0849",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0849"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/445/Two-Sleeve-Mean-Reversion-Momentum"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Prajjwal Mittal"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "两袖均值回归动量：袖1价格高于200日SMA且RSI低于未印出阈值，动量排名最多5只、ATR仓位；袖2基本面后再留21日对数斜率为正，反波动率，重叠上限40%；RSI阈值、ATR倍数与最长持有期未印出"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-04-06"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Two-Sleeve Mean Reversion Momentum"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：RSI阈值、ATR倍数与最长持有期页面未印出，不能把未写出的超卖阈值、止损倍数或持有上限补成规则。本条只写该公开策略页已印出的两袖结构，不是已收的单一200日均线择时，也不是周线RSI(2)低于20的10只，也不是未印出快慢EMA周期的价值质量趋势减仓。日线信号。Sleeve 1 每日决策：价格在200日SMA上方且RSI低于阈值，按近期动量排名，最多5个持仓；ATR仓位和高水位追踪止损，RSI过买或最长持有期退出。Sleeve 2 每月再平衡：流动性、盈利、股东收益、杠杆等基本面筛选，再保留21日对数价格斜率为正者；反波动率加权、回撤缩放，和Sleeve 1重叠上限40%。源文件市场写美国股票/ETF及比特币代理，未印出比特币代理代码，也未印出把比特币现货写入持仓，主表按市场字段计入美股/ETF，不记成混合。基本面筛选的具体比率、回撤缩放比例、动量窗口与RSI周期页面也未印出，本条不补。提出日期按页面原样保留2026-04-06。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。RSI阈值、ATR倍数与最长持有期未印出"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

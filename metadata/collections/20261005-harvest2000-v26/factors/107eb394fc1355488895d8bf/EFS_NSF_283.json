@@ -1,0 +1,157 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述一个给定均值与经验样本的约束似然兼容度；不是均值的后验概率、金融方向或已校准检验结论。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-6ab4a7250a2ef294dce475c2"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X所有观测与mu所需信息已发布后才可计算整窗profile；不得回填过去。金融输入与query选择时点仍未冻结。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-6ab4a7250a2ef294dce475c2"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "核心固定Art Owen的Stanford TechnicalReport283（1987-12）扫描稿，大学PURL mq771hk9087及XML原生EFS_NSF_283共同核身份；PDF字节/MD5/SHA1与官方XML一致。Crossref的1990-03-01期刊条目仅关联同题作品，未取得期刊PDF，不宣称其与1987稿公式或字节相同。 有限样本输入为X和同坐标mu。此条显式选择满仿射秩与query严格内点，以得到有限T及唯一乘子；它是数学研究子域，不是源软件的主动检查。原定理可讨论秩亏随机变量，当前不自动降维或加协方差正则。 每一行观测分配一个质量w_i；重复坐标仍保留重复观测。原printedp7的ties装置把同坐标的质量相加成分布概率，在等价最大化时同值观测质量相等；不能去重后给唯一点等权，或误把乘积只乘不同取值。 基准经验质量每行1/n，归一化乘积∏n w_i，使无均值限制时最大值1。约束逐坐标精确重构mu，不是只限定总权重，也不是给定权重下计算普通样本均值。 严格内点使存在所有w_i>0的可行表示，故R>0；闭单纯形内的可行集紧，乘积连续使最大值达到。正域sum logw严格凹使最优w唯一；这不等于一个数值求解器已找到或认证该解。 原§2式10/11与§3式2/3给有理权重和乘子方程。先按1+lambdaᵀ(x_i−mu)作分母；不能误换成指数倾斜softmax。根方程和归一性可自撰推导：Σ1/(1+lambdaᵀz_i)=n−lambdaᵀΣz_i/(1+lambdaᵀz_i)=n。仅当根成立时权重和才为1。 原§3定义f(lambda)=−(1/n)Σln(1+lambdaᵀz_i)，梯度−mean[z_i/(1+lambdaᵀz_i)]，Hessian=mean[z_i z_iᵀ/(1+lambdaᵀz_i)^2]。所选满秩下严格凸。求其临界点只是等价刻画；原域还用w_i<=1，即分母>=1/n，不把任意试探lambda当合法概率。 直接以R或T定义输出；在样本均值mu=meanX时uniform可行且最优，R=1、T=0。精确R在(0,1]、T>=0；不把T叫概率、有限样本p值或已校准置信度。阈值/置信水平、权重及单位变化不另计家族。 写u_i=1/n，则T=2n min_(w∈A(mu)) KL(u||w)，KL=Σu_i ln(u_i/w_i)。这是完整profile与已有KL原语的精确联系；反向KL、不同估计器或对数底数不是本条新增依据。也不是最大化Shannon熵−Σw lnw或一般entropy-pooling的指数权重。 与Zonoid共享均值重构A(mu)，但后者返回1/(n min maxw)，当前profile返回所有观测的似然兼容度。自撰精确对照：X=((0,0),(1,0),(0,1))，muA=(1/4,1/4)与muB=(2/5,1/10)，唯一权分别(1/2,1/4,1/4)和(1/2,2/5,1/10)。两query的Zonoid均为2/3，而R分别27/32与27/50。因此T不由Zonoid单一标量通过固定变换得到；此为代数说明，未运行数值LP或经验似然。 本合同排除凸包边界/外部。满秩样本在边界均值只能给部分观测零权，乘积退化0；凸包外根本无重构权。原printedp18也警告外部query无解以及数值假停止；不把求解器失败当R=0证据，当前不提供这种扩展返回接口。 原printedp12式16把1/(1+gamma_i)展开后的余项分母写成1−gamma_i，与printedp11式11及printedp15式2的正号不一致。当前定义直接取未歧义的primal式9/§3式1及正号权重；不修改原图，也不使用这段渐近展开证明计算或显著性。 原Theorem1依赖iid、有限协方差及秩，文中还讨论chi-square/小样本F近似。此条仅是给定完整样本的确定性profile统计，不选p值、渐近校准、覆盖率或bootstrap。金融自相关、重尾、数据选择与估计窗口并未被此定义自动解决。 原文logstar平滑延拓、IMSL共轭梯度、Brent等仅是计算讨论；未采集执行代码、容差、失败判据、浮点精度或最优性证书。不能将一个近似根、梯度很小或sumw近1当已批准的精确最优。 统计量使用完整样本且忽略行的时间顺序，query也必须事前给定或有独立选择证据。样本末端前不得使用全窗统计回填早期时点；金融字段/时点/供应商/资产池和研究阈值MISSING。 样本均值、多变量、方差/相关的矩变换、各query轮廓、普通/广义经验似然及数值实现不在本目标拆作多个新增；此条只审核明确的均值合同，不预先承诺所有推广方法公式已审。 边界：严格内点、满仿射秩、完整有限实观测为本条研究域；NaN/Inf/缺值/自动降维/凸包外不提供伪默认。 重复行按观测保留经验质量，不去重为等权唯一点。 T有限非负是精确最优定义，不保证任意数值实现的输出、收敛或浮点安全；未执行。 原式16符号矛盾不进入核心公式；不修原PDF，不声称1990期刊已纠正。 iid/有限矩/chi-square或F校准与金融可交易性均未验证；R不是真实均值概率。 扫描PDF的pdftotext只有36个换页符，公式证据仅原页图与父PDF；未生成OCR替代文本。 输出：精确T(mu)=−2lnR(mu)标量；权重/乘子/轮廓属于同族且未生成数值结果。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-6ab4a7250a2ef294dce475c2"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述一个给定均值与经验样本的约束似然兼容度；不是均值的后验概率、金融方向或已校准检验结论。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-6ab4a7250a2ef294dce475c2"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给n个有限实d维观测x_i（d>=1,n>=d+1），样本仿射秩d，待检均值mu严格位于conv{x_i}内部。A(mu)={w_i>=0:Σ_iw_i=1,Σ_iw_i x_i=mu}。R(mu)=max_(w∈A(mu))∏_(i=1..n)(n w_i)；所收统计量T(mu)=−2 ln R(mu)。内点最优w唯一且严格正；存在唯一lambda∈R^d，使Σ_i(x_i−mu)/[1+lambdaᵀ(x_i−mu)]=0且全部分母>0，w_i*=1/[n(1+lambdaᵀ(x_i−mu))]，T=2Σ_i ln[1+lambdaᵀ(x_i−mu)]。主定义是精确primal最优，不把未验证数值根或chi-square尾概率当结果。R、T、权重、乘子和轮廓全部同一族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-6ab4a7250a2ef294dce475c2"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X（finite real n by d matrix, d>=1,n>=d+1, affine rank d; repeated rows permitted provided rank condition holds）：每行完整同坐标观测；数学合同不自动标准化、去重、补缺或截尾。；mu（finite real d-vector strictly inside conv(X) in R^d）：待检均值query，与X相同坐标；需独立确定或注明选择过程，不借样本未来信息。。参数：log_base：只改变单位不构成新因子；无软件默认。；范围natural logarithm used in original likelihood ratio statistic；来源默认值None；本条选定natural；empirical_mass：原经验分布与ties装置，非去重后的等权唯一点。；范围equal observation-level reference mass; repeated coordinates retain multiplicity；来源默认值None；本条选定1/n per observation"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-6ab4a7250a2ef294dce475c2"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "statistics.stanford.edu/technical-reports",
+  "lab": null,
+  "missing_information": [
+    "金融变量/资产池/样本窗口/发布修订时点与query选择规则MISSING",
+    "数值求解器/初始化/容差/精度和失败认证未固定",
+    "iid/矩条件及金融显著性或经济有效性未验证",
+    "原稿再分发与商用许可未取得；大学可读不等于授权",
+    "扫描稿无机器文字层；原式16渐近展开符号矛盾保留，期刊后版未核"
+  ],
+  "name": "均值约束下的经验似然比",
+  "native_source_id": "EFS_NSF_283",
+  "one_line": "给每个观测分配概率质量，在精确重构待检均值的约束下最大化样本似然，度量该均值与完整样本的兼容程度。",
+  "record_id": "EFS_NSF_283",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://stacks.stanford.edu/file/druid:mq771hk9087/mq771hk9087_EFS-NSF-283.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Art Owen, Empirical Likelihood Ratio Confidence Regions, Stanford Technical Report283, December1987. Stanford repository native EFS_NSF_283/mq771hk9087. Self-authored Chinese definition.",
+      "id": "harvest-source-6ab4a7250a2ef294dce475c2",
+      "license": "ALL_RIGHTS_RESERVED_REPRODUCTION_PERMISSION_REQUIRED",
+      "locator": "Author Art Owen, technical report283, December1987; original cover not1990 publication: physical PDF p1-1; Printedp2 Eq1 empirical likelihood ratio and restriction to empirical support: physical PDF p4-4; Printedp3 Theorem1 iid finite covariance rank hypothesis; asymptotics not part of selected score: physical PDF p5-5; Printedp7 observation-level weights, ties device and product nwi in Eq2: physical PDF p9-9; Printedp10 profile r(mu), simplex/moment constraints, compactness and uniqueness for positive r, Eq8/9: physical PDF p12-12; Printedp11 optimal positive weights and multiplier equation Eq10/11: physical PDF p13-13; Printedp12 -2logr=2sumlog(1+gamma); asymptotic expansion Eq16 sign inconsistency separately preserved: physical PDF p14-14; Printedp15 Section3 log-weight primal and moment restrictions Eq1/2: physical PDF p17-17; Printedp16 positive-weight dual gradient/Hessian and rank boundary, Eq3/4: physical PDF p18-18; Printedp17 off-root weights need not sum1, logstar extension and optimizer not selected: physical PDF p19-19; Printedp18 finite precision caution, outside-hull no solution and statistical extensions not separately nominated: physical PDF p20-20",
+      "revision": "Art Owen Stanford TechnicalReport283, December1987; exact archived scan mq771hk9087_EFS-NSF-283.pdf",
+      "sha256": "21e377940afedfc022139a27771573fb90f626a66d9fa105fe3cf65464eb5c28",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://stacks.stanford.edu/file/druid:mq771hk9087/mq771hk9087_EFS-NSF-283.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Art Owen, Empirical Likelihood Ratio Confidence Regions, Stanford Technical Report283, December1987. Stanford repository native EFS_NSF_283/mq771hk9087. Self-authored Chinese definition.",
+      "id": "harvest-source-c45e83947e329c9c3da8ccaf",
+      "license": "NOASSERTION_METADATA_REUSE",
+      "locator": "Stable report/native file identity, byte size and SHA1/MD5:L2-L16; World-readable is not reproduction license; literary rights and all-rights-reserved notice:L17-L35; Author/title/report date1987-12 and native report ID:L42-L51",
+      "revision": "Stanford publicObject published2024-10-18T07:02:44Z; captured original XML bytes",
+      "sha256": "00340abe7d2df45c5e5fc0da22f69fabb6896f2213dcdccc311c4a803f0e6f2a",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://purl.stanford.edu/mq771hk9087.xml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Art Owen, Empirical Likelihood Ratio Confidence Regions, Stanford Technical Report283, December1987. Stanford repository native EFS_NSF_283/mq771hk9087. Self-authored Chinese definition.",
+      "id": "harvest-source-e55517cc7f6f544982e0191e",
+      "license": "NOASSERTION_METADATA_REUSE",
+      "locator": "Pinned original HTTP identity/rights document; no formula evidence",
+      "revision": "Stanford report bibliography HTTP snapshot",
+      "sha256": "e1de6c42ca28d0d230c1927dd14095012ecd908f4df2868173f4f0034436a20d",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://statistics.stanford.edu/technical-reports/empirical-likelihood-ratio-confidence-regions",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Art Owen, Empirical Likelihood Ratio Confidence Regions, Stanford Technical Report283, December1987. Stanford repository native EFS_NSF_283/mq771hk9087. Self-authored Chinese definition.",
+      "id": "harvest-source-efd0eeed6a53f7609fddeffd",
+      "license": "NOASSERTION_METADATA_REUSE",
+      "locator": "Pinned original HTTP identity/rights document; no formula evidence",
+      "revision": "Stanford PURL landing snapshot",
+      "sha256": "ff5fc4e725dabfcab0aa34a40e5bbcf4cf724e7e32b46610fa88812fd44ec752",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://purl.stanford.edu/mq771hk9087",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Art Owen, Empirical Likelihood Ratio Confidence Regions, Stanford Technical Report283, December1987. Stanford repository native EFS_NSF_283/mq771hk9087. Self-authored Chinese definition.",
+      "id": "harvest-source-eb4f93dbbcd7b9d3e7f0fa08",
+      "license": "NOASSERTION_METADATA_REUSE",
+      "locator": "Pinned original JSON identity metadata: title, author, year, sourceid",
+      "revision": "Crossref published1990-03-01; related journal work identity only, not a claim of same byte/version/formula",
+      "sha256": "3d3e881a4bdbe519d3e7fff278b515f308eaddfacdda855fc4483b4ea68ba0d1",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://api.crossref.org/works/10.1214/aos/1176347494",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Art Owen, Empirical Likelihood Ratio Confidence Regions, Stanford Technical Report283, December1987. Stanford repository native EFS_NSF_283/mq771hk9087. Self-authored Chinese definition.",
+      "id": "harvest-source-ba122cbb256152f5e0998534",
+      "license": "NOASSERTION_METADATA_REUSE",
+      "locator": "Pinned original JSON identity metadata: title, author, year, sourceid",
+      "revision": "Original public IIIF manifest snapshot",
+      "sha256": "3e2fc8e79f55c0a958a770298378b1b66386677708e536fe1e741620e1ae1d89",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://purl.stanford.edu/mq771hk9087/iiif/manifest",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "economic_basis": {
+    "hypothesis": "固定目标与两个输入各自的联合边缘，在可行联合分布中最小化总互信息，得到唯一、共享和协同信息的四个分量。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-a21310f6da41ff0920334845"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "联合分布的估计所依赖的全部样本已公布后才可用；若目标X含未来收益，必须等收益实现，不能把含未来目标的窗口信息回填为当时可用特征。金融变量、时点、训练/测试分隔和估计器MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-a21310f6da41ff0920334845"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定目标X与两个输入Y、Z的同一有限联合概率表P，非负且归一，全部边缘从该表计算。这里bivariate指两个信息输入，不是只有两个随机变量。目标与输入角色有别，互换角色或合并变量不另拆新增。 定义可行域Delta_P为所有归一非负Q，满足Q_XY=P_XY与Q_XZ=P_XZ。Q_YZ不固定；不能强迫Q只在P的正概率单元取正值。若P_X(x)=0，该层所有可行Q均为0，可移除而不改变信息量。 用同一底数2定义熵和互信息，0log0按连续极限为0。对任一Q，I_Q(X;(Y,Z))=sum_(q_xyz>0) q_xyz log2[q_xyz/(q_X(x)q_YZ(y,z))]。正q单元分母必正；不对零单元直接作0/0。 求精确最优值m=min_(Q in Delta_P) I_Q(X;(Y,Z))。P本身可行，域为紧多面体且信息量连续，极值存在；最优分布可不唯一，但最优标量唯一。这里的凸性在固定边缘域成立，不泛化为任意变动联合分布上的全局凸性。 令A=I_P(X;Y)、B=I_P(X;Z)、C=I_P(X;(Y,Z))。UI_Y=m−B，UI_Z=m−A，SI=A+B−m，CI=C−m。这与原文最小条件互信息/最大co-information形式等价，四项均非负且总和为C。四个坐标、公共最优值与代数改写保守合计一族。 Q0(x,y,z)=P_XY(x,y)P_XZ(x,z)/P_X(x)在P_X>0时可行，零边缘层取0；论文明确它通常不是最小解，不用这一闭式代替优化。原文表1 UNQ行写CI=1，与同文命题18及Copy行矛盾；本条定义取正文最优化与命题18，不以该表单元作数值验收。 现有O-information在三变量时等于co-information=SI−CI，无法单独确定此处四分量；BROJA用固定边缘下的优化补足自由度，仍共享相同Shannon信息基础，不宣称经济独立。论文自述Griffith/Koch预印本v5的双输入分解相同，此命名/归因不另计新族。 本条只登记精确数学定义，未选择、安装或执行dit/BROJA求解器、容差、概率估计器或数值误差认证。无法把近似优化结果写成精确最优或非负保证；也不把两个输入的构造泛化为已解决的任意多输入非负PI格分解。 边界：输入是已知有限PMF；原始连续价格、离散化、估计窗口和有限样本偏差不在已核定义内。 日志底数2是本条明示单位选择，论文bits例与此一致；无软件默认参数之说。 共享和协同是分布的信息分解，不是因果识别、统计显著性、交易利润或特征预测能力的证明。 Table1 UNQ行CI=1与正文命题18CI=0冲突已保留；不改原PDF，不采纳该示例值。 同一最小值衍生的四输出、目标/输入置换、单位和实现均只计一族；共享熵/条件互信息不等于完全相同构造。 一般多输入PI格推广有原文限制；只核一个目标和两个输入，不对连续密度或无限状态承诺。 原文CC BY3不覆盖明确另注版权的第三方图或输入市场数据；原件和图均不入公共Git。 输出：有序四元组(UI_Y,UI_Z,SI,CI)，完整族计1，非数值求解器实现"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-a21310f6da41ff0920334845"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "固定目标与两个输入各自的联合边缘，在可行联合分布中最小化总互信息，得到唯一、共享和协同信息的四个分量。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-a21310f6da41ff0920334845"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "有限状态X,Y,Z的联合PMF P>=0且sumP=1；Delta_P={Q>=0,sumQ=1,Q_XY=P_XY,Q_XZ=P_XZ}。I_Q(X;(Y,Z))=sum_(q_xyz>0) q_xyz log2[q_xyz/(q_X q_YZ)]；m=min_(Q in Delta_P) I_Q(X;(Y,Z))。A=I_P(X;Y)，B=I_P(X;Z)，C=I_P(X;(Y,Z))。输出(UI_Y,UI_Z,SI,CI)=(m−B,m−A,A+B−m,C−m)，单位bits；四项一个构造族。UI_Y也等于min_Q I_Q(X;Y|Z)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-a21310f6da41ff0920334845"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "P and finite alphabets X,Y,Z（one finite three-variate PMF with nonnegative finite probabilities summing exactly to1）：明确目标X和两个输入Y/Z；同表边缘，不限Q支持为P支持；市场输入和估计缺失。。参数：log_base：本条明示bits，不声称原论文提供软件默认参数；范围selected2; other bases only rescale units；来源默认值None；本条选定2"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-a21310f6da41ff0920334845"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "doi.org/10.3390",
+  "lab": null,
+  "missing_information": [
+    "金融目标/输入与PIT数据合同MISSING",
+    "离散化、概率估计、样本窗和偏差处理MISSING",
+    "求解器、浮点误差和最优性证书未选定/执行",
+    "经济有效性及实际商用数据权利未验证"
+  ],
+  "name": "固定两组边缘分布的 BROJA 信息分解",
+  "native_source_id": "e16042161",
+  "one_line": "固定目标与两个输入各自的联合边缘，在可行联合分布中最小化总互信息，得到唯一、共享和协同信息的四个分量。",
+  "record_id": "e16042161",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://mdpi-res.com/d_attachment/entropy/entropy-16-02161/article_deploy/entropy-16-02161.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Nils Bertschinger, Johannes Rauh, Eckehard Olbrich, Juergen Jost, Nihat Ay. Quantifying Unique Information. Entropy2014,16,2161–2183. DOI10.3390/e16042161. Published2014-04-15. Self-authored Chinese mathematical definition.",
+      "id": "harvest-source-a21310f6da41ff0920334845",
+      "license": "CC-BY-3.0; third-party Figure1-right expressly APS copyright2013",
+      "locator": "DOI, title, authors, publication date and finite state space: physical PDF p1-p1; decomposition identities1–4 and co-information relation: physical PDF p2-p2; fixed XY/XZ marginal domain and defining minima: physical PDF p3-p3; same bivariate construction attributed to Griffith and Koch v5; removing zero-marginal states: physical PDF p4-p4; definitions and existence of extrema on compact domain: physical PDF p6-p6; Lemma4 common minimizer and convexity on fixed-marginal domain; Q0 not generally optimizer: physical PDF p9-p9; Proposition18 identity property contradicts Table1 UNQ synergy cell: physical PDF p13-p13; Table1 UNQ CI=1 versus Proposition18 and Copy CI=0; table cell excluded: physical PDF p15-p15; bits example and third-party APS Figure1 notice: physical PDF p16-p16; bivariate scope and limitations on PI-lattice multivariate extension: physical PDF p17-p17; affine marginal constraints intersect simplex, feasible polytope: physical PDF p18-p18; author CC BY3 article license and references: physical PDF p23-p23",
+      "revision": "Entropy 2014,16,2161-2183;published2014-04-15;doi:10.3390/e16042161",
+      "sha256": "c7c7014a247535b0681b36dc08f2dc2170c234736d805a73c0a200a330de81f8",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://mdpi-res.com/d_attachment/entropy/entropy-16-02161/article_deploy/entropy-16-02161.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Nils Bertschinger, Johannes Rauh, Eckehard Olbrich, Juergen Jost, Nihat Ay. Quantifying Unique Information. Entropy2014,16,2161–2183. DOI10.3390/e16042161. Published2014-04-15. Self-authored Chinese mathematical definition.",
+      "id": "harvest-source-c4104416f9f6bab3b4040575",
+      "license": "CC-BY-3.0 deed; webpage shell rights not inferred",
+      "locator": "share/adapt, attribution, limitations and no additional restrictions:L500-L568",
+      "revision": "CC-BY-3.0 deed content snapshot; not legalcode replacement",
+      "sha256": "befae005d7dc8701eed58fe2080fda2889c3749272d6c8aba8e8310114112095",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://creativecommons.org/licenses/by/3.0/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

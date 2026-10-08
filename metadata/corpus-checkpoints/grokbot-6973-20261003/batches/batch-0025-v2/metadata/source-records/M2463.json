@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2463",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2463,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6f9d423439bcb45b5b6398004fbf21e417627d51ca0f1ade32ce89505a7717f2",
+    "rule_sha256": "d952509faac8fc2789c07561e8f63e6e7b5774c4dea9821c8154b5ca5e9a43d4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2463",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2463"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/17902/bitcoin-as-a-leading-indicator/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Derek Melchin（QuantConnect 研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：BTC小时布林(30×24,2σ)下轨以下则清仓SPY持现金，否则满仓SPY（QC Bitcoin Leading Indicator）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY；BTC小时布林开关；QC Bitcoin Leading Indicator）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：BTC小时布林(30×24,2σ)下轨以下则清仓SPY持现金，否则满仓SPY（QC Bitcoin Leading Indicator）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect 研究《Bitcoin as a Leading Indicator》已印实现。`add_equity('SPY')`；`add_crypto('BTCUSD')`；`bb(BTC, 30*24, 2, resolution=Resolution.HOUR)`。指标 `updated` 回调：若 `btc.price < bb.lower_band` 且已投资则 `liquidate()`；若不在下轨下方且未投资则 `set_holdings(SPY, 1)`。以代码 30×24 小时布林为准（正文动机句「两年均线」不覆盖实现）。不是 QQQ/SHY 的 BTC SMA50+ROC20 周开关（M0807），也不是 SPY·BTC 双均线同时持仓核。提出日期未知。 不是QQQ/SHY的BTC SMA50+ROC20周开关：本条为BTC小时布林(30×24,2σ)下轨以下清仓SPY否则满仓SPY。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

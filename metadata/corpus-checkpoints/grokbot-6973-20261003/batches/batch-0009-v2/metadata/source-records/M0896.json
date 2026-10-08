@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0896",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 896,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ca7a1fc1b1cfccd03e7c067168ca5302659e4879e9d2fd370211d94615caa9e6",
+    "rule_sha256": "d26bcd79975a4a1591cd95652b87c07e504626432f505a0cacd7f5b5d89dc8d3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0896",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0896"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/237/Regime-Adaptive-Carry-Momentum-Futures-Strategy"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Awang Ananda"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "体制自适应套息动量期货：BTCUSD、SOLUSD永续，小时数据每日决策，BEAR为90日跌超20%且低于200日EMA，14日回到均线上方且60日涨超10%退出，BULL为7日动量>3%做多、<-3%半仓做空，单腿40%、至少4日、偏离25%再平衡；资金费门槛未印出"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-02-03"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Regime-Adaptive Carry Momentum Futures Strategy"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：资金费「不贵」与「不强惩罚」未印成数字，不能把未写出的费率门槛补成规则。长期波动率高于近期、以及波动率降温，页面未印成窗口或阈值，本条不补。已印出的动量与回撤带保留。本条只写每日决策、小时数据；标的为 BTCUSD、SOLUSD 永续。进入 BEAR 并去风险：BTC 过去 90 日跌超 20%、低于 200 日 EMA，且长期波动率高于近期。退出 BEAR：BTC 连续 14 日高于 200 日 EMA、60 日涨超 10%，且波动率降温。BULL：7 日动量 >3% 且资金费不贵则做多；<-3% 且资金费不强惩罚则半仓做空。单腿上限 40%，至少持有 4 日，目标权重偏离 25% 才再平衡。不是已收的考虑资金费的时间序列动量：那边是 Hyperliquid 永续日再平衡，组合 10/30/90 日回看上涨做多、下跌做空，按年化波动目标并惩罚持有期预期资金费，仅当预期优势至少约为成本 2 到 3 倍才交易，没有这组 BEAR 的 90 日 20% 与 200 日 EMA，没有 14 日与 60 日 10% 的退出，也没有 7 日 ±3% 与单腿 40%。计入加密。提出日期按源文件原样保留2026-02-03。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。资金费门槛未印出"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

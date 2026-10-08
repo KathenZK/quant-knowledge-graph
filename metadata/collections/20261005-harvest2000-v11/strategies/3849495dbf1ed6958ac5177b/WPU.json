@@ -1,0 +1,135 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说：历史低协方差的发达货币配置、外汇成交份额限制与经济规模约束可能分散单一储备货币敞口。本文只核对来源规定的组合构造；不把“保值”、分散或方差最小写成已验证的收益、实际风险降低或经济独立性。",
+    "missing": [
+      "未验证收益、风险降低或可交易复制。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "FTSERussell",
+  "lab": null,
+  "missing_information": [
+    "只核对来源§4–7的币种选择、权重及数量构造；不是完整复制§8指数/除数或§9 NDF曲线、也不是可直接交易的基金。现金利息、融资、保证金和执行工具未由选定合同给全。",
+    "方差估计的缺测样本/协方差数值方法、优化求解器、不可行/多解时处理未详细给出；最低权重删减后的约束再检查或重新优化没有规定，不替来源补算法。",
+    "GDP年份按来源使用7月公布的前一年数据，BIS三年调查按9月公布起使用；实际点时数据版本、GDP修订及缺失处理未采集，不能用当前修订历史值声称无前视。",
+    "来源正文规定最低单币权重25bp、同分量内顺序删减再分配；若出现整个分量都被剔除、并列最小、异常负剩余预算等没有完全规定。",
+    "v4.0列表为六发达币、四新兴币及USD，并注明2022剔除RUB；MPG概述页仍写12币种，仅用其证明共同开发及PDF链接，不把概述页旧数量覆盖PDF。",
+    "§8.1.1的求和标签如何包含独立USD分量及§7.8交叉引用等计值说明未在本次复原，本条不复原§8基准序列；仅选§4–7组合定义。",
+    "PDF为合作开发方公开链接的v4.0固定版本，不宣称当前最新；全部来源、汇率/WDI/BIS和品牌/方法使用权仍需分别审核。没有执行优化、行情下载或回测。"
+  ],
+  "name": "FTSE WPU：BIS限额最小方差与GDP份额的年度货币篮子构造",
+  "native_source_id": "WPU",
+  "one_line": "用60个月美元视角货币收益优化发达币种权重，叠加新兴国家及美国GDP份额，按年固定货币数量；只收§4–7现货篮子构造，不另收NDF期限版本。",
+  "record_id": "WPU",
+  "relations": [],
+  "rights": {
+    "derived_results": "没有执行优化器、来源代码或行情回测。",
+    "metadata": "自撰组合定义、原生名称与出处定位；不复制来源原文、图表或数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.mountainpacificgroup.com/images/FTSE_World_Parity_Unit_new.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FTSE Russell and Mountain Pacific Group (jointly developed and approved per Sections2.2–2.3)",
+      "id": "ftse-world-parity-unit-v4-pdf",
+      "license": "FTSE/LSEG all rights reserved. Co-developer MPG links the publisher-approved PDF; public availability grants no redistribution, financial-product or commercial/data-use license. WDI/BIS/WM-Refinitiv and methodology rights separate, REVIEW_REQUIRED.",
+      "locator": "Ground Rules v4.0 June2024; Sections4–7 physicalpages7–14, plus Sections1–2 co-development attribution; source fields use PDF-derived text lines and visual formula pins.",
+      "revision": "FTSE World Parity Unit Ground Rules v4.0; June 2024; published PDF linked by co-developer Mountain Pacific Group",
+      "sha256": "efb4f348f1710060f196d2a8ffb334af896471df23ef044626ac81043ba4cddf",
+      "supports": [
+        "固定币篮、分层权重、数量、年度形成/生效时点和明确缺项"
+      ],
+      "url": "https://www.mountainpacificgroup.com/images/FTSE_World_Parity_Unit_new.pdf",
+      "verification": "FETCHED_PINNED_CO_DEVELOPER_LINKED_PUBLISHER_METHODOLOGY"
+    },
+    {
+      "attribution": "Mountain Pacific Group",
+      "id": "mpg-wpu-author-page",
+      "license": "MPG all rights reserved; linked PDF and data rights separate",
+      "locator": "Partners paragraph and WPU Ground Rules(June2024) hyperlink; generic12-currency marketing count is not used to override v4 PDF eligible instruments.",
+      "revision": "MPG Partners page HTTP snapshot 2026-10-04T18:04:46.039904+00:00",
+      "sha256": "d8e09951eed071e462ddecc478e54e9ed58dde25e84b467ba29a69da44abe8a3",
+      "supports": [
+        "共同开发方身份与直接PDF链接；不作为现行12币种宇宙证据"
+      ],
+      "url": "https://www.mountainpacificgroup.com/partners/",
+      "verification": "FETCHED_PINNED_CO_DEVELOPER_IDENTITY_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "ftse-world-parity-unit-v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "选择FTSE WPU v4.0的现货货币篮子构造：六发达货币EUR、JPY、GBP、AUD、CHF、CAD，四新兴货币INR、CNY、BRL、MXN，加独立USD分量，共11个可能持仓币种。各分量为非负货币数量，权重可按最低权重规则归零。不是做多一个指数代码的交易指令；同文件一至三月NDF/creation rate服务不另外拆作新增策略。"
+    },
+    "cost": {
+      "evidence": [
+        "ftse-world-parity-unit-v4-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：选定§4–7没有给出买卖点差、券商佣金、换汇/托管/资金利息、融资或税务的统一成本模型，不能按零成本宣称可复制。报价中间价/巴西ask是来源计值输入，不是所有货币实际成交承诺。原件和外部汇率、GDP、BIS数据许可均独立待审。"
+    },
+    "entry": {
+      "evidence": [
+        "ftse-world-parity-unit-v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "年度更新时把选定币篮从旧数量换成新数量；源没有额外价格突破或择时开仓条件。新数量按年度模型输出权重及11月15日（或顺延日）价格计算，12月第一个营业日才生效；所以执行时权重可能已偏离形成时目标。首次投资建仓、交易券商/实盘instrument映射并未给定，本条只记录源组合建立方法。"
+    },
+    "execution_time": {
+      "evidence": [
+        "ftse-world-parity-unit-v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "截至10月最后营业日收盘取可用信息；GDP用来源称7月发布的上一年WDI值，BIS调查9月发布后按三年周期使用。11月前两周审定、15日或下一个营业日以价格确定数量，生效前七个营业日分发指示文件；11月最后营业日收盘再平衡/12月首营业日开盘实施。若新数量确定后汇率变化，只让权重漂移，不回头改数量。实际成交定价及模型运行完成时间没有给出；未取得原始点时数据，未声称无前视实盘验证。"
+    },
+    "exit": {
+      "evidence": [
+        "ftse-world-parity-unit-v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "正常年度再平衡用新成分/新数量替换旧成分/旧数量；权重低于25bp的币种依来源顺序归零，并把剔除权重在同分量剩余币种按比例分配；这给出退出权重的条件。没有价格止损、止盈或日内清仓。未到年度生效日仍用旧篮子，已计算新权重并不提前换仓；没有把NDF每日展期当该现货篮子的退出安排。"
+    },
+    "position": {
+      "evidence": [
+        "ftse-world-parity-unit-v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "设gi为四个新兴经济体各自占全球GDP的份额，zi=min[gi,1.5×其余三个新兴份额的算术平均]；USD权重u=美国占全球GDP份额；发达分量总预算d=1−u−Σzi。将发达优化权xi乘d得各币整体权重，新兴为zi，USD为u（这是§7.2–7.5层级合成的代数展开）。随后按§7.6：同分量内低于0.0025的权重从最小者开始归零，按比例给其余币，重复到剩余各币达门槛；不重新优化。名义规模NS=10000美元/wUSD，数量Qi=NS×wi/Pi，Pi为以USD计的该币价格；数量保留两位小数，JPY取最近整数日元。例行期间数量固定，权重价格漂移；不是目标杠杆或资金账户利息合同。"
+    },
+    "risk": {
+      "evidence": [
+        "ftse-world-parity-unit-v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "约束控制历史方差、集中度和BIS成交份额相关上限，不保证未来风险；低波动目标不等于保本。最低权重删除/再分配可能改变优化阶段约束，源未要求重新求解，不能补做。协方差估计、求解器/多解、不可行、并列剔除、数据缺失/修订与币种可投资限制未完整规定。不同币参考时点和节假日旧价使所报篮子不等于同时可交易价格；未测优化或经济有效性。只核§4–7，不对§8的USD求和标签/交叉引用歧义作默修。"
+    },
+    "signal": {
+      "evidence": [
+        "ftse-world-parity-unit-v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "发达币种i以美元视角月度对数变动cri,m=ln(Pi,m)−ln(Pi,m−1)为输入；USD/CCY报价的对数变动取负号。使用截至10月底的60个月，最小化Var(Σi xi cri)，满足Σxi=1、0≤xi≤1.5sharei，以及5−1/Σxi²≤0。sharei=BIS该发达币成交额/所选非USD发达币总成交额；最后约束等价于有效币数至少5，不只是任选五种币。BIS三年调查9月发布后沿用三年。没有carry、动量或预测汇率涨跌信号；组合目标是来源指定的历史方差最小化。"
+    },
+    "timeframe": {
+      "evidence": [
+        "ftse-world-parity-unit-v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "年度形成与再配置。每年10月最后营业日收盘是市场/非市场数据截止；11月前两周计算权重，11月15日（非营业日则顺延至首个营业日）用成分价确定新数量。新数量固定，权重随随后价格漂移；11月最后营业日收盘再平衡，12月首个营业日开盘生效。日终发布参考汇率不是每日把权重调回目标。"
+    },
+    "universe": {
+      "evidence": [
+        "ftse-world-parity-unit-v4-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只使用v4.0表列币种。发达汇率参考WM/Refinitiv伦敦16:00；现货基准的新兴参考分别为人行香港09:15、印度央行当地12:00、巴西PTAX当地13:00及MXN伦敦16:00；有bid/ask时取中间价，巴西PTAX例外用ask。校准阶段§6.1另规定WM/Refinitiv16:00在岸现货数据，不把这些不同用途时点混为同时可成交报价。RUB已于2022-05-31从新兴分量删除。"
+    }
+  }
+}

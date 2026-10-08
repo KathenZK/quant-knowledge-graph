@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2473",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2473,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0e4ea4b0baedda22332709528d4a8c22eab3e32fabc07b3f49f13f21dc0a75f3",
+    "rule_sha256": "a2886450f6c0e81f9c347f712019d5a30fc2f9dcd5f3dbb4aaf113864bb66ad4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2473",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2473"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/StrategyScalpingFast/StrategyScalpingFast.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（StrategyScalpingFast.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区StrategyScalpingFast：1m，开盘<EMA5(low)且ADX>30且MFI<30且Stoch上穿且CCI<−150做多；卖信号关；ROI立即1%；止损−50%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区StrategyScalpingFast；1m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区StrategyScalpingFast：1m，开盘<EMA5(low)且ADX>30且MFI<30且Stoch上穿且CCI<−150做多；卖信号关；ROI立即1%；止损−50%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/StrategyScalpingFast/StrategyScalpingFast.py默认。timeframe=1m；stoploss=−0.5；minimal_roi={\"0\":0.01}；use_sell_signal=False；trailing_stop=False。指标：EMA(5) 于 high/close/low；STOCHF(5,3,0,3,0)；ADX；CCI(20)；MFI。做多：open<ema_low 且 adx>30 且 mfi<30 且 fastk<30 且 fastd<30 且 fastk 上穿 fastd 且 cci<−150。卖侧 populate 仍写条件，但 use_sell_signal=False 不发卖。相对 master SmoothScalp / ReinforcedSmoothScalp：本文件明确关卖信号且 ROI 立即1%、止损−50%。相对已收 StrategyScalpingFast2（W214/M2136，买过滤默认全关、仅 open<ema_low+重采样SMA）：本条买侧 MFI/ADX/Stoch/CCI 全开且无重采样SMA条件。提出日期未知。 不是SmoothScalp亦非ScalpingFast2买过滤全关：本条为StrategyScalpingFast买侧MFI/ADX/Stoch/CCI全开且关卖信号。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

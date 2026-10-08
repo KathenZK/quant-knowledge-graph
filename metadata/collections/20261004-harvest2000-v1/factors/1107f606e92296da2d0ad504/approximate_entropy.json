@@ -1,0 +1,105 @@
+{
+  "economic_basis": {
+    "hypothesis": "统计特征可描述已观测序列；金融预测用途和收益方向尚未验证。",
+    "missing": [
+      "无收益有效性、因果识别或样本外复现证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只能在输入窗口全部样本已观测且发布后计算；若用于金融研究，窗口必须仅包含决策时已知值。 窗口/采样频率/资产域/缺失处理未指定为市场实施；这不是已能直接回测的交易策略。"
+    },
+    "calculation": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "把用户 r 乘整段标准差；负阈值报 ValueError；n<=m+1 时直接返回 0。 对长度 m 与 m+1 的全体重叠模板分别计算两两 Chebyshev 距离。 各模板的相似计数包含自身，除以同长度模板数后取对数平均。 返回两种模板长度的平均对数匹配率之差的绝对值。 边界：源码使用 abs(phi_m-phi_mplus1)，本次不替换成有符号文献版本。 源码没有统一 NaN 处理；短样本返回 0 不是复杂度可靠估计。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述一段序列里局部模板重复程度的稳定性。 这是统计序列特征，未声称解释或预测投资收益。"
+    },
+    "formula": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "r_eff=r*std(x)；C_i^m=匹配第i个m长模板且Chebyshev距离<=r_eff的模板数/(n-m+1)，含自身；phi_m=mean_i ln(C_i^m)；ApEn=abs(phi_m-phi_{m+1})。"
+    },
+    "inputs": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入x为按时间排序的一维有限数值样本；源码不绑定某资产或价格/收益变量。m：positive integer，基准模板长度；源码默认值=无默认值，调用时传入；r：nonnegative real，标准差倍数，代码容许零阈值；源码默认值=无默认值，调用时传入"
+    },
+    "use_cases": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可以为数值序列的描述、聚类或后续研究提供输入；市场绑定、窗口和采样频率需单独确定，不把参数或输出分量展开为新因子。"
+    }
+  },
+  "identity_namespace": "blue-yonder/tsfresh",
+  "lab": null,
+  "missing_information": [
+    "市场输入绑定、窗口与采样频率尚未选择",
+    "数据供应商、时间戳与修订政策缺失",
+    "NumPy/Pandas 等依赖环境未冻结",
+    "未执行源代码或进行数值交叉验证",
+    "没有经济收益有效性证据"
+  ],
+  "name": "包含自身匹配的近似熵",
+  "native_source_id": "approximate_entropy",
+  "one_line": "描述一段序列里局部模板重复程度的稳定性。",
+  "record_id": "approximate_entropy",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行源码，未生成行情计算或回测结果；综合商业状态REVIEW_REQUIRED。",
+    "metadata": "自撰数学定义、参数与源码定位；保留tsfresh与贡献者归属，不复制来源全文。源码MIT不扩张至引用论文或输入数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2016 Maximilian Christ, Blue Yonder GmbH; tsfresh contributors",
+      "id": "tsfresh-tsfresh-feature_extraction-feature_calculators-py",
+      "license": "MIT",
+      "locator": "approximate_entropy:L1759-L1805",
+      "revision": "6af3c0030b6c9f02c3862a20e00cce87c984aa5b",
+      "sha256": "af78b02ff7d99d1e1c8fb0d56711fab00c0f84f63aeec969c091dd52fbdb228f",
+      "supports": [
+        "原生计算器定义、输入、参数与边界"
+      ],
+      "url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/tsfresh/feature_extraction/feature_calculators.py",
+      "verification": "PINNED_SOURCE_CODE_INDEPENDENTLY_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2016 Maximilian Christ, Blue Yonder GmbH; tsfresh contributors",
+      "id": "tsfresh-LICENSE-txt",
+      "license": "MIT",
+      "locator": "LICENSE.txt:L1-L16",
+      "revision": "6af3c0030b6c9f02c3862a20e00cce87c984aa5b",
+      "sha256": "1804283622c8e51a4427aaa772d5ca522f89932fd610b294055435922af1c748",
+      "supports": [
+        "源码版权和许可声明；不支持公式或经济有效性"
+      ],
+      "url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/LICENSE.txt",
+      "verification": "PINNED_LICENSE_NOTICE_READ"
+    }
+  ]
+}

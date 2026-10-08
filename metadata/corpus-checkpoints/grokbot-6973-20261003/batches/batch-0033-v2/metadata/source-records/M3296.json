@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3296",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3250,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ec69e6e5a07e8ce87af8b7a8ff6a1d6af2877e2b437fd02a586e00cb81bb491a",
+    "rule_sha256": "49a6150b09c26001cb1b3d2d1e3e9f51d517405b5dea392e8dc03ac85dcc9e25"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3296",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3296"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FractionalQuantityRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密现货：GDAX现金 BTCUSD日线；合并棒上按现金可买整数量阶梯下单后加0.1/0.01再减0.02，最后试最小量失败并以±2倍杠杆 set_holdings 退出（Lean FractionalQuantity）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密货币"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密现货：GDAX现金 BTCUSD日线；合并棒上按现金可买整数量阶梯下单后加0.1/0.01再减0.02，最后试最小量失败并以±2倍杠杆 set_holdings 退出（Lean FractionalQuantity）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FractionalQuantityRegressionAlgorithm.py`。经纪 `GDAX` CASH；`add_security(CRYPTO,\"BTCUSD\",Daily,GDAX)`；`SecurityMarginModel(3.3)`；`TradeBarConsolidator(1)`。`data_consolidated`：`quantity=floor((cash+fees)/(|bar|+1))`；空仓 → `order(BTCUSD,quantity)`；若持仓=quantity → `+0.1`；=quantity+0.1 → `+0.01`；=quantity+0.11 → `−0.02`；=quantity+0.09 → 试 `0.00001`（预期失败）后 `set_holdings(−2)` 与 `set_holdings(2)` 并 `quit`。不是 Bybit EMA 核（W492/W536）。提出日期未知。GDAX BTCUSD 分数币阶梯下单+失败最小量后±2倍杠杆退出 ≠ Bybit EMA（M3225/W536）。计入加密。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

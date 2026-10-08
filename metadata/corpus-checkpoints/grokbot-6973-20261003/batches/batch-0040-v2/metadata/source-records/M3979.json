@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3979",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3933,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "05bf683ed696021c6faa6301f29f332ff29f2c69c1b2bae6cd1c035cb598a1cd",
+    "rule_sha256": "a09c57083088cb4ca76d95810fedc25ad9d98908bff93f9f804b25f59b067e25"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3979",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3979"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/20341/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect 社区"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-103/W1186"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·VIX期货期限结构日度滚动：日频收盘前15分钟；非近月且≥10交易日到期合约；日滚动收益<-0.05开多50%，>+0.05开空50%；多头滚回>-0.025/空头滚回<-0.025或临期1日平仓（QC VIXFut·Roll±0.05·50%）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "其他"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·VIX期货期限结构日度滚动：日频收盘前15分钟；非近月且≥10交易日到期合约；日滚动收益<-0.05开多50%，>+0.05开空50%；多头滚回>-0.025/空头滚回<-0.025或临期1日平仓（QC VIXFut·Roll±0.05·50%）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect Research **20341**：标的单一 **VIX 期货**；日频在收盘前约 **15** 分钟，选流动性最好、剩余交易日 **≥10**、非近月合约；基差=期货中间价−VIX 现货代理（开收均价），再除以剩余交易日得**日滚动收益**。滚动 **<-0.05** 则名义 **50% 开多**；**>+0.05** 则 **50% 开空**；多头在滚动升至 **>-0.025**、空头在滚动降至 **<-0.025**，或距到期 **1** 个交易日时平仓。不是 SVXY/UVXY/TQQQ 三态切换（近 M0854）。计入其他。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 20341 VIX futures roll carry"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,201 @@
+{
+  "admission": {
+    "membership": {
+      "curated": false,
+      "historical_public_export": false
+    },
+    "reasons": [
+      "NOT_PRIMARY_CONCRETE_DEFINITION",
+      "SECONDARY_TRANSCRIPTION"
+    ],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "REVIEW_REQUIRED"
+  },
+  "category": "unclassified",
+  "definition": {
+    "content_origin": "PROJECT_AUTHORED_STRUCTURAL_SUMMARY",
+    "definition_sha256": "749add7c7602d18df84071e7dcbc8f2e381bcabe682eacf3623da19cdecb4db7",
+    "formula": null,
+    "formula_dialect": "wq101",
+    "formula_sha256": "749add7c7602d18df84071e7dcbc8f2e381bcabe682eacf3623da19cdecb4db7",
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "alpha_number": 39,
+      "numeric_literals": [
+        "1",
+        "7",
+        "9",
+        "250"
+      ],
+      "operators": [
+        "wq101:cs_rank",
+        "wq101:decay_linear",
+        "wq101:delta",
+        "wq101:sum"
+      ],
+      "source_commented_out": false
+    },
+    "required_fields": [
+      "adv20",
+      "close",
+      "returns",
+      "volume"
+    ],
+    "required_fields_status": "syntax_extracted_unexpanded",
+    "status": "STRUCTURED_SUMMARY_ONLY",
+    "text": "已有结构化提取记录列出输入：adv20、close、returns、volume；算子：wq101:cs_rank、wq101:decay_linear、wq101:delta、wq101:sum；数值字面量：1、7、9、250。这些构成要素不保留完整运算顺序，也不证明计算语义。完整定义须按来源定位核对。",
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "daily",
+    "holding_period": null,
+    "lookback": null,
+    "rebalance": null,
+    "universe": "requires caller-specified cross-sectional equity universe"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": null,
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:f068e74a-86fe-52d8-910a-9d7afc4ad5f6"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:85b0d5cc-61b6-5095-bc94-7cf23cad2e3c"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:85b0d5cc-61b6-5095-bc94-7cf23cad2e3c"
+    ],
+    "source_record_ids": [
+      "qkg:record:0946a4ed-5463-5b2b-a776-fdac418cd297"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "社区转录不证明原始公式权利；不复制完整公式，仅保留结构要素、摘要及原字段摘要。"
+  ],
+  "name": "WorldQuant Alpha039",
+  "native_source_ids": [
+    "alpha039"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 5321,
+        "line_ordinal": 1310,
+        "line_sha256": "b98f3c6fd335768d61e5b35ea5580b02e32311c1902092a79a4adaa7a4049f3b",
+        "record_id": "qkg:record:0946a4ed-5463-5b2b-a776-fdac418cd297"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "parsed"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "secondary_definition"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:f068e74a-86fe-52d8-910a-9d7afc4ad5f6",
+  "record_kind": "signal",
+  "rights": {
+    "attribution_required": false,
+    "commercial_use": [
+      "REVIEW_REQUIRED"
+    ],
+    "derivative_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "license_labels": [
+      "MIT (community repository); upstream formula/paper rights not cleared"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [
+          "NOT_PRIMARY_CONCRETE_DEFINITION",
+          "SECONDARY_TRANSCRIPTION"
+        ],
+        "status": "REVIEW_REQUIRED"
+      },
+      "attribution": [
+        "Zura Kakushadze"
+      ],
+      "code_url": "https://github.com/wukan1986/ta_cn/blob/a569a618109daa804541c5d67fa4c0407f03fd49/ta_cn/alphas/alpha101.py#L284",
+      "license": "MIT (community repository); upstream formula/paper rights not cleared",
+      "locator": "line 39; Alpha39",
+      "name": "WorldQuant Alpha039",
+      "native_id": "alpha039",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": "101 Formulaic Alphas",
+        "url": "https://arxiv.org/abs/1601.00991v3",
+        "year": 2016
+      },
+      "parameters": {
+        "alpha_number": 39,
+        "numeric_literals": [
+          "1",
+          "7",
+          "9",
+          "250"
+        ],
+        "operators": [
+          "wq101:cs_rank",
+          "wq101:decay_linear",
+          "wq101:delta",
+          "wq101:sum"
+        ],
+        "source_commented_out": false
+      },
+      "primary_source": false,
+      "record_id": "qkg:record:0946a4ed-5463-5b2b-a776-fdac418cd297",
+      "response_sha256": "0fbc43addd022bab9b0ad935d30633c8b76645c38df98b7ee26f2579938e9207",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": "0cd963d8780a3ad816dd5940fc4bc3f5e78ed09e",
+      "rights": {
+        "attribution_required": null,
+        "commercial_use": "REVIEW_REQUIRED",
+        "derivative_allowed": "REVIEW_REQUIRED",
+        "license": "MIT (community repository); upstream formula/paper rights not cleared",
+        "license_id": "qkg:license:5765226c-308b-51af-808c-bde9972fb0a3",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "REVIEW_REQUIRED",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "REVIEW_REQUIRED",
+        "terms_url": "https://github.com/wukan1986/alpha_examples/blob/0cd963d8780a3ad816dd5940fc4bc3f5e78ed09e/LICENSE"
+      },
+      "sha256": "0fbc43addd022bab9b0ad935d30633c8b76645c38df98b7ee26f2579938e9207",
+      "source_id": "wq101",
+      "source_name": "WorldQuant Alpha101 (MIT community transcription)",
+      "url": "https://github.com/wukan1986/alpha_examples/blob/0cd963d8780a3ad816dd5940fc4bc3f5e78ed09e/transformer/alpha101.txt"
+    }
+  ]
+}

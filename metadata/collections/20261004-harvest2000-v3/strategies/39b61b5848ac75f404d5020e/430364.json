@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "一次下压后低点不再被突破且连阳或反映买盘恢复，未证实经济优势。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "不能描述为所有三棒低点逐棒抬升。",
+    "首次括号依可见持仓，不承诺入口瞬间有效。"
+  ],
+  "name": "阴线低点守住后的三阳递升多头",
+  "native_source_id": "430364",
+  "one_line": "一根阴线之后连续三阳、后两次收盘递升且三棒低点均高于阴线低点时做多，保存该低点与信号价一比一目标。",
+  "record_id": "430364",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/1-3-1-%E7%BA%A2%E7%BB%BFK%E7%BA%BF%E5%8F%8D%E8%BD%AC%E7%AD%96%E7%95%A51-3-1-Red-Green-Candlestick-Reversal-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 by Genma01, Markdown L162；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-430364-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "426ba19ca5244aec36e685fd3ba518a69b6c7f059956605e41f7f160a0f34229",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/1-3-1-%E7%BA%A2%E7%BB%BFK%E7%BA%BF%E5%8F%8D%E8%BD%AC%E7%AD%96%E7%95%A51-3-1-Red-Green-Candlestick-Reversal-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-430364-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-430364-published-code"
+      ],
+      "status": "MISSING",
+      "text": "无显式佣金、滑点、点差或融资成本，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-430364-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "上述全部条件且position_size==0时保存stopLossPrice=L[3]并entry Long；每根空仓bar若保存stop非na则target=C+(C−stop)。在入口信号bar就是相对信号收盘的1R目标。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-430364-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5，先确定四棒形态、空仓时写stop和target，再entry，最后已见多仓才exit；未指定逐tick/成交重算/收盘成交，实际保护覆盖未运行。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-430364-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "可见position_size>0且保存stop非na时strategy.exit(stop=保存前阴线低点,limit=保存目标)，未指定from_entry但仅一类多入口。持仓期间不重算stop/target；无时间退出或其他close。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-430364-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认100%权益，入口无qty覆盖；没有风险百分比定仓或明确杠杆，实际风险由信号收盘距三棒前低点决定。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-430364-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "在脚本看到持仓后才提交括号，入口与首次保护时点未核。空仓时旧stop本体没有重置，但新信号会覆盖；绘图变量重置不代表交易变量被清空。目标基于信号收盘而非实际均价。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-430364-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "第[3]棒C<O且L[3]分别<L[2],L[1],L[0]；当前及[1]/[2]三棒均C>O；当前C>C[1]>C[2]。没有要求C[2]高于前阴线的O或C，也不要求三阳逐棒低点都递升，只需均高于最初阴线低点。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-430364-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-430364-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

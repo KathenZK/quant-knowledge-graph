@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2748",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2748,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "53f1831259704c796fea66b426c9793fc913787afba15670e873fdce6b919110",
+    "rule_sha256": "9ba4f09f48684aa1b19bf33d38a4e1ef5a0a7a7db1c1b7a38b76bb6147af1c3f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2748",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2748"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bigquant.com/wiki/doc/z7IAyNuNE7"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant量化（wiki《多因子选股策略-股票日频_new》；页更新约2024-06-13）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant教程：日频多因子过滤门（市值排名>0.20∧pe_ttm排名<0.40∧pe_ttm>0）⊕my_rank=rank(roe)+rank(净利环比)−rank(pb）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（教程日频选股叙述）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant教程：日频多因子过滤门（市值排名>0.20∧pe_ttm排名<0.40∧pe_ttm>0）⊕my_rank=rank(roe)+rank(净利环比)−rank(pb）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。过滤：c_pct_rank(total_market_cap)>0.20；c_pct_rank(pe_ttm)<0.40；pe_ttm>0。打分：my_rank=rank(roe_avg_lf)+rank(net_profit_qoq_lf)−rank(pb)。BigTrader按rebalance_period信号日对目标列表order_target_percent（页未钉死持仓只数与调仓天数，不编造）。相对C836行业Top10持5日：本条为市值/PE过滤门⊕同构my_rank表达式核。 不是C836行业Top10持5日：本条为市值/PE过滤门⊕同构my_rank日频核。 计入其他。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

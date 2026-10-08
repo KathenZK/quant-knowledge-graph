@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "箱体突破与平滑趋势一致可能刻画持续趋势，盈利后活力转折退出可能改变尾部，但未证明有效。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "源码声明参考YouTube视频YYxlnFOX9sQ；视频版本和转载授权未验证。",
+    "仅第一次可见持仓设置箱体stop，不是持续跟踪。"
+  ],
+  "name": "确认达瓦斯箱与六层加权平滑过滤的双向策略",
+  "native_source_id": "436757",
+  "one_line": "确认箱顶底后沿六层WMA趋势突破入场，首次可见仓位时挂箱体对边止损，有浮盈且相对活力反交叉时退出。",
+  "record_id": "436757",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E9%9C%87%E5%8A%A8%E5%AE%9D%E7%9B%92%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Trending-Darvas-Box-Quantitative-Trading-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 xxy_theone; xxy_theone, Markdown L118; video adaptation claim L119–120; original identity/version unverified；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-436757-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "b62057c4b7648bd903130964b1fbb76892c712e9273cd27dfd5f6b26564fc319",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E9%9C%87%E5%8A%A8%E5%AE%9D%E7%9B%92%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Trending-Darvas-Box-Quantitative-Trading-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-436757-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-436757-published-code"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：源码未设佣金/滑点，亦无融资、资金费或真实合约成本。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-436757-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "空仓且closedtrades<100才入场。多：C上穿TopBox且C>MAVW；空：C下穿BottomBox且C<MAVW。源码日期输入存在但window()恒true，因此不按日期限交易。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-436757-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5、没有外部周期数据；箱体只用当时已知历史。先多entry、单次stop、close，再空侧对应调用。未显式逐tick/收盘成交/成交重算，当前图表订单与首次仓位可见时刻未执行核验。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-436757-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "longStopSet初false；首次可见多仓且flag=false时提交from_entry=Long Position的stop=当根BottomBox，然后flag=true；空仓时复位。空侧对称首次挂当根TopBox；同ID exit复用于另一方向。多仓最近开放交易profit>0且RVI下穿sig时close，多仓以外对应请求无匹配仓位；空侧profit>0且RVI上穿sig时close。止损不是每bar跟随最新箱。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-436757-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "100%权益、资本100 USD、pyramiding=0，两个entry无qty覆盖，并限制position_size==0。closedtrades达到100后停止新开仓；不是100%账户风险预算。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-436757-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "RVI分母为0未设后备值；止损在首次可见仓位后请求，不保证入场同时有保护。空仓仍计算opentrades.profit(opentrades−1)，未在本次运行核验边界。固定100笔上限会使后续样本不再产生入场。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-436757-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "p=5；LL=lowest(L,5)，k1=highest(H,5)，k2=highest(H,4)，k3=highest(H,3)；NH=valuewhen(H>k1[1],H,0)。事件B为barssince(H>k1[1])==3且k3<k2；TopBox=valuewhen(B,NH,0)，BottomBox=valuewhen(B,LL,0)。MAVW依次对C做WMA3、5、8、13、21、34。RVI=sum10(swma(C−O))/sum10(swma(H−L))，sig=swma(RVI)，swma四权为1/6、2/6、2/6、1/6。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-436757-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-436757-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

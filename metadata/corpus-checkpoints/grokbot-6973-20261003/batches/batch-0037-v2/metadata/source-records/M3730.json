@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3730",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3684,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a0801e38472c4a7e0d313adbf1bd21c9ec8fcd3b3e43335c019f717208fefcf9",
+    "rule_sha256": "e8ea5351c1ebf842220b3c9249db49512c9ff47c9b83a29efc506c4e6ee34ba4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3730",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3730"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.cxoadvisory.com/volatility-effects/validating-use-of-wilder-volatility-stops-to-time-the-u-s-stock-market/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO Advisory（验证 Rothe/Wilder WVS）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-72/W937"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·威尔德波动止损择时：日频；ATR5×2.5，上破趋势低+止损买SPY，下破趋势高−止损改现金（CXO WVS·SPY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-11-04"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·威尔德波动止损择时：日频；ATR5×2.5，上破趋势低+止损买SPY，下破趋势高−止损改现金（CXO WVS·SPY）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CXO《Validating Use of Wilder Volatility Stops to Time the U.S. Stock Market》：每日对 **SPY** 用未复权价算真实波幅，**ATR=近5日真实波幅简单平均**，**WVS=ATR×2.5**；空仓时当收盘上破「趋势最低价 + 当前 WVS」则买入；持仓时当收盘跌破「趋势最高价 − 当前 WVS」则改现金。信号与换仓按当日收盘。不是固定百分比止损；不是 SMA10 股债切换（M3717）。计入美股/ETF。提出日期 2024-11-04，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "网页 SPY WVS ATR5×2.5 breakout/breakdown"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

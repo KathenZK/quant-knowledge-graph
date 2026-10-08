@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2131",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2131,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "290a814d21d2901c78dd544df9a1243ab372dc6bc2e15c050af7c9609310a265",
+    "rule_sha256": "7a5e60bf556763b1977ea20afdb9ffa9cc8c12fd2f98ae85cbcdda2085ac1061"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2131",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2131"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/dynamic-stop-loss-atr"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线收盘高于SMA(200)满仓，成交后挂ATR(14)×2止损（EasyQuant波动止损核）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY；SMA200满仓+ATR14×2止损；EasyQuant）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-09"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线收盘高于SMA(200)满仓，成交后挂ATR(14)×2止损（EasyQuant波动止损核）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Implementing a Dynamic Stop-Loss in QuantConnect Using ATR》已印 VolatilityBasedStopLoss。标的 SPY，日线。SMA(200)；ATR(14, SIMPLE)；atr_multiplier=2.0；WarmUp=200。未持仓且 price>SMA(200) 则 SetHoldings(1.0, tag=\"Entry\")。Entry 成交后：stop_price=成交价−ATR×2，对该数量挂 stop_market。代码未印价格跌破均线的主动平仓，离场依赖止损成交。不是 W208 的 ROC+SMA50+止盈括号核。提出日期取页面 Published on。 不是本批W208括号核：本条是EasyQuant SPY日线价>SMA(200)满仓，成交后挂ATR(14)×2止损、无主动均线平仓。 计入美股/ETF。 提出日期按源文件原样保留2025-12-09。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

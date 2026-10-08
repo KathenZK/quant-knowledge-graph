@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1789",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1789,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "37ca2549bc9906f0e1f967afc70f685548419b7e0f855ed01e96bb89c3abfe7d",
+    "rule_sha256": "61c260b5836ed666079e2caf99f1e52452f90f629c94adb9b8019391892b57ac"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1789",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1789"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/KC_BB/KC_BB.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（KC_BB.py；@jilv220）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区KC_BB：5m，KC(28,1)下轨夹在BB(20,2)内且KC−BB下轨差%在0.928–1.5、Williams%R∈(−90,−80)、HA收盘变动>0.8%收盘做多；Fisher>0.39075等HA/EMA条件平多；止损−99%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区KC_BB；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区KC_BB：5m，KC(28,1)下轨夹在BB(20,2)内且KC−BB下轨差%在0.928–1.5、Williams%R∈(−90,−80)、HA收盘变动>0.8%收盘做多；Fisher>0.39075等HA/EMA条件平多；止损−99%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写davidzr仓strategies/KC_BB/KC_BB.py默认。timeframe=5m；stoploss=−0.99；minimal_roi={\"0\":20.5}；use_custom_stoploss=True（浮盈>20%/10%/6%/3%时分别收到5%/3%/2%/1.5%）。KC：SMA(TRANGE)作波动，KC20×2与KC28×1；BB典型价(20,2)；Williams %R(14)；HA；Fisher由RSI经逆Fisher；ema_fast=EMA(ha_close,3)。做多：kc_lowerband_28_1介于bb_upperband2与bb_lowerband2之间，kc_bb_delta∈(0.928,1.5)，r_14∈(−90,−80)，ha_closedelta>ha_close×0.008。平多：fisher>0.39075，近三根ha_high非升，ha_close≤昨收，ema_fast>ha_close，ha_close×0.99754>bb_middleband2，volume>0。提出日期未知。 不是单KC或单BB下轨：本条是5m KC_BB，KC(28,1)下轨夹在BB(20,2)内且KC−BB差%∈(0.928,1.5)、Williams%R∈(−90,−80)、HA变动>0.8%做多，Fisher等条件平多。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

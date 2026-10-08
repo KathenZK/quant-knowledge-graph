@@ -1,0 +1,157 @@
+{
+  "economic_basis": {
+    "hypothesis": "给定期限内的燃料与电价不确定性、各生产档位现金流及切换成本，保留继续当前档位的选择权可能比仅见正火花价差就发电更有价值。该候选只记录运营权持有人的条件调度构造；风险中性估值分布、模型假设和启停权价值不等于现实利润，也不验证作者的数值或最优性证明。",
+    "missing": [
+      "未执行原文数值方法、代码、估值、设备模拟或回测；源定义不等于现实净收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "carmona.princeton.edu/document",
+  "lab": null,
+  "missing_information": [
+    "外部给定可用的电力/燃料Markov转移核、期限、时间步长、模式收益函数、切换成本矩阵、初始模式和次数预算；本条没有拟合窗口/参数默认、实时曲线或生产设备身份。",
+    "来源明确不讨论金融对冲，运营风险可能不可交易。本条不是同时买卖两条期货的价差策略，未给期货对冲张数、保证金或完整资金约束。",
+    "只取Eq27第二行/Eq36显式离散收益率近似；ψ_i(t_m,x)Δt代替下一时段积分，不将实际未来价格当成决策输入。没有运行估值、回归、模拟或回测。",
+    "基础模型即时切换无额外锁定；§4.2.2的立即切换后等待δ是time separation，不是真实启动延迟。真实延迟、停机期间燃料/零发电账及市场成交接口未闭合。",
+    "原§2.3先把HR定义为每MWh所需MMBtu，后面范围及示例却标MWh/MMBtu；本条保留Eq1乘法和量纲要求，不使用冲突数值范围。原文容量示例用MWh而后文MW，输入须统一为每时间产出速率。",
+    "原Eq17按已发生的ℓ写J^ℓ且argmax_j对M^{ℓ,i}未显j，与前文剩余k层级含义不一致；本条依据Eq12/27/36及明确J(T)=0限定离散规则，不宣称纠正整个连续时间证明。",
+    "Eq11按字面在τ=T仍加切换项，与τ<T计费和后文零终值约定未完全同写；本条显式采用Eq36的V(T)=0，T不再决策，不把连续表示的端点公式补改为原文。",
+    "给定正且满足三角不等式的C，不自行对不合格输入做最短路修复；同值动作和多个切换目的地未有唯一优先级。本条保留最优动作集合，未补生产实现。",
+    "所选公式没有单独折现乘子；来源用ψ和C刻画目标，不能仅据NPV用词加上未给r或称真实净现值。tolling预付款、融资/信用、交割和电网费用未组成可执行账。",
+    "Princeton PDF首页未标稿件日期；作者列表关联2008同名论文，两作者网页期号分别15(5)/15(6)，不将所获未标日期稿冒充核验过的最终出版版本。联合作者旧PDF链接404已保存响应，未绕过。",
+    "原作者公开托管不是商用/全文再分发授权；仅拟发布自撰定义、原生身份和定位，商业状态REVIEW_REQUIRED。"
+  ],
+  "name": "Carmona–Ludkovski：有限启停预算下的燃气发电档位调度",
+  "native_source_id": "271",
+  "one_line": "给定电力与燃料价格转移，比较继续运行和支付切换费后的剩余价值，在合同期限及启停次数内选择发电档位。",
+  "record_id": "271",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未验证最优性证明、估值或设备可调度。",
+    "metadata": "来源原生身份、定位与自撰中文定义；原文、图像、代码及行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://carmona.princeton.edu/document/271"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Rene Carmona and Michael Ludkovski, Pricing Asset Scheduling Flexibility using Optimal Switching, undated Princeton author-hosted manuscript. Author publication lists associate title with 2008 article but disagree on issue15(5)/15(6).",
+      "id": "carmona-ludkovski-271-pdf",
+      "license": "No open redistribution or commercial-use license established. Public author-hosted manuscript and publication lists are source evidence, not a license for paper, figures, code or price data. Only original Chinese rule metadata, identity and locators proposed; commercial REVIEW_REQUIRED.",
+      "locator": "Physical pp3–5 §2 tolling cashflow/modes/cost; pp7–10 scope, k-remaining recursion and Eq17 conflict; pp14–18 Eq27/36 explicit finite-grid policy and zero terminal condition; p16 real delay versus time-separation distinction; p22 examples and unit-label conflict. Fixed manuscript undated; no claim of final published version.",
+      "revision": "Undated Princeton author manuscript, Pricing Asset Scheduling Flexibility using Optimal Switching; HTTP snapshot sha256:df54da8f57682a1a17c6689b7ccb7d45f5b3e8b215e2901591f52fc2aeb80a18",
+      "sha256": "df54da8f57682a1a17c6689b7ccb7d45f5b3e8b215e2901591f52fc2aeb80a18",
+      "supports": [
+        "运营权与生产档位现金流",
+        "有限启停预算和离散决策",
+        "终值与真实执行缺项",
+        "原稿局部索引及量纲冲突"
+      ],
+      "url": "https://carmona.princeton.edu/document/271",
+      "verification": "FETCHED_PINNED_AUTHOR_MANUSCRIPT_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Author-maintained institutional publication list; reported bibliographic identity is not evidence of identical manuscript revision.",
+      "id": "carmona-ludkovski-carmona-publications",
+      "license": "No open redistribution or commercial-use license established. Public author-hosted manuscript and publication lists are source evidence, not a license for paper, figures, code or price data. Only original Chinese rule metadata, identity and locators proposed; commercial REVIEW_REQUIRED.",
+      "locator": "HTML L285 same title/authors, lists15(5),2008,405–447. Does not establish exact draft revision.",
+      "revision": "Publication-list HTTP snapshot sha256:a72d24a0a27c413a48e446a33c8bcd32a1067bcddd8544f78f9ff8897f41932d",
+      "sha256": "a72d24a0a27c413a48e446a33c8bcd32a1067bcddd8544f78f9ff8897f41932d",
+      "supports": [
+        "作者与标题定位",
+        "期号差异保留"
+      ],
+      "url": "https://carmona.princeton.edu/research-publications/published-articles/index.html",
+      "verification": "FETCHED_PINNED_AUTHOR_PUBLICATION_LIST"
+    },
+    {
+      "attribution": "Author-maintained institutional publication list; reported bibliographic identity is not evidence of identical manuscript revision.",
+      "id": "carmona-ludkovski-coauthor-publications",
+      "license": "No open redistribution or commercial-use license established. Public author-hosted manuscript and publication lists are source evidence, not a license for paper, figures, code or price data. Only original Chinese rule metadata, identity and locators proposed; commercial REVIEW_REQUIRED.",
+      "locator": "HTML L552–553 same title lists15(6),2008,405–447 and CL_Switching07.pdf link; the linked PDF returned404. Identity only, no rule support.",
+      "revision": "Publication-list HTTP snapshot sha256:217e23a26969b9d11d01d03aa708f02513f92ba09f0570458bd1949e1a854359",
+      "sha256": "217e23a26969b9d11d01d03aa708f02513f92ba09f0570458bd1949e1a854359",
+      "supports": [
+        "作者与标题定位",
+        "期号差异保留"
+      ],
+      "url": "https://ludkovski.pstat.ucsb.edu/publications",
+      "verification": "FETCHED_PINNED_AUTHOR_PUBLICATION_LIST"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "carmona-ludkovski-271-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "已持有燃气发电厂tolling运营权的租用者，通过买燃料、按所选档位发电并卖出电力获得现金流；P是电价，G是天然气价，X=(P,G)为外生状态。没有在本条另购买电厂股票或建立一多一空ETF组合，也不含金融对冲。模式i的Cap_i为产出速率、HR_i为单位电力对应燃料量；HR_i*G必须与P同单位，K_i为Eq1内的每单位电力运营成本。来源单位标签有反向处，数值例不作默认。"
+    },
+    "cost": {
+      "evidence": [
+        "carmona-ludkovski-271-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "模型明确在模式i持续赚取ψ_i的净运营现金流率，在线燃料及单位运营费已包含在Cap_i*(P−HR_iG−K_i)中；在每次i→j切换时另一次性支付C_ij(t,x)，C_ii=0、i≠j时C_ij>ε>0并满足C_ij≤C_ik+C_kj。不能把一次启停费乘整个运行时长或把燃料重复扣款。所选Eq27/36未另印折现因子；本条不补r。租入运营权的固定预付款是已持有权利的前置合同，未给完整资金账；交割、价差、融资、电网及税费仍需下游定义，不能从模型价值推真实净利润。"
+    },
+    "entry": {
+      "evidence": [
+        "carmona-ludkovski-271-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "从外部给定的当前档位i与剩余切换数k开始。若最优动作是j≠i，支付C_ij，将档位置j并令k减1；进入发电档位就按该档位燃料需求采购并销售产出。若继续动作最优则不付切换费、保持模式；并不是价差一转正立即开机。切换分支包含同一时点较低k层的价值V_{m,k−1,j}，不另外重复加原档位收入；正成本和三角不等式使连续瞬时绕路没有严格优势，未补并列情况下的实现顺序。"
+    },
+    "execution_time": {
+      "evidence": [
+        "carmona-ludkovski-271-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：基础规则先观察当期价格与模式/次数，再比较条件价值，切换在模型中立即改变档位，之后按该期显式收益率计运行收入。没有真实燃料采购/电力销售的委托时钟、日前与实时市场对应、物理投产确认、调度延迟、计量结算或故障回退。作者§4.2.2明确“立即生效后锁定δ”较真实启动延迟风险小；本条未采此近似，也不以它补实际ramp过程。未执行源码、模拟或实盘动作。"
+    },
+    "exit": {
+      "evidence": [
+        "carmona-ludkovski-271-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "停机或降低产能与启动同用上述比较，只有相应j动作最优才切换并扣次数/成本；可以因未来恢复价值而暂时忍受负运行现金流，不设见亏就停的额外规则。k耗尽后保持当时模式至T，而非无条件关闭。T为运营权期限末端，V(T)=0且不再发出新切换，所选目标没有终端售厂收入、强制关机费或续租规则，不能把零终值解释成真实设备免费处置。"
+    },
+    "position": {
+      "evidence": [
+        "carmona-ludkovski-271-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "经济规模由已给定设备各模式的Cap_i决定；处于发电档位时每Δt生产Cap_iΔt单位电力，并对应消耗HR_iCap_iΔt的燃料。保持的是运行模式，不是累计天然气库存、证券份数或和为1的资金权重。每次模式变化消耗一个离散切换权，剩余k不为负；所有允许模式和初始k已先给定，没有扩容、拆分多个厂、权益百分比仓位或融资上限规则。停机模式虽无产出仍可能存在已给ψ_0成本。"
+    },
+    "risk": {
+      "evidence": [
+        "carmona-ludkovski-271-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "状态模型与条件期望必须在决策前给定；不能用同一条事后实际价格路径回填期望。正切换费、有限模式/次数、可积收益和统一时间/量纲是所选构造条件，不保证实际价格分布、最优政策或盈利。没有账户回撤、保证金或对手风险限制。保留原稿Eq17层数/argmax及Eq11终点约定疑点；只采用后文明确终值和离散方程，不替作者修连续证明、代码或数值例。LS回归基、样本量、种子/容差、真实delay、价格冲击与示例价格参数未采；理论描述完整不等于可直接回测。"
+    },
+    "signal": {
+      "evidence": [
+        "carmona-ludkovski-271-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原Eq5/6的条件期望是在风险中性定价测度P下，本条给定的Markov转移亦为该估值分布；未把它当现实发生概率，风险溢价和模型校准尚未闭合。取原显式离散递推，设V_{N,k,i}(x)=0。继续当前档位的值L_{m,k,i}(x)=ψ_i(t_m,x)Δt+E[V_{m+1,k,i}(X_{m+1})|X_m=x]。k=0时V=L；k≥1时，切换值S_{m,k,i}(x)=max_{j≠i}{−C_ij(t_m,x)+V_{m,k−1,j}(x)}，V=max(L,S)。按m从N−1倒推、同一m按k由0向上处理，未来条件期望取给定分布而非之后真实价格。S严格大于L时切换到实现最大值的j，L严格更大时继续；相等和多个j并列保留集合，不补优先级。ψ_i(t_m,x)Δt是对下期运行收入的显式近似，未改成实际下期价格，也未声称已求出数值边界。"
+    },
+    "timeframe": {
+      "evidence": [
+        "carmona-ludkovski-271-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "合同期[0,T]划分为t_m=mΔt，m=0,…,N、Δt=T/N，只能在m<N的网格点切换。N为本摘要的时间步数，对应原M#；k为尚可使用的切换次数。每期根据当时状态、当前档位和剩余k查询决策，期限越近价值会变化。T、Δt与初始k均是输入；三个月/六小时等实验值不是生产默认，也没有月度重估或历史形成期。"
+    },
+    "universe": {
+      "evidence": [
+        "carmona-ludkovski-271-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定一台可调度设备及有限模式集合i∈{0,…,M−1}，包含停机与若干事先允许的生产档位；不是逐期连续优化任意产能。给定价格Markov条件分布及收益率ψ_i(t,x)、切换成本C_ij(t,x)。在线档位按ψ_i=Cap_i*(P−HR_i*G−K_i)；停机现金流由ψ_0输入，来源例子允许停机固定成本，故不一律填0。所选基础模型不让经营决策改变价格转移，也不套后续双燃料示例。"
+    }
+  }
+}

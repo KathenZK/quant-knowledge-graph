@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2625",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2625,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8e3b5a3d01264e833bac34dfbe070906df3c181f6a902bd9e3e6f34442899f02",
+    "rule_sha256": "70e0f73e24b54c734008bca055969025841410be9e3797635938ca80b44a4c63"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2625",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2625"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-atr-volatility-stop/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟ATR(14)吊灯；空仓即满仓，收盘跌破滚动高点−3×ATR则清仓并待再入（QC Documentation ATR chandelier）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY分钟ATR14吊灯−3×ATR待再入；QC Documentation ATR chandelier）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟ATR(14)吊灯；空仓即满仓，收盘跌破滚动高点−3×ATR则清仓并待再入（QC Documentation ATR chandelier）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-atr-volatility-stop/main.py`。标的 SPY，分钟；`atr(...,14)`。未投资则 `set_holdings(1)` 并记 `_trailing_high=close`。持仓中若 close>`_trailing_high` 则上移；`stop=_trailing_high−3.0×ATR`；若 close<stop 则 `liquidate` 并置 `_waiting_to_reenter=True`。下一根：等待再入时再次满仓并重置 trailing high。不是 M0371 吊灯 n=21×3 离场概念条，也不是 W209 价>SMA200 且 ATR×2 止损核。提出日期未知。 不是M0371吊灯n=21×3离场概念条，也不是W209价>SMA200且ATR×2止损核：本条为SPY分钟ATR(14)吊灯，空仓即满仓，收盘跌破滚动高点−3×ATR则清仓并待再入。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

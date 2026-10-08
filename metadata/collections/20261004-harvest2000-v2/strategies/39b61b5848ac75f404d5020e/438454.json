@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "多阶变化方向一致或能辨别趋势加速，但高阶噪声和成本可能抵消效果；尚未研究。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "未要求一阶速度同向，不能改写为所有导数同号。",
+    "空头止损初值999999不是无穷大。"
+  ],
+  "name": "平滑价格二至四阶差分共振与OHLC均价追踪",
+  "native_source_id": "438454",
+  "one_line": "对HMA平滑的OHLC均价连续差分，二、三、四阶同号时开仓，使用OHLC均价维护双向跟踪止损。",
+  "record_id": "438454",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E5%AF%BC%E6%95%B0%E7%9A%84%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Derivative-Based-Trading-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-438454-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "5892d0c40bc27f32579ce52786710838bb7fa7ea8cc739e45c893de173b66218",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E5%AF%BC%E6%95%B0%E7%9A%84%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Derivative-Based-Trading-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-438454-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-438454-published-code"
+      ],
+      "status": "MISSING",
+      "text": "无显式佣金、滑点、点差及持仓费用，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-438454-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "二至四阶都正时openlong，多头；都负时openshort，空头；采用状态条件而非首次过零，不要求空仓。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-438454-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v3且成交后重算；先执行方向入口，再按当前持仓更新止损。OHLC均价含当前高低收，实时变化和订单成交后重算路径未验证。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-438454-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多仓时longStop=max(ohlc4×0.75,longStop[1])，非多仓重置0；空仓时shortStop=min(ohlc4×1.25,shortStop[1])，非空仓重置999999。当前持仓对应strategy.exit(stop=该线)，未指定from_entry。未另设置止盈或超时。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-438454-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认10%权益，initial_capital=1000、currency=USD；无额外qty或止损风险预算，calc_on_order_fills=true。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-438454-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "25%是相对更新ohlc4的跟踪距离，不是账户最大亏损保证。空头初始化上限999999有价格尺度约束；缺少首次仓位前历史时prevStop缺失风险未核。高阶差分放大噪声。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-438454-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x=(O+H+L+C)/4，h=WMA(2×WMA(x,2)−WMA(x,4),2)。默认len=1；速度v=(h−h[1])，加速度a=v−v[1]，三阶j=a−a[1]，四阶q=j−j[1]。多要求a>0、j>0、q>0；空要求三者都<0，不要求速度v同号。对openprofit的差分变量已计算但没有参与订单。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-438454-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-438454-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

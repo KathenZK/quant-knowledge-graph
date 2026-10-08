@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3398",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3352,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "3249644f7c602401383620eb7ca5d52e95e20dd47cadff60bf9ab0209821ea57",
+    "rule_sha256": "001ba4bfb8019510ad6168efd4af19105ea620529481c21b3f292288f77b05a5"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3398",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3398"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/AddRemoveSecurityRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；先 SPY 半仓；周一 add AIG/BAC，周二各配25%，周三 remove_security 二者（Lean AddRemoveSecurityRegression）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：日线；先 SPY 半仓；周一 add AIG/BAC，周二各配25%，周三 remove_security 二者（Lean AddRemoveSecurityRegression）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `AddRemoveSecurityRegressionAlgorithm.py`。初始仅 `add_equity(\"SPY\")`。同日仅一次动作：未投资 → `set_holdings(SPY,0.5)`；`weekday==1` → `add_equity(\"AIG\")` 与 `\"BAC\"`；`weekday==2` → `set_holdings(AIG,0.25)`、`set_holdings(BAC,0.25)`；`weekday==3` → `remove_security` 两者。不是固定四票等权框架核，也不是粗选日期切换三票核（W513）。提出日期未知。SPY半仓后周一加AIG/BAC周二各25%周三remove ≠ 固定四票等权框架 / 粗选日期切换三票（M3262）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

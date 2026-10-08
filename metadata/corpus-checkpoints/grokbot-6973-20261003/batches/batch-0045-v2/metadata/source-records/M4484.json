@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4484",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4438,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "08ff595a4f027f3a2df8edfe036074c3672f169b3e8d91bcf55d48dae84a15ef",
+    "rule_sha256": "fefaa45177e2b3b6cebd18c322a56c5c28b7da52efdab23294d11714b97b160b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4484",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4484"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4199648"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Enrique A. Zambrano / Carlos Rizzolo (Vitral Advisors)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-159/W1694"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Vitral·多资产动量：月末；13风险+SHV/IEF；9信号(收益/价−SMA/效率趋势×3/6/12)相关调整排序；Top5等权；风险仓=max(1−4n/39,0)，n=负动量数；负动量席改最高秩风险关闭（Vitral MAM·Top5·Breadth）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2022-09"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Vitral·多资产动量：月末；13风险+SHV/IEF；9信号(收益/价−SMA/效率趋势×3/6/12)相关调整排序；Top5等权；风险仓=max(1−4n/39,0)，n=负动量数；负动量席改最高秩风险关闭（Vitral MAM·Top5·Breadth）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Zambrano/Rizzolo《Long-Only Multi-Asset Momentum》（SSRN 2022；Vitral）公开可钉死核。风险开启宇宙：**SPY、QQQ、IWM、VGK、EWJ、EEM、VNQ、DBC、DBA、GLD、LQD、HYG、TLT**（N=13）；风险关闭：**SHV、IEF**。月末对每资产算 **9** 个动量信号：总分收益、价−SMA、效率趋势（收益/绝对日变动和）各在 **3/6/12月**（SMA用约50/100/200日）；再按与等权风险组合的相关做相关惩罚后汇总排序。取秩最高 **Top5**；**风险仓暴露=max(1−4n/39, 0)**，其中 n=风险宇宙中动量为负的资产数；Top5内等权分配风险仓；若某 Top5 资产动量≤0，则该席改配风险关闭中秩最高者；剩余仓亦配最高秩风险关闭。持有1月。相对 Antonacci GEM/单信号双动量与 EAA：本核为 **九规格集成+广度缩仓**。计入美股/ETF。提出日期 2022-09。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SSRN 4199648 · 9-signal multi-asset mom · Top5 · breadth max(1-4n/39,0)"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

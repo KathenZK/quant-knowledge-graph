@@ -1,0 +1,135 @@
+{
+  "economic_basis": {
+    "hypothesis": "收益方向持续时，占优子账户的财富和对应名义头寸可能增长，使净头寸随已实现路径变化。这里只记录反馈配置机制；不据论文的正期望论述宣称盈利、抗风险或真实市场可实施。",
+    "missing": [
+      "未运行、未回测，论文理论或示例结果不作为经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "arxiv",
+  "lab": null,
+  "missing_information": [
+    "只审arXiv:2209.12383v1的Eq(1)/(2)规则；未执行源码、算例、优化或回测，未核实经济效果。",
+    "V0、alpha、w、epsilon和未来收益支持边界属于外部输入，论文未给通用事前选择程序；缺固定市场/时钟/数据与实际订单执行合同。",
+    "费用按每期毛名义扣，不是现实交易所默认的净额或换手收费；真实借券、税、保证金与融资另待研究。",
+    "原稿分析式有不一致；定义证据与数学证明、经济有效性分开，保持原始字节不默修。",
+    "DLP与经典SLS同族，alpha=.5情形作者明确等价；参数、费率、标的和版本本身不贡献新增。",
+    "退出/清算时点、终止成本、归零后重启和跨腿转账均未定义。",
+    "arXiv v1落地页标CC BY4.0；只记录该预印本许可声明，不移用于期刊排版、引用文献或市场数据。商用完整研究仍REVIEW_REQUIRED。"
+  ],
+  "name": "Double Linear Policy：按各自子账户财富递推的同步多空配置",
+  "native_source_id": "2209.12383",
+  "one_line": "初始资本拆成多、空两个子账户；每期各用自身财富的同一固定比例持有同一资产的多头或空头，并分别扣除名义金额比例费用。",
+  "record_id": "2209.12383",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、优化器或回测。",
+    "metadata": "作者原生arXiv ID、定位及自撰中文规则；不发布论文全文、图像、源码或市场数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://arxiv.org/abs/2209.12383v1"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Chung-Han Hsieh, On Robustness of Double Linear Trading with Transaction Costs, arXiv:2209.12383v1 (26 September 2022). Author-submitted preprint; linked journal DOI10.1109/LCSYS.2022.3218541 not treated as byte-identical final edition. Chinese paraphrase by catalog curator.",
+      "id": "arxiv-2209-12383v1-pdf",
+      "license": "arXiv version1 landing page L206–208 explicitly links CC BY4.0 for this article. This records the deposited preprint license, not a grant for the IEEE typeset version, cited papers, code, or market data. No fulltext redistributed; commercial overall use REVIEW_REQUIRED.",
+      "locator": "Physical page1 §II-A; page2 §II-B/C Eq(1)/(2), wmax and Remark2.3 SLS equivalence; pages3/6 source-analysis discrepancies; page4 §IV-B example; page5 conclusion says optimal parameters future research. Lines are derived pdftotext with visual equations checked.",
+      "revision": "arXiv:2209.12383v1, 26 September 2022; PDF sha256:4b9661250c5f6fe37bc94c4c4fe2c688125466a1c0de6ccbb4f25521fe173d09",
+      "sha256": "4b9661250c5f6fe37bc94c4c4fe2c688125466a1c0de6ccbb4f25521fe173d09",
+      "supports": [
+        "单资产双子账户递推、名义仓位、逐期费用、SLS同族关系和缺项"
+      ],
+      "url": "https://arxiv.org/pdf/2209.12383v1",
+      "verification": "FETCHED_PINNED_AUTHOR_SUBMITTED_PREPRINT_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "arXiv author-submission record: Chung-Han Hsieh.",
+      "id": "arxiv-2209-12383v1-abstract",
+      "license": "Landing page records the article CC BY4.0 declaration. Page fulltext not redistributed; no license inheritance to referenced publications or data.",
+      "locator": "Original HTML L114–124 title/version/author/PDF; L136 substantial-overlap note with arXiv2202.02300; L172 related journal DOI; L193–194 submitter/version; L206–208 CC BY4.0 link.",
+      "revision": "arXiv:2209.12383v1; HTTP snapshot 2026-10-04T20:38:18.236121+00:00; sha256:6cf8d1ef6d302eea323e2288b3c937ff7c919e4f4a3e018b23704ca26d05db56",
+      "sha256": "6cf8d1ef6d302eea323e2288b3c937ff7c919e4f4a3e018b23704ca26d05db56",
+      "supports": [
+        "作者投稿身份、v1版本、相关期刊DOI、预印本许可声明"
+      ],
+      "url": "https://arxiv.org/abs/2209.12383v1",
+      "verification": "FETCHED_PINNED_VERSIONED_AUTHOR_SUBMISSION_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "arxiv-2209-12383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一个价格始终为正的风险资产，论文一般记S(k)，股票是通常例子，§IV-B另用BTC-USD日价格作演示。多头与空头指同一底层资产，不是两只反向ETF；BTC演示不被提升为本定义的唯一冻结标的。收益X(k)=(S(k+1)-S(k))/S(k)为单期简单收益。"
+    },
+    "cost": {
+      "evidence": [
+        "arxiv-2209-12383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "模型明确每期从多腿扣epsilon*pi_L(k)，从空腿扣epsilon*abs(pi_S(k))，epsilon∈[0,1]。这是当前两腿名义金额的周期性比例扣款，不能改写为epsilon*abs(净头寸)、头寸变动的换手费或一次开仓费。主式现金/无风险利息取0；实际买卖价差、冲击、借券费、资金费、税和末期平仓成本未单独建模。§IV-B的0.01%与0.1%只是演示成本值，不作为真实交易费用。"
+    },
+    "entry": {
+      "evidence": [
+        "arxiv-2209-12383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "初始两腿名义额分别为alpha*w*V0和-(1-alpha)*w*V0；没有均线、突破或均值估计触发开仓的前置条件。随后每期目标取各子账户余额乘固定w。alpha=.5时初始净头寸为0，但模型仍保存并更新两腿状态，且epsilon>0时仍按两腿毛名义计费；不能把它简化为无持仓无成本。"
+    },
+    "execution_time": {
+      "evidence": [
+        "arxiv-2209-12383v1-pdf"
+      ],
+      "status": "MISSING",
+      "text": "已给模型顺序：阶段k使用V_L(k)、V_S(k)决定名义头寸，k到k+1收益及费用进入子账户，才得到下一阶段目标。实际交易时钟、开/收盘选择、可成交报价、订单类型、滑点、净额结算与双子账户实际实现均未给，不能把抽象递推顺序称为完成成交核查。"
+    },
+    "exit": {
+      "evidence": [
+        "arxiv-2209-12383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每期根据已更新的子账户余额替换该腿的目标名义额，余额缩水则目标缩小；递推中没有单笔止损、止盈或独立持有天数触发。w=0给零名义；某子账户余额达到0时其后该腿乘法递推保持0。论文未规定最终退出时点、结束清算费用或归零后的重启/跨腿注资机制，不能补入再平衡转账。"
+    },
+    "position": {
+      "evidence": [
+        "arxiv-2209-12383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "以美元名义额而非股票数量指定pi_L、pi_S。alpha只负责初始资本分配，w同时作用于两腿自身财富，不能把alpha误作每期目标多空权重。净名义是pi_L+pi_S，毛名义是abs(pi_L)+abs(pi_S)。在已给收益支持、w范围与非负子账户条件下可由递推得到毛名义=w*(V_L+V_S)，但本次未运行求值。论文主现金版本r=0；不引入独立风险平价、波动目标或经验Kelly估计。"
+    },
+    "risk": {
+      "evidence": [
+        "arxiv-2209-12383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "主要限制是未知未来收益支持、固定参数如何选取及真实做空约束。论文的严格存活Lemma3.1仅写alpha∈(0,1]，不把alpha=0的纯空头边界也写成必定严格正财富；空腿在w=1/(Xmax+epsilon)且X=Xmax时可能归零。本定义没有回撤上限、峰值地板或保护止损。原稿第3/6页方差交叉项与第6页现金融资初值等式存在静态代数不一致，审阅仅采Eq(1)/(2)递推，未修原文，也不把这些证明式或示例收益当作验证。"
+    },
+    "signal": {
+      "evidence": [
+        "arxiv-2209-12383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入固定V0>0、alpha∈[0,1]、epsilon∈[0,1]及固定w∈[0,wmax]，其中wmax=min{1/(1+epsilon),1/(Xmax+epsilon)}。初始化V_L(0)=alpha*V0、V_S(0)=(1-alpha)*V0；每期pi_L(k)=w*V_L(k)，pi_S(k)=-w*V_S(k)，合计pi(k)=w*(V_L(k)-V_S(k))。按Eq(2)更新V_L(k+1)=V_L(k)+X(k)*pi_L(k)-epsilon*pi_L(k)，V_S(k+1)=V_S(k)+X(k)*pi_S(k)-epsilon*abs(pi_S(k))；总财富V=V_L+V_S。各子账户持续复利，不在下一期重新把总财富按alpha切分。本候选范围为0<alpha<1且w>0；alpha端点单边、w=0现金与alpha=.5的经典SLS等价情形都不拆新记录。"
+    },
+    "timeframe": {
+      "evidence": [
+        "arxiv-2209-12383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "定义在离散阶段k=0,1,2,…上，每一阶段按当时两个子账户余额重算头寸，再承受k到k+1的简单收益。核心构造未固定日历周期；§IV-B的BTC-USD例子为日频，§IV-A模拟的1/252年步长仅属另一个演示，均不自动成为通用参数。"
+    },
+    "universe": {
+      "evidence": [
+        "arxiv-2209-12383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "外部指定单一可做多且可做空的资产，未提供股票池筛选、流动性或合约选择。理论假设每期收益相互独立、共同但未知的均值和方差，并存在已知支持边界 -1<Xmin<0<Xmax<∞。历史样本最大/最小值不能自动证明未来支持边界；实际借券、交易场所与数据质量门槛缺失。"
+    }
+  }
+}

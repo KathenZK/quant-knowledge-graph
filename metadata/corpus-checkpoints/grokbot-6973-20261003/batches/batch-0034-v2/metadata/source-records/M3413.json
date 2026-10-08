@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3413",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3367,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "40f10c547bc425bbb38a1d3e13a7e4e54a29c7152a4955d50c4f44af0489c819",
+    "rule_sha256": "c2cdb500dd022a751973935681516fd480fd1803e09f3ee65f1ef8193ba928b0"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3413",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3413"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/TimeInForceAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；分别以 GTC/DAY/GTD(2013-10-10) 属性挂限价：GTC 限价100与160；DAY 限价140与180；GTD 限价100与160；各预期提交中/成交/取消状态（Lean TimeInForce）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；分别以 GTC/DAY/GTD(2013-10-10) 属性挂限价：GTC 限价100与160；DAY 限价140与180；GTD 限价100与160；各预期提交中/成交/取消状态（Lean TimeInForce）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `TimeInForceAlgorithm.py`。`add_equity(\"SPY\",Minute)`。首次：`TimeInForce.GOOD_TIL_CANCELED` 下 `limit_order(+10,100)`（预期回测结束仍 SUBMITTED）与 `limit_order(+10,160)`（预期 FILLED）；`TimeInForce.DAY` 下限价 140（预期收盘 CANCELED）与 180（预期 FILLED）；`TimeInForce.GOOD_TIL_DATE(2013-10-10)` 下限价 100（预期到期 CANCELED）与 160（预期 FILLED）。不是价格信号择时核，但是完整可回测的限价+有效期进出规则。提出日期未知。SPY GTC/DAY/GTD限价各两档状态断言 ≠ 价格信号择时核/仅MOO-MOC（M3399）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

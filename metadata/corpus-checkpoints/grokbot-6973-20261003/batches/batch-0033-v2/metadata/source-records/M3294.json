@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3294",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3248,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0bba8ce85b7a3c06e149139ea4bfc4198e3f5697af4924682208ff51dc71b79d",
+    "rule_sha256": "3b5843c096c1ffe750205dff54ea3ff008202315ac51c4d711674e0a97af9588"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3294",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3294"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateIndiaAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "印度股票：INR账户；YESBANK分钟（Market.INDIA）；空仓市价买1股；默认 IndiaOrderProperties(NSE)（Lean BasicTemplateIndia）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "印度股票：INR账户；YESBANK分钟（Market.INDIA）；空仓市价买1股；默认 IndiaOrderProperties(NSE)（Lean BasicTemplateIndia）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateIndiaAlgorithm.py`。`set_account_currency(\"INR\")`；`add_equity(\"YESBANK\", Minute, Market.INDIA)`；`default_order_properties=IndiaOrderProperties(Exchange.NSE)`。`on_data`：未投资 → `market_order(\"YESBANK\",1)`。不是 NIFTY 周三突破核（W508），也不是 SPY 空仓满仓核。提出日期未知。YESBANK 印度分钟空仓买1股+NSE订单属性 ≠ NIFTY周三突破（M3257）/SPY空仓满仓（M3265）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

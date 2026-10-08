@@ -1,0 +1,180 @@
+{
+  "economic_basis": {
+    "hypothesis": "把全图每组三个不同节点按其全部有向边形状归入16个同构类型，返回每类出现次数；包括不连通结构，整个向量只计一个特征族。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-2ef1ed3c6b97f9f3c7068927",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-6418501c083ddcd65e844cc4",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整节点与有向边均已生效并可得后计算；不能用未来网络或修订后的全样本关联回填历史。节点池、关系时点、构图估计窗口和数据许可MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-2ef1ed3c6b97f9f3c7068927",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-6418501c083ddcd65e844cc4",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "明确选择内置networkx.DiGraph、有限互异整数节点、无自环、无平行边、nodelist=None及默认Python实现；不在计算过程中修改图。不把不同backend/图子类/权重或子集版本另计。边属性均不参与计数，节点标签只是标识；图构建与金融数据可得时点另定。 类型可由三个节点重命名后与下面代表边集完全相同来确定，而不是只要求这些边为子图：003={}；012={ab}；102={ab,ba}；021D={ab,ac}；021U={ba,ca}；021C={ab,bc}；111D={ab,ba,ca}；111U={ab,ba,ac}；030T={ab,bc,ac}；030C={ab,bc,ca}；201={ab,ba,bc,cb}；120D={ab,ac,bc,cb}；120U={ba,ca,bc,cb}；120C={ab,bc,ac,ca}；210={ab,ba,ac,ca,bc}；300={ab,ba,ac,ca,bc,cb}。ab表示a→b；除列出的边外不存在其他边。 原实现用(v,u,w)六个有向边存在性编码：c=A_vu+2A_uv+4A_vw+8A_wv+16A_uw+32A_wu，经固定64状态表映射16类。该表按边形状的同构类归并；用数学代表形状描述同一分类，不把64编码状态各收一条。 Graph.nbunch_iter(None)经reportviews helper迭代全部邻接键，故nodeset等于全V，Nnot=0；选任意节点顺序m。记N(v)=入邻居∪出邻居、B(v)=两者交集。对v及其邻居u仅保留m(u)>m(v)，令W=(N(v)∪N(u))去除u/v。 对w∈W，只在m(u)<m(w)，或m(v)<m(w)<m(u)且v不属于N(w)时，按六边编码给对应类型加1。这避免一个相连三节点集合被不同边重复计；不是按全部有序排列求和。任意整数节点标签和set迭代顺序不同不改目标计数，未声明实际环境位级/运行复现。 每个上述u/v邻接对，再把N−|W|−2加入一条有向边加孤点的012类；若u∈B(v)则加入互向边加孤点的102类。Nnot=0时原子集边界补偿分支完全跳过，不能把nodelist解释成仅其诱导子图。 全部非空类型完成后，003=choose(N,3)−其他15类总数。整数总量采用N(N−1)(N−2)//6；返回有全部16个字符串键的Python整数dict，而非比例、p值、随机图显著性或节点中心性。N<3时三节点组合数为0，全部计数0；空图无需特别补金融含义。 DiGraph.adj/succ是出边映射、pred是入边映射，AtlasView只包装已有字典；已读固定类与nbunch helper。原文的复杂度说明不作为本条资源上限；大密图的内存/时间、后台dispatch与Python运行环境未执行验证。 数学上Σ_k C_k=choose(N,3)，整体反向会交换部分U/D类型而不改变全部计数之和；节点方向、图窗口、归一比例、各类型坐标和triad_type/triads_by_type包装不拆新增。现有clustering及其有向扩展属于闭合摘要族，本条不因为旧有向分支未审而计新；完整开/闭/互向/不连通结构分布是不同统计目标。 边界：诱导计数要求同时考虑不存在的边；它不是非诱导子图个数，也不能把同一个三元组按3!排列重复计数。 自环、多重图和并发图变化被本合同排除；原函数不验证全部这些输入限制，不称其错误处理已全面验证。 已有无向clustering的零闭合无法区分三点链a→b→c与出星a→{b,c}；本条分别计021C与021D。这个自撰代数例不是运行库的实验，也不是独立盈利证据。 有向三角闭合摘要也无法区分上述无三角两例，故区别并不只靠无向换有向。不能把不同方向的021坐标单独计为因子。 原维护者源码所引Batagelj/Mrvar和Snijders论文仅为归属引用，未审其所有证明或取得原论文商用授权。 未运行源码/图算法、未构建金融网络或回测；图模式到市场风险/收益/因果的映射为未验证研究假设。 输出：16键整数字典；各类型/比例/节点子集/语言实现合为一个完整分类计数族"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-2ef1ed3c6b97f9f3c7068927",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-6418501c083ddcd65e844cc4",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把全图每组三个不同节点按其全部有向边形状归入16个同构类型，返回每类出现次数；包括不连通结构，整个向量只计一个特征族。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-2ef1ed3c6b97f9f3c7068927",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-6418501c083ddcd65e844cc4",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定有限简单无自环有向图G=(V,E)，nodelist=None。对16类k，C_k=Σ_(S⊂V,|S|=3)1{诱导图G[S]与类型k的代表图同构}；同构仅允许节点重命名，须同时保留边存在和不存在。各类代表边集见步骤，输出C整向量；Σ_k C_k=N(N−1)(N−2)/6，N<3时全部0。无权重、显著性校准或自动金融方向；所有16类及同族包装只算一个构造。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-2ef1ed3c6b97f9f3c7068927",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-6418501c083ddcd65e844cc4",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in networkx.DiGraph; integer nodes; loop-free, no parallel edges; default Python backend; unchanged during calculation）：完整且当时可得的方向关系图；金融节点池、边方向/关系定义、阈值、估计窗口与历史修订均待研究层固定。。参数：nodelist：全部节点参与；原子集选项是至少含一个选定节点，非仅子集诱导图；其它范围不拆新增；范围None only reviewed；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-2ef1ed3c6b97f9f3c7068927",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-6418501c083ddcd65e844cc4",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/有向关系定义、阈值、PIT时点和输入许可缺失",
+    "Python/backend版本与实际内存/运行性能未冻结验证",
+    "没有随机图基准、显著性、经济独立性或收益方向证据",
+    "代码许可证不授予原始论文和输入数据权利"
+  ],
+  "name": "有向图三节点诱导结构的完整分类计数",
+  "native_source_id": "triadic_census",
+  "one_line": "把全图每组三个不同节点按其全部有向边形状归入16个同构类型，返回每类出现次数；包括不连通结构，整个向量只计一个特征族。",
+  "record_id": "triadic_census",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/triads.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX开发者；固定triads模块保留Reya Group、Alex Levenson、Diederik van Liere版权及Batagelj/Mrvar、Snijders方法归引。代码BSD3不授予原论文或金融网络数据许可。",
+      "id": "harvest-source-2ef1ed3c6b97f9f3c7068927",
+      "license": "BSD-3-Clause",
+      "locator": "authors and native exports:L1-L19; complete64-state map and six-directed-edge code:L21-L126; public interface:L129-L148; attribution and complete global/optional subset implementation:L173-L278; complete sixteen topological definitions:L344-L365; class names and independent native type classifier:L429-L500",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "f5894f9c84ac8170a27e3e0cf6fafdfd2717bb67eb6eac36da122c1e58c27fa2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/triads.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX开发者；固定triads模块保留Reya Group、Alex Levenson、Diederik van Liere版权及Batagelj/Mrvar、Snijders方法归引。代码BSD3不授予原论文或金融网络数据许可。",
+      "id": "harvest-source-9bc7c4ec626786f0185a037d",
+      "license": "BSD-3-Clause",
+      "locator": "native node iteration:L454-L470; length and adjacency item lookup:L486-L532; nbunch delegation:L2012-L2052",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6708c0bdc9aa744e0c70d57c4b75ea517cfe6a183d589c737baca4333c241734",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/graph.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX开发者；固定triads模块保留Reya Group、Alex Levenson、Diederik van Liere版权及Batagelj/Mrvar、Snijders方法归引。代码BSD3不授予原论文或金融网络数据许可。",
+      "id": "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+      "license": "BSD-3-Clause",
+      "locator": "inherits Graph:L87-L88; successor predecessor and adjacency views:L393-L447; native directed simple graph flags:L1256-L1262",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "212a06e63ba05bfbf2ce48f038acd4cf1057ed26ce49342b3e586427892e58a2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/digraph.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX开发者；固定triads模块保留Reya Group、Alex Levenson、Diederik van Liere版权及Batagelj/Mrvar、Snijders方法归引。代码BSD3不授予原论文或金融网络数据许可。",
+      "id": "harvest-source-6418501c083ddcd65e844cc4",
+      "license": "BSD-3-Clause",
+      "locator": "complete adjacency/atlas mapping views:L23-L85",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "e43822f0f8cc649cff52e9f64972f96ba9b1b407dd6e6de43c875b8334935e03",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/coreviews.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX开发者；固定triads模块保留Reya Group、Alex Levenson、Diederik van Liere版权及Batagelj/Mrvar、Snijders方法归引。代码BSD3不授予原论文或金融网络数据许可。",
+      "id": "harvest-source-11d15da2a54528d863a1305b",
+      "license": "BSD-3-Clause",
+      "locator": "nbunch helper including reviewed None branch:L230-L265",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "60d216370be05f02407138ddec4e23e26073a8e2085144261254f24a393835df",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/reportviews.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX开发者；固定triads模块保留Reya Group、Alex Levenson、Diederik van Liere版权及Batagelj/Mrvar、Snijders方法归引。代码BSD3不授予原论文或金融网络数据许可。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "complete BSD3 notice:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

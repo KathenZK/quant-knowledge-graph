@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2801",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2801,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d16fae2acf69bf6d39a51c96e78d97f570fa16f4aca31cd5ddbb96f2b29ffefa",
+    "rule_sha256": "10b981ca2ad0a01fd78e4f652a3a33058a6e45e3c02b4122d7514da480dd58ad"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2801",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2801"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.fmz.com/strategy/489150"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "发明者量化FMZ社区（strategy/489150；Donchian Channel and ATR；Created 2025-04-02）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "FMZ：4小时唐奇安20中轨⊕ATR×2动态间隔（1分钟执行；每笔固定5.1 USDT梯度加减仓）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（回测头：币安期货BNB_USDT；指标4小时/执行1小时叙述；源码1分钟执行）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-04-02"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "FMZ：4小时唐奇安20中轨⊕ATR×2动态间隔（1分钟执行；每笔固定5.1 USDT梯度加减仓）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。指标在4小时K线：唐奇安length=20，上轨=最高、下轨=最低、中轨=收盘SMA；ATR同窗。间隔=ATR×2。无仓：中轨−现价>间隔则首次买入。有仓：相对基准价偏离超过间隔则加仓或减仓。每笔固定trade_amount=5.1 USDT折算数量；价格上涨超间隔卖出，仓不足则全平。相对已收经典海龟20/10通道突破：本条为4h中轨偏离⊕ATR×2间隔⊕固定5.1U核。 不是经典海龟20/10通道突破：本条为4h中轨偏离⊕ATR×2间隔⊕固定5.1U核。 计入加密。 提出日期按源文件原样保留2025-04-02。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

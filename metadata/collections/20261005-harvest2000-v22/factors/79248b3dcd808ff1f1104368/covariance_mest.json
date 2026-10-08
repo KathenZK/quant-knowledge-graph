@@ -1,0 +1,214 @@
+{
+  "economic_basis": {
+    "hypothesis": "以当前多变量散布决定每个观测的马氏距离权重，反复重估散布并在末尾固定总尺度，描述变量之间的形状关系。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-c680518fdcbebd460d099477",
+        "harvest-source-ea6e6c5f23d883226e324c49",
+        "harvest-source-13f2e26381a7769263717c63",
+        "harvest-source-a4acf4962912d41488caf832"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "均值、初始散布与每轮权重都使用完整窗口。所有输入及修订已发布后才可用，不能回填窗口内部时点；金融变量、采样、对齐、窗口和PIT仍MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-c680518fdcbebd460d099477",
+        "harvest-source-ea6e6c5f23d883226e324c49",
+        "harvest-source-13f2e26381a7769263717c63",
+        "harvest-source-a4acf4962912d41488caf832"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审普通二维实NumPy 2.x float64输入及其mT/matrix_norm接口，不审复杂数、批维或PyTorch。输入每行一个变量、每列一个共同样本；整窗减每行算术均值，不在迭代中重估中心，源并未使用稳健中位中心。额外研究域要求中心化后每列非零、Y满行秩，以及各步正定、有限中间量和成功特征分解。 原生covariance_mest必须明确给m_estimator；本条固定tyl，公开_tyl包装的实际函数名为_tyl并转发此选项。默认init=None用YYᵀ/n初始化，不除n−1，不加对角抖动或收缩。q=.9和nu=5虽在签名中保留，但本分支不使用或校验它们。 distance_mahalanobis以invsqrtm(C)@Y白化，d_i²为白化列的平方绝对值和。invsqrtm经eigh构造U diag(λ^−1/2) Uᵀ，不直接调用inverse，也不把数值结果伪称逐位等于代数求逆。_matrix_operator只检查维度、方形及非有限输入，没有显式拒绝非正特征值；本条正定域是附加合同。 权函数p/d_i²整列共享，先令Yw_i=sqrt(p/d_i²)y_i，再C_new=Yw Ywᵀ/n。权重由前一步整张散布决定，变量间耦合；不是按每个变量MAD独立剪裁或一次加权外积。 先计算新旧矩阵差的Frobenius范数与旧矩阵范数，再把cov赋为新矩阵，比较比值<=tol。因此停止时返回的是最新一轮。原生max50耗尽只warnings.warn后继续返回，不能把有返回矩阵解释成已收敛，也不能借用旧Huber的抛异常行为。 结束后才normalize(cov,\"trace\")除trace，再乘p；没有每轮trace归一，也没有保留总体方差尺度。返回矩阵的对角和为p的数学性质不等于每个对角均为1；股票收益协方差用于仓位或风险还需另定尺度、估计误差和数据合同。 矩阵估计只作为统计特征。固定点方程是对应的数学目标，有限50次输出未必达到方程解；本次不运行迭代、不验证收敛、稳健性界或任何金融预测效果。算术均值预处理对极端值的敏感性仍在，不能仅凭Tyler名称宣布端到端异常值稳健。 NumPy2.2.2固定源码仅补充eigh和matrix_norm默认Frobenius的数学约定，并非pyRiemann实际历史环境锁。ctranspose用ndarray.mT，而setup.py仅声明numpy>=1.25，不能由这一宽依赖声明推断所有允许安装版本均可运行；本条明确限定NumPy2.x接口。Array API兼容层、NumPy/LAPACK/BLAS及完整安装运行未验证。 完整径向M散布构造族只计1：tyl代表本条已审分支，Huber/Student权函数、trace/determinant归一、维度、输出坐标、初始化、窗口和实现端口以后不得另计新族。其他分支没有因出现在同一文件就自动通过定义审核。 边界：p>=2,n>=p+1只是必要尺寸选择，不保证满秩；常量列、零中心化观测、退化散布、非有限或溢出不在合同内。源码没有全面检查这些条件；零马氏距离不能擅自填eps。 满行秩也不自动证明经典Tyler估计存在、唯一或在50次内收敛。实际源返回有限迭代最后值并可能附警告；不追加理想收敛结果或忽略警告。 该输出固定trace=p，绝对幅度信息被移除；单独重标各变量通常改变形状，不默认量纲可比或金融风险已校准。输出各元素不拆新增因子。 均值、初始散布与每轮权重都使用完整窗口。所有输入及修订已发布后才可用，不能回填窗口内部时点；金融变量、采样、对齐、窗口和PIT仍MISSING。 所审为pyRiemann维护者的具体Python路径，不声称复现Tyler1987/Ollila等原论文全文或全部模型证明。代码BSD3不授权原论文和市场数据；commercial REVIEW_REQUIRED。 输出：一个p×p的归一化散布形状矩阵，可能附未收敛警告；全部元素和原生M散布选项同族1"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-c680518fdcbebd460d099477",
+        "harvest-source-ea6e6c5f23d883226e324c49",
+        "harvest-source-13f2e26381a7769263717c63",
+        "harvest-source-a4acf4962912d41488caf832"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "以当前多变量散布决定每个观测的马氏距离权重，反复重估散布并在末尾固定总尺度，描述变量之间的形状关系。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-c680518fdcbebd460d099477",
+        "harvest-source-ea6e6c5f23d883226e324c49",
+        "harvest-source-13f2e26381a7769263717c63",
+        "harvest-source-a4acf4962912d41488caf832"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "给定p×n普通有限实数组X，p>=2,n>=p+1，各行变量、各列观测。μ_a=n^−1Σ_i X_ai，y_i=X[:,i]−μ，Y=[y_1,...,y_n]，C_0=YYᵀ/n。固定m_estimator=\"tyl\",init=None,tol=.01,n_iter_max=50,assume_centered=False,norm=\"trace\"。每轮k=0,...,49：d_i²=y_iᵀC_k^−1 y_i，C_(k+1)=(p/n)Σ_i y_i y_iᵀ/d_i²。若||C_(k+1)−C_k||F/||C_k||F<=.01则以本轮新C停止；否则继续。50轮耗尽给Convergence not reached警告但仍使用C_50。最后返回S=p C_K/trace(C_K)。逐轮未做trace归一；输出为固定trace=p的形状，不是绝对波动协方差或单位对角相关矩阵。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-c680518fdcbebd460d099477",
+        "harvest-source-ea6e6c5f23d883226e324c49",
+        "harvest-source-13f2e26381a7769263717c63",
+        "harvest-source-a4acf4962912d41488caf832"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X（ordinary finite real NumPy 2.x float64 array of shape(p,n),p>=2,n>=p+1; centered columns nonzero; centered full row rank; positive definite finite iterates and successful eigensolves）：完整对齐多变量观测，行变量列样本；附加非退化域不是源自动验收，市场与PIT未定。参数：m_estimator：必需显式选tyl，无源码默认；hub/stu保守同族但未在本条审核；范围selected tyl only；源码默认REQUIRED_NO_DEFAULT；init：原始中心化样本散布初始化；范围selected None only；源码默认None；tol：以旧散布Frobenius范数为分母的相对变化；范围selected native default .01；源码默认0.01；n_iter_max：最多50轮，耗尽警告但返回；范围selected native default 50；源码默认50；assume_centered：先按完整窗口作算术均值中心化；范围selected native default False；源码默认False；q：仅hub权函数使用，tyl分支不参与计算；范围unused in selected tyl branch; native default retained；源码默认0.9；nu：仅stu权函数使用，tyl分支不参与计算；范围unused in selected tyl branch; native default retained；源码默认5；norm：末尾除trace后乘变量数p；范围selected native default trace；源码默认trace"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-c680518fdcbebd460d099477",
+        "harvest-source-ea6e6c5f23d883226e324c49",
+        "harvest-source-13f2e26381a7769263717c63",
+        "harvest-source-a4acf4962912d41488caf832"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "pyRiemann/pyRiemann",
+  "lab": null,
+  "missing_information": [
+    "未执行算法或回测；没有50轮收敛或浮点误差证书",
+    "实际Array API/NumPy/BLAS/LAPACK安装依赖和硬件未冻结",
+    "金融变量/单位/输入对齐/窗口/PIT与供应商未定",
+    "固定trace形状不含绝对波动尺度，没有收益方向或经济有效性证据",
+    "源码许可不授原论文或市场数据权利，商用REVIEW_REQUIRED"
+  ],
+  "name": "径向固定点迭代的 Tyler 散布形状矩阵",
+  "native_source_id": "covariance_mest",
+  "one_line": "以当前多变量散布决定每个观测的马氏距离权重，反复重估散布并在末尾固定总尺度，描述变量之间的形状关系。",
+  "record_id": "covariance_mest",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/pyriemann/geometry/covariance.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "pyRiemann authors（项目README与setup列Alexandre Barachant，LICENSE为2015–2024作者BSD3）；源码归引D.E. Tyler1987与Ollila/Tyler/Koivunen/Poor2012等。另引NumPy维护者的数学API合同；原文和市场数据权利另审。",
+      "id": "harvest-source-c680518fdcbebd460d099477",
+      "license": "BSD-3-Clause",
+      "locator": "namespace and selected helper imports:L1-L19; native wrapper, signature, source attribution and complete M scatter iteration:L112-L249; complete final matrix normalization:L955-L1008",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "a13b5b9bf2acf073ef1e5485d9f6ad8ecbaa03205cf798f6391a08b25e1e8c0c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/pyriemann/geometry/covariance.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors（项目README与setup列Alexandre Barachant，LICENSE为2015–2024作者BSD3）；源码归引D.E. Tyler1987与Ollila/Tyler/Koivunen/Poor2012等。另引NumPy维护者的数学API合同；原文和市场数据权利另审。",
+      "id": "harvest-source-ea6e6c5f23d883226e324c49",
+      "license": "BSD-3-Clause",
+      "locator": "namespace and real conjugate transpose:L1-L36; spectral matrix operator, finite checks and return:L150-L167; complete inverse matrix square root:L206-L241",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "567e1923d97dae06d99323cd8de0189536d390342fa2869116b04c411f47be66",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/pyriemann/geometry/base.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors（项目README与setup列Alexandre Barachant，LICENSE为2015–2024作者BSD3）；源码归引D.E. Tyler1987与Ollila/Tyler/Koivunen/Poor2012等。另引NumPy维护者的数学API合同；原文和市场数据权利另审。",
+      "id": "harvest-source-a463defb0a9ad835f47c4c31",
+      "license": "BSD-3-Clause",
+      "locator": "complete BSD3 notice:L1-L24",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "13a48740065e33cddef33a67c8e06ce9cd27d9e9f7d5fd0271d2b77d5d979694",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors（项目README与setup列Alexandre Barachant，LICENSE为2015–2024作者BSD3）；源码归引D.E. Tyler1987与Ollila/Tyler/Koivunen/Poor2012等。另引NumPy维护者的数学API合同；原文和市场数据权利另审。",
+      "id": "harvest-source-9f76cfea42bd1b6fc9ab3646",
+      "license": "BSD-3-Clause",
+      "locator": "project scope, identity and supported backend statement:L1-L43",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "71ba26697ba78dea774ff8ed68f5814d8e92cf2f33d330763a72088fcf12353f",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors（项目README与setup列Alexandre Barachant，LICENSE为2015–2024作者BSD3）；源码归引D.E. Tyler1987与Ollila/Tyler/Koivunen/Poor2012等。另引NumPy维护者的数学API合同；原文和市场数据权利另审。",
+      "id": "harvest-source-137cfaedd164fdac320c42d5",
+      "license": "BSD-3-Clause",
+      "locator": "author, license and dependency declarations:L22-L52",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "ea6892e5d024ad09a9ca0ccc2c49d34d6cf5a767caa7421c9c066da4f7ecd653",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/setup.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors（项目README与setup列Alexandre Barachant，LICENSE为2015–2024作者BSD3）；源码归引D.E. Tyler1987与Ollila/Tyler/Koivunen/Poor2012等。另引NumPy维护者的数学API合同；原文和市场数据权利另审。",
+      "id": "harvest-source-13f2e26381a7769263717c63",
+      "license": "BSD-3-Clause",
+      "locator": "namespace and inverse square-root imports:L1-L13; complete Mahalanobis squared-distance helper:L1083-L1129",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "7e0af00bcdc65f3108bd81eb3954592eb1e65525f6fc8e08c6c89e439c84063e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/pyriemann/geometry/distance.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors（项目README与setup列Alexandre Barachant，LICENSE为2015–2024作者BSD3）；源码归引D.E. Tyler1987与Ollila/Tyler/Koivunen/Poor2012等。另引NumPy维护者的数学API合同；原文和市场数据权利另审。",
+      "id": "harvest-source-a4acf4962912d41488caf832",
+      "license": "BSD-3-Clause",
+      "locator": "complete square-matrix shape check:L26-L39",
+      "revision": "de7f46657d676f25da27ebd4807f9099598ec061",
+      "sha256": "37fae4093569446091a874c816a6a7326d02eacc09d4abb6f45f79d27e0816f3",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pyRiemann/pyRiemann/blob/de7f46657d676f25da27ebd4807f9099598ec061/pyriemann/geometry/test.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors（项目README与setup列Alexandre Barachant，LICENSE为2015–2024作者BSD3）；源码归引D.E. Tyler1987与Ollila/Tyler/Koivunen/Poor2012等。另引NumPy维护者的数学API合同；原文和市场数据权利另审。",
+      "id": "harvest-source-7d21a5528c378d1d28f46126",
+      "license": "BSD-3-Clause",
+      "locator": "eigh lower triangle and ordered orthonormal eigensystem:L1485-L1563; selected eigh implementation return:L1609-L1630; matrix_norm defaults and norm delegation:L3414-L3473; Frobenius sum-of-squares matrix norm return:L2814-L2835",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "40d795507d435d07bb5f9620a7e2d5f56d6d37bb1bc1b84c5c841b44d3d8257d",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/numpy/linalg/_linalg.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "pyRiemann authors（项目README与setup列Alexandre Barachant，LICENSE为2015–2024作者BSD3）；源码归引D.E. Tyler1987与Ollila/Tyler/Koivunen/Poor2012等。另引NumPy维护者的数学API合同；原文和市场数据权利另审。",
+      "id": "harvest-source-2ba9c9fa57c4e2708e63a8fd",
+      "license": "BSD-3-Clause",
+      "locator": "complete NumPy BSD3 license:L1-L30",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "01fb016849aa427edb1bbbbd55f91c26ca6cadb32a5b20e7f000655dd05b0760",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

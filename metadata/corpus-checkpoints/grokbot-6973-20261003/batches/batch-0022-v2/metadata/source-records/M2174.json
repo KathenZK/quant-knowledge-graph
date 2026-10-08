@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2174",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2174,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "6f7e217c4d23caab7b6e9ac527363d1856a02082388544c830fb0fdb113bd2ad",
+    "rule_sha256": "7b5d01af9e552a2dd3eb952c2b15104a33678edbb38664ff6b31bfc203df07e2"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2174",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2174"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/MarketChyperHyperStrategy/MarketChyperHyperStrategy.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（MarketChyperHyperStrategy.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区MarketChyperHyperStrategy：1h，按ADX趋势加权WaveTrend超卖上穿与RSI看涨背离，总分达阈值做多；对称卖侧；止损约−12.4%，追踪止损开"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区MarketChyperHyperStrategy；1h）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区MarketChyperHyperStrategy：1h，按ADX趋势加权WaveTrend超卖上穿与RSI看涨背离，总分达阈值做多；对称卖侧；止损约−12.4%，追踪止损开"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/MarketChyperHyperStrategy/MarketChyperHyperStrategy.py以文件头 buy_params/sell_params 为准（三向交易开关默认 True）。timeframe=1h；stoploss=−0.12447；minimal_roi约0/238/846/1834分钟对应23.733%/20.624%/8.939%/0；trailing_stop=True，positive≈0.01658，offset≈0.10224且only_offset_is_reached=True。趋势：adx>20且+DI>−DI为upwards；adx>20且+DI<−DI为downwards；adx<20为sideways。做多：对应趋势下 wtCrossUp 且 wt2≤oslevel（up/−43、side/−28、down/−37）计入 wavetrend 权重（91/5/96），且 bullish_div 且 rsi≤div阈值（93/45/79）计入背离权重（84/35/50）；total_buy_signal_strength≥所需（up/25、side/80、down/70）。卖侧按 sell_params 的 oblevel 与权重阈值对称（细节以源码 populate_sell_trend 为准）。提出日期未知。 不是纯WaveTrend交叉：本条是1h MarketChyper，ADX加权WaveTrend超卖上穿与RSI看涨背离总分达阈值。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

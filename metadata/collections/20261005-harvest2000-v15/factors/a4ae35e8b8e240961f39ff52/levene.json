@@ -1,0 +1,174 @@
+{
+  "economic_basis": {
+    "hypothesis": "先度量各组观测离本组中心有多远，再比较这些绝对偏差的组间与组内离散程度。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "所有输入组的全部观测与组标签均已发布后才能获得本次统计量；金融输入、窗口和发布时间另行固定。未来标签只能在其实现后用于事后诊断；不把整窗输出回填到窗内早期。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审普通NumPy一维float64有限数组，固定axis=0、无掩码、无缺值。默认center=median，偶数个数取两中心值平均；center=mean使用本组平均。 trimmed路径仅在估计中心时调用trim_mean：q=int(α*n_i)，普通NumPy用partition找到相应次序区间，取去掉两端后的均值。 该固定版本不会把尾端观测从之后的Levene计算中删除：Nis在原samples上计数，Zijs也用原samples减截尾中心。其它版本若先裁掉整组尾部，是来源实现差异，不能混用。 对原始组内绝对偏差计算均值，按组大小求整体均值；组间平方离差乘N−k，组内平方离差乘k−1再相除。所有中心选项、Brown–Forsythe相关称呼和p值合为一个族。 边界：两个点围绕本组中位数的绝对偏差相等，因此多组各只有2点也可能分母0；不能以n_i>=2推断必然有效。 默认median与mean、trimmed属于同一中心选择族。trimmed在这里保留原始尾部偏差和原n，与直接删除尾部后再做检验不相同。 本条α<.5是清楚的使用域；源码对所有无效α并无完整统一检查，不进入越界partition或空截尾区间。 统计量无方向，不标明哪个组风险更高，也不处理金融自相关、多重检验或选择组标签带来的偏差。 未执行源统计函数、未采集市场数据或回测；只能在全部组样本已知后计算。 输出：一个完整原生统计构造：统计量及附属p值合计一族，参数、组别、窗口、轴与实现端口不拆新增"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "先度量各组观测离本组中心有多远，再比较这些绝对偏差的组间与组内离散程度。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "k>=2组普通有限float64样本x_ij，n_i>=2，N=Σn_i。本组中心c_i默认median(x_i)，mean选算术均值；trimmed选q_i=floor(α n_i)，c_i=mean(x_i排序后去两端各q_i点)，α=proportiontocut默认.05且本合同0<=α<.5。三分支都对原始全部n_i点取z_ij=|x_ij−c_i|；Z_i=mean_j z_ij，Z=Σ_i n_i Z_i/N。W=[(N−k)Σ_i n_i(Z_i−Z)²]/[(k−1)Σ_iΣ_j(z_ij−Z_i)²]，要求分母>0；附属p为F_(k−1,N−k)上尾。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "samples（k>=2 ordinary NumPy 1D finite float64 arrays, each n_i>=2）：各组完整样本，可不同长度；组独立是校准前提，非函数主动检查；nondegeneracy（sum_i sum_j (z_ij-Z_i)^2>0; all intermediates finite）：排除各组绝对偏差全为常数导致的零分母；不是只检查原样本是否非恒定。参数：center：本组中心选择，不另计变体；范围median/mean/trimmed；源码默认median；proportiontocut：仅估计中心时每端去floor(alpha*n_i)点；之后仍使用全样本；范围research 0<=alpha<0.5; used only for trimmed center；源码默认0.05；axis：本合同逐个完整一维样本；多轴与广播不增加条目；范围reviewed 1D arrays with axis=0；源码默认0；nan_policy：源码默认传播NaN；本条排除缺值，不能把缺值当零；范围propagate/omit/raise in source; reviewed finite input；源码默认propagate；keepdims：标量统计量与其附属p值；范围reviewed False；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "scipy/scipy",
+  "lab": null,
+  "missing_information": [
+    "未执行来源算法、未回测、未冻结数值运行环境",
+    "金融输入、市场、窗口、组标签生成/PIT发布时间缺失",
+    "p值在金融序列下的校准和多重检验未审",
+    "不证明收益方向、经济独立性或商业许可"
+  ],
+  "name": "组中心绝对偏差方差分析的 Levene 统计量",
+  "native_source_id": "levene",
+  "one_line": "先度量各组观测离本组中心有多远，再比较这些绝对偏差的组间与组内离散程度。",
+  "record_id": "levene",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_morestats.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-701f1f6dbf5d9baab9f7ceac",
+      "license": "BSD-3-Clause",
+      "locator": "signature, Levene/Brown-Forsythe references and full center/deviation/F path:L3276-L3452",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "16149a4eec5c1005a120d400b8c34852e0d29037436bed20e99a543b679679ca",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_morestats.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-dcaa4b2ca5e08690e90c3e75",
+      "license": "BSD-3-Clause",
+      "locator": "tail probability helper:L1559-L1575; Chi-square wrapper:L11246-L11259; F-distribution wrapper:L11299-L11310; trim_mean complete selected finite NumPy path:L3660-L3763",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "f83fbd7a76afa61a865820917184eabd67d5ebc04cde4db102ba1ba86e94d0cb",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-bbbecde791dfaaebacee469f",
+      "license": "BSD-3-Clause",
+      "locator": "1D input, defaults, finite path, paired NaN policy:L433-L620; factory defaults:L365-L370; ordinary 1D result return:L621-L623",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "a1650feb6cfcf6f9a1c764c824e725b39f039a2e19001fb60f48f88c354d102f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_axis_nan_policy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-8b75a55d87853f7f61280e73",
+      "license": "BSD-3-Clause",
+      "locator": "ordinary-array sample counts and masks:L677-L693",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "14dbc9a53b4f6bb8dffe8fb302574fed5a522b619ce15696b1e29766d81b238c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_array_api.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-088c1d9c7042eaaa4ba39300",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_scope:L1-L81",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "6a4d55e53007e0d509dc30f5a8d460c280f0f5bcf2567c910948e7eb23047b10",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

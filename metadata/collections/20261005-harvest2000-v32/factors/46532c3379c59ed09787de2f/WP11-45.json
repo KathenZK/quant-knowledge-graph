@@ -1,0 +1,104 @@
+{
+  "economic_basis": {
+    "hypothesis": "可研究选定模型和参考变量下预测误差相互关联的结构与变化；没有识别真实传染因果、绝对系统损失或交易收益。",
+    "missing": [
+      "未识别真实传染因果、绝对系统损失或交易收益；无模型/数值/经济验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-a9ee8586e71a87819121f4cf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "全部训练窗/创新模型与版本已知后；参数估计可能前视，不能回填训练窗起点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-a9ee8586e71a87819121f4cf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原件是作者在PhiladelphiaFed发布的WP11-45、2011-09-30版本；主式为印刷p6未编号广义方差分解，Table1/印刷p3–4定义方向与汇总。不假称已取2014JournalofEconometrics同字节或所有版本公式等价。 本条定义层以模型的有限MA系数和创新协方差为输入；不是原始价格直接输入的自动估计器。创新必须序列不相关，stationary线性模型及所给系数解释要在研究层确认。原文§3允许不同估计模型，本条没有私补OLS/窗口/滞后选择。 选择约化型MA规范Θ0=I与Σ对角严格正，允许Σ半正定/奇异的有限数学输入；若某Σjj=0则该j标准化未定义，不自动填零、删除或加ridge。半正定是协方差域，不允许任意对称矩阵。 每个h先算Σ传播后的(e_iᵀΘhΣe_j)，逐h平方后求和，再除Σjj及同响应的累计方差V_i；不是先把Θh求长期和再平方。Σjj是方差，不是标准差。原脚注4专指出先前文献σii记号错误，这里保留作者实际σjj。 h0与Θ0=I使V_i>=Σii>0，且g_ii含正项Σii/V_i，所以r_i>0，整表在精确有限实数域定义良好。输入存在奇异但正对角的Σ仍能评价该式，不能把模型可识别/金融有效性随之推定。 先得到g再按每一行的全部N列归一，含own对角列。相关创新下不同j的一次冲击条件化并非同时正交冲击，g行和一般不是1；P行和1是后加规范，不能把P说成一套已经识别的互斥结构冲击真实因果比例。 方向P_ij为j来源到i接收。from是行的非对角和，to是列的非对角和；net_i=to−from，pairnet_ij=P_ji−P_ij。不能看行号就反转经济方向。原印刷p9中nodej的to-degree符号写δ_i，按明确列求和公式/前文方向解释，保留排版索引不齐。 total除N不是N(N−1)，因全矩阵行归一后的总份额为N；from≤1，to≤N−1且不必≤1，net可负，总net=0。原p9给to支持[0,N]为宽界，不能照抄为各to概率。 在Σ半正定域，Cauchy–Schwarz给每项(e_iΘhΣe_j)²<=Σjj·e_iΘhΣΘhᵀe_i，因此0<=g_ij<=1；行归一后P非负。P丢失符号效应，正负相关/冲击响应可有相同平方份额；不等同方向性收益符号。 H1时g_ij=Σij²/(ΣiiΣjj)，即创新相关系数平方；P再行归一。这是同族退化与已有相关矩阵的精确关系，H或归一参数不计新。一般H保留逐h的动态响应信息，不能以H1退化断言全域只是改Pearson参数。 只对同一变量重标签、同步置换所有Θh与Σ时P等变，故不依递归排序；不是任意正交旋转资产组合都不改变输出。改变参考资产集合/采样频率/变量定义/预测期H会改变归一及模型，原§3明确不应期待鲁棒不变。 原§2.3指出识别假设仍存在，脚注2说明正态创新背景；有限公式本身可评价，不证明真实条件冲击的高斯解释、外生性、因果或系统性风险有效性。相关共同冲击可产生正offdiagonal，即使没有跨滞后Granger预测作用。 与已有Hasbrouck共同永久份额的精确扩维归约及同长期摘要不同有限期表的两模型反例均附报告。前者证明共享方差归属核，后者说明现有原生ψ/Ω合同不含完整有限期动态目标。本条提名原作者整体连接构造，是否新增由独审裁定，不能按矩阵每坐标或简单聚合凑数。 原文§3.2的H12天是本篇实证例，非通用参数默认；不把Basel历史说明写成当前法规。滚动样本、估计滞后、企业池及对数波动数据均未采集；本条无该实证结果复现。 只使用窗末已知模型和数据版本；若全样本拟合Θ/Σ再回填早期连接度，产生前视。金融发布/修订、对象身份、时间对齐、估计不确定性和数值实现均MISSING。 边界：N>=2,H为显式正整数；finite模型系数、ΣPSD且diag>0。零方差源、非PSD、缺失或无穷未定义，不填零修复。 允许正对角奇异Σ是本数学公式的有效域，不宣称任何VAR估计器/Cholesky程序能运行；Hasbrouck扩维关系仅在Σ正定子域。 g各列来自不同条件冲击规范，不构成共同正交分解；P行归一只是该来源定义，非结构因果真值。 H1是归一相关平方关系，不单计；Σ对角且全部Θh对角则offdiagonal与total为0，但0不等于系统无风险。 方向/符号/单位必须保留：行受/列发，pairnet从i发−收；总数未乘100，to可大于1。 原来源normality/模型识别/参考宇宙/采样间隔并非已由有限公式检验；无金融推断或收益证明。 完整矩阵/聚合/H/变量坐标/识别实现都只一族；不把network degree或既有Cholesky另计。 未收复现代码、未运行估计器/算法/市场回测。发布页allrightsreserved、PDFfreeofcharge不授予开放或商业使用权。 输出：P完整有向连接表及同族from/to/net/pairnet/total，g作为中间输出；不拆独立因子，无交易目标。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-a9ee8586e71a87819121f4cf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可研究选定模型和参考变量下预测误差相互关联的结构与变化；没有识别真实传染因果、绝对系统损失或交易收益。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-a9ee8586e71a87819121f4cf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给N>=2、H>=1，有限实MA系数Θ_0..Θ_(H−1)∈R^(N×N)，所选约化型合同Θ0=I；Σ为有限实对称半正定创新协方差，Σjj>0。V_i=Σ_(h=0..H−1)e_iᵀΘ_hΣΘ_hᵀe_i。g_ij(H)=[Σ_(h=0..H−1)(e_iᵀΘ_hΣe_j)²]/[Σjj V_i]。令r_i=Σ_jg_ij，P_ij=g_ij/r_i。完整有向连接表用P作为N×N内块，from_i=Σ_(j≠i)P_ij，to_i=Σ_(j≠i)P_ji，net_i=to_i−from_i，net_(i,j)=P_ji−P_ij，total=(1/N)Σ_(i≠j)P_ij。所有这些坐标/摘要是一个广义FEVD连接表族；份额以0–1小数为单位而非默认乘100。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-a9ee8586e71a87819121f4cf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Theta（H finite real N-by-N arrays;N>=2;Theta0=identity）：约化型MA创新响应系数；不由本记录自动从价格拟合，需模型身份/时点/单位一致。；Sigma（finite real symmetricpositive-semidefinite N-by-N matrix withstrictlypositivediagonal）：同一模型的序列不相关创新协方差，不是任意收益样本协方差或投资风险权重。。参数：H：预测期使用h0..H−1的平方响应累积。；范围finite positiveinteger;paperexample12days isnotuniversaldefault；来源默认None；选定explicit integer>=1；normalization：P是规范后的份额；不能只归一非对角或把它与未归一g混用。；范围selectedsourcegeneralizedrow-normalization；来源默认None；选定normalizeeachentireg-rowincludingdiagonal"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-a9ee8586e71a87819121f4cf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "完整广义FEVD连接表一族；模型估计与经济识别分开，不按to/from/net/total或H拆数。 作为外部已固定动态模型的诊断特征；金融变量、模型估计、信息时点、因果解释及收益验证均须另行固定。"
+    }
+  },
+  "identity_namespace": "philadelphiafed/working-papers",
+  "lab": null,
+  "missing_information": [
+    "实际金融变量池、时间频率/PIT/波动代理/创新估计未知",
+    "模型阶次/拟合器/样本窗/数值精度和依赖未冻结",
+    "normality/结构识别/稳定性/不确定性未验证",
+    "原论文许可/数据商用权利REVIEW_REQUIRED"
+  ],
+  "name": "广义预测误差方差的有向连接表",
+  "native_source_id": "WP11-45",
+  "one_line": "将给定多变量动态模型的创新影响转为有限期方差份额，再按行归一构成发送、接收和整体连接表。",
+  "record_id": "WP11-45",
+  "relations": [],
+  "rights": {
+    "derived_results": "SOURCE_DESCRIPTION_REVIEWED；NOT_EXECUTED/NOT_TESTED；商业使用REVIEW_REQUIRED。",
+    "metadata": "自撰中文公式、边界与来源摘要。原PDF/HTML/图/全文均不公开复制；保留作者归属、2011原版本、未知论文许可和独立市场数据权利。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.philadelphiafed.org/-/media/frbp/assets/working-papers/2011/wp11-45.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Francis X.Diebold andKamilYilmaz,PhiladelphiaFed WorkingPaper11-45,September30,2011. Chinese metadata selfauthored.",
+      "id": "harvest-source-a9ee8586e71a87819121f4cf",
+      "license": "UNKNOWN_NO_OPEN_LICENSE_VERIFIED",
+      "locator": "Original September30,2011 WP11-45: physicalp5 Table1 directions,p6 summaries,p8 generalizedFEVD androw normalization/footnote4; p4,7,9-13 interpretation andmodel boundaries. Physicalp1-2 identity/rights. Exact native text/page range andoriginal scale-to1500 PNG lineage retained.",
+      "revision": "PhiladelphiaFed WorkingPaper11-45;September30,2011 exact38-pageauthorworkingpaper;notasserted2014journalbyteversion",
+      "sha256": "00f7835b91151ddb8c01fc4e88fe4bc39ac4af18aba7ab2470fcfdbbacb8fe7d",
+      "supports": [
+        "原工作论文完整广义有限期FEVD连接表；只给定模型定义，不批准VAR估计/因果解释/实证复现"
+      ],
+      "url": "https://www.philadelphiafed.org/-/media/frbp/assets/working-papers/2011/wp11-45.pdf",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Francis X.Diebold andKamilYilmaz,PhiladelphiaFed WorkingPaper11-45,September30,2011. Chinese metadata selfauthored.",
+      "id": "harvest-source-25fd273a73644ebf660a6afb",
+      "license": "ALL_RIGHTS_RESERVED_WEBSITE_NOTICE_NOT_PAPER_PERMISSION",
+      "locator": "Original HTML L302-334 author/work identity,L385-393 exactPDF link,L490-496 websitecopyright; no formula or open-license inference",
+      "revision": "HTTP snapshot2026-10-05 WP11-45 authorlisting anddownloadlink",
+      "sha256": "5a1874b5b54f7602659b785a91d04efde5f26a9a810f597d1716ee3a03152302",
+      "supports": [
+        "工作论文作者/版本身份和原PDF链接；网站版权不是论文开放许可"
+      ],
+      "url": "https://www.philadelphiafed.org/the-economy/macroeconomics/on-the-network-topology-of-variance-decompositions-measuring-the-connectedness-of-financial-firms",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

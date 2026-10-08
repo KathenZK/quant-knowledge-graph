@@ -1,0 +1,135 @@
+{
+  "economic_basis": {
+    "hypothesis": "若多期预测与成本刻画可靠，同时考虑未来配置变化可能减少不必要调仓；已实现回撤提高风险厌恶可能在亏损扩大时减险。该说法仅是构造假说；离散交易、有限epsilon和估计误差使Dmax不构成已证实的硬损失保证。",
+    "missing": [
+      "未运行、未回测；论文模型最优性和实证不是仓库验收结论。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi:10.1007/s10479-018-2947-3",
+  "lab": null,
+  "missing_information": [
+    "只审§2配置构造；HMM/EM预测器及实证绩效不纳入审核结论，来源明确预测与配置可分离。",
+    "资产池、当前权重/NAV及峰值初始化、未来H期预测的时点、H、gamma0/Dmax/epsilon、惩罚系数、头寸与杠杆界限需研究前冻结。",
+    "回撤反馈来自真实已实现状态且规划期gamma固定，不等于逐未来情景约束回撤；epsilon钳位后不是达到Dmax即全平的硬保护。",
+    "Eq2相邻计划权重之差属于优化近似；真实价格漂移、手续费、成交到NAV/权重的账户递推未给，不能声称完成自融资或回测验收。",
+    "选定Eq7交易罚与Eq9持仓罚，不把Eq8借券、其他成本幂次、HMM、H=1或参数/资产变体拆新记录。",
+    "未运行求解、训练、模拟或回测，未验证经济效果、数值容差和失败退路。",
+    "作者Stanford公开个人期刊副本，PDF页1为Springer2018版权；未发现适用于原件的开放许可。只提供自撰定义与来源定位，商用REVIEW_REQUIRED。"
+  ],
+  "name": "MPC Drawdown：回撤反馈风险厌恶的多期弹性网配置",
+  "native_source_id": "multiperiod_portfolio_drawdown",
+  "one_line": "用未来多期收益及风险预测规划一串带交易与持仓惩罚的权重，只执行第一步；按已实现净值回撤提高风险厌恶，再更新预测并重算。",
+  "record_id": "multiperiod_portfolio_drawdown",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、优化器或回测。",
+    "metadata": "作者原生文件/DOI身份、定位及自撰中文规则；不发布论文原文、图像、源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://web.stanford.edu/~boyd/papers/multiperiod_portfolio_drawdown.html"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Peter Nystrup, Stephen Boyd, Erik Lindström and Henrik Madsen, Multi-period portfolio selection with drawdown control, Annals of Operations Research282,2019,245–271, DOI10.1007/s10479-018-2947-3. Stanford author-linked personal copy. Chinese paraphrase by catalog curator.",
+      "id": "nystrup-boyd-multiperiod-drawdown-pdf",
+      "license": "Author Stanford page links its personal journal copy. PDFpage1 states Springer2018copyright; no open redistribution license established. No source text/images redistributed; commercial use REVIEW_REQUIRED.",
+      "locator": "Physical pp4–9 §2 Eq2–11 and Algorithm1; p3 explicitly separates forecasts from allocation; p1 authors/DOI/copyright. Holding penaltyEq9 selected; Eq8 not added. Lines use derived pdftotext with visual formulas.",
+      "revision": "Annals of Operations Research282,2019,pp245–271; published online20June2018; author-hosted PDF sha256:c64051ea38a1e6074c02ecbdc64379999e4480f728290156d2ff4191982c37df",
+      "sha256": "c64051ea38a1e6074c02ecbdc64379999e4480f728290156d2ff4191982c37df",
+      "supports": [
+        "多期权重优化、回撤风险偏好反馈、交易/持仓罚与首步执行递推"
+      ],
+      "url": "https://web.stanford.edu/~boyd/papers/pdf/multiperiod_portfolio_drawdown.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_UNIVERSITY_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Stephen Boyd Stanford faculty publication page.",
+      "id": "mpcdd-stanford-author-page",
+      "license": "Publisher/institution page; no permission inferred from public accessibility. Fulltext not redistributed.",
+      "locator": "Author HTML title, fourauthors, 2019journal citation and direct manuscriptPDF link; abstract separates prediction/control.",
+      "revision": "HTTP snapshot 2026-10-04T21:08:51.288482+00:00; sha256:9cb30d2adf1b8e163653b8397b7184a94cee1b5386078f3cf6114d5a356489d2",
+      "sha256": "9cb30d2adf1b8e163653b8397b7184a94cee1b5386078f3cf6114d5a356489d2",
+      "supports": [
+        "作者、题名、期刊版本及许可缺项定位"
+      ],
+      "url": "https://web.stanford.edu/~boyd/papers/multiperiod_portfolio_drawdown.html",
+      "verification": "FETCHED_PINNED_AUTHOR_AFFILIATED_BIBLIOGRAPHIC_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "nystrup-boyd-multiperiod-drawdown-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "n个风险资产加第n+1项现金，w_t为各项金额占当前正组合净值V_t的比例，合计1；负值表示卖空。收益输入与协方差使用相应一期的无量纲收益单位，不能套用GPDT的份额/价格差协方差。本条是§2一般配置函数，不冻结论文另章指数样本为实际可交易品种。"
+    },
+    "cost": {
+      "evidence": [
+        "nystrup-boyd-multiperiod-drawdown-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "目标内T(Δw)=κ1^T|Δw|+κ2^T(Δw)^2及C(w)=ρ1^T|w|+ρ2^T*w^2均是权重单位的惩罚，系数按每期给定，须与收益目标同单位。来源允许它们代表实际成本估计或抗估计误差的正则化，不能把优化罚直接宣称为已实测费用。κ1对应比例换手、κ2限制交易规模，ρ项作用于持仓。Eq8另给借券费模型但本条未混入；真实佣金、税、借券/现金融资、价差和价格冲击校准仍缺。短规划问题Eq2明确忽略Eq1折现，不能额外乘eta。"
+    },
+    "entry": {
+      "evidence": [
+        "nystrup-boyd-multiperiod-drawdown-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "优化各未来期权重并约束1^T*w_tau=1、−w_min<=w_tau<=w_max、||w_tau[1:n]||_1<=Lmax；边界向量非负，保证可行的数值由调用者事先给定。求解后只采用首个目标w*_(t+1)，当前目标差为w*_(t+1)−w_t：正分量增持、负分量减持；预测后面H−1期的计划不提前执行。没有价格阈值或指标交叉入口。"
+    },
+    "execution_time": {
+      "evidence": [
+        "nystrup-boyd-multiperiod-drawdown-pdf"
+      ],
+      "status": "MISSING",
+      "text": "已给顺序是观察新数据和账户状态→更新预测→求H期权重→执行首个目标差→下一期再观测、重算；全部预测用形成时t的信息。实际收盘或次开盘成交、报价、下单与求解延迟、成交份额舍入、执行失败和现金成本会计未闭合，因此真实成交时点为MISSING，未运行优化器/源码/回测。"
+    },
+    "exit": {
+      "evidence": [
+        "nystrup-boyd-multiperiod-drawdown-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每次采用新求得的首期权重；目标降低则减持，目标归零则不再配置该项。没有独立止盈、止损或固定持有天数。接近回撤限会通过gamma提高风险罚，但epsilon钳位使gamma有限；不能把D>=Dmax自动写成全现金或强制清仓。未来各期规划不是已承诺交易指令。终止投资时如何清算未定义。"
+    },
+    "position": {
+      "evidence": [
+        "nystrup-boyd-multiperiod-drawdown-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "权重含现金且合计1，满足给定逐项多/空上限与仅计算前n个风险资产的毛杠杆帽；不能把现金绝对权重加入Eq11左边。w_min=0是来源说明的仅多特例，不默认所有版本都仅多。当前w_t是已知账户权重，不是优化变量；后续计划在数学优化中通过相邻w之差计罚。真实价格漂移、成本扣款到净值/权重的会计更新需下游执行合同，不把优化中的计划差直接当完整自融资订单账本。"
+    },
+    "risk": {
+      "evidence": [
+        "nystrup-boyd-multiperiod-drawdown-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "风险函数严格取w^TΣw，前面没有1/2。当前真实回撤通过gamma0*Dmax/max(cushion,epsilon)产生状态反馈；只用实现峰值，不预测未来峰值。正半定协方差、非负惩罚向量和凸且可行的约束是本选定凸问题条件；原文没有给不可行/奇异输入、并列解、容差和求解失败的生产退路。有限epsilon与离散执行不保证Dmax永不突破；原文承认可能被困在回撤限附近，不能自行重置峰值或补外部资金。"
+    },
+    "signal": {
+      "evidence": [
+        "nystrup-boyd-multiperiod-drawdown-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "保存M_t=max_(s<=t)V_s、D_t=1-V_t/M_t，初始V0=M0。给定gamma0>0、Dmax∈(0,1)及小正epsilon，按实际实现式gamma_t=gamma0*Dmax/max(Dmax-D_t,epsilon)；规划内全部gamma_tau保持当前gamma_t，不用预测回撤更新。以当前w_t为固定输入、未来w_(t+1)...w_(t+H)为变量，最大化Σ_tau[mu_hat_(tau|t)^T*w_tau−gamma_t*w_tau^T*Sigma_hat_(tau|t)*w_tau−T(w_tau−w_(tau−1))−C(w_tau)]。T=κ1^T|Δw|+κ2^T(Δw)^2，C=ρ1^T|w|+ρ2^T*w^2，绝对值/平方逐元素。只选Eq9持仓惩罚，未同时加Eq8借券项。"
+    },
+    "timeframe": {
+      "evidence": [
+        "nystrup-boyd-multiperiod-drawdown-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "源§2.1以每日重新决策说明流程，规划H个未来期间；H与投资总期限是两回事。每次更新输入、预测未来H期、求整串权重，只执行首步，下一个决策日重算。本条取H>=2的多期构造，H=1单期退化不新增；未强制用演示H=15或改变日历频率计数。"
+    },
+    "universe": {
+      "evidence": [
+        "nystrup-boyd-multiperiod-drawdown-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "风险资产池、当前净值V_t、运行峰值M_t和当前实际权重w_t由调用者给定，未规定动态选券。来源明确把预测模型与配置分开、允许替换HMM；本条只接收t时点形成的未来H期均值mu_hat_(tau|t)、协方差Sigma_hat_(tau|t)和成本/约束参数，不借未来实现值。HMM估计、金融数据供应商及数据时点不属于本条完成的预测输入合同。"
+    }
+  }
+}

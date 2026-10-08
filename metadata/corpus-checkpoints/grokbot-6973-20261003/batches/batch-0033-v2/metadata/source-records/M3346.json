@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3346",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3300,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "43671791f55db4d9466aa80206944552ee569244c778297ce02a5f7d26bc7a91",
+    "rule_sha256": "7b48d441c673109af6bc775f90eaad0d2a134d19833f5a1b6715ad58c07d0885"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3346",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3346"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/CustomBuyingPowerModelAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY小时；自定义买力（目标量向下取整至100倍数且始终 sufficiency=True、维保=0）；空仓时市价买 calculate_order_quantity(1)×10（Lean CustomBuyingPowerModel）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY小时；自定义买力（目标量向下取整至100倍数且始终 sufficiency=True、维保=0）；空仓时市价买 calculate_order_quantity(1)×10（Lean CustomBuyingPowerModel）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `CustomBuyingPowerModelAlgorithm.py`。`add_equity(\"SPY\",Hour)` 并 `set_buying_power_model(CustomBuyingPowerModel)`：最大目标量 `floor(qty/100)*100`；`has_sufficient_buying_power_for_order` 恒 True；维护保证金与预留买力为 0。`on_data`：已投资则返回；否则 `quantity=calculate_order_quantity(spy,1)`（须为100倍数）→ `market_order(spy, quantity*10)`。不是 CustomModels 日阈50%核（W534），也不是仅部分成交核。提出日期未知。自定义买力 sufficiency=True + 空仓市价买 calculate_order_quantity(1)×10 ≠ CustomModels日阈50%（M3291）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

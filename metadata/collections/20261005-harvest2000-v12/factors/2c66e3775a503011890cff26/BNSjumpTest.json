@@ -1,0 +1,200 @@
+{
+  "economic_basis": {
+    "hypothesis": "把总平方变动与相邻绝对收益乘积的差，按三幂四次变差估计进行标准化，衡量单个完整窗口偏离连续无跳跃模型的程度。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-387fb5b1f1c55b6b0f38020a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-387fb5b1f1c55b6b0f38020a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审单资产单个完整窗口的numeric vector；输入已是对数收益，makeReturns=FALSE、alignBy=alignPeriod=NULL，不插首零、不排序、不按日自动拆分。N就是向量长度。 rRVar直接列平方和；hatIV选择BV时调用RBPVar，后者对相邻绝对收益乘积乘π/2，无N/(N−1)修正。 hatIQ选择TP时调用rTPQuar：先取绝对收益，再逐连续3项相乘，输出N−2项；helper之后用输出行数加2恢复原N。计算N²/(N−2)归一的4/3次幂和。 tt(\"BV\")返回π²/4+π−3，主函数再减2，因此分母系数是π²/4+π−5；不能直接把tt返回值当最终分母。按原代码不对RV−BV截负。 只解释原生z/critical.value/pvalue三个字段的关系，临界值选项不改变核心z。ratio、max修正、logTransform及其它IV/IQ估计器属于同族但不纳入本次已审计算路径。 边界：BV可超过RV，因此z可为负；不截为0，也不把任一负z称为跳跃不存在。全零或没有非零三连乘积时IQ=0，源会产生Inf/NaN而无统一fallback。 rRVar、RBPVar及三幂平方和不使用na.rm；缺值会传播。N<3时滚动C++维度和R分母不满足合同，不能当自动缺失返回。 这是完整日/窗口的整合统计量，没有年化或去均值；三幂标准化只是本条内部组件，不额外登记为新因子。 源码返回原生统计量、双侧标准正态尾面积和上下临界点；它们是同一诊断构造的输出，不按方向、p值、样本窗口或参数选项另计。没有交易入出场、仓位或收益方向。 alpha虽然文档称显著性水平，实际用于qnorm(1−alpha,alpha)：原生默认0.975对应中央95%临界区间，双侧拒绝阈值为0.05。本文要求0.5<alpha<1；源入口没有统一检查该研究约束。 标准正态近似来自无跳跃的连续价格过程假设及高频极限，有限样本/非同步/微观结构噪声下的校准没有在本库验证。输出不是某根收益发生真实跳跃的标签，也不是价格方向预测。 缺失/无穷值、跨日拆分、data.table/xts批处理、重采样和非默认估计器分支不在本次已审合同内；这些分支存在不代表已完成逐项语义验证。R/zoo/RcppArmadillo及基础数学函数的运行环境未冻结执行。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-387fb5b1f1c55b6b0f38020a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把总平方变动与相邻绝对收益乘积的差，按三幂四次变差估计进行标准化，衡量单个完整窗口偏离连续无跳跃模型的程度。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-387fb5b1f1c55b6b0f38020a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "设N>=3项有限等时距对数收益r_i。RV=Σ_(i=1..N)r_i²；BV=(π/2)Σ_(i=2..N)|r_(i−1)r_i|。令μ_(4/3)=2^(2/3)Γ(7/6)/Γ(1/2)，IQ=[N²/(N−2)]μ_(4/3)^(-3)Σ_(i=1..N−2)|r_i r_(i+1) r_(i+2)|^(4/3)。已审默认linear、logTransform=FALSE、max=FALSE、IVestimator=\"BV\"、IQestimator=\"TP\"：z=√N(RV−BV)/√[(π²/4+π−5)IQ]。临界点为[Φ^(-1)(1−alpha),Φ^(-1)(alpha)]，p=2Φ(−|z|)，Φ为标准正态CDF。要求IQ>0且所有中间运算有限。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-387fb5b1f1c55b6b0f38020a"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "rData（finite real numeric vector of N>=3 ordered equally spaced intraday log returns, one asset and one complete window）：自然对数收益，完整频率/交易日与数据发布时点须另冻结；入口不验证等时距或完整交易日。；nondegenerate_quarticity（IQ>0 and all intermediate values finite）：至少有连续三项非零收益使三幂和为正；这是研究有效域检查，不是上游已经提供的保护。。参数：IVestimator：双幂连续波动估计；范围only source default BV reviewed；源码默认BV；IQestimator：三幂四次变差标准化；范围only source default TP reviewed；源码默认TP；type：总方差减连续方差；范围only linear reviewed；源码默认linear；logTransform：不用方差的对数变换；范围only FALSE reviewed；源码默认False；max：不用max标准误修正；范围only FALSE reviewed；源码默认False；alignBy：不重采样；范围only NULL reviewed；源码默认None；alignPeriod：不重采样；范围only NULL reviewed；源码默认None；makeReturns：已有收益直接输入；范围only FALSE reviewed；源码默认False；alpha：上下正态分位点的上端概率，不是直接双侧显著性水平；范围research scalar .5<alpha<1；源码默认0.975"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791",
+        "harvest-source-199eefbd4c9a56cd77a78f1d",
+        "harvest-source-2f821f16db9cc7f4b73af0c0",
+        "harvest-source-07223db91ef76f7502caf5a2",
+        "harvest-source-387fb5b1f1c55b6b0f38020a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "jonathancornelissen/highfrequency",
+  "lab": null,
+  "missing_information": [
+    "原论文全文与该实现其它分支的等价性未审核",
+    "市场采样网格、完整日/窗口、异常报价/停牌处理和PIT未冻结",
+    "有限样本零假设校准及R数值环境未执行验证",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "已实现方差与双幂方差之差的跳跃诊断",
+  "native_source_id": "BNSjumpTest",
+  "one_line": "把总平方变动与相邻绝对收益乘积的差，按三幂四次变差估计进行标准化，衡量单个完整窗口偏离连续无跳跃模型的程度。",
+  "record_id": "BNSjumpTest",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Barndorff-Nielsen/Shephard (2006)及Huang/Tauchen (2005)等。本条审维护者固定实现，未声称与原论文所有有限样本选项逐式等价。",
+      "id": "harvest-source-1028bcab3647a0fae74441ed",
+      "license": "GPL-2.0-or-later",
+      "locator": "package identity, maintainers, GPL >=2 and original package paper:L1-L24; unfrozen runtime dependencies:L26-L45",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d8d98b0df5ea59c9488f6af78a6246dbbbabb593d56ef92e84eb7516dadce0b3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Barndorff-Nielsen/Shephard (2006)及Huang/Tauchen (2005)等。本条审维护者固定实现，未声称与原论文所有有限样本选项逐式等价。",
+      "id": "harvest-source-5f01e4e89a90ac43d08c6870",
+      "license": "GPL-2.0-or-later",
+      "locator": "RV defaults and branch gates:L2667-L2673; complete finite numeric/zoo RV square sum:L2705-L2722; tripower signature and type gates:L2760-L2767; complete numeric tripower quarticity helper:L2791-L2809",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "47103e0f8a9f72ae6cdac845655c22a976e2aece49f7bb672302b33338354a32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Barndorff-Nielsen/Shephard (2006)及Huang/Tauchen (2005)等。本条审维护者固定实现，未声称与原论文所有有限样本选项逐式等价。",
+      "id": "harvest-source-b5a2f57468a7eff5e05fd791",
+      "license": "GPL-2.0-or-later",
+      "locator": "complete bipower helper without finite-sample correction:L256-L262",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "5f38e15d48ae103a5e9db0715647b0dbc053e7d08ce67aa8b4e620799989d4e2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/internalRealizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Barndorff-Nielsen/Shephard (2006)及Huang/Tauchen (2005)等。本条审维护者固定实现，未声称与原论文所有有限样本选项逐式等价。",
+      "id": "harvest-source-199eefbd4c9a56cd77a78f1d",
+      "license": "GPL-2.0-or-later",
+      "locator": "native matrix runtime dependency:L1-L3; complete rolling product helper:L206-L216",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "e73731f67e6cf6c30b78a43da3efdadd95a1d38abac13bb670126e846f59c0b2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/src/internals.cpp",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Barndorff-Nielsen/Shephard (2006)及Huang/Tauchen (2005)等。本条审维护者固定实现，未声称与原论文所有有限样本选项逐式等价。",
+      "id": "harvest-source-2f821f16db9cc7f4b73af0c0",
+      "license": "GPL-2.0-or-later",
+      "locator": "generated native rolling-product call:L82-L84",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "3930bffdcaf6ab6ef070bb1c5682be16e4907cb185db4f89f00e919361e33f4e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/RcppExports.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Barndorff-Nielsen/Shephard (2006)及Huang/Tauchen (2005)等。本条审维护者固定实现，未声称与原论文所有有限样本选项逐式等价。",
+      "id": "harvest-source-07223db91ef76f7502caf5a2",
+      "license": "GPL-2.0-or-later",
+      "locator": "native null hypothesis equal-spacing specification and original attribution:L198-L262; signature defaults and xts gate:L271-L275; data.table gate:L292-L292; complete reviewed numeric linear path:L317-L350",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d18ba87aeb1ef932e6c74921d3891f0a4b7e6717548ca5a4a6573bc03d68231e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/jumpTests.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "highfrequency实现署名Giang Nguyen、Jonathan Cornelissen、Kris Boudt、Emil Sjoerup；源码归因Barndorff-Nielsen/Shephard (2006)及Huang/Tauchen (2005)等。本条审维护者固定实现，未声称与原论文所有有限样本选项逐式等价。",
+      "id": "harvest-source-387fb5b1f1c55b6b0f38020a",
+      "license": "GPL-2.0-or-later",
+      "locator": "complete native variance and quarticity selectors:L7-L34; theta table including BV constant:L155-L163",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "e5bbc17a046a7ca52964815b3d8b0bfb5257d34142ee2a5fdcd9f7fed463ea59",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasuresInference.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

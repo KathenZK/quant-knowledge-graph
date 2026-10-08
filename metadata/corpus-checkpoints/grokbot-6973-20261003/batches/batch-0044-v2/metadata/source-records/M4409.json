@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4409",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4363,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "4af2a5d2e835f6c805d8b8dca9e7ea05c6072af930c60d86e4ba13fec809a638",
+    "rule_sha256": "51734ea5fb1ba74633670ead9ee3e9c09bea4cd762e411f3b09da9d3ebb51924"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4409",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4409"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://doi.org/10.1093/rfs/hhz069"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Kent Daniel / David Hirshleifer / Lin Sun"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-151/W1619"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Daniel·Hirshleifer·Sun·FIN融资因子：年6月末；剔金融与负账面；市值中位×(1年NSI⊕5年CSI)融资高低；FIN=½(SL+BL)−½(SH+BH)市值加权持至次年6月（DHS FIN·2×3）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2017-12"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Daniel·Hirshleifer·Sun·FIN融资因子：年6月末；剔金融与负账面；市值中位×(1年NSI⊕5年CSI)融资高低；FIN=½(SL+BL)−½(SH+BH)市值加权持至次年6月（DHS FIN·2×3）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Daniel/Hirshleifer/Sun《Short- and Long-Horizon Behavioral Factors》（RFS / NBER w24163）之 **长期误定价融资因子 FIN**。宇宙：NYSE/AMEX/NASDAQ 普通股（share code 10/11），**剔除金融与负账面权益**。每年 **6月末**：按 NYSE 市值中位分小/大；独立构造融资组——**5年复合股票发行 CSI**（Daniel–Titman：5年市值增长对数减5年收益对数）用 NYSE **20%/80%** 分低/中/高；**1年净股票发行 NSI**（Pontiff–Woodgate：同 CSI 但1年且不含现金股息）对回购（NSI<0）用 NYSE 中位分两组、对增发（NSI>0）用 NYSE **30%/70%** 分三组，最负回购→低NSI、最高增发→高NSI、其余→中。综合：两边都高（或缺一边但另一边高）→融资高H；两边都低（或缺一边但另一边低）→融资低L；其余→中M。六个市值加权组合；**FIN=(r_SL+r_BL)/2−(r_SH+r_BH)/2**，持有至次年6月。不是单腿 CompEquIss/NSI OSAP；不是 MGMT 复合误定价。计入美股/ETF。提出日期 2017-12。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "RFS 2020 / NBER w24163 · §1.1 · FIN=avg(low NSI⊕CSI)−avg(high) · size×financing 2×3 VW"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

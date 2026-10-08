@@ -221,6 +221,15 @@ class CatalogRepository:
                     con.execute('UPDATE catalog_origins SET active=0 WHERE owner=?', (owner,))
                     con.execute('UPDATE catalog_edge_origins SET active=0 WHERE owner=?', (owner,))
                     for node in nodes:
+                        if node.get('source_type') == 'RULE_LINK_ONLY':
+                            old = con.execute('SELECT definition_revision FROM catalog_items WHERE entity_id=?', (node['entity_id'],)).fetchone()
+                            if old and old[0] == node['definition_revision']:
+                                # Another strategy may reference the same signal.
+                                # Its link is new evidence; it must not silently
+                                # replace the reference's previously reviewed URL.
+                                con.execute('INSERT INTO catalog_origins VALUES(?,?,1) ON CONFLICT(owner,entity_id) DO UPDATE SET active=1', (owner,node['entity_id']))
+                                con.execute('UPDATE catalog_items SET active=1 WHERE entity_id=?',(node['entity_id'],))
+                                continue
                         self._put(con, node, owner, value if node['kind'] == 'strategy' else {})
                     for e in edges:
                         self._edge(con, e, owner)
@@ -254,6 +263,10 @@ class CatalogRepository:
     def _refresh_lineage(self, con):
         from quantgraph.graph.variation import apply_observed_axes, components, signature
         projections = [json.loads(r[0]) for r in con.execute("SELECT private_payload FROM catalog_items WHERE kind='strategy' AND active=1")]
+        # Source-review candidates and paper models are legitimate catalog
+        # entries, but do not have a parser-derived identity/template contract.
+        projections = [p for p in projections if isinstance(p.get('variant'),dict)
+                       and p['variant'].get('strategy_variant_id') and p['variant'].get('source_native_id')]
         apply_observed_axes(projections)
         ids = {p['variant']['source_native_id']:p['variant']['strategy_variant_id'] for p in projections}
         groups = {}

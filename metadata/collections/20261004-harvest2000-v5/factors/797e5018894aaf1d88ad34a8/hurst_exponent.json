@@ -1,0 +1,168 @@
+{
+  "economic_basis": {
+    "hypothesis": "对多个分段长度的平均重标极差作对数回归，描述尺度变化；不把输出自动认定为真实市场Hurst或可预测性。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f",
+        "harvest-source-ad509e2bcae4f374b40e29d1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f",
+        "harvest-source-ad509e2bcae4f374b40e29d1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码先对全常量输入返回NaN；FEATURES_MIN_SIZE=160，不足160点则警告并返回NaN。尺度来自整数linspace再set去重，并未采用固定几个幂次尺度。 各尺度独立从输入起点分段，按各段自身均值中心化后累积，再取累积路径极差除该段原始序列标准差。np.std没有显式ddof。 对同尺度各段比值作普通均值，不是先汇总所有R/S分子分母。某一段std为0产生非有限值时，会经普通均值使该尺度无效并在后面删除。 按剩余尺度的log-log配对数据拟合带截距直线，只输出斜率；set的遍历顺序没有被排序，但同一对象生成l和Q的对应关系仍一致。不是DFA的线性去趋势残差波动。 边界：只有有限Q_l才保留；源码不检查剩余尺度是否至少2个，全部无效或退化回归可能报错/警告或NaN。 筛选条件是isfinite(Q_l)，并未明确排除Q_l=0导致log10无穷；不能擅自补正为安全值。 尺度参数不是可变函数参数；替换N/尺度/回归方法不拆新增算法族。 经典R/S输出与Hurst、持久性的关系依赖过程模型与样本设计；未提供金融有效性或去趋势稳健性保证。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f",
+        "harvest-source-ad509e2bcae4f374b40e29d1"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对多个分段长度的平均重标极差作对数回归，描述尺度变化；不把输出自动认定为真实市场Hurst或可预测性。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f",
+        "harvest-source-ad509e2bcae4f374b40e29d1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N>=160，尺度集合L=set(linspace(4,floor(N/10),floor(N/2),dtype=int))。每个l将x从起点分成floor(N/l)个无重叠l长段，丢末尾余数。每段b：w_bj=Σ_(k<=j)(x_bk−mean(x_b))，R_b=max_jw_bj−min_jw_bj，S_b=np.std(x_b)，Q_l=mean_b(R_b/S_b)。删除Q_l非有限的尺度；输出np.polyfit(log10(l),log10(Q_l),1)的斜率。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f",
+        "harvest-source-ad509e2bcae4f374b40e29d1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "signal（1D finite nonconstant real numpy ndarray, N>=160, ordered and evenly sampled）：等间隔完整窗口；具体价格/收益/其他观测绑定缺失。。参数：minimum_samples：不足时返回NaN；范围fixed imported constant；源码默认160；minimum_segment：linspace起始尺度；范围fixed native constant；源码默认4；maximum_segment_divisor：最大尺度floor(N/10)；范围fixed native constant；源码默认10；scale_grid_size_divisor：linspace候选点数floor(N/2)，整数再去重；范围fixed native constant；源码默认2"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f",
+        "harvest-source-ad509e2bcae4f374b40e29d1"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "fraunhoferportugal/tsfel",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "NumPy/SciPy/PyWavelets等运行环境未冻结；固定源码调用与完整数值复现是不同状态",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "分段重标极差的对数标度斜率",
+  "native_source_id": "hurst_exponent",
+  "one_line": "对多个分段长度的平均重标极差作对数回归，描述尺度变化；不把输出自动认定为真实市场Hurst或可预测性。",
+  "record_id": "hurst_exponent",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/tsfel/feature_extraction/features.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-69aca4321017f6f302b163db",
+      "license": "BSD-3-Clause",
+      "locator": "hurst_exponent:L1843-L1880; imports and environment boundary:L1-L8",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "8b1270b22219f230648165bcadbd6c7e2a215e1c0a4ee9c0d642310e5a55c6d2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/tsfel/feature_extraction/features.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-e4e516cdc1e2597301bca76f",
+      "license": "BSD-3-Clause",
+      "locator": "compute_rs:L504-L536; imports and environment boundary:L1-L4",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "0053fc891e55939dc54aaedf34bb4de31001e302e13d1b38c3cd29fe6a2819ab",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/tsfel/feature_extraction/features_utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-307e5ae686a88bfe0114b8a0",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L29",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "b8f68990bee0d6c6cfceab3c13f4da6a74ce66db8eacdad89a12614e5f551aed",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-1e00b2abb469b52324fb2765",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_attribution:L1-L48",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "6dab75dcafe1d8f033aafbc53e75f34d47507841849d44bf5b4a5085c0345663",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/AUTHORS.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-33d9503e658fb0c6f0e9d4a7",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_attribution:L1-L177",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "d8cb28567d39a645b558e3679da1933c22441ebbee006aa3eeec035df7f98760",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-ad509e2bcae4f374b40e29d1",
+      "license": "BSD-3-Clause",
+      "locator": "minimum length constant:L1-L1",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "4a1d1ebd7111c95f57aa97e3931edc766fcc938c52f79e16f378b162a5131192",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/tsfel/constants.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

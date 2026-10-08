@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "随持仓时间提高退出门槛可能催促失去动能的头寸离场，但绝对单位与成交时序需要研究，未证明收益。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "polynomic_stop名称不构成挂单止损证据。",
+    "价格单位缩放敏感，仓位百分比不代表账户最大亏损受限。"
+  ],
+  "name": "均线突破与持仓龄平方退出线",
+  "native_source_id": "442646",
+  "one_line": "严格从SMA下方到上方时做多，持仓可见后冻结近期低点并加上持仓棒数的二次项作为条件退出线。",
+  "record_id": "442646",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%A4%9A%E9%A1%B9%E5%BC%8F%E8%BF%BD%E8%B8%AA%E6%AD%A2%E6%8D%9F%E7%AD%96%E7%95%A5Polynomial-Trailing-Stop-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 Alferow；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-442646-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "b50ebf84f62f0965b3556feaa573137a9bf527a204530a727862b2138d6e9264",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%A4%9A%E9%A1%B9%E5%BC%8F%E8%BF%BD%E8%B8%AA%E6%AD%A2%E6%8D%9F%E7%AD%96%E7%95%A5Polynomial-Trailing-Stop-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-442646-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-442646-published-code"
+      ],
+      "status": "MISSING",
+      "text": "源码仅commission_value=0.1，未显式commission_type；不把未冻结单位当作已验证0.1%成本。滑点、点差、持仓费MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-442646-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "C[1]<SMA[1]且C>SMA时entry buy，Pine v4 long=true；前棒等于SMA不算。没有显式空仓条件，未指定pyramiding。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-442646-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v4，先按可见opentrades更新基准/计数，再算hl，最后entry和close；未显式逐tick、收盘成交或成交重算，首次持仓保护与实际订单时序未运行。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-442646-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "hl上穿当前C时close buy。它是比较两条当前bar序列的市场平仓条件，不是strategy.exit(stop=hl)挂单；没有固定目标或最大持有时间。若价格始终增长更快，num增长不保证限时离场。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-442646-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认100%权益、初始资本1000；入口无qty覆盖。仓位不以stop距价格为风险预算。stop在可见持仓第一bar冻结，与信号bar/实际成交价有差别。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-442646-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "0.1×num^2是绝对价格单位，不随ATR、报价比例或合约点值缩放。stop基准用首次看见仓位的当前20棒最低，因此不能称为在信号bar预挂固定止损；出场要求交叉事件，单纯hl>C不是完整条件。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-442646-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "SMA=SMA20(C)，MIN=lowest(L,20)。持久stop初值0、num初值0；可见opentrades从0转非0时stop=当棒MIN。只要opentrades!=0，num逐bar加1；空仓则num=0且stop=当棒MIN。hl=stop+0.1×num^2。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-442646-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-442646-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

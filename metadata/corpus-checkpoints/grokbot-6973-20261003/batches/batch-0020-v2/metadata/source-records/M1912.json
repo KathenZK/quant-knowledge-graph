@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1912",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1912,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e26e9cca069b49dff6df9ba8836656e35ac09cb42e14f01ddf0ee2e1b715d071",
+    "rule_sha256": "b2f77ce6cb1a16f92186ef07f5cbc99facb2d20596c4dd15542d0a2ac52a78b1"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1912",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1912"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/Inverse/Inverse.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（Inverse.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Inverse：1h，Fisher-CCI 上穿−0.42或先下破0.41再上穿，且4h SSL多头与EMA多头过滤做多；Fisher-CCI下穿0.42或−0.34平多；止损−20%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区Inverse；1h）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区Inverse：1h，Fisher-CCI 上穿−0.42或先下破0.41再上穿，且4h SSL多头与EMA多头过滤做多；Fisher-CCI下穿0.42或−0.34平多；止损−20%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/Inverse/Inverse.py以 buy_params/sell_params 为准（load=True）。timeframe=1h，info_timeframe=4h；stoploss=−0.2；minimal_roi={\"0\":100}；trailing_stop=True，positive=0.078，offset=0.174。buy_params：buy_fisher_length=31，buy_fisher_cci_1=−0.42，buy_fisher_cci_2=0.41。sell_params：sell_fisher_cci_1=0.42，sell_fisher_cci_2=−0.34。Fisher-CCI：CCI(length)→×0.1/4→WMA(9)→逆 Fisher。做多（两支或）且过滤：Fisher-CCI 上穿 −0.42，或（近8根内曾下穿 0.41 且当期上穿 0.41）；且 4h ssl_up>ssl_down；且 1h ema50>ema200；且 4h ema50>ema100 且 ema50>ema200；volume>0。平多：Fisher-CCI 下穿 0.42 或下穿 −0.34，且 volume>0。confirm_trade_exit 在 sell_signal 且 di_up 且 adx 升时可拒卖，本条记入执行细节。不是 harvest-8 跳过的 InverseV2。提出日期未知。 不是harvest跳过的InverseV2：本条是1h Inverse，Fisher-CCI上穿−0.42或先下破0.41再上穿，且4h SSL多头与EMA多头过滤做多；下穿0.42或−0.34平多，止损−20%。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

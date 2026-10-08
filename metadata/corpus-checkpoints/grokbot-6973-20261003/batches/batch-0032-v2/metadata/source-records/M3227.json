@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3227",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3181,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1be4b5a1941a3b6ee5196df7c1c7fc1a4da3d7f148799e7f9313807ea9216a67",
+    "rule_sha256": "02b9003431fc40dff118ee18f3e5623b12d062c635ea3a456dc3276f134f4a4e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3227",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3227"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateFutureRolloverAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：ES连续日线（BACKWARDS_RATIO×OPEN_INTEREST）；价>EMA(20)且非多则买映射1手，价<EMA(20)且非空则卖映射1手；换月清旧买新（Lean BasicTemplateFutureRollover）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期货：ES连续日线（BACKWARDS_RATIO×OPEN_INTEREST）；价>EMA(20)且非多则买映射1手，价<EMA(20)且非空则卖映射1手；换月清旧买新（Lean BasicTemplateFutureRollover）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateFutureRolloverAlgorithm.py`。`add_future(SP_500_E_MINI, Daily, extended=True, BACKWARDS_RATIO, OPEN_INTEREST, depth=0)`；`SymbolData` 上 `EMA(20,Daily)`。就绪且有 bar：`EMA < price` 且非多 → `market_order(mapped,1)`；`EMA > price` 且非空 → `market_order(mapped,−1)`。`symbol_changed`：按原数量 `liquidate(old)` 后 `market_order(new, quantity)`。不是连续 SMA4/10 阈值核（W426），也不是 SPY EMA20/60+远月ES 核（W404）。提出日期未知。ES连续日线 EMA20 多空+换月清旧买新 ≠ 连续SMA4/10（W426）/SPY EMA20/60+远月ES（W404）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

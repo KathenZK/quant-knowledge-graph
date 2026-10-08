@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "跨bar价格形态可能刻画短期价格路径；AI标题或原文归因不是经济有效性证据。",
+    "missing": [
+      "没有经过核实的原始论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "作者原始发布URL、原始版本与镜像一致性尚未核实。",
+    "依赖Pine内建函数及运行时；未编译、执行、下载行情或回测。",
+    "基线近邻经正文比较，但还没有独立复核的全库机制去重结论。",
+    "实际市场、周期、价格调整、合约规格及可交易约束未冻结。",
+    "源码仅注释引用D’Errico/Trombetta文章，未核实文章与此实现一一对应。",
+    "未成交限价单未看到明确取消。"
+  ],
+  "name": "Gandalf跨K线价格形态限价入场与累计盈利棒退出",
+  "native_source_id": "430542",
+  "one_line": "用加权价、区间中点和实体中点的跨bar关系触发多头限价单，并按累计盈利棒、持有棒或替代形态退出。",
+  "record_id": "430542",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果。未断言源码、论文、数据或商业内部使用权；没有把镜像发布权限扩展为原作者授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E4%B8%AD%E5%80%BC%E7%BA%BF%E7%9A%84Gandalf%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Gandalf-Mean-Reversion-Quantitative-Trading-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ仓库发布账号 ChaoZhang；源码署名声明 未明确给出；转载链与原作者发布版本未核实，不把上传者视为实现作者。",
+      "id": "fmz-430542-published-code",
+      "license": "NOASSERTION; no recognized source license notice; repository has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "35c9fb306e2d4cec005d7274531df1b62ef0e6ab56e5569f325f2dbca8349252",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E4%B8%AD%E5%80%BC%E7%BA%BF%E7%9A%84Gandalf%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Gandalf-Mean-Reversion-Quantitative-Trading-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-430542-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表当前标的；策略主体没有固定证券代码。FMZ回测注释的BTC_USDT配置仅是转载包装，未确认为原作者适用市场。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-430542-published-code"
+      ],
+      "status": "MISSING",
+      "text": "策略声明没有显式佣金、滑点、点差或融资费用；成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-430542-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "空仓且形态成立时，以low−0.08提交L1多头限价单；−0.08是价格差而非8%。未见未成交单的超时取消逻辑。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-430542-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v3；先更新持仓计数再计算退出，随后提交限价入口和close调用。未显式设置逐tick、收盘成交或成交后重算；运行时与成交未核。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-430542-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "持仓检测计数BarsSinceEntry−1≥8，或累计盈利收盘棒数≥6，或替代退出形态成立则关闭L1。盈利计数只在BarsSinceEntry>1且close>持仓均价时累加，未要求连续。替代形态为(W[1]<B[1]且M[2]==B[3]且B[1]≤B[4])，或(W[2]<B且M[4]≤W[3]且B[1]≤W[1])；AltExit默认true，否则该形态还要求亏损。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-430542-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Quantity默认0时qty=10000/当前close；Quantity>0则用该固定数量。限价成交价不同于qty计算所用close，名义金额未必恰好10000。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-430542-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "无独立价格止损；计数按检测到持仓的bar递推，不等同已验证成交后精确8根。替代退出表达式中的一项在源码重复，未据此新增规则。挂单有效期未限制。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-430542-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "W=(H+L+2C)/4，M=(H+L)/2，B=(O+C)/2。入场形态为(W[1]<M[1]且M[2]≤W[1]且B[2]≤W[3])，或(W[1]<M[3]且B<M[2]且B[1]<B[2])。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-430542-published-code"
+      ],
+      "status": "MISSING",
+      "text": "计算窗口均以图表bar为单位；策略主体未强制周期。FMZ回测包装周期与原作者要求没有等价证明，原始运行周期为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-430542-published-code"
+      ],
+      "status": "MISSING",
+      "text": "没有跨资产选股或动态股票池；源码运算针对当前图表序列。具体交易品种、合约乘数、交易日历和调整规则仍须另行冻结。"
+    }
+  }
+}

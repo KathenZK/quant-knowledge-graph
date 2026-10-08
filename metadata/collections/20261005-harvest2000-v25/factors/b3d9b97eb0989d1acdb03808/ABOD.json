@@ -1,0 +1,377 @@
+{
+  "economic_basis": {
+    "hypothesis": "同一多变量样本集合内的逐点无监督几何描述；不自动转为金融异常、概率或交易方向。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-113aae84a6c40ef04d84cd55",
+        "harvest-source-fe03e8f3547ea63b6e49a5bf",
+        "harvest-source-d7a35a1f4f2457f06a0a4f41",
+        "harvest-source-69024c9d73fbcdd124e8c3cc",
+        "harvest-source-667be0f66203d2ba3dabd368",
+        "harvest-source-81686d64d5e2c5a397c60a21",
+        "harvest-source-29444b10ee0dc7ea639708bb",
+        "harvest-source-3c6204f3ffdfbb70b4f32c1d",
+        "harvest-source-940727b00f35c121d6d85e60",
+        "harvest-source-466e54dab17a39dbb39c0793",
+        "harvest-source-dd9171647ba056aca170b8e4",
+        "harvest-source-985eb3d57dbd8618cdbb5d58",
+        "harvest-source-d75738118755e2401d0499b5",
+        "harvest-source-f51d751ab60f89bd1c148596"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "整个样本集及数据修订已发布后才能计算；不能用全样本评分回填过去。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-113aae84a6c40ef04d84cd55",
+        "harvest-source-fe03e8f3547ea63b6e49a5bf",
+        "harvest-source-d7a35a1f4f2457f06a0a4f41",
+        "harvest-source-69024c9d73fbcdd124e8c3cc",
+        "harvest-source-667be0f66203d2ba3dabd368",
+        "harvest-source-81686d64d5e2c5a397c60a21",
+        "harvest-source-29444b10ee0dc7ea639708bb",
+        "harvest-source-3c6204f3ffdfbb70b4f32c1d",
+        "harvest-source-940727b00f35c121d6d85e60",
+        "harvest-source-466e54dab17a39dbb39c0793",
+        "harvest-source-dd9171647ba056aca170b8e4",
+        "harvest-source-985eb3d57dbd8618cdbb5d58",
+        "harvest-source-d75738118755e2401d0499b5",
+        "harvest-source-f51d751ab60f89bd1c148596"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定ELKI commit及ABOD.java原作者署名Matthias Schubert/ELKIfication Erich Schubert。所审为这个版本实现，不宣称重现2008论文实验或源码字节。原论文下载地址本次返回首页/反爬HTML，失败原件保留，未充当PDF或公式证据。 显式构造ABOD(LinearKernel.STATIC)，使用普通DoubleVector等长稠密坐标。公共参数默认却是PolynomialKernel，原默认degree2、bias0；线性选择是明确研究子合同，不冒称默认，不按核/次数/窗口另计家族。 所审公共派发边界为relation没有附加SimilarityIndex，并在QueryBuilder初始化之前令环境elki.optimizer为空字符串以选择DisableQueryOptimizer。其继承的getSimilarityQuery返回null，回退到PolynomialKernel.instantiate所创建的PrimitiveDistanceSimilarityQuery；动态similarity调用LinearKernel的dot。未审核自定义索引、优化器替换、其他NumberVector或完整ELKI安装运行。 KernelMatrix只计算含对角的上三角并镜像；输入ID映射在整个调用中不变，随后按该顺序遍历query、b、c。每query从零重置权重和W、加权和S、修正平方和M2。单query的其他点两两组合各一次，不纳入a、不纳入b=c。 Gram差得到q后先检查q>0；q为0、负值或NaN都跳过该邻点，未加epsilon。v是点积除两边平方长度的乘积，等价cos(angle)/(distance_ab*distance_ac)，不是角度弧度、也不是单纯cosine；w另为两边长度乘积的倒数。 每个(v,w)进入MeanVariance.put：w=0则直接不更新；首次W<=0时令W=w,S=wv而M2保持reset后的0。以后先z=wv,t=W*z−S*w，再Wnew=W+w,Snew=S+z,M2new=M2+t²/(w*Wnew*Wold)。最后返回M2/W；不除pair_count−1或W−1，不取平方根。 在正有限研究域内上式等价加权总体方差。代数等价说明不是浮点位级重写：源码依赖原ID顺序及朴素Gram点积，消减、乘积、累加可溢出或丢精度，本次未执行或测其数值误差。 run把abof直接写入每ID的scoreRelation；InvertedOutlierScoreMeta表明低值对应更异常的方向元信息，核心返回没有把值变成1/ABOF、负数或校准概率。排序平局、top-k/阈值和新query novelty接口不在所审输出中。 原生循环如只接收一个点对，其M2为0而输出0；无有效点对则W=M2=0而返回NaN。n=3互异时每query恰一对而均0，故本研究选择N>=4；这不是源的错误保护，也不代表N>=4保证有用异常区分。 精确实数定义在共同平移/正交变换下不变；正比例缩放x→c*x使v→v/c²、w→w/c²，ABOF→ABOF/c⁴，故值不是无量纲但同批排序保持。逐坐标不同缩放通常会改变结果，源码未做标准化。浮点Gram消减不保证上述位级不变。 由余弦定理，点积/角度可由距离三元组表示，不能称该量与距离信息数学独立。新增候选是完整query中心的全部方向对加权分布构造，不是简单把某个已有标量方差改参数；与LOF密度比、隔离树路径、dCov双样本距离中心化的输入-目标-输出逐项比较。 FastABOD/LBABOD、近邻k近似、核化、坐标/样本输出、反向分数或后续实现都保守归同一ABOD族。本条只核exact全对Linear分支；这些名称不因为出现在注释而获得完整定义审核。 所有评分共同使用整个样本集；加入未来样本会改变过去样本的参考方向和权重，因此全窗末计算不得回填早期时点。金融字段/量纲/采样/训练窗口、供应商和PIT仍MISSING。 原件AGPL3-or-later仅覆盖这些软件文件，不推及ACM原论文、作者网页或任何行情。公开仅自撰定义和来源pin；原代码/HTML失败页及本地验证日志不入Git。 边界：输入N>=4、d>=2、等长稠密有限向量、唯一稳定ID、互异点计算距离>0、全部中间值有限为额外研究合同；源码只局部跳过非正距离，未全面验证。 Gram消减造成非正q会跳过；实际浮点除零、NaN、Inf等合同外结果不自动修补。空有效集NaN与评分0不同。 原默认PolynomialKernel不是本条选定LinearKernel；其他核/近邻近似属于同族但当前未审。 加权总体方差小只是该样本几何下的方向集中，不能确认为异常类别或有收益；全部分数0/并列仍可能出现。 整个query输出非训练外预测接口；全样本/PIT与金融映射未冻结，不做回测。 原论文固定PDF未取得；未据web抽文中的疑似权重排版歧义推断具体勘误或论文数值等价。 输出：全部原始ABOF评分的ID映射；低值的方向元信息不改变原始分数，参数/方向/输出坐标不拆族。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-113aae84a6c40ef04d84cd55",
+        "harvest-source-fe03e8f3547ea63b6e49a5bf",
+        "harvest-source-d7a35a1f4f2457f06a0a4f41",
+        "harvest-source-69024c9d73fbcdd124e8c3cc",
+        "harvest-source-667be0f66203d2ba3dabd368",
+        "harvest-source-81686d64d5e2c5a397c60a21",
+        "harvest-source-29444b10ee0dc7ea639708bb",
+        "harvest-source-3c6204f3ffdfbb70b4f32c1d",
+        "harvest-source-940727b00f35c121d6d85e60",
+        "harvest-source-466e54dab17a39dbb39c0793",
+        "harvest-source-dd9171647ba056aca170b8e4",
+        "harvest-source-985eb3d57dbd8618cdbb5d58",
+        "harvest-source-d75738118755e2401d0499b5",
+        "harvest-source-f51d751ab60f89bd1c148596"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "同一多变量样本集合内的逐点无监督几何描述；不自动转为金融异常、概率或交易方向。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-113aae84a6c40ef04d84cd55",
+        "harvest-source-fe03e8f3547ea63b6e49a5bf",
+        "harvest-source-d7a35a1f4f2457f06a0a4f41",
+        "harvest-source-69024c9d73fbcdd124e8c3cc",
+        "harvest-source-667be0f66203d2ba3dabd368",
+        "harvest-source-81686d64d5e2c5a397c60a21",
+        "harvest-source-29444b10ee0dc7ea639708bb",
+        "harvest-source-3c6204f3ffdfbb70b4f32c1d",
+        "harvest-source-940727b00f35c121d6d85e60",
+        "harvest-source-466e54dab17a39dbb39c0793",
+        "harvest-source-dd9171647ba056aca170b8e4",
+        "harvest-source-985eb3d57dbd8618cdbb5d58",
+        "harvest-source-d75738118755e2401d0499b5",
+        "harvest-source-f51d751ab60f89bd1c148596"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定ELKI ABOD、显式LinearKernel。给N>=4个同维d>=2稠密实向量x_i及固定唯一ID顺序。K_ij=Σ_l x_il*x_jl；对查询a和所有b<c、b,c!=a，按源序计算q_ab=K_aa+K_bb−K_ab−K_ab、q_ac同理，仅保留两者>0的点对。v_bc=(K_bc−K_ab−K_ac+K_aa)/(q_ab*q_ac)，w_bc=sqrt(1/(q_ab*q_ac))。令W=Σw、μ=Σwv/W，ABOF_a=Σw(v−μ)^2/W。实际源码用加权在线m2递推后返回m2/W，不用总体和差平方直接相减；全部N点原始评分是一族。本文研究域要求全部Gram、距离积、权重与递推中间量有限，互异点的计算q>0及w>0；不是源主动做的完整输入校验。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-113aae84a6c40ef04d84cd55",
+        "harvest-source-fe03e8f3547ea63b6e49a5bf",
+        "harvest-source-d7a35a1f4f2457f06a0a4f41",
+        "harvest-source-69024c9d73fbcdd124e8c3cc",
+        "harvest-source-667be0f66203d2ba3dabd368",
+        "harvest-source-81686d64d5e2c5a397c60a21",
+        "harvest-source-29444b10ee0dc7ea639708bb",
+        "harvest-source-3c6204f3ffdfbb70b4f32c1d",
+        "harvest-source-940727b00f35c121d6d85e60",
+        "harvest-source-466e54dab17a39dbb39c0793",
+        "harvest-source-dd9171647ba056aca170b8e4",
+        "harvest-source-985eb3d57dbd8618cdbb5d58",
+        "harvest-source-d75738118755e2401d0499b5",
+        "harvest-source-f51d751ab60f89bd1c148596"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "relation（N>=4 distinct finite dense DoubleVector observations, common d>=2, unique fixed IDs and order; every Gram-derived off-diagonal q>0, positive finite weights and all finite intermediate arithmetic; no attached SimilarityIndex）：完整同坐标观测集合及固定ID顺序；额外研究合同，不自动去均值/缩放、缺失填补或时间排除。。参数：kernelFunction：原生非默认线性核；全部核/实现保守同族；范围selected explicit native LinearKernel；源码默认PolynomialKernel (degree2,bias0)；本条选定LinearKernel.STATIC；elki.optimizer：固定公共原生fallback派发范围，不是改上游源码；未运行；范围empty environment string set before QueryBuilder class initialization; no attached SimilarityIndex；源码默认EmpiricalQueryOptimizer if environment variable absent；本条选定"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-113aae84a6c40ef04d84cd55",
+        "harvest-source-fe03e8f3547ea63b6e49a5bf",
+        "harvest-source-d7a35a1f4f2457f06a0a4f41",
+        "harvest-source-69024c9d73fbcdd124e8c3cc",
+        "harvest-source-667be0f66203d2ba3dabd368",
+        "harvest-source-81686d64d5e2c5a397c60a21",
+        "harvest-source-29444b10ee0dc7ea639708bb",
+        "harvest-source-3c6204f3ffdfbb70b4f32c1d",
+        "harvest-source-940727b00f35c121d6d85e60",
+        "harvest-source-466e54dab17a39dbb39c0793",
+        "harvest-source-dd9171647ba056aca170b8e4",
+        "harvest-source-985eb3d57dbd8618cdbb5d58",
+        "harvest-source-d75738118755e2401d0499b5",
+        "harvest-source-f51d751ab60f89bd1c148596"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "elki-project/elki",
+  "lab": null,
+  "missing_information": [
+    "金融字段/量纲/样本与窗口、供应商和PIT MISSING",
+    "原2008论文PDF本次未固定，论文公式/实验与代码完全等价未确立",
+    "完整JVM/ELKI依赖安装、运行资源和浮点误差未验证",
+    "无回测、收益机制、经济独立性或商用许可批准"
+  ],
+  "name": "全部方向对距离加权的角度异常度",
+  "native_source_id": "ABOD",
+  "one_line": "对每个观测向其余点的方向对计算逆距离加权方差，用同一整体构造描述其几何位置。",
+  "record_id": "ABOD",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-outlier/src/main/java/elki/outlier/anglebased/ABOD.java"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-113aae84a6c40ef04d84cd55",
+      "license": "AGPL-3.0-or-later",
+      "locator": "file rights:L1-L20; original code attribution, paper identity and explicit kernel constructor:L55-L95; public run returns stored raw scores:L103-L124; all unordered pairs, positive distance gates, weighted population variance:L136-L172; native default PolynomialKernel, not selected LinearKernel:L184-L204",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "98fa9e4567b669d56a49f76e0d9dccd2a9409dec9be5d59205bb72e496bf19c0",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-outlier/src/main/java/elki/outlier/anglebased/ABOD.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-fe03e8f3547ea63b6e49a5bf",
+      "license": "AGPL-3.0-or-later",
+      "locator": "state and constructors:L88-L110; weighted online corrected sum-of-squares:L132-L154; population denominator is weight sum:L229-L238; reset correction accumulator:L300-L305",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "a9ebba9e7c04f2006c3759d21914047d6e640eecac88ac9ed5b6c7c2e40b9b09",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-core-math/src/main/java/elki/math/MeanVariance.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-d7a35a1f4f2457f06a0a4f41",
+      "license": "AGPL-3.0-or-later",
+      "locator": "base state and zero initialization:L41-L58; base reset sum/weight:L172-L181",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "6bb4d2e4c8fc901bb48106e4eb02bb45709fc4ba303463e03dc162b95ec60d15",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-core-math/src/main/java/elki/math/Mean.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-69024c9d73fbcdd124e8c3cc",
+      "license": "AGPL-3.0-or-later",
+      "locator": "complete explicit linear dot kernel and constructor:L1-L74",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "9df973ff73125b1180a417f0c65bf32539329d1297a25656e9dfab1b932015a6",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-core-distance/src/main/java/elki/similarity/kernel/LinearKernel.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-667be0f66203d2ba3dabd368",
+      "license": "AGPL-3.0-or-later",
+      "locator": "symmetric cached Gram construction from query:L76-L97; identity-mapped Gram lookup:L171-L180",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "e618946b0c0c6a68f28c0cfc4f5a8de66cacdf13877c57c7ea1bf8a849c1c30d",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-core-distance/src/main/java/elki/similarity/kernel/KernelMatrix.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-b7877879beb914ff6c9be9bf",
+      "license": "AGPL-3.0-or-later",
+      "locator": "complete repository AGPLv3 license:L1-L660",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "f5b26d7915d3528f340e14e14abc97518e6235be9a4286fa37cda4c882061fd6",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/LICENSE.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-81686d64d5e2c5a397c60a21",
+      "license": "AGPL-3.0-or-later",
+      "locator": "ordered dense dot over common dimension:L343-L358; dense versus sparse dispatch:L444-L460",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "fad3915e7d8f94d99c2007a234db4edea67d6a237e070559dc90bcdb54c9da94",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-core-api/src/main/java/elki/data/VectorUtil.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-29444b10ee0dc7ea639708bb",
+      "license": "AGPL-3.0-or-later",
+      "locator": "identity equality:L99-L108; array and enum mapping:L438-L457",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "54b714880da89b9c6528deffb18ea60e19d8ea5dc38555545be5d497981f5a73",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-core-dbids/src/main/java/elki/database/ids/DBIDUtil.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-3c6204f3ffdfbb70b4f32c1d",
+      "license": "AGPL-3.0-or-later",
+      "locator": "polynomial defaults and constructor:L45-L85; selected subclass inherits query instantiate:L98-L105; parameter degree2/bias0 and linear specialization:L112-L149",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "e91325326cbcc3a1d35fde3575116a8f2460393a06035ad4fa412b2301abecc9",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-core-distance/src/main/java/elki/similarity/kernel/PolynomialKernel.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-940727b00f35c121d6d85e60",
+      "license": "AGPL-3.0-or-later",
+      "locator": "similarity constructor:L183-L186; index and optimizer/fallback dispatch:L315-L345; empty environment value selects disabled optimizer before class initialization:L884-L912",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "0570c79e8ff0a47b967912e0be925d8edc44408fe5041d70f15f501c194b3269",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-database/src/main/java/elki/database/query/QueryBuilder.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-466e54dab17a39dbb39c0793",
+      "license": "AGPL-3.0-or-later",
+      "locator": "parent relation and dynamic similarity dispatch:L38-L83",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "0bf36d8fdc30f8d6a637780b20b58cac207bb58d56b8c026f66fffcaa9c64919",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-core-api/src/main/java/elki/database/query/distance/PrimitiveDistanceSimilarityQuery.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-dd9171647ba056aca170b8e4",
+      "license": "AGPL-3.0-or-later",
+      "locator": "dense vector coordinates and dimensionality:L62-L94",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "8321a41484527edfa07346593d773dae9a9e7d5f23df55d82129da13015e232f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-core-data/src/main/java/elki/data/DoubleVector.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-985eb3d57dbd8618cdbb5d58",
+      "license": "AGPL-3.0-or-later",
+      "locator": "no override for default null similarity optimizer:L27-L59",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "668929e80ad152d9f20d42b4c1dc6c151e3bf14a62525a0cec3efe39f9ec166e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-database/src/main/java/elki/database/query/DisableQueryOptimizer.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-d75738118755e2401d0499b5",
+      "license": "AGPL-3.0-or-later",
+      "locator": "default optimizer similarity method returns null:L33-L53",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "279c5aa757a7f63c96ef4b7eb91a553dfe2c2935036fb2a02fc54c04436196a2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-database/src/main/java/elki/database/query/QueryOptimizer.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-f51d751ab60f89bd1c148596",
+      "license": "AGPL-3.0-or-later",
+      "locator": "stores relation for inherited similarity lookup:L38-L59",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "81a55abcad9cd182245f684aa09c1feb6f0e960985e1fca6501418127e4a5e1d",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/elki-project/elki/blob/2e0a0520688f68070b110290d59a7883882f3ef0/elki-core-api/src/main/java/elki/database/query/distance/PrimitiveDistanceQuery.java",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-b95a6e3601c1db4d8c87f56c",
+      "license": "NOASSERTION",
+      "locator": "Pinned author publication or identity listing",
+      "revision": "2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "cb67fc9058b75694b53523ab4ce415e4e50c5040ea3045e04b4facac878d32e0",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://raw.githubusercontent.com/elki-project/elki/2e0a0520688f68070b110290d59a7883882f3ef0/elki-outlier/src/main/java/elki/result/outlier/InvertedOutlierScoreMeta.java",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "ELKI Development Team; ABOD.java attributes original code to Matthias Schubert and ELKIfication to Erich Schubert; paper authors Hans-Peter Kriegel, Matthias Schubert, Arthur Zimek, KDD2008 DOI10.1145/1401890.1401946.",
+      "id": "harvest-source-21eeaf03f461f1f00940a06b",
+      "license": "NOASSERTION",
+      "locator": "Pinned author publication or identity listing",
+      "revision": "Git tree b734748b08b189b53001e248aae9bb97613d20ab for repository commit 2e0a0520688f68070b110290d59a7883882f3ef0",
+      "sha256": "3ae3cdf43c86f1bbb625a0f68c48ce07a85ee21854d75c85873c4371165c89b3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://api.github.com/repos/elki-project/elki/git/trees/b734748b08b189b53001e248aae9bb97613d20ab?recursive=1",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

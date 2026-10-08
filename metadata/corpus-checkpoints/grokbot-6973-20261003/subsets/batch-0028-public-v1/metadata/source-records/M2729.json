@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2729",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2729,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "19b4450d227a8f3eb10dad2b213bebcaf4ceb4b05abf103000f00cb013c529d2",
+    "rule_sha256": "ba04b44c49100dcce1c6d1e14edd6d1c8d4ef449a9ad1b96cb88e5c1635d13fe"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2729",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2729"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/alternative-data-universe/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：EODHD未来1–5日有财报的股票，空仓时买≥30日到期ATM跨式1组（QC Documentation earnings straddle）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（EODHD未来1–5日有财报股票空仓买≥30日ATM跨式1组；QC Documentation earnings straddle）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：EODHD未来1–5日有财报的股票，空仓时买≥30日到期ATM跨式1组（QC Documentation earnings straddle）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `alternative-data-universe/main.py`。`EODHDUpcomingEarnings` 宇宙；选择：从 `now+5日` 往回扫到 `now+1日`，取该目标日有财报的标的集（优先更远日）。新增股票：期权链取到期≥`now+30日` 的最近到期，ATM（\\|strike−spot\\|最小）call+put，`combo_market_order` 各腿+1、数量1。移除股票：`liquidate` 正股并 `remove_option_contract` 两腿。不是 W334 SPY 约30日ATM跨式演示核，也不是 W324 仅股票等权核。提出日期未知。 不是W334 SPY约30日ATM跨式演示核，也不是W324仅股票等权核：本条为EODHD未来1–5日有财报股票，空仓时买≥30日到期ATM跨式1组。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

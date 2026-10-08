@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3524",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3478,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1c33cce6d357cfa80834605bb5cd676eb785ea99eb4b0025bbbb535425ff58ed",
+    "rule_sha256": "2d9159bb8cbf4cf4bbf85d161e05cdc82b38e9830c219ced8540a1be4cade8fb"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3524",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3524"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Adjusted-Data"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：同W728宇宙与月末lag成交；动量分=60日收益+120日收益，仍须合计>0才可入选后取Top1（SI Adjusted-Data·mom120）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2015-03-30"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：同W728宇宙与月末lag成交；动量分=60日收益+120日收益，仍须合计>0才可入选后取Top1（SI Adjusted-Data·mom120）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写同页 `mom120`：`return = prices/mlag(prices,60)-1 + prices/mlag(prices,120)-1`；`position.score = iif(return<0, NA, return)`；其余宇宙、月末 `period.ends1→period.ends0`、`ntop(...,1)` 同 W728。不是单 60 日核（W728）。提出日期 2015-03-30。计入美股/ETF。提出日期按源文件原样保留2015-03-30。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "models$mom120（60+120 收益和；绝对过滤；Top1）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

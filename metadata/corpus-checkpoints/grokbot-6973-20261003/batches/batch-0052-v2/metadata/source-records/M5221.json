@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M5221",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 5175,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ac8b4720a1fa3ee944e4327e16dcc6ba8ae00a0a915627d0c8c7109ec760fba8",
+    "rule_sha256": "a91b529bf59134ecd9e612e860c9b2b4b2123fec3d5fa1bbdbc91506e11535e7"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M5221",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M5221"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://jayonthemarkets.com/2017/12/14/a-useful-inflation-indicator-and-a-decent-bond-market-model/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Jay Kaeppel"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-233/W2432"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Kaeppel·TIP/TLT债模：日频；比率EMA10<1200得1分、EMA1200<2500得1分；总分<2持TLT否则现金（TIP/TLT·BondModel）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2017-12-14"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "TIP/TLT Test Bond Model – hold TLT if score<2"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Jay Kaeppel《A Useful Inflation Indicator…》(2017-12-14) **Test Bond Model**：日频；令 R=**TIP/TLT** 收盘比。若 **EMA10(R) < EMA1200(R)** 加1分；若 **EMA1200(R) < EMA2500(R)** 加1分；得分∈{0,1,2}。**仅当得分 < 2** 持有 **TLT**，得分=2 改现金。不是TIP/TLT·200w周比（M5139）；不是禁拆HYG/IEI比率→SPY。计入美股/ETF。提出日期 2017-12-14。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Kaeppel TIP/TLT·BondModel · score<2 → TLT"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

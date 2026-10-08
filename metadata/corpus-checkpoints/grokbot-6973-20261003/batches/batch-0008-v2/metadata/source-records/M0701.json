@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0701",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 701,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0752cac2b6c6eb2a27513ab6e9401e92a4bea7c9b4558b57eb7669009f78619c",
+    "rule_sha256": "d624d205468e6e065fd09e278cdcab5e03eb48f3be181af1f9c1dd413e8712e3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0701",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0701"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/protective-asset-allocation/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Wouter Keller；JW Keuning（Allocate Smartly实测PAA-CPR）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "PAA-CPR：广度避险仓在IEF与现金间按动量轮换"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2016-04"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Protective Asset Allocation；PAA: A Simple Momentum-based Alternative to Term Deposits"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写Allocate Smartly实测的PAA-CPR，不是已收的、避险资产固定为IEF的PAA。每月最后交易日收盘，对12类风险资产计算动量MOM等于收盘除以最近13个月末收盘（含当日，记为t到t-12）的简单移动平均再减1。n等于MOM大于0的个数。n小于或等于6，则100%配到避险资产；n大于或等于7时，避险比例等于(12减n)/6，其余资金等权分给MOM最高的6只。持有至下月最后交易日，即使配置不变也全仓再平衡。风险资产名单见文末：SPY、QQQ、IWM、VGK、EWJ、EEM、VNQ、DBC、GLD、HYG、LQD、TLT。PAA把避险资产固定为中期美国国债IEF。PAA-CPR则在IEF与更短久期工具之间，改持MOM更高的一只。原论文的短久期工具是1至3年美国国债SHY；该站因交易频繁、把SHY换成现金，现金收益等于3个月美国国债利率。页面未写现金的MOM用哪条总收益指数来算，也未写MOM并列时如何取前6名或比较IEF与现金。1989年前该站未用更长的模拟序列。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Strategy rules tested；Two variations of PAA；End notes。论文日期另见https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2759734"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

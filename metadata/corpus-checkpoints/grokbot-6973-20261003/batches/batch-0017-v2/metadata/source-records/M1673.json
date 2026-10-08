@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1673",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1673,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "86d6f4b39966daf39f3d5a0672bd8ca3e968e9dc8d2298ccfb9ec7fe704214e4",
+    "rule_sha256": "325dbf931569213c5101f7682497f80eb333a551898f4fc19f483085c4d8c476"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1673",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1673"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.fmz.com/strategy/430881"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "发明者量化（FMZ）公开策略页"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "发明者量化：Squeeze动量（BB20×2嵌入KC22×1.5为挤压；线性回归斜率val⊕ROC30阈值7）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（回测头：币安合约BTC_USDT；1h叙述）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "发明者量化：Squeeze动量（BB20×2嵌入KC22×1.5为挤压；线性回归斜率val⊕ROC30阈值7）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。布林：SMA(20)±2.0×标准差；肯特纳：长度22、倍数1.5（TrueRange可选）。挤压On：下轨BB>下轨KC且上轨BB<上轨KC。动量：价相对通道中轨的线性回归斜率val；ROC周期30、阈值7。挤压中：val>0且ROC超阈做多；反向做空。页默认止损%/止盈%输入为100/5000（极宽，执行层以通道+动量信号为主）。相对已收单布林或单肯特纳突破：本条为BB⊂KC挤压⊕val⊕ROC30/7。 不是M1100 BB(20,2)+KC(20,1.5)+EMA50斜率翻正：本条为BB20×2嵌入KC22×1.5挤压，线性回归斜率val⊕ROC30阈值7。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

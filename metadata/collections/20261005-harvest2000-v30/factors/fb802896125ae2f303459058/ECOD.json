@@ -1,0 +1,291 @@
+{
+  "economic_basis": {
+    "hypothesis": "ECOD/COPOD整族，代表为ECOD的新建实例整批rawscore；不是交易策略、联合copula拟合或经过校准的异常概率。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-9bda265bc10d56cb82096d74"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "整个预先指定批次和全部列输入在决策时已知之后可得；未来行加入会改变已有分数。已训练对象亦把query整批拼入重算，不保证逐点外推同值。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-9bda265bc10d56cb82096d74",
+        "harvest-source-62bf63a9b92c52f122f07183",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-deb514c7a0344d9b63e28d1b",
+        "harvest-source-251754c69d341f446ac05301",
+        "harvest-source-35734e87d064c990f04ad252"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条代表公开原生ECOD类的串行完整批次评分，选新建实例、n_jobs=1、未存在X_train时的decision_function(X)，与新建实例首次fit(X).decision_scores_的评分核相同。初次fit还做check_array/y类别/阈值包装；本条不批准全部sklearn分类API、并行后端或任意对象输入。 逐列把N个样本升序，初始概率为1/N,...,1。helper由后向前遇同值就用后一项概率替换，所以每个并列组全部为该组最大秩/N；再依sort_idx放回原行。对−X做同样操作得到P(X_j>=当前值)，不写成1−F，因为两侧都包括当前值及并列。 每个经验概率>=1/N且<=1，不因值是当前样本中的极端而得到0；负自然log无需额外epsilon。若新建实例只收到一个样本，所有尾概率为1、最终分数0。常量列也对所有行贡献0，不当失败或自动删除。 PyOD原生只调用SciPy skew(axis=0)默认bias=True，然后np.nan_to_num，最后sign。为使公式边界清楚，另冻结SciPy f91e22与NumPy fd8a68的相关数学helper作为本次选定解释合同；requirements只有下界，未据这些补充证明作者历史安装版本或本组合已运行兼容。近常量阈值依float64均值与eps，不能一律只判断m2==0。 计算U_skew后ECOD逐项与U_l/U_r取max，再跨列求和。偏度正负非零时选边已经包含在max中，只有精确0分支会用L+R；不能误写为偏度为0时取平均。理想实数下翻转一个完整列会交换左右尾并翻skew，分数不变；但不宣称任意非线性单调变换都不改变偏度零判定或有限精度结果。 源码保留每列O用于解释，但只把完整向量score作为整族输出。增加一列完全重复特征会把其贡献再加一次，不能称此法消除了列相关或拟合完整联合copula；它没有条件copula参数、联合经验CDF或联合尾频数。分数也不是已校准p值、真实违约概率或置信度。 同作者COPOD在该固定版本改用max(U_skew,(U_l+U_r)/2)，与ECOD的max(U_skew,U_l,U_r)可能数值不同；代码明确ECOD为extended/renamed同族。保留这处实现差异，不说逐值相等，也不计第二个因子。 若实例已有X_train，decision_function把整个query批次接在训练行后，共同重算ECDF与偏度，最后仅取query后m行。分数依赖同批其他query，不是冻结训练分布对每个新点独立外推。若在同一实例再次fit，新评分仍会先看到旧X_train，随后才覆盖训练字段；本条主合同要求新建实例，重复fit不是干净重置。 默认contamination=.1只在fit后确定score的90百分位阈值，并用严格score>threshold给标签；并列可使异常标签比例不等于.1。它不进入原始评分公式。其它阈值器、predict_proba、置信度/拒绝选项及explain_outlier绘图不在已审核心范围，不另计族。 金融应用仅可作为已发布特征向量的横截面或完整尾随样本极端程度。必须冻结列定义/单位/调整/缺值政策和批次边界；逐bar历史特征不能用整段未来样本统一fit后回填。未确定收益方向、持仓、成本或经济有效性。 边界：常量/单样本为0；并列用maxrank使F+G=1+同值比例，不是互补连续p值。 允许重复行；不要求协方差满秩。缺失/Inf输入不在所述数学输入域，不能因skew有nan_to_num就认为原始X已完成缺失修复。 原始decision_function没有统一check_array；所述二维finitefloat64是研究输入合同，不是源码主动验证承诺。整数−X、对象/稀疏/complex/GPU/多线程路径不在本次代表合同。 直接空query且已有X_train时原代码切片[-0:]会返回全部训练分数；本条只审非空批次，保留该API边界，不宣称空输入正确。 skew近常量及溢出产生的NaN会被替0，可能把该列转成L+R；不代表数据可信或算法可靠修复。有限输入不保证浮点矩都可表示，未数值执行验证。 scores没有跨N/d通用校准；列重复会重复计权，批次/样本量/偏度零判定影响分数。不能把score直接解读成p值或已验证风险概率。 requirements允许多种NumPy/SciPy/Numba版本；所锁补充helper只是明确本次数学合同，不是完整运行依赖/ABI/Numba编译或历史环境锁。 COPOD与ECOD统一family；列/正负尾/污染率/阈值/窗口/标签/语言实现不拆。 输出：N行原始异常分数，高值方向为异常；O逐列贡献、阈值/标签与COPOD全在同族不另计。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-9bda265bc10d56cb82096d74",
+        "harvest-source-62bf63a9b92c52f122f07183"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "ECOD/COPOD整族，代表为ECOD的新建实例整批rawscore；不是交易策略、联合copula拟合或经过校准的异常概率。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-9bda265bc10d56cb82096d74",
+        "harvest-source-62bf63a9b92c52f122f07183",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-deb514c7a0344d9b63e28d1b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定新建ECOD(contamination=.1,n_jobs=1)的初次全批原始分数。X为N×d有限普通float64数组，N,d>=1。F_ij=N⁻¹Σ_k1(X_kj<=X_ij)，G_ij=N⁻¹Σ_k1(X_kj>=X_ij)；并列取包含全部同值的末秩，不取平均秩。L_ij=−ln F_ij，R_ij=−ln G_ij。s_j=sign(nan_to_num(skew(X[:,j],bias=True)))；选定补充SciPy语义：μ_j=mean X_j，m_qj=mean[(X_j−μ_j)^q]，若m_2j<=(eps64 μ_j)²则skew=NaN，否则m_3j/m_2j^(3/2)；NumPy默认将NaN→0、±Inf→对应最大有限值再取sign。K_ij=−L_ij sign(s_j−1)+R_ij sign(s_j+1)。O_ij=max(L_ij,R_ij,K_ij)，score_i=Σ_j O_ij。等价分支：s_j<0时K=L，s_j>0时K=R，s_j=0时K=L+R；故非零偏度列O=max(L,R)，零偏度列O=L+R。返回全N行score，高值方向为更异常；整族不拆列贡献、尾方向、标签或COPOD。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-9bda265bc10d56cb82096d74",
+        "harvest-source-62bf63a9b92c52f122f07183",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-deb514c7a0344d9b63e28d1b",
+        "harvest-source-251754c69d341f446ac05301"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X（ordinary finite real NumPy float64 dense N by d array,N>=1,d>=1）：完整同批数值样本，行列身份固定；金融字段/供应商/PIT/缺值政策MISSING。允许重复行与常量列。。参数：n_jobs：保留原生串行默认，核心列定义不靠并行运行校验。；范围serial path only reviewed;parallel not a new family；源码默认1；本条选定1；contamination：仅影响阈值标签，不影响原始score；本条不将标签API当新增构造。；范围original numeric gate0<c<=.5;onlydefault lifecycle context reviewed；源码默认0.1；本条选定0.1；instance_state：定义本条代表原生评分；不是伪造软件参数，避免把旧实例refit称重置。；范围whole nonempty batch;fitted-query/refit behavior explicitly documented；源码默认None；本条选定fresh ECOD instance with no X_train；skew_helper_reference：PyOD只给依赖下界，固定数学解释并保留历史环境未知。；范围supplementary fixed mathematical semantics;not runtime compatibility verified；源码默认None；本条选定SciPy f91e22cd3d9e984b8da31f899c755b2a43c60db4;NumPy fd8a68e4978defd094cffa23c71d7de7fb213e3f"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-9bda265bc10d56cb82096d74",
+        "harvest-source-62bf63a9b92c52f122f07183"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "yzhao062/pyod",
+  "lab": null,
+  "missing_information": [
+    "金融列定义/供应商/校验与PIT MISSING",
+    "经济有效性/可交易方向/成本 MISSING",
+    "原论文许可与商业数据授权REVIEW_REQUIRED",
+    "完整运行依赖/Numba编译/数值复现未执行",
+    "并行/其它对象/概率及置信包装未审"
+  ],
+  "name": "多列经验双尾概率汇总的异常分数",
+  "native_source_id": "ECOD",
+  "one_line": "对每列的左右经验尾概率取负对数，按原生偏度零值分支汇总到每行，保留并列值和整批样本依赖。",
+  "record_id": "ECOD",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/pyod/models/ecod.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-9bda265bc10d56cb82096d74",
+      "license": "BSD-2-Clause",
+      "locator": "authors imports andnan_to_num skewwrapper:L1-L23; native familyrelationship defaults anddirection:L53-L100; complete first-fit andserial rawscore; queryconcatenation:L102-L155",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "fc84ebe8607b93625da201d38c9e566006297209a307e110e9b93cc8070f86cf",
+      "supports": [
+        "PRIMARY_ECOD_AND_ECDF"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/pyod/models/ecod.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-62bf63a9b92c52f122f07183",
+      "license": "BSD-2-Clause",
+      "locator": "helper attribution andimports:L1-L15; complete columnECDF andtie propagation:L187-L250",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "b557968540a7f5a11d9b88569bf036677b49bffbe1d2825ad1464d0b659893a1",
+      "supports": [
+        "PRIMARY_ECOD_AND_ECDF"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/pyod/utils/stat_models.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-251754c69d341f446ac05301",
+      "license": "BSD-2-Clause",
+      "locator": "base imports includingnumpy percentile:L1-L24; numeric contamination gate:L60-L70; yNoneclasses andthreshold wrapper kept separate fromrawscore:L537-L588",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "cf5040ab8e00da741d439983788571a2103682d449d7020b04377026369804a5",
+      "supports": [
+        "LIFECYCLE_AND_THRESHOLD_CONTEXT_NOT_RAW_SCORE"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/pyod/models/base.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-35734e87d064c990f04ad252",
+      "license": "BSD-2-Clause",
+      "locator": "sameauthors andskewhelper:L1-L22; explicit sameextended renamedfamily:L52-L98; COPOD corediff versusselectedECOD:L133-L150",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "d46319c451ce91d5d41ee9a33ad02d4dffec0ba90a1624b4642268f020c84be8",
+      "supports": [
+        "SAME_FAMILY_IMPLEMENTATION_COMPARISON_NOT_PRIMARY_ECOD_PATH"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/pyod/models/copod.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-8a44d7d9fb784551f753288a",
+      "license": "BSD-2-Clause",
+      "locator": "complete PyOD BSD2 terms:L1-L25",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "2aad003d1faca304e013f82e5088e8cb1c364470d4755e1e2175922a9872bf56",
+      "supports": [
+        "ATTRIBUTION_LICENSE_OR_DEPENDENCY_RANGE"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-f3ac3c8dd9eac03d9c9890e2",
+      "license": "BSD-2-Clause",
+      "locator": "maintainer listing ECOD COPOD SOS:L278-L307; originalpaper attribution only:L873-L875",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "e3fc25cab8f0c49cd2c4d40fdd6090a1177d52c3ecc6ca66814708b2dba4a39a",
+      "supports": [
+        "ATTRIBUTION_LICENSE_OR_DEPENDENCY_RANGE"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-c836bf35c62894bb980aab6a",
+      "license": "BSD-2-Clause",
+      "locator": "dependencylowerbounds not exactruntime lock:L1-L6",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "b9e9430eed989340693502ffd4c919dd0051f4ffc390f565eb84ab9578491498",
+      "supports": [
+        "ATTRIBUTION_LICENSE_OR_DEPENDENCY_RANGE"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/requirements.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-8541ae4e14238c0912317b06",
+      "license": "BSD-2-Clause",
+      "locator": "packageidentity andBSD2 declaration:L5-L14; dynamicdependencies readrequirements:L90-L94",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "eeeb416f83f0398186877b7a3f77da4363f134bc3be7a887cd826b2f4181a495",
+      "supports": [
+        "ATTRIBUTION_LICENSE_OR_DEPENDENCY_RANGE"
+      ],
+      "url": "https://github.com/yzhao062/pyod/blob/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-dcaa4b2ca5e08690e90c3e75",
+      "license": "BSD-3-Clause",
+      "locator": "ordinaryarray axishelper:L119-L133; demeanandmoment fullcore:L1175-L1225; skew biasTrue default:L1239-L1245; skew momentratio andnearconstantguard:L1319-L1337",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "f83fbd7a76afa61a865820917184eabd67d5ebc04cde4db102ba1ba86e94d0cb",
+      "supports": [
+        "SELECTED_MATHEMATICAL_REFERENCE_NOT_HISTORICAL_RUNTIME_LOCK"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-bbbecde791dfaaebacee469f",
+      "license": "BSD-3-Clause",
+      "locator": "factorydefaults:L365-L370; extractaxis andmove sampleaxis:L535-L581; ordinary nonNaN vectorizeddispatch:L670-L684",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "a1650feb6cfcf6f9a1c764c824e725b39f039a2e19001fb60f48f88c354d102f",
+      "supports": [
+        "SELECTED_MATHEMATICAL_REFERENCE_NOT_HISTORICAL_RUNTIME_LOCK"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_axis_nan_policy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "completeSciPyBSD3:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "ATTRIBUTION_LICENSE_OR_DEPENDENCY_RANGE"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-deb514c7a0344d9b63e28d1b",
+      "license": "BSD-3-Clause",
+      "locator": "finfo bounds andnan_to_num defaultmeaning:L363-L392; completeordinary floatingarrayreplacement:L458-L481",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "0eff5aed0091d5ba811e85e00a398fac611ec06d6fd8106d13ff157dc178c925",
+      "supports": [
+        "SELECTED_MATHEMATICAL_REFERENCE_NOT_HISTORICAL_RUNTIME_LOCK"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/numpy/lib/_type_check_impl.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "PyOD maintainers Zheng Li, Yue Zhao and coauthors; SciPy/NumPy maintainers for separately pinned mathematical references. Source-peer later reviewed the two exact papers as supplementary version-conflict evidence; original collector attribution is retained in the review.",
+      "id": "harvest-source-2ba9c9fa57c4e2708e63a8fd",
+      "license": "BSD-3-Clause",
+      "locator": "completeNumPyBSD3:L1-L30",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "01fb016849aa427edb1bbbbd55f91c26ca6cadb32a5b20e7f000655dd05b0760",
+      "supports": [
+        "ATTRIBUTION_LICENSE_OR_DEPENDENCY_RANGE"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Li, Zhao and coauthors; exact versioned ECOD/COPOD papers independently read by the source peer",
+      "id": "harvest-source-62cb495faae6f3eb9f538dd0",
+      "license": "NOASSERTION",
+      "locator": "Exact versioned original PDF; supplementary line/page locators retained in review",
+      "revision": "2201.00382v3; sha256:3755cb4664b94b41bf16b83c049e5a2a270be0f3112eb62d98dcd84e1b5601e6",
+      "sha256": "3755cb4664b94b41bf16b83c049e5a2a270be0f3112eb62d98dcd84e1b5601e6",
+      "supports": [
+        "SOURCE_RULE_CONFLICT：论文、当前ECOD与COPOD代码的不同汇总及零偏度分支；不证明原论文复现"
+      ],
+      "url": "https://arxiv.org/pdf/2201.00382v3",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Li, Zhao and coauthors; exact versioned ECOD/COPOD papers independently read by the source peer",
+      "id": "harvest-source-623cd18bf12dab7112b656d3",
+      "license": "NOASSERTION",
+      "locator": "Exact versioned original PDF; supplementary line/page locators retained in review",
+      "revision": "2009.09463v1; sha256:b22b70ce5d894776a6759809b1e041aaf142d2069dd1633c52a819c4fb328837",
+      "sha256": "b22b70ce5d894776a6759809b1e041aaf142d2069dd1633c52a819c4fb328837",
+      "supports": [
+        "SOURCE_RULE_CONFLICT：论文、当前ECOD与COPOD代码的不同汇总及零偏度分支；不证明原论文复现"
+      ],
+      "url": "https://arxiv.org/pdf/2009.09463v1",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

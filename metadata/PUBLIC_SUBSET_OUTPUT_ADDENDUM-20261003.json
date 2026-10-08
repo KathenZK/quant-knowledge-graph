@@ -1,0 +1,51 @@
+{
+  "schema_version": "quantgraph-public-subset-output-addendum/v1",
+  "created_at_utc": "2026-10-03T12:00:11.936591+00:00",
+  "coordinator": "root only",
+  "owner": "dot persist_grok_metadata_records only",
+  "repository": "KathenZK/quant-knowledge-graph",
+  "output_branch": "dot/grok6973-checkpoints-20261003",
+  "existing_v2_contract_head": "fd938b5ddea06444d477455079cd8b563bd77f00",
+  "source_csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+  "applies_only_to": [
+    {
+      "batch_id": "batch-0026",
+      "original_ids": 100,
+      "excluded_ids": [
+        "M2535"
+      ],
+      "expected_safe_ids": 99
+    },
+    {
+      "batch_id": "batch-0028",
+      "original_ids": 100,
+      "excluded_ids": [
+        "M2709"
+      ],
+      "expected_safe_ids": 99
+    }
+  ],
+  "allowed_new_paths": [
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/subsets/batch-0026-public-v1/**",
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/subsets/batch-0028-public-v1/**",
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/receipts/batch-0026-public-v1.json",
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/receipts/batch-0028-public-v1.json"
+  ],
+  "requirements": [
+    "Run the fixed reviewed public-subset tool against the exact original v2 batch manifest sha256, never edited source bytes.",
+    "Original complete100-ID batch remains immutable in private Library with independent manifest, readback and complete11-field recovery; do not publish that mixed batch.",
+    "After export, run check-public-subset and restore-public-subset in fresh directories; all99safe original IDs and every11-field value must agree with verified source rows.",
+    "Require exact expected excluded IDs and original/safe/excluded counts above; any extra sensitive hit or different source/plan/batch must stop that subset.",
+    "All remaining fields still need publication review. Copy the entire reviewed derived subset unchanged into the allowed new path and verify remote file bytes and manifest.",
+    "Receipts pin source plan hash, source batch manifest hash, derived manifest hash, exact branch commit,99safe IDs and1excludedID; do not include excluded field values, private file hashes, Library identifiers or local machine paths.",
+    "Count each original ID once across v2 batches and derived subsets; report public99/private100 separately, never public100 or a new research run."
+  ],
+  "unchanged_restrictions": [
+    "No global relaxation or row override of sensitive-field scanning",
+    "M2535 andM2709 remain private-only pending independent complete-row review",
+    "No changes to old plans/checkpoints/contracts, originalCSV, rawdata, revieweddefinitions or personalannotations",
+    "No force push/rebase/delete, Site writes, top-levelmetadata/index or other repository paths"
+  ],
+  "review_access_limit": "Root normal Library find/read exposed only493 rendered preview lines and did not return either original row; this addendum approves safe subset handling only, not the suspected false-positive contents.",
+  "new_strategy_trials": 0
+}

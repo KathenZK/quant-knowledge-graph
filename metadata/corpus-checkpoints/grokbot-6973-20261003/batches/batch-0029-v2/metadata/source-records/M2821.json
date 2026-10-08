@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2821",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2821,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ac8aa44b074be619bd89fdc0bff9388f46cfdca645e6a660f24b8a5a3730754e",
+    "rule_sha256": "af6704c5031e881b78182e86a337a67af4a2c168af09b6c886c3ac60c91a70d1"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2821",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2821"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-bollinger-mean-reversion/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线BB(20,2σ)；价<下轨且空仓则满仓，价≥中轨则清仓；每日08:00再平衡（QC Documentation equity bollinger）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY日线BB20,2σ价<下轨满仓价≥中轨清仓每日08:00；QC Documentation equity bollinger）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线BB(20,2σ)；价<下轨且空仓则满仓，价≥中轨则清仓；每日08:00再平衡（QC Documentation equity bollinger）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-bollinger-mean-reversion/main.py`（本轮为凑满链式以外可读核、相对先前“近核跳过”按模板原文另开一条并与 EasyQuant BB 区分）。标的 SPY；`bb(20, 2)` 日线；`automatic_indicator_warm_up=True`。每日 08:00：若未持仓且 `price < lower_band` → `set_holdings(1)`；若已持仓且 `price >= middle_band` → `liquidate`。不是 EasyQuant 多标的/Insight BB 核，也不是 W299 Keltner 挤压核。提出日期未知。 不是EasyQuant多标的/Insight BB核，也不是W299 Keltner挤压核：本条为SPY日线BB(20,2σ)；价<下轨且空仓则满仓，价≥中轨则清仓；每日08:00再平衡。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2680",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2680,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "14695bfec94cecb0fcd84e3f311ef27f1c9483fb9ed2963904a98c51eeb9df20",
+    "rule_sha256": "0ef6b5ca5391b4b816aadfb27a2714ddd6a61eea50cf9e1b84e4b2893c995400"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2680",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2680"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/index-options-universe/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX/SPXW 0DTE、行权价档−1..+1，空仓买最低行权价认购1张（QC Documentation 0DTE call）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPX/SPXW 0DTE strikes−1..+1空仓买最低行权价call；QC Documentation 0DTE call）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股指数期权：SPX/SPXW 0DTE、行权价档−1..+1，空仓买最低行权价认购1张（QC Documentation 0DTE call）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `index-options-universe/main.py`。`add_index_option(\"SPX\",\"SPXW\")`；`set_filter(lambda u: u.expiration(0,0).strikes(−1,1))`。空仓时取链上 CALL 按 strike 升序，`buy(calls[0], 1)`。不是 W331 RUT 0.4-delta 方向核，也不是 W341 ATM EMA 交叉核。提出日期未知。 不是W331 RUT 0.4-delta方向核，也不是W341 ATM EMA交叉核：本条为SPX/SPXW 0DTE行权价档−1..+1，空仓买最低行权价认购1张。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

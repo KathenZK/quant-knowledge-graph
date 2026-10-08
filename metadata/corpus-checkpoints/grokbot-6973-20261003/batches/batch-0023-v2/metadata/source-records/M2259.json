@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2259",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2259,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "1b5b03296ad40edcd9268aba84301a9e467723c305728a83bbbdb53fcdc43850",
+    "rule_sha256": "3e8f881566d0f98ebd16c0544369d736195afef4a50fe813c9c0fe04443142b4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2259",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2259"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/ObeliskIM_v1_1/ObeliskIM_v1_1.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / Obelisk（brookmiles）freqtrade-strategies社区仓（ObeliskIM_v1_1.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区ObeliskIM_v1_1：5m，强绿云+tenkan上穿kijun+EMA3>5>10且收阳创新高、无急跌spike做多；tenkan或收下穿kijun平多；止损−4%，ROI立即500%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区ObeliskIM_v1_1；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区ObeliskIM_v1_1：5m，强绿云+tenkan上穿kijun+EMA3>5>10且收阳创新高、无急跌spike做多；tenkan或收下穿kijun平多；止损−4%，ROI立即500%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写davidzr仓strategies/ObeliskIM_v1_1/ObeliskIM_v1_1.py默认。timeframe=5m；stoploss=−0.04；minimal_roi={\"0\":5}；startup_candle_count=288。ichimoku(conversion=20, base=60, lagging=120, displacement=30)；EMA3/5/10；RSI(14)。cloud_green_strong：绿云且 tenkan>kijun 且 kijun>senkou_a。tk_cross_up：tenkan上穿kijun后 ffill limit=2。ema35_ok：ema3>ema5>ema10。spike：close > close.shift(3)×(1−stoploss×0.9) 记0/1（条件要求 spike<1）。做多须：cloud_green_strong>0、tk_cross_up>0、ema35_ok>0、close>close.shift()、close>recent_high.shift()（recent_high=12根最高）、spike<1。平多：tenkan下穿kijun 或 close下穿kijun。不是 Obelisk_3EMA（EMA堆叠+StochRSI）核。提出日期未知。 不是Obelisk_3EMA（EMA堆叠+StochRSI）：本条是5m ObeliskIM_v1_1强绿云+tenkan上穿kijun+EMA3>5>10做多核。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

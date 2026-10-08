@@ -1,0 +1,155 @@
+{
+  "economic_basis": {
+    "hypothesis": "对同一批对象的多个测量方法或条件在每个对象内排名，诊断条件间是否存在系统秩差。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "所有输入组的全部观测与组标签均已发布后才能获得本次统计量；金融输入、窗口和发布时间另行固定。未来标签只能在其实现后用于事后诊断；不把整窗输出回填到窗内早期。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "研究合同要求k个普通NumPy一维有限实数数组严格等长且位置一一对应同一对象；n>=2是本条的使用域，不宣称来源显式检查这个下限。不会根据日期或对象ID自动对齐。 源码将各条件堆叠后交换轴，使最后一轴包含一个对象的k个条件；仅在这条轴内排名，不能对全部n*k值共同排名。 先在每个对象内计算并列修正，再累加各条件的秩和平方。固定实现的paired=True会在缺值删除路径同时删除整个配对对象；本条有限数据合同不执行删失或掩码分支。 同一条件的所有对象构成一个输入数组；输出一个Q及其附属p，条件数、对象数、滚动窗口和输出表示不拆成新因子。 边界：若每个对象内所有条件均相同，则C=0，即使不同对象的绝对水平不同也会退化；来源未给统一良性回退。 源码文档提示渐近近似在对象数n>10且条件数k>6时较可靠，这不是强制门槛，也不是金融相关数据的校准证明。 检验条件效应并不等于检验对象间排名一致性的Kendall τ。Q与Kendall协调系数W有同一秩和构造的比例关系，若以后发现该W定义，应同族合并而非另计。 不输出效应方向、事后两两显著性或交易仓位；缺失金融输入绑定和PIT发布时间。 未执行来源统计函数、未采集行情、未回测；完整样本到齐后才可计算，不得回填到窗口内更早时点。 输出：一个完整原生统计构造：统计量及附属p值合计一族，参数、组别、窗口、轴与实现端口不拆新增"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对同一批对象的多个测量方法或条件在每个对象内排名，诊断条件间是否存在系统秩差。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "k>=3个条件，每个条件有同一n>=2个对象的有限观测x_ij（i为对象，j为条件）。每行i在k个条件内作average秩r_ij；该行每个并列组大小t_ig，R_j=Σ_i r_ij。C=1−[Σ_iΣ_g(t_ig³−t_ig)]/[n·k·(k²−1)]。Q=[12/(n·k·(k+1))Σ_j R_j²−3n(k+1)]/C，要求C>0。附属p值为χ²_(k−1)上尾。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "samples（k>=3 ordinary NumPy 1D finite real arrays, each same n>=2）：严格配对对象×条件观测；各对象独立是校准前提，函数不验证经济独立性；nondegeneracy（C>0; all intermediate arithmetic finite）：至少一个对象的条件间存在不同值；不是把所有对象自身方差要求为正。参数：axis：本合同逐个完整一维样本；多轴与广播不增加条目；范围reviewed 1D arrays with axis=0；源码默认0；nan_policy：源码默认传播NaN；本条排除缺值，不能把缺值当零；范围propagate/omit/raise in source; reviewed finite input；源码默认propagate；keepdims：标量统计量与其附属p值；范围reviewed False；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "scipy/scipy",
+  "lab": null,
+  "missing_information": [
+    "未执行来源算法、未回测、未冻结数值运行环境",
+    "金融输入、市场、窗口、组标签生成/PIT发布时间缺失",
+    "p值在金融序列下的校准和多重检验未审",
+    "不证明收益方向、经济独立性或商业许可"
+  ],
+  "name": "配对区组内排名的 Friedman 统计量",
+  "native_source_id": "friedmanchisquare",
+  "one_line": "对同一批对象的多个测量方法或条件在每个对象内排名，诊断条件间是否存在系统秩差。",
+  "record_id": "friedmanchisquare",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-dcaa4b2ca5e08690e90c3e75",
+      "license": "BSD-3-Clause",
+      "locator": "paired signature, assumptions and full row-rank statistic:L8724-L8821; average ranks, stable sorting, per-value tie counts:L10372-L10521; directional and symmetric p-value helper:L1559-L1575; normal and chi-square tail wrappers:L11231-L11259; StudentT tail wrapper:L11285-L11297; rankdata signature and explicit average default:L10284-L10302",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "f83fbd7a76afa61a865820917184eabd67d5ebc04cde4db102ba1ba86e94d0cb",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-bbbecde791dfaaebacee469f",
+      "license": "BSD-3-Clause",
+      "locator": "1D input, defaults, finite path, paired NaN policy:L433-L620; factory defaults:L365-L370; ordinary 1D result return:L621-L623; paired NaN removal across complete objects:L174-L194",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "a1650feb6cfcf6f9a1c764c824e725b39f039a2e19001fb60f48f88c354d102f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_axis_nan_policy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-8b75a55d87853f7f61280e73",
+      "license": "BSD-3-Clause",
+      "locator": "ordinary-array sample counts and masks:L677-L693",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "14dbc9a53b4f6bb8dffe8fb302574fed5a522b619ce15696b1e29766d81b238c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_array_api.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-088c1d9c7042eaaa4ba39300",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_scope:L1-L81",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "6a4d55e53007e0d509dc30f5a8d460c280f0f5bcf2567c910948e7eb23047b10",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

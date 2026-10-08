@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M6509",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 6463,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "aed9a42d333e221c89f757d17b81db12573f4e3e359f4bd6c8a8ed6f4b80c894",
+    "rule_sha256": "54d5883d2b137c407760f559f5474b78c03f162fd839317154fa3dd97fd25f3f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M6509",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M6509"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/DolVol.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Brennan / Chordia / Subrahmanyam / OpenSourceAP CrossSection"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-361/W3720"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Brennan·Chordia·Subrahmanyam·成交金额十分位多空：月末；两月滞后成交额对数；等权多最低空最高持1月（Brennan·DolVol·DecileL/S）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "1998-01-01"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dollar trading volume univariate decile L/S (Brennan et al. 1998 lineage)"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Brennan/Chordia/Subrahmanyam《Alternative factor specifications, security characteristics, and the cross-section of expected stock returns》成交金额溢价之可钉十分位多空（非OpenSourceAP仅回归字段）。DolVol=ln(两月滞后成交量×两月滞后价格)；每月末在NYSE+NASDAQ股票上按DolVol分十分位；等权做多最低成交金额十分位、做空最高成交金额十分位，持有1月。Sign为负（低成交金额溢价）。不是目录条M0396（同URL仅信号浏览器且LSQuantile未写）；不是Datar换手率十分位（近M6498）；不是Amihud ILLIQ十分位（近M4430）。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Brennan·DolVol·DecileL/S"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

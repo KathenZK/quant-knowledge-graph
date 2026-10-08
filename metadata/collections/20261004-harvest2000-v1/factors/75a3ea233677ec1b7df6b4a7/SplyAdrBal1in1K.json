@@ -1,0 +1,91 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述地址层面大额持币集中程度的绝对规模。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-d100d95f321ae8a84dfae536"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "源文间隔 1 day；须在区间结束、原件及必要价格/分类标签发布后使用，实际发布延迟/PIT快照缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-d100d95f321ae8a84dfae536"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "取得每个地址的日末原生币余额和同日当前供给。 筛选余额不低于供给千分之一的地址，包括恰等于阈值者，再加总原生币余额。 边界：不合并同一实体控制的多个地址，不将地址当自然人。 不计ERC-20等非原生代币；XRP包括托管余额；完全隐私资产不可算，可选隐私只计公开余额。 其它1/X阈值、美元门槛、币数量门槛版本本轮不单列；本条仅作地址集中度族的一个来源原生代表。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-d100d95f321ae8a84dfae536"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述地址层面大额持币集中程度的绝对规模。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-d100d95f321ae8a84dfae536"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Σ_a B_a * 1[B_a >= SplyCur/1000]，余额和供给均取日末原生币单位。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-d100d95f321ae8a84dfae536"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "address native-unit balances at day end：按冻结原始文档定义，原生名称/作用见公式和计算步骤；SplyCur：按冻结原始文档定义，原生名称/作用见公式和计算步骤。参数：threshold_share：日末总供给的千分之一；范围fixed native metric; other thresholds same family；源码默认0.001"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-d100d95f321ae8a84dfae536"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "coinmetrics/product-docs",
+  "lab": null,
+  "missing_information": [
+    "供应商数据获取与商用授权未确认",
+    "区间时间边界、发布延迟和修订历史未冻结",
+    "未获取行情/链上数据或执行任何回测",
+    "供应商内部算法/分类标签仅有文档层定义，未取得完整源码"
+  ],
+  "name": "持币至少千分之一供给的地址余额总量",
+  "native_source_id": "SplyAdrBal1in1K",
+  "one_line": "描述地址层面大额持币集中程度的绝对规模。",
+  "record_id": "SplyAdrBal1in1K",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/supply/addresses-with-balance.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Coin Metrics, product-docs official repository",
+      "id": "harvest-source-d100d95f321ae8a84dfae536",
+      "license": "NOASSERTION",
+      "locator": "Val in Addrs w/ Bal ≥ X% of Current Supply:L10-L40",
+      "revision": "8489126ae94aff995d01be44f965327f2640f51e",
+      "sha256": "ac3e68edd8450bc02a5ad9b68e0e1dea24f432eb8cf090ad9973334eaa0b8770",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/coinmetrics/product-docs/blob/8489126ae94aff995d01be44f965327f2640f51e/docs/network-data/network-data-overview/supply/addresses-with-balance.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

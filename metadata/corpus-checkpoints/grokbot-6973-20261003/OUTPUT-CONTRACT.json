@@ -1,0 +1,89 @@
+{
+  "schema_version": "quantgraph-corpus-output-contract/v1",
+  "created_at_utc": "2026-10-03T10:51:00.582532+00:00",
+  "owner": "dot persist_grok_metadata_records only",
+  "coordinator": "Codex root; sole global progress and integration writer",
+  "repository": "KathenZK/quant-knowledge-graph",
+  "output_branch": "dot/grok6973-checkpoints-20261003",
+  "base_commit": "68d1d584b7e50b13f8118460b1f75737844091b3",
+  "tool_commit": "a063616399acc298e334bd8e07cf4820d24e3d95",
+  "tool_path": "graph/metadata_catalog.py",
+  "tool_sha256": "03adda1421502f6215083cfd1e92a97b10993a475dbabee5896d2ccb5b4bbf10",
+  "source_contract": {
+    "bytes": 6470637,
+    "sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "md5": "f3c60e61bedfd0434c339cb4c16a7e4a",
+    "unique_original_ids": 6973,
+    "min_id": "M0001",
+    "max_id": "M7019",
+    "gaps": 46,
+    "authoritative_type_column": false
+  },
+  "exclusive_allowed_output_root": "metadata/corpus-checkpoints/grokbot-6973-20261003",
+  "allowed_new_paths": [
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/plan-reference-v1.json",
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-NNNN-v1/**",
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/receipts/batch-NNNN-v1.json",
+    "metadata/corpus-checkpoints/grokbot-6973-20261003/receipts/complete-v1.json"
+  ],
+  "immutable_coordinator_files": [
+    "OUTPUT-CONTRACT.json",
+    "README.md"
+  ],
+  "forbidden_paths": [
+    "graph/**",
+    "tests/**",
+    "metadata/schema.json",
+    "metadata/index.json",
+    "metadata/strategies/**",
+    "metadata/factors/**",
+    "sites/**",
+    ".github/**",
+    "AGENTS.md"
+  ],
+  "batch_contract": {
+    "size": 100,
+    "batches": 70,
+    "last_batch_ids": 73,
+    "max_additional_inflight_batches": 2,
+    "first_verified_batch_before_expansion": true,
+    "no_overwrite_or_delete": true,
+    "no_force_push_or_rebase": true,
+    "new_trial_count": 0,
+    "unknown_type_inventory_is_complete_id_retention_not_classified_folder_coverage": true
+  },
+  "publication_review": {
+    "repository_is_public": true,
+    "all_added_fields_review_required": true,
+    "public_allowed": "Only validated staged inventory, self-authored factual metadata, source links and byte/hash manifests; original labels remain unverified. Source URLs must remain sanitized by tool.",
+    "public_forbidden": [
+      "Original CSV bytes or full rule/source prose",
+      "raw market data or full papers/web pages",
+      "personal annotations, credentials, signed URLs or private runtime dumps",
+      "unreviewed full plan inventory"
+    ],
+    "stage_bytes": "After field review, copy entire immutable stage output with no edits into permitted batch directory. If unsafe fields are found, keep that batch private and report; do not silently edit outputs or relax schema.",
+    "private_library": "Preserve full private plan and all validated batch archives with independent manifests; report exact Library IDs and recovery receipts privately to parent/root."
+  },
+  "plan_reference_fields": [
+    "source_sha256",
+    "tool_commit",
+    "plan_sha256",
+    "base_index_sha256",
+    "inventory_sha256",
+    "batch_size",
+    "batch_ids",
+    "counts",
+    "type_decisions_sha256_or_null"
+  ],
+  "handoff_per_batch": [
+    "batch_id and original record ID count",
+    "classified strategy/factor and unresolved counts",
+    "checkpoint manifest sha256 and files/bytes",
+    "Library backup identity plus recovery verification receipt (private channel)",
+    "remote branch commit and exact readback verification",
+    "any field-review blocker"
+  ],
+  "integration_owner": "Root reviews each bounded PR and appends records/index on an independent integration branch; dot never writes top-level metadata records or global progress.",
+  "continue_policy": "Do not wait for this executor Library download; dot uses its already verified source bytes. New collection intake remains paused until original corpus remote acceptance."
+}

@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "保存回撤段的极值可能区别浅回调和趋势破坏，按中线距离缩放仓位可能平衡名义风险；尚无经济有效性证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "minp>50为原始价格距离，源码命名pips不能替代单位证据。",
+    "未运行订单；信号价风险与实际成交均价缩放的差异须保留。"
+  ],
+  "name": "保存回撤收盘极值的三 EMA 顺势回穿与风险仓位",
+  "native_source_id": "426487",
+  "one_line": "价格回穿快速EMA时，检验前次回撤以来的收盘极值仍在慢线内侧；按到中线距离定仓，持仓后以信号风险比例挂均价括号。",
+  "record_id": "426487",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E4%B8%89%E9%87%8DEMA%E5%9B%9E%E8%B0%83%E7%AA%81%E7%A0%B4%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Triple-EMA-Pullback-Breakout-Trading-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-426487-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "11c73f9517ed9f88ff09eca62d277cb81cf8932090bf3a52731eb6dcf74b353e",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E4%B8%89%E9%87%8DEMA%E5%9B%9E%E8%B0%83%E7%AA%81%E7%A0%B4%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Triple-EMA-Pullback-Breakout-Trading-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-426487-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-426487-published-code"
+      ],
+      "status": "MISSING",
+      "text": "显式slippage=25（平台tick参数）；手续费、融资、资金费和合约tick现金值为MISSING，未将未声明费用当零。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-426487-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅position_size==0。多区域与多触发均成立时先保存rL=(C−M)/C，若d=C−M>50才entry(long,qty=qL)；空侧先保存rS=(M−C)/C，若d=M−C>50才entry(short,qty=qS)。50直接与价格距离比较，源码虽称pips却没有tick或点值换算。日期输入未生效，inTradeWindow硬编码true。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-426487-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "顺序为EMA→维护极值→区域/回穿→空仓保存风险并entry→可见持仓时exit。未显式process_orders_on_close或逐tick/成交重算；本次静态阅读未核实际成交和保护单首次有效时点。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-426487-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "可见多仓时每棒挂stop=avg_price×(1−rL)、limit=avg_price×(1+2rL)；空仓对称stop=avg×(1+rS)、limit=avg×(1−2rS)，from_entry分别long/short。无指标平仓或最大持期。r从信号价距离取得，但挂单以真实持仓均价缩放，因此跳空后止损未必等于信号时EMA100。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-426487-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始资本1000。risk输入float默认2，riskt=2/100+1；qL=(equity×riskt−equity)/(C−M)，qS=(equity×riskt−equity)/(M−C)，即2%权益除价格风险距离，entry显式qty覆盖默认数量。没有点值、最小数量、权益占比或杠杆上限。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-426487-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "rL/rS在通过区域/回穿门但检查d>50之前更新；订单实际成交前的后续空仓计算可能再更新。止损及2倍目标只在持仓被计算可见后发出。数量单位和跳空使2%只是公式预算，不能保证最大亏损2%；日期选择不会过滤。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-426487-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认输入C，F=EMA25(C)、M=EMA100(C)、S=EMA200(C)。Above/Below每根先承接历史值，C上穿F时Above重置为C，之后C>Above则更新最大值；C下穿F时Below重置为C，之后C<Below则更新最小值。多区域F>M>S，多触发=C上穿F且S<Below<F；空区域F<M<S，空触发=C下穿F且F<Above<S。这些极值是从相应穿越事件以来维护，并非固定N棒最高低。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-426487-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-426487-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

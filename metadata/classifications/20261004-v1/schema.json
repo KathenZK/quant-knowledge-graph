@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "classification_status": {
+      "const": "CONTENT_INFERRED"
+    },
+    "confidence": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "definition_status": {
+      "const": "UNVERIFIED"
+    },
+    "evidence": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "const": "规则"
+          },
+          "quote": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "field",
+          "quote"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "kind": {
+      "enum": [
+        "strategy",
+        "factor",
+        "reference",
+        "unclassified"
+      ]
+    },
+    "quality_flags": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "reason": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "record_id": {
+      "pattern": "^M[0-9]{4}$",
+      "type": "string"
+    },
+    "row_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "rule_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "rule_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "quantgraph-content-classification-decision/v1"
+    },
+    "source": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "bytes"
+      ],
+      "type": "object"
+    },
+    "subtype": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "row_sha256",
+    "rule_sha256",
+    "source",
+    "kind",
+    "subtype",
+    "rule_id",
+    "confidence",
+    "reason",
+    "evidence",
+    "quality_flags",
+    "classification_status",
+    "definition_status"
+  ],
+  "type": "object"
+}

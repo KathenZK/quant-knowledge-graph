@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2905",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2901,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5517dbad01eaa109135557f901463d242e34bbf55e9be0539bb75faaf974a5d5",
+    "rule_sha256": "59e84cd3d532770cdbe9446e61641365f14918d549fe0cde7a32fd283988a5dd"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2905",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2905"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/DisplacedMovingAverageRibbon.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；SMA(15)经Delay(5/10/15/20/25/30)六带，is_ascending满仓、is_descending清仓（Lean DisplacedMovingAverageRibbon）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY SMA15经Delay5–30六带升序满仓降序清仓；Lean DisplacedMovingAverageRibbon）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；SMA(15)经Delay(5/10/15/20/25/30)六带，is_ascending满仓、is_descending清仓（Lean DisplacedMovingAverageRibbon）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `DisplacedMovingAverageRibbon.py`。标的 SPY 日线；基带 `SMA(15)`；`count=6`、`offset=5`，对 i=0..5 施加 `Delay(offset×(i+1))`（延迟 5/10/15/20/25/30）得 displaced ribbon。每日：六值就绪后，未持仓且 `is_ascending(values)`（源码：相邻后值均≤前值）则 `set_holdings(1)`；已持仓且 `is_descending`（相邻后值均≥前值）则 `liquidate`。不是双均线交叉核。提出日期未知。 不是双均线交叉核：本条为SPY SMA(15)经Delay(5/10/15/20/25/30)六带is_ascending满仓、is_descending清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

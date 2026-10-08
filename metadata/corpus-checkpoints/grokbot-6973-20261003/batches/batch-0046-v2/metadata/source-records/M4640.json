@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4640",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4594,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "17ccb2a2353a30b9e98dd34ce4b4d56cb52f49d824e750a444bdd0ce6a31da65",
+    "rule_sha256": "14227f9612238ca3ed9324700ed4162aaa4c6003c9ac8383821e1d07a1074ee0"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4640",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4640"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://quantpedia.com/using-inflation-data-for-systematic-gold-and-treasury-investment-strategies/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Cyril Dujava / Quantpedia"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-175/W1851"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia·通胀MoM加速体制：月末；连续两月MoM通胀加速且GLD近1月收益>0则满仓GLD；连续两月减速且IEF近1月>0则满仓IEF；否则SHY（QP InflRegime·GLD/IEF/SHY）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-02-21"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Quantpedia·通胀MoM加速体制：月末；连续两月MoM通胀加速且GLD近1月收益>0则满仓GLD；连续两月减速且IEF近1月>0则满仓IEF；否则SHY（QP InflRegime·GLD/IEF/SHY）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Quantpedia《Using Inflation Data for Systematic Gold and Treasury Investment Strategies》（2025-02-21）**最终模型**可钉死核。通胀体制：月度 MoM 通胀环比变化连续 **两月为正**→Inflation UP；连续两月为负→Inflation DOWN；否则沿用上月体制（点位优先用 BLS 当时公布、早期可用 FRED CPIAUCSL 近似）。再叠加 **1月动量**：UP 且 GLD 近1月总分收益>0 → 下月 **100% GLD**；DOWN 且 IEF 近1月>0 → 下月 **100% IEF**；其余 → **SHY**（现金近似）。不是 M0916 MIPS 六状态黑箱；不是 Gold Cross-Asset 仅 GLD+IEF 同号（M0654）。计入美股/ETF。提出日期 2025-02-21。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QP 2025-02-21 · Final Model · Infl UP+GLD1m>0→GLD / DOWN+IEF1m>0→IEF / else SHY"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

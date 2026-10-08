@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4425",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4379,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "236c82d459a27adfbe86fd8b278d953d92130d486cae146e0863314c2ac6b181",
+    "rule_sha256": "2e15afbc19663ccfb1cf919efa19234ea7a4c5e78b093c9d58810f94c65526c2"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4425",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4425"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3212862"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Wouter J. Keller / Jan Willem Keuning"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-153/W1635"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keller·Keuning·防御资产配置DAA-G12：月末；金丝雀VWO+BND之13612W；B=2；CF=n/B∈{0,0.5,1}；进攻G12取Top T=6×(1−CF)等权；防御仓取SHY/IEF/LQD中13612W最高（DAA·G12·B2·T6）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "多资产ETF（含美股）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2018-07"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Keller·Keuning·防御资产配置DAA-G12：月末；金丝雀VWO+BND之13612W；B=2；CF=n/B∈{0,0.5,1}；进攻G12取Top T=6×(1−CF)等权；防御仓取SHY/IEF/LQD中13612W最高（DAA·G12·B2·T6）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Keller/Keuning《Breadth Momentum and the Canary Universe: Defensive Asset Allocation (DAA)》（SSRN 2018；TrendXplorer/Allocate Smartly 公开核）之 **DAA-G12**。动量：**13612W**=(12×r12+4×r4+2×r2+1×r1)/19（月总回报）。金丝雀宇宙：**VWO、BND**；n=其中13612W≤0的个数；**B=2**，现金/防御比例 **CF=n/B∈{0,50%,100%}**。进攻宇宙G12：SPY/IWM/QQQ/VGK/EWJ/VWO/VNQ/GSG/GLD/TLT/HYG/LQD；取13612W最高的 **T_eff=round((1−CF)×6)** 只等权（CF=0→Top6；CF=50%→Top3；CF=100%→0只）。防御仓：在 **SHY/IEF/LQD** 中取13612W最高者，权重=CF。月末再平衡。相对 VAA-G12（M0010）：本核用**独立双金丝雀**控仓而非全宇宙广度，平均防御仓显著更低。不是 ADM/HAA/PAA。计入其他（多资产）。提出日期 2018-07。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SSRN 2018 · DAA-G12 · canary VWO+BND B2 · T=6 · cash SHY/IEF/LQD"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

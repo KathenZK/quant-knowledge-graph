@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2411",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2411,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "c1513b1d5aa08e8cca454673a3e53ba5943260d6205c039f919ea31b55fd7919",
+    "rule_sha256": "c77629a33f104d6dc765d68dc46c804161bb02f59038e9e57d6fea77034c6bad"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2411",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2411"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/roll/2025-07-31/doc-infikers7351938.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "民生证券研究院金工（韵天雨；新浪转载；2025-07-31）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "民生金工Deep Timing⊕SimStock属性初始化（Hs初始化GRU隐状态；同70%/30%分位⊕最少持有10日）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股个股择时（全A；自监督相似度嵌入）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-07-31"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "民生金工Deep Timing⊕SimStock属性初始化（Hs初始化GRU隐状态；同70%/30%分位⊕最少持有10日）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。SimStock自监督：输入个股过去40日量价+Barra风格+资金流（形状N×40×20）及行业嵌入；正样本X_pos=λX+(1−λ)X_perm（λ=0.75）；对比学习得属性向量Hs。将Hs初始化收益预测GRU第0隐状态；其余训练与择时阈值同Deep Timing基线（一年70%/30%分位、至少持有10日）。相对无属性基线：本条为相似度嵌入增强核。 不是纯Deep Timing：本条为Deep Timing⊕SimStock属性初始化（Hs初始化GRU隐状态；同70%/30%分位⊕最少持有10日）。 计入其他。 提出日期按源文件原样保留2025-07-31。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

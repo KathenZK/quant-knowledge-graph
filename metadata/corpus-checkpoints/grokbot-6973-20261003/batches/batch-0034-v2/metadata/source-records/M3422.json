@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3422",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3376,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "720245de9efaf16cb9efca32001da36720b1551296601f03b06654788438d0a3",
+    "rule_sha256": "fd1a726f7e027272bbf0ba4fca1374ac101cbed9ea8428bdecda558a3d18db41"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3422",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3422"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/SetHoldingsMultipleTargetsRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY/IBM分钟杠杆1；空仓时目标 SPY80%+IBM20%，已投资则翻转为 IBM80%+SPY20%（Lean SetHoldingsMultipleTargets）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY/IBM分钟杠杆1；空仓时目标 SPY80%+IBM20%，已投资则翻转为 IBM80%+SPY20%（Lean SetHoldingsMultipleTargets）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `SetHoldingsMultipleTargetsRegressionAlgorithm.py`。`add_equity(SPY/IBM, Minute, leverage=1)`。`on_data`：若组合未投资 → `set_holdings([PortfolioTarget(SPY,0.8), PortfolioTarget(IBM,0.2)])`；否则 → `set_holdings([PortfolioTarget(IBM,0.8), PortfolioTarget(SPY,0.2)])`。注释称多目标按保证金影响排序提交以避免保证金错误。不是等权双票核，也不是单票 `set_holdings(SPY,1)` 骨架核。提出日期未知。Lean SetHoldingsMultipleTargets：空仓SPY80+IBM20 / 已投资翻转为IBM80+SPY20 ≠ 等权双票 / 单票set_holdings(SPY,1)。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Algorithm.Python/SetHoldingsMultipleTargetsRegressionAlgorithm.py"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,213 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述有界观测流近期均值是否出现超界差异；不是完整分布变化证明、p值或收益信号。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-4d16934125bfa5d93d918af3",
+        "harvest-source-a0817b9eead841f27ac36640",
+        "harvest-source-d1254d5e78dd5116304c9421",
+        "harvest-source-3989767f7bc74ce08db4520c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每个当前观测及此前输入已发布后才更新，序列预处理也必须截至当时；没有未来回填。市场尺度/时钟、修订和供应商仍MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-4d16934125bfa5d93d918af3",
+        "harvest-source-a0817b9eead841f27ac36640",
+        "harvest-source-d1254d5e78dd5116304c9421",
+        "harvest-source-3989767f7bc74ce08db4520c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审公开river.drift.ADWIN的固定默认参数。从新实例开始，flag=False，W=U=V=tick=n_detections=0；桶层0为空，层i中每个摘要表示2^i个连续观测，保存总和u与组内离均差平方和v，层内按旧至新存放。 调用update(x)时，若此前flag=True，先调用Python_reset，连保留下来的新窗口、tick和n_detections一起清零。随后Rust insert把单点(x,0)追加层0，按公式更新全窗W/U/V，再压缩；update本身返回None。 从层0开始，仅当该层摘要数恰为max_buckets+1=6时，将最旧两个各n=2^i点的摘要(u0,v0),(u1,v1)合成(u0+u1,v0+v1+(n/2)(u0/n−u1/n)²)，追加到层i+1末尾，并从本层移去前两个。若下一层已不超过5就停，否则继续向上；缺下一层就新建。 插入与压缩后tick增加1；tick是本次完整reset以来的输入计数。仅tick能被32整除且当前W严格大于10才检查。本轮change=False开始；每次重扫从n0=u0=0,n1=W,u1=U开始。 按层从最大i向0、层内按旧到新顺序，把每个桶的2^i点与总和从后段转到前段；这是压缩桶边界，不是所有逐点切分。达到层0最后一个桶就停止且不测试该空后段。其余切点仅当n0,n1都至少5时比较严格大于ε。D与V/W都使用当前整窗口。 首个合格超界就置change=True，并从最大非空层删除最旧一个桶，而不是一次删尽被识别前段。删桶大小n、和u、离均差平方和v：Wnew=Wold−n，Unew=Uold−u；Vnew=Vold−[v+n*Wnew/(n+Wnew)*(u/n−Unew/Wnew)²]。若该层空则移去层；重新从所有剩余桶的最旧边界开始扫描。重复直到没有触发。 本轮无论删几个桶，n_detections只在change=True时加1。Rust保存删短窗口直到本次update结束；公开Python会在下一输入前全reset，因此n_detections不是跨报警的终身累计值。不能把只用Rust内核的持续保留窗口语义冒称为本公开入口。 结束后读drift_detected。width=W、total=U、estimation在W=0时为0否则U/W；variance属性经get_variance返回V原始离均差平方和，不是V/(W−1)也不是V/W。Rust另有variance_in_window=V/W，但不等于公开variance；这保留了文档称sample variance与实现不一致。 所有阈值、桶数、时钟和输出合并为一个ADWIN构造族。均值差阈值扫描与可变窗口是研究描述，不证明完整分布相同/不同，不把源码宣传的数学保证转成对任意金融序列的已验证保证。 边界：额外研究合同为已按时间到达的普通有限float64标量，0<=x<=1；总调用数1<=T<=10^6，所有已执行中间运算有限且V及平方根内量非负。源码不替调用者实施这些检查；取有界流是研究域，不冒称源只接受0/1。 固定参数避免clock=0、负/零窗口等原生未统一拦截的参数；T上界同时避开i32计时/诊断计数和1u64<<层号的超界，不是实测容量或复杂度承诺。 δ=.002是门槛参数，输出不是p值；原窗口样本方差文字实际是SSE。源不裁剪负的浮点舍入V；若舍入导致NaN，本合同排除而不假设自动修复。 源码注释称all possible cut points，但真实循环只看压缩摘要边界。比较严格>，grace为W>10，子窗允许n=5；无资格或非32倍时flag=False。 检测时逐桶删减，下一条公开输入前又完全重置；上一条触发后宽度/均值可读，但不能假定该剩余历史参与下一条更新。默认没有warning状态。 Rust维护n_buckets/max_n_buckets的调试计数，合并时并非简单实时桶数；这些不参与本条阈值或公开输出，未将其包装为另一个特征。 仅新建正常对象和顺序update；序列化/反序列化、克隆、自定义参数/直接Rust入口、旧Cython版本及多线程修改未审。未编译或运行PyO3/Rust/上游测试。 金融输入如何缩放到[0,1]、发布时点、修订及对报警的交易反应均MISSING；不能用未来全样本min/max缩放冒充在线。 输出：update返回None，读drift_detected及width/total/estimation/variance/n_detections；全部状态与参数只计一族。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-4d16934125bfa5d93d918af3",
+        "harvest-source-a0817b9eead841f27ac36640",
+        "harvest-source-d1254d5e78dd5116304c9421",
+        "harvest-source-3989767f7bc74ce08db4520c"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述有界观测流近期均值是否出现超界差异；不是完整分布变化证明、p值或收益信号。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-4d16934125bfa5d93d918af3",
+        "harvest-source-a0817b9eead841f27ac36640",
+        "harvest-source-d1254d5e78dd5116304c9421",
+        "harvest-source-3989767f7bc74ce08db4520c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定ADWIN(delta=.002,clock=32,max_buckets=5,min_window_length=5,grace_period=10)。状态为窗口长度W、总和U、离均差平方和V及指数桶。加入x：W←W+1；若W>1则V←V+(W−1)(x−U/(W−1))²/W，再U←U+x，并按步骤压缩桶。每段tick加1；仅tick mod32=0且W>10时按从旧到新的桶边界测试。某切点两侧(n0,u0)、(n1,u1)，两n>=5：D=ln(2 ln(W)/.002)，m=1/(n0−4)+1/(n1−4)，ε=sqrt[2m(V/W)D]+(2/3)Dm；若|u0/n0−u1/n1|>ε则标记变化、只删除最旧一个桶并从头重扫，直到无合格超界切点。Python下一次update前若上次标记True会清空整个辅助状态。当前flag、W和U/W等摘要合为一族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-4d16934125bfa5d93d918af3",
+        "harvest-source-a0817b9eead841f27ac36640",
+        "harvest-source-d1254d5e78dd5116304c9421",
+        "harvest-source-3989767f7bc74ce08db4520c"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x_1,...,x_T（ordinary finite float64 scalars in [0,1], ordered arrival; 1<=T<=10^6; finite intermediate arithmetic and nonnegative SSE/radicands）：额外研究域；金融字段、归一化时点和供应商PIT缺失。。参数：delta：阈值置信参数，不把输出当p值；范围selected fixed native default；源码默认0.002；clock：每本段32条才检查一次；范围selected fixed native default；源码默认32；max_buckets：每指数层正常保留最多5摘要，临时6个触发合并；范围selected fixed native default；源码默认5；min_window_length：两侧点数下限；范围selected fixed native default；源码默认5；grace_period：当前窗口严格大于10才检查；范围selected fixed native default；源码默认10"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-4d16934125bfa5d93d918af3",
+        "harvest-source-a0817b9eead841f27ac36640",
+        "harvest-source-d1254d5e78dd5116304c9421",
+        "harvest-source-3989767f7bc74ce08db4520c"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "online-ml/river",
+  "lab": null,
+  "missing_information": [
+    "金融输入及在线归一化、供应商/时点/PIT MISSING",
+    "实际Python/PyO3/Rust安装、浮点误差和性能未运行验证",
+    "误报率保证所需条件未在金融数据验证；无交易和收益合同",
+    "论文/市场数据/商业使用权利另审"
+  ],
+  "name": "压缩历史窗口均值差驱动的 ADWIN 变化状态",
+  "native_source_id": "ADWIN",
+  "one_line": "用指数桶压缩近期观测，在桶边界比较两侧均值，超界就逐桶删旧历史，并忠实保留公开入口的下次输入重置。",
+  "record_id": "ADWIN",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/drift/adwin.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "River developers and maintainers; native source attributes ADWIN to Albert Bifet and Ricard Gavalda2007 and streaming variance update to Babcock et al2003. This is the maintained River Python/Rust implementation, not a claim of identical paper pseudocode or code written by every cited paper author.",
+      "id": "harvest-source-4d16934125bfa5d93d918af3",
+      "license": "BSD-3-Clause",
+      "locator": "native identity and general ADWIN2 documentation:L1-L38; paper attribution, defaults, reset, raw statistics properties and update:L58-L137",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "dc9acc018365cfcfc572ec9a136f8bfc17d9d2274371da772c21242fd9afb9d4",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/drift/adwin.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "River developers and maintainers; native source attributes ADWIN to Albert Bifet and Ricard Gavalda2007 and streaming variance update to Babcock et al2003. This is the maintained River Python/Rust implementation, not a claim of identical paper pseudocode or code written by every cited paper author.",
+      "id": "harvest-source-a0817b9eead841f27ac36640",
+      "license": "BSD-3-Clause",
+      "locator": "attribution and full bucket storage operations:L1-L73; state initialization and raw variance getter:L75-L147; insert streaming SSE and delete oldest bucket:L149-L195; exponential bucket compression:L197-L236; complete cut scan, repeated deletion and threshold:L238-L303",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "9a6ab2bb8686a63548ea5e76efe463eb4bdf65541864adeed7dd9ebc62841b84",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/rust_src/adwin.rs",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "River developers and maintainers; native source attributes ADWIN to Albert Bifet and Ricard Gavalda2007 and streaming variance update to Babcock et al2003. This is the maintained River Python/Rust implementation, not a claim of identical paper pseudocode or code written by every cited paper author.",
+      "id": "harvest-source-d1254d5e78dd5116304c9421",
+      "license": "BSD-3-Clause",
+      "locator": "native type imported:L1-L22; class registration, exact defaults, updates and getters:L445-L500; submodule mapping:L519-L552; drift class export:L570-L573",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "768a4c824d8ca0e95263af6796eb2013aac4ef4b752154f969064096f2fc0cb1",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/rust_src/pyo3_bindings.rs",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "River developers and maintainers; native source attributes ADWIN to Albert Bifet and Ricard Gavalda2007 and streaming variance update to Babcock et al2003. This is the maintained River Python/Rust implementation, not a claim of identical paper pseudocode or code written by every cited paper author.",
+      "id": "harvest-source-291cf435ff618c48b1eb9c5e",
+      "license": "BSD-3-Clause",
+      "locator": "crate module route and Python binding module:L1-L30",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "f13bdc7e38a5eecf946aeb1af854e9a9f1f31ca1fc7e3d303270f9955469804c",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/rust_src/lib.rs",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "River developers and maintainers; native source attributes ADWIN to Albert Bifet and Ricard Gavalda2007 and streaming variance update to Babcock et al2003. This is the maintained River Python/Rust implementation, not a claim of identical paper pseudocode or code written by every cited paper author.",
+      "id": "harvest-source-b80d91c601a706c541a6c0da",
+      "license": "BSD-3-Clause",
+      "locator": "public ADWIN import and export:L10-L29",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "eeb4ab4c09235926f42d0a68e71915d287dd9f4c41cb0df841cfb33a329c6a07",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/drift/__init__.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "River developers and maintainers; native source attributes ADWIN to Albert Bifet and Ricard Gavalda2007 and streaming variance update to Babcock et al2003. This is the maintained River Python/Rust implementation, not a claim of identical paper pseudocode or code written by every cited paper author.",
+      "id": "harvest-source-3989767f7bc74ce08db4520c",
+      "license": "BSD-3-Clause",
+      "locator": "flag initialization reset and public getter:L16-L33; public abstract update contract:L57-L69",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "0747f5410fe3998075fd572f85f1677d37ca0e4d0d8503d133c6023ac1c87995",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/river/base/drift_detector.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "River developers and maintainers; native source attributes ADWIN to Albert Bifet and Ricard Gavalda2007 and streaming variance update to Babcock et al2003. This is the maintained River Python/Rust implementation, not a claim of identical paper pseudocode or code written by every cited paper author.",
+      "id": "harvest-source-0959526f7f7d450047f9fc7d",
+      "license": "BSD-3-Clause",
+      "locator": "native library and dependency declarations:L1-L35",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "69f0e342b84fc4ac7c2b45cb1c69690d488c03bbb279bbb5af5b6b67007b9112",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/Cargo.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "River developers and maintainers; native source attributes ADWIN to Albert Bifet and Ricard Gavalda2007 and streaming variance update to Babcock et al2003. This is the maintained River Python/Rust implementation, not a claim of identical paper pseudocode or code written by every cited paper author.",
+      "id": "harvest-source-3d412234db4c48f81a1ab01e",
+      "license": "BSD-3-Clause",
+      "locator": "River authors citation and source license:L188-L204",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "bd2997b2e2a67a910ec2011430a650692743233abfaeb23cf7c3d4faff5566a5",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "River developers and maintainers; native source attributes ADWIN to Albert Bifet and Ricard Gavalda2007 and streaming variance update to Babcock et al2003. This is the maintained River Python/Rust implementation, not a claim of identical paper pseudocode or code written by every cited paper author.",
+      "id": "harvest-source-6ce3661632a351443efcc654",
+      "license": "BSD-3-Clause",
+      "locator": "River BSD3 copyright conditions disclaimer:L1-L29",
+      "revision": "086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7",
+      "sha256": "e87f2c8f1ba611702af10cba745e6ceb773d32310135ed55aa2722c55dd0d077",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/online-ml/river/blob/086e8028b4867ee7dbc40d4e7b9886c5fe80f4a7/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

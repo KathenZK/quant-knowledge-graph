@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3663",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3617,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9546124f302f2bee77d6a413268e8521ccc2cb3f3c65c08ffca38a9e45811c54",
+    "rule_sha256": "f0f504bc26b210f3328da0872f4ace8caad5bd937fa1a01ec45e03f6b43dff1c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3663",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3663"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.cxoadvisory.com/sentiment-indicators/combining-economic-policy-uncertainty-and-stock-market-trend/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO Advisory"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-64/W869"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·EPU与股指SMA10「Either」：月末；SMA10多头或EPU环比下降则持SPY，否则T-bill（CXO Either·SMA10∨ΔEPU）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2020-11-10"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·EPU与股指SMA10「Either」：月末；SMA10多头或EPU环比下降则持SPY，否则T-bill（CXO Either·SMA10∨ΔEPU）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CXO《Combining Economic Policy Uncertainty and Stock Market Trend》第一组合的 **Either**。每月末：(1) 标普/SPY 月收盘 **高于** 其 SMA(**10**) 为股指多头；(2) 美国 **Economic Policy Uncertainty (EPU)** 指数上月环比 **为负**（文中：负变化=利多、正变化=利空）为 EPU 多头。二者 **任一** 多头则下月满仓 **SPY**，否则持 **T-bill**。不是裸 SMA10（M3639）；不是 SMA10∨失业率（M3662）；不是同文 Both/仅EPU（同 URL 让位）。计入美股/ETF。提出日期 2020-11-10，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "网页 Either SP500:SMA10 or ΔEPU bullish"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

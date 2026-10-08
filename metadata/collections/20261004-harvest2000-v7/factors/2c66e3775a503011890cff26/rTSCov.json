@@ -1,0 +1,124 @@
+{
+  "economic_basis": {
+    "hypothesis": "在单资产成交价格上分别汇总慢、快两个采样尺度的收益平方，再用两尺度的观测数比例修正噪声偏差；此条只审公开rTSCov的单资产TSRV路径。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "rTSCov默认K=300、J=1，单资产公开路径要求NROW(pData)>=10K，否则报错；对跨多日xts另拒绝。单一数值价格向量不携带日历，必须由输入层保证仅一完整交易时段。 单资产直接调用TSRV(pData,K,J)：先取log(as.numeric(pData))，逐个起点1..K与1..J生成等步索引，对各子网格的相邻log价格差平方求和，然后分别除K/J。不是只选一个网格，也不是将价格线性插值到时钟网格。 已审合同1<=J<K、K与J都是整数，n>=10K且全部价格正有限。源码没有完整验证J<K或正整数；合同用于避免零分母、索引异常和无效log，不能把它描述为函数内部检查。 单资产return早于cor/makePsd分支，因此这些参数对该路径无后处理；负TSRV保持负值，不自动截零或开方。多资产refreshTime、成对同步和协方差路径尚未纳入已审合同，同一rTSCov家族以后补证也不能重复计数。 边界：nbar_K/nbar_J用n−s+1，但实际网格diff总项数为n−s；不能把文档上界或理想统计公式替换源码的有限样本系数。 结果可负，不能当作有效标准差直接开方。J=K时分母为0，参数非法可能Inf/NaN；源码只显式查样本>=10K及多日xts。 numeric vector路径没有自动跨日剔除、时间排序、交易时钟检验或PIT检查；即使样本数量足够也不证明估计统计稳定。 as.numeric矩阵会按列展平，不能把多列numeric矩阵误当已支持的多资产合同；本条限定一维向量。 微观结构噪声修正的模型适用性未验证；不同K/J只是参数变体，不另计。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在单资产成交价格上分别汇总慢、快两个采样尺度的收益平方，再用两尺度的观测数比例修正噪声偏差；此条只审公开rTSCov的单资产TSRV路径。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "令z_i=lnP_i，i=1..n。对步长s∈{K,J}，A_s=(1/s)Σ_(a=1..s)Σ_(相邻i,i+s∈{a,a+s,...<=n})(z_(i+s)−z_i)²，等价A_s=(1/s)Σ_(i=1..n−s)(z_(i+s)−z_i)²。源码设nbar_s=(n−s+1)/s，ρ=nbar_K/nbar_J，返回TSRV=(A_K−ρA_J)/(1−ρ)。注意nbar公式含+1，实际diff网格的收益项共n−s个，照固定实现保留二者差异。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "pData（one positive finite numeric price vector, length n>=10K, in observation-time order within one complete session）：单资产逐笔/等观测序号成交价格，不是对数价格或收益；本函数自行取log。没有强制等钟时采样，尺度是观测点数。。参数：K：慢尺度按成交序号间隔，不是秒数；范围positive integer slow scale; research J<K and n>=10K；源码默认300；J：快尺度；范围positive integer fast scale <K；源码默认1；cor：单变量返回前不会算相关；范围ignored by audited single-asset return path；源码默认False；makePsd：单变量负值不修正；范围ignored by audited single-asset return path；源码默认False；KCov/JCov/KVar/JVar：本条仅单资产K/J；范围multivariate options outside reviewed contract；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5f01e4e89a90ac43d08c6870",
+        "harvest-source-b5a2f57468a7eff5e05fd791"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "jonathancornelissen/highfrequency",
+  "lab": null,
+  "missing_information": [
+    "仅审单资产路径；多资产同步、协方差/PSD/相关分支未冻结",
+    "原论文全文尚未逐式核对，源码与文档索引差异明确保留",
+    "实际数据来源、时点、R依赖与运行结果缺失",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "双采样尺度噪声修正的已实现方差",
+  "native_source_id": "rTSCov",
+  "one_line": "在单资产成交价格上分别汇总慢、快两个采样尺度的收益平方，再用两尺度的观测数比例修正噪声偏差；此条只审公开rTSCov的单资产TSRV路径。",
+  "record_id": "rTSCov",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup。单资产原方法：Lan Zhang、Per A. Mykland、Yacine Aït-Sahalia (2005), A tale of two time scales: Determining integrated volatility with noisy high-frequency data, JASA 100:1394–1411。",
+      "id": "harvest-source-5f01e4e89a90ac43d08c6870",
+      "license": "GPL-2.0-or-later",
+      "locator": "native two-scale purpose and single-asset formula:L2979-L3011; PSD boundary and algorithm authors:L3035-L3046; exact public defaults and single-asset dispatch/gates:L3070-L3094",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "47103e0f8a9f72ae6cdac845655c22a976e2aece49f7bb672302b33338354a32",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/realizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup。单资产原方法：Lan Zhang、Per A. Mykland、Yacine Aït-Sahalia (2005), A tale of two time scales: Determining integrated volatility with noisy high-frequency data, JASA 100:1394–1411。",
+      "id": "harvest-source-b5a2f57468a7eff5e05fd791",
+      "license": "GPL-2.0-or-later",
+      "locator": "single argument isMultiXts day check:L151-L156; complete TSRV log-price subgrid sums and finite-sample correction:L603-L622",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "5f38e15d48ae103a5e9db0715647b0dbc053e7d08ce67aa8b4e620799989d4e2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/R/internalRealizedMeasures.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现：Jonathan Cornelissen、Kris Boudt、Emil Sjoerup。单资产原方法：Lan Zhang、Per A. Mykland、Yacine Aït-Sahalia (2005), A tale of two time scales: Determining integrated volatility with noisy high-frequency data, JASA 100:1394–1411。",
+      "id": "harvest-source-1028bcab3647a0fae74441ed",
+      "license": "GPL-2.0-or-later",
+      "locator": "package identity, maintainers, GPL >=2 and original package paper:L1-L24; unfrozen runtime dependencies:L26-L45",
+      "revision": "eb0e84898ce1c44142726412529bbcf9e296a066",
+      "sha256": "d8d98b0df5ea59c9488f6af78a6246dbbbabb593d56ef92e84eb7516dadce0b3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/jonathancornelissen/highfrequency/blob/eb0e84898ce1c44142726412529bbcf9e296a066/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

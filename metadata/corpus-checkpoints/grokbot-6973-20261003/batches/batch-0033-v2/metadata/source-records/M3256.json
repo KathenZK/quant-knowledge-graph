@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3256",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3210,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "cc645b04b1e5a5ea7c17add97df0fda77dab42998c7456ee3c20573f565a7adc",
+    "rule_sha256": "13a71585157923b3fa6976790deefe07a082222ff9064a91f1e8073ae3363bc3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3256",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3256"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ObjectStoreExampleAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；日线收盘 Identity 上 EMA(10)/EMA(50)；EMA10>收盘且EMA10>EMA50满仓多，EMA10<收盘且EMA10<EMA50满仓空，EMA10穿越EMA50则平对应多/空（Lean ObjectStoreExample）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟；日线收盘 Identity 上 EMA(10)/EMA(50)；EMA10>收盘且EMA10>EMA50满仓多，EMA10<收盘且EMA10<EMA50满仓空，EMA10穿越EMA50则平对应多/空（Lean ObjectStoreExample）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ObjectStoreExampleAlgorithm.py`。`add_equity(\"SPY\", Minute)`；`spy_close=identity(SPY,Daily)`，`ema10/ema50=EMA(spy_close,10/50)`；可用 ObjectStore 键 `spy_close` 暖机或拉 365 日历史。`on_data`：`ema10>close` 且 `ema10>ema50` → `set_holdings(SPY,1)`；`ema10<close` 且 `ema10<ema50` → `set_holdings(SPY,-1)`；多头且 `ema10<ema50` → `liquidate`；空头且 `ema10>ema50` → `liquidate`。不是秒线 EMA60/3600 核（W453），也不是日线 EMA50/200 暖机核。提出日期未知。SPY分钟日线 Identity 上 EMA10/EMA50 多空+穿越平仓+ObjectStore暖机 ≠ 秒线EMA60/3600（M3089）/日线EMA50/200暖机。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2361",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2361,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "341fa25cd74d42794a0b9ef4109297b3f35c688e90cf4b69188505482b0292e4",
+    "rule_sha256": "b0e4af9e61177483964383ac18a3031ac6413bbba11d4b578231d7c7dc7fd76d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2361",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2361"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/dynamic-universe-selection-guide"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：粗选价>10流动性前50，细选市值>10亿且PE>0取市值前10，价>SMA(200)各配10%否则清仓（EasyQuant动态宇宙）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股（粗选流动性前50→市值前10+SMA200；EasyQuant动态宇宙）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-11-27"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：粗选价>10流动性前50，细选市值>10亿且PE>0取市值前10，价>SMA(200)各配10%否则清仓（EasyQuant动态宇宙）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Dynamic Universe Selection Guide》已印 DynamicUniverseStrategy。日线；_lookback=200。coarse：has_fundamental_data 且 price>10，按 dollar_volume 降序取前50。fine：market_cap>1e9 且 pe_ratio>0，按市值降序取前10。剔除时若持仓则 Liquidate；新增则建 SMA(200) 并用历史预热。on_data：价>SMA 且未持仓则 SetHoldings(0.10)；价<SMA 且已持仓则 Liquidate。不是 W241 的 PE 升序等权10只无均线核。提出日期取页面 Published on。 不是W241 PE升序等权无均线：本条为粗选价>10流动性前50、细选市值>10亿且PE>0取市值前10、价>SMA200各配10%。 计入美股/ETF。 提出日期按源文件原样保留2025-11-27。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

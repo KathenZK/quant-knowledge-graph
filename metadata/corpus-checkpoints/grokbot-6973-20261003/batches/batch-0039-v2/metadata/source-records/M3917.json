@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3917",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3871,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "e2feb5560dd3648fafd376fab225f344ff2b6477f6fdf23be7e07d06f58b5793",
+    "rule_sha256": "96b5d8e6c925b916559806718fc1d1a96b5c451069db06802a552a5ff0a44af8"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3917",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3917"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15255/combining-mean-reversion-and-momentum-in-forex-market/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect（转述 Serban / Balvers–Wu）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-96/W1124"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·外汇均值回归×动量OLS：月频；EURUSD/GBPUSD/USDCAD/USDJPY；标准化偏离+3月动量OLS预期收益，多最高空最低（全正只多/全负只空）（QC FX·MR×Mom·OLS）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "外汇"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·外汇均值回归×动量OLS：月频；EURUSD/GBPUSD/USDCAD/USDJPY；标准化偏离+3月动量OLS预期收益，多最高空最低（全正只多/全负只空）（QC FX·MR×Mom·OLS）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect《Combining Mean Reversion And Momentum In Forex Market》：宇宙 **EURUSD/GBPUSD/USDCAD/USDJPY**；用历史对数价估各国 μ、σ，构造**标准化均值回归因子** (x−μ)/σ 与 **3 月动量** x_t−x_{t−3}；pooled OLS 拟合预期收益；每月对四对预测，**做多预期最高、做空最低**（美元名义约 ±100%）；若预期全为正则只多最高，全为负则只空最低。不是外汇偏度阈值（M0829）；不是 12 月多空三对三（M3573）；不是 HP 低频 MA（M3901）。计入外汇。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 15255 EURGBP CADJPY monthly OLS"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

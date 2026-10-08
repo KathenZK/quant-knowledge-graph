@@ -1,0 +1,156 @@
+{
+  "economic_basis": {
+    "hypothesis": "对同一组多列观测估计均值协方差，结合成对距离与到样本中心的距离，衡量其相对拟合多元正态形状的偏离；只登记HZ统计量。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-eec62a8f579d81dadc5938b9"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "全部列每一行已发布、整个样本结束后才可计算；样本均值协方差使用完整窗口，不能提前回填。市场变量、样本时点、供应商、缺值与修订政策MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-eec62a8f579d81dadc5938b9"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审普通二维有限float64数组，2<=p<n且样本协方差在选定数值合同下为满秩；全部中间均值、乘积、指数和分母有限。源入口实际先np.asarray、删除任一列NaN的整行、仅assert二维/n>=3/p>=2，并不完成本合同全部检查。输入整数会把伪逆astype回整数，本合同排除；不是自行更改上游类型处理。 S用np.cov(X,rowvar=False,bias=True)，无频数/分析权重，分母是n而不是n−1；μ为各列全样本均值。B由np.linalg.pinv(S,hermitian=True)得到并astype(X.dtype)。固定NumPy2.2.2对应commit仅作补充运算合同，项目只声明numpy>=2.2.2，未把最低依赖冒充历史安装环境。 补充NumPy合同中pinv默认相对截断1e−15，严格保留s>1e−15*s_max；Hermitian分支用eigh绝对特征值排序并保留符号构造SVD。matrix_rank另用一般SVD，默认严格s>s_max*p*eps。二者阈值不同，不能仅rank==p就笼统保证pinv等于精确逆；公式始终以返回B表述，不偷换S^−1。底层LAPACK、舍入与安装没有执行核验。 源对Z=X−μ计算Dj=diag(ZBZᵀ)，但成对项先用未中心化X求Y=XBXᵀ，再Djk=−2Yᵀ+diag(Y)+diag(Y)[:,None]。精确实对称算术下是(x_i−x_j)ᵀB(x_i−x_j)，实际保留未中心化消减和转置路径，不额外裁负距离或改用centered实现。 multi_dot是矩阵链乘；三个矩阵根据形状乘法成本选择(AB)C或A(BC)，相同成本走A(BC)。全部双重和包含i=j及两个方向，按n²归一，不是U统计量的n(n−1)排对角版本。平滑b按原n/p公式自动确定，不从行情选最优参数。 只选择源码matrix_rank(S)==p的HZ公式。其它路径源把hz直接设4n；该哨兵不是每个退化样本真实拟合距离，低秩合同未提名，未来补审或阈值变化仍是同族。源后续计算mu/si2、对数正态pval和normal，并返回三个字段的HZResults；本条仅hz，不声称接口只返回标量或p值底层已审核。 alpha原默认.05仅影响normal=pval>alpha，不改变hz。源码normal文档称True来自正态，统计上非拒绝不证明正态；金融依赖、重叠窗、多重检验和样本量的校准均未验证。本条未将该boolean准入为交易信号。 所选方法是对拟合正态的高斯平滑分布差异；与Gaussian-kernel MMD类存在方法联系，不因Henze命名另造独立经济概念。当前目录扩召回未找到已登记同一MMD/HZ构造，遇同公式必须合并；窗口、维数、坐标、语言、p/bool都不拆新增。 边界：整数输入伪逆会astype回整数；不能忽略，所审只限float64。 S样本均值与协方差来自全窗口，可能放大计算成本；n×n矩阵的资源、LAPACK依赖和数值消减未执行测试。 源码成对距离可因消减出现浮点负值且无clip；不宣称任何有限输入都稳定。 numpy最低依赖仅是声明，补充固定版不是已复现的历史运行栈。 Mardia偏度/峰度、距离KS同样描述非正态性，但是低阶矩/径向CDF；本条高斯指数成对与拟合参考积分是不同完整构造。共同用途不证明经济独立。 不从原论文引用、源码示例或normal布尔字段推出金融盈利或正确显著性。未运行源算法或回测。 输出：原HZResults中的hz；pval和normal及奇异fallback不作为另一个量化特征"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-eec62a8f579d81dadc5938b9"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对同一组多列观测估计均值协方差，结合成对距离与到样本中心的距离，衡量其相对拟合多元正态形状的偏离；只登记HZ统计量。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-eec62a8f579d81dadc5938b9"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "有限float64矩阵X有n行p列，2<=p<n；μ=mean_i x_i，S=(1/n)Σ_i(x_i−μ)(x_i−μ)ᵀ，B=pinv(S,hermitian=True)，Dj=(x_j−μ)ᵀB(x_j−μ)。源先Y=XBXᵀ，Dij=Y_ii+Y_jj−2Y_ji。b=2^(−1/2)[(2p+1)/4]^(1/(p+4))*n^(1/(p+4))。所审rank(S)==p分支：HZ=n{n^(−2)Σ_iΣ_j exp(−b²Dij/2)−2(1+b²)^(−p/2)n^(−1)Σ_j exp[−b²Dj/(2(1+b²))]+(1+2b²)^(−p/2)}。B保留数值伪逆截断，双重和含对角；这里只将原生hz字段作为统计特征。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-eec62a8f579d81dadc5938b9"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X（ordinary finite float64 ndarray shape(n,p);2<=p<n;selected matrix_rank(S)==p;finite intermediates;no missing values）：同一组完整多列观测，各行样本、各列变量；市场绑定、单位、样本窗口、PIT与数据许可均待固定。额外输入约束不是源自动验证。。参数：alpha：只控制未提名的normal布尔阈值；不是HZ平滑参数；范围default0.05 retained; statistic hz independent；源码默认0.05"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-eec62a8f579d81dadc5938b9"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "raphaelvallat/pingouin",
+  "lab": null,
+  "missing_information": [
+    "金融变量、窗口、发布时间和数据许可MISSING",
+    "实际NumPy/SciPy/LAPACK运行环境与数值表现未冻结",
+    "pval/lognorm完整底层未审，显著性和经济有效性未测试",
+    "原论文/MATLAB以及商用内部研究许可另审"
+  ],
+  "name": "Henze–Zirkler 多元正态偏离统计量",
+  "native_source_id": "multivariate_normality",
+  "one_line": "对同一组多列观测估计均值协方差，结合成对距离与到样本中心的距离，衡量其相对拟合多元正态形状的偏离；只登记HZ统计量。",
+  "record_id": "multivariate_normality",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/raphaelvallat/pingouin/blob/bb1cb22a3137f5864341c7a06cd030c072a170d4/src/pingouin/multivariate.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Raphael Vallat/Pingouin；源码说明由Trujillo-Ortiz等2007 MATLAB改编，方法引用Henze/Zirkler1990。项目声明GPL-3.0与NumPy BSD3分别保留；未审原论文或MATLAB权利，原GPL全文仅保留字节，本条核许可证标识非法律结论。",
+      "id": "harvest-source-eec62a8f579d81dadc5938b9",
+      "license": "GPL-3.0",
+      "locator": "imports interface output and original attribution:L1-L55; complete numeric statistic and singular fallback:L66-L101; inferential output boundary and actual namedtuple return:L103-L122",
+      "revision": "bb1cb22a3137f5864341c7a06cd030c072a170d4",
+      "sha256": "49ad3a350717bd32594c5f94be345b88ff7deaba55fb6a73be2e1a6714d17968",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/raphaelvallat/pingouin/blob/bb1cb22a3137f5864341c7a06cd030c072a170d4/src/pingouin/multivariate.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Raphael Vallat/Pingouin；源码说明由Trujillo-Ortiz等2007 MATLAB改编，方法引用Henze/Zirkler1990。项目声明GPL-3.0与NumPy BSD3分别保留；未审原论文或MATLAB权利，原GPL全文仅保留字节，本条核许可证标识非法律结论。",
+      "id": "harvest-source-ff84d64ca00080ec0c440cd1",
+      "license": "GPL-3.0",
+      "locator": "project author license and minimum dependency declarations:L5-L39",
+      "revision": "bb1cb22a3137f5864341c7a06cd030c072a170d4",
+      "sha256": "613f911ed93e4c5ed3e9da98b0cd629c6bcc84c958cb0dcb727800fa9839fbbb",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/pingouin/blob/bb1cb22a3137f5864341c7a06cd030c072a170d4/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Raphael Vallat/Pingouin；源码说明由Trujillo-Ortiz等2007 MATLAB改编，方法引用Henze/Zirkler1990。项目声明GPL-3.0与NumPy BSD3分别保留；未审原论文或MATLAB权利，原GPL全文仅保留字节，本条核许可证标识非法律结论。",
+      "id": "harvest-source-d4fa681ee5df69565e1493f4",
+      "license": "GPL-3.0",
+      "locator": "retained GPL version3 license identity; no paper or data grant:L1-L6",
+      "revision": "bb1cb22a3137f5864341c7a06cd030c072a170d4",
+      "sha256": "9982fe257de132d8c7176cefd9da40af9e65b3835bf72aac8640ea71bf92c5f6",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/pingouin/blob/bb1cb22a3137f5864341c7a06cd030c072a170d4/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Raphael Vallat/Pingouin；源码说明由Trujillo-Ortiz等2007 MATLAB改编，方法引用Henze/Zirkler1990。项目声明GPL-3.0与NumPy BSD3分别保留；未审原论文或MATLAB权利，原GPL全文仅保留字节，本条核许可证标识非法律结论。",
+      "id": "harvest-source-7d21a5528c378d1d28f46126",
+      "license": "BSD-3-Clause",
+      "locator": "SVD signature and matrix semantics:L1640-L1649; Hermitian and non-Hermitian SVD paths:L1775-L1824; matrix_rank signature:L2011-L2024; default strict rank cutoff:L2102-L2119; pinv signature:L2129-L2141; default cutoff and pseudoinverse reconstruction:L2211-L2240; matrix-chain product semantics:L2842-L2849; three-matrix dispatch and output shape:L2926-L2958; complete three-matrix multiplication parenthesization:L2961-L2979",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "40d795507d435d07bb5f9620a7e2d5f56d6d37bb1bc1b84c5c841b44d3d8257d",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/numpy/linalg/_linalg.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Raphael Vallat/Pingouin；源码说明由Trujillo-Ortiz等2007 MATLAB改编，方法引用Henze/Zirkler1990。项目声明GPL-3.0与NumPy BSD3分别保留；未审原论文或MATLAB权利，原GPL全文仅保留字节，本条核许可证标识非法律结论。",
+      "id": "harvest-source-ffa09221d0f398c97d9b18f3",
+      "license": "BSD-3-Clause",
+      "locator": "unweighted average signature:L416-L428; average return and weights-none mean path:L540-L576; covariance signature and array meaning:L2681-L2692; complete covariance normalization selected no-weight path:L2800-L2895",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "79e65a8b3169b022de8ac2dcc6b43e78ae11fbc7a7c3a60a3d5d637833f00b35",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/numpy/lib/_function_base_impl.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Raphael Vallat/Pingouin；源码说明由Trujillo-Ortiz等2007 MATLAB改编，方法引用Henze/Zirkler1990。项目声明GPL-3.0与NumPy BSD3分别保留；未审原论文或MATLAB权利，原GPL全文仅保留字节，本条核许可证标识非法律结论。",
+      "id": "harvest-source-2ba9c9fa57c4e2708e63a8fd",
+      "license": "BSD-3-Clause",
+      "locator": "complete NumPy BSD3 license:L1-L30",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "01fb016849aa427edb1bbbbd55f91c26ca6cadb32a5b20e7f000655dd05b0760",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

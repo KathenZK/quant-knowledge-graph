@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1716",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1716,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b3fb46c0cf96d723544f4555282979641ee88d3ef1f109b54d19f98f541f9235",
+    "rule_sha256": "9557914a96c7e7bc1628b27be777bf07bf7e4a9977c1ddd6e1cb82e688d87546"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1716",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1716"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/davidzr/freqtrade-strategies/blob/9623c1f3/strategies/ClucFiatSlow/ClucFiatSlow.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "davidzr / freqtrade-strategies社区仓（ClucFiatSlow.py）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区ClucFiatSlow：5m，Fisher-RSI(9)<−0.971且(BinHV式尾差或收盘<0.01415×BB下轨且量<18×均量)做多；收盘×0.95153>BB中轨且EMA6>收盘且Fisher>0.609平多；止损约−34.3%"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密（freqtrade社区ClucFiatSlow；5m）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Freqtrade社区ClucFiatSlow：5m，Fisher-RSI(9)<−0.971且(BinHV式尾差或收盘<0.01415×BB下轨且量<18×均量)做多；收盘×0.95153>BB中轨且EMA6>收盘且Fisher>0.609平多；止损约−34.3%"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。本条只写davidzr仓strategies/ClucFiatSlow/ClucFiatSlow.py默认（无live加仓分支的清晰核）。timeframe=5m；stoploss=−0.34299；minimal_roi约0/5/8/10/76/235/415分钟对应4.354%/3.734%/2.569%/1.9%/1.283%/0.7%/0；trailing_stop=True，positive≈0.01057，offset≈0.03668且only_offset_is_reached=True。buy_params：bbdelta-close=0.00642、bbdelta-tail=0.75559、close-bblower=0.01415、closedelta-close=0.00883、fisher=−0.97101、volume=18。sell_params：sell-bbmiddle-close=0.95153、sell-fisher=0.60924。RSI(9)经0.1×(RSI−50)再逆Fisher得fisher-rsi。BB：收盘BB(40)得lower-bb1/bb1-delta；典型价BB(20)得lower-bb2/mid-bb2；ema_fast=EMA6、ema_slow=EMA48；volume_mean_slow=24。做多需fisher-rsi<−0.97101，且两支或：(1) bb1-delta>收盘×0.00642、closedelta>收盘×0.00883、tail<bb1-delta×0.75559、收盘低于上一根lower-bb1且收盘≤上一根收盘；(2) 收盘<ema_slow且收盘<0.01415×lower-bb2且量<(均量.shift(1)×18)。平多：收盘×0.95153>mid-bb2且ema_fast>收盘且fisher-rsi>0.60924且volume>0。不是W059 ClucHAnix / W081 Cluc4。提出日期未知。 不是M1511 ClucHAnix，也不是M1612 Cluc4：本条是5m ClucFiatSlow，Fisher-RSI(9)<−0.971且(BinHV式尾差或收盘<0.01415×BB下轨且量<18×均量)做多，收盘×0.95153>BB中轨且EMA6>收盘且Fisher>0.609平多，止损约−34.3%。 计入加密。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,121 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说：根据隐含波动率调整出售上行空间、把每月展期分散到五天并参考已有覆盖量，可能改变备兑组合的权利金、上涨参与和展期时点风险。仅为构造的经济解释，不是收益驱动证据，也未验证优于平值或固定delta备兑。",
+    "missing": [
+      "没有验证收益、交易可实现性或经济独立性。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "CboeGlobalIndices",
+  "lab": null,
+  "missing_information": [
+    "核心源版本差异：v3.0正文行权价式保留max(0,(IVM−10)/4)，参数表和示例按波动率点；附录2025修订式写IVM×100且省去max(0,...）。本记录只转录当前正文及其≤10%时101.5%的说明，不合成两个公式；该差异仍待独审，不宣称已消解。",
+    "Cboe Hanweck 25delta近月理论期权隐波为外部模型输出；文件不展开拟合/插值/微笑处理和精确原始字段编码。使用波动率点是当前正文参数表/示例的单位表达，不代表已取得Hanweck feed合同。",
+    "Round半整数规则、理论行权价等距的两档取舍、无报价/倒挂/缺分钟数据、同一日多个节假日槽位、首月初始化、总余额异常时处理未完整给出；引用的Cboe_Index_Policies_Practices未采集。",
+    "数量式的剩余预算没有显式max(0,...)，且20%预算之后仍乘权利金及成本因子；不改写成五批始终等权、严格20%最终风险上限或实盘保证完全覆盖。",
+    "指数以连续单位计算，未给整张合约取整、最小交易单位、保证金/券商约束；最终TWAP与数量在窗口结束后才可完全确定，没有实际成交复制验证。",
+    "指数基日、发布日前历史、2023时点变更及2025公式修订不同；不能把当前正文直接当全历史同一规则。许可与行情/模型授权独立REVIEW_REQUIRED；没有回测、收益或执行结论。"
+  ],
+  "name": "Cboe CALD：25 delta 隐波驱动行权价与五批覆盖预算的 SPX 备兑方法",
+  "native_source_id": "CALD",
+  "one_line": "持有标普500总收益敞口，以近月25 delta认购隐含波动率决定卖出认购的阶梯行权价，并在每月五个营业日按剩余覆盖预算分批换仓；范围限定v3.0当前正文。",
+  "record_id": "CALD",
+  "relations": [],
+  "rights": {
+    "derived_results": "没有执行源码、回测或复现指数业绩。",
+    "metadata": "自撰事实性规则、明确缺项与出处定位；不复制来源原文、图表或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://cdn.cboe.com/api/global/us_indices/governance/Cboe_Validus_Dynamic_Call_BuyWrite_Indices_Methodology.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Cboe Global Indices, LLC / Validus methodology attribution as titled",
+      "id": "cboe-validus-dynamic-call-buywrite-pdf",
+      "license": "Cboe Global Indices / Cboe Exchange all rights reserved; document carries CONFIDENTIAL footers and restrictive reuse notices. Public readability does not grant redistribution, derivative-index, market-data or commercial-use rights. Only self-authored factual metadata and locators; commercial use REVIEW_REQUIRED.",
+      "locator": "v3.0 current body Sections 1–3; PDF physical pages 3–11; Appendix1 physical pages12–13 retains differing historical formula; field lines refer to original-PDF-derived text, see review.field_spans/visual_formula_evidence.",
+      "revision": "Cboe Validus Dynamic Call BuyWrite Indices Methodology v3.0; revised 2026-03-03",
+      "sha256": "25056cb764574f47b0175ee91cbbeb0b52b7525fcbdbf77fc0e2209cb3b40c6f",
+      "supports": [
+        "CALD投资与行权价、五批换仓和数量、成本估计、时点及明确源冲突"
+      ],
+      "url": "https://cdn.cboe.com/api/global/us_indices/governance/Cboe_Validus_Dynamic_Call_BuyWrite_Indices_Methodology.pdf",
+      "verification": "FETCHED_PINNED_FIRST_PARTY_DOCUMENT_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "cboe-validus-dynamic-call-buywrite-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CALD持有S&P 500指数的总收益多头敞口，并卖出标准近月、上午结算的SPX看涨期权；以USD记值。只收CALD，文件中的Russell 2000 CALRD是同族资产/参数版本，本条不拆作另一新增。期权空头的现金流回到标的多头；“指数单位”不是已映射到可直接下单的证券/合约账户。"
+    },
+    "cost": {
+      "evidence": [
+        "cboe-validus-dynamic-call-buywrite-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源给估算成本比例TC=Fday/S_TWAP×min[1.5,0.20+0.035×max(0,VIX_TWAP−12)]，两个TWAP取10:00–10:30 ET；周五Fday=1，其他展期日1.45，以反映同时买旧卖新的跨期交易效率。TC进入新批数量的(1−TC)，不另外杜撰逐边收费。此为方法假设，不是实际成交成本承诺；券商佣金、保证金融资、税、滑点及行情/模型订阅费没有完整实盘合同，不能当零。"
+    },
+    "entry": {
+      "evidence": [
+        "cboe-validus-dynamic-call-buywrite-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "展期日j先用新目标行权价选下一标准月度上午结算认购，再卖出按position字段计算的Nj单位。新认购视同按10:00–10:30 ET每分钟最后tick的中间价TWAP卖出。其余四批不重开，也不是一次卖齐五份；基础指数多头连续保留，权利金按文中计值关系再投。当前源规则没有按信号正负切换空仓、认沽或反向买call。"
+    },
+    "execution_time": {
+      "evidence": [
+        "cboe-validus-dynamic-call-buywrite-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "10:00 ET观察S与近月25delta IV并确定理论行权价；10:00–10:30汇集每分钟末tick中间价，10:30及以后按TWAP计算展期与新数量；10:30以前按非展期方式计值；到期日新展期计算须等10:30与SOQ发布二者较晚时刻，10:30之后至迟发SOQ之间的等待区间如何计值未详述。数量用最终新call TWAP和成本窗口，不能在10:00就假定知道完整数量或成交价；本条记录的是指数计算安排，尚无实际执行仿真。源脚注还明确2022发布前历史用收盘定K，2023观察从10:30改10:00，当前合同不回填这些旧版本。"
+    },
+    "exit": {
+      "evidence": [
+        "cboe-validus-dynamic-call-buywrite-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "槽位j展期时买回上月相同槽位旧call，通常以10:00–10:30 ET分钟末tick中间价TWAP计买回价；标准到期日旧call直接按max(0,SOQ−Kold)结算，损益由多头组合余额支付。SOQ由成分股开盘价形成，不等于普通10:00现值。随后同槽位再卖新一期；没有给定价格止盈、止损或盘中止损。其余四批维持到各自展期。"
+    },
+    "position": {
+      "evidence": [
+        "cboe-validus-dynamic-call-buywrite-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "以Mprev为昨日多头余额、Sprev为昨日标的收盘、D为当日指数点股息、S10为展期日10:00现值，先得Mroll=Mprev×(S10+D)/Sprev−Nj_old×Cclose。其他槽位Ni不变。令B=min[0.20Mroll, Mroll−Σ(i≠j)Ni×min(S10,Kold_i)]，新批Nj=(1+Cnew_TWAP/S10)×(1−TC)×B/Knew_j。展期后Mt=Mroll×St/S10+Nj×Cnew_TWAP；指数值=Mt−Σ全部五批NiCi。非展期日Ni不变，Mt=Mprev×(St+D)/Sprev。公式按连续指数单位，不擅加100合约乘数或整张取整。20%是预算项，后面还有权利金和成本因子；B未显式夹到零，不能声称最终五批始终等权或任何市场状态下严格覆盖上限。"
+    },
+    "risk": {
+      "evidence": [
+        "cboe-validus-dynamic-call-buywrite-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "保留备兑的股票下跌风险及上涨被卖出call截断风险；五批与动态K不构成保本。源公式可能在异常余额/现存覆盖关系下得B<0而未给处理；不补max(0,B)。Hanweck模型/报价中断、档位并列、Round细节、首月/异常节假日初始化仍有缺项。尤其正文与2025附录低IV边界不同，本候选仅当前正文构造，独审前不计新增。发布前历史曾用收盘定K，2023改观察时点，2025改公式，不能把当前规则当整段回溯口径；尚未执行或验证实盘可复制。"
+    },
+    "signal": {
+      "evidence": [
+        "cboe-validus-dynamic-call-buywrite-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按v3.0当前正文，把IV写成波动率点v（10代表10%），10:00 ET标的为S10：K*=S10×min[0.015+Round((100+max(0,(v−10)/4))/0.25)×0.0025,1.165]，再取离K*最近的上市行权价。v≤10时理论目标为1.015S10；随v上升以0.25%标的价格为理论步长上移，最高1.165S10。并列档位和Round半整数未定义。该函数决定卖出上行空间，没有额外择时开关。附录2025修订栏的式子另写IVM×100且没有max(0,...)，低IV行为不完全一致；本条明确选择当前正文及示例，保留冲突，不把附录拼成新公式。"
+    },
+    "timeframe": {
+      "evidence": [
+        "cboe-validus-dynamic-call-buywrite-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月五个展期营业日：标准上午结算月度到期日（通常第三个星期五）及其前四个营业日；遇交易所假日向前调，来源仍要求每月五个展期日。每个槽位j只关闭/结算上月同槽位一批并打开新批，旧批通常已持有28–35日；其余四批数量保持。日内15秒发布指数不等于15秒调仓，常规交易构造为月度五批。"
+    },
+    "universe": {
+      "evidence": [
+        "cboe-validus-dynamic-call-buywrite-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个展期槽位选择一个月到期的标准上午结算SPX认购。行权价取离当前正文理论目标最近的上市档位；输入是10:00 ET标普500现值，以及Cboe Hanweck提供的最近标准到期、理论25 delta认购隐含波动率，期权报价来自OPRA。25 delta是IV取样位置，并非最终卖出期权的目标delta；Hanweck模型与数据授权未由本文提供。"
+    }
+  }
+}

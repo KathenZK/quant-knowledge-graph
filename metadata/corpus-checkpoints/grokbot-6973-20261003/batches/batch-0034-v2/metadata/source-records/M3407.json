@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3407",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3361,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "f16e257624d1b2608e8d0cd8bce7038d795e75bf9953ecd55d7f6163822fed14",
+    "rule_sha256": "02c833e8821dc70f4cf7588126f5b3293d9ddee705752d2caa3accd38686ea20"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3407",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3407"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FutureOptionMultipleContractsInDifferentContractMonthsWithSameUnderlyingFutureRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "商品期货期权：COMEX黄金连续过滤0–365日延时；对四张指定FOP（2020-03-26 Call1650/Put1540与2020-02-25 Call1600/Put1545，标的期货2020-04-28）在常规交易时段各市价买1（Lean FutureOptionMultipleContracts）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "商品期货期权：COMEX黄金连续过滤0–365日延时；对四张指定FOP（2020-03-26 Call1650/Put1540与2020-02-25 Call1600/Put1545，标的期货2020-04-28）在常规交易时段各市价买1（Lean FutureOptionMultipleContracts）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FutureOptionMultipleContractsInDifferentContractMonthsWithSameUnderlyingFutureRegressionAlgorithm.py`。`universe_settings.extended_market_hours=True`；`add_future(GC,Minute,COMEX,extended_market_hours=True).set_filter(0,365)`；`add_future_option`。`on_data`：若 quote 标的属于预期四合约且 `exchange_open`（常规时段），尚未成交则 `market_order(symbol,1)`。四合约均须买入。不是单合约 ES FOP ITM/OTM 核，也不是 W466 黄金 ATM 最远月看涨核。提出日期未知。COMEX黄金四张指定跨月FOP各市价买1（常规时段） ≠ 黄金ATM最远月看涨（M3102）/单合约ES FOP。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

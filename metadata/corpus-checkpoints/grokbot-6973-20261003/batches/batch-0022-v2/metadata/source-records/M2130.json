@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2130",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2130,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "dd74b9a5648aded83e52a9e923dd89bd448a3a396d1186251e9347b7e53366d1",
+    "rule_sha256": "71f43e0bf39bd3af1cb7d0276164eeb0bd882d17c7e11bc991fa0a172064078e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2130",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2130"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/momentum-etf-strategy-stops"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：多标的日线价>SMA(50)且ROC(20)>0等权开仓，入场后ATR(14)×2止损与×4止盈OCO（EasyQuant动量括号单）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY/QQQ/IWM/XLE/XLF/TLT/GLD；SMA50+ROC20+ATR括号；EasyQuant）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-11-27"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：多标的日线价>SMA(50)且ROC(20)>0等权开仓，入场后ATR(14)×2止损与×4止盈OCO（EasyQuant动量括号单）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《2-Day Momentum ETF Strategy with Stop-Loss and Take-Profit in QuantConnect》已印 MomentumETFWithBracketOrders。标的池 SPY、QQQ、IWM、XLE、XLF、TLT、GLD；日线。lookback=20（ROC），trend_period=50（SMA），atr_period=14（Wilders ATR），sl_multiplier=2.0，tp_multiplier=4.0；allocation=1/7。未持仓且无未成交挂单时：price>SMA(50) 且 ROC(20)>0 则市价买入等权仓。成交后在 on_order_event 以成交价为锚：止损=成交价−2×ATR，止盈=成交价+4×ATR；任一成交则取消另一挂单（OCO）。提出日期取页面 Published on。 不是W196 EMA50/200状态，也不是单ROC动量：本条是EasyQuant多标的日线价>SMA(50)且ROC(20)>0等权，入场后ATR(14)×2止损与×4止盈OCO。 计入美股/ETF。 提出日期按源文件原样保留2025-11-27。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

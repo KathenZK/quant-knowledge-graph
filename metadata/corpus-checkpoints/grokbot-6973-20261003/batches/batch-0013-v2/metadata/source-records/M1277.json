@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M1277",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 1277,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9385ce1971d6274ff46c9164fd81f38417a383e434369032d8c88b9042d4a023",
+    "rule_sha256": "e6fc4ff4f1719fbaa7e7a3e0bdde3cb2074798342efd74ea2f5886711f5aeebb"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M1277",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M1277"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://bigquant.com/wiki/doc/gwoDQeVeIf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区（bq5973r5/bqhnclli）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区：随机森林横截面选股（HS300+500+1000；TRAIN240；未来20日排名；Top30/20日）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股（is_hs300或is_zz500或is_zz1000；非ST非停牌；上市>365日；pe/pb/ps/close/amount>0）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-05-19"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "BigQuant社区：随机森林横截面选股（HS300+500+1000；TRAIN240；未来20日排名；Top30/20日）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。特征含EP/BP/SP、收入利润同比、ROE/ROA/毛利率/ROIC、动量20/60/120、日内波幅、成交额比20、换手、roe_to_pb、roa_to_pe、log流通市值等；按日截面标准化；标签为未来20日收益横截面分位排名。滚动TRAIN=240日拟合RandomForestRegressor；预测集用训练集1%/99%分位裁剪。按预测分Top30等权；TradingDaysRebalance(20)。页另述可用Optuna-TPE在n_estimators∈[50,200]、max_depth∈[3,10]、min_samples_leaf∈[2,20]上最大化验证RankIC（本条只收可印组合与训练窗规则，不编造默认树参）。 不是已收LightGBM/ICIR/ElasticNet类：本条是RandomForestRegressor滚动TRAIN=240、未来20日横截面分位标签、HS300∪500∪1000、Top30每20日；页述Optuna树参搜索区间，未印单一默认树参，不编造。 可回测标数据不足（随机森林默认树参未印出，不编造）。 计入其他。 提出日期按源文件原样保留2026-05-19。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,116 @@
+{
+  "economic_basis": {
+    "hypothesis": "根据局部信号与噪声估计调整平滑程度。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-3698cb995871114ace921afc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "收盘后输入才固定；源码未锁定市场、交易所或bar周期；实时柱内的输出可变。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-3698cb995871114ace921afc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "以回看区间相邻差分平方的均值之半估计噪声方差。 对每个时点相对于当时滚动均值的平方偏差再滚动平均，得到信号加噪声量。 截断估计的信号方差为非负，按信噪比例在均值与当前值间收缩。 边界：V_t不是把当前窗口全部点减同一个当前均值再求方差。 平坦序列可令 S=N=0，源码没有处理0/0；历史不足也可能NaN。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-3698cb995871114ace921afc"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "根据局部信号与噪声估计调整平滑程度。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-3698cb995871114ace921afc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N_t=Σ_(i=0..L-2)(x_(t-i)-x_(t-i-1))²/[2(L-1)]；m_t=SMA_s(x)_t；V_t=SMA_s((x-m)^2)_t；S_t=max(V_t-N_t,0)；k_t=S_t/(S_t+N_t)；y_t=m_t+k_t*(x_t-m_t)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-3698cb995871114ace921afc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src：每根已完成柱的价格或数值输入；默认close。参数：length：差分噪声回看；范围integer 5..500 (UI)；源码默认20；smooth_len：均值及平方偏差平滑根数；范围integer 2..100 (UI); function default10；源码默认10"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-3698cb995871114ace921afc"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为数值序列滤波或链上状态特征，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "mihakralj/pinescript",
+  "lab": null,
+  "missing_information": [
+    "Pine运行环境与ta.*内建语义未另冻结",
+    "未编译或执行Pine代码",
+    "市场数据、时间周期、调整方式和成本未选择"
+  ],
+  "name": "差分噪声估计的 Wiener 自适应收缩",
+  "native_source_id": "wiener",
+  "one_line": "根据局部信号与噪声估计调整平滑程度。",
+  "record_id": "wiener",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。源码MIT不等于原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/wiener.pine"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-3698cb995871114ace921afc",
+      "license": "MIT",
+      "locator": "wiener:L12-L27; UI defaults and input selectors:L32-L34; native function invocation and selected source:L37-L37",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "189f59e7fadad32b799ef9a310e9737850494dfad085b115e8d0e8e8ab39458a",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/wiener.pine",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-804bcf21463c75493a5520e3",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "19436752dbc325b6013c778a438efa521d0fefe0eb53aebf83d7753543052936",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Miha Kralj; individual files © mihakralj",
+      "id": "harvest-source-7213e3914d25644a16717feb",
+      "license": "MIT",
+      "locator": "author notes:L1-L61",
+      "revision": "c4e91b962be09733d8fc76caa5191e9e586c5cee",
+      "sha256": "6dafd45782d5478076ce80b07de9c3ffd801104d96c26f8fbc0ab7ff2613cf7e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/mihakralj/pinescript/blob/c4e91b962be09733d8fc76caa5191e9e586c5cee/indicators/filters/wiener.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

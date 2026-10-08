@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "价格振荡与资金流共同极端可能反转，但共同使用价格量的两序列不保证独立证据，无收益验证。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "Show in Percentage选项参与实际退出；本摘要冻结默认false。",
+    "绘图WT阈值输入未接到入口常数。"
+  ],
+  "name": "真实区间资金流与WaveTrend双极值反转",
+  "native_source_id": "432343",
+  "one_line": "使用含前收盘的真实区间资金流，结合WaveTrend极值逆向入场；资金流到相反一侧阈值退出。",
+  "record_id": "432343",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E6%B3%A2%E6%B5%AA%E9%80%9A%E9%81%93%E5%92%8C%E8%B5%84%E9%87%91%E6%B5%81%E6%8C%87%E6%A0%87%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E7%AD%96%E7%95%A5WaveTrend-and-CMF-Based-Trend-Following-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-432343-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "a7d827372c5217e8e7f61c037ca4f26cb9c6cf5db714d4a76d14f3844e78ea44",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E6%B3%A2%E6%B5%AA%E9%80%9A%E9%81%93%E5%92%8C%E8%B5%84%E9%87%91%E6%B5%81%E6%8C%87%E6%A0%87%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E7%AD%96%E7%95%A5WaveTrend-and-CMF-Based-Trend-Following-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-432343-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-432343-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未明确手续费、滑点、点差和持仓费，成本MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-432343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "wt1<−60且cmf<−0.20时多；wt1>60且cmf>0.20时空，不要求交叉事件或wt1/wt2交叉。两独立方向if；阈值60/0.20直接写在条件，修改绘图ob/os输入不自动改变订单条件。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-432343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v3当前OHLCV更新资金流与WT，先多entry、空entry，再两侧close。未显式逐tick/成交重算/收盘成交；没有外部高周期依赖或未来索引，仍未核实际成交。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-432343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "cmf_p>0.18时close多，cmf_p<−0.18时close空。默认p=false所以cmf_p=cmf；若启用p则cmf_p=50cmf+50，但退出常数仍0.18/−0.18，不能将非默认选项描述为纯显示改变。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-432343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "100%权益、pyramiding=0、币种EUR，entry无qty覆盖；反向entry可能反转持仓。资本、保证金与合约乘数未冻结。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-432343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "CMF真实区间包含前收盘，与标准只用当前H/L的CMF不同。sum量为0、WT的d为0未保护；没有价格风险上限。非默认p会改变退出语义，不能将绘图选项当完全无害。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-432343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认len20、聚合SUM、e=10、p=false、mvs=false。TL=min(L,C[1])，TH=max(H,C[1])；wv=V^(e/10)×(mvs?hlc3:1)，默认V；ad在TH==TL时0，否则(2C−TH−TL)/tr(true)×wv；cmf=sum20(ad)/sum20(wv)。ap=hlc3，esa=EMA10(ap)，d=EMA10(abs(ap−esa))，ci=(ap−esa)/(0.015d)，wt1=EMA21(ci)；wt2=SMA4(wt1)不参与订单。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-432343-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-432343-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

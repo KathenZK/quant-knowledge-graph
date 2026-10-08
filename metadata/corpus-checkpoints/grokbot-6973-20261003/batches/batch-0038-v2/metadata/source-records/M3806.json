@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3806",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3760,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8fdcc29ac618847edf91d7077966ced793efaeb081515f6ba5c3e4f15ce77d73",
+    "rule_sha256": "4ecdeb7c84718e96373939c56d1ec8185190ce27d77e416096333779e37fc26d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3806",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3806"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.cxoadvisory.com/technical-trading/buy-intraday-loser-stocks-in-the-last-half-hour/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO Advisory（转述 Soebhag, Baltussen & Da）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-82/W1013"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "低"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·尾盘半小时反转：日频；流动股按日间前段收益取最低十分位，仅末30分钟等权持有至收盘（CXO EOD·Rev·LH30）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-01-06"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "CXO·尾盘半小时反转：日频；流动股按日间前段收益取最低十分位，仅末30分钟等权持有至收盘（CXO EOD·Rev·LH30）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CXO《Buy Intraday Loser Stocks in the Last Half-hour?》转述 Soebhag/Baltussen/Da《End-of-Day Reversal》：宇宙剔 NYSE 市值第 **10** 百分位以下、股价<$5、样本不足 **126** 日者；将交易日分为隔夜、首半小时、首半小时末→收盘前1小时、次末半小时、**末半小时**；以隔夜+首半小时+至收盘前1小时三段合计收益排序，等权做多最低十分位，**仅持有末半小时**并于收盘平仓（文忽略次末半小时以排除弹跳伪迹）。不是隔夜偏置组（M3686）；不是 CO-OC 截面（M3714）。计入美股/ETF。提出日期 2025-01-06，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "网页 last-30m long prior-day losers decile"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

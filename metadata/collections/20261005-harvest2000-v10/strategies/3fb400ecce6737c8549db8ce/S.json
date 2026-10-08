@@ -1,0 +1,147 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者假设商品期货曲线斜率最近一天的移动会延续至下一天，于是交易曲线内的价差；这里只保留研究假说，不把拟合良好或论文收益当成机制或盈利已证明。",
+    "missing": [
+      "本文只是定义与来源核对，没有验证机制、收益或交易可行性。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "arXiv:2308.00383",
+  "lab": null,
+  "missing_information": [
+    "只审核作者固定版本的方法描述；没有作者实现或市场数据，没有执行、复现收益或证明经济有效性。",
+    "β拟合损失、数值求解器、期限月数计法、缺失值和退化曲线处理没有完整展开；实际需要先冻结实现假设。",
+    "当日结算价同时用于拟合和当日末成交是论文价格约定，实际结算价公布与下单时间、组合成交、容量、整数合约和保证金处理尚未核。",
+    "价格为零/负值时回报与成本分母、滚动时各到期腿对应以及空分组边界均需实现前澄清。",
+    "arXiv仅列非独占分发给arXiv的许可；并非面向读者的开源/CC或商用授权。数据商、期货数据和交易所规则权利另行审查。",
+    "正、非正组如果一组为空时资本分配未明示；不补全仓另一组、现金或跳过规则。组内等权引用§5.7回指基准S的说明。"
+  ],
+  "name": "S：NS斜率日变动驱动的商品跨期价差截面组合",
+  "native_source_id": "S",
+  "one_line": "每天从最近四合约拟合曲线斜率，以斜率变化正负选择近月对第四月价差方向，两信号组各分一半资本，持有一天。",
+  "record_id": "S",
+  "relations": [],
+  "rights": {
+    "derived_results": "没有执行来源代码、下载行情、回测或复现论文结果。",
+    "metadata": "自撰事实性规则与来源定位；不复制论文原文、图表、源码或数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://arxiv.org/licenses/nonexclusive-distrib/1.0/license.html"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Robert J. Bianchi; John Hua Fan; Joëlle Miffre; Tingxi Zhang",
+      "id": "arxiv-2308-00383v1-pdf",
+      "license": "arXiv non-exclusive distribution license 1.0: submitter grants distribution rights to arXiv, not a general CC/open-source or commercial-use license to readers. Paper, publisher, third-party market-data and exchange rights remain separately REVIEW_REQUIRED. Only self-authored factual metadata and locators are prepared for publication.",
+      "locator": "固定PDF§2.1/2.2/3.1/4.2/4.3/5.7，物理页5–8/14–16/27–28；派生文本行号见review.field_spans。公式提取缺字须核原PDF及review.visual_formula_evidence。",
+      "revision": "arXiv:2308.00383v1 submitted 2023-08-01; PDF This version July 16, 2023",
+      "sha256": "d244f3b2fbc0ab91f955087ab7c87f5d417319115e79371b3c594870ca0b5150",
+      "supports": [
+        "曲线拟合、形成信号、交易腿、权重、调仓与成本方法及明确缺项"
+      ],
+      "url": "https://arxiv.org/pdf/2308.00383v1",
+      "verification": "FETCHED_PINNED_AUTHOR_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Robert J. Bianchi; John Hua Fan; Joëlle Miffre; Tingxi Zhang",
+      "id": "2308.00383v1-abs",
+      "license": "arXiv non-exclusive distribution license 1.0: submitter grants distribution rights to arXiv, not a general CC/open-source or commercial-use license to readers. Paper, publisher, third-party market-data and exchange rights remain separately REVIEW_REQUIRED. Only self-authored factual metadata and locators are prepared for publication.",
+      "locator": "citation_title/citation_author/citation_date/citation_arxiv_id; submission history and view-license hyperlink",
+      "revision": "arXiv versioned abstract page; HTTP snapshot 2026-10-04T17:30:21.257448+00:00",
+      "sha256": "e47520a9b391736b3a25b1642da73d358761c33f1248e332f5565ee84aef6733",
+      "supports": [
+        "原生论文ID、作者、版本、提交日期、论文许可指针"
+      ],
+      "url": "https://arxiv.org/abs/2308.00383v1",
+      "verification": "FETCHED_PINNED_PUBLIC_IDENTITY_PAGE"
+    },
+    {
+      "attribution": "arXiv",
+      "id": "arxiv-nonexclusive-license",
+      "license": "arXiv non-exclusive license to distribute",
+      "locator": "License grant and revision history",
+      "revision": "nonexclusive-distrib/1.0; HTTP snapshot 2026-10-04T17:30:21.786276+00:00",
+      "sha256": "1991765e2079370736d4dedf217375799ad19aab6700ebdf42ae3dd84690067a",
+      "supports": [
+        "仅授予arXiv分发许可的范围；不推导通用商用权"
+      ],
+      "url": "https://arxiv.org/licenses/nonexclusive-distrib/1.0/license.html",
+      "verification": "FETCHED_PINNED_LICENSE_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "arxiv-2308-00383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "商品期货跨期价差；每个商品实际交易最近月F1与第四个到期合约F4，多空相反；最近四个月合约都参与拟合，但F2/F3不是本条交易腿。"
+    },
+    "cost": {
+      "evidence": [
+        "arxiv-2308-00383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按论文§4.3的三个成本情景记录，不择优挑一种：TC1=Cfee/(F×Mult)，TC2=0.0167%，TC3=(Cfee+n×Tick×Mult)/(F×Mult)，Cfee=1.5每合约，n=1/4，Mult、Tick、F分别是合约乘数、最小跳价、结算价。漂移权重 w_old_plus=w_old×(1+r)，换手 TO=|w_new−w_old_plus|；换合约用|被平旧合约漂移权重|+|新合约权重|。净收益 r_net=r_gross−0.5×Σ(TO_i×TC_i)，0.5沿原文往返成本口径保留。S假设直接交易一组价差、C假设两组价差来降低多腿费用；原文没把交易所价差成交和逐腿费用分摊完全实现化。资金利息、实际报价冲击、整数张数与其他费用未被完整锁定，不据论文净收益宣传判定质量。"
+    },
+    "entry": {
+      "evidence": [
+        "arxiv-2308-00383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在t日末，ΔβS>0的商品做多斜率价差：多F1、空F4；其余可比较商品反向：空F1、多F4。正、非正两组分配相同资本，按当前信号每日重建。未定义盘中额外开仓、止损或加仓条件。"
+    },
+    "execution_time": {
+      "evidence": [
+        "arxiv-2308-00383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源在t日末形成组合、按当日结算价交易并持有一天；下一日末重复。§4.3假设直接成交价差而非逐腿成交。未锁交易所各腿具体时区、结算价可得时间及成交顺序，因此不声称已验证收盘后可按收盘价成交。"
+    },
+    "exit": {
+      "evidence": [
+        "arxiv-2308-00383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有t至t+1一天，在下一日末随新分组再平衡；信号翻组则反转价差，同组也可能因组内商品数变化调权。合约滚动遵照§3.1：持有至近月合约进入到期月份前的最后交易日，不把持有一天理解成忽略换月。没有额外价格止损/止盈。"
+    },
+    "position": {
+      "evidence": [
+        "arxiv-2308-00383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "组合全额抵押、所有合约绝对权重总和=1；正信号价差组与其余价差组各占一半资本。§5.7回指NS基准S并明确多、空组内等权。因此在两组均非空时可由这些约束写出：正组n+个商品，每个F1/F4权重为+1/(4n+)、−1/(4n+)；其余组n−个商品每个为−1/(4n−)、+1/(4n−)。这组等式是上述原文约束的代数展开，不是论文直接印出的S公式；全额抵押是名义权重约定，不表示资金风险为零。未给空组、最小手数和保证金执行细节。"
+    },
+    "risk": {
+      "evidence": [
+        "arxiv-2308-00383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "价差仍承受曲线变化、流动性与换月风险；原文没有本条亏损上限或停止交易规则。λ逐日设定不等于全流程无前视：同日结算价拟合后按同价交易的可执行性未核。拟合器、退化输入、缺四合约、零/负价、空分组和合约整数化处理仍缺。没有下载行情或重做论文回测。"
+    },
+    "signal": {
+      "evidence": [
+        "arxiv-2308-00383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对每种商品在每天 t 用最近四个到期合约价格拟合 Nelson–Siegel：F_t(M)=βL,t+βS,t×A(λ_t M)+βC,t×[A(λ_t M)−exp(−λ_t M)]+ε_t,M，其中 A(x)=(1−exp(−x))/x，M 为剩余到期月数。λ_t 按当天四合约平均期限处的曲率载荷最大来选，每日更新；不是在全样本里选 λ。正文未展开 β 拟合损失、求解器、期限月数日计数或 λ 数值搜索边界，不能把某个程序实现当作已核原定义。 本条信号 ΔβS,t=βS,t−βS,t−1。以其降序排列可用商品，再分为正值组与其余组；正值不是斜率水平为正，而是斜率相对前日增加。原文其余组的字面包括零；未定义不可比较值如何进入排序。式(1)及脚注4的数学符号在pdftotext中缺失，摘要公式由固定PDF第5–6页视觉核对。"
+    },
+    "timeframe": {
+      "evidence": [
+        "arxiv-2308-00383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "日频；形成信号是βS,t−βS,t−1，预测并持有下一天。每个交易日末重新拟合、分组和调整；不是过去一年carry排序或持有一月。"
+    },
+    "universe": {
+      "evidence": [
+        "arxiv-2308-00383v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原研究列出21种商品：原油、汽油、取暖油；玉米、燕麦、糙米、小麦；棉花、木材；架子牛、活牛、生猪；铜、金、银；豆粕、豆油、大豆；可可、咖啡、橙汁。每日结算价来自 Bloomberg/CRB。拟合需每种商品当天最近四份到期合约的价格和期限；周度CoT并不是本条NS核心信号。论文样本为1992-01至2019-06，不能把这份事后样本名单称为已核实时可交易宇宙；缺四合约/缺价、历史品种进退与并列日期处理未明示。"
+    }
+  }
+}

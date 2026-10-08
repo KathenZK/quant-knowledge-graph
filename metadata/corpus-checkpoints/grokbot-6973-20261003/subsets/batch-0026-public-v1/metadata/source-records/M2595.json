@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2595",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2595,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ba50322a2462738ee659a96ebbf1e796638a7fbfc9c4526861269b2940b0d9d7",
+    "rule_sha256": "4c2e7353d87afd77032560f5dbfcd8e25de2272ded01db5e9f25fdd403badf7e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2595",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2595"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-obv-divergence/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线价ROC(20)与OBV的ROC(20)背离连续确认5日则多/空，背离消失清仓；开盘后30分钟（QC Documentation OBV divergence）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY价ROC20与OBV_ROC20背离确认5日；QC Documentation OBV divergence）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线价ROC(20)与OBV的ROC(20)背离连续确认5日则多/空，背离消失清仓；开盘后30分钟（QC Documentation OBV divergence）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-obv-divergence/main.py`。标的 SPY；日线 `OBV` 与 `ROC(20)`；另对 OBV 挂 `RateOfChange(20)` 得 `_obv_roc`；`_required_confirmation=5`。开盘后30分钟：看涨背离=价ROC<0 且 OBV_ROC>0；看跌相反。连续同向背离计数；异向或无背离则计数清零，若有仓则 `liquidate`。看涨计数≥5 且仓位≤0 → 满仓多；看跌计数≥5 且仓位≥0 → 满仓空。不是仅 OBV 符号或加密 PrawnstarOBV 核。提出日期未知。 不是仅OBV符号或加密PrawnstarOBV核：本条为SPY价ROC(20)与OBV_ROC(20)背离连续确认5日则多/空，背离消失清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

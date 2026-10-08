@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3447",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3401,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "43729da157e046e35843d6020d4cf0caaea15573d209d8ef4c33864f45bc0860",
+    "rule_sha256": "4a92cf22cadc58b3ecc09342a0e18226491624c115997c7f848a06adff22a7f4"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3447",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3447"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://cssanalytics.wordpress.com/2011/07/29/improving-trend-following-strategies-with-counter-trend-entries/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "David Varadi / CSS Analytics"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线；收盘>SMA(10)且DVB(1)<25才开多；收盘<SMA(10)且DVB(1)>75才平多（CSSA Counter-Trend Overlay on SMA10）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2011-07-29"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：日线；收盘>SMA(10)且DVB(1)<25才开多；收盘<SMA(10)且DVB(1)>75才平多（CSSA Counter-Trend Overlay on SMA10）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 CSS Analytics《Improving Trend-Following Strategies With Counter-Trend Entries》（2011-07-29）已印叠加规则（标的语境为 SPY/S&P）。趋势腿：收盘≷SMA(10)。反趋势过滤：DVB 取最短周期 **1**（DVB1）；**仅当** 收盘>SMA(10) **且** DVB1<**25**（下四分位）才入多；**仅当** 收盘<SMA(10) **且** DVB1>**75**（上四分位）才出场。作者强调持仓直至趋势结束，而非纯均值回归。DVB/DV2 定义见同站差分文（W643）。不是裸 SMA(10) 多空核，也不是 DV2<50 始终在场核。提出日期取文首 July 29, 2011。CSSA SMA10×DVB1：收>SMA10且DVB1<25才开多；收<SMA10且DVB1>75才平 ≠ 裸SMA10 / DV2<50始终在场。计入美股/ETF。提出日期按源文件原样保留2011-07-29。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "DVB1 四分位叠加段"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

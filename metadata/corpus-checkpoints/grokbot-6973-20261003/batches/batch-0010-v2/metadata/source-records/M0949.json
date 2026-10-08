@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0949",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 949,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "d65e20b846a962b1f0e19b6aad6ceb3ce39917e51fa514fc8e2ec3ea7800b01f",
+    "rule_sha256": "d2a8c659bc965d1d4ff5293f6f1aac03e198957cf8725182f6b9db4dc11e6f45"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0949",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0949"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/400/Volatility-Penalized-Sector-Momentum-Rotation/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "chenshangshang"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "波动惩罚行业动量轮动：SMH、XLK、XLF、XLE、XLP按252日波动调整动量取第1，价格高于SMA50则用对应3倍SOXL、TECL、ERX；RSI/峰值回撤/反摇摆/SPY<SMA200广波切断未印出"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-03-16"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Volatility-Penalized Sector Momentum Rotation"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：RSI超买退出阈值、峰值回撤降级阈值、反摇摆过滤，以及SPY<SMA200且结合广度和波动率过滤器的熊市现金机制页面未印出，不能把未写出的切断数字补成规则。已印出的SMH、XLK、XLF、XLE、XLP与杠杆SOXL、TECL、ERX，以及252日波动率调整动量满仓排名第1、价格高于SMA50时使用3倍杠杆ETF保留。本条只写该公开策略页已印出的在5只行业ETF中按252日波动率调整动量排名、满仓排名第1、当价格高于SMA50时使用3倍杠杆ETF。风险控制写有RSI超买退出、峰值回撤降级、反摇摆过滤、以及SPY<SMA200且结合广度和波动率过滤器的熊市现金机制，数字未印出，标数据不足，不补。主文件没有已印出的这五只加SOXL/TECL/ERX、252日波动调整动量取第1、SMA50切杠杆的行。不是M0863：那边是TQQQ对ERX的21日单位风险动量、0.05切换门槛，不是这五只行业加252日取第1。不是M0918四模块风险偏好代码轮动。计入美股/ETF。提出日期按源文件原样保留2026-03-16。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页。RSI/回撤/反摇摆/广波切断数字未印出"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

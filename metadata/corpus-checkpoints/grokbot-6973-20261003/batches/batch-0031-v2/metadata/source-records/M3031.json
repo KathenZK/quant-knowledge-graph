@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3031",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3010,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "dc9b3944387b46d15dd25c431be41625fe4993d2b4fe44bf070fdd1439420ac2",
+    "rule_sha256": "923b7b956a7e679dccab7577e34a21c9fcb1251e759c9ae0710f14e36da78f1b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3031",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3031"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/Alphas/ShareClassMeanReversionAlpha.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：VIA/VIAB；α/β≈各50%股数，组合值=α·P_long−β·P_short 相对SMA(10)；上偏则空long多short，下偏相反，穿回均线平（Lean ShareClassMeanReversion）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：VIA/VIAB；α/β≈各50%股数，组合值=α·P_long−β·P_short 相对SMA(10)；上偏则空long多short，下偏相反，穿回均线平（Lean ShareClassMeanReversion）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `Alphas/ShareClassMeanReversionAlpha.py`。标的 VIA、VIAB 分钟；`alpha/beta=calculate_order_quantity(*,0.5)`；`position_value=α*close_long−β*close_short`，SMA(10)。未持仓：值≥SMA → long发DOWN、short发UP；值<SMA → long发UP、short发DOWN（magnitude=0.001，期=5分钟）；已持仓且穿越SMA则 `invested=False`（平仓组）。不是 W390 KO/PEP 协整核。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2447",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2447,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "9fa600c6e41b3eec17156384b69ea31755e27777bdf81e1c1cd90a9ba3df1086",
+    "rule_sha256": "eb90267636a48dc13c7ceacada8ace305f627bb372b59fbf12d1e457595d9cdc"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2447",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2447"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://finance.sina.com.cn/wm/2026-06-18/doc-inicuqhf2349703.shtml"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华西证券金工（张立宁、杨国平；发现报告/新浪《基于趋势与资金流的指数增强ETF组合》；发布2026-06-16）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华西金工均线趋势三维度打分（排列形态+扩散间距gap+时序升降；多头|ma_gap×交叉×时序|）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股行业/主题指数（周频叙述）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-06-16"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "华西金工均线趋势三维度打分（排列形态+扩散间距gap+时序升降；多头|ma_gap×交叉×时序|）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。均线趋势三维度：①排列形态——3条全多头+4、连续2条多头+3、不连续2条+2、仅1条+1，空头对应负分；②扩散间距gap₁=MA_s/MA_ms−1、gap₂=MA_ms/MA_ml−1、gap₃=MA_ml/MA_l−1，ma_gap=三者均值，正为多头扩散、负为空头扩散；③时序——均线相对前一日上升+1/下降−1。综合：ma_gap≥0时score=|ma_gap×count_cross×count_ts|；ma_gap<0时score=|ma_gap×|count_cross|×|count_ts||。相对已收细颗粒度：本条为均线趋势打分核。 不是资金流：本条为华西均线趋势三维度打分（排列形态+扩散间距gap+时序升降）。 计入其他。 提出日期按源文件原样保留2026-06-16。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

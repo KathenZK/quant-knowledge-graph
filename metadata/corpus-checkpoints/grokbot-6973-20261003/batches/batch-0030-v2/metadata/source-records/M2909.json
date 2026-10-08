@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2909",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2905,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5250bce1e9ecada159bc59b2b684413a4061910cf2f2656fba4a1819a737daa4",
+    "rule_sha256": "1de18db18000511c200a69327a68d7eea5a46d529f8c7f791b80273c65484794"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2909",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2909"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/DailyAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY日线MACD(12,26,9,Wilders)过滤 + IBM小时EMA(90,七价)；同向则IBM±25%（Lean DailyAlgorithm）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY日MACD Wilders过滤+IBM小时EMA90七价同向±25%；Lean DailyAlgorithm）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY日线MACD(12,26,9,Wilders)过滤 + IBM小时EMA(90,七价)；同向则IBM±25%（Lean DailyAlgorithm）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `DailyAlgorithm.py`。`macd(SPY,12,26,9,WILDERS,Daily)`；`ema(IBM, 15×6=90, Hour, Field.SEVEN_BAR)`。每日至多一次：若 SPY 持仓量≤0 且 MACD>信号 且 IBM价>EMA → `set_holdings(IBM, 0.25)`；若 SPY 持仓量≥0 且 MACD<信号 且 IBM价<EMA → `set_holdings(IBM, -0.25)`（代码以 `portfolio[\"SPY\"].quantity` 作闸）。不是单票 SPY MACD 满仓核（W392/W380）。提出日期未知。 不是单票SPY MACD满仓核（W392/W380）：本条为SPY日线MACD(12,26,9,Wilders)过滤+IBM小时EMA(90,七价)，同向则IBM±25%。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0733",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 733,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5459d7ad0dbeecde86d8716e14ea2f2b7cc2378b6dc9bd3e49f679e4f69b01bb",
+    "rule_sha256": "ec8bc10f53cdaded74773c9356e8998818ac6d4bcae8e0fbdb8e70a3198c2ab1"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0733",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0733"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://research.glassnode.com/dissecting-bitcoins-unrealised-on-chain-profit-loss/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Rafael Schultze-Kraft（Glassnode）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "比特币流通供给盈利占比：50日均线高于95%看顶部、低于50%看底部"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2019-11-13"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Dissecting Bitcoin’s Unrealised On–Chain Profit/Loss"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写该文对流通供给盈利占比的数字，不是同文的NUPL，也不是UTXO个数占比。先把上次移动时价格低于现价的流通比特币数量加总，再除以流通供给，得到盈利供给占比。页面对该序列使用50日简单移动平均，并写这个平均对历史数据拟合得合适。使用95%这条简单门槛，有助于识别市场顶部。相对盈利供给落到50%以下，有助于识别市场底部和较方便的入场。页面未写50日用日历日还是交易日、95%是上穿还是停留、仓位和离场。同文写相对UTXO盈利个数的50日均线接近100%也曾指示全球顶部，但没有写成固定百分比门槛，本条不把UTXO个数另开。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Circulating Supply in Profit/Loss；Figure 5"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

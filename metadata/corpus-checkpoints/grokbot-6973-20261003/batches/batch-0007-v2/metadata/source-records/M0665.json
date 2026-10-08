@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0665",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 665,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "8d0847b3636b88161a5f54010c55531efcafd7c8d5ca209763f1b148915f89a1",
+    "rule_sha256": "0b43b07196a99828f037ac5da7e06d6b08feb2fa0e498d2db7f7bfd2b81aa258"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0665",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0665"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://allocatesmartly.com/navigating-economic-downturns-with-survey-based-recession-indicators/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Allocate Smartly（受Yulong Sun论文启发后改写的实测；原文作者为Yulong Sun）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "SPF调查衰退预期上升则离开60/40，国债收益率预期决定IEF或现金"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Navigating Economic Downturns: Insights from Survey-Based Recession Indicators；SPF Recession Probability"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条是Allocate Smartly写明与原文不同的实测规则，不是孙玉龙原文。Survey of Professional Forecasters假定在每季第2个月公布，即一季度到2月末、二季度到5月末，依此类推。在2、5、8、11月最后一个交易日收盘，计算本季RECESS2、RECESS3、RECESS4的平均衰退概率，与上一季RECESS3、RECESS4、RECESS5的平均比较。若本季平均小于或等于上一季对应平均，则持有60% SPY与40%国债或现金；否则全部改为国债或现金。国债还是现金，再比较本季TBOND3、TBOND4、TBOND5的平均10年期国债收益率预期，与上一季TBOND4、TBOND5、TBOND6的平均。本季平均小于或等于上一季则该防御部分持IEF，否则持现金。每月最后一个交易日收盘再平衡，即使信号不变。TBOND调查自1992年一季度起使用；1981年三季度至1991年四季度用TBILL调查；1981年三季度之前假定始终持IEF。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Strategy rules tested；Calculation notes（1）（2）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

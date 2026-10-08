@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3519",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3473,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "785528ba939d574813517f7dd7fa1657994f494490167601dd83bdae258fbdba",
+    "rule_sha256": "16daf51b41cabcee82bf156b0c06a653ca36b88a679ebdfe33e05a25f5b7b411"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3519",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3519"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://systematicinvestor.github.io/Logical-Invest-Strategy"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Systematic Investor"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；SPY与TLT；3×21日收益取Top1满仓（SI Logical Invest 页对照·Top1 3M）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2014-12-02"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：月末；SPY与TLT；3×21日收益取Top1满仓（SI Logical Invest 页对照·Top1 3M）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写同 SI《Logical Invest…UIS》页对照模型：`position.score = prices / mlag(prices, 3*21)`，月末 `ntop(..., 1)` 在 **SPY、TLT** 中满仓收益更高者。不是 UIS 的 mean/(sd^2) 网格核（W717），也不是 SIT2 五资产 5 个月 Top1（W721）。提出日期取页头 2014-12-02。SI Top1 3M：SPY/TLT上3×21收益Top1满仓 ≠ UIS网格（W717）/SIT2五资产5月Top1（W721）。计入美股/ETF。提出日期按源文件原样保留2014-12-02。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Code Strategies, Top 1 based on 3 month momentum（models$top1）"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

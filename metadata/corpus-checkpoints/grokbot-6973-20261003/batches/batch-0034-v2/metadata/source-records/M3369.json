@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3369",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3323,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "976e8f47c92e74a38644626b16f666dd209a8dc3b3dbe443ba01a8bba2b5ee44",
+    "rule_sha256": "2bd309d51e6747549aec7627e45d9619905c9c41a4fb9d4ebede4af2469d9860"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3369",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3369"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ScikitLearnLinearRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；每日开盘后28分钟用近30日开盘价线性回归得斜率/截距；开盘后30分钟：斜率>0.001则等权满仓，已投资且斜率<−0.001则清仓（Lean ScikitLearnLinearRegression）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY；每日开盘后28分钟用近30日开盘价线性回归得斜率/截距；开盘后30分钟：斜率>0.001则等权满仓，已投资且斜率<−0.001则清仓（Lean ScikitLearnLinearRegression）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ScikitLearnLinearRegressionAlgorithm.py`。分钟 SPY；`lookback=30`；`after_market_open(28)` 取日线开盘史，对时间列拟合 `LinearRegression`，存 `slope=a/b`；`after_market_open(30)`：已投资且 `slope < −0.001` → `liquidate`；`slope > 0.001` → `set_holdings(symbol,1/N)`（N=1）。不是 EasyQuant 月末随机森林核（W240），也不是 Keras/Pytorch 开盘±σ核。提出日期未知。SPY开盘后Sklearn斜率>0.001满仓/<−0.001清仓 ≠ EasyQuant月末随机森林（M2255）/Keras开盘±σ（M2966）。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

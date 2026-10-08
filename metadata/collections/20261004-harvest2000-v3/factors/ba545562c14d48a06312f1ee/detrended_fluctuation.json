@@ -1,0 +1,149 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述去掉各尺度线性趋势后，累积路径的残差波动如何随尺度变化。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "所有统计量使用整个已完成输入窗口；只在该窗口所有样本已观测并发布后可得，不得回填为窗口内过去时点可知特征。窗口长度、真实采样间距和PIT数据未固定。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "对整段x减其全窗均值后累积，形成离散路径。 在多个对数分布尺度上截去不完整尾段，逐段去线性趋势，再先平均所有平方残差、后开根号。 对非零波动尺度拟合log-log斜率。尺度范围与分段方法是一个原生算法，不把各个尺度输出另计。 边界：_log_n即使max_n<4也先放入4；短样本不会被来源包装主动拒绝，建议研究输入N>=100并检查有效尺度数，此建议不是原始默认。 舍弃尾部余数且只从起点分段，不用反向再次分段，也不是滑动重叠DFA。 所有F为0返回NaN；仅一个有效尺度的回归或含NaN/Inf没有额外有效性验证。 DFA指数与Hurst的对应关系取决于输入平稳性与过程模型，本条不直接把任何输出叫真实Hurst指数。 输出：一个算法族；多输出、轴/通道、窗口/参数及归一选项不另计数"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述去掉各尺度线性趋势后，累积路径的残差波动如何随尺度变化。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y_t=Σ_(i<=t)(x_i-mean(x))。尺度s由_log_n(4,0.1N,1.2)生成递增去重floor(4*1.2^j)，初值4；每尺度截去末端余数并切成无重叠s长段，逐段拟合线性趋势。F(s)=sqrt(mean_(all kept points)(y-trend)²)。移除F=0后，输出ln F相对ln s的带截距拟合斜率（回归分母加1e-9）。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（1D finite real array-like converted to float64; sufficiently long series for multiple valid scales）：等时间间隔采样、按时间排序的有限实数窗口；具体价格/收益/链上序列绑定另行固定。参数：minimum_scale：最短去趋势段；范围fixed native helper input；源码默认4；maximum_scale_fraction：最长尺度约为N/10；范围fixed native helper input；源码默认0.1；scale_growth：对数尺度增长因子；范围fixed native helper input；源码默认1.2"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "raphaelvallat/antropy",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或金融回测",
+    "NumPy/SciPy/Numba及运行环境未冻结；来源pyproject只设依赖下限",
+    "市场输入绑定、采样周期、供应商、PIT修订与可得时间缺失",
+    "无金融收益方向/预测能力证据"
+  ],
+  "name": "累积去均值路径的去趋势波动标度",
+  "native_source_id": "detrended_fluctuation",
+  "one_line": "描述去掉各尺度线性趋势后，累积路径的残差波动如何随尺度变化。",
+  "record_id": "detrended_fluctuation",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/fractal.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-bda6389d367dbbf0cefd62fd",
+      "license": "BSD-3-Clause",
+      "locator": "detrended_fluctuation:L369-L480; _dfa:L333-L366; imports, constants and declarations:L1-L13",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "ea127be7fbe8467fd425092e13338d082f056265f25330318f49d3825f99e2cf",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/fractal.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-d8d8e75b46b9f1696d69bd7a",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L29",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "e77f97cfd2a40e4c2e02742dfedd7957c7ed397664e93c0a7bbbaf0bb6c82caf",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-f07530fff185f4f6a34b6d57",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L287",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "07d745a1c2ed8000994c718f7eeaf385e8679c3eaa304953ce28f69b892dfb78",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-197424b14812774ea6d92020",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L111",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "ffe54c637a9c3acf704078608e505e79209e58bb449b96148efb85b1c4a4d3c1",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-b750632eba387336c6456655",
+      "license": "BSD-3-Clause",
+      "locator": "_log_n:L97-L129; _linear_regression:L64-L94; imports, constants and declarations:L1-L11",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "365514efe21dc5ec409786e1d3bdc034cf7a4f62ab802d326fdcd1f20c4a36cc",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

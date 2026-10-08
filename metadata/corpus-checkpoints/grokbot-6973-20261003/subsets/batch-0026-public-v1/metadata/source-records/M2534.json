@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2534",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2534,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "613eca249fb7f2c675816dce882e315073fad0426e9c790653ac9fb1b9e824c3",
+    "rule_sha256": "a2bfac35b5acf48741c422792755794a5728d775368fe24652adaa86269e2783"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2534",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2534"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15336/12-month-cycle-in-cross-section-of-stocks-returns/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Jing Wu（QuantConnect 研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：NYSE/AMEX市值前30%内，按“一年前1月收益”十分位，每月等多头最高十分位、空头最低十分位（QC 12 Month Cycle）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（市值前30%一年前1月收益十分位多空；QC 12 Month Cycle）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：NYSE/AMEX市值前30%内，按“一年前1月收益”十分位，每月等多头最高十分位、空头最低十分位（QC 12 Month Cycle）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect 研究《12 Month Cycle In Cross Section Of Stocks Returns》已印实现。月频；粗选有基本面美股；细选交易所 NYS/ASE；用约365日与约335日前收盘差近似“一年前1月收益”，在市值前30%子集内按该收益降序。`portfolio_size=len/10`；多头=前十分位，空头=后十分位；对各多头 `set_holdings(i, 1/(portfolio_size*2))`，对各空头 `−1/(portfolio_size*2)`；不在当月名单则清仓。不是 M0062“1月持小盘、其余月持大盘”的一月效应简化核。提出日期未知。 不是M0062一月效应简化核：本条为市值前30%内按一年前1月收益十分位月度多空。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

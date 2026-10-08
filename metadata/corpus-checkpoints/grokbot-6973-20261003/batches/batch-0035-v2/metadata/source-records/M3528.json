@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3528",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3482,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "7aa84238364da29a00c644473974ba38d43f3e4a2a9471286b4ca87106f258ac",
+    "rule_sha256": "f377cb5940c2d2e6a04c590ca86694a49969386cc6df2d91e80aa4d36833e67f"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3528",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3528"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "http://docs.lhpedersen.com/BettingAgainstBeta.pdf"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Andrea Frazzini / Lasse Heje Pedersen（AQR / NYU）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": ""
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AQR BAB：美股月末；事前beta中位数分低/高组，组内beta秩加权，各组缩放至beta=1后多低空高"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2014"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AQR BAB：美股月末；事前beta中位数分低/高组，组内beta秩加权，各组缩放至beta=1后多低空高"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Frazzini & Pedersen《Betting Against Beta》（JFE；PDF `docs.lhpedersen.com/BettingAgainstBeta.pdf`）权益BAB构造。事前beta：波动用**1年**滚动标准差、相关用**5年**窗，再合成beta；并向截面均值收缩，文取 **w=0.6、β_XS=1**。每月末按事前beta排序，以**资产类（美国股票为市）中位数**分为低beta/高beta两组；组内按**beta秩**加权（低组更低beta权更大、高组更高beta权更大）；两组均**缩放至组合beta=1**；BAB=做多低beta组、做空高beta组（自融资）。每月再平衡。不是国家ETF版BAB（M0002），也不是仅排序不缩放的低波选股。提出日期取期刊接受信息对应发表年 **2014**（稿件 Accepted 2013-04-19；JFE 2014）。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Constructing Betting-Against-Beta Factors；beta估计与 w=0.6 收缩段"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

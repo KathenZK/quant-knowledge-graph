@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3293",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3247,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "44b319a6dd1a6173afa0f0662b3838a46a5766b5a1b52d915b448d35ef8ffcc3",
+    "rule_sha256": "2e107a6ba41e177776c80c825fa9f6b745e7cf11b5b1194d8313e94621b2a69b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3293",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3293"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BybitCustomDataCryptoRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密现货：Bybit现金；BTCUSDT+自定义分钟 CSV；EMA(30)>EMA(60)且订单数=0买自定义标的1，慢头且订单数=1则清仓（Lean BybitCustomDataCrypto）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密货币"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "加密现货：Bybit现金；BTCUSDT+自定义分钟 CSV；EMA(30)>EMA(60)且订单数=0买自定义标的1，慢头且订单数=1则清仓（Lean BybitCustomDataCrypto）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BybitCustomDataCryptoRegressionAlgorithm.py`。账户 USDT；经纪 `BYBIT` CASH；`add_crypto(\"BTCUSDT\")` 并 `add_data(CustomCryptoData, symbol, Minute)`；`ema(自定义,30/60,Minute)`。快>慢且 `orders_count==0` → `buy(自定义,1)`；否则若 `orders_count==1` → `liquidate(自定义)`。不是 Bybit 永续双合约核（W491），也不是 Bybit 现货限价核（W492）。提出日期未知。Bybit现金+自定义分钟CSV上 EMA30/60 买卖1 ≠ Bybit永续双合约（M3224）/Bybit现货限价（M3225）。计入加密。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

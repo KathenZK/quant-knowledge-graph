@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "不同低频价格成分加回现价后平滑，可能区分价格长期方向与短期波动；是否改善趋势识别未获独立证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "默认四项保护均关闭；没有因官方版本说明而宣称原代码已编译或成交验证。",
+    "源码署名03.freeman、平滑代码ChartArt改编、π辅助e2e4mfck与Fourier引用xyse是不同贡献声明，非已核身份或授权链。"
+  ],
+  "name": "低频 Fourier 分量叠加价格后的三均线状态趋势",
+  "native_source_id": "365882",
+  "one_line": "从64棒收盘价格抽取第1/2/3余弦分量，各自叠加当前价再平滑；快线对中线与价格对慢线共振时按固定数量多空入场。",
+  "record_id": "365882",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/FTSMA-Trend-is-your-frend.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 03.freeman; 03.freeman, Markdown L82; MA ChartArt modified by 03.freeman L131; pi helper e2e4mfck L139; Fourier implementation thanks to xyse and link L150；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-365882-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "542699a83dc76fdee56b81e5b667f164dbd642548a278f24526530c0394a0689",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/FTSMA-Trend-is-your-frend.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-365882-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-365882-published-code"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：未显式手续费、滑点、资金费或融资费；货币EUR不能代替市场成本模型。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-365882-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "F>M且C>S时entry(\"Long Entry\",long)；F<M且C<S时entry(\"Short Entry\",short)。是连续状态，不是注释中的快中线交叉事件；没有空仓或冷却门。同状态可连续发同方向入场请求，相反状态发反向entry。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-365882-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "calc_on_every_tick=true；先算滚动频率分量与EMA，随后多侧entry、空侧entry、两个默认无有效保护值的exit。实时bar内可能重算/发出请求，历史bar无法据此获得同等tick证据；未运行、未作回测。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-365882-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认TakeProfit/StopLoss/TrailStop/TrailOffset输入全0，各经>=1检验转na；无条件exit Buy/Sell收到的四种保护值均na，默认没有激活这些价格保护。没有close、最大持期或独立退出信号；离开原方向仓位依赖相反方向entry的原平台反转处理。非默认保护参数没有纳入本条定义。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-365882-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "initial_capital=10000、currency.EUR、default_qty_type=fixed、default_qty_value=10000、pyramiding=10，entry无qty覆盖。10000为固定数量，不能写成每笔10000欧元名义；合约点值及保证金/可用资金约束未给。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-365882-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认无价格止损止盈，最多10同向入场的放大量未进行账户核算。Fourier使用当前和过去64棒；不足历史和EMA初始化按源na语义。源码声明Pine v4，不能将v5的exit有效参数限制直接套回判为必然编译错误；本次仍未运行原版本或验证实时重算成交。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-365882-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认src=C、N=64、频率k=1/2/3、MA=true、EMA型、linearReg=false。源码π近似：a初值1/(4×20+2)、b初值1/(6×20+3)，i从19降至0递推a=1/(4i+2)−a/4、b=1/(6i+3)−b/9，π=4a+4b。Re(k)=Σi=0..63 C[i]cos(2πki/64)，Im(k)=−ΣC[i]sin(2πki/64)；Re幅度在k非0/32时为2Re/64，端点为Re/64，Im幅度=−2Im/64。sx(0,k)=Re幅度×cos0+Im幅度×sin0，故默认为Re幅度。S=EMA200(C+sx(0,1))、M=EMA20(C+sx(0,2))、F=EMA5(C+sx(0,3))。未调用完整Fourier重构x，也不启用FRAMA/线回归等其他选项。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-365882-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-365882-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

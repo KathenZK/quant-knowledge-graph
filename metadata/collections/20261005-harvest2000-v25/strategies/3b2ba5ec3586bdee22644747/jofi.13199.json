@@ -1,0 +1,139 @@
+{
+  "economic_basis": {
+    "hypothesis": "跨资产信号对后续回报的关系可能不只在自身资产上出现；保留较强的预测方向或可减少估计噪声。这里只记录作者配置构造；不把已知总体矩阵的最优性定理当作有限样本盈利保证。",
+    "missing": [
+      "未执行SVD/源代码、下载行情或回测；论文样本结果及总体定理不是本仓库经济或成交验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi.org/10.1111",
+  "lab": null,
+  "missing_information": [
+    "只选原Fig3 PP1–3等权平均分支。§V.A正文L1626–1629说sum，Fig3图注明确equal-weighted average；选后者系数1/3，保留两处尺度不同，不声称复现整文代码。",
+    "FF25是来源给定的25个规模/账面市值比组合回报输入，不是25只个股。本文未冻结完整逐股成分、点时发布/修订、真实可交易合约与缺失数据处理；未下载行情。",
+    "训练120个不重叠20日期，信号20日，持有20日；文有训练末日与预测首日的一日buffer，但信号最后一日与报单时刻、区间端点与跨假日实现仍未全给。不能把R_(t+1)实现在t使用。",
+    "本条额外限制研究输入的第三奇异值>第四且第三>0，避免截断边界不唯一；不是源程序主动检查。横截面秩并列、无穷/缺失、SVD数值容差与退化处理未规定。",
+    "Eq11限制的是持仓矩阵谱范数，非资产权重合计1或毛杠杆1。没有现金/保证金、融资、借券可得性、资本规模、末期清算或净值会计合同。",
+    "选定描述允许多空及目标变化，不含止盈止损、盈亏阈值或保证盈利。总体已知Pi下的奇异值非负，不等于样本外预期或实际收益非负。",
+    "论文PDF注明CC BY/Creative Commons Attribution；具体许可版本未从所选正文落实，不能自动扩展到FF市场数据、作者网页或未采的复现代码。商用状态仍REVIEW_REQUIRED。",
+    "没有执行作者代码、SVD/优化求解、收益计算或回测。理论与样本结果只作来源事实，非本仓库计算/经济验证。"
+  ],
+  "name": "Kelly等：跨资产预测矩阵的前三主组合配置",
+  "native_source_id": "jofi.13199",
+  "one_line": "把滞后动量对各组合后续回报的交叉预测矩阵分解，按前三对左右奇异向量形成多空持仓，每20个交易日更新。",
+  "record_id": "jofi.13199",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未验证收益、风险上限、估计矩阵或可成交性。",
+    "metadata": "原生身份、定位与自撰中文规则；原文、图像、源码及行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://research-api.cbs.dk/ws/portalfiles/portal/86261459/kelly_et_al_principal_portfolios_publishersversion.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Bryan Kelly, Semyon Malamud, Lasse Heje Pedersen. Principal Portfolios, Journal of Finance78(1),347–387. Publisher-version PDF preserved by Copenhagen Business School official repository.",
+      "id": "kelly-malamud-pedersen-jofi-13199-pdf",
+      "license": "PDF cover states CC BY, and physical p2 states Creative Commons Attribution and copyright2022 The Authors. Exact CC version unresolved here. This does not license FF data, separate website or uncollected replication code. Commercial scope REVIEW_REQUIRED.",
+      "locator": "Physical p1 institutional publisher-version cover and CC BY; p2 authors/copyright; pp6–12 Eq2/5/11/14/15 weights, prediction matrix, norm and SVD; pp25–27 low-rank scope; pp28–29 Eq48 FF25 example and one-day buffer; p32 Fig3 PP1–3 equal-weight average/20-day holding. Figure3 scale selected; section text sum differs.",
+      "revision": "DOI10.1111/jofi.13199 Journal of Finance78(1),347–387,2023 publisher version; sha256:3f2bc4637d02da9ddadee0905442be394108244077c7a065ed097f51459d7378",
+      "sha256": "3f2bc4637d02da9ddadee0905442be394108244077c7a065ed097f51459d7378",
+      "supports": [
+        "完整主组合配置定义",
+        "预测矩阵与SVD权重",
+        "样例输入形成持有",
+        "许可及边界"
+      ],
+      "url": "https://research-api.cbs.dk/ws/portalfiles/portal/86261459/kelly_et_al_principal_portfolios_publishersversion.pdf",
+      "verification": "FETCHED_PINNED_PUBLISHER_VERSION_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Bryan Kelly author-maintained academic website.",
+      "id": "bryan-kelly-author-page",
+      "license": "Author website copyright notice; no broader code/data/commercial grant established. PDF CC BY not inherited by this HTML.",
+      "locator": "Original HTML L298 lists Principal Portfolios with coauthors and SSRN3623983 link. Author/title linkage only, no formula evidence and not used to resolve final-version rules.",
+      "revision": "Author website HTTP snapshot sha256:ecd4c7cf5e151ca914b535c1c02e2329333e25e442a29137233d5700481bcde9",
+      "sha256": "ecd4c7cf5e151ca914b535c1c02e2329333e25e442a29137233d5700481bcde9",
+      "supports": [
+        "第一方作者与作品身份"
+      ],
+      "url": "https://www.bryankellyacademic.org/",
+      "verification": "FETCHED_PINNED_AUTHOR_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "kelly-malamud-pedersen-jofi-13199-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "资产输入为Fama–French按规模与账面市值比双排序的25个美股组合回报，不是25只个股或现场选定ETF。原理论用超额回报R；§V.A脚注20再把每期横截面均值减掉，相当于每个输入测试资产是做多相应组合并做空全部25组合的等权篮子。当前记录是这些给定组合上的金融配置规则；没有取得组成股票的点时名单或直接可交易产品映射。"
+    },
+    "cost": {
+      "evidence": [
+        "kelly-malamud-pedersen-jofi-13199-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：所选Eq2/15/48与Fig3组合回报没有固定佣金、点差、市场冲击、借券、融资、税费或组合成分调仓成本。原文一日buffer是防止过度依赖低流动性的样本安排，不等于已计交易成本；不把费用缺失填零，亦不复制论文收益率作为本库结果。"
+    },
+    "entry": {
+      "evidence": [
+        "kelly-malamud-pedersen-jofi-13199-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在每个形成点，用截至可用数据截止的Pi_hat与S_t产生目标w；对每个给定的去均值测试资产，目标为正即多、为负即空、为0则不配置。所有信号共同影响每项仓位，没有额外正预测门槛、价格交叉或统计显著性筛选；也未依据论文事后表现只取显著的前两项。需先具备120个完整训练配对，再按来源缓冲规则进入下一个20日持有段；实际开仓成交条件未提供。"
+    },
+    "execution_time": {
+      "evidence": [
+        "kelly-malamud-pedersen-jofi-13199-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：来源给20日形成信号、120个历史20日配对、训练/预测间一日缓冲与20日持有，但未钉时区、信号最后可见价、订单类型、开收盘成交、拒单/部分成交、借券和资金交割。须严格在历史R标签发布后估Pi，不用未来回报选择方向。只审核条件于完整已知输入的组合定义；没有可直接回测或部署的账户执行承诺。"
+    },
+    "exit": {
+      "evidence": [
+        "kelly-malamud-pedersen-jofi-13199-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有段为20个交易日；下次滚动形成新的SVD与信号目标，替换旧配置，目标减少则减仓、归零则退出，改变符号则翻向。对整个原组合的实际净订单还取决于期内权重漂移和下游账户约定，文中未给订单账本。这里没有跌幅止损、止盈、持续等待残差回归或全研究末期的强制清仓规则，不把预测不佳的样本事后删除。"
+    },
+    "position": {
+      "evidence": [
+        "kelly-malamud-pedersen-jofi-13199-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "采用Fig3的等权平均持仓矩阵L=(1/3)Σ_(k=1..3)v_k u_k转置，w=L转置S。各奇异向量为正交单位向量；前三个是组合方向，不是前三只股票。持有测试资产R_i=r_i−mean(r)时，在原25组合上等价的净权重q_i=w_i−mean(w)，故Σq=0；这是脚注20的代数展开，不新增对冲策略。没有把|q|归一至1，也没有要求w求和1。Eq11谱范数约束控制L对信号的放大；不能把||S||=1的条件性界套在未作欧氏归一的秩信号上。Fig3平均比§V.A正文sum小3倍，选择图注尺度并保留原文差异。"
+    },
+    "risk": {
+      "evidence": [
+        "kelly-malamud-pedersen-jofi-13199-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "用低秩截断舍去较小奇异方向，属于作者减少估计噪声的构造，不是已证实风险/回撤上限。谱范数约束不同于实际毛杠杆、保证金或VaR；短头寸和融资能否建立未核。原文Pi已知时的最优/非负期望结论不能套到滚动估计的未来市场。保留第三/第四奇异值并列或零值时子空间选择不唯一、秩并列、数据修订、训练与持有端点、现金会计和费用缺项；本条额外非退化输入范围不宣称来源自动修复这些问题。PP/PEP/PAP、rank和矩阵范数变体保守同族不拆计。"
+    },
+    "signal": {
+      "evidence": [
+        "kelly-malamud-pedersen-jofi-13199-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按原Eq48，Pi_hat_t=(1/120)Σ_(tau=t−120..t−1) R_(tau+1) S_tau转置，行i是被预测资产，列j是提供滞后信号的资产；R已按脚注20横截面去均值。对Pi_hat作SVD=U diag(sigma_1≥…≥sigma_25≥0) V转置，u_k为U第k列、v_k为V第k列。原Eq15第k主组合的目标是u_k(v_k转置S_t)，未来一期回报是(S_t转置v_k)(u_k转置R_(t+1))。本条选择Fig3前三个的等权平均，w_t=(1/3)Σ_(k=1..3)u_k(v_k转置S_t)，不再乘奇异值，也不按当前单资产动量直接选Top3。Pi使用历史后续标签；表达式中的R_(t+1)只计算后来回报，不作为当期输入。"
+    },
+    "timeframe": {
+      "evidence": [
+        "kelly-malamud-pedersen-jofi-13199-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每次形成使用过去120个不重叠20交易日期的信号/后续回报配对，估计预测矩阵；当前20日动量信号形成后，输出的组合持有下一20交易日，再滚动更新。作者在训练末日与预测区间首日之间加一个交易日缓冲；不能因此默补每个持有期后另有一日空仓。样例1963–2019为论文研究区间，不是新录策略的投产时间。日历锚点、缓冲日信号截点与订单时刻未定。"
+    },
+    "universe": {
+      "evidence": [
+        "kelly-malamud-pedersen-jofi-13199-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "固定N=25的来源示例宇宙，过去20个交易日每个组合的累计回报先做横截面秩，除以25，再减当期横截面均值得S_i。源把区间写作[−0.5,0.5]，不强行把最小/最大映成精确端点；相同回报的秩处理未给。训练标签为随后20日已实现回报减同期25项均值；只有历史标签完整可知后才进训练。选择SVD截断不跨并列子空间的输入范围sigma_3>sigma_4且sigma_3>0是本条额外研究范围，不是来源软件防护。"
+    }
+  }
+}

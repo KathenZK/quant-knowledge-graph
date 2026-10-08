@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2676",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2676,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "789f4bf3a14cea2aa9d4e8fbf17d101c6001f8ab6600d91167130cd304bfdafa",
+    "rule_sha256": "85d2b5948540d3f883351fe32f3f249d1837681f77e50b21749a6b32c3fd4863"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2676",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2676"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/intraday-indicator-scans/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：QQQ全成分分钟ATR(60)最高10只，按成分权重归一每15分钟再平衡（QC Documentation intraday ATR scan）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（QQQ成分分钟ATR60 Top10按成分权重每15分钟再平衡；QC Documentation intraday ATR scan）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：QQQ全成分分钟ATR(60)最高10只，按成分权重归一每15分钟再平衡（QC Documentation intraday ATR scan）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `intraday-indicator-scans/main.py`。`universe.etf(\"QQQ\")` 取全部成分并记权重；新增证券挂 `atr(..., 60, resolution=MINUTE)`。市场开盘且宇宙非空时每15分钟：ATR 就绪者按 ATR 取最高10；权重和>0 则按 ETF 权重归一 `set_holdings(..., True)`。不是 W335 日线 ATR(14) 开盘前再平衡核。提出日期未知。 不是W335日线ATR(14)开盘前再平衡核：本条为QQQ全成分分钟ATR(60)最高10只，按成分权重归一每15分钟再平衡。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

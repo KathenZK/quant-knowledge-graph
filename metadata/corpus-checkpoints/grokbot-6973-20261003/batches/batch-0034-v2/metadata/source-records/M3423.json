@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3423",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3377,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b1e4a9fda8ee31488e9d6ad69fd7ef113975c01017642ca4f866d80bcbdf0ca4",
+    "rule_sha256": "2dedd6fae01e7f1f3481df55ca3ee5cda5bf3279805382aba1b6b69e9e235c1c"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3423",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3423"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/MaximumDrawdownPercentPortfolioFrameworkRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：小时；BaseFramework宇宙AAPL起步+午夜扩至四票；ConstantAlpha UP(31日,mag=0.025)等权即时；复合风控=组合最大回撤1%（保本金）+组合最大回撤1.5%且trail=True（保浮盈）（Lean MaximumDrawdownPercentPortfolioFramework）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：小时；BaseFramework宇宙AAPL起步+午夜扩至四票；ConstantAlpha UP(31日,mag=0.025)等权即时；复合风控=组合最大回撤1%（保本金）+组合最大回撤1.5%且trail=True（保浮盈）（Lean MaximumDrawdownPercentPortfolioFramework）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `MaximumDrawdownPercentPortfolioFrameworkRegressionAlgorithm.py`（继承 `BaseFrameworkRegressionAlgorithm`）。宇宙：起步 Manual AAPL/AIG，每日午夜 Scheduled 扩至 AAPL/AIG/BAC/SPY（末日空）。Alpha=`ConstantAlphaModel(PRICE,UP,31日,0.025)`；等权+即时。风控=`CompositeRiskManagementModel(MaximumDrawdownPercentPortfolio(0.01), MaximumDrawdownPercentPortfolio(0.015, True))`——前者相对初始资本回撤 1% 触发，后者 `True` 表示相对利润峰值回撤 1.5%。不是 W414/W501 仅单票回撤 1% 核，也不是 AddRiskManagement 的 2% 组合回撤+1% 未实现盈利核。提出日期未知。Lean MaximumDrawdownPercentPortfolioFramework：组合回撤1%（保本）+1.5% trail（保浮盈）复合 ≠ AddRiskManagement 2%+1%浮盈（M3090）/单票回撤。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Algorithm.Python/MaximumDrawdownPercentPortfolioFrameworkRegressionAlgorithm.py"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

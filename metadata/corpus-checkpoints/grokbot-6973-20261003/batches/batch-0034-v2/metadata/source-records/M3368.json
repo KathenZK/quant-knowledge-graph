@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3368",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3322,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "30646a9f0b54b78e924578d88c825522c4c12f1264883c9396c2bee523dec6e2",
+    "rule_sha256": "b9577de85edf64c2e21d1b8aa7a9754063802debf1546e904f581168d43fffcc"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3368",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3368"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/StopLimitOrderRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；EMA(30)>EMA(60)×(1+0.001)时空仓止损限价买100（止损=高×1.10、限价=高×1.11）；成交后趋势转弱则止损限价卖100（止损=低×0.99、限价=低×0.98）（Lean StopLimitOrderRegression）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY日线；EMA(30)>EMA(60)×(1+0.001)时空仓止损限价买100（止损=高×1.10、限价=高×1.11）；成交后趋势转弱则止损限价卖100（止损=低×0.99、限价=低×0.98）（Lean StopLimitOrderRegression）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `StopLimitOrderRegressionAlgorithm.py`。`add_equity(\"SPY\",Daily)`；`ema` 快30/慢60；容差 `tolerance=0.001`。就绪后：无买单且 `fast > slow*(1+tolerance)` → `stop_limit_order(+100, stop=high*1.10, limit=high*1.11)`；买单 FILLED 且无卖单且 `fast < slow*(1+tolerance)` → `stop_limit_order(−100, stop=low*0.99, limit=low*0.98)`。断言成交价须落在限价一侧且 `stop_triggered`。不是仅市价 EMA 交叉满仓核，也不是 SecurityCustomProperties 分钟 EMA30/60 市价核。提出日期未知。SPY日线EMA30/60容差0.001止损限价±100 ≠ 加密EMA30/60市价核 / SecurityCustomProperties分钟市价核。计入美股/ETF。提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

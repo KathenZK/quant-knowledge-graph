@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说：收盘反向的区间扩展棒可能形成后续突破参考位；并无独立经济证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "同棒入口/关闭重合和实时重算可能产生额外成交；未验证订单效果，按源码四调用顺序保留。"
+  ],
+  "name": "反向收盘扩展棒锚点突破与动态锚失效退出",
+  "native_source_id": "433938",
+  "one_line": "保存收跌却创新高棒的高点和收涨却创新低棒的低点，后来穿越锚点做多空，收盘失守或反向突破退出。",
+  "record_id": "433938",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%8F%8C%E9%87%8D%E8%BD%AC%E6%8A%98%E8%BF%BD%E8%B8%AA%E7%AD%96%E7%95%A5Double-Reversal-Tracking-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-433938-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "18e31455c15c8d452458f71fd0c29b4ef6c1d869b56528c1cc457fb6ba1ed763",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%8F%8C%E9%87%8D%E8%BD%AC%E6%8A%98%E8%BF%BD%E8%B8%AA%E7%AD%96%E7%95%A5Double-Reversal-Tracking-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-433938-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-433938-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "佣金按成交额0.2%；滑点、资金费与真实点差未给。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-433938-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "u时请求long市价，d时请求short市价，不要求先前空仓；没有将锚高/低作为提前挂出的突破stop。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-433938-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "calc_on_order_fills=true、calc_on_every_tick=true、process_orders_on_close=false。先更新锚再检测交叉，订单四调用保持原先后；未运行，不声称每根只下单一次或收盘价成交，实时锚/信号可变化。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-433938-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "close long条件=C<A或d；close short=C>B或u。每棒源码调用顺序为long entry、long close、short entry、short close；锚在持仓期间仍可被新HHS/LLB更新，非冻结入场止损。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-433938-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始1000 USD，每笔50%权益，pyramiding=0。反向entry与close的具体撮合/净持仓结果未运行确认。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-433938-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "无固定价差止损、目标或仓位风险定量。可能一棒同时满足入口与关闭条件，跨棒H/L相对动态锚的交叉与收盘位置不可混为同一事件；实际订单顺序需复现。锚初值0可能影响开始阶段。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-433938-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "HHS=(C<C[1]且H>H[1])，LLB=(C>C[1]且L<L[1])。持久锚A/B初值均0；当HHS出现先A=H，当LLB出现先B=L。之后u=crossover(H,A)，d=crossunder(L,B)。交叉使用两条随时间变化的序列，锚更新先于当前交叉计算；trade_long只是显示状态。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-433938-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称或注释中的建议周期不等于冻结交易周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-433938-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

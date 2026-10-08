@@ -1,0 +1,220 @@
+{
+  "economic_basis": {
+    "hypothesis": "以收盘价相对本期及下一期高低价中点的位置关系估计价差；保留先聚合后开方与先截断开方后聚合两种原生选项，合计一个构造族。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-d090d2fc8ef6510617e3b2dd",
+        "harvest-source-b354bc27cfec3706bc60aefd",
+        "harvest-source-b32ca623b6204baf1b90aeb3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-d090d2fc8ef6510617e3b2dd",
+        "harvest-source-b354bc27cfec3706bc60aefd",
+        "harvest-source-b32ca623b6204baf1b90aeb3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "来源原生内部函数AR(high,low,close,width,method,sign,na.rm)没有参数默认；公开spread包装的width默认nrow(x)、method默认EDGE、sign=False、na.rm=False。使用AR/AR2须显式选择method，不将AR误写成包装默认。 本条只审width为标量整数2..N的窗口合同；width向量、变长窗口和自定义端点未纳入。utils令滚动长度n=width−1；原始q第一项因lag为NA，同时将输出前width−1行显式置NA。 公开spread在标量width下再删去前max(1,width−1)行；因此W=N返回窗口末端一个估计，W<N返回从第W根价格起的尾随估计。AR内部返回长度N的列表，公开包装返回data.frame或保留xts时间索引。 AR的signed平方根与AR2逐项截负再开方不同，不把AR的均值负值强制归零。AR2的sign参数不起作用。缺失默认na.rm=False；打开na.rm时mean按保留的非缺失项重算分母，但不改变lag配对，不把两边缺失删除后拼接。 data.table补充固定版本文档确认frollmean默认右对齐、完整窗口及按物理行序运行；这份依赖文档仅支持静态窗口解释，不能冒称已冻结上游安装时的data.table版本。 边界：源码不验证价格正性、OHLC关系、窗口整数合法性或等长；不将R回收规则当有效异长支持。极短/错误窗口可能NA或库错误，研究合同显式W>=2。 均值负值不会让默认AR变为0：输出sqrt(abs(mean q))。AR2可以因所有q<=0输出0；二者有不同有限样本含义而不是仅输出重命名。 missing处理依赖data.table，版本未运行锁定；无数据日历和PIT保护。本条不审变宽/端点分支。 此代码由EDGE作者维护，是其对Abdi–Ranaldo方法的实现；未取得并逐公式核对原论文全文，不声称Abdi/Ranaldo本人源码或论文完全复现。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-d090d2fc8ef6510617e3b2dd",
+        "harvest-source-b354bc27cfec3706bc60aefd",
+        "harvest-source-b32ca623b6204baf1b90aeb3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "以收盘价相对本期及下一期高低价中点的位置关系估计价差；保留先聚合后开方与先截断开方后聚合两种原生选项，合计一个构造族。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-d090d2fc8ef6510617e3b2dd",
+        "harvest-source-b354bc27cfec3706bc60aefd",
+        "harvest-source-b32ca623b6204baf1b90aeb3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "令h_t=lnH_t，l_t=lnL_t，c_t=lnC_t，m_t=(h_t+l_t)/2。t=2..N时q_t=4(c_(t−1)−m_(t−1))(c_(t−1)−m_t)。标量价格窗口W>=2使用截至t的W−1个相邻二期q值。AR先算a_t=mean(q_(t−W+2)..q_t)，默认S_t=sqrt(abs(a_t))；sign=True时S_t=sign(a_t)sqrt(abs(a_t))。AR2先u_t=sqrt(max(q_t,0))，再S2_t=mean(u_(t−W+2)..u_t)，不使用sign开关。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-d090d2fc8ef6510617e3b2dd",
+        "harvest-source-b354bc27cfec3706bc60aefd",
+        "harvest-source-b32ca623b6204baf1b90aeb3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "high, low, close（three equal-length one-dimensional positive finite price vectors, N>=W>=2）：同一规则时间网格HLC，输入顺序是时间顺序；来源不内部排序。公开包装使用同名列，AR路径不读取open作为计算输入。。参数：width：价格条数；实际平均W−1个相邻二期项；范围reviewed scalar integer W in [2,N] only；源码默认public spread: nrow(x); internal AR: no default；method：不是新增两个经济因子；范围AR and/or AR2 bundled；源码默认public spread: EDGE; AR/AR2 require explicit selection；sign：是否保留聚合平方价差符号；范围boolean; only AR uses it；源码默认public spread: false; internal AR: no default；na.rm：滚动均值的缺失处理；范围boolean；源码默认public spread: false; internal AR: no default"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-d090d2fc8ef6510617e3b2dd",
+        "harvest-source-b354bc27cfec3706bc60aefd",
+        "harvest-source-b32ca623b6204baf1b90aeb3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "eguidotti/bidask",
+  "lab": null,
+  "missing_information": [
+    "尚未与原论文全文逐公式比较，仅审固定维护者实现",
+    "R/data.table实际运行版本、市场输入及PIT时点未冻结",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "Abdi–Ranaldo 相邻价格中点价差估计",
+  "native_source_id": "AR",
+  "one_line": "以收盘价相对本期及下一期高低价中点的位置关系估计价差；保留先聚合后开方与先截断开方后聚合两种原生选项，合计一个构造族。",
+  "record_id": "AR",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/r/R/ar.R"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "实现维护者：Emanuele Guidotti。被实现的原方法：Farshid Abdi、Angelo Ranaldo (2017)，doi:10.1093/rfs/hhx084。原论文归属与实现源码作者分开。",
+      "id": "harvest-source-d090d2fc8ef6510617e3b2dd",
+      "license": "MIT",
+      "locator": "native AR/AR2 complete finite-input computation:L1-L41",
+      "revision": "1caba55d63ebab6c855536be51c43bdfc48d2dec",
+      "sha256": "af8643e342adafe05fd07ab69aa1d41a3f989a4ee419477286fa8616b327ba22",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/r/R/ar.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现维护者：Emanuele Guidotti。被实现的原方法：Farshid Abdi、Angelo Ranaldo (2017)，doi:10.1093/rfs/hhx084。原论文归属与实现源码作者分开。",
+      "id": "harvest-source-b354bc27cfec3706bc60aefd",
+      "license": "MIT",
+      "locator": "width minus lag, mean dispatch and leading NA:L12-L39; rmean delegates to data.table frollmean:L51-L59",
+      "revision": "1caba55d63ebab6c855536be51c43bdfc48d2dec",
+      "sha256": "b2ab2eac78099360aa8c2e8ffd283f240e4146955bec259c7ea38aeef2174802",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/r/R/utils.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现维护者：Emanuele Guidotti。被实现的原方法：Farshid Abdi、Angelo Ranaldo (2017)，doi:10.1093/rfs/hhx084。原论文归属与实现源码作者分开。",
+      "id": "harvest-source-b32ca623b6204baf1b90aeb3",
+      "license": "MIT",
+      "locator": "method attribution and units:L7-L39; actual public defaults and AR dispatch:L79-L101; return class and leading-row removal:L120-L135",
+      "revision": "1caba55d63ebab6c855536be51c43bdfc48d2dec",
+      "sha256": "1fcc63ebae3aaeb30b57ae47b5d971be35f8b46dbba00c242509ec391988cc5e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/r/R/spread.R",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "实现维护者：Emanuele Guidotti。被实现的原方法：Farshid Abdi、Angelo Ranaldo (2017)，doi:10.1093/rfs/hhx084。原论文归属与实现源码作者分开。",
+      "id": "harvest-source-069271bdfcdfc753d5b8c1a0",
+      "license": "MIT",
+      "locator": "maintainer identity, original article citations and license:L1-L33",
+      "revision": "1caba55d63ebab6c855536be51c43bdfc48d2dec",
+      "sha256": "1e6c01b8f3cbe87a82601cd41bab56c836653369e3cbbd0bf52f29808bf10ef8",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/r/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "实现维护者：Emanuele Guidotti。被实现的原方法：Farshid Abdi、Angelo Ranaldo (2017)，doi:10.1093/rfs/hhx084。原论文归属与实现源码作者分开。",
+      "id": "harvest-source-485e1d7876acae8efd5e1c95",
+      "license": "MIT",
+      "locator": "MIT copyright and conditions:L1-L21",
+      "revision": "1caba55d63ebab6c855536be51c43bdfc48d2dec",
+      "sha256": "7f480f8329cc38ed9799ea39067317e762b890f586335c0632b6e83a39b83ff0",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "实现维护者：Emanuele Guidotti。被实现的原方法：Farshid Abdi、Angelo Ranaldo (2017)，doi:10.1093/rfs/hhx084。原论文归属与实现源码作者分开。",
+      "id": "harvest-source-d7e138c40a9693e3e8c1db08",
+      "license": "MIT",
+      "locator": "R copyright notice:L1-L2",
+      "revision": "1caba55d63ebab6c855536be51c43bdfc48d2dec",
+      "sha256": "9b3954e91473e8afcf5e3df9fe48bbb09b4d375ac0d29b087f20c9fdd73a9292",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/eguidotti/bidask/blob/1caba55d63ebab6c855536be51c43bdfc48d2dec/r/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "实现维护者：Emanuele Guidotti。被实现的原方法：Farshid Abdi、Angelo Ranaldo (2017)，doi:10.1093/rfs/hhx084。原论文归属与实现源码作者分开。",
+      "id": "harvest-source-f03065a9be2229136561c188",
+      "license": "MPL-2.0",
+      "locator": "supplemental frollmean default parameters:L201-L203",
+      "revision": "a3eeb4c0caec51afd66bdf9bbc16817e12a47a40",
+      "sha256": "d65a2529896ad0f20e8561869b9db7f5dd1407ccd0cb0180e85de65faa923b26",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/Rdatatable/data.table/blob/a3eeb4c0caec51afd66bdf9bbc16817e12a47a40/R/froll.R",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "实现维护者：Emanuele Guidotti。被实现的原方法：Farshid Abdi、Angelo Ranaldo (2017)，doi:10.1093/rfs/hhx084。原论文归属与实现源码作者分开。",
+      "id": "harvest-source-07ae04a0e82adaa7ad0ae1ff",
+      "license": "MPL-2.0",
+      "locator": "right-aligned mean argument contract:L28-L57; physical input order and return type:L68-L73",
+      "revision": "a3eeb4c0caec51afd66bdf9bbc16817e12a47a40",
+      "sha256": "7e7a90436ac10d144f79dafe12ba2064b1a55c58b20bb92e6dc5d26b3c16687c",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/Rdatatable/data.table/blob/a3eeb4c0caec51afd66bdf9bbc16817e12a47a40/man/froll.Rd",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "实现维护者：Emanuele Guidotti。被实现的原方法：Farshid Abdi、Angelo Ranaldo (2017)，doi:10.1093/rfs/hhx084。原论文归属与实现源码作者分开。",
+      "id": "harvest-source-130631291490ea999c1760d2",
+      "license": "MPL-2.0",
+      "locator": "dependency package identity and license declaration:L1-L10",
+      "revision": "a3eeb4c0caec51afd66bdf9bbc16817e12a47a40",
+      "sha256": "3c163a20adaf8be81fe16a3c1210b8a43e0f8e1281f800f6651185dc458ba1e0",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/Rdatatable/data.table/blob/a3eeb4c0caec51afd66bdf9bbc16817e12a47a40/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "实现维护者：Emanuele Guidotti。被实现的原方法：Farshid Abdi、Angelo Ranaldo (2017)，doi:10.1093/rfs/hhx084。原论文归属与实现源码作者分开。",
+      "id": "harvest-source-92e188f8c1024a2f72daf6f5",
+      "license": "MPL-2.0",
+      "locator": "MPL version:L1-L3; license scope and distribution conditions:L104-L182",
+      "revision": "a3eeb4c0caec51afd66bdf9bbc16817e12a47a40",
+      "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/Rdatatable/data.table/blob/a3eeb4c0caec51afd66bdf9bbc16817e12a47a40/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

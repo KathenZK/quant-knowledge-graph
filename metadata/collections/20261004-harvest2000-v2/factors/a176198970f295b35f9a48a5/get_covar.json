@@ -1,0 +1,104 @@
+{
+  "economic_basis": {
+    "hypothesis": "比较条件变量处于尾部和中位状态时，另一个资产的估计左尾风险。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-7533c143302a4b09fe08cc73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅在整个估计窗口/分组结束、所有输入已观测并发布后可得；拟合系数及统计量不得回填为窗口内的实时因子。PIT数据与发表延迟缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-7533c143302a4b09fe08cc73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "内连接两条收益序列并成对去缺失，第一条为y，第二条为条件变量x。 在同一个α上拟合截距与斜率；helper使用非负正负残差和HiGHS线性规划，系数无界。 将这条α分位线分别在x的α分位点和中位点上求值；差额不重新拟合中位回归。 边界：成对样本n<=10返回NaN；优化器失败时系数返回NaN。 helper旧docstring误称另拟合中位线，实际主函数只拟合一次α分位回归，以代码为准。 输出单位是收益，不是损失取正；条件依赖不能自动解释成机构之间的因果传染。 输出：一个完整统计构造；参数、窗口及多输出分量不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-7533c143302a4b09fe08cc73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "比较条件变量处于尾部和中位状态时，另一个资产的估计左尾风险。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-7533c143302a4b09fe08cc73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "通过线性规划最小化Σρα(y_i-a-bx_i)拟合条件α分位线；CoVaR=a+b*Qα(x)；ΔCoVaR=b*(Qα(x)-Q0.5(x))；ρα(u)=αmax(u,0)+(1-α)max(-u,0)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-7533c143302a4b09fe08cc73"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "returns（pandas Series only）：被度量资产/系统的收益y；conditioning_returns（pandas Series only）：条件资产/机构的收益x。参数：alpha：回归和条件变量VaR共同的左尾概率；范围研究域0<alpha<1；来源未主动验证；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-7533c143302a4b09fe08cc73"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "JerBouma/FinanceToolkit",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或进行数值复现",
+    "NumPy/Pandas/SciPy/sklearn版本及默认行为未冻结",
+    "金融数据、无风险收益与基准、供应商、数据发布时点和修订快照未选定",
+    "未验证经济收益有效性或市场适用假设"
+  ],
+  "name": "线性分位回归的条件风险及差额",
+  "native_source_id": "get_covar",
+  "one_line": "比较条件变量处于尾部和中位状态时，另一个资产的估计左尾风险。",
+  "record_id": "get_covar",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/risk/covar_model.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-7533c143302a4b09fe08cc73",
+      "license": "MIT",
+      "locator": "get_covar:L70-L172; _quantile_regression:L13-L67; imports and explicit constants:L1-L12",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "c722245b014d771fd11538fd1e6e053c6f1d1358b36333d62293791345992b85",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/risk/covar_model.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-cb2abb9f4ee81dee928c5ef7",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "20f27d76a82699c1a5926ed41e8d1d8681ab3d554492559a9bfbd6f0d1ee2eef",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "economic_basis": {
+    "hypothesis": "用三频复数乘积衡量频率对与和频的相位关联，并给出随机相位基准下的窗口诊断。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-b272be7f86a0cf14c9b3e2a2",
+        "harvest-source-58c6e00e70c5717f1ed5cbf7",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-b272be7f86a0cf14c9b3e2a2",
+        "harvest-source-58c6e00e70c5717f1ed5cbf7",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认maxN=full；若手动设限则只取最早maxN点。段长至少16，至少8段。只取完整重叠段，末尾不足一段舍弃；窗口hamming默认数值依赖未执行锁定。 分段双谱用求和而不是平均，但分子平方和分母乘积中的K尺度抵消；源码在求和后的分母上加eps，不能把eps改到每段或平均量上。 主域只取正频、a<=b及和频不超过单边FFT上限；对角统计也排除DC。没有信号采样Hz参数，频率是每样本周期。 SD_MakeSurrogates的RP分支保留原窗口FFT幅度；DC和偶数N的Nyquist相位保持原值，其余正频相位独立从[0,2π)抽样、负频相位取共轭对应负值，再real(IFFT)。奇数N不删尾。 每次把MATLAB Mersenne Twister重置种子0，再顺序生成numSurr条。所有代理用同一分段几何；汇总其有限B²后取95%分位，没有为每个频点分别校准阈值。 边界：源码称50%重叠，但奇数L的步长是floor(L/2)，比例不是精确一半。 全零输入的B²=0/(eps)=0，均值/最大值/对角均值/熵/propSig/阈值比可为0，skewness可能NaN；这不证明有效低复杂度。部分NaN仍可穿过只检查all非有限的门槛而污染均值等统计。 随机相位基准保留全窗功率谱，但窗口内非平稳、相关分段、池化阈值和多重频率搜索使propSig不能直接解释成金融显著性或稳定耦合证据。 eps、hamming默认、quantile插值、skewness/std以及MATLAB随机数版本尚未运行冻结；重置全局rng有副作用，不声称外部流程随机状态不变。 核心Operations/SD_MakeSurrogates为GPL-3.0-or-later，BF_ResetSeed自身为CC-BY-NC-SA-4.0；逐文件保留不同许可，不能称整条依赖全GPL。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-b272be7f86a0cf14c9b3e2a2",
+        "harvest-source-58c6e00e70c5717f1ed5cbf7",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用三频复数乘积衡量频率对与和频的相位关联，并给出随机相位基准下的窗口诊断。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-b272be7f86a0cf14c9b3e2a2",
+        "harvest-source-58c6e00e70c5717f1ed5cbf7",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "段长L默认64，步长floor(L/2)，K=floor((N−L)/步长)+1>=8。每段先减段均值再乘hamming(L)，X_k=FFT。对0<a<=b且a+b<=floor(L/2)的非DC频点：Z_k=X_k(a)X_k(b)，W_k=X_k(a+b)，B²_ab=|Σ_k Z_k conj(W_k)|²/[Σ_k|Z_k|²*Σ_k|W_k|²+eps]。输出整个主频域B²的mean/max/std/skewness、f1=f2对角均值及−Σp ln p/ln(主域点数)，其中p只将正B²归一。另用25条随机相位序列的全主域有限B²汇总，T=quantile(pool,.95)，propSig=mean(B²>T)，threshRatio=T/[−ln(.05)/K]。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-b272be7f86a0cf14c9b3e2a2",
+        "harvest-source-58c6e00e70c5717f1ed5cbf7",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（finite real time-ordered evenly sampled vector）：完整窗口；默认L64至少需要288样本形成8段，市场变量与采样Hz需另固定。。参数：segLength：FFT分段长度，奇数段用floor(L/2)步长；范围research integer>=16；源码默认64；maxN：可裁最早样本；范围full or positive integer sufficient for eight segments；源码默认full；numSurr：随机相位代理次数，不拆新增构造；范围research positive integer；源码默认25"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-b272be7f86a0cf14c9b3e2a2",
+        "harvest-source-58c6e00e70c5717f1ed5cbf7",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "分段双相干与随机相位基准",
+  "native_source_id": "SP_Bicoherence",
+  "one_line": "用三频复数乘积衡量频率对与和频的相位关联，并给出随机相位基准下的窗口诊断。",
+  "record_id": "SP_Bicoherence",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SP_Bicoherence.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-b272be7f86a0cf14c9b3e2a2",
+      "license": "GPL-3.0-or-later",
+      "locator": "native meaning, parameters and GPL:L1-L84; defaults, geometry, output statistics and surrogate threshold:L88-L200; segment FFT, complex triple products and eps normalization:L205-L233",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "e6ac40d5e7146c9aeff1de87691b21457c98f61f2f8af0bbce9c0d6de7cd197e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SP_Bicoherence.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-58c6e00e70c5717f1ed5cbf7",
+      "license": "GPL-3.0-or-later",
+      "locator": "GPL, orientation, seed and RP dispatch:L1-L113; exact random-phase construction for even and odd length:L182-L233",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "7cc3163adfe1e9eccca32617b3daec662cd48b3bd7a3c29ab8fdc2c4bed16237",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SD_MakeSurrogates.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-b3c0bdfaa2f2c23b099d0a11",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "CC-BY-NC-SA-4.0 notice and seed0 Mersenne Twister:L1-L57",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "54ab0354d059a7c3ab075f3d7ef63c3b92c4ac9544ea3d0411169ac033b3acc6",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/PeripheryFunctions/BF_ResetSeed.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

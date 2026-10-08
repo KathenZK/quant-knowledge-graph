@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0823",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 823,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "518378b5dd94edc433a031225bea5bd26e457f4c5b22db870b249d614c1d40b0",
+    "rule_sha256": "f4710b8d6dc2baad0664456af080b6e857bc4a7a2c19d919b21e720821382d75"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0823",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0823"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/strategies/46/TheOmniscientParadox"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Naitik Gupta"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "杠杆ETF日动量轮换：50日均线过滤与RSI惩罚，机会集与评分权重未印出"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2026-01-31"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "TheOmniscientParadox"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "数据不足：机会集与综合动量评分权重页面未印出，不能把未写出的ETF名单或短中长周期权重补成规则。本条只写该公开策略页已印出的每日动量轮换，不是已收的简单均线择时杠杆ETF对照一直持有标普500，也不是多只哨兵RSI在UVXY、VIXM与2倍ETF间整仓切换，也不是UPRO 55%加TMF 45%季度再平衡。每日从预设机会集选风险调整后趋势最强的ETF；每日按短、中、长周期动量/ROC构成的综合动量评分，并按近期实现波动率缩放；价格高于50日均线时中期趋势过滤器给予全部信号，否则折扣；对超买/超卖作适度RSI惩罚。通常只持有一只ETF，仅当第一名相对当前持仓有明显优势才轮换；模型信号评分恶化时退出。机会集未列出代码。短、中、长周期长度，波动率缩放窗口，RSI周期与惩罚幅度，以及“明显优势”的差，页面都未印出，本条不补。市场以杠杆行业/指数ETF为主，持仓是单一ETF。提出日期按页面原样保留2026-01-31。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开策略详情页"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

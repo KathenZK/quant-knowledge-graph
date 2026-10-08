@@ -1,0 +1,136 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述给定成交计划、流动性预测和资产相关关系下的模型冲击成本；不是买卖信号，也不是已观测实际成本。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-51adb09552f15093a6b9830c",
+        "harvest-source-632026c4c1ad9de97808b38a"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "可在计划制定时以当时已知的日期、计划u和已发布预测v/sigma/C计算。未来期间的预测可以事前输入，未来已实现成交量或价格不可伪装成事前预测。具体供应商、预测训练截止和发布时间未冻结。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-51adb09552f15093a6b9830c",
+        "harvest-source-632026c4c1ad9de97808b38a"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "逐资产逐期计算γ=σ/v及对角Γ，用同一期C形成Λ，保留其单位与资产顺序。 按日期差形成下三角K并取半对称G；对角保持1，非对角仅半核。 对每个Λ取对称PSD平方根构成块对角B，使用Kronecker积G⊗I_n跨时间连接同资产空间。 构成整体A后按时间优先的同一坐标顺序把u堆叠，计算uᵀAu；等价下三角双和每个跨期配对只计一次。 逐期平方根乘积保留资产交叉及时间变化，不把它简化为单一历史Λ_s或逐元素相乘。 边界：原文§3.1把ℓ_i写为一般实数，但负值与实对称PSD平方根及凸性前提不兼容。本条只审§4明确使用的ℓ_i=1，不将原文实数域自动解释为已约束非负，也不自行补拟合器。 矩阵平方根是数学上对称PSD平方根；不是逐元素开方，也不是任意Cholesky下三角因子。原文没锁定数值求根实现/特征值裁剪策略，本条没有运行复现。 G非对角是半个衰减核；若用全核直接乘对称矩阵会把跨期项双计。Λ_t^(1/2)Λ_s^(1/2)通常不是自身对称，但A_ts=A_stᵀ使整体A对称。 正vol/volume和相关矩阵PSD是输入条件。零成交额、负波动、非PSD样本估计没有论文自动修复规则，本条排除；不能默默加epsilon或裁负特征值。 给定该有效域，论文证明φ>=0和至少半个逐期独立成本；这是模型数学性质，不证明真实成交无价格操纵、成本预测准确或策略有利可图。 本条只登记§3的成本函数，不收§4优化交易策略和宣称收益。§4成本模型也用于模拟器，不是独立观测成本；其月初结算价p0与月前固定决策的时点冲突不被本条消除。 τ/β变化、资产数、日期间隔、每个矩阵坐标和单/多期退化例不拆新增。 输出：美元计价的一个完整模型成本及其A矩阵表示；坐标、参数、实现和退化例不拆数量"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-51adb09552f15093a6b9830c",
+        "harvest-source-632026c4c1ad9de97808b38a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述给定成交计划、流动性预测和资产相关关系下的模型冲击成本；不是买卖信号，也不是已观测实际成本。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-51adb09552f15093a6b9830c",
+        "harvest-source-632026c4c1ad9de97808b38a"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "审阅子合同使用论文数值例明确取值ℓ_i=1；令γ_(t,i)=σ_(t,i)/v_(t,i)，Γ_t=diag(γ_t)，C_t为实对称半正定、对角1的冲击相关矩阵，Λ_t=Γ_t^(1/2) C_t Γ_t^(1/2)。日期a_1<...<a_T可非等距，k(h)=(1+h/τ)^(-β)，τ,β>0。K_ts=k(a_t−a_s)若s<=t，否则0；G=(K+Kᵀ)/2，故G_tt=1、非对角G_ts=k(|a_t−a_s|)/2。取Λ_t的对称半正定矩阵平方根，B=blockdiag(Λ_1^(1/2),...,Λ_T^(1/2))，A=B(G⊗I_n)B。输入有符号美元成交计划u=(u_1,...,u_T)，输出φ(u)=uᵀAu=Σ_t Σ_(s<=t) k(a_t−a_s) u_tᵀ Λ_t^(1/2)Λ_s^(1/2)u_s。单期和跨期项、矩阵A及成本标量共同计一族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-51adb09552f15093a6b9830c",
+        "harvest-source-632026c4c1ad9de97808b38a"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "u（finite real array of shape (T,n), n>=2,T>=2）：拟评估的有符号美元成交额计划，非持仓、成交量股数或未来已实现交易；买卖符号与所有资产/日期坐标须一致。；a（finite strictly increasing real vector of length T）：已知交易日期/窗口坐标；时间单位必须与τ一致，不要求等间隔。；v（finite strictly positive array (T,n)）：各计划期间的美元成交额预测，不能以当期尚未发生的实际总量代替而声称事前可用。；sigma（finite strictly positive array (T,n)）：各计划期间的收益波动率预测，与相应期间长度一致；来源未在§3固定估计器。；C（T symmetric positive semidefinite n-by-n real matrices with unit diagonal）：各期冲击相关矩阵，论文用收益相关代理；具体预测器、PSD修复、数据vintage未固定。。参数：ell_i：§3可学习系数不是有默认值的软件参数；本条选用§4正值子合同，不审核任意实数拟合。；范围all assets fixed to explicit numerical-study value 1；来源默认值None；本条选定1；tau：幂律衰减时间尺度；例1不是通用默认。；范围finite positive real, same time unit as a；来源默认值None；原文示例（不是默认）1；beta：幂律衰减指数；例0.5不是通用默认。；范围finite positive real；来源默认值None；原文示例（不是默认）0.5"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-51adb09552f15093a6b9830c",
+        "harvest-source-632026c4c1ad9de97808b38a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "arxiv",
+  "lab": null,
+  "missing_information": [
+    "实际预测器、标定程序、供应商、市场/合约映射、数据权限与PIT未冻结",
+    "未提供已审核数值实现或平方根容差/PSD修复，未执行原公式",
+    "任意实数ell_i不在本条有效子合同",
+    "原模型成本未以独立实测交易成本验证；未验证经济收益"
+  ],
+  "name": "跨资产与跨期平方根耦合的交易冲击成本",
+  "native_source_id": "2609.04712v1",
+  "one_line": "用波动率和成交金额预测缩放资产相关关系，再用幂律时间核计算整个成交计划的二次冲击成本。",
+  "record_id": "2609.04712v1",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://arxiv.org/pdf/2609.04712v1"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Vincent Yinjun-Wang and Madeleine Udell, Convex Modeling of Price Cross-Impact over Time, arXiv:2609.04712v1 (2026-09-04), §3; self-authored Chinese definition and explicit ell_i1 scope.",
+      "id": "harvest-source-51adb09552f15093a6b9830c",
+      "license": "CC-BY-4.0",
+      "locator": "§3/§3.1 dollar units, positive forecasts, gamma and Lambda: physical PDF p4-p4; §3.2 equations2–4 and §3.3 PSD proof: physical PDF p5-p6; numerical-study example and model-vs-observed cost boundary; ell1 context: physical PDF p7-p9",
+      "revision": "2609.04712v1",
+      "sha256": "cb2e6d863d7b8f7ad236fba09ea35ec0840fa64f1a380c73249f77462d0df898",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://arxiv.org/pdf/2609.04712v1",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Vincent Yinjun-Wang and Madeleine Udell, Convex Modeling of Price Cross-Impact over Time, arXiv:2609.04712v1 (2026-09-04), §3; self-authored Chinese definition and explicit ell_i1 scope.",
+      "id": "harvest-source-632026c4c1ad9de97808b38a",
+      "license": "CC-BY-4.0",
+      "locator": "version and author attribution:L224-L238; §3 time and signed-dollar input:L410-L430; §3.1 self/cross-impact:L432-L479; §3.2 kernel and complete cost:L480-L559; §3.3 PSD proof under valid inputs:L561-L646; §4 input/example settings; ell_i1 and non-default tau/beta:L728-L809",
+      "revision": "2609.04712v1",
+      "sha256": "da2dfb65fd1baa62d029b2e16f1f04a7073c40044b0d399cb3cb56eab6e90add",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://arxiv.org/html/2609.04712v1",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Vincent Yinjun-Wang and Madeleine Udell, Convex Modeling of Price Cross-Impact over Time, arXiv:2609.04712v1 (2026-09-04), §3; self-authored Chinese definition and explicit ell_i1 scope.",
+      "id": "harvest-source-d72f01a0e152ae4bd41c20bc",
+      "license": "UNKNOWN_PAGE_SHELL_RIGHTS_NOT_ASSERTED",
+      "locator": "exact version title/authors/history:L120-L156; paper-specific CC BY4.0 link:L178-L181",
+      "revision": "2609.04712v1",
+      "sha256": "8e26573b1f0dec921ea10a79feb3ed58789b590f422af0befaa1e10e1bdd853a",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://arxiv.org/abs/2609.04712v1",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Vincent Yinjun-Wang and Madeleine Udell, Convex Modeling of Price Cross-Impact over Time, arXiv:2609.04712v1 (2026-09-04), §3; self-authored Chinese definition and explicit ell_i1 scope.",
+      "id": "harvest-source-b684fe1e8746f4afddeebfe5",
+      "license": "UNKNOWN_PAGE_SHELL_RIGHTS_NOT_ASSERTED",
+      "locator": "CC BY4 scope and rights not covered:L610-L718; CC BY4 attribution/change/link conditions:L719-L813",
+      "revision": "CC-BY-4.0 legalcode captured 20261004T183235Z",
+      "sha256": "58230517b7895aa219ff46a6ed63e67057a1582fb9ea054b16728a8c13525650",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://creativecommons.org/licenses/by/4.0/legalcode.en",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

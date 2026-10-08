@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2254",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2254,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "59e0e3f15149ed1a27efe03cdba87707a9204642a9ccae316e2aa6f04528b767",
+    "rule_sha256": "c1095cc92fcf65a4717d9515564c925de28d7a27268e2789ee409de6acd03167"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2254",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2254"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://easyquant.ai/e/quantconnect/using-multiple-data-resolutions"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "easyquant.ai（QuantConnect Lean 示例）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟价相对日线SMA(20)满仓/清仓（EasyQuant多分辨率日信号分钟执行）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF（SPY；日线SMA20信号分钟执行；EasyQuant多分辨率）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2025-12-11"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY分钟价相对日线SMA(20)满仓/清仓（EasyQuant多分辨率日信号分钟执行）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 EasyQuant《Using Multiple Data Resolutions in a Single QuantConnect Algorithm》已印 DailySignalMinuteExecution。add_equity(\"SPY\", Resolution.MINUTE)；sma_daily=SimpleMovingAverage(20)，经日线 consolidator register_indicator，并 warm_up_indicator(..., Resolution.DAILY)。on_data（分钟）：sma 就绪后，current_price>daily_sma 则 SetHoldings(1.0)；已持仓且 current_price<daily_sma 则 Liquidate。不是 W227 日线 SMA(30) 核，也不是固定日线收盘比较核。提出日期取页面 Published on。 不是W227日线SMA(30)，也不是固定日线收盘比较：本条是EasyQuant SPY分钟价相对日线SMA(20)满仓/清仓的多分辨率核。 计入美股/ETF。 提出日期按源文件原样保留2025-12-11。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

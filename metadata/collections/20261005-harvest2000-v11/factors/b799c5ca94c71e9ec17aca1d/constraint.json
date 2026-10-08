@@ -1,0 +1,124 @@
+{
+  "economic_basis": {
+    "hypothesis": "对每个节点，衡量它对邻居的直接关系份额与经其它邻居形成的间接份额有多集中；这是给定网络中的关系冗余度量，不代表投资组合约束或已验证市场风险。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-e220533fa6d6a453b1ebcfb0",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图方式、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-e220533fa6d6a453b1ebcfb0",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "原生nodes默认None；若此时可import SciPy，将选稀疏矩阵分支。本条明确传list(G)，不依赖安装环境选分支；nodes=None仍如实记原生默认，但不是本条冻结的计算入口。 mutual_weight通过两个方向边属性相加，缺边0、指定权重属性缺失1。weight=None时本合同要求不存在None键边属性，故每条无向边取1+1；源码实际使用dict.get(weight,1)，不掩盖None键会改变权重的边界。 normalized_mutual_weight用set(all_neighbors(G,u))去重邻居，对mutual_weight求sum；分母0返回0。无向all_neighbors直接使用G.neighbors，不把平行边或方向计数引入本条。 local_constraint先求p_uv，再对u的邻居z求p_uz*p_zv之和，加后平方；实际源码遍历N(u)，不是遍历全部图节点或对每个乘积先平方。 constraint对各有效请求节点，先以len(G[u])==0判孤立并返回NaN；否则把局部约束在u的邻居上相加。未自动补缺节点、裁到[0,1]或给经验阈值。 有限正权保证非孤立点的归一分母为正；不把负权、权重抵消、多重图、自环或只有入边的有向图并入此审阅子合同。局部项、无权/加权、节点坐标不拆计数。 边界：原生总约束不限定[0,1]；无权三角形按上述公式每条局部项(.5+.25)^2，总和为1.125。此为自撰代数例，不是执行上游代码所得测试。 孤立点总C为NaN；局部helper的零分母返回0不等于总函数给孤立点0。 有向图仅有入边的节点在逐节点分支len(G[v])==0会进NaN，且nodes=None可能改走不同实现；本条限定无向和显式nodes，不擅称所有原生路径等价。 仅给无权三角形数量不足以决定本构造：间接项使用邻居各自的归一关系份额并与直接份额相加后平方；不是clustering三角数/可能三角数。 Burt概念归属来自维护者源码References；没有读取或获权复制原论文全文，源码BSD3不推导原论文和任何网络数据的许可。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-e220533fa6d6a453b1ebcfb0",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对每个节点，衡量它对邻居的直接关系份额与经其它邻居形成的间接份额有多集中；这是给定网络中的关系冗余度量，不代表投资组合约束或已验证市场风险。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-e220533fa6d6a453b1ebcfb0",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条显式传nodes=list(G)，审Python逐节点路径，G无向简单无自环且所选边权有限正值。令m_uv=w_uv+w_vu（无边0；无向有边为2w_uv），p_uv=m_uv/Σ_(z∈N(u))m_uz，若分母0则helper返回0。局部约束c_uv=[p_uv+Σ_(z∈N(u))p_uz p_zv]^2；总约束C_u=Σ_(v∈N(u))c_uv。无向图m中的2在各行归一时抵消。孤立点原生总约束返回NaN。local_constraint只是同族的组成项，不单独计数。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-e220533fa6d6a453b1ebcfb0",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in undirected simple networkx.Graph, loop-free, finite positive selected edge weights; no None-key edge attribute when weight=None）：冻结关系网络及节点宇宙，允许孤立节点输出NaN；金融关系/权重估计、阈值和PIT尚缺。。参数：nodes：显式全部节点列表固定Python路径；默认None可能走SciPy稀疏分支；范围native default None; reviewed call requires nodes=list(G)；源码默认None；weight：关系强度字段，不是距离；范围None with no None-key edge attrs, or selected string key of finite positive weights; missing=>1；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-e220533fa6d6a453b1ebcfb0",
+        "harvest-source-5d79c0bf6f6f71a9ac38dba0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/边/权重/方向和阈值构图、完整节点宇宙及PIT缺失",
+    "外部backend与具体运行依赖版本未冻结，未执行上游实现",
+    "没有金融收益、风险有效性或因果传播证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "直接与间接关系份额平方和的 Burt 约束度",
+  "native_source_id": "constraint",
+  "one_line": "对每个节点，衡量它对邻居的直接关系份额与经其它邻居形成的间接份额有多集中；这是给定网络中的关系冗余度量，不代表投资组合约束或已验证市场风险。",
+  "record_id": "constraint",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers固定内置实现；Brandes/Freeman、Wasserman–Faust、Burt等原概念归属按各源码References保留。公开内容为自撰计算定义与固定源码定位，未复制论文全文。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现；Brandes/Freeman、Wasserman–Faust、Burt等原概念归属按各源码References保留。公开内容为自撰计算定义与固定源码定位，未复制论文全文。",
+      "id": "harvest-source-e220533fa6d6a453b1ebcfb0",
+      "license": "BSD-3-Clause",
+      "locator": "mutual weight and sum-normalized neighborhood helper:L8-L49; constraint defaults attribution branch selection and reviewed explicit-nodes path:L217-L314; local constraint formula and full implementation:L317-L374",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "11123f9858aa54b048c1483257a567b47d675542742ecd55ad81d86d0290a9ce",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/structuralholes.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现；Brandes/Freeman、Wasserman–Faust、Burt等原概念归属按各源码References保留。公开内容为自撰计算定义与固定源码定位，未复制论文全文。",
+      "id": "harvest-source-5d79c0bf6f6f71a9ac38dba0",
+      "license": "BSD-3-Clause",
+      "locator": "all_neighbors undirected and directed native behavior:L1021-L1073",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "e836dd94f419dbb9beb8a44e2db14f7e8f632d44972da9c366ab9620e554e852",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/function.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2529",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2529,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ab691c78820ab573be03cb892381abb8b5863c237d37b76f9ff35d0fc0e3b6b7",
+    "rule_sha256": "64891766faddf7ece646f193e6a47a7cc942b087603789b44cd378d7da780a20"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2529",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2529"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Documentation/blob/master/project-templates/python/equity-all-weather-portfolio/main.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Documentation 项目模板"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY30%+TLT40%+IEF15%+GLD7.5%+DBC7.5%，每年首个交易日开盘后再平衡（QC Documentation All Weather）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（All Weather SPY/TLT/IEF/GLD/DBC年首再平衡；QC Documentation）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股ETF：SPY30%+TLT40%+IEF15%+GLD7.5%+DBC7.5%，每年首个交易日开盘后再平衡（QC Documentation All Weather）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写模板 `equity-all-weather-portfolio/main.py`。目标权重：SPY=0.30、TLT=0.40、IEF=0.15、GLD=0.075、DBC=0.075；分钟线。`year_start(SPY,0)` + `after_market_open(SPY,1)` 再平衡；无数据标的跳过；`set_holdings(targets, liquidate_existing_holdings=True)`。另有周初漂移日志阈值 `_drift_threshold=0.01`（仅日志，不据此下单）。不是风险平价/波动目标配权，也不是 W259 月度 SPY60/TLT40。提出日期未知。 不是风险平价亦非W259月度SPY60/TLT40：本条为All Weather固定权重年首再平衡。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

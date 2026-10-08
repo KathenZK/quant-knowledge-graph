@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2250",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2250,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "5336714d1852956b53e170062954fadbfc2f75eb4328c8be50fcf2799403d2a0",
+    "rule_sha256": "7740ca2f96796edfcfc1ba3112918b30308356d28b600a6ba3ce77f89d1b3f3b"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2250",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2250"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/hugo2046/QuantsPlaybook/blob/master/C-%E6%8B%A9%E6%97%B6%E7%B1%BB/%E5%9F%BA%E4%BA%8E%E9%B3%84%E9%B1%BC%E7%BA%BF%E7%9A%84%E6%8C%87%E6%95%B0%E6%8B%A9%E6%97%B6%E5%8F%8A%E8%BD%AE%E5%8A%A8%E7%AD%96%E7%95%A5/zs_timing_strategy.ipynb"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "招商证券金融工程（《基于鳄鱼线的指数择时及轮动策略》2024-05-07；QuantsPlaybook转述）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "招商金工鳄鱼线⊕AO择时（AO=SMA(中点,5)−SMA(中点,34)；多头∧AO连3日上行满仓；空头∨AO连3日下行空仓）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股宽基（沪深300示例；日频）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-05-07"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "招商金工鳄鱼线⊕AO择时（AO=SMA(中点,5)−SMA(中点,34)；多头∧AO连3日上行满仓；空头∨AO连3日下行空仓）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。AO：5根与34根价格柱中点((H+L)/2)的SMA之差（笔记亦对照研报或写SMA(H−L)变体，收录以中点SMA差为主述）。信号：T日鳄鱼多头排列且AO连续3个交易日上行→看多满仓；T日鳄鱼空头排列或AO连续3日下行→看空空仓；否则维持昨仓。看多用“且”、看空用“或”。相对纯鳄鱼：本条为AO三连加速过滤核。 不是纯鳄鱼：本条为鳄鱼⊕AO连3日加速过滤核。 计入其他。 提出日期按源文件原样保留2024-05-07。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

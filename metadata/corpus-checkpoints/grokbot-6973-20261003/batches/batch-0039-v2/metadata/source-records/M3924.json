@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3924",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3878,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b6c60149a71a930d7cd241fcba16f723b49572382b9e7f7756fcaaad7ad6b032",
+    "rule_sha256": "c0aa178874065314bcefa8d2fbce34372737619bd3b2888fb8ba1d2346267b75"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3924",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3924"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/18987/portfolio-construction-using-topological-data-analysis/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect（Louis Szeto）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-96/W1131"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·TDA聚类等权SPY成分：约125日重估；SPY权重Top200；KeplerMapper+PCA+UMAP+DBSCAN 后按巨/小簇分层等权（QC TDA·SPY200·EqCluster）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·TDA聚类等权SPY成分：约125日重估；SPY权重Top200；KeplerMapper+PCA+UMAP+DBSCAN 后按巨/小簇分层等权（QC TDA·SPY200·EqCluster）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect《Portfolio Construction Using Topological Data Analysis》：取 **SPY** 权重最高约 **200** 成分；对对数收益用 **KeplerMapper**（投影 **PCA(0.8方差)+UMAP(1维)**）与 **DBSCAN(correlation)** 构图；资金在连通巨簇、子簇与簇内股票间**分层等权**；默认历史窗约 **150** 周、约每 **125** 日重建单纯复形。不是 PCA 残差 z 多空（近 M3902）；不是相关距离层次风险平价。计入美股/ETF。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 18987 150w lookback 125d rebuild"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

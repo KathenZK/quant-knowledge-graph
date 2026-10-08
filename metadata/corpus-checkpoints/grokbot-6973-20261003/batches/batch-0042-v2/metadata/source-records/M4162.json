@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M4162",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 4116,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "b1ff86ac413c01f9b0bea075c626cc66dc5522e0783a2f35b83e5bb149d0d893",
+    "rule_sha256": "da5775a12cbeb926e996f866a93168287b06a0649cb75116ed7b37609116de8d"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M4162",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M4162"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.aqr.com/Insights/Research/Journal-Article/Carry"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Ralph S. J. Koijen / Tobias J. Moskowitz / Lasse H. Pedersen / Evert B. Vrugt（AQR 相关研究）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-123/W1369"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AQR·Carry·商品：月末；商品期货；carry=近月相对次近月斜率（F1−F2）/F2/ΔT；秩减均值加权多高空低至1美元（AQR Carry·Cmdty）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "商品期货"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2018-02"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "AQR·Carry·商品：月末；商品期货；carry=近月相对次近月斜率（F1−F2）/F2/ΔT；秩减均值加权多高空低至1美元（AQR Carry·Cmdty）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Koijen/Moskowitz/Pedersen/Vrugt《Carry》（JoF 2018；工作稿）**商品期货套息**腿之**当期 carry**。宇宙约 24 种商品期货。因现货常不可靠，用**最近到期 F¹**与**次近 F²**斜率：`C=(F¹−F²)/(F²·(T2−T1))`（按月）；权重 `w∝rank(C)−mean(rank)`，缩放为 **1 美元多头+1 美元空头**；月末再平衡。不是顶/底 20% 等权展期收益（近 M0344）；不是 ValMom 商品价值=−5年即期收益（近 M3533）；不是商品动量 MOM2–12（近 M4151，回避刚入库族）。**OVERRIDE** 同 URL 异核。计入商品期货。提出日期 2018-02。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Carry paper §I.C / §II · commodity futures slope carry · rank-weight eq(18)"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

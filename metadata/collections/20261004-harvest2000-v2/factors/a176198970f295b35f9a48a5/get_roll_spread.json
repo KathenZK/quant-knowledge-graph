@@ -1,0 +1,104 @@
+{
+  "economic_basis": {
+    "hypothesis": "用价格变化的负串行协方差估计微观结构价差。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-4b7f87555a03e6b7ae2f2fad"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅在整个估计窗口/分组结束、所有输入已观测并发布后可得；拟合系数及统计量不得回填为窗口内的实时因子。PIT数据与发表延迟缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-4b7f87555a03e6b7ae2f2fad"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "删除缺失收盘价后再差分，取相邻价格变化的样本协方差。 至少需要4个价格变化（5个有效价格）才继续。 负协方差按平方根推导价差；同时返回百分比、协方差与有效标记，合为一条。 边界：删除缺失后会跨越原时间缺口计算相邻差分；日历连续性需输入层另检。 c>=0不输出0价差，而是NaN；均价0时百分比未兜底。 这是随机游走与买卖价反弹模型下的估计，不是实际盘口观测价差。 仅DataFrame且索引恰有两层时按第0层分期，每列单独统计；MultiIndex Series不会进入分期分支。函数不主动按时间排序，序列顺序须由输入保证。 输出：一个完整统计构造；参数、窗口及多输出分量不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-4b7f87555a03e6b7ae2f2fad"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用价格变化的负串行协方差估计微观结构价差。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-4b7f87555a03e6b7ae2f2fad"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "ΔP_t=P_t-P_(t-1)；c=np.cov(ΔP[:-1],ΔP[1:],ddof=1)[0,1]。若c<0，S=2sqrt(-c)，S%=100S/mean(P)；否则S与S%为NaN。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-4b7f87555a03e6b7ae2f2fad"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "close_prices（pandas Series or DataFrame）：同频率的成交/收盘价格，单位一致。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-4b7f87555a03e6b7ae2f2fad"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "JerBouma/FinanceToolkit",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或进行数值复现",
+    "NumPy/Pandas/SciPy/sklearn版本及默认行为未冻结",
+    "金融数据、无风险收益与基准、供应商、数据发布时点和修订快照未选定",
+    "未验证经济收益有效性或市场适用假设"
+  ],
+  "name": "Roll 价格反弹隐含价差",
+  "native_source_id": "get_roll_spread",
+  "one_line": "用价格变化的负串行协方差估计微观结构价差。",
+  "record_id": "get_roll_spread",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/risk/market_liquidity_model.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-4b7f87555a03e6b7ae2f2fad",
+      "license": "MIT",
+      "locator": "get_roll_spread:L108-L212; imports and explicit constants:L1-L15",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "7126c9a1df4efa409a64b0aae3dfa72014a06c3ce2dbb306e04f3d77286a807e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/risk/market_liquidity_model.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-cb2abb9f4ee81dee928c5ef7",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "20f27d76a82699c1a5926ed41e8d1d8681ab3d554492559a9bfbd6f0d1ee2eef",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

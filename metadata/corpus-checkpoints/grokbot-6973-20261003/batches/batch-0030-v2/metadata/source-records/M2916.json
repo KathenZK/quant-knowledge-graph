@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2916",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2912,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "10ad5f23299e1afadc336cb04a11aca7d3dfa10ac5ce9a3e78d104a89bab80ac",
+    "rule_sha256": "6cb85d7a54d1b805300f250150e199e46631768077ae100d83f73565353264c3"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2916",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2916"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/ETFConstituentUniverseRSIAlphaModelAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY成分权重≥0.1%；小时RSI(7)平均损失>平均收益则DOWN否则UP，Insight权重=成分权重（Lean ETFConstituentUniverseRSIAlpha）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（SPY成分≥0.1%小时RSI7 Insight权重=成分权重；Lean ETFConstituentUniverseRSIAlpha）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：SPY成分权重≥0.1%；小时RSI(7)平均损失>平均收益则DOWN否则UP，Insight权重=成分权重（Lean ETFConstituentUniverseRSIAlpha）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `ETFConstituentUniverseRSIAlphaModelAlgorithm.py`。宇宙=`universe.etf(SPY)` 且权重≥0.001；Alpha=`ConstituentWeightedRsiAlphaModel`：每成分 `rsi(...,7,EXPONENTIAL,Hour)`；全就绪后若 `average_loss>average_gain` 发 DOWN，否则 UP，`weight=constituent.weight`，期限 1 日；组合=`InsightWeightingPortfolioConstructionModel`。不是 Brain 排名加权（W347）核，也不是 QQQ 成分 ATR Top10（W335）核。提出日期未知。 不是Brain排名加权（W347）核，也不是QQQ成分ATR Top10（W335）核：本条为SPY成分权重≥0.1%小时RSI(7)平均损失>平均收益则DOWN否则UP，Insight权重=成分权重。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

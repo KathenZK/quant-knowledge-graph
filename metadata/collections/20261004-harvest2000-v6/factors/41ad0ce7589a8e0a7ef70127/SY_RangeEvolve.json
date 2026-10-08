@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述新高或新低出现时，窗口覆盖范围如何扩张以及范围扩张集中在窗口的哪个阶段。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-bb8089b70d169c952026dd29"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-bb8089b70d169c952026dd29"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "把y拉成列向量后，用cummax−cummin计算每个前缀范围，不做滚动固定窗、不差分、不去趋势。 T统计精确数值上的不同前缀范围，包括第一点r1=0；新极值必须严格扩大范围才增加T。 分位前缀的不同值数量用floor(Np)，前缀范围比例取ceil(Np)，两处不能统一四舍五入。 前缀不足一个样本时不同值计数为0；固定长度超过N的对应两项返回NaN；其它项保留。 边界：常量输入T=1，而范围比例的分母R=0，因此这些比例为NaN；不同范围计数占比可能为1或空前缀的0。 样本长度与幅度舍入会影响精确unique；没有数值容差合并近似相等的范围。含NaN/Inf行为由依赖决定，本条仅定义有限非空向量。 所有比例用完整窗口T/R作分母，早期前缀比例需要未来窗口观测才能定稿；只可当窗口末的描述特征，不能回填成早期可知值。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-bb8089b70d169c952026dd29"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述新高或新低出现时，窗口覆盖范围如何扩张以及范围扩张集中在窗口的哪个阶段。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-bb8089b70d169c952026dd29"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "r_i=max(y_1..y_i)−min(y_1..y_i)，T=|unique(r_1..r_N)|，R=max(y)−min(y)。返回T；对p∈{.01,.1,.2,.5}，U_p=|unique(r_1..r_floor(Np))|/T，A_p=r_ceil(Np)/R；对L∈{10,50,100,1000}，N>=L时U_L=|unique(r_1..r_L)|/T，A_L=r_L/R，否则NaN。完整剖面计一族，不把每个p/L展开为新因子。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-bb8089b70d169c952026dd29"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（nonempty finite real time-ordered evenly sampled vector）：完整窗口的原序列；市场变量/窗口长度另行固定，输出只能在完整窗口结束后获得。。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-bb8089b70d169c952026dd29"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "窗口前缀范围扩张轨迹",
+  "native_source_id": "SY_RangeEvolve",
+  "one_line": "描述新高或新低出现时，窗口覆盖范围如何扩张以及范围扩张集中在窗口的哪个阶段。",
+  "record_id": "SY_RangeEvolve",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SY_RangeEvolve.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (C) 2013-2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-bb8089b70d169c952026dd29",
+      "license": "GPL-3.0-or-later",
+      "locator": "native contract and GPL:L1-L59; prefix range, floor/ceil sampling and output ratios:L61-L116",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "d76345a2fadef773c3ad8e85d6bb52a693c6f45e559e589b296e5d3af0e6f150",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/SY_RangeEvolve.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

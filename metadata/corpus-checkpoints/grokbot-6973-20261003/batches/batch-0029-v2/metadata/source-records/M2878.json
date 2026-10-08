@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2878",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2878,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "0c35141206ca08d7eda54390900982d2c364e7f0c67a6f18a6b657febb19a533",
+    "rule_sha256": "41297b65ad7c990a162e1ab72ac86cd1e2706b4063cdc68aeb77890f55d70328"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2878",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2878"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/BasicTemplateOptionStrategyAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；空仓时卖出最近到期ATM跨式2组，已投资则清仓（Lean BasicTemplateOptionStrategyAlgorithm）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF（GOOG空仓卖最近到期ATM跨式2组已投资清仓；Lean BasicTemplateOptionStrategy）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股期权：GOOG；空仓时卖出最近到期ATM跨式2组，已投资则清仓（Lean BasicTemplateOptionStrategyAlgorithm）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `BasicTemplateOptionStrategyAlgorithm.py`。`add_option(\"GOOG\")`；过滤 `standards_only().strikes(−2,+2).expiration(0,180)`。`on_data`：若组合未投资，在期权链中按 |行权价−标的价| 升序、到期升序取合约，对 ATM 执行 `sell(OptionStrategies.straddle(option_symbol, strike, expiry), 2)`；若已投资则 `liquidate()`。不是 W334 SPY 买跨式、也不是铁鹰（W306）核。提出日期未知。 不是W334 SPY买跨式、也不是铁鹰（W306）核：本条为GOOG空仓时卖出最近到期ATM跨式2组，已投资则清仓。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

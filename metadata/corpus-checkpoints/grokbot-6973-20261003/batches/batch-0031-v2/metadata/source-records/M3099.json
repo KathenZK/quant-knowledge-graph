@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3099",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3066,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "ed5e634ec9b8ba50fc07384d82df094bbfc468a99b11f363ddd171ef492e56ab",
+    "rule_sha256": "1efb2fa1747764003df306f5603f6aed03a2e217069f33b0757a3faa35f5f677"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3099",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3099"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FundamentalRegressionAlgorithm.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect Lean"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/QuantConnect/Lean/blob/master/Algorithm.Python/FundamentalUniverseSelectionAlgorithm.py（quant-web-harvest-34 W566；同市场+同核：Fundamental宇宙价>1按成交额再按PE降序取Top2；剔除清仓、新增各配2%；FundamentalUniverseSelectionModel 相对 FundamentalRegression(add_universe) 仅为宇宙API包装妆点，买卖/持仓核相同（优先保留 M3099）；同核未另开）"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：Fundamental宇宙；价>1按成交额再按PE降序取Top2；新增各配2%、剔除清仓（Lean FundamentalRegression）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股/ETF"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美股：Fundamental宇宙；价>1按成交额再按PE降序取Top2；新增各配2%、剔除清仓（Lean FundamentalRegression）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 Lean `FundamentalRegressionAlgorithm.py`。日线 `add_universe(selection_function)`：`price>1` 按 `dollar_volume` 降序，再按 `valuation_ratios.pe_ratio` 降序取 `number_of_symbols_fundamental=2`。变更：removed `liquidate`；added `set_holdings(symbol,0.02)`。不是粗选Top5再PE Top2各20%核（W447）。提出日期未知。 计入美股/ETF。 提出日期按源文件原样保留未知。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

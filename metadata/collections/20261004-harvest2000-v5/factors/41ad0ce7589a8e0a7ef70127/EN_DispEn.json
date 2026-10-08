@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "先把整窗幅度映射成类别，再统计延迟类别模板及类别差分模板的分布熵。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-1af215961c264bbbc57618ba"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-1af215961c264bbbc57618ba"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定默认/显式数值tau路径；源码检查c>=2/m>=1和模板数V>=5，常量ncdf或linear输入返回NaN。 默认用原窗口均值标准差的高斯CDF仅作幅度映射，不意味着本库认定数据为高斯。使用round(c*g+.5)而非按样本分位数等频分箱，最后夹到1..c。 统计完整类别序列频率；可保留幅度层级差异。附属fluctuation输出统计类别差分序列，不把它与标准化或每个方向另记新条。 归一的对数分母使用所有形式类别组合数；差分类别的某些连续组合受原类别边界限制，不宣称每个形式模式都一定可达。 边界：m=1只有幅度类别熵，两个差分熵字段为NaN；不是生成两个不同算法。 理论数组大小c^m或(2c−1)^(m−1)可很大，源码未完整资源限制；非法非整数参数也未全面拒绝。 极端ncdf值达到1时round可生成c+1，再被clip为c；必须保留该边界。 数值环境的normcdf/round/std未执行冻结；动态tau字符串依赖ACF/AMI选择合同未审，不纳入本条可复现公式。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-1af215961c264bbbc57618ba"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "先把整窗幅度映射成类别，再统计延迟类别模板及类别差分模板的分布熵。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-1af215961c264bbbc57618ba"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认g_t=Φ((y_t−mean(y))/std(y))；linear分支g_t=(y_t−min(y))/(max(y)−min(y))。z_t=clip(round(c*g_t+.5),1,c)。V=N−(m−1)τ，Z_ik=z_(i+(k−1)τ)，类别模式号1+Σ_k(Z_ik−1)c^(m−k)；p为V个模板的经验比例。H=−Σ_(p>0)p ln p，归一输出H/ln(c^m)。m>=2时再对每行相邻类别差ΔZ+(c−1)以基数2c−1编码，得q，H_F=−Σq lnq及H_F/ln[(2c−1)^(m−1)]。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-1af215961c264bbbc57618ba"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（finite real time-ordered evenly sampled vector）：完整观测窗口，具体市场变量绑定缺失；数值tau合同，不自动延迟选择。按公式要求足够的有效模板。。参数：m：模板维度；范围research integer>=1；源码默认2；c：幅度类别数；范围research integer>=2；源码默认6；tau：延迟，字符串适应分支未冻结；范围research positive integer; numeric path only；源码默认1；mappingHow：幅度映射方式，同一家族；范围ncdf/linear；源码默认ncdf"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-1af215961c264bbbc57618ba"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "幅度类别模板的离散分布熵",
+  "native_source_id": "EN_DispEn",
+  "one_line": "先把整窗幅度映射成类别，再统计延迟类别模板及类别差分模板的分布熵。",
+  "record_id": "EN_DispEn",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/EN_DispEn.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-1af215961c264bbbc57618ba",
+      "license": "GPL-3.0-or-later",
+      "locator": "native interface and author papers:L1-L60; GPL notice:L63-L91; defaults, mapping, pattern count and both entropies:L95-L210",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "ed2216a17cd275d1a9f7c3f11c5c21c030fa18b20d509bf441ecdff82f63aee2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/EN_DispEn.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

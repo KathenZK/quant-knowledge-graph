@@ -1,0 +1,295 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述已给样本的整体分布形状与正常顺序分位权的对齐程度；用途是诊断，未验证收益方向、正态性成立或经济独立。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-93e0174065ab80004563b4ba",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-027500190b6f503aeaa10e1b",
+        "harvest-source-d69c566eef1ab23647cce6e8",
+        "harvest-source-162749065505145450ac7401"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在整窗样本均已观测/发布后计算；排序使用完整窗口，不能回填为窗内早期信号。金融变量、窗口、供应商、发布日期/修订及PIT仍MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-93e0174065ab80004563b4ba",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-027500190b6f503aeaa10e1b",
+        "harvest-source-d69c566eef1ab23647cce6e8",
+        "harvest-source-162749065505145450ac7401"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定公共scipy.stats.shapiro(x,axis=None,nan_policy=\"propagate\",keepdims=False).statistic，普通无mask一维float64且全体有限。长度上限5000是本条研究域，source N>5000仍计算W并只警告p值准确性；长度不是可拆身份。原signature/default_axis都是None，docstring参数行写default0，按代码保留差异。 固定commit实际公共入口调用同文件Python _swilk/_swilk_w。来自_ansari_swilk_statistics的唯一import是gscale用于其它函数；不能用同仓旧Cython swilk的阈值/截尾分支替代此实现。 先xp.sort(x)取得升序副本，再减原数组x[n//2]。注释称median(or nearby value)，但原x不保证有序，该项可能不是中位数。只是共同平移以改善数值，后续分母再减mean(y)，不把它作为顺序分位/金融中位数定义。排除整型输入，因为减法发生在force_floating之前；本合同预先float64。 n=3只用[-sqrt2/2,0,sqrt2/2]权，调用同一平方内积/中心平方和再clip到[.75,1]。原public函数还算伴随p，但这不作为本条已审核特征。n>3采用完整两端修正正常分位权，不擅改为简单正态分位单位向量的Shapiro–Francia近似。 依i和n构造标准正态分位m，先单位化成c。a_n的五阶u多项式对所有n>3应用；第二端b只在n>5替换，n=4/5的phi只扣最末一对。随后未替换的内点由共同sqrt(phi)归一；不是把所有权再除sqrt(sum(a²))。 逐个xpx.at(...).set覆盖权向量位置。源码最后用索引−0，即Python的0，故覆盖第一点；不能把它理解为最后一个位置。n>5四端赋值，n<=5只有两端；submodule绑定SciPy gitlink1c9100…并记录MIT许可，普通NumPy路径是赋值后返回更新数组。 _swilk_w用vecdot(a,y)^2作分子；_demean先计算y−mean(y)并可能发精度损失warning，但不替换计算结果，再vecdot求平方和。无n或n−1额外因子。常量数据导致0/0，本研究排除；近常量并不保证自动拒绝或修复。 理想实数/反对称单位权下W等于升序样本与该权向量的Pearson相关平方；这只是代数关系，浮点quantile/权重和可能不严格对称或单位化，源码直接算原平方比，n>3不clip。本条不把变换成1−W或p值另计新。 排序舍弃原时间顺序，诊断单样本形状与指定正常顺序权的对齐。较大W不证明金融收益正态、独立、平稳或可预测；不能从历史窗结果推出交易方向。p值涉及额外log/normal近似，本条不审其校准或normal标签。 ndtri以固定官方定义Φ^−1为数学原语，没有逐指令审compiled XSF近似或NumPy底层，也没有运行。普通有限有效中间量合同不等于已证所有机器输入稳定；其他Array API、mask、nan omit、轴批量和censoring未在本条承诺。 边界：原未排序中间位置减法不可误写成先求真正中位数；exact translation relation不证明极端浮点样本结果不依赖顺序。 本输入额外要求所用减法、平方、求和、phi及输出W有限，分母和phi正；source不会主动验证这一整域。 n=3裁[.75,1]，n>3不裁；不能借旧Cython截尾/小range保护来解释本commit。 public shapiro仍计算伴随p；本条仅审返回statistic，未验证p的近似、显著性或时间相关数据下校准。 普通corr内积、L-moment序统计和normalquantile均是共享组件；不声明数学或经济独立，也不把方向、长度和新语言当新族。 BSD-3-Clause仅适用SciPy材料；array-api-extra子模块为MIT；原Shapiro/Wilk/Royston论文与市场数据许可分开未核定。 输出：公共ShapiroResult.statistic中的W；pvalue虽同调用计算但未作为本条已审核输出，同族未来补核不另计。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-93e0174065ab80004563b4ba",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-027500190b6f503aeaa10e1b",
+        "harvest-source-d69c566eef1ab23647cce6e8",
+        "harvest-source-162749065505145450ac7401"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述已给样本的整体分布形状与正常顺序分位权的对齐程度；用途是诊断，未验证收益方向、正态性成立或经济独立。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-93e0174065ab80004563b4ba",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-027500190b6f503aeaa10e1b",
+        "harvest-source-d69c566eef1ab23647cce6e8",
+        "harvest-source-162749065505145450ac7401"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入普通一维float64有限x_1..x_n，3<=n<=5000且中心平方和>0；令z=sort(x)，y_i=z_i−x_[floor(n/2)+1]；x_[]采用1基原未排序数组下标，即源代码0基n//2位置。n=3时a=(−1/sqrt2,0,1/sqrt2)，W=clip[(Σa_i y_i)^2/Σ(y_i−mean(y))²,.75,1]。n>3时p_i=(i−3/8)/(n+1/4)，m_i=Φ^−1(p_i)，M=Σm_i²，c_i=m_i/sqrt(M)，u=n^−.5；a_n=c_n+.221157u−.147981u²−2.071190u³+4.434685u⁴−2.706056u⁵；b=c_(n−1)+.042981u−.293762u²−1.752461u³+5.682633u⁴−3.582633u⁵。若n<=5，phi=(M−2m_n²)/(1−2a_n²)；若n>5，phi=(M−2m_n²−2m_(n−1)²)/(1−2a_n²−2b²)。先令a_i=m_i/sqrt(phi)，再覆盖a_1=−a_n、a_n；n>5另覆盖a_2=−b、a_(n−1)=b。返回W=(Σa_i y_i)^2/Σ(y_i−mean(y))²；n>3无额外clip。Φ标准正态CDF；全部样本长度/系数/伴随p或后续实现归一族，当前只审statistic W。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-93e0174065ab80004563b4ba",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-027500190b6f503aeaa10e1b",
+        "harvest-source-d69c566eef1ab23647cce6e8",
+        "harvest-source-162749065505145450ac7401"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（ordinary unmasked finite float64 one-dimensional NumPy vector, 3<=n<=5000, positive centered sum of squares）：一个完整已观测样本窗；不需要预先排序，不含未来观测或填充数据；n上限为审阅子合同。；valid_intermediates（all selected arithmetic finite; denominator>0; for n>3 phi>0）：额外数值使用域，不冒称source逐项验证。源码仍可能给精度warning；未做数值实验。。参数：axis：source默认None，展平一整窗；docstring default0冲突保留；范围selected None on a one-dimensional vector；源码默认None；本条选定None；nan_policy：不使用missing删除分支；范围finite-input reviewed subdomain only；源码默认propagate；本条选定propagate；keepdims：输出取原statistic标量；形状变体不另计；范围False；源码默认False；本条选定False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75",
+        "harvest-source-bbbecde791dfaaebacee469f",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-93e0174065ab80004563b4ba",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-027500190b6f503aeaa10e1b",
+        "harvest-source-d69c566eef1ab23647cce6e8",
+        "harvest-source-162749065505145450ac7401"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "scipy/scipy",
+  "lab": null,
+  "missing_information": [
+    "金融数据绑定、时点/PIT与窗口未定",
+    "compiled ndtri与NumPy底层数值环境未执行/位级复现",
+    "pvalue/显著性及金融依赖样本校准未审",
+    "原论文与行情商业权利未核定"
+  ],
+  "name": "正常顺序分位权的 Shapiro–Wilk 形状诊断",
+  "native_source_id": "shapiro",
+  "one_line": "先把样本排序，再用依样本量修正的正常顺序分位权计算标准化平方内积，形成单样本分布形状诊断。",
+  "record_id": "shapiro",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_morestats.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-701f1f6dbf5d9baab9f7ceac",
+      "license": "BSD-3-Clause",
+      "locator": "actual imports: Cython gscale only; public shapiro is Python:L1-L49; public attribution/signature and sorted vector offset/promote/return:L2093-L2185; complete W weights/core and neighboring excluded p transformation boundary:L2188-L2262",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "16149a4eec5c1005a120d400b8c34852e0d29037436bed20e99a543b679679ca",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_morestats.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-dcaa4b2ca5e08690e90c3e75",
+      "license": "BSD-3-Clause",
+      "locator": "demean subtraction and precision warning used in denominator:L1175-L1203",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "f83fbd7a76afa61a865820917184eabd67d5ebc04cde4db102ba1ba86e94d0cb",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-bbbecde791dfaaebacee469f",
+      "license": "BSD-3-Clause",
+      "locator": "ordinary unmasked input unchanged:L208-L218; keepdimsFalse output unchanged:L284-L291; decorator signature:L365-L370; finite ordinary one-dimensional default-axis handling:L422-L623",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "a1650feb6cfcf6f9a1c764c824e725b39f039a2e19001fb60f48f88c354d102f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_axis_nan_policy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-8b75a55d87853f7f61280e73",
+      "license": "BSD-3-Clause",
+      "locator": "namespace imports and SciPy overrides:L21-L50; NumPy array conversion:L80-L130; default-axis flatten helper:L424-L429; promotion and selected no-broadcast return:L442-L536; device helper ordinary NumPy path:L615-L649; unmasked sample count:L672-L686; capabilities decorator modifies docs only and returns original function:L868-L980",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "14dbc9a53b4f6bb8dffe8fb302574fed5a522b619ce15696b1e29766d81b238c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_array_api.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-93e0174065ab80004563b4ba",
+      "license": "BSD-3-Clause",
+      "locator": "namespace setup and ordinary NumPy types:L1-L79; NumPy namespace selection:L80-L166",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "8e92cd324136a93e10cdf54d3c1ef63fe26ebd382b8b9405f74c2f93d0314560",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_array_api_override.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-779c3ca1cb586365bbaa911d",
+      "license": "BSD-3-Clause",
+      "locator": "finite float64 input NaN inspection:L822-L879; unused placeholder dtype in wrapper:L946-L955",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "11afe6455cb6992ec2f22cd60c42995b9c351aeaaf062d9b4ab04d7fd234d40c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_util.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-ed108f77a6cfc191109f52a5",
+      "license": "BSD-3-Clause",
+      "locator": "ndtri exact mathematical contract: inverse standard-normal CDF; compiled kernel not audited:L10761-L10790",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "e2a896a9e41ead237c5f7a4c2cc6e49e36400162252d659baece95401ec72f45",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/special/_special_ufuncs_docs.cpp",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "SciPy copyright and redistribution conditions:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-fdb13ae8a92f22496925d1b0",
+      "license": "BSD-3-Clause",
+      "locator": "SciPy pinned array_api_extra repository mapping:L9-L11",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "370b4621943e368312a073d14ea1b8b636c86de25f25bd1f38d7b569b29017f6",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/.gitmodules",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-027500190b6f503aeaa10e1b",
+      "license": "MIT",
+      "locator": "imports, set operation, copyNone semantics:L1-L77; constructor and indexing:L196-L213; complete eager set-update path; nonNumPy alternatives excluded:L214-L360",
+      "revision": "1c9100b354b5874956624759d81e1d98f1bed521",
+      "sha256": "6f8ae731bc13f314307c690d23c185b6f70451ef3e5bac3379416c4940d1944e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/data-apis/array-api-extra/blob/1c9100b354b5874956624759d81e1d98f1bed521/src/array_api_extra/_at.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-d69c566eef1ab23647cce6e8",
+      "license": "MIT",
+      "locator": "compatibility imports including vendoring override:L1-L74",
+      "revision": "1c9100b354b5874956624759d81e1d98f1bed521",
+      "sha256": "caf9cee5a674e0ec24f0d88f0ce9bd231d58a9ae57be9f17869b6a22d948b112",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/data-apis/array-api-extra/blob/1c9100b354b5874956624759d81e1d98f1bed521/src/array_api_extra/_lib/_compat.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-162749065505145450ac7401",
+      "license": "MIT",
+      "locator": "public at export and package version:L1-L26",
+      "revision": "1c9100b354b5874956624759d81e1d98f1bed521",
+      "sha256": "37c8766fe8b788e687d1b28e5ff31c52db8907a662fb94ff3540a4ada936dc4e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/data-apis/array-api-extra/blob/1c9100b354b5874956624759d81e1d98f1bed521/src/array_api_extra/__init__.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers; Copyright(c)2001–2002 Enthought, Inc.2003 SciPy Developers. array-api-extra Copyright(c)2024 Consortium for Python Data API Standards. Fixed shapiro docstring attributes Shapiro & Wilk1965 and Royston1993; self-authored Chinese definition.",
+      "id": "harvest-source-91d25ce9d48f4b74551f120e",
+      "license": "MIT",
+      "locator": "Consortium attribution and MIT software conditions:L1-L21",
+      "revision": "1c9100b354b5874956624759d81e1d98f1bed521",
+      "sha256": "58494398fe147fdce76a68b2decd4c08ce3a1ea237b6d6785001c15f822c6ed6",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/data-apis/array-api-extra/blob/1c9100b354b5874956624759d81e1d98f1bed521/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

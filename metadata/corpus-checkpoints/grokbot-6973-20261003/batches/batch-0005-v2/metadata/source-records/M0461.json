@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M0461",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 461,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "759b3fef6eb2e6ad543c8e1f9c00fad6507c817359ebfabc8afe34f8ced7e1b4",
+    "rule_sha256": "06e125f3c9051716560e2d1500ba49d78a9ab49c501dd4b7f3e382eab40c32aa"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M0461",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M0461"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/OpenSourceAP/CrossSection/blob/master/Signals/pyCode/Predictors/iomom_supp.py"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Menzly and Ozbas (2010, JF)"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://openassetpricing.com/SignalDoc-Browser.html"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "中"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Suppliers momentum（iomom_supp）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "美国股票（CRSP/Compustat；Chen-Zimmermann 复制）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2010"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Suppliers momentum"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "信号（Signal Browser Definition）：We download BEA Make-Use Tables, match to Compustat by NAICS assuming 5 year lag, compute returns within BEA 70 industries. Then match each industry-year to matched-industry weights corresponding to IO tables as follows: for supplier mom, industry comes from cols of Use table, matched industries from the rows. For customer mom: industry from rows of make table, matched industries from cols. Weights exclude own-industry entries. For each industry-month, average returns of matched industries, weighted using IO tables. Sort industries into deciles based on matched returns, assign firm-months to industry deciles, Finally, long stocks in deciles 8-10 and short decile 1. Drop pre-1986 due to NAICS availability. 组合规则（该页字段）：StockWeight=EW；LSQuantile=未写；PortfolioPeriod=1.0个月；StartMonth=6.0；Sign=1.0；TestInOP=mv reg。股票池/过滤：过滤列为空；定义/注释中的股票池限制：We download BEA Make-Use Tables, match to Compustat by NAICS assuming 5 year lag, compute returns within BEA 70 industries. Then match each industry-year to matched-industry weights corresponding to IO tables as follows: for supplier mom, industry comes from cols of Use table, matched industries from the rows. For customer mom: industry from rows of make table, matched industries from cols. Weights exclude own-industry entries. For each industry-month, average returns of matched industries, weighted using IO tables. Sort industries into deciles based on matched returns, assign firm-months to industry deciles, Finally, long stocks in deciles 8-10 and short decile 1. Drop pre-1986 due to NAICS availability.。 Notes：Early in the paper, they use a stock level mv reg with many controls. Later in the paper, they sort industry portfolios instead of stocks. Given that it would have been more straightforward to just sort on stocks, I think the evidence on standard portfolio sorts is unclear (hence this is a likely predictor, not clear)。 基线为原论文分组的多空组合（FAQ：baseline follows the original paper split）。未在该行写出的细节不补。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "signalname=iomom_supp; KeyTable=2 (1) r_supplier,t-1"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

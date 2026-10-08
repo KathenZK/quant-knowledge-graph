@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M3927",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 3881,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "68955eb2e06cf38ecc2a00c7a9866102f2c059a1b94c2b693455555caec92178",
+    "rule_sha256": "a0892aaeb0dfed8085b4d19cc6d47d68a2de5a82976b6503d584d10aa5bed98e"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M3927",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M3927"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://www.quantconnect.com/research/15373/the-dynamic-breakout-ii-strategy/"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QuantConnect（转述 George Pruitt / Building Winning Trading Systems）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "quant-web-harvest-97/W1134"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·动态突破II·布林过滤：日频；EURUSD；回看N∈[20,60]随波动伸缩，昨收>布林上轨且价破N日高开多，对称开空，跌破/升破N日收盘均值平仓（QC DynBreakoutII·BB·EURUSD）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "外汇"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "未知"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "QC·动态突破II·布林过滤：日频；EURUSD；回看N∈[20,60]随波动伸缩，昨收>布林上轨且价破N日高开多，对称开空，跌破/升破N日收盘均值平仓（QC DynBreakoutII·BB·EURUSD）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写 QuantConnect《The Dynamic Breakout II Strategy》：标的 **EURUSD**（教程亦测 GBPUSD）；回看初值 **20**，按近/昨波动变化率伸缩并夹在 **[20,60]**；**BB(N,2σ)**；做多需昨收 **高于** 上轨且现价破近 N 日最高，做空对称（昨收下破下轨且破 N 日最低）；持仓以近 N 日收盘均值为动态出场。不是无布林、仅唐奇安的 EasyQuant 版（M2470）。计入外汇。提出日期未知，不编造。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "Research 15373 EURUSD BB+Donchian adaptive N"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

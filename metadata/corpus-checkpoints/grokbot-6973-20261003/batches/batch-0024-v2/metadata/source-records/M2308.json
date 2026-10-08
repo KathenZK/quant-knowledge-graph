@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "entity_type": null,
+    "evidence": [],
+    "original_classification": null,
+    "reason": "CSV_HAS_NO_AUTHORITATIVE_TYPE_COLUMN",
+    "type_status": "UNREVIEWED"
+  },
+  "entity_type": "source_record",
+  "execution_permission_granted": false,
+  "identity_namespace": "grokbot",
+  "knowledge_values_complete": true,
+  "native_source_id": "M2308",
+  "new_execution_trials": 0,
+  "provenance": {
+    "csv_row_ordinal": 2308,
+    "csv_sha256": "15cc0ecbcb23261e3cd7f2fb0851815daed59951090d9ce3e759ef224ea6f415",
+    "row_sha256": "a694111383b4eeeee6ec09174ea0ad31d987816ff325f33f5e57d4c1547acabe",
+    "rule_sha256": "7e600d9199c1ee9bec12db288d259d18f093e11390c4701b47bfed2e5286f2ce"
+  },
+  "publication": {
+    "all_fields_reviewed": false,
+    "reason_codes": [],
+    "sensitive_fields": [],
+    "status": "FIELD_REVIEW_REQUIRED"
+  },
+  "record_id": "M2308",
+  "reported_fields": {
+    "id": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "M2308"
+    },
+    "source_url": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "https://github.com/hugo2046/QuantsPlaybook/blob/master/C-%E6%8B%A9%E6%97%B6%E7%B1%BB/%E7%BB%93%E5%90%88%E6%94%B9%E8%BF%9BHHT%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95%E7%9A%84%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5/hht_timing.ipynb"
+    },
+    "作者或机构": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "招商证券金融工程（《结合改进HHT模型和分类算法的交易策略》2024-12-10；QuantsPlaybook复现）"
+    },
+    "别名来源": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "无"
+    },
+    "可回测": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "高"
+    },
+    "名称": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "招商金工HHT+滚动机器学习相位分类择时（多窗5/10/30/60/90/120；EMD/VMD；每5日重训；次开收益标签）"
+    },
+    "市场": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "A股宽基（例沪深300；日频）"
+    },
+    "提出日期": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "2024-12-10"
+    },
+    "标题": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "招商金工HHT+滚动机器学习相位分类择时（多窗5/10/30/60/90/120；EMD/VMD；每5日重训；次开收益标签）"
+    },
+    "规则": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "本条只写源文件已印出的规则。将多组分解窗长∈{5,10,30,60,90,120}×方法∈{EMD,VMD}得到的相位二元信号作特征；以未来收益二分类（笔记用次日开盘收益移位）为标签；滚动训练分类器（笔记示RFC/LGB/XGB），分类器每隔5日重训，再用当日相位预测涨跌作多空。相对固定相位阈值：本条为滚动ML映射核。 不是固定相位阈值：本条为多窗×EMD/VMD相位特征滚动ML（每5日重训）分类择时核。 计入其他。 提出日期按源文件原样保留2024-12-10。"
+    },
+    "页码或文件": {
+      "status": "CATALOG_REPORTED_UNVERIFIED",
+      "value": "公开页/PDF已印出规则"
+    }
+  },
+  "schema_version": "quantgraph-catalog-source-record/v1",
+  "source_webpage_fulltext_fetched": false
+}

@@ -1,0 +1,212 @@
+{
+  "economic_basis": {
+    "hypothesis": "在预先对应的两组多维观测之间，去掉整体平移和尺度，再找允许旋转、反射与整体缩放的最小平方对齐误差。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-77f4acf83f68a5121f379530",
+        "harvest-source-3a8b966fcbb28f10afb6661f",
+        "harvest-source-56db14b5e33cccac436244de",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-93e0174065ab80004563b4ba"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "全部点/字段及配对关系均观测并发布后才可计算；金融输入、窗口、比较对象、字段单位和PIT仍MISSING。未执行来源算法、采集行情或回测。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-77f4acf83f68a5121f379530",
+        "harvest-source-3a8b966fcbb28f10afb6661f",
+        "harvest-source-56db14b5e33cccac436244de",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-93e0174065ab80004563b4ba"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审普通NumPy二维float64有限实数组；源码复制到float64，检查二维、同shape和非空。按列减均值后各除整体Frobenius范数，不是逐列标准化或协方差白化；任一全体点相同导致norm==0时明确报错。n>=3,k>=2是本条研究域选择，不是源强制。 原生spatial.procrustes调用linalg.orthogonal_procrustes(A,B)，后者实际在NumPy路径对(B.T@conj(A)).T作SVD；实数时是A.T@B。默认SVD full_matrices=True、compute_uv=True、check_finite=True、lapack_driver=gesdd。R=U@Vt，scale为奇异值和。 helper给的是从A到B的方向R；上层按B@R.T再乘s对齐回A。允许det(R)=−1的反射，不加Kabsch的det=+1修正。s不是原始两矩阵范数之比，而是中心化归一后交叉矩阵的核范数。 返回首矩阵A、拟合第二矩阵sBR.T和平方误差和；第二矩阵范数通常为s，不重新归一到1。行对应固定，不搜索置换、最近邻、运输耦合或时间扭曲。输入点重复只改变该位置的权重，源不会去重。 s<=1来自归一矩阵的最优交叉内积界；展开||A−sBR.T||²=1+s²−2s²给D=1−s²，这是自撰代数核对，没有执行算法。k=1时退化为1−Pearson相关²，作为同族边界明确保留，不把该单变量情形另计。 源notes称disparity随点数缩放，但当前实现先整体单位范数化。若每个配对行都等倍复制，A/B各除sqrt(复制倍数)，交叉矩阵不变，故精确D不变；保留这条文档/实现边界，不将notes写成线性缩放定律。 已读取Python上层、正交helper与SVD派发/返回；未审核编译LAPACK内部浮点算法、所有Array API后台或完整实际安装依赖，未运行SVD。只将其公开数学目标与固定Python路径录为定义。 边界：输入两组必须是预先对应的观测；相同形状不证明金融实体、时间或特征列已正确对齐。任意改变一组行顺序可能改变误差。 对每个点集的整体平移、非零整体缩放、正交旋转/反射不敏感，但一般的逐列缩放、剪切及非线性变换会改变结果；不能混称对任意单调变换不变。 允许秩不足及零奇异值时最优R可不唯一，浮点方向依赖求解器；误差的数学最优值仍定义。常量全点集被拒绝；本研究额外要求中心化、平方、乘法等中间量有限及SVD成功，不能说源对所有极端输入均稳定。 平方disparity本身不声称满足三角不等式，不是显著性p值、独立性检验或金融收益预测。拟合使用整个输入窗，窗内形状对齐不能回填作早期已知信号。 全部点/字段及配对关系均观测并发布后才可计算；金融输入、窗口、比较对象、字段单位和PIT仍MISSING。未执行来源算法、采集行情或回测。 输出：完整Procrustes形状对齐一个族；两个矩阵、误差、R/s、方向、维度及实现端口不拆新增"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-77f4acf83f68a5121f379530",
+        "harvest-source-3a8b966fcbb28f10afb6661f",
+        "harvest-source-56db14b5e33cccac436244de",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-93e0174065ab80004563b4ba"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在预先对应的两组多维观测之间，去掉整体平移和尺度，再找允许旋转、反射与整体缩放的最小平方对齐误差。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-77f4acf83f68a5121f379530",
+        "harvest-source-3a8b966fcbb28f10afb6661f",
+        "harvest-source-56db14b5e33cccac436244de",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-93e0174065ab80004563b4ba"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "给定同形状n×k有限实矩阵X,Y，n>=3,k>=2，行一一预配对，各自中心化后Frobenius范数为正。Xc=X−列均值，Yc=Y−列均值；A=Xc/||Xc||F，B=Yc/||Yc||F。对C=AᵀB作SVD C=U diag(σ)Vᵀ，令R=UVᵀ，s=Σσ。返回A、Bfit=s B Rᵀ及D=||A−Bfit||F²。精确实数算术下D=min_(a>=0,QᵀQ=I)||A−aBQ||F²=1−||AᵀB||_*²，0<=D<=1；源码实际计算平方差的总和，不用1−s²替代且不额外clip。整组输出和两个方向计一个族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-77f4acf83f68a5121f379530",
+        "harvest-source-3a8b966fcbb28f10afb6661f",
+        "harvest-source-56db14b5e33cccac436244de",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-93e0174065ab80004563b4ba"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "data1,data2（same-shape ordinary NumPy finite real float64 n by k matrices; n>=3,k>=2; positive centered Frobenius norms; finite intermediates and successful SVD）：预先成对的多维完整观测；没有自动匹配、补缺或金融时间对齐。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-77f4acf83f68a5121f379530",
+        "harvest-source-3a8b966fcbb28f10afb6661f",
+        "harvest-source-56db14b5e33cccac436244de",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-779c3ca1cb586365bbaa911d",
+        "harvest-source-93e0174065ab80004563b4ba"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "scipy/scipy",
+  "lab": null,
+  "missing_information": [
+    "未执行算法或回测，实际NumPy/BLAS/LAPACK运行环境未固定",
+    "金融字段、配对规则、比较窗口和PIT发布时间缺失",
+    "仅数学形状差异，没有金融经济有效性或独立性证据",
+    "代码BSD3不授予原论文或市场数据权利，商用REVIEW_REQUIRED"
+  ],
+  "name": "配对点集经平移缩放与正交对齐后的形状差异",
+  "native_source_id": "procrustes",
+  "one_line": "在预先对应的两组多维观测之间，去掉整体平移和尺度，再找允许旋转、反射与整体缩放的最小平方对齐误差。",
+  "record_id": "procrustes",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/spatial/_procrustes.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SciPy Developers；上层源码注明Justin Kucynski原写、Yoshiki Vazquez-Baeza从scikit-bio移植；方法文献Gower/Krzanowski和正交解Schonemann保留于源docstring。代码许可不代替原文许可。",
+      "id": "harvest-source-77f4acf83f68a5121f379530",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer attribution, scope and output notes:L1-L83; method references:L85-L88; complete paired spatial alignment implementation:L105-L137",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "41fabbd2b601ae3054d10797598b462433791675c404a3d54c5f5829ceedc733",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/spatial/_procrustes.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；上层源码注明Justin Kucynski原写、Yoshiki Vazquez-Baeza从scikit-bio移植；方法文献Gower/Krzanowski和正交解Schonemann保留于源docstring。代码许可不代替原文许可。",
+      "id": "harvest-source-3a8b966fcbb28f10afb6661f",
+      "license": "BSD-3-Clause",
+      "locator": "native helper signature and reference:L1-L64; complete selected helper SVD and transform direction:L101-L120",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "13c9ae1a4bb460a69e2f974b839bcf4f61e627bfdce18d518f1082e9b39be80e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/linalg/_procrustes.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；上层源码注明Justin Kucynski原写、Yoshiki Vazquez-Baeza从scikit-bio移植；方法文献Gower/Krzanowski和正交解Schonemann保留于源docstring。代码许可不代替原文许可。",
+      "id": "harvest-source-56db14b5e33cccac436244de",
+      "license": "BSD-3-Clause",
+      "locator": "SVD defaults and mathematical factorization:L1-L90; selected input and dtype checks:L146-L166; SVD native dispatch and output/error handling:L188-L215",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "4b212ea72f9978ed7add1d2aa2ae333001f9eea5c18d4064b78ae75a8628b0e4",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/linalg/_decomp_svd.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；上层源码注明Justin Kucynski原写、Yoshiki Vazquez-Baeza从scikit-bio移植；方法文献Gower/Krzanowski和正交解Schonemann保留于源docstring。代码许可不代替原文许可。",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；上层源码注明Justin Kucynski原写、Yoshiki Vazquez-Baeza从scikit-bio移植；方法文献Gower/Krzanowski和正交解Schonemann保留于源docstring。代码许可不代替原文许可。",
+      "id": "harvest-source-088c1d9c7042eaaa4ba39300",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_scope:L1-L81",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "6a4d55e53007e0d509dc30f5a8d460c280f0f5bcf2567c910948e7eb23047b10",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；上层源码注明Justin Kucynski原写、Yoshiki Vazquez-Baeza从scikit-bio移植；方法文献Gower/Krzanowski和正交解Schonemann保留于源docstring。代码许可不代替原文许可。",
+      "id": "harvest-source-8b75a55d87853f7f61280e73",
+      "license": "BSD-3-Clause",
+      "locator": "scipy/_lib/_array_api.py:L24-L47; scipy/_lib/_array_api.py:L74-L130; scipy/_lib/_array_api.py:L868-L980",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "14dbc9a53b4f6bb8dffe8fb302574fed5a522b619ce15696b1e29766d81b238c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_array_api.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；上层源码注明Justin Kucynski原写、Yoshiki Vazquez-Baeza从scikit-bio移植；方法文献Gower/Krzanowski和正交解Schonemann保留于源docstring。代码许可不代替原文许可。",
+      "id": "harvest-source-779c3ca1cb586365bbaa911d",
+      "license": "BSD-3-Clause",
+      "locator": "scipy/_lib/_util.py:L364-L415; scipy/_lib/_util.py:L1182-L1280",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "11afe6455cb6992ec2f22cd60c42995b9c351aeaaf062d9b4ab04d7fd234d40c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_util.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；上层源码注明Justin Kucynski原写、Yoshiki Vazquez-Baeza从scikit-bio移植；方法文献Gower/Krzanowski和正交解Schonemann保留于源docstring。代码许可不代替原文许可。",
+      "id": "harvest-source-93e0174065ab80004563b4ba",
+      "license": "BSD-3-Clause",
+      "locator": "scipy/_lib/_array_api_override.py:L39-L78; scipy/_lib/_array_api_override.py:L80-L166",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "8e92cd324136a93e10cdf54d3c1ef63fe26ebd382b8b9405f74c2f93d0314560",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_array_api_override.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}
