@@ -1,0 +1,94 @@
+{
+  "economic_basis": {
+    "hypothesis": "过去跨式收益高的股票期权，未来跨式收益仍偏高（期权收益动量）。",
+    "missing": [
+      "五分位组合内加权方式（等权/其他）在所引段落未写明，作者其他组合多用等权。",
+      "仅取得2021-09工作论文版，未与期刊终版比对。",
+      "交易成本与保证金未计入本定义。",
+      "未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v35-sjtu-sffs-option-momentum-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "期权与标的数据在到期日可得；OptionMetrics数据权利需另行确认。"
+    },
+    "calculation": {
+      "evidence": [
+        "v35-sjtu-sffs-option-momentum-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月按形成期平均跨式收益把股票分五分位，持有期统一为一个月（至下一到期日），做多最高五分位、做空最低五分位（high-minus-low）。作者称十分位、三分位结果相近。组合内加权方式在所引段落未写明。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v35-sjtu-sffs-option-momentum-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者发现期权收益存在横截面动量，持续数月至数年；成因为研究解释，未经本库检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v35-sjtu-sffs-option-momentum-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "跨式构造：每个到期日为每只股票选次月到期、call delta最接近0.5的看涨/看跌对（call delta<0.25或>0.75则舍弃）；以权重∝−Δ_P·C（看涨）与Δ_C·P（看跌）组成零Delta跨式，C、P为买卖中价，比例常数使权重和为1；跨式收益=两腿收益按权重平均，持有至到期、按到期日拆股调整标的价计算。动量信号=形成期内月跨式收益的算术平均（不复利），主规格“经典”形成期为滞后2–12个月。"
+    },
+    "inputs": {
+      "evidence": [
+        "v35-sjtu-sffs-option-momentum-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "OptionMetrics个股期权（买卖价、delta、未平仓量）与CRSP标的价格；持有期要求看涨与看跌未平仓量为正，形成期不要求；加权平均买卖价差超过跨式价值50%则舍弃，并尝试更远离平值（delta仍在范围内）的合约替代；形成期一般要求无缺失观测。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v35-sjtu-sffs-option-momentum-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美国个股期权横截面策略与期权因子研究；对照IV-RV、隐含波动率期限结构/偏斜类期权信号。"
+    }
+  },
+  "identity_namespace": "acem.sjtu.edu.cn/sffs",
+  "lab": null,
+  "missing_information": [
+    "五分位组合内加权方式（等权/其他）在所引段落未写明，作者其他组合多用等权。",
+    "仅取得2021-09工作论文版，未与期刊终版比对。",
+    "交易成本与保证金未计入本定义。",
+    "未回测；经济有效性未检验。"
+  ],
+  "name": "个股跨式期权动量：滞后2–12个月零Delta平值跨式平均收益",
+  "native_source_id": "2021w-3:option-momentum",
+  "one_line": "每月以零Delta平值跨式的月收益为对象，按其过去（滞后2–12月）算术平均收益五分位排序，做多高、做空低，持有一个月。",
+  "record_id": "2021w-3:option-momentum",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.acem.sjtu.edu.cn/sffs/2021w/pdfs/3.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Steven L. Heston, Christopher S. Jones, Mehdi Khorram, Shuaiqi Li, Haitao Mo,《Option Momentum》2021-09工作论文（SJTU SFFS托管；期刊版JF 2023据外部书目，未取）。中文定义自撰。",
+      "id": "v35-sjtu-sffs-option-momentum-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L335–367（PDF物理页7）；formula L380–386（PDF物理页8）；formula L612–616（PDF物理页12）；formula L634–636（PDF物理页12）；inputs L323–329（PDF物理页7）；inputs L357–365（PDF物理页7）；inputs L442–444（PDF物理页9）；calculation L620–628（PDF物理页12）；calculation L644–645（PDF物理页12）",
+      "revision": "Heston/Jones/Khorram/Li/Mo《Option Momentum》工作论文，September 2021；上海交大SFFS 2021研讨会托管；67页；sha256 f206f48b0ff4e3f25b79093f5c53edab5acde4774613cc35e1805e2783093b37",
+      "sha256": "f206f48b0ff4e3f25b79093f5c53edab5acde4774613cc35e1805e2783093b37",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.acem.sjtu.edu.cn/sffs/2021w/pdfs/3.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "economic_basis": {
+    "hypothesis": "大语言模型能理解新闻对公司的经济含义，新闻后价格对其信息反应不足（尤其小盘与负面新闻），次日存在漂移。",
+    "missing": [
+      "同一公司同日多条标题在交易组合中的合并规则（平均/逐条）未在所引段落写明。",
+      "gpt-4-0314已停用，模型版本漂移影响可复现性；温度0不保证完全确定。",
+      "日内新闻（9:00–16:00）另有入场规则，不属本条。",
+      "未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "arxiv.org/abs",
+  "lab": null,
+  "missing_information": [
+    "同一公司同日多条标题在交易组合中的合并规则（平均/逐条）未在所引段落写明。",
+    "gpt-4-0314已停用，模型版本漂移影响可复现性；温度0不保证完全确定。",
+    "日内新闻（9:00–16:00）另有入场规则，不属本条。",
+    "未回测；经济有效性未检验。"
+  ],
+  "name": "GPT-4新闻标题评分次日开收盘多空（隔夜新闻）",
+  "native_source_id": "2304.07619v6:gpt4-headline-ls",
+  "one_line": "用固定提示词让GPT-4对公司新闻标题给出好/坏/不确定（1/−1/0），隔夜新闻次一开盘等权做多正分、卖空负分，当日收盘平仓，每日再平衡。",
+  "record_id": "2304.07619v6:gpt4-headline-ls",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://arxiv.org/pdf/2304.07619v6"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Alejandro Lopez-Lira, Yuehua Tang,《Can ChatGPT Forecast Stock Price Movements? Return Predictability and Large Language Models》arXiv:2304.07619v6（2025-10-28）。中文定义自撰。",
+      "id": "v35-arxiv-2304.07619v6-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L466–468（PDF物理页13）；universe L484–490（PDF物理页14）；universe L509–512（PDF物理页14）；signal L520–539（PDF物理页15）；signal L567–571（PDF物理页16）；entry L674–681（PDF物理页19）；exit L679–681（PDF物理页19）；position L684–687（PDF物理页19）；position L692–694（PDF物理页19）；risk L694–695（PDF物理页19）；cost L704–712（PDF物理页20）；execution_time L705–708（PDF物理页20）",
+      "revision": "arXiv:2304.07619v6 [q-fin.ST] 28 Oct 2025（First Version April 6, 2023）；142页；sha256 a410e809cfffc39badcfb46bad31021aad3573f7f1800365507fb3fa6f8c3ca8",
+      "sha256": "a410e809cfffc39badcfb46bad31021aad3573f7f1800365507fb3fa6f8c3ca8",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://arxiv.org/pdf/2304.07619v6",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v35-arxiv-2304.07619v6-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国个股：可与CRSP及RavenPack匹配的公司（样本4,123家）。"
+    },
+    "cost": {
+      "evidence": [
+        "v35-arxiv-2304.07619v6-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者情景：每次往返5、10、20bp固定成本（开收盘集合竞价视为无买卖价差，固定成本近似佣金与冲击）；20bp往返时策略不盈利。"
+    },
+    "entry": {
+      "evidence": [
+        "v35-arxiv-2304.07619v6-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "隔夜新闻（9:00前或16:00后发布）：9:00前发布则当日开盘入场；收盘后发布则在下一交易日开盘价入场。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v35-arxiv-2304.07619v6-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "开盘价入场、收盘价出场（开/收盘集合竞价）。"
+    },
+    "exit": {
+      "evidence": [
+        "v35-arxiv-2304.07619v6-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "入场当日收盘平仓（9:00前新闻为同日收盘；收盘后新闻为下一交易日收盘）。"
+    },
+    "position": {
+      "evidence": [
+        "v35-arxiv-2304.07619v6-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "等权做多GPT-4正分公司、等权卖空负分公司的多空组合，每日再平衡；任一腿至少需2家公司，否则只建另一腿；不另用市场组合对冲。"
+    },
+    "risk": {
+      "evidence": [
+        "v35-arxiv-2304.07619v6-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "未设止损、仓位上限或风险预算；作者明言策略未针对实施优化。"
+    },
+    "signal": {
+      "evidence": [
+        "v35-arxiv-2304.07619v6-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "提示词（原文全文见锁定行段）要求模型扮演有荐股经验的金融专家，判断“该标题对公司短期股价是好是坏”，首行答YES/NO/UNKNOWN并给一句理由；模型gpt-4-0314，temperature=0；映射YES=1、UNKNOWN=0、NO=−1。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v35-arxiv-2304.07619v6-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日频（每个交易日依当日可用隔夜新闻建仓）。"
+    },
+    "universe": {
+      "evidence": [
+        "v35-arxiv-2304.07619v6-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "2021-10至2024-05新闻样本；要求RavenPack相关度=100，仅完整文章与新闻稿，剔除“stock-gain/stock-loss”类标题，event similarity days>90；同公司同日相似度>0.6的后续标题剔除。"
+    }
+  }
+}
