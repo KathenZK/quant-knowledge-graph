@@ -39,6 +39,25 @@ def load_source_records() -> Dict[str, Dict[str, Any]]:
                     "csv_row_ordinal": data["provenance"]["csv_row_ordinal"]
                 }
     
+    # Scan subsets (e.g., batch-0026-public-v1, batch-0028-public-v1)
+    subsets_dir = CORPUS_DIR / "subsets"
+    if subsets_dir.exists():
+        for subset_dir in sorted(subsets_dir.glob("batch-*")):
+            source_dir = subset_dir / "metadata/source-records"
+            if not source_dir.exists():
+                continue
+                
+            for record_file in source_dir.glob("M*.json"):
+                with open(record_file) as f:
+                    data = json.load(f)
+                    mid = data["record_id"]
+                    if mid not in records:  # Don't overwrite if already found
+                        records[mid] = {
+                            "row_sha256": data["provenance"]["row_sha256"],
+                            "rule_sha256": data["provenance"]["rule_sha256"],
+                            "csv_row_ordinal": data["provenance"]["csv_row_ordinal"]
+                        }
+    
     return records
 
 def load_classifications() -> Dict[str, str]:
@@ -143,10 +162,15 @@ def main():
     overlay_entries = []
     discrepancies = []
     missing_hashes = []
+    withheld_ids = ["M2535", "M2709"]  # Intentionally withheld from public
     type_conflicts = []
     
     for row in strategies:
         mid = row["id"]
+        
+        # Skip withheld IDs (documented, not an error)
+        if mid in withheld_ids:
+            continue
         
         # Get source record hashes
         if mid not in source_records:
@@ -254,10 +278,12 @@ def main():
     discrepancies_file = OVERLAY_DIR / "discrepancies.json"
     with open(discrepancies_file, "w") as f:
         json.dump({
+            "withheld_ids": withheld_ids,
             "missing_source_record_hashes": missing_hashes,
             "type_classification_conflicts": type_conflicts,
             "notes": [
-                "missing_source_record_hashes: M-IDs in normalized CSV but not found in corpus",
+                "withheld_ids: M2535/M2709 intentionally excluded from public corpus per existing policy",
+                "missing_source_record_hashes: M-IDs in normalized CSV but not found in corpus (after checking batches + subsets)",
                 "Type classifications intentionally excluded from overlay per design"
             ]
         }, f, indent=2, ensure_ascii=False)
@@ -291,13 +317,30 @@ def main():
     
     # Identify newly executed IDs
     newly_executed = []
+    lab_refresh_details = []
     for mid, lab_info in lab_coverage.items():
+        old_status = None
         if mid in coverage_matrix:
-            old_status = coverage_matrix[mid].get("backtest_coverage_status")
-            if old_status == "not_executed":
+            old_coverage_class = coverage_matrix[mid].get("backtest_coverage_class") or coverage_matrix[mid].get("coverage_class")
+            old_result_status = coverage_matrix[mid].get("result_status")
+            old_legacy_bucket = coverage_matrix[mid].get("legacy_bucket") or coverage_matrix[mid].get("validation_bucket")
+            
+            # Check if it was not_executed in 09-30 matrix
+            if old_coverage_class == "not_executed" or old_result_status == "not_run":
                 newly_executed.append(mid)
+                lab_refresh_details.append({
+                    "id": mid,
+                    "old_coverage_class": old_coverage_class,
+                    "old_result_status": old_result_status,
+                    "old_legacy_bucket": old_legacy_bucket,
+                    "new_fidelity_class": lab_info["fidelity_class"],
+                    "lab_commit": lab_info["lab_commit"],
+                    "run_id": lab_info["run_id"]
+                })
     
-    summary["lab_refresh"]["newly_executed_since_20260930"] = newly_executed
+    summary["lab_refresh"]["newly_executed_since_20260930"] = sorted(newly_executed)
+    summary["lab_refresh"]["newly_executed_count"] = len(newly_executed)
+    summary["lab_refresh"]["lab_refresh_details"] = lab_refresh_details
     
     summary_file = OVERLAY_DIR / "summary.json"
     with open(summary_file, "w") as f:

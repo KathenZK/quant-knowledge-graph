@@ -104,9 +104,11 @@ def test_discrepancies():
     with open(OVERLAY_DIR / "discrepancies.json") as f:
         disc = json.load(f)
     
+    assert "withheld_ids" in disc
     assert "missing_source_record_hashes" in disc
     assert "notes" in disc
-    assert len(disc["missing_source_record_hashes"]) > 0
+    # With subsets included, all 6971 records should be pinned (only M2535/M2709 withheld)
+    assert len(disc["withheld_ids"]) == 2
 
 def test_lab_coverage_refresh():
     """Check Lab coverage was refreshed."""
