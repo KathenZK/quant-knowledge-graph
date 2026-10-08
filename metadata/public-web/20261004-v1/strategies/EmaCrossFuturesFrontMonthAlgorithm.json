@@ -1,0 +1,137 @@
+{
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "identity_namespace": "QuantConnect/Lean",
+  "record_id": "EmaCrossFuturesFrontMonthAlgorithm",
+  "native_source_id": "EmaCrossFuturesFrontMonthAlgorithm",
+  "entity_type": "strategy",
+  "name": "QuantConnect 黄金近月期货 EMA100/300 实现",
+  "one_line": "黄金近月合约的一分钟EMA100高于EMA300的1.001倍时目标0.1，否则清仓；合约和成交语义尚待研究阶段验证。",
+  "relations": [],
+  "sources": [
+    {
+      "id": "lean-algorithm-python-emacrossfuturesfrontmonthalgorithm-py",
+      "url": "https://github.com/QuantConnect/Lean/blob/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/Algorithm.Python/EmaCrossFuturesFrontMonthAlgorithm.py",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "728fa816ea97ce44505913b3c6c3a9b716e56a836993221f218f5436954dec69",
+      "locator": "Algorithm.Python/EmaCrossFuturesFrontMonthAlgorithm.py; L25-L41：标的过滤与指标参数; L51-L60：进出条件; L63-L84：换合约和指标预热",
+      "supports": [
+        "标的过滤与指标参数",
+        "进出条件",
+        "换合约和指标预热"
+      ],
+      "license": "Apache-2.0",
+      "attribution": "QuantConnect Corporation 与仓库 contributors",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "id": "lean-license",
+      "url": "https://github.com/QuantConnect/Lean/blob/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/LICENSE",
+      "revision": "705b9551be1aaa821c7f77896a7eb8fcd07b92ee",
+      "sha256": "522cf0a716ce03f67d46f8fceb5bf78c5b84400ec5cd8d14bf9f02cddc1cb6ba",
+      "locator": "LICENSE; L1-L191：仓库许可证及保留归属义务，仅覆盖该软件和相应文档。",
+      "supports": [
+        "源码许可证标识、归属和保留通知义务；不证明行情或论文许可。"
+      ],
+      "license": "Apache-2.0",
+      "attribution": "QuantConnect Corporation 与仓库 contributors",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "text": "黄金期货：LEAN 标识 Futures.Metals.GOLD。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-emacrossfuturesfrontmonthalgorithm-py"
+      ]
+    },
+    "universe": {
+      "text": "Futures.Metals.GOLD；front_month过滤，只在开市时刷新选择。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-emacrossfuturesfrontmonthalgorithm-py"
+      ]
+    },
+    "signal": {
+      "text": "当前合约的一分钟合并棒驱动EMA100和EMA300；换合约后重新注册与预热。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-emacrossfuturesfrontmonthalgorithm-py"
+      ]
+    },
+    "entry": {
+      "text": "EMA100>EMA300×1.001且未持仓时，set_holdings目标0.1。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-emacrossfuturesfrontmonthalgorithm-py"
+      ]
+    },
+    "exit": {
+      "text": "上式不成立且已持仓时清仓，包含相等情况。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-emacrossfuturesfrontmonthalgorithm-py"
+      ]
+    },
+    "position": {
+      "text": "LEAN set_holdings(0.1)；期货合约数量/保证金与名义敞口语义待核验，不能直接称10%保证金。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-emacrossfuturesfrontmonthalgorithm-py"
+      ]
+    },
+    "risk": {
+      "text": "源码仅在建仓时传入目标0.1，没有独立止损或账户回撤门槛。移除合约时重置指标，旧仓位到期清算依赖引擎，尚未核验。",
+      "status": "MISSING",
+      "evidence": [
+        "lean-algorithm-python-emacrossfuturesfrontmonthalgorithm-py"
+      ]
+    },
+    "cost": {
+      "text": "文件未显式设置费用/滑点/换月成本。 不能把未设置解释为实际费用等于零。",
+      "status": "MISSING",
+      "evidence": [
+        "lean-algorithm-python-emacrossfuturesfrontmonthalgorithm-py"
+      ]
+    },
+    "execution_time": {
+      "text": "on_data判断；选择刷新由开市过滤控制，指标一分钟。 已审查事件内的源码分支，实际成交时点、成交价格及事件先后仍未复现核验。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-emacrossfuturesfrontmonthalgorithm-py"
+      ]
+    },
+    "timeframe": {
+      "text": "指标由当前合约一分钟合并棒更新；合约筛选在开市时刷新，on_data判断交易条件。示例2013-10-08至2013-10-10，起始资金1000000。",
+      "status": "SOURCE_CODE_REVIEWED",
+      "evidence": [
+        "lean-algorithm-python-emacrossfuturesfrontmonthalgorithm-py"
+      ]
+    }
+  },
+  "economic_basis": {
+    "hypothesis": "研究假说：近月黄金期货的快慢均线可能描述局部趋势；换月、交易成本和市场状态可能改变结果，源码本身不提供经济有效性证据。",
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN",
+    "paper_support": [],
+    "missing": [
+      "没有本次策略的经审核原始论文支持。",
+      "没有冻结样本、交易成本和成交规则后的回测，也没有样本外或前瞻执行证据。"
+    ]
+  },
+  "missing_information": [
+    "移除旧合约后依赖引擎到期处理；代码注释不能代替换月/清算复现证据。",
+    "on_securities_changed假设added_securities非空，仅做源码记录，未验证所有事件路径。",
+    "行情、合约乘数、保证金、期限和成本未锁。",
+    "来源源码、公式调用、计算语义和经济有效性分别判断；本次只审核所列源码行为。",
+    "源码许可证不等于行情、原始论文或商业内部研究数据授权；相关商业使用仍为REVIEW_REQUIRED。",
+    "未执行上游代码、未采集市场数据、未回测；实际成交和引擎默认行为尚未完整核验。"
+  ],
+  "lab": null,
+  "rights": {
+    "metadata": "本记录是自行撰写的事实摘要、源文件定位及限制说明。所列软件源码许可证为Apache-2.0；不把软件许可扩展为行情、论文或其他材料的商业使用许可。",
+    "derived_results": "没有回测或衍生收益结果。经济解释仅为研究假说；商业数据和相关依赖的许可尚待审核（REVIEW_REQUIRED）。",
+    "terms_url": "https://github.com/QuantConnect/Lean/blob/705b9551be1aaa821c7f77896a7eb8fcd07b92ee/LICENSE",
+    "raw_data_included": false,
+    "source_fulltext_included": false
+  }
+}

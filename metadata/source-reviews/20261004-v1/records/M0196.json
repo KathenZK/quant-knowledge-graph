@@ -1,0 +1,150 @@
+{
+  "classification": {
+    "evidence": [
+      "tv-pine-v1"
+    ],
+    "kind": "strategy",
+    "reason": "原页对应公开Pine v4脚本直接声明strategy且含两条strategy.entry，确定为交易策略。",
+    "subtype": "dual_stop_order_strategy"
+  },
+  "commercial_use": "REVIEW_REQUIRED",
+  "computation_semantics": "NOT_EXECUTED",
+  "corrections": [
+    "已补具体轨道构造与双向停止入场规则。",
+    "交叉条件仅用于plotshape，不把画图标签解释为实际下单条件；stop入场也不等同持仓止损。",
+    "公开源码版本1.0，创建/更新时间2019-08-02；页面可重映射标的，不覆盖原XBTUSD身份。"
+  ],
+  "economic_validity": "NOT_TESTED",
+  "fields": {
+    "assets": {
+      "evidence": [
+        "tv-page"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原脚本题名和发布图表为BITMEX:XBTUSD；现页面市场元数据可能显示BTCUSD.P，保留历史符号，不默认为同一历史合约序列。"
+    },
+    "cost": {
+      "evidence": [
+        "tv-pine-v1"
+      ],
+      "status": "MISSING",
+      "text": "源码未显式设佣金、滑点或资金费；页面历史图表属性不是完整真实成本约定。"
+    },
+    "entry": {
+      "evidence": [
+        "tv-pine-v1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每次计算依次调用strategy.entry：long与short两条相反方向入口，stop价格均为st_line。不是用图形交叉条件包住入场调用，源码也未按当前方向过滤任一入口。"
+    },
+    "execution_time": {
+      "evidence": [
+        "tv-pine-v1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v4的strategy脚本下停止入场单；未执行模拟器，未补造同棒路径、成交时点、反手和pyramiding默认语义。"
+    },
+    "exit": {
+      "evidence": [
+        "tv-pine-v1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "未定义独立strategy.exit/close；可能通过相反方向入口改变仓位。没有显式撤单或OCA互斥，具体反手、双单及同棒成交顺序需要按Pine v4模拟器验证。"
+    },
+    "position": {
+      "evidence": [
+        "tv-pine-v1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "strategy声明default_qty_type为权益百分比，default_qty_value=100；实际合约张数、杠杆/保证金与成交量未由此确定。"
+    },
+    "risk": {
+      "evidence": [
+        "tv-pine-v1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "入场单的stop参数是触发入场价，不可直接叫持仓止损。未给独立止盈、损失上限或风险预算。"
+    },
+    "signal": {
+      "evidence": [
+        "tv-pine-v1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认st_mult=2、st_period=14；基础轨道为hl2减/加2×ATR14，依据前收盘价与前轨道递归延续。close>上一根down_trend置方向+1，close<上一根up_trend置−1，其余延续前值（前值缺失时取+1）；st_line按方向选择轨道。"
+    },
+    "timeframe": {
+      "evidence": [
+        "tv-page",
+        "tv-pine-v1"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "1分钟由原页题名和发布图表interval=1支持；源码不强制检查图表周期。"
+    },
+    "universe": {
+      "evidence": [
+        "tv-pine-v1"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前图表单标的；源码没有多资产选择器。"
+    }
+  },
+  "identity_match": {
+    "evidence": [
+      "tv-page",
+      "tv-pine-v1"
+    ],
+    "reason": "CSV原页cX6X9Ry2和QuantNomad作者一致；页面ssrIdeaData.script给出PUB ID和version_maj=1，公开响应version=1.0。原始响应按SHA固定，不把同页图表USER ID当公开源码身份。",
+    "status": "EXACT_URL"
+  },
+  "missing_information": [
+    "BitMEX合约单位、结算与保证金/杠杆对应方式未在源码定义。",
+    "真实交易费、滑点、资金费、标记价格/强平成本未定义。",
+    "双向同价停止单、默认pyramiding与同棒路径的精确成交账本未重放。",
+    "初始化所需历史长度、样本起止、OOS和参数选择过程未冻结。",
+    "无独立止盈或风险预算；反向入场不是独立的损失上限。",
+    "市场数据授权、历史合约连续性与当前代码适用性未核验。"
+  ],
+  "name": "XBTUSD 1分钟SuperTrend 2/14",
+  "origin": {
+    "bytes": 2343,
+    "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0196.json",
+    "row_sha256": "140a0447be4e97511e301bc64f92e5953706a907b943e8e50d59277128b0e319",
+    "rule_sha256": "21ee9116991d0537bfad70187e3780d223e89897b570d7c61f64c0c0a4c649e7",
+    "sha256": "8e021f53bed2697050d41d0cee173f73e2f71ef9e5d953ef598f9ea0d0013678"
+  },
+  "outcome": "SOURCE_CODE_REVIEWED",
+  "record_id": "M0196",
+  "reviewed_at": "2026-10-04T11:24:47.542821+00:00",
+  "schema_version": "quantgraph-source-review/v1",
+  "source_fulltext_included": false,
+  "sources": [
+    {
+      "attribution": "QuantNomad",
+      "bytes": 1051206,
+      "http_status": 200,
+      "id": "tv-page",
+      "kind": "source_page",
+      "license": "REVIEW_REQUIRED",
+      "locator": "ssrIdeaData.uuid/title/chart_url/script；原始公开图表的symbol与interval",
+      "retrieved_at": "2026-10-04T11:06:07.585773+00:00",
+      "revision": "snapshot:2026-10-04",
+      "sha256": "8afdb69ed61d483b378dd019b875a725f723ea21ffb2badfc196a5e415c40925",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0196/page.html",
+      "url": "https://www.tradingview.com/script/cX6X9Ry2-QuantNomad-SuperTrend-XBTUSD-1m/"
+    },
+    {
+      "attribution": "QuantNomad",
+      "bytes": 1689,
+      "http_status": 200,
+      "id": "tv-pine-v1",
+      "kind": "public_code",
+      "license": "源码无许可头；平台开放脚本许可/再发布条款仍待具体审核（REVIEW_REQUIRED）",
+      "locator": "JSON source字段；Pine v4源码L1–6声明及参数，L8–23递归轨道，L26–29绘图，L32–33停止入场单",
+      "retrieved_at": "2026-10-04T11:06:50.133176+00:00",
+      "revision": "PUB;gPM99R3OEGHjklqhqpPXXIq0xDQiOCUx@1.0",
+      "sha256": "baa964baade0865b4c6f39ff3db52c5678144025ea9e4c15f072bf23e60c1fb0",
+      "snapshot_path": "datasets/raw/sources/source-followup-20261004/M0196/source-response.json",
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3BgPM99R3OEGHjklqhqpPXXIq0xDQiOCUx/1"
+    }
+  ]
+}

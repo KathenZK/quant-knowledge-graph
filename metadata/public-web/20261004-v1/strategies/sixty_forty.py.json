@@ -1,0 +1,279 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说：固定股债组合可能分散风险，周期再平衡可能维持目标敞口；是否改善净收益或回撤取决于时期、资产相关性和成本，本次未测试。",
+    "missing": [
+      "没有本次策略的经审核原始论文支持。",
+      "没有冻结样本、交易成本和成交规则后的回测，也没有样本外或前瞻执行证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "mhallsmoore/qstrader",
+  "lab": null,
+  "missing_information": [
+    "end_of_month.py L65-L75 将可能已带时分秒和时区的 Timestamp 与 21:00:00 再拼接；须在冻结 pandas 版本后核验计划表能否构建，不能只按注释假定已可运行。",
+    "需核验模拟事件表、月末节假日、夏令时和成交顺序。",
+    "日行情默认adjust_prices=True，需Adjusted Close；未采集行情或数据许可。",
+    "费用、价差、滑点需研究阶段另行冻结。",
+    "来源源码、公式调用、计算语义和经济有效性分别判断；本次只审核所列源码行为。",
+    "源码许可证不等于行情、原始论文或商业内部研究数据授权；相关商业使用仍为REVIEW_REQUIRED。",
+    "未执行上游代码、未采集市场数据、未回测；实际成交和引擎默认行为尚未完整核验。"
+  ],
+  "name": "QSTrader SPY/AGG 月末60/40配置实现",
+  "native_source_id": "sixty_forty.py",
+  "one_line": "SPY/AGG固定60/40月末配置，源码先留1%现金再取整数股；这是新增实施来源，未宣称60/40经济概念新颖。",
+  "record_id": "sixty_forty.py",
+  "relations": [],
+  "rights": {
+    "derived_results": "没有回测或衍生收益结果。经济解释仅为研究假说；商业数据和相关依赖的许可尚待审核（REVIEW_REQUIRED）。",
+    "metadata": "本记录是自行撰写的事实摘要、源文件定位及限制说明。所列软件源码许可证为MIT；不把软件许可扩展为行情、论文或其他材料的商业使用许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/LICENSE"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "QuantStart.com / QuarkGluon Ltd 与 QSTrader contributors",
+      "id": "qstrader-examples-sixty_forty-py",
+      "license": "MIT",
+      "locator": "examples/sixty_forty.py; L16-L44：示例区间、标的及传入参数",
+      "revision": "4c59e1584e83fcc2be644b820f827c0dd1b45c02",
+      "sha256": "e6be3d78d7cb2a6edcae75b9f0c42e6c0f2c45145e6f4680d0a97e2394fe1274",
+      "supports": [
+        "示例区间、标的及传入参数"
+      ],
+      "url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/examples/sixty_forty.py",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "attribution": "QuantStart.com / QuarkGluon Ltd 与 QSTrader contributors",
+      "id": "qstrader-license",
+      "license": "MIT",
+      "locator": "LICENSE; L1-L22：仓库许可证及保留归属义务，仅覆盖该软件和相应文档。",
+      "revision": "4c59e1584e83fcc2be644b820f827c0dd1b45c02",
+      "sha256": "dc1797cc31d307ad8f651df2bd739ca623db4e4c6bf6a411eb2c15fd4f33c9d4",
+      "supports": [
+        "源码许可证标识、归属和保留通知义务；不证明行情或论文许可。"
+      ],
+      "url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/LICENSE",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "attribution": "QuantStart.com / QuarkGluon Ltd 与 QSTrader contributors",
+      "id": "qstrader-qstrader-alpha_model-fixed_signals-py",
+      "license": "MIT",
+      "locator": "qstrader/alpha_model/fixed_signals.py; L19-L45：信号直接返回",
+      "revision": "4c59e1584e83fcc2be644b820f827c0dd1b45c02",
+      "sha256": "7ab0a26abb4ab94a9c08bd9c980e66daea0b4dbdd0deb99a3718f9ccc0908ac5",
+      "supports": [
+        "信号直接返回"
+      ],
+      "url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/qstrader/alpha_model/fixed_signals.py",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "attribution": "QuantStart.com / QuarkGluon Ltd 与 QSTrader contributors",
+      "id": "qstrader-qstrader-trading-backtest-py",
+      "license": "MIT",
+      "locator": "qstrader/trading/backtest.py; L69-L84：默认资金与零费模型",
+      "revision": "4c59e1584e83fcc2be644b820f827c0dd1b45c02",
+      "sha256": "8f6de9fff5de20ff418b0910c7f39e15253fd60488ea2364a500801a5b6bb0b7",
+      "supports": [
+        "默认资金与零费模型"
+      ],
+      "url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/qstrader/trading/backtest.py",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "attribution": "QuantStart.com / QuarkGluon Ltd 与 QSTrader contributors",
+      "id": "qstrader-qstrader-system-rebalance-end_of_month-py",
+      "license": "MIT",
+      "locator": "qstrader/system/rebalance/end_of_month.py; L53-L77：固定UTC时点与BME",
+      "revision": "4c59e1584e83fcc2be644b820f827c0dd1b45c02",
+      "sha256": "3a993d114f2e37170caf3efe6b301b762bd99b8efc21239f275e3d934c589f7a",
+      "supports": [
+        "固定UTC时点与BME"
+      ],
+      "url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/qstrader/system/rebalance/end_of_month.py",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "attribution": "QuantStart.com / QuarkGluon Ltd 与 QSTrader contributors",
+      "id": "qstrader-qstrader-system-qts-py",
+      "license": "MIT",
+      "locator": "qstrader/system/qts.py; L72-L142：long_only 分支选择带现金缓冲的股数生成器，再连接固定权重优化器和组合构建器。",
+      "revision": "4c59e1584e83fcc2be644b820f827c0dd1b45c02",
+      "sha256": "91099c9fb5c30c16c46ab9c2965be844774037cb3b0f096108d5375a3227a089",
+      "supports": [
+        "固定信号、目标权重、现金缓冲和再平衡订单之间的实际调用关系。"
+      ],
+      "url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/qstrader/system/qts.py",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "attribution": "QuantStart.com / QuarkGluon Ltd 与 QSTrader contributors",
+      "id": "qstrader-qstrader-portcon-pcm-py",
+      "license": "MIT",
+      "locator": "qstrader/portcon/pcm.py; L257-L300：信号经可选风险模型和优化器生成目标组合，再按当前持仓生成再平衡订单。",
+      "revision": "4c59e1584e83fcc2be644b820f827c0dd1b45c02",
+      "sha256": "c75725ad9501b285e7ae945fcc137a95a83eaa1f1e072f22e100049835040887",
+      "supports": [
+        "固定信号、目标权重、现金缓冲和再平衡订单之间的实际调用关系。"
+      ],
+      "url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/qstrader/portcon/pcm.py",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "attribution": "QuantStart.com / QuarkGluon Ltd 与 QSTrader contributors",
+      "id": "qstrader-qstrader-portcon-optimiser-fixed_weight-py",
+      "license": "MIT",
+      "locator": "qstrader/portcon/optimiser/fixed_weight.py; L23-L41：权重不变",
+      "revision": "4c59e1584e83fcc2be644b820f827c0dd1b45c02",
+      "sha256": "120bac69b648ff20205a1c38e11bf3e7a77a455c1d58194ceb543040de6812ea",
+      "supports": [
+        "权重不变"
+      ],
+      "url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/qstrader/portcon/optimiser/fixed_weight.py",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "attribution": "QuantStart.com / QuarkGluon Ltd 与 QSTrader contributors",
+      "id": "qstrader-qstrader-portcon-order_sizer-dollar_weighted-py",
+      "license": "MIT",
+      "locator": "qstrader/portcon/order_sizer/dollar_weighted.py; L132-L177：现金缓冲及整数股数",
+      "revision": "4c59e1584e83fcc2be644b820f827c0dd1b45c02",
+      "sha256": "58110532a0553c5ea024d4a1494dcefcbe1dc7c3e004be36c10f504f5a312ef0",
+      "supports": [
+        "现金缓冲及整数股数"
+      ],
+      "url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/qstrader/portcon/order_sizer/dollar_weighted.py",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "attribution": "QuantStart.com / QuarkGluon Ltd 与 QSTrader contributors",
+      "id": "qstrader-qstrader-data-daily_bar_csv-py",
+      "license": "MIT",
+      "locator": "qstrader/data/daily_bar_csv.py; L149-L177：复权和同价Bid/Ask",
+      "revision": "4c59e1584e83fcc2be644b820f827c0dd1b45c02",
+      "sha256": "7abe4db41f64c48d936f351ee76bc91861cbcfed98f07f8ba7a21723f525f386",
+      "supports": [
+        "复权和同价Bid/Ask"
+      ],
+      "url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/qstrader/data/daily_bar_csv.py",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "attribution": "QuantStart.com / QuarkGluon Ltd 与 QSTrader contributors",
+      "id": "qstrader-qstrader-broker-fee_model-zero_fee_model-py",
+      "license": "MIT",
+      "locator": "qstrader/broker/fee_model/zero_fee_model.py; L11-L80：佣金和税费分别返回0.0，calc_total_cost求和。",
+      "revision": "4c59e1584e83fcc2be644b820f827c0dd1b45c02",
+      "sha256": "9d143729b30e2911f9922507165c337f45c2156bde62b450f2f116486790d06e",
+      "supports": [
+        "默认费用模型实际为零佣金和零税费。"
+      ],
+      "url": "https://github.com/mhallsmoore/qstrader/blob/4c59e1584e83fcc2be644b820f827c0dd1b45c02/qstrader/broker/fee_model/zero_fee_model.py",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "qstrader-examples-sixty_forty-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "美国上市ETF：SPY和AGG，脚本将其作为股票/债券组合；未采集行情。"
+    },
+    "cost": {
+      "evidence": [
+        "qstrader-qstrader-trading-backtest-py",
+        "qstrader-qstrader-data-daily_bar_csv-py",
+        "qstrader-qstrader-portcon-order_sizer-dollar_weighted-py",
+        "qstrader-qstrader-broker-fee_model-zero_fee_model-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "BacktestTradingSession默认ZeroFeeModel；CSV转换令Bid=Ask=Price，零价差假设，非现实零成本证据。 股数生成器会扣除费用模型给出的估计费用；实际手续费、滑点和价差仍需研究阶段单独设置。"
+    },
+    "entry": {
+      "evidence": [
+        "qstrader-examples-sixty_forty-py",
+        "qstrader-qstrader-alpha_model-fixed_signals-py",
+        "qstrader-qstrader-portcon-optimiser-fixed_weight-py",
+        "qstrader-qstrader-portcon-pcm-py",
+        "qstrader-qstrader-system-qts-py",
+        "qstrader-qstrader-system-rebalance-end_of_month-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "在计划表成功构建且模拟事件命中的前提下，首个计划再平衡建立目标；此后按目标股数与现有股数差生成调仓订单。尚未执行此示例验证。"
+    },
+    "execution_time": {
+      "evidence": [
+        "qstrader-examples-sixty_forty-py",
+        "qstrader-qstrader-system-rebalance-end_of_month-py",
+        "qstrader-qstrader-trading-backtest-py",
+        "qstrader-qstrader-portcon-pcm-py",
+        "qstrader-qstrader-system-qts-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "示例使用 end_of_month 调度：EndOfMonthRebalance 尝试用 pandas BME 日期与固定 21:00 UTC 构造计划表；源码把日期对象字符串再拼接时间，带时区和时分秒的输入可能形成重复时间，兼容性尚未运行验证。仅在计划表成功生成且模拟事件命中时调用交易系统；真实市场节假日、夏令时、成交价和事件顺序也未核验。"
+    },
+    "exit": {
+      "evidence": [
+        "qstrader-examples-sixty_forty-py",
+        "qstrader-qstrader-portcon-pcm-py",
+        "qstrader-qstrader-system-rebalance-end_of_month-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "月末调整到目标；无独立止损、清仓信号或短仓。"
+    },
+    "position": {
+      "evidence": [
+        "qstrader-examples-sixty_forty-py",
+        "qstrader-qstrader-system-qts-py",
+        "qstrader-qstrader-alpha_model-fixed_signals-py",
+        "qstrader-qstrader-portcon-optimiser-fixed_weight-py",
+        "qstrader-qstrader-portcon-order_sizer-dollar_weighted-py",
+        "qstrader-qstrader-trading-backtest-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "long_only=True，1%现金预留；先把组合权益乘0.99，再按归一化0.6/0.4分配、扣估计费用并除ask向下取整，约59.4%/39.6%权益加现金。"
+    },
+    "risk": {
+      "evidence": [
+        "qstrader-examples-sixty_forty-py",
+        "qstrader-qstrader-system-qts-py",
+        "qstrader-qstrader-portcon-order_sizer-dollar_weighted-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "示例限制long_only并设置1%现金缓冲；目标股数向下取整。没有独立止损、回撤门槛或择时风险信号，这些配置不证明风险可接受。"
+    },
+    "signal": {
+      "evidence": [
+        "qstrader-examples-sixty_forty-py",
+        "qstrader-qstrader-alpha_model-fixed_signals-py",
+        "qstrader-qstrader-portcon-optimiser-fixed_weight-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "FixedSignals每次返回SPY=0.6、AGG=0.4；FixedWeight优化器原样传递，没有择时信号。"
+    },
+    "timeframe": {
+      "evidence": [
+        "qstrader-examples-sixty_forty-py",
+        "qstrader-qstrader-system-rebalance-end_of_month-py",
+        "qstrader-qstrader-trading-backtest-py",
+        "qstrader-qstrader-data-daily_bar_csv-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "日行情输入，配置为 pandas BME 月末再平衡；日期对象与 21:00 字符串拼接的运行兼容性待核验，不能视为已工作的交易所月末调度。示例区间 2003-09-30 14:30 UTC 至 2019-12-31 23:59 UTC；默认 initial_cash=1e6。"
+    },
+    "universe": {
+      "evidence": [
+        "qstrader-examples-sixty_forty-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "StaticUniverse固定为EQ:SPY和EQ:AGG；脚本后半段的SPY单标的仅作比较基准。"
+    }
+  }
+}

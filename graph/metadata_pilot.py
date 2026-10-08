@@ -105,8 +105,12 @@ def validate(root):
         else:
             validator.validate(record)
         identity = (record['identity_namespace'], record['entity_type'], record['record_id'])
-        expected = f"{dict(strategy='strategies', factor='factors', source_record='source-records')[record['entity_type']]}/{record['record_id']}.json"
-        if ref['path'] != expected or identity in seen or ref['path'] in paths:
+        folder = dict(strategy='strategies', factor='factors', source_record='source-records')[record['entity_type']]
+        expected = f"{folder}/{record['record_id']}.json"
+        # A source namespace directory permits identical native IDs from distinct
+        # upstreams in future batches; legacy pinned paths remain unchanged.
+        namespaced = f"{folder}/{digest(record['identity_namespace'].encode())[:24]}/{record['record_id']}.json"
+        if ref['path'] not in {expected, namespaced} or identity in seen or ref['path'] in paths:
             raise ValueError('Metadata filename, type or stable identity conflicts')
         if record['native_source_id'] != record['record_id']:
             raise ValueError('Original stable ID must not be renumbered')
@@ -126,7 +130,7 @@ def validate(root):
                 raise ValueError('Asserted metadata field requires evidence')
         seen.add(identity); paths.add(ref['path']); records.append(record)
     actual = {str(p.relative_to(root)) for kind in ['strategies', 'factors', 'source-records']
-              for p in (root / kind).glob('*.json')}
+              for p in (root / kind).rglob('*.json')}
     if actual != paths:
         raise ValueError('Metadata index does not cover exactly the numbered records')
     return records

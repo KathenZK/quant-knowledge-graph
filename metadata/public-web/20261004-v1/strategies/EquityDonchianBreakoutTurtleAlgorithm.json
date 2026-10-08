@@ -1,0 +1,135 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说：突破历史价格区间可能捕捉趋势，ATR缩放可能改变波动敞口；两者的经济作用与组合净收益均未测试。",
+    "missing": [
+      "没有本次策略的经审核原始论文支持。",
+      "没有冻结样本、交易成本和成交规则后的回测，也没有样本外或前瞻执行证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "QuantConnect/Documentation",
+  "lab": null,
+  "missing_information": [
+    "需核实日线通道是否含当前已完成棒、开盘后价格事件先后和成交模型。",
+    "ATR=0、通道就绪、数据完整性与许可未验证。",
+    "来源源码、公式调用、计算语义和经济有效性分别判断；本次只审核所列源码行为。",
+    "源码许可证不等于行情、原始论文或商业内部研究数据授权；相关商业使用仍为REVIEW_REQUIRED。",
+    "未执行上游代码、未采集市场数据、未回测；实际成交和引擎默认行为尚未完整核验。"
+  ],
+  "name": "QuantConnect 五ETF 唐奇安突破模板",
+  "native_source_id": "EquityDonchianBreakoutTurtleAlgorithm",
+  "one_line": "固定五ETF开市后检查日线唐奇安突破，用ATR限制新仓股数，跌破10日下轨清仓；不代表完整经典海龟系统。",
+  "record_id": "EquityDonchianBreakoutTurtleAlgorithm",
+  "relations": [],
+  "rights": {
+    "derived_results": "没有回测或衍生收益结果。经济解释仅为研究假说；商业数据和相关依赖的许可尚待审核（REVIEW_REQUIRED）。",
+    "metadata": "本记录是自行撰写的事实摘要、源文件定位及限制说明。所列软件源码许可证为Apache-2.0；不把软件许可扩展为行情、论文或其他材料的商业使用许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/QuantConnect/Documentation/blob/fc50f126f5c47748e0667b898c9af4c7583da5e3/LICENSE"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "QuantConnect Corporation 与仓库 contributors",
+      "id": "qc-docs-project-templates-python-equity-donchian-breakout-turtle-main-py",
+      "license": "Apache-2.0",
+      "locator": "project-templates/python/equity-donchian-breakout-turtle/main.py; L6-L32：风险参数、标的、指标和调度; L34-L47：实际仓位和进出逻辑",
+      "revision": "fc50f126f5c47748e0667b898c9af4c7583da5e3",
+      "sha256": "fffd5a20080f9206d254df1a269ad7b7a0ca6d9a887499b974511a439735cd00",
+      "supports": [
+        "风险参数、标的、指标和调度",
+        "实际仓位和进出逻辑"
+      ],
+      "url": "https://github.com/QuantConnect/Documentation/blob/fc50f126f5c47748e0667b898c9af4c7583da5e3/project-templates/python/equity-donchian-breakout-turtle/main.py",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    },
+    {
+      "attribution": "QuantConnect Corporation 与仓库 contributors",
+      "id": "qc-docs-license",
+      "license": "Apache-2.0",
+      "locator": "LICENSE; L1-L201：仓库许可证及保留归属义务，仅覆盖该软件和相应文档。",
+      "revision": "fc50f126f5c47748e0667b898c9af4c7583da5e3",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "supports": [
+        "源码许可证标识、归属和保留通知义务；不证明行情或论文许可。"
+      ],
+      "url": "https://github.com/QuantConnect/Documentation/blob/fc50f126f5c47748e0667b898c9af4c7583da5e3/LICENSE",
+      "verification": "FETCHED_SHA256_VERIFIED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "qc-docs-project-templates-python-equity-donchian-breakout-turtle-main-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "美国上市股票ETF：SPY、QQQ、IWM、EFA、EEM，覆盖美国及海外股票敞口。"
+    },
+    "cost": {
+      "evidence": [
+        "qc-docs-project-templates-python-equity-donchian-breakout-turtle-main-py"
+      ],
+      "status": "MISSING",
+      "text": "未显式设置手续费、滑点、价差。 不能把未设置解释为实际费用等于零。"
+    },
+    "entry": {
+      "evidence": [
+        "qc-docs-project-templates-python-equity-donchian-breakout-turtle-main-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "空仓且当前 security.price 高于入场上轨；股数取 int(min(组合权益×0.01/ATR, calculate_order_quantity(1/标的数)))，即朝零截断；非零则按该数量提交市价单，正数量表示买入。负数量边界和 ATR=0 尚未执行验证。"
+    },
+    "execution_time": {
+      "evidence": [
+        "qc-docs-project-templates-python-equity-donchian-breakout-turtle-main-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每天按SPY交易日开盘后1分钟触发；使用当时最新price与日线通道。 已审查事件内的源码分支，实际成交时点、成交价格及事件先后仍未复现核验。"
+    },
+    "exit": {
+      "evidence": [
+        "qc-docs-project-templates-python-equity-donchian-breakout-turtle-main-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "持多且当前price低于退出下轨则清仓。"
+    },
+    "position": {
+      "evidence": [
+        "qc-docs-project-templates-python-equity-donchian-breakout-turtle-main-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每次新建仓按1%权益/ATR与约20%目标量上限取小；源码未实现1ATR止损或不断再平衡。"
+    },
+    "risk": {
+      "evidence": [
+        "qc-docs-project-templates-python-equity-donchian-breakout-turtle-main-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "建仓股数用组合权益的1%除以ATR20，并受每票约20%目标量上限约束；这只是仓位计算，不是1ATR止损或每笔最大亏损1%的保证。源码没有加仓和独立止损规则。"
+    },
+    "signal": {
+      "evidence": [
+        "qc-docs-project-templates-python-equity-donchian-breakout-turtle-main-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "日线唐奇安20日入场通道、10日退出通道，ATR20用Simple平滑；自动预热，循环只显式检查ATR就绪。"
+    },
+    "timeframe": {
+      "evidence": [
+        "qc-docs-project-templates-python-equity-donchian-breakout-turtle-main-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "日线20日入场通道、10日退出通道及ATR20；每天SPY开市后1分钟检查。示例2024-09-01至2024-12-31，资金250000。"
+    },
+    "universe": {
+      "evidence": [
+        "qc-docs-project-templates-python-equity-donchian-breakout-turtle-main-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定五标的 SPY、QQQ、IWM、EFA、EEM；不是历史成分股筛选。"
+    }
+  }
+}

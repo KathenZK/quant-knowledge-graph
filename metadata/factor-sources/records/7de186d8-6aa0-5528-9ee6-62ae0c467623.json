@@ -1,0 +1,181 @@
+{
+  "admission": {
+    "membership": {
+      "curated": false,
+      "historical_public_export": false
+    },
+    "reasons": [
+      "NOT_PRIMARY_CONCRETE_DEFINITION",
+      "NOT_SIGNAL"
+    ],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "REVIEW_REQUIRED"
+  },
+  "category": "unclassified",
+  "definition": {
+    "content_origin": "ATTRIBUTED_SOURCE_DEFINITION_EXCERPT",
+    "definition_sha256": "e454df05ec4b139b058fd9d152b2843bb76ff880c45bd5a4a96fffefc4b750d8",
+    "formula": null,
+    "formula_dialect": null,
+    "formula_sha256": null,
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "filter": null,
+      "long_short_quantile": null,
+      "portfolio_period_months": null,
+      "sign": null,
+      "start_month": null,
+      "stock_weight": null
+    },
+    "required_fields": [],
+    "required_fields_status": "partial_definition_extraction",
+    "status": "DEFINITION_EXCERPT",
+    "text": "ib / lag(market value of equity, 6 months).  NYSE stocks only.  Exclude if EP < 0.  Lag simulates the Dec 31 market equity used in original paper",
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "monthly",
+    "holding_period": null,
+    "lookback": null,
+    "rebalance": null,
+    "universe": "US equities; original-paper filters and licensed inputs vary by signal"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": null,
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:7de186d8-6aa0-5528-9ee6-62ae0c467623"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:4ebdfa25-f5db-5516-bb50-92dea4da7b54"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:4ebdfa25-f5db-5516-bb50-92dea4da7b54"
+    ],
+    "source_record_ids": [
+      "qkg:record:1c15f983-3f88-50bb-8383-786ccd6bf1bc"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "本条类型为 placebo，不能作为已准入的正式单因子统计。",
+    "输入字段提取不完整，不得视为完整数据需求合同。"
+  ],
+  "name": "Earnings-to-Price Ratio",
+  "native_source_ids": [
+    "EPq"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 3700,
+        "line_ordinal": 794,
+        "line_sha256": "25760780adec46f43f133319e3b57605f83131dc05a8b9029528649b48fa1b1e",
+        "record_id": "qkg:record:1c15f983-3f88-50bb-8383-786ccd6bf1bc"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "not_applicable"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "reference_only"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:7de186d8-6aa0-5528-9ee6-62ae0c467623",
+  "record_kind": "placebo",
+  "rights": {
+    "attribution_required": true,
+    "commercial_use": [
+      "CONDITIONAL"
+    ],
+    "derivative_allowed": [
+      "CONDITIONAL"
+    ],
+    "license_labels": [
+      "GPL-2.0"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "CONDITIONAL"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [
+          "NOT_PRIMARY_CONCRETE_DEFINITION",
+          "NOT_SIGNAL"
+        ],
+        "status": "REVIEW_REQUIRED"
+      },
+      "attribution": [
+        "Basu"
+      ],
+      "code_url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/Signals/pyCode/Placebos/EPq.py#L1",
+      "license": "GPL-2.0",
+      "locator": "CSV record 276; Acronym=EPq",
+      "name": "Earnings-to-Price Ratio",
+      "native_id": "EPq",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": null,
+        "url": null,
+        "year": 1977
+      },
+      "parameters": {
+        "filter": null,
+        "long_short_quantile": null,
+        "portfolio_period_months": null,
+        "sign": null,
+        "start_month": null,
+        "stock_weight": null
+      },
+      "primary_source": true,
+      "record_id": "qkg:record:1c15f983-3f88-50bb-8383-786ccd6bf1bc",
+      "response_sha256": "f6c055120bad7afe97c16e23e0f49bce0982269026605a955e8064bd661cf415",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": "8db892442c2c3a3779b0f1eac4370d3655be15a1",
+      "rights": {
+        "attribution_required": true,
+        "commercial_use": "CONDITIONAL",
+        "derivative_allowed": "CONDITIONAL",
+        "license": "GPL-2.0",
+        "license_id": "qkg:license:9d6cc42c-065b-5687-87f6-b1e384dea14c",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "CONDITIONAL",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "REVIEW_REQUIRED",
+        "terms_url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/LICENSE"
+      },
+      "sha256": "f6c055120bad7afe97c16e23e0f49bce0982269026605a955e8064bd661cf415",
+      "source_id": "osap",
+      "source_name": "Open Source Asset Pricing",
+      "url": "https://github.com/OpenSourceAP/CrossSection/blob/8db892442c2c3a3779b0f1eac4370d3655be15a1/SignalDoc.csv"
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "admission": {
+    "membership": {
+      "curated": true,
+      "historical_public_export": false
+    },
+    "reasons": [],
+    "scope": "Existing definition admission only; not economic validity, execution readiness or commercial clearance.",
+    "status": "ADMITTED"
+  },
+  "category": "unclassified",
+  "definition": {
+    "content_origin": "ATTRIBUTED_SOURCE_DEFINITION_EXCERPT",
+    "definition_sha256": "4fed25400feee9f1e72d7e930e6cbb040b976aebd0bd0048b723e2cb2dbb348f",
+    "formula": null,
+    "formula_dialect": null,
+    "formula_sha256": null,
+    "hash_scope": "SHA-256 of the original collected field UTF-8, before excerpting; null means absent.",
+    "parameters": {
+      "accounting_availability_lag_months": 4,
+      "core_153": false,
+      "original_sign": null,
+      "source_occurrences": [],
+      "theme": null
+    },
+    "required_fields": [
+      "REC",
+      "SALE"
+    ],
+    "required_fields_status": "partial_latex_token_extraction",
+    "status": "DEFINITION_EXCERPT",
+    "text": "$\\frac{\\frac{REC_t+REC_{t -12}}{2}}{SALE\\mbox{*}_t}\\times365$",
+    "truncated": false
+  },
+  "domain": {
+    "asset_class": "equity",
+    "frequency": "monthly",
+    "holding_period": {
+      "scope": "default JKP monthly factor portfolio",
+      "unit": "month",
+      "value": 1
+    },
+    "lookback": null,
+    "rebalance": "monthly for default monthly JKP portfolios",
+    "universe": "global equities; source covers 93 countries; country-specific data availability"
+  },
+  "entity_type": "factor",
+  "identity": {
+    "curated_canonical_factor_id": "qkg:concept:ef03d173-99c4-53b2-9b09-b91129c73d63",
+    "equivalence_scope": "Existing exact-variant identity only; no new cross-source or economic-concept equivalence asserted.",
+    "legacy_canonical_factor_ids": [
+      "qkg:factor:28337fb8-eb81-5418-8cba-108b1d267bf6"
+    ],
+    "normalized_canonical_factor_ids": [
+      "qkg:concept:ef03d173-99c4-53b2-9b09-b91129c73d63"
+    ],
+    "normalized_concept_ids": [
+      "qkg:concept:ef03d173-99c4-53b2-9b09-b91129c73d63"
+    ],
+    "source_record_ids": [
+      "qkg:record:3c3f8d44-4998-5448-bd5d-529535229f60"
+    ]
+  },
+  "identity_namespace": "quantgraph/factor-variant",
+  "missing_information": [
+    "现有采集未验证计算语义；不代表已复现、可回测或具有收益有效性。",
+    "行情供应商、历史可用时点、复权、缺失处理和实际组合交易规则尚未冻结。",
+    "底层行情、原论文和研报授权分别核验，不从仓库代码许可推定。",
+    "输入字段提取不完整，不得视为完整数据需求合同。"
+  ],
+  "name": "Days Sales Outstanding",
+  "native_source_ids": [
+    "rec_days"
+  ],
+  "provenance": {
+    "exporter": "factor-metadata-export/v1",
+    "line_hash_scope": "Original UTF-8 JSONL line bytes, excluding the line terminator.",
+    "source_artifact": "normalized/factor_records.jsonl",
+    "source_lines": [
+      {
+        "line_bytes": 3595,
+        "line_ordinal": 1184,
+        "line_sha256": "e749dbd9fe27074446101d7040cebd001734ba18f0d8ab9be5f5605d2ac877ff",
+        "record_id": "qkg:record:3c3f8d44-4998-5448-bd5d-529535229f60"
+      }
+    ],
+    "source_snapshot_sha256": "58772a1fa216e8c26df4a049a1f7f818e6557bd648e2c53d971e5ba904835686"
+  },
+  "quality": {
+    "backtest_ready": false,
+    "economic_validity": "NOT_EVALUATED",
+    "metadata_status": "IMPORTED_TRACEABLE_METADATA",
+    "parse_status": [
+      "not_applicable"
+    ],
+    "semantic_status": [
+      "not_verified"
+    ],
+    "source_quality_tiers": [
+      "primary_definition"
+    ],
+    "upstream_code_executed_in_export": false
+  },
+  "record_id": "qkg:factor:28337fb8-eb81-5418-8cba-108b1d267bf6",
+  "record_kind": "signal",
+  "rights": {
+    "attribution_required": true,
+    "commercial_use": [
+      "PROHIBITED"
+    ],
+    "derivative_allowed": [
+      "CONDITIONAL"
+    ],
+    "license_labels": [
+      "CC-BY-NC-4.0 (reference metadata; conservative scope); MIT (code)"
+    ],
+    "license_notice": "README.md 中说明逐来源归属与限制；原状态保留，不因进入统一目录而放宽商业许可。",
+    "market_observations_included": false,
+    "raw_data_allowed": [
+      "REVIEW_REQUIRED"
+    ],
+    "redistribution_allowed": [
+      "CONDITIONAL"
+    ],
+    "scope": "Directory metadata and expressly identified definition excerpts only; no blanket license over upstream papers, source implementations or market observations.",
+    "source_fulltext_included": false
+  },
+  "schema_version": "quantgraph-factor-metadata/v1",
+  "sources": [
+    {
+      "admission": {
+        "reasons": [],
+        "status": "ADMITTED"
+      },
+      "attribution": [],
+      "code_url": "https://github.com/bkelly-lab/jkp-data/blob/666e8960ed81a664f1e9f189f92925ab2eeffcd5/src/jkp/data/aux_functions.py",
+      "license": "CC-BY-NC-4.0 (reference metadata; conservative scope); MIT (code)",
+      "locator": "documentation.tex:L1650",
+      "name": "Days Sales Outstanding",
+      "native_id": "rec_days",
+      "paper": {
+        "permission": "REVIEW_REQUIRED",
+        "title": null,
+        "url": null,
+        "year": null
+      },
+      "parameters": {
+        "accounting_availability_lag_months": 4,
+        "core_153": false,
+        "original_sign": null,
+        "source_occurrences": [],
+        "theme": null
+      },
+      "primary_source": true,
+      "record_id": "qkg:record:3c3f8d44-4998-5448-bd5d-529535229f60",
+      "response_sha256": "a987f4876e80a21f8712e208818361c81f011e25259a3f7575cee49806b34801",
+      "retrieved_at": "2026-09-25T12:03:09.101138+00:00",
+      "revision": "666e8960ed81a664f1e9f189f92925ab2eeffcd5",
+      "rights": {
+        "attribution_required": true,
+        "commercial_use": "PROHIBITED",
+        "derivative_allowed": "CONDITIONAL",
+        "license": "CC-BY-NC-4.0 (reference metadata; conservative scope); MIT (code)",
+        "license_id": "qkg:license:debe6add-b9c3-5468-a3f1-47f1ae88c9d1",
+        "raw_data_allowed": "REVIEW_REQUIRED",
+        "redistribution_allowed": "CONDITIONAL",
+        "rights_scope": "Collected definitions/metadata only; excludes underlying market observations and upstream third-party rights.",
+        "rights_status": "NONCOMMERCIAL_ONLY",
+        "terms_url": "https://github.com/bkelly-lab/jkp-data/blob/666e8960ed81a664f1e9f189f92925ab2eeffcd5/DATA_LICENSE"
+      },
+      "sha256": "a987f4876e80a21f8712e208818361c81f011e25259a3f7575cee49806b34801",
+      "source_id": "jkp",
+      "source_name": "JKP Global Factor Data",
+      "url": "https://github.com/bkelly-lab/jkp-data/blob/666e8960ed81a664f1e9f189f92925ab2eeffcd5/documentation/documentation.tex"
+    }
+  ]
+}
