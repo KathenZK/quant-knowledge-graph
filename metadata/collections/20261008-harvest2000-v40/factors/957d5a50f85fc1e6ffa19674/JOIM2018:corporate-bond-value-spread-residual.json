@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "利差相对违约风险越宽的公司债，随后对久期匹配美债的超额收益越高。",
+    "missing": [
+      "经验法与结构法的回归是否加入行业或时间固定效应、等风险合成的具体波动窗口，正文未细写。",
+      "结构模型违约概率的引用在正文（Bharath–Shumway 2008）与附表A.1（Shumway 2001）不一致，未统一。",
+      "期刊版重印本；未回测；同文另有空头受限的长多优化组合，未单列。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "BAML指数成分与OAS数据为商业数据；公司债交易成本高，作者指出BBB与B级中期债平均买卖半价差约22bp和30bp，单位风险成本远高于股票，多空组合的实际可得性需谨慎看待。"
+    },
+    "calculation": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月计算价值特征，先在DTS（久期×利差）五分位内去均值（价值不排除在外），再按特征排序分五组，做多最高五分位、做空最低五分位，组内市值加权，持有一个月；另报告按过去24个月实现波动率缩放至5%年化波动的版本。作者报告Q5−Q1年化3.9%、波动2.2%、夏普1.75（恒定波动版10.7%、夏普1.80），Fama–MacBeth单独检验t=5.8。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：利差相对违约风险偏宽的债券被市场低估，随后获得更高的超额收益；这是对股票价值（市价对基本面锚）的信用市场类比。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "VALUE_emp=ε，来自log(OAS_i)=a+b·log(Duration_i)+c·Rating_i+d·Vol12m_i+ε_i（月度横截面回归）；VALUE_str=ε，来自log(OAS_i)=a+b·log(PD_i)+ε_i（PD为结构模型违约概率，正文引Bharath–Shumway (2008)，附表A.1写Shumway (2001)）；两项按等风险权重合成为价值特征，残差越大（利差相对违约风险越宽）越便宜。"
+    },
+    "inputs": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "BAML美国投资级（U.S. Corporate Master）与高收益（U.S. High Yield Master）指数全部成分，1997-01至2015-04月度；OAS、有效久期与相对关键利率久期匹配美债的信用超额收益来自BAML；评级为标普发行人评级（1=AAA至10=D）；违约概率需发行人有上市股票（可链接Compustat约48%）。每个发行人每月按优先级、主要评级、5–15年期限、2年内新发与最大存量规则选一只代表性债券。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "公司债横截面选券因子；可与信用动量、低风险、套息因子组合，或作为指数增强信号。"
+    }
+  },
+  "identity_namespace": "journal-of-investment-management/2018",
+  "lab": null,
+  "missing_information": [
+    "经验法与结构法的回归是否加入行业或时间固定效应、等风险合成的具体波动窗口，正文未细写。",
+    "结构模型违约概率的引用在正文（Bharath–Shumway 2008）与附表A.1（Shumway 2001）不一致，未统一。",
+    "期刊版重印本；未回测；同文另有空头受限的长多优化组合，未单列。"
+  ],
+  "name": "公司债价值：log(OAS)对违约风险代理的横截面回归残差（Israel–Palhares–Richardson）",
+  "native_source_id": "JOIM2018:corporate-bond-value-spread-residual",
+  "one_line": "每月把每只代表性公司债的log(OAS)对log(久期)、评级与12个月超额收益波动做横截面回归（经验法），另对结构模型违约概率的对数回归（结构法），残差越大越便宜；两项按等风险合成，并在久期×利差（DTS）五分位内去均值后做五分位多空，做多最便宜组、做空最贵组，组内市值加权。",
+  "record_id": "JOIM2018:corporate-bond-value-spread-residual",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.aqr.com/-/media/AQR/Documents/Journal-Articles/Common-Factors-in-Corporate-Bond-Returns.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Ronen Israel, Diogo Palhares, Scott A. Richardson,《Common Factors in Corporate Bond Returns》JOIM 16(2), 2018（作者所在机构网站托管的期刊版重印本）。中文定义自撰。",
+      "id": "v40-aqr-common-factors-corporate-bond-joim2018-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L449–478（PDF物理页8,9）；formula L1475–1480（PDF物理页27）；formula L388–397（PDF物理页7）；inputs L269–290（PDF物理页5）；inputs L226–272（PDF物理页5）；inputs L1475–1480（PDF物理页27）；calculation L471–477（PDF物理页9）；calculation L479–490（PDF物理页9）；calculation L651–670（PDF物理页12）；availability L865–884（PDF物理页16）",
+      "revision": "Journal of Investment Management 16(2), 2018, pp.17–46期刊版重印本（作者Israel、Palhares所在的AQR网站托管）；30页；sha256 cdd097f425467823e8cb72fb1cf7dad51bc35771914da34548821deacb7340f5",
+      "sha256": "cdd097f425467823e8cb72fb1cf7dad51bc35771914da34548821deacb7340f5",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.aqr.com/-/media/AQR/Documents/Journal-Articles/Common-Factors-in-Corporate-Bond-Returns.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

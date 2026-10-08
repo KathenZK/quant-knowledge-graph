@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "股票上月收益若显著偏离与其高度相关的配对组合，下月会向配对组合收敛。",
+    "missing": [
+      "全市场两两相关的计算量大，作者要求60个月完整数据以降低负担；实盘需自行实现。",
+      "同文把利润分解为短期反转与“配对动量”（约等于一个月行业动量），后者单独作为信号未单列。",
+      "期刊版（清华网站托管）未含网络附录；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "pbcsf.tsinghua.edu.cn/local",
+  "lab": null,
+  "missing_information": [
+    "全市场两两相关的计算量大，作者要求60个月完整数据以降低负担；实盘需自行实现。",
+    "同文把利润分解为短期反转与“配对动量”（约等于一个月行业动量），后者单独作为信号未单列。",
+    "期刊版（清华网站托管）未含网络附录；未回测。"
+  ],
+  "name": "股票配对收益背离RetDiff十分位多空（相关性最高50只配对组合，Chen等）",
+  "native_source_id": "MS2019:equity-pairs-RetDiff",
+  "one_line": "每年用过去5年月收益为每只股票找出相关系数最高的50只股票作为配对组合；次年每月计算RetDiff=β_C·(配对组合上月收益−Rf)−(本股上月收益−Rf)，按RetDiff分十组，做多RetDiff最高组、做空最低组，持有一个月；只交易股票本身，不交易50只配对股。",
+  "record_id": "MS2019:equity-pairs-RetDiff",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://eng.pbcsf.tsinghua.edu.cn/__local/7/61/D5/20F9802D29BA087B9D8A12987BD_D53D9CBF_54542.pdf?e=.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Huafeng (Jason) Chen, Shaojun (Jenny) Chen, Zhuo Chen, Feng Li,《Empirical Investigation of an Equity Pairs Trading Strategy》Management Science 65(1), 2019（清华五道口网站托管的期刊版）。中文定义自撰。",
+      "id": "v40-pbcsf-chen-pairs-ms2019-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L139–149（PDF物理页3）；universe L120–137（PDF物理页3）；universe L139–149（PDF物理页3）；universe L611–617（PDF物理页10）；signal L159–174（PDF物理页3）；signal L120–137（PDF物理页3）；entry L139–149（PDF物理页3）；entry L164–173（PDF物理页3）；exit L139–149（PDF物理页3）；exit L159–174（PDF物理页3）；position L164–173（PDF物理页3）；position L231–243（PDF物理页4）；risk L164–173（PDF物理页3）；risk L231–243（PDF物理页4）；risk L252–258（PDF物理页5）；timeframe L159–174（PDF物理页3）；timeframe L120–137（PDF物理页3）",
+      "revision": "Management Science 65(1):370–389（2019）出版社排版版PDF，由作者陈卓（Zhuo Chen）所在的清华大学五道口金融学院网站托管（页首有INFORMS下载水印）；21页；网络附录未取；sha256 58ca41fcc4bc136ee62684f4daaf25de1ec0b991d019ddbd92337b7d33088b27",
+      "sha256": "58ca41fcc4bc136ee62684f4daaf25de1ec0b991d019ddbd92337b7d33088b27",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://eng.pbcsf.tsinghua.edu.cn/__local/7/61/D5/20F9802D29BA087B9D8A12987BD_D53D9CBF_54542.pdf?e=.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v40-pbcsf-chen-pairs-ms2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国CRSP普通股；只把排序股票本身放入组合，50只配对股只作排序基准。"
+    },
+    "cost": {
+      "evidence": [
+        "v40-pbcsf-chen-pairs-ms2019-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "原文未扣交易成本；信号含上月本股收益（短期反转成分），月度换手高，等权版集中于小盘股。"
+    },
+    "entry": {
+      "evidence": [
+        "v40-pbcsf-chen-pairs-ms2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月按上月RetDiff把股票分为十组，做多第10组（本股相对配对组合跑输最多）、做空第1组。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v40-pbcsf-chen-pairs-ms2019-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月末用上月收益计算信号，下月持有；日内时点未写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v40-pbcsf-chen-pairs-ms2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月，下月按新的RetDiff整体重排；配对每年用滚动5年窗口更新一次。"
+    },
+    "position": {
+      "evidence": [
+        "v40-pbcsf-chen-pairs-ms2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "零成本D10−D1，组内市值加权（主结果）或等权；两种加权都有报告。"
+    },
+    "risk": {
+      "evidence": [
+        "v40-pbcsf-chen-pairs-ms2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告：市值加权D10−D1月均1.40%（t=8.81），三因子α 1.23%，加入动量、短期反转与流动性后六因子α 0.77%（t=3.75）；等权D10−D1月均3.59%、六因子α 3.03%。市值加权组合在1931–2007年有12年为负（含1999–2001、2003、2005、2007）。"
+    },
+    "signal": {
+      "evidence": [
+        "v40-pbcsf-chen-pairs-ms2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对t+1年的股票i，用t−4年1月至t年12月月收益与CRSP全部其他股票算Pearson相关，取最高50只为配对；配对组合收益Cret为50只等权月收益。RetDiff=betaC·(Cret−Rf)−(Lret−Rf)，betaC为i的月收益对配对组合收益在同一5年窗口的回归系数，Lret为i上月收益。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v40-pbcsf-chen-pairs-ms2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度调仓；配对窗口5年（60个月），每年更新。"
+    },
+    "universe": {
+      "evidence": [
+        "v40-pbcsf-chen-pairs-ms2019-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "t+1年的每只股票须在t−4年至t年有完整60个月月收益；样本1931-01至2007-12（六因子α自1968年起）。稳健性：价格>5美元且市值高于NYSE第10百分位时结果仍显著（网络附录表A.2）。"
+    }
+  }
+}
