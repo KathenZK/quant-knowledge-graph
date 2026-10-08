@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "期权隐含偏度相对已实现偏度更负（SRP高）的货币，承担更多崩盘风险，下个月超额收益更高。",
+    "missing": [
+      "作者接收稿（2025-08-22修订）未与JFQA终版比对；网络附录（含G10子样本、各货币样本期与CIP剔除清单）未纳入本条证据。",
+      "期权数据来自未具名的大型投资银行，非公开；剔除CIP大幅偏离观测的具体阈值见网络附录，本条未核。",
+      "与套息高度相关（收益主要来自利率差），原文未扣交易成本；同文P腿、Q腿单独排序、Bakshi三阶矩SRP、自回归预测的物理偏度及β排序组合属同一核心信号的变体，未单列；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "需要场外货币期权隐含波动率报价（原文来自投行，非公开；彭博等终端有同类报价）与日度即期/远期汇率。作者显示多空收益主要来自利率差（远期贴水年化8.06%，t=16.5），即期部分为负（−2.59%，t=−1.70），与套息高度相关但作者称SRP定价能力更强；P1常见日元、瑞士法郎、港币，P5多为高息货币且换手更高。原文未扣交易成本。"
+    },
+    "calculation": {
+      "evidence": [
+        "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末用过去3个月日收益（先减去窗口内日均收益）计算已实现半方差，用当月末3个月期期权计算隐含半方差，得各货币SRP；按SRP升序把全部货币分为五组（各约20%），等权组合，做多第五组（高SRP）、做空第一组（低SRP），持有至下月末重排；超额收益X_{t+1}=(S_{t+1}−F_t)/S_t。作者报告1998-02至2021-12多空年化5.47%（t=3.31）、夏普0.75、偏度−0.70，主要来自多头（P5年化4.85%，t=2.47）。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者认为SRP衡量投资者为货币偏度（崩盘）风险支付的保险价格，高SRP货币承担更多崩盘风险而获得补偿，与Farhi–Gabaix罕见灾难模型一致。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "SRP_{i,t}=RSK_{i,t}−ISK_{i,t}；RSK=(RV^U−RV^D)/RV，RV^U=(12/τ)Σ r²·1[r>0]、RV^D=(12/τ)Σ r²·1[r≤0]、RV=RV^U+RV^D，r为日度即期汇率对数收益（美元/外币），以滞后已实现值作为P测度期望（随机游走代理，t时可观测）；ISK=(IV^U−IV^D)/IV，IV^U=∫_{S}^{∞}2(1−ln(K/S))/K²·C(K)dK，IV^D=∫_0^{S}2(1+ln(S/K))/K²·P(K)dK，IV=IV^U+IV^D。"
+    },
+    "inputs": {
+      "evidence": [
+        "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "28种兑美元货币（澳、巴西、加、瑞士、捷克、丹麦、欧元、港币、匈牙利、印尼、印度、以色列、日本、马来西亚、墨西哥、新西兰、挪威、菲律宾、波兰、俄罗斯、新加坡、南非、韩国、瑞典、台湾、泰国、土耳其、英国）；一家大型投资银行提供的3个月期场外期权Garman–Kohlhagen隐含波动率报价（ATM delta中性跨式、10δ与25δ风险逆转、10δ与25δ蝶式），按Jiang–Tian插值外推成波动率曲面后换算期权价格，利率取自Datastream；BBI与WM/Reuters经Datastream的即期与1个月远期汇率；样本1998-01至2021-12，剔除抛补利率平价大幅偏离的观测。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "跨货币截面因子；可与套息、动量、价值、货币波动率风险溢价（VRP）、风险逆转组合对照，或作为套息的期权信息替代信号。"
+    }
+  },
+  "identity_namespace": "repository.cam.ac.uk",
+  "lab": null,
+  "missing_information": [
+    "作者接收稿（2025-08-22修订）未与JFQA终版比对；网络附录（含G10子样本、各货币样本期与CIP剔除清单）未纳入本条证据。",
+    "期权数据来自未具名的大型投资银行，非公开；剔除CIP大幅偏离观测的具体阈值见网络附录，本条未核。",
+    "与套息高度相关（收益主要来自利率差），原文未扣交易成本；同文P腿、Q腿单独排序、Bakshi三阶矩SRP、自回归预测的物理偏度及β排序组合属同一核心信号的变体，未单列；未回测。"
+  ],
+  "name": "货币偏度风险溢价SRP：已实现半方差偏度减期权隐含半方差偏度，月末五分位等权多高空低（Li–Sarno–Zinna）",
+  "native_source_id": "LSZ2025:currency-skewness-risk-premium-SRP",
+  "one_line": "对28种兑美元货币，每月末用过去3个月日度即期汇率对数收益（去均值）计算上行与下行已实现半方差，得已实现偏度RSK=(RV^U−RV^D)/RV；用3个月期场外货币期权（ATM、10δ/25δ风险逆转与蝶式报价插值）按Bakshi–Kapadia–Madan积分得隐含上行/下行半方差，ISK=(IV^U−IV^D)/IV；SRP=RSK−ISK。按SRP把货币分五组，等权做多SRP最高20%、做空最低20%，用一个月远期持有一个月。",
+  "record_id": "LSZ2025:currency-skewness-risk-premium-SRP",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.repository.cam.ac.uk/bitstreams/43dee201-967f-4bd7-8b59-42d1a24da487/download"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Junye Li, Lucio Sarno, Gabriele Zinna,《Skewness Risk Premia and the Cross-Section of Currency Returns》作者接收稿（2025-08-22修订；Cambridge Apollo托管；JFQA终版未比对）。中文定义自撰。",
+      "id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+      "license": "CC BY（稿件脚注声明作者对接收稿适用CC BY，未印版本号）",
+      "locator": "派生文本(pdftotext -layout)行段：formula L630–659（PDF物理页11）；formula L678–707（PDF物理页12）；formula L709–777（PDF物理页12,13）；formula L808–824（PDF物理页14）；formula L880–889（PDF物理页15）；formula L1155–1175（PDF物理页20）；inputs L941–951（PDF物理页16）；inputs L994–1032（PDF物理页17）；inputs L1037–1055（PDF物理页18）；inputs L1057–1098（PDF物理页18,19）；calculation L1144–1153（PDF物理页19,20）；calculation L1225–1233（PDF物理页21）；calculation L1235–1255（PDF物理页21）；calculation L1270–1288（PDF物理页22）；calculation L1057–1098（PDF物理页18,19）；availability L1261–1318（PDF物理页21,22）；availability L415–428（PDF物理页7,8）；availability L1856–1866（PDF物理页32）",
+      "revision": "作者接收稿（Accepted Version），封面\"Revised August 22, 2025\"，剑桥大学Apollo机构仓储托管（机构仓储）；99页；JFQA录用（编辑George G. Pennacchi），未与期刊终版比对；同仓储另一条目的网络附录（Internet Appendix）未纳入本条证据；sha256 94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884",
+      "sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.repository.cam.ac.uk/bitstreams/43dee201-967f-4bd7-8b59-42d1a24da487/download",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}
