@@ -3,21 +3,28 @@
 Build normalized overlay v1 from off-repo audit work (2026-09-30).
 Hash-pins each overlay entry to the source record's row_sha256 + rule_sha256.
 Refreshes Lab coverage from repo's lab-display-sources.json.
+
+Usage:
+    python build_overlay.py <input_dir>
+    
+    input_dir: Directory containing 09-30 CSV inputs (strategies-normalized-v0_bb8a.csv, etc.)
 """
 import csv
 import json
 import hashlib
+import sys
 from pathlib import Path
 from typing import Dict, List, Any
 from collections import defaultdict
+from datetime import datetime, timezone
 
-# Paths
-WORKSPACE = Path("/workspace")
-UPLOADS = Path("/home/ubuntu/.cursor/projects/workspace/uploads")
-OVERLAY_DIR = WORKSPACE / "metadata/overlays/normalized-v1-20261008"
-CORPUS_DIR = WORKSPACE / "metadata/corpus-checkpoints/grokbot-6973-20261003"
-LAB_DISPLAY = WORKSPACE / "metadata/lab-display-sources.json"
-CLASSIFICATIONS = WORKSPACE / "metadata/classifications/20261004-v1/index.json"
+# Resolve paths relative to repo root
+SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parent.parent.parent  # overlays/normalized-v1-20261008 -> overlays -> metadata -> repo_root
+OVERLAY_DIR = SCRIPT_DIR
+CORPUS_DIR = REPO_ROOT / "metadata/corpus-checkpoints/grokbot-6973-20261003"
+LAB_DISPLAY = REPO_ROOT / "metadata/lab-display-sources.json"
+CLASSIFICATIONS = REPO_ROOT / "metadata/classifications/20261004-v1/index.json"
 
 def load_source_records() -> Dict[str, Dict[str, Any]]:
     """Load all source records to get their hash fingerprints."""
@@ -110,6 +117,16 @@ def load_lab_coverage() -> Dict[str, Dict[str, Any]]:
     return coverage
 
 def main():
+    if len(sys.argv) < 2:
+        print("Usage: python build_overlay.py <input_dir>")
+        print("  input_dir: Directory containing 09-30 CSV inputs")
+        return 1
+    
+    input_dir = Path(sys.argv[1]).resolve()
+    if not input_dir.exists():
+        print(f"Error: Input directory does not exist: {input_dir}")
+        return 1
+    
     print("Loading source records...")
     source_records = load_source_records()
     print(f"  Loaded {len(source_records)} source records")
@@ -124,7 +141,7 @@ def main():
     
     print(f"\nReading normalized strategies CSV...")
     strategies = []
-    with open(UPLOADS / "strategies-normalized-v0_bb8a.csv") as f:
+    with open(input_dir / "strategies-normalized-v0_bb8a.csv") as f:
         reader = csv.DictReader(f)
         for row in reader:
             strategies.append(row)
@@ -132,7 +149,7 @@ def main():
     
     print(f"\nReading families CSV...")
     families = []
-    with open(UPLOADS / "families-v0_c288.csv") as f:
+    with open(input_dir / "families-v0_c288.csv") as f:
         reader = csv.DictReader(f)
         for row in reader:
             families.append(row)
@@ -140,19 +157,19 @@ def main():
     
     print(f"\nReading variants CSV...")
     variants = []
-    with open(UPLOADS / "variants-v0_410e.csv") as f:
+    with open(input_dir / "variants-v0_410e.csv") as f:
         reader = csv.DictReader(f)
         for row in reader:
             variants.append(row)
     print(f"  Read {len(variants)} variants")
     
     print(f"\nReading known issues...")
-    with open(UPLOADS / "known-issues-verification-v1_2a77.json") as f:
+    with open(input_dir / "known-issues-verification-v1_2a77.json") as f:
         known_issues = json.load(f)
     
     print(f"\nReading coverage matrix...")
     coverage_matrix = {}
-    with open(UPLOADS / "coverage-matrix-v1_7028.csv") as f:
+    with open(input_dir / "coverage-matrix-v1_7028.csv") as f:
         reader = csv.DictReader(f)
         for row in reader:
             coverage_matrix[row["id"]] = row
@@ -306,7 +323,7 @@ def main():
             "known_issues_annotated": len([e for e in overlay_entries if "known_issues" in e])
         },
         "lab_refresh": {
-            "lab_registry_path": str(LAB_DISPLAY),
+            "lab_registry_path": str(LAB_DISPLAY.relative_to(REPO_ROOT)),
             "lab_runs_found": len(lab_coverage),
             "newly_executed_since_20260930": []
         },

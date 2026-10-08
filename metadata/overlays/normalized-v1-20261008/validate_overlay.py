@@ -14,10 +14,11 @@ from pathlib import Path
 from typing import Dict, List, Set
 import sys
 
-# Paths
-WORKSPACE = Path("/workspace")
-OVERLAY_DIR = WORKSPACE / "metadata/overlays/normalized-v1-20261008"
-CORPUS_DIR = WORKSPACE / "metadata/corpus-checkpoints/grokbot-6973-20261003"
+# Resolve paths relative to repo root
+SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parent.parent.parent  # overlays/normalized-v1-20261008 -> overlays -> metadata -> repo_root
+OVERLAY_DIR = SCRIPT_DIR
+CORPUS_DIR = REPO_ROOT / "metadata/corpus-checkpoints/grokbot-6973-20261003"
 
 VALID_ORIGIN_TYPES = {"original_rule", "indicator_definition", "adaptation", "hypothesis", "secondary_citation", "unknown"}
 VALID_SOURCE_VERIFIED = {"verified", "partial", "unverified"}

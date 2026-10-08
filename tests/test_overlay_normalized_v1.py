@@ -5,8 +5,10 @@ import json
 import pytest
 from pathlib import Path
 
-WORKSPACE = Path("/workspace")
-OVERLAY_DIR = WORKSPACE / "metadata/overlays/normalized-v1-20261008"
+# Resolve paths relative to repo root
+TEST_DIR = Path(__file__).resolve().parent
+REPO_ROOT = TEST_DIR.parent
+OVERLAY_DIR = REPO_ROOT / "metadata/overlays/normalized-v1-20261008"
 
 def test_overlay_files_exist():
     """Check all expected files exist."""
