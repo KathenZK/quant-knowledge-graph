@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "违约风险高的公司股票波动与杠杆更高，在波动风险价格为负时其Delta对冲期权的期望收益更低（期权更贵），故做多低违约风险、做空高违约风险的Delta对冲期权可获溢价。",
+    "missing": [
+      "主结果按买卖中间价计且未扣成本；作者成本分析显示OPRA实际有效价差（约报价价差52%）加保证金与融券费后策略不再盈利，只有在有效价差约为报价价差25%的假设下才保持正收益。",
+      "实证部分的对冲调整频率正文未明说（公式为离散N次调整，成本分析改为月内不调整）；违约概率所用会计数据的报告滞后与μ、σS的估计窗口在附录A.1，本条未逐项核对。",
+      "同文违约概率、看跌期权、跨式、信用评级变动事件研究与分组稳健性属同一核心信号的变体或对照，未单列；作者接受稿未与Management Science终版比对；仓储条款不允许改动后再分发原文；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "openaccess.city.ac.uk/30902",
+  "lab": null,
+  "missing_information": [
+    "主结果按买卖中间价计且未扣成本；作者成本分析显示OPRA实际有效价差（约报价价差52%）加保证金与融券费后策略不再盈利，只有在有效价差约为报价价差25%的假设下才保持正收益。",
+    "实证部分的对冲调整频率正文未明说（公式为离散N次调整，成本分析改为月内不调整）；违约概率所用会计数据的报告滞后与μ、σS的估计窗口在附录A.1，本条未逐项核对。",
+    "同文违约概率、看跌期权、跨式、信用评级变动事件研究与分组稳健性属同一核心信号的变体或对照，未单列；作者接受稿未与Management Science终版比对；仓储条款不允许改动后再分发原文；未回测。"
+  ],
+  "name": "违约风险与个股期权收益：月末按标普信用评级（或Bharath–Shumway违约概率）五分位，做多低违约风险、做空高违约风险的Delta对冲平值看涨期权（Vasquez–Xiao）",
+  "native_source_id": "VX2024:default-risk-delta-hedged-equity-option-returns",
+  "one_line": "每月末对美国非金融个股，取最接近平值、到期超过一个月的最短期期权，计算Delta对冲看涨期权收益（期权多头加卖出Delta股股票，按|Δ·S−O|缩放）；按标普发行人信用评级数值（1=AAA至22=D）或Bharath–Shumway朴素默顿违约概率分五组，做多违约风险最低组、做空最高组的Delta对冲看涨期权（等权、持仓量加权或市值加权），月末建仓、下月末平仓。",
+  "record_id": "VX2024:default-risk-delta-hedged-equity-option-returns",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://openaccess.city.ac.uk/id/eprint/30902/1/VX_Jan2022.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Aurelio Vasquez, Xiao Xiao,《Default Risk and Option Returns》Management Science 2024（City Research Online托管的作者接受稿）。中文定义自撰。",
+      "id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+      "license": "City Research Online使用条款：可用于个人研究、学习、教育或非营利目的，须注明作者与出处并给出元数据页链接，不得改动内容（仓储封面声明）",
+      "locator": "派生文本(pdftotext -layout)行段：assets L674–692（PDF物理页12）；assets L708–725（PDF物理页12,13）；assets L727–760（PDF物理页13）；universe L674–692（PDF物理页12）；universe L708–725（PDF物理页12,13）；universe L765–781（PDF物理页13）；universe L2603–2633（PDF物理页47）；signal L765–781（PDF物理页13）；signal L789–822（PDF物理页14）；signal L969–975（PDF物理页16）；entry L969–975（PDF物理页16）；entry L2603–2633（PDF物理页47）；entry L727–760（PDF物理页13）；entry L1770–1878（PDF物理页29,30,31）；exit L727–760（PDF物理页13）；exit L2603–2633（PDF物理页47）；position L969–975（PDF物理页16）；position L2603–2633（PDF物理页47）；position L727–760（PDF物理页13）；risk L983–995（PDF物理页17）；risk L2603–2633（PDF物理页47）；cost L1770–1878（PDF物理页29,30,31）；cost L2908–2945（PDF物理页54）；timeframe L727–760（PDF物理页13）；timeframe L2603–2633（PDF物理页47）；execution_time L727–760（PDF物理页13）；execution_time L2603–2633（PDF物理页47）；execution_time L765–781（PDF物理页13）",
+      "revision": "作者接受稿（Accepted version，文件名VX_Jan2022，含网络附录），伦敦城市圣乔治大学City Research Online机构仓储托管（机构仓储，非镜像）；77页；终版Management Science 70(4):2144–2167（2024），DOI 10.1287/mnsc.2023.4796，未比对；sha256 682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03",
+      "sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://openaccess.city.ac.uk/id/eprint/30902/1/VX_Jan2022.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国个股期权（OptionMetrics全市场），每只标的取一张最接近平值的看涨期权（稳健性用看跌与跨式），配合标的股票做Delta对冲。"
+    },
+    "cost": {
+      "evidence": [
+        "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "第4.8节与表10：改为月内不调整对冲的买入持有口径做卖出Delta中性看涨的多空，按有效价差为报价价差的0%/25%/50%计：25%时等权0.48%/月、持仓量加权0.80%、市值加权0.41%均显著，50%时转负；再计保证金与融券费（25%价差）仍为正（等权0.36%）；2003年起OPRA实际有效价差约为报价价差的52%，计入后仅持仓量加权显著，再计保证金与融券费后不再盈利；跨式口径计成本后全部为负。"
+    },
+    "entry": {
+      "evidence": [
+        "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按违约风险指标把期权分为五组，做多违约风险最低组（第1组）、做空最高组（第5组）的Delta对冲看涨期权；建仓价为月末买卖中间价（成本分析另计）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月末用当时已有的信用评级（或违约概率）排序并按月末期权中间价建仓，下月末平仓；信号不取自期权价格。"
+    },
+    "exit": {
+      "evidence": [
+        "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月，下月末平仓并按新排序重建。"
+    },
+    "position": {
+      "evidence": [
+        "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "五分位组合，组内等权、按期权持仓量加权或按股票市值加权；多低违约风险组、空高违约风险组的零投资组合；每张期权以Delta股标的对冲。"
+    },
+    "risk": {
+      "evidence": [
+        "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告1996-01至2016-04按信用评级排序的高减低Delta对冲看涨收益：等权−0.78%/月（t=−10.49）、持仓量加权−0.79%（t=−6.99）、市值加权−0.73%（t=−10.04）；按违约概率排序等权−0.73%（t=−6.92），即做多低风险、做空高风险组可获正收益。"
+    },
+    "signal": {
+      "evidence": [
+        "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "主信号为标普发行人信用评级，经Compustat转为数值（1=AAA，22=D，数值越大违约风险越高；≤10为投资级）；替代信号为Bharath–Shumway（2008）迭代法KMV–默顿违约概率N(−(ln(V/D)+(μ−0.5σv²)T)/(σv√T))，D取流动负债中的债务加长期债务（Compustat item 45、51），V与σv由股价与股票波动联立解出。高违约风险对应更低的后续Delta对冲期权收益。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度。"
+    },
+    "universe": {
+      "evidence": [
+        "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "OptionMetrics Ivy DB美国个股期权，1996-01至2016-04；剔除金融公司；剔除期权存续期内标的派息者、违反套利界限者、卖价≤买价、买价为零、价差小于最小报价单位（3美元以下0.05、其余0.10）、无持仓量者；须有标普信用评级（违约概率口径须有Compustat负债与CRSP日价）。"
+    }
+  }
+}
