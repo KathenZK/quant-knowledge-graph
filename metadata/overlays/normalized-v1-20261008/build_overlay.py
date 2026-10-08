@@ -18,6 +18,8 @@ from typing import Dict, List, Any
 from collections import defaultdict
 from datetime import datetime, timezone
 
+from source_loader import load_source_records, WITHHELD_IDS
+
 # Resolve paths relative to repo root
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent.parent.parent  # overlays/normalized-v1-20261008 -> overlays -> metadata -> repo_root
@@ -25,47 +27,6 @@ OVERLAY_DIR = SCRIPT_DIR
 CORPUS_DIR = REPO_ROOT / "metadata/corpus-checkpoints/grokbot-6973-20261003"
 LAB_DISPLAY = REPO_ROOT / "metadata/lab-display-sources.json"
 CLASSIFICATIONS = REPO_ROOT / "metadata/classifications/20261004-v1/index.json"
-
-def load_source_records() -> Dict[str, Dict[str, Any]]:
-    """Load all source records to get their hash fingerprints."""
-    records = {}
-    
-    # Scan all batches
-    for batch_dir in sorted(CORPUS_DIR.glob("batches/batch-*")):
-        source_dir = batch_dir / "metadata/source-records"
-        if not source_dir.exists():
-            continue
-            
-        for record_file in source_dir.glob("M*.json"):
-            with open(record_file) as f:
-                data = json.load(f)
-                mid = data["record_id"]
-                records[mid] = {
-                    "row_sha256": data["provenance"]["row_sha256"],
-                    "rule_sha256": data["provenance"]["rule_sha256"],
-                    "csv_row_ordinal": data["provenance"]["csv_row_ordinal"]
-                }
-    
-    # Scan subsets (e.g., batch-0026-public-v1, batch-0028-public-v1)
-    subsets_dir = CORPUS_DIR / "subsets"
-    if subsets_dir.exists():
-        for subset_dir in sorted(subsets_dir.glob("batch-*")):
-            source_dir = subset_dir / "metadata/source-records"
-            if not source_dir.exists():
-                continue
-                
-            for record_file in source_dir.glob("M*.json"):
-                with open(record_file) as f:
-                    data = json.load(f)
-                    mid = data["record_id"]
-                    if mid not in records:  # Don't overwrite if already found
-                        records[mid] = {
-                            "row_sha256": data["provenance"]["row_sha256"],
-                            "rule_sha256": data["provenance"]["rule_sha256"],
-                            "csv_row_ordinal": data["provenance"]["csv_row_ordinal"]
-                        }
-    
-    return records
 
 def load_classifications() -> Dict[str, str]:
     """Load type classifications from main (authoritative)."""
@@ -128,7 +89,7 @@ def main():
         return 1
     
     print("Loading source records...")
-    source_records = load_source_records()
+    source_records = load_source_records(CORPUS_DIR)
     print(f"  Loaded {len(source_records)} source records")
     
     print("Loading type classifications from main...")
@@ -179,14 +140,13 @@ def main():
     overlay_entries = []
     discrepancies = []
     missing_hashes = []
-    withheld_ids = ["M2535", "M2709"]  # Intentionally withheld from public
     type_conflicts = []
     
     for row in strategies:
         mid = row["id"]
         
         # Skip withheld IDs (documented, not an error)
-        if mid in withheld_ids:
+        if mid in WITHHELD_IDS:
             continue
         
         # Get source record hashes
@@ -295,7 +255,7 @@ def main():
     discrepancies_file = OVERLAY_DIR / "discrepancies.json"
     with open(discrepancies_file, "w") as f:
         json.dump({
-            "withheld_ids": withheld_ids,
+            "withheld_ids": sorted(WITHHELD_IDS),
             "missing_source_record_hashes": missing_hashes,
             "type_classification_conflicts": type_conflicts,
             "notes": [

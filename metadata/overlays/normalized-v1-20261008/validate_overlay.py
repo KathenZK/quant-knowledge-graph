@@ -14,6 +14,8 @@ from pathlib import Path
 from typing import Dict, List, Set
 import sys
 
+from source_loader import load_source_records, WITHHELD_IDS
+
 # Resolve paths relative to repo root
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent.parent.parent  # overlays/normalized-v1-20261008 -> overlays -> metadata -> repo_root
@@ -30,25 +32,11 @@ VALID_ACCESS_STATUS = {"ok", "access_blocked", "access_pending", "unknown"}
 VALID_DATE_PRECISION = {"year", "month", "day", "unknown"}
 VALID_ATTRIBUTION = {"原文明确", "编纂者决定", "尚未知"}
 
-def load_source_records() -> Dict[str, Dict]:
-    """Load all source records."""
-    records = {}
-    for batch_dir in sorted(CORPUS_DIR.glob("batches/batch-*")):
-        source_dir = batch_dir / "metadata/source-records"
-        if not source_dir.exists():
-            continue
-        for record_file in source_dir.glob("M*.json"):
-            with open(record_file) as f:
-                data = json.load(f)
-                mid = data["record_id"]
-                records[mid] = data
-    return records
-
 def validate_overlay():
     """Run all validations."""
     print("Loading source records...")
-    source_records = load_source_records()
-    print(f"  Loaded {len(source_records)} source records\n")
+    source_records_provenance = load_source_records(CORPUS_DIR)
+    print(f"  Loaded {len(source_records_provenance)} source records\n")
     
     print("Loading overlay records...")
     overlay_records = []
@@ -61,15 +49,15 @@ def validate_overlay():
     errors = []
     warnings = []
     
-    # Check 1: All overlay M-IDs exist in source records
+    # Check 1: All overlay M-IDs exist in source records (excluding known withheld)
     print("Check 1: M-ID existence...")
     missing_mids = []
     for rec in overlay_records:
         mid = rec["id"]
-        if mid not in source_records:
+        if mid not in source_records_provenance and mid not in WITHHELD_IDS:
             missing_mids.append(mid)
     if missing_mids:
-        errors.append(f"  ✗ {len(missing_mids)} M-IDs not found in source records: {missing_mids[:10]}")
+        errors.append(f"  ✗ {len(missing_mids)} M-IDs not found in source records: {', '.join(missing_mids[:10])}")
     else:
         print("  ✓ All M-IDs exist in source records")
     
@@ -78,14 +66,14 @@ def validate_overlay():
     hash_mismatches = []
     for rec in overlay_records:
         mid = rec["id"]
-        if mid not in source_records:
+        if mid not in source_records_provenance:
             continue
         
-        src = source_records[mid]
+        src_prov = source_records_provenance[mid]
         overlay_row_sha = rec["pinned_to"]["row_sha256"]
         overlay_rule_sha = rec["pinned_to"]["rule_sha256"]
-        src_row_sha = src["provenance"]["row_sha256"]
-        src_rule_sha = src["provenance"]["rule_sha256"]
+        src_row_sha = src_prov["row_sha256"]
+        src_rule_sha = src_prov["rule_sha256"]
         
         if overlay_row_sha != src_row_sha or overlay_rule_sha != src_rule_sha:
             hash_mismatches.append({

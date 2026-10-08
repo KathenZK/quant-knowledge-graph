@@ -122,5 +122,24 @@ def test_lab_coverage_refresh():
     assert lab_info["lab_runs_found"] == 27
     assert "newly_executed_since_20260930" in lab_info
 
+def test_full_validator():
+    """Run the complete validator to check source record pins."""
+    import subprocess
+    
+    validator_path = OVERLAY_DIR / "validate_overlay.py"
+    result = subprocess.run(
+        ["python3", str(validator_path)],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True
+    )
+    
+    # Validator should exit 0 when all checks pass
+    assert result.returncode == 0, f"Validator failed:\n{result.stdout}\n{result.stderr}"
+    
+    # Check for success messages
+    assert "✓ All M-IDs exist in source records" in result.stdout
+    assert "✓ All hash pins match source records" in result.stdout
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
