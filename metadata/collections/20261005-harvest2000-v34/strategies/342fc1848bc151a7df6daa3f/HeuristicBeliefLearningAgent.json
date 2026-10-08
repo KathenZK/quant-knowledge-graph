@@ -1,0 +1,337 @@
+{
+  "economic_basis": {
+    "hypothesis": "经验成交可能性与私有估值剩余共同决定报价，是来源模拟代理假说；不验证真实接受概率、盈利或优于其他代理。",
+    "missing": [
+      "只有静态来源定义；没有执行模拟、参数估计、历史交易或收益研究。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "github.com/abides-sim/abides",
+  "lab": null,
+  "missing_information": [
+    "现实私有基础价值观察替代、资金/借券/保证金、真实费用和订单执行未闭合。",
+    "来源sigma递推/收盘单位/异步状态边界原样保留；不是修复后算法。",
+    "整HBL代理族计数待独立审核，不按参数、ZI回退或内部概率另拆。"
+  ],
+  "name": "ABIDES HBL：订单成败经验概率与私有估值择价的限价代理",
+  "native_source_id": "HeuristicBeliefLearningAgent",
+  "one_line": "按近期订单成败估计各报价成交概率，乘私有估值剩余选一侧100股限价；历史不足时回退随机剩余报价。",
+  "record_id": "HeuristicBeliefLearningAgent",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED",
+    "metadata": "来源原生ID、版本、定位与自撰规则；本机原件不公开。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-readme-md",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "README.md; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "98082c178b1bfc60ac2e758b340ebe6e551e42fc6d4ac25fbd6a826235b2a4c3",
+      "supports": [
+        "SOURCE_IDENTITY_LICENSE_OR_DECLARED_DEPENDENCY_VERSIONS_NOT_RUNTIME_PROOF"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/README.md",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-license-txt",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "LICENSE.txt; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "9c59cf2e0fa99d36263cfdbd6c4417586abe09c4ef358a3119f66bfb90686de9",
+      "supports": [
+        "SOURCE_IDENTITY_LICENSE_OR_DECLARED_DEPENDENCY_VERSIONS_NOT_RUNTIME_PROOF"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/LICENSE.txt",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-requirements-txt",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "requirements.txt; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "b200267f6d9a72e9260e14a85e77b6e24f6f83afeacda00194472a962e31b262",
+      "supports": [
+        "SOURCE_IDENTITY_LICENSE_OR_DECLARED_DEPENDENCY_VERSIONS_NOT_RUNTIME_PROOF"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/requirements.txt",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-agent-heuristicbelieflearningagent-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "agent/HeuristicBeliefLearningAgent.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "be830864d978a0d1b8c1a3b68bf8b1f8d44b50d930df90c577b28c04725978ae",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/agent/HeuristicBeliefLearningAgent.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-agent-zerointelligenceagent-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "agent/ZeroIntelligenceAgent.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "983844b392fa3f89366d6d9811b5ec85b5ac85b6aa129b5385fc34317d696b2a",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/agent/ZeroIntelligenceAgent.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-agent-tradingagent-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "agent/TradingAgent.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "ba813153896003e9ef2c95213df4e109b42ef9febda7e522b5d6d41777fdd7b7",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/agent/TradingAgent.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-agent-financialagent-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "agent/FinancialAgent.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "e91ae6da00a59f3e06eabb1b9628047df9188c1a748aac556299ffbe202ee3dc",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/agent/FinancialAgent.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-agent-agent-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "agent/Agent.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "4372aba58db2685c7295b73ff1332acb5b782f469ba9fbf8523243badd377987",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/agent/Agent.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-agent-exchangeagent-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "agent/ExchangeAgent.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "59e7d5d0e665070abe4a5626162c393cd1eede87413673a6107dcc15f3bb590a",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/agent/ExchangeAgent.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-util-orderbook-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "util/OrderBook.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "e49a197be7fbacf9ad87ae5234850640e153d2d6851cab7b64b4134935c36b58",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/util/OrderBook.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-util-order-limitorder-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "util/order/LimitOrder.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "694749bab493aac9829a9d0c7d710b13b17c2701d622075b4d827dc49edd8e0e",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/util/order/LimitOrder.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-util-order-order-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "util/order/Order.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "938aed084b0d002b929786ee4e0494ea79c9aad07cee2403481d97421fe99f9a",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/util/order/Order.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-util-util-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "util/util.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "85e0824d8a90a7510b4322b96d263b7bd884df382ea447984ce3370142a23a42",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/util/util.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-message-message-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "message/Message.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "8debb446b5fd4e4038bbe997ee56ebea68087e0b6054acaa56fabc15480f014b",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/message/Message.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-kernel-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "Kernel.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "703aedc0173c8b1e985437c7764927b0836cbd4c060a1420020cbb9e054af478",
+      "supports": [
+        "SELECTED_CORE_OR_TRANSITIVE_STATIC_DEPENDENCY"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/Kernel.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    },
+    {
+      "attribution": "ABIDES repository; LICENSE names David Byrd and Tucker Balch and Georgia Tech Research Corporation copyright 2019. Class authorship not separately inferred.",
+      "id": "abides-config-rmsc01-py",
+      "license": "BSD-3-Clause for repository code, per fixed LICENSE.txt; external papers/data and runtime dependencies retain separate rights. Commercial REVIEW_REQUIRED.",
+      "locator": "config/rmsc01.py; native UTF-8 source lines in field_spans",
+      "revision": "c4bf157678928934417aba6073eb0651aeaf6d15",
+      "sha256": "545f9985fb6774c558f2db04a7198d67776796eab99f3b7e8e1afae3f7227594",
+      "supports": [
+        "AUTHOR_EXAMPLE_NOT_SELECTED_PARAMETERS_OR_RUNTIME"
+      ],
+      "url": "https://github.com/abides-sim/abides/blob/c4bf157678928934417aba6073eb0651aeaf6d15/config/rmsc01.py",
+      "verification": "PINNED_GIT_BLOB_AND_TRUE_TREE_STATIC_REVIEW_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "abides-agent-heuristicbelieflearningagent-py",
+        "abides-agent-zerointelligenceagent-py",
+        "abides-agent-tradingagent-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "选择ABIDES固定提交中的HeuristicBeliefLearningAgent及继承的ZeroIntelligenceAgent：模拟连续双向限价拍卖中，一个外部指定symbol的100股逐单交易代理。symbol默认IBM只是构造器标签，不是冻结真实IBM市场数据；股数是份额，限价/现金按整数美分。估值输入obs_t来自kernel.oracle.observePrice的私有基础价值观察接口，不是代理可直接读取的真实市场公平价；真实可获取替代数据没有给定。本条采完整HBL代理族，不把ZI回退、基础估值或成交概率另拆新策略/因子。"
+    },
+    "cost": {
+      "evidence": [
+        "abides-agent-tradingagent-py",
+        "abides-util-orderbook-py",
+        "abides-kernel-py"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：所选成交现金只扣有符号成交股数×fill_price，没有手续费、返佣、融资、借券、税或撤单费用。bid/ask价差与被动/主动吃单体现在模拟撮合价；不能把这些视为已经扣完现实成本，也不能把未实现收费代码当费用为0。lambda_a和计算/网络delay是时序参数，不是货币交易费率。"
+    },
+    "entry": {
+      "evidence": [
+        "abides-agent-heuristicbelieflearningagent-py",
+        "abides-agent-zerointelligenceagent-py",
+        "abides-agent-tradingagent-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "历史足够时取best_p=low+np.argmax(E)，只有best_E>0才提交100股、所选方向的限价；等于0或负则本轮不下单，源码注释里的负剩余备选路径未启用。np.argmax沿升序价数组取首个最大项时即偏低价，此依赖函数语义未在这里执行。历史格数不足则原样走ZI：先同样得到v与方向，再采整数R∈[R_min,R_max]，买p=v−R、卖p=v+R；若买且ask量>0且v−ask>=eta*R，改为ask；卖且bid量>0且bid−v>=eta*R，改为bid。回退直接下100股，没有HBL的best_E>0门。提交不等于成交。"
+    },
+    "execution_time": {
+      "evidence": [
+        "abides-agent-heuristicbelieflearningagent-py",
+        "abides-agent-zerointelligenceagent-py",
+        "abides-util-orderbook-py",
+        "abides-kernel-py",
+        "abides-agent-exchangeagent-py",
+        "abides-agent-tradingagent-py"
+      ],
+      "status": "MISSING",
+      "text": "静态次序已核：唤醒预约下一次→发所有取消→请求历史→流回复→请求spread→spread回复→按此时私有观察估值/选方向与价→发新限价。模拟OrderBook按最优价同价FIFO撮合、按原挂单价成交，可分段部分成交；随后ORDER_EXECUTED回执才改代理现金/仓位。每个有成交的新入单结束后推进history批次。Kernel按计算延迟+附加延迟+网络延迟安排投递，Exchange默认订单pipeline40,000ns/compute1ns；真实配置可改，来源示例也改成0。实际交易所连接、行情可得性、排队映射、拒单/重试/资金和历史执行均未验证，真实执行为MISSING；未导入或执行上游模块。"
+    },
+    "exit": {
+      "evidence": [
+        "abides-agent-zerointelligenceagent-py",
+        "abides-agent-tradingagent-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每轮有效唤醒向当前全部open orders发送cancel，不等确认再继续新报价；订单被完全成交或取消回执到达才从本地移除，部分成交只扣其剩余量。反方向新成交可以降低或翻转已有净仓，但没有逐笔止盈止损、持有期或强制收盘归零。收到闭市且已有日终价后停止；若尚无日终价则只查询spread。kernelStopping只统计和估值，没有卖出剩余股票；其FINAL_VALUATION把股数四舍五入到百股后H=股数/100，用rT*H加现金差，和交易现金按每股*实际股数计账不一致，不能当真实账户净收益。"
+    },
+    "position": {
+      "evidence": [
+        "abides-agent-tradingagent-py",
+        "abides-agent-zerointelligenceagent-py",
+        "abides-agent-heuristicbelieflearningagent-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始化只持外部starting_cash（构造器默认100000美分）且无股票；每次生成一张100股订单，不按权益比例。q=int(股数/100)是向零截断的百股索引，达到±q_max只强制下一方向回减，不是撮合层硬库存限制；部分成交、迟到成交与未确认撤单可让暴露偏离此索引计划。TradingAgent.placeLimitOrder的ignore_risk默认True，HBL/ZI未覆盖，故不会执行其可选at-risk检查；现金可以在模拟账中为负，不能宣称默认起始现金足够。收到成交回执后以有符号qty更新股数，CASH−=qty*fill_price；本金、借券/保证金、可用资金和最大损失合同未闭合。"
+    },
+    "risk": {
+      "evidence": [
+        "abides-agent-zerointelligenceagent-py",
+        "abides-agent-heuristicbelieflearningagent-py",
+        "abides-agent-tradingagent-py",
+        "abides-requirements-txt"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码估值误差方差使用旧s且初值0，不是标准后验方差更新；kappa=0或2使估值分母1−(1−kappa)^2为0，sigma_n=0与s=0会零除，源码未统一校验。theta合法长度/索引、L正整数、价格整数、有限正尺度和随机状态均有输入要求；空历史字典却长度足够会使网格形状非法，极宽价域耗尽内存，超限库存可导致theta索引无意义或越界。交易流只看是否有任何成交，未成交包括挂着与已取消，并非标注过的真实接受概率样本；晚成交通知/查询回复与新唤醒可交错。默认资金检查关闭且未强平；收盘估值单位问题不能作为盈利证据。requirements声明numpy1.16.3/pandas0.25.1/scipy1.2.1，但没有重建历史环境或执行；BSD代码许可不授权论文或行情。"
+    },
+    "signal": {
+      "evidence": [
+        "abides-agent-zerointelligenceagent-py",
+        "abides-agent-heuristicbelieflearningagent-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先沿原ZI估值。初始化r=r_bar、s=0；theta是2*q_max个N(0,sigma_pv)独立抽样，经np.round、降序、int转换。令q=int(已成交股数/100)，q>=q_max选卖，q<=−q_max选买，否则等概率硬币选方向。观察obs=oracle.observePrice(symbol,now,sigma_n,random_state)。a=(1−kappa)^delta；r_pre=(1−a)*r_bar+a*r，s_pre=a²*s+[1−a²]/[1−(1−kappa)²]*sigma_s；r←[sigma_n*r_pre+s_pre*obs]/[sigma_n+s_pre]。源码s←sigma_n*s/(sigma_n+s)用旧s而非s_pre，初s=0且sigma_n>0时一直为0，不擅改成标准滤波。h=max(0,(close−now)/1ns)，r_T=int(round((1−(1−kappa)^h)*r_bar+(1−kappa)^h*r))；买取theta[q+q_max]，卖取theta[q+q_max−1]，v=r_T+该项。\n历史足够时，遍历每个订单的limit_price与buy标志；transactions非空即整笔订单记成功1（不按成交股数或成交比例）。每整数分价p统计成功ask/bid SA/SB及失败ask/bid UA/UB。买侧N(p)=SA(<=p)+SB(<=p)+UA(<=p)，D=N+UB(>=p)；卖侧N(p)=SA(>=p)+SB(>=p)+UB(>=p)，D=N+UA(<=p)。P=np.nan_to_num(N/D)，合法计数下0/0化0。买侧E(p)=P(p)*(v−p)，卖侧E(p)=P(p)*(p−v)。在源码low=sys.maxsize、high=0起始后按观察价扩出的全部整数价（含未观察价）上np.argmax选E最大价。通常非负价格时就是最小到最大观察价；若全为负，high仍为0。不是用真实未来成交或收益作预测。"
+    },
+    "timeframe": {
+      "evidence": [
+        "abides-agent-tradingagent-py",
+        "abides-agent-zerointelligenceagent-py",
+        "abides-agent-heuristicbelieflearningagent-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "事件消息驱动，时间差使用纳秒而非K线。获知市场开闭市后，第一轮在开市加均匀整数0..99ns偏移唤醒；以后每次有效唤醒先采delta~Exponential(scale=1/lambda_a)、round转整数纳秒预约下次，再发取消请求并索取订单流。收到流才索取spread；收到spread且未标闭市才估值与报价。prev_wake_time实际在估值时回写当时消息时间，下一次递推的delta从该时间算；不是保证固定间隔。等待回复期间已预约下一轮，迟到消息无独立请求序号匹配。"
+    },
+    "universe": {
+      "evidence": [
+        "abides-agent-heuristicbelieflearningagent-py",
+        "abides-agent-exchangeagent-py",
+        "abides-util-orderbook-py",
+        "abides-agent-agent-py",
+        "abides-config-rmsc01-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每实例一项symbol、预先给定开闭市时间、带种子的NumPy RandomState、基础价值观察接口、订单流及bid/ask回复。HBL参数L默认8，是查询返回的历史字典个数；Exchange实际返回history[1:L+1]，当前0号批不发给代理。OrderBook只在一个新入单发生至少一次撮合后推进一格，因此一格可含多个部分成交，不等于一根时间棒或每一笔成交。Exchange默认stream_history=0会使HBL始终回退ZI；HBL路径须运行环境保留至少L格并已有足够事件。同仓rmsc01示例用stream_history10、L2，但本条不移植其其余参数或宣称整个示例已执行。"
+    }
+  }
+}

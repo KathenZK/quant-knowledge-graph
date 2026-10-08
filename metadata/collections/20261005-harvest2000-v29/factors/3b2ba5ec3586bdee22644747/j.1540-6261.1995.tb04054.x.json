@@ -1,0 +1,136 @@
+{
+  "economic_basis": {
+    "hypothesis": "完整信息份额族；给定ψ/Ω及固定标签后可定义全部递归正交顺序结果，不把VECM拟合、首尾快捷极值断言或实证收益混入。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-d35e7ee6deeb313557ee6bf8",
+        "harvest-source-6b0b94e7560230012b80d6c2"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只有ψ与Ω全部拟合输入已到达/发布并冻结之后可得；整窗统计不得回填至窗内早期时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-d35e7ee6deeb313557ee6bf8",
+        "harvest-source-6b0b94e7560230012b80d6c2"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "本条冻结原1995§III Eq14–16定义层；给定的是创新协方差与长期共同载荷，不是直接把任意价格收益协方差或投资权重塞入并声称已有价格发现估计。需研究层先检查同证券/同价格单位、I(1)、n−1协整秩及长期影响共同row条件。 ψ是价格变化VMA系数在L=1处之和的公共行，Ω是该模型序列不相关创新的协方差。原论文先估VECM再数值累积响应，但采样、滞后、估计窗、精度/收敛和特定代码未在本条冻结；不以其存在推成可回测流水线。 固定原场所标签及一个排列π，同时重排ψ和Ω的两个轴。数学Cholesky取下三角、正对角；不以任意对称平方根或特征分解旋转替代。将各正交冲击长期载荷ψ_πF_π逐项平方，除以同一个总永久创新方差D。 每个固定排列的份额非负且总和1，这是[ψF][ψF]ᵀ=D的精确代数结果，不是有限环境执行检验或真实经济贡献证明。把每组结果映回原标签，不能把排序位置当原市场ID。 保留全部排列值或逐标签实际最小/最大范围；2002原作者文档printed4明确all permutations，这里作为同族后续阐述而非假称1995版本修订。只观察部分排列时，不能声称得到完整排列范围。 1995 printed1183声称排最前给上界、最后给下界；此说法在一般正定及单共同趋势域并非恒真。自撰精确反例ψ=(.5,.5)、Ω对角1/非对角−.9，前排份额.05、后排.95；有效VAR p_t=Jp_(t−1)+e_t、J=.5ones可产生此长期公共行。候选不把该快捷断言当算法，也不无声修改原文。 全部排列的逐项min/max仅是这类递归正交化归属的范围，不是置信区间、真实结构冲击识别区间或对任意正交旋转的全域上下界。各标签下界之和通常小于1、上界之和通常大于1，不应把上下界再归一成同一组合。 原printed1184说明度量仅分配共同永久成分，瞬时/暂时价格噪声不进入同一目标；它不测绝对信息总量、不保证最优报价或速度、不证明因果或可获利。多个报价映射同一场所时可按事先确定的标签组对固定排列份额加总，分组/方向不另计。 2002文档有自身源内记号问题：printed3 Eq6的求和指标为i而被加项写B_k，邻文与B(1)说法指累计系数；同页Eq5对非零μ_z的递推省掉中心化项。这里仅使用其明确全排列陈述和同源背景，不批准该印刷递推、SAS包或任何随附数据。 方差分配与回归解释方差、顺序正交分解共享基础；同ψ/Ω上的Euler风险分摊一般不同，已留明确反例。新增提名是共同永久价格创新的场所贡献完整构造，而不是把Cholesky算法、排序、方差归一或某市场参数各算一个。 边界：数学有效域要求Ω正定和ψ非零；零永久方差、奇异/非PSD协方差与缺失/无穷输入不在此合同，没有自动岭修复、伪逆、截负或填零。定义能算不证明传入矩阵来自有效VECM。 Ω非对角时分配依赖排列；有相关项时ψ_j=0不保证场所份额为0。不能只用ψ_j²Ω_jj再强行归一替代Eq16。 ψ整体乘非零常数、Ω整体乘正数不改变份额；跨场所不同报价单位仍必须按同一价格模型变换，不能借尺度不变性绕过共同趋势条件。 全排列枚举有n!规模；未提供近似优化器/抽样保证或大n计算实现。单个顺序可以解释为该递归识别约定下的分配，不视为唯一真实信息份额。 原文first/last无条件极值声明已显式保留反例；本文无源算法执行、无金融数据、无数值容差/运行环境验证。 原1995文章经大学托管的JSTOR传输件保留个人非商业使用提示；Crossref DOI仅身份，2012online日期不改1995print版本。原2002文档preliminary/not for attribution及shareware/as-is不等于开源许可证，也不授权原论文或数据。 模型拟合使用整窗时只能在窗口结束且全部创新估计输入已发布后使用；不从拟合后永久项回填窗内历史可用信号。 本条不给市场全集、时钟对齐/上一报价填充、PIT/交易日、参数估计、稳定性检验或交易动作；这些均须另行冻结。 输出：同一组原标签的顺序特定份额向量及全排列逐标签范围，全部计1族；不是收益、交易信号、p值或结构因果份额。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-d35e7ee6deeb313557ee6bf8",
+        "harvest-source-6b0b94e7560230012b80d6c2"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "完整信息份额族；给定ψ/Ω及固定标签后可定义全部递归正交顺序结果，不把VECM拟合、首尾快捷极值断言或实证收益混入。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-d35e7ee6deeb313557ee6bf8",
+        "harvest-source-6b0b94e7560230012b80d6c2"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入n>=2个同一或已换算到同一价格单位的相关场所/报价创新，给定有限非零行向量ψ∈R^(1×n)及有限实对称正定创新协方差Ω。金融解释前提为Δp_t=Ψ(L)e_t、Cov(e_t)=Ω，Ψ(1)=Σ_kΨ_k=1_nψ且价格有一个共同I(1)成分；ψ与Ω的估计不在此计算合同。对每个价格标签排列π令P_π为置换矩阵，ψ_π=ψP_πᵀ，Ω_π=P_πΩP_πᵀ。取唯一正对角下三角F_π使F_πF_πᵀ=Ω_π。D=ψΩψᵀ>0；按排列位置i计算s_(π,i)=[ψ_πF_π]_i²/D，并用P_πᵀ把s还原为原标签向量S^(π)。输出固定顺序的整向量及全部n!排列下每个原标签的[min_π S_j^(π),max_π S_j^(π)]；这些顺序/上下界/坐标保守计一个构造族。若Ω对角，所有顺序相同并退为原Eq14:S_j=ψ_j²Ω_jj/D。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-d35e7ee6deeb313557ee6bf8",
+        "harvest-source-6b0b94e7560230012b80d6c2"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "psi（finite nonzero real row vector lengthn,n>=2）：单共同趋势价格变化VMA长期影响矩阵Ψ(1)的公共行；不是任意持仓权重。原生拟合器/模型检验未冻结。；Omega（finite real symmetric positive-definite n by n matrix, same original innovation labels aspsi）：同一模型零均值、序列不相关创新e_t的协方差；不擅自用价格水平或任意收益协方差替代。；label_order_and_model_contract（n unique original labels plus declared valid single-common-trend model/units/window）：用于同步排列、还原结果和解释永久价格冲击归属；数学公式可算并不验证此金融合同。。参数：permutation：顺序是识别约定，非新增算法；不能只把市场置首尾当一般极值；范围any permutation of n original labels; family range uses all n!；来源默认值None；本条选定one full family including all ordered outputs and their per-label extrema；grouping：只有固定标签映射才能把bid/ask等贡献并到同一场所；不把加总后范围当各分项极值之和；范围optional prespecified disjoint mapping of original price labels to market venues；来源默认值None；本条选定individual price labels; grouping discussed but not counted separately"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-d35e7ee6deeb313557ee6bf8",
+        "harvest-source-6b0b94e7560230012b80d6c2"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "doi.org/10.1111",
+  "lab": null,
+  "missing_information": [
+    "供应商、原始行情、场所/价格映射与PIT MISSING",
+    "VECM拟合器、秩/稳定性检验、滞后/窗长、长期响应收敛和数值实现未冻结",
+    "经济解释、统计校准、真实因果信息贡献及收益未验证",
+    "论文/文档/代码/数据商业复用权利分别待审"
+  ],
+  "name": "共同永久价格创新的市场信息份额",
+  "native_source_id": "j.1540-6261.1995.tb04054.x",
+  "one_line": "按各市场创新对共同永久价格变动的正交载荷平方分配方差，并保留顺序敏感范围；模型估计与时点仍需补齐。",
+  "record_id": "j.1540-6261.1995.tb04054.x",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.bauer.uh.edu/rsusmel/phd/hasbrouck95.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Joel Hasbrouck,One Security,Many Markets:Determining the Contributions to Price Discovery,Journal of Finance50(4),1175–1199,September1995,DOI10.1111/j.1540-6261.1995.tb04054.x,JSTOR2329348. Separate author2002 preliminary documentation used only for explicit all-permutation context.",
+      "id": "harvest-source-d35e7ee6deeb313557ee6bf8",
+      "license": "NO_OPEN_REUSE_LICENSE_ESTABLISHED",
+      "locator": "JSTOR transmission cover identifies 1995 original title, author, Journal of Finance50(4):1175–1199, stable2329348; personal/non-commercial use notice: physical PDF p1-p1; Printed1175 original journal title/author/abstract; information share economic interpretation: physical PDF p2-p2; Printed1180 §II: I(1) related prices and covariance-stationary differences, Eq10 VMA innovations: physical PDF p7-p7; Printed1181: equal rows of long-run impact Psi(1), one common random walk, Eq11–13 context: physical PDF p8-p8; Printed1182: estimation is separate; Eq14 diagonal-innovation information share: physical PDF p9-p9; Printed1183: Eq15 lower-triangular Cholesky, Eq16 squared long-run shock loading; ordering and disputed first/last claim: physical PDF p10-p10; Printed1184: relative/permanent-component-only information, no best-price/absolute-efficiency claim; grouped-venue shares: physical PDF p11-p11",
+      "revision": "Journal of Finance50(4),September1995,1175–1199; original article with2008 JSTOR cover",
+      "sha256": "b9c1218b1353f988b06ad2a1de73cf9b82bc3a4a3f6686a085f117576c695907",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://www.bauer.uh.edu/rsusmel/phd/hasbrouck95.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Joel Hasbrouck,One Security,Many Markets:Determining the Contributions to Price Discovery,Journal of Finance50(4),1175–1199,September1995,DOI10.1111/j.1540-6261.1995.tb04054.x,JSTOR2329348. Separate author2002 preliminary documentation used only for explicit all-permutation context.",
+      "id": "harvest-source-6b0b94e7560230012b80d6c2",
+      "license": "NO_OPEN_REUSE_LICENSE_ESTABLISHED",
+      "locator": "Author2002-01-10 preliminary Version1.0, explicitly not for attribution; not same paper revision as1995: physical PDF p1-p1; Author2002 printed1: shareware/as-is programs and SAS vs Matlab results not identical; no code/data adopted: physical PDF p2-p2; Author2002 printed2: VECM/innovation covariance context and estimation differences: physical PDF p3-p3; Author2002 printed3: cumulative impulse response/common-row context; Eq6 subscript conflict preserved, not used as algorithm: physical PDF p4-p4; Author2002 printed4: Eq10 diagonal share and explicit all-permutation Cholesky range: physical PDF p5-p5",
+      "revision": "Price Discovery Analysis in SAS Version1.0,January10,2002 preliminary draft; separate publication not1995 source revision",
+      "sha256": "023630b3a3845c3efeb05edd90e3668e8cb5fa2ad22b2a9e8206b9efa0127a45",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://pages.stern.nyu.edu/~jhasbrou/Research/Working%20Papers/CointDocumentation01.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Joel Hasbrouck,One Security,Many Markets:Determining the Contributions to Price Discovery,Journal of Finance50(4),1175–1199,September1995,DOI10.1111/j.1540-6261.1995.tb04054.x,JSTOR2329348. Separate author2002 preliminary documentation used only for explicit all-permutation context.",
+      "id": "harvest-source-573f527b142c2a6f96505d07",
+      "license": "NOASSERTION",
+      "locator": "Author page identifies price-discovery documentation separately from original1995 paper:L19-L21; Author, Version1.0 and exact observed PDF href; program/data archive not downloaded:L97-L104",
+      "revision": "Original author working-paper index HTTP snapshot 2026-10-05T08:02:39.902586+00:00",
+      "sha256": "4c515d39de50c4b53ad67dbb1451d56c06c133a44df4b266fcaec49ffdf54241",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://pages.stern.nyu.edu/~jhasbrou/Research/WorkingPaperIndex.htm",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Joel Hasbrouck,One Security,Many Markets:Determining the Contributions to Price Discovery,Journal of Finance50(4),1175–1199,September1995,DOI10.1111/j.1540-6261.1995.tb04054.x,JSTOR2329348. Separate author2002 preliminary documentation used only for explicit all-permutation context.",
+      "id": "harvest-source-6d9332d71a6e513102c67429",
+      "license": "NO_ARTICLE_LICENSE_INFERRED",
+      "locator": "Original DOI identifier:JSON pointer /message/DOI; Same original title:JSON pointer /message/title; Author:JSON pointer /message/author; September1995 print publication:JSON pointer /message/published-print; April30,2012 online publication metadata, not an alternative formula version:JSON pointer /message/published-online; 1175–1199:JSON pointer /message/page; Points to publisher terms, not an open CC license:JSON pointer /message/license",
+      "revision": "Crossref DOI metadata HTTP snapshot 2026-10-05T08:06:44.484390+00:00",
+      "sha256": "a32f5db3890fa297dd12db9a8693539c1de7c4060f07ed73c950bc0b977c4c21",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://api.crossref.org/works/10.1111/j.1540-6261.1995.tb04054.x",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

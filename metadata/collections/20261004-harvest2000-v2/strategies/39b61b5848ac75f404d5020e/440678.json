@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "长期方向内的前棒过度波动后回穿可能产生短期修复；目前只有规则，没有收益证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "触发计时与成交持有期不同。",
+    "旧入口挂单未明确撤销。"
+  ],
+  "name": "前棒破低后的回穿止损入场与触发计时双向",
+  "native_source_id": "440678",
+  "one_line": "前棒收盘破更早低点且长期价差向上时，在前棒高点上方挂多头突破单；空头镜像，并从最近触发信号计时退出。",
+  "record_id": "440678",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E7%AA%81%E7%A0%B4%E6%8B%89%E5%9B%9E%E4%B8%AD%E7%9A%84%E9%9A%90%E5%BD%A2%E9%A3%8E%E6%9A%B4Breakback-Storm-Strategy-in-Hidden-Opportunities.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-440678-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "18ebcdf3c605bf788aa4fd5fe488a4c9ea4c5646556add4b5fb8b7a2751458a5",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E7%AA%81%E7%A0%B4%E6%8B%89%E5%9B%9E%E4%B8%AD%E7%9A%84%E9%9A%90%E5%BD%A2%E9%A3%8E%E6%9A%B4Breakback-Storm-Strategy-in-Hidden-Opportunities.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-440678-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-440678-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未显式给出佣金、滑点、点差或持仓费用，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-440678-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多触发时在最新触发所对应high[1]+0.001挂Long stop入口；空触发时在最新low[1]−0.001挂Short stop入口。0.001是原始价格差，未按mintick换算。触发后挂单未见超时撤销，也可能在反向仓位期间提交。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-440678-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v3；仅信号价格使用滞后bar，判断当前可见仓位后先入口、止损、计时close，再处理空头。未显式逐tick/成交后重算/收盘成交，不能把图表上穿当已核成交。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-440678-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多仓检测成立时挂最新longEntry对应low[1]止损，空仓检测成立时挂对应high[1]止损。另barssince(longEntry)>=39平Long，barssince(shortEntry)>=39平Short，计时来自最近触发而非成交；晚成交会缩短真实持有时间，未成交单也不因close自动被确认撤销。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-440678-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "strategy.fixed，每次1单位，initial_capital=10000；没有额外qty或风险缩放。方向相反的stop入口可能涉及反转，成交与订单容量未核。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-440678-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "无止盈；名为40天的上限实际基于触发bar且存在挂单等待。0.001偏移跨市场意义不一，保护止损在检测到持仓后才提交，挂单有效期与趋势过滤失效后的撤销未给。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-440678-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多：close[1]<low[2]且close[1]>close[80]；空：close[1]>high[2]且close[1]<close[80]。longEntry还要求当前不是多仓，shortEntry要求不是空仓，不要求两者都是空仓。MaxDaysToHold默认40经减1得到39，实际按图表bar计。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-440678-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-440678-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

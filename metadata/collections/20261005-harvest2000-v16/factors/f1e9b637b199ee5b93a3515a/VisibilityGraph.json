@@ -1,0 +1,232 @@
+{
+  "economic_basis": {
+    "hypothesis": "把一个完整序列窗口的观测当作节点，只有两端之间未被中间值遮挡才连边；保留自然和水平两种同族规则，以及过去/未来邻居数和局部三角闭合程度。它是序列形态构造，不自动成为市场因果或收益信号。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-39d014f7d7c9c31703da23d5",
+        "harvest-source-588a5f95c1d5d9eb54936395",
+        "harvest-source-3d25755236eff050c8bdcf7e",
+        "harvest-source-e8f3b289bdd89fd6176b4362",
+        "harvest-source-9dbbe80d0997786d9bc76176",
+        "harvest-source-ecb84cd45ea7cd41ad1e7ce1",
+        "harvest-source-d853942d329c4ce689ab4ca5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口内的标量观测或外部定义事件及其时刻均已到达和可用后计算。可视图未来节点/局部事件的下一事件间隔包含窗内未来，严禁回填到内部事件当时的信息集。具体金融输入、供应商、发布时间与PIT缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-39d014f7d7c9c31703da23d5",
+        "harvest-source-588a5f95c1d5d9eb54936395",
+        "harvest-source-3d25755236eff050c8bdcf7e",
+        "harvest-source-e8f3b289bdd89fd6176b4362",
+        "harvest-source-9dbbe80d0997786d9bc76176",
+        "harvest-source-ecb84cd45ea7cd41ad1e7ce1",
+        "harvest-source-d853942d329c4ce689ab4ca5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "审VisibilityGraph(time_series,timings,missing_values=False,horizontal=False或True)及邻接、过去/未来degree与local_clustering输出。输入限float32/float64的一维NumPy数组，3<=N<=32766；显式timings同形同长度且转换float32后仍严格递增，或None生成0..N−1；转换及差值/比值均有限。这些是额外研究合同，非源入口全面验证。 to_cy调用astype(dtype=FIELD,copy=True,order=c,casting=same_kind)，FIELD明确np.float32。不能把文中的实数可视不等式当作原float64输入上的逐字输出；存储与比较都受转换舍入影响。源码Cython的test变量也是FIELD_t。 natural路径先建全零int8矩阵。对所有非相邻i,j从k=i+1开始检查严格斜率不等式，首个失败便不连接；通过全部中间点后对称置1。最后对所有相邻观测强制连边，因此有限有效无缺失合同下图至少包含时间链。 horizontal同样检查全部中间点是否严格低于两端较小值，最后补相邻边。相等中间高度会遮挡，不是<=；自然中间共线同样不连远端边。水平分支只使用时间顺序，不用时间差。 InteractingNetworks以directed=False交Network；后者保存稀疏邻接并以非零坐标初始化igraph、简化图、默认单位节点权。本文只审源内存储和明确A/degree/clustering算式；外部NumPy/SciPy/igraph/Cython构建运行版本未冻结，不把缓存或图构造运行当已验证。 retarded_degree逐行加A[i,:i]；advanced_degree加A[i,i:]，因A_ii=0等于严格未来节点数。两个局部聚类方法逐一计同侧邻居无序对中的三角形，再除degree*(degree−1)/2；分母0保持初始化的0。 不调用closeness/betweenness或边界修正degree等其余分析方法；这些输出和其它图统计未来需独审，也不因为换了同一可视图输入就把既有通用图指标另计新增。保持实例内部time_series/timings/adjacency不变，避免修改后缓存/邻接不一致；外部输入最初被复制不等于实例可任意修改。 边界：自然图不等式是严格<，线性共线序列仅留下相邻链；水平相等高点也遮挡。是否接近相等受float32精度影响，未执行数值重现。 N=0或1会触及父类密度分母N*(N−1)，Cython也未全面做长度/时间一致性检查；本合同N>=3及上界32766为保守研究域，并非来源适用范围定理。 timings=None等间距索引不等于真实市场等时间间隔；停牌/缺bar/不规则观测如何解释缺失，研究需另定。缺数据不可静默删除后冒称相同原时间图。 过去/未来是窗口内索引方向。未来degree与future clustering使用该节点之后的观测，完整窗口结果只能在窗口结束且数据发布后可得；不能回填到每个历史节点的实时信息集。 邻接/degree/局部聚类不是对称或不对称性显著检验，也没有收益方向、阈值订单、仓位或因果识别；使用场景仍是研究假说。 原父类使用外部igraph存图、SciPy稀疏矩阵和LRU缓存；本文静态核其调用与A算法，不声称依赖安装环境或所有继承图方法已闭合。 输出：一个完整构造族；自然/水平或双方向、节点坐标、窗口/参数与语言实现均不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-39d014f7d7c9c31703da23d5",
+        "harvest-source-588a5f95c1d5d9eb54936395",
+        "harvest-source-3d25755236eff050c8bdcf7e",
+        "harvest-source-e8f3b289bdd89fd6176b4362",
+        "harvest-source-9dbbe80d0997786d9bc76176",
+        "harvest-source-ecb84cd45ea7cd41ad1e7ce1",
+        "harvest-source-d853942d329c4ce689ab4ca5"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把一个完整序列窗口的观测当作节点，只有两端之间未被中间值遮挡才连边；保留自然和水平两种同族规则，以及过去/未来邻居数和局部三角闭合程度。它是序列形态构造，不自动成为市场因果或收益信号。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-39d014f7d7c9c31703da23d5",
+        "harvest-source-588a5f95c1d5d9eb54936395",
+        "harvest-source-3d25755236eff050c8bdcf7e",
+        "harvest-source-e8f3b289bdd89fd6176b4362",
+        "harvest-source-9dbbe80d0997786d9bc76176",
+        "harvest-source-ecb84cd45ea7cd41ad1e7ce1",
+        "harvest-source-d853942d329c4ce689ab4ca5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先按原to_cy把一维x和可选时间t复制为float32；缺省t_i=i。以下x,t均指转换后的值。对i<j，邻接矩阵A对称、对角0，相邻j=i+1总连边。自然默认：j>i+1时A_ij=1当且仅当每个i<k<j满足(x_k−x_i)/(t_k−t_i)<(x_j−x_i)/(t_j−t_i)；水平分支改为全部x_k<min(x_i,x_j)，不使用t的数值。令P_i={j<i:A_ij=1}，F_i={j>i:A_ij=1}，k_i^−=|P_i|、k_i^+=|F_i|。C_i^−为P_i内相连无序节点对数/choose(k_i^−,2)，k_i^−<2时0；C_i^+同理用F_i。原生对象含无向A，各方法返回整组节点向量；NVG/HVG、时间方向及节点/窗口/输出摘要合并为一个构造族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-39d014f7d7c9c31703da23d5",
+        "harvest-source-588a5f95c1d5d9eb54936395",
+        "harvest-source-3d25755236eff050c8bdcf7e",
+        "harvest-source-e8f3b289bdd89fd6176b4362",
+        "harvest-source-9dbbe80d0997786d9bc76176",
+        "harvest-source-ecb84cd45ea7cd41ad1e7ce1",
+        "harvest-source-d853942d329c4ce689ab4ca5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "time_series（1D NumPy ndarray dtype float32 or float64, 3<=N<=32766, finite after float32 cast and finite intermediate slopes）：完整窗口的一维标量观测；可以是研究者定义的价格或变换值，但目前具体金融字段、复权及数据供应商MISSING。不是预生成图。；timings（None or matching1D float32/float64 ndarray; strictly increasing and differences positive after float32 conversion）：观测时间顺序和自然可视斜率坐标；须同一单位。大epoch数值可能转float32后重复，外部换原点/缩放必须显式记录，源码不会自动校正。。参数：timings：None按等间隔索引；显式时间允许不等间隔但不能重复/倒序或转换后塌缩；范围None or finite float32/float64 ndarray shape(N,), strictly increasing after float32 conversion；源码默认None；missing_values：自然缺失分支未审；水平函数明确没有缺失选项，不推断自动分段；范围reviewed False, all finite；源码默认False；horizontal：自然斜率遮挡与水平高度遮挡保留为同一原生类变体；范围reviewed False and True, one family；源码默认False；silence_level：打印级别不改变所审公式；范围logging only；源码默认0"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-39d014f7d7c9c31703da23d5",
+        "harvest-source-588a5f95c1d5d9eb54936395",
+        "harvest-source-3d25755236eff050c8bdcf7e",
+        "harvest-source-e8f3b289bdd89fd6176b4362",
+        "harvest-source-9dbbe80d0997786d9bc76176",
+        "harvest-source-ecb84cd45ea7cd41ad1e7ce1",
+        "harvest-source-d853942d329c4ce689ab4ca5"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "pik-copan/pyunicorn",
+  "lab": null,
+  "missing_information": [
+    "金融标量/事件生成规则、市场数据供应商、时间单位和PIT输入发布/修订均MISSING",
+    "NumPy/SciPy/igraph/Cython实际执行环境未冻结；未执行上游、未数值验证",
+    "原始算法论文全文及其权利未由代码BSD自动取得；经济用途RESEARCH_ASSUMPTION",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "按中间观测遮挡关系构造的时间序列可视图",
+  "native_source_id": "VisibilityGraph",
+  "one_line": "把一个完整序列窗口的观测当作节点，只有两端之间未被中间值遮挡才连边；保留自然和水平两种同族规则，以及过去/未来邻居数和局部三角闭合程度。它是序列形态构造，不自动成为市场因果或收益信号。",
+  "record_id": "VisibilityGraph",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-e0277d411ceacbb16abcd0bc",
+      "license": "BSD-3-Clause",
+      "locator": "full BSD3 notice conditions and disclaimer:L1-L31",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "d28c8c473c386e2cae45d19cec1af874dac3f414cc42c8897df1827056fdd0ff",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-95a040e9059ef366c72746a3",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer scope differentiating time series graph and event constructors:L20-L39",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "901a43d6d51dcec559faa7ba7637c5a1a20e1075113c25c67270dd17cf152202",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-39d014f7d7c9c31703da23d5",
+      "license": "BSD-3-Clause",
+      "locator": "copyright imports Lacasa attribution and complete input conversion constructor:L1-L101; natural and horizontal no-missing public graph builders:L115-L153; complete past future degree and clustering wrappers:L177-L239",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "51880b1d9cfaae1da77fe9dc7a15021a3530d0498745445c628c8e24c02b4e6b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/src/pyunicorn/timeseries/visibility_graph.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-588a5f95c1d5d9eb54936395",
+      "license": "BSD-3-Clause",
+      "locator": "copyright Cython imports and types:L1-L27; complete visibility and local triangle kernels:L827-L922",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "c093cd231b65654e8bef28659437ec953c74194f15e206c052ce9d066ca60881",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/src/pyunicorn/timeseries/_ext/numerics.pyx",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-3d25755236eff050c8bdcf7e",
+      "license": "BSD-3-Clause",
+      "locator": "exact float32 FIELD int8 adjacency and copy conversion:L1-L38",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "d83fd12c7103d1e64c9bbf4e6c5045e5b9c3d6be0646c0f6b9ad9a711412f091",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/src/pyunicorn/core/_ext/types.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-e8f3b289bdd89fd6176b4362",
+      "license": "BSD-3-Clause",
+      "locator": "Cython dtype declarations:L1-L37",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "23f6248a7cbd266c761e3b5182f94ff64506f195837f17f7409ab5eba890c3bb",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/src/pyunicorn/core/_ext/types.pxd",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-9dbbe80d0997786d9bc76176",
+      "license": "BSD-3-Clause",
+      "locator": "parent constructor delegates to Network:L1-L70",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "dd5cb6116e63fa2677a71d242d9fec175b15f474db1b8c07b541eedcb21871a0",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/src/pyunicorn/core/interacting_networks.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-ecb84cd45ea7cd41ad1e7ce1",
+      "license": "BSD-3-Clause",
+      "locator": "imports and sparse nonzero coordinate helper:L20-L57; parent initialization and cache state:L140-L218; adjacency getter setter and undirected graph storage:L364-L424; default unit node weights:L458-L493; undirected degree dispatch:L1300-L1318; unweighted outdegree from adjacency sums:L1341-L1360",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "65934814029b4c9fd6dacff888579089d12f22eb831692266112911d773e2803",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/src/pyunicorn/core/network.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Jonathan F. Donges/Potsdam-Institute for Climate Impact Research及pyunicorn authors的维护者实现；源码分别归引Lacasa2008和Quiroga2002/Odenweller2020。保留源码头部贡献者归属，不称已复核原论文全文或其历史版本。",
+      "id": "harvest-source-d853942d329c4ce689ab4ca5",
+      "license": "BSD-3-Clause",
+      "locator": "copyright cache imports:L1-L44; weak reference cache holder:L88-L100; state hash and wrapped attributes:L141-L169; complete method-cache wrapper used by native degree:L171-L265",
+      "revision": "cd2e7e43ec3fe3b8d820ecdd9194732da2f15746",
+      "sha256": "4818a411889d3546f896dbe480a8da24d5c6a217dc74fd41898ab41df84d5288",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/pik-copan/pyunicorn/blob/cd2e7e43ec3fe3b8d820ecdd9194732da2f15746/src/pyunicorn/core/cache.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

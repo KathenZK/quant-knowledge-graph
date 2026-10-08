@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "相对RSI自身平滑水平的暂时偏弱可能产生回归；ATR分层是否改善库存风险没有研究证据。",
+    "missing": [
+      "没有经过核实的论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像一一对应尚未核实。",
+    "依赖Pine内建函数和运行时；未编译、执行、下载行情或回测。",
+    "基线近邻已按正文比较，但全库机制去重仍待独立复核。",
+    "实际标的、频率、合约单位、成交模型与完整成本未冻结。",
+    "标题含4h但源码未强制4小时，转载回测头为1d，不能据标题或包装冻结频率。",
+    "isShort与空头图形不代表有空头订单。",
+    "未执行Pine运行时，exit限价的保留和成交仍待验证。"
+  ],
+  "name": "RSI相对均线下偏与ATR累进加仓多头",
+  "native_source_id": "433951",
+  "one_line": "RSI低于自身均线一定比例时做多，后续加仓要求价格较平均成本再下降与已有层数相关的ATR距离，RSI回升时挂限价退出。",
+  "record_id": "433951",
+  "relations": [],
+  "rights": {
+    "derived_results": "没有回测结果；未宣称上游源码、论文、数据或商业内部研究使用已获授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8ERSI%E5%9D%87%E7%BA%BF%E7%9A%84%E4%BD%8E%E4%B9%B0%E9%AB%98%E5%8D%96%E7%9F%AD%E7%BA%BF%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5RSI-Mean-Reversion-Quantitative-Trading-Strategy-Based-on-RSI-Average-Crossing.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 I11L；原始发布版本与转载授权未核，上传者不等同实现作者。",
+      "id": "fmz-433951-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "a8db32df8799f47efce98d4a4be4a8a6232cc51b6f5871b0aebc7ebf35f62937",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8ERSI%E5%9D%87%E7%BA%BF%E7%9A%84%E4%BD%8E%E4%B9%B0%E9%AB%98%E5%8D%96%E7%9F%AD%E7%BA%BF%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5RSI-Mean-Reversion-Quantitative-Trading-Strategy-Based-on-RSI-Average-Crossing.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-433951-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一当前图表标的；策略主体没有固定证券代码。FMZ回测头的BTC_USDT是转载包装，未证明原作者只适用于该标的。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-433951-published-code"
+      ],
+      "status": "MISSING",
+      "text": "源码未声明佣金、滑点、点差、融资或资金费率，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-433951-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "偏低条件和仓位条件同时成立，每次调用同名Buy多头入口；没有要求RSI首次穿越。首层仅需n==0，追加层须当前close低于均价减S×现有交易层数；默认上限由pyramiding=3约束。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-433951-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5，process_orders_on_close=false、calc_on_every_tick=false；按当前bar的RSI/ATR及上次可见持仓状态判断，先入口再条件限价退出。没有执行源码，成交、保护单生效时点及实时/历史一致性未核。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-433951-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "r>m且r>50时调用strategy.exit(\"Close\",limit=close)，未限制from_entry。该调用提交以当前收盘为限价的退出单，不是无条件按当前收盘成交，也不是strategy.close市价清仓。未见当退出条件后来消失时显式撤销挂单。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-433951-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "strategy.cash每次名义金额10000，initial_capital=10000，pyramiding=3；入口未单独覆盖qty。重复买入受引擎订单与资金约束，最多三层不等于已证明可成交300%权益，实际杠杆/保证金未指定。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-433951-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "没有硬价格止损或持有超时；亏损区按ATR和已有层数继续加仓。ATR条件改变加仓间隔，不是止损；限价退出可能等待或未成交。库存容量与穿仓风险未验。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-433951-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "r=ta.rsi(close,40)，m=ta.sma(r,10)，偏低条件r<0.95m。S=最近3根ta.atr(20)之和，n=strategy.opentrades；仓位条件为n==0或持仓均价−S×n>close。退出条件r>m且r>50；useAbsoluteRSIBarrier默认true，关闭后只保留r>m。isShort虽被计算，实际空头入口已经注释。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-433951-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口以图表bar计，策略未强制单一运行周期；标题与FMZ回测配置没有原作者适用性证明，原始频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-433951-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未见跨资产筛选或动态池逻辑；计算和交易对象是当前图表。具体市场、交易日历、价格调整、合约乘数与可交易约束尚未冻结。"
+    }
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "economic_basis": {
+    "hypothesis": "对有限收益样本求指数损失矩所给尾部风险上界的最小值，并返回对应尺度参数；不把它当作已校准的未来损失概率。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先检查solver是否为CLARABEL/MOSEK/COPT/SCS/ECOS之一，指定值置候选队列最前；这在尝试SciPy之前发生，所以即使SLSQP可能成功，非法solver仍立即报错。 检查输入形状和有限性后调用warnings.filterwarnings(\"ignore\")，未在函数结束恢复过滤状态。调用scipy.optimize.minimize(_Entropic_RM,[1],args=(a,alpha),method=SLSQP,bounds=[1e−24,Inf],tol=1e−12)。 SLSQP result.success为True时用其z重新算ERM；为False才value=None。没有在这条成功路径重新检查ERM值有限性，也没有log-sum-exp稳定变换；公式明确但不能保证数值不溢出。 只有value为None才建立CVXPY指数锥。目标乘1000用于数值求解，最终返回risk.value而非乘1000的objective；z=0的闭锥边界允许损失上界极限解，不是把ERM直接在0处相除。 按队列逐个调用求解器，捕获cp.SolverError；非None且有限的risk.value使循环停止。循环结束只检查None，最后一个非None但非有限值仍可能返回；没有单独要求prob.status=optimal或检查残差。 CVXPY补充源码固定当前commit，说明ExpCone数学合同；requirements只给cvxpy>=1.7.2、scipy>=1.13.1等下界，不是原函数实际安装版本/求解器精度的冻结证明。 边界：源码docstring写M_X但实际exp输入是−收益/z；以源码损失符号为准，不反号。所有收益为正时输出可以为负，源码不裁到0。 参数α<=0或>=1未统一防护，极小z可能指数溢出；本条只承诺定义与分支，未安装/执行优化器，NOT_EXECUTED不是收敛证据。 SLSQP对z的近似最小值与锥求解可能在容差/边界上不同；所列inf是数学目标，不声称实际浮点返回必等于精确inf。 不另计ERM固定z、EVRG上下尾、EDaR换回撤输入或不同求解器；既有CVaR/ES构造不因此重复登记。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对有限收益样本求指数损失矩所给尾部风险上界的最小值，并返回对应尺度参数；不把它当作已校准的未来损失概率。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "给T个收益x_i，损失为−x_i。ERM(z)=z[ln((1/T)Σ_i exp(−x_i/z))+ln(1/α)]；EVaR=inf_(z>0) ERM(z)。固定实现先从z=1用SLSQP在z>=1e−24求最小值；失败时求指数锥形式 min_(t,z,u) t+z ln[1/(αT)]，约束z>=0、Σu_i<=z、(−x_i−t,z,u_i)∈K_exp。K_exp={(a,b,c):b>0,b exp(a/b)<=c}∪{a<=0,b=0,c>=0}。返回(risk,z)，两个输出与固定z的ERM辅助函数都不拆新增。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X（nonempty finite real return series, 1D or Tx1/1xT array-like; recommended T>=2）：同一采样频率的完整收益窗口；函数把1xT转为Tx1，拒绝多行多列及NaN/Inf。价格到收益、simple/log口径、成本与时间发布规则均不由本函数生成。。参数：alpha：收益分布低尾概率；范围research 0<alpha<1; source lacks explicit domain guard；源码默认0.05；solver：仅SLSQP失败后的锥求解优先顺序；范围CLARABEL/MOSEK/COPT/SCS/ECOS；源码默认CLARABEL；SLSQP_initial_z：优化初始点；范围fixed implementation；源码默认1；SLSQP_lower_z：数值下界；范围fixed implementation；源码默认1e-24；SLSQP_tol：请求求解容差，非已验证误差界；范围fixed implementation；源码默认1e-12"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "dcajasn/Riskfolio-Lib",
+  "lab": null,
+  "missing_information": [
+    "收益输入变量、采样频率、供应商、时区/PIT及修订政策未固定",
+    "实际依赖/求解器版本与数值输出尚未执行冻结",
+    "无收益方向或样本外经济有效性证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "指数矩上界的最小熵尾部风险",
+  "native_source_id": "EVaR_Hist",
+  "one_line": "对有限收益样本求指数损失矩所给尾部风险上界的最小值，并返回对应尺度参数；不把它当作已校准的未来损失概率。",
+  "record_id": "EVaR_Hist",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/riskfolio/src/RiskFunctions.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-33a1babff54280c7a77dbbc0",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer license and numerical imports:L1-L17; ERM formula, shape checks, SLSQP first and exponential-cone fallback:L512-L677",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "2156737cc64527f439b172f0a448b6aa48fbfd1f0b1710b02454dff722ceb7c7",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/riskfolio/src/RiskFunctions.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-d716f1091c2d4ef07fac883d",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 full license:L1-L27",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "7f7a68d261604e432e818993f92b74b636c632e31f207730dd189267044aa5e6",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-4f72c990401395c3f1dc6c92",
+      "license": "BSD-3-Clause",
+      "locator": "lower bounds only, not an exact numerical environment:L1-L15",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "999b816f857730883e03b6455426e4a635e36822d1b3bc2e04aa2b6b29fe4955",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/requirements.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-62293b58121f24792ab9c2bb",
+      "license": "BSD-3-Clause",
+      "locator": "Ahmadi Javid EVaR original reference attribution:L529-L537; Cajas entropic convex formulation attribution:L550-L558",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "68b06232402ae268774ae715806c79271fa691c476b657d352123f838197d734",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/docs/source/riskfoliolib/biblio.bib",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-eb59267b7e0c65715cd9adc4",
+      "license": "Apache-2.0",
+      "locator": "Apache2 and exact closed exponential cone semantics:L1-L73",
+      "revision": "5a53ac6d5becbb63af3a6fce32a91fee6c63dbb6",
+      "sha256": "90e3c6dc04ac73293391338769b0b65994f50e8e9458776fb3c64fd694670e98",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/cvxpy/cvxpy/blob/5a53ac6d5becbb63af3a6fce32a91fee6c63dbb6/cvxpy/constraints/exponential.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-965ce59a3a082ffc40ea5b10",
+      "license": "Apache-2.0",
+      "locator": "Apache2 license:L1-L201",
+      "revision": "5a53ac6d5becbb63af3a6fce32a91fee6c63dbb6",
+      "sha256": "94d81cb282da837f4ace0df08b52fd1c72e07da9efb52e5aa6d556a5cea5286f",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/cvxpy/cvxpy/blob/5a53ac6d5becbb63af3a6fce32a91fee6c63dbb6/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

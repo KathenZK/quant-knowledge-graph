@@ -1,0 +1,205 @@
+{
+  "economic_basis": {
+    "hypothesis": "比较给定图中节点所处的结构角色，不把相似度认作经济相关、信息传播或收益预测。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-95b690796fd6ce99571d4341",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只有全部图节点、关系与weight已经观测并发布后可计算；未来关系不得回填过去。供应商、窗口/金融构图和PIT未固定。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-95b690796fd6ce99571d4341",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定原节点迭代顺序list(G)。to_numpy_array默认使用weight属性、缺失按1、非边0；无向边镜像，有向A_ij表示i指向j。默认dense数组与newsim均为普通float64。 逐列求和归一：对有向图，列j给j全部前驱的权重份额；零列的除数改1，仅为防止0/0，不把它改成均匀列。 S初始化单位矩阵，每轮先复制完整旧S，再算C*(P.T@旧S@P)，最后只将对角覆盖为1。等价对每个不同节点i,j按P_ai P_bj权重平均旧S_ab；不会原地逐节点更新。 使用本条参数C=.9/max_iterations=1000/tolerance=1e-4，参数值均来自公共原生默认且显式选定。np.allclose使用新值作相对容差参考；所有元素满足才break。 循环后原生的终轮检查优先，最后一轮的收敛也会抛异常；没有相似度裁零/裁1或失败后回退。 source=None,target=None原生公共包装将整个二维数组按相同节点顺序转换成字典套字典；标量/单行选择只是同族不同输出，不另计，本条未审其所有参数错误分支。 有限数学域的相似度描述节点被结构相近的前驱引用的程度；把节点绑定资产关系后可作为研究描述，但没有已验证的金融收益方向或交易规则。 边界：原论文式伪码与同文件教学Python函数按邻居集合等权；本条实际公共入口调用NumPy helper并使用weight属性。教学路径忽略weight且容差=tol*(1+|旧值|)，与本合同不同，未当替代执行。 比较np.allclose(prev,new,atol=1e-4)含默认rtol=1e-5及以new为参考。NumPy2.2.2固定文件只补充该数学语义，不冒充NetworkX历史安装依赖或运行环境。 最后its+1==max_iterations无条件抛错，所以默认第1000轮即便首次满足容差仍抛ExceededMaxIterations；仅在前999轮满足时返回。不把返回结果说成精确不动点。 输入正有限权、列和有限可表示、简单无自环、N>=1及调用中图不改变是额外研究合同；源没有替用户全做这些检查。零/负/非有限权、多重图、backend重写、空图和其他选择器不在已审域。 入权和为0的列以1作除数，原全零列仍全零；该节点与其他点相似度0、自己恒1。非空无边图在第一轮返回单位矩阵。不添加PageRank悬空质量/重启。 即使原图有向，精确算术的S迭代仍对称；它不是有方向的相似评分。源码不为浮点误差主动对称化或裁剪。 图节点/边/权重的金融含义、阈值、窗口、供应商、PIT和真实发布时间仍MISSING；矩阵资源规模与收敛时间未实测。 共享线性代数、成对随机游走和图核表示；不声称数学/经济独立。将同一方程向量化到乘积图的线性系统或其他求解器不再计新族。 输出：原生dict[node][node]为全节点对的最后新S；对角/行/节点对/方向和参数变化保守一族，不拆计数。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-95b690796fd6ce99571d4341",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "比较给定图中节点所处的结构角色，不把相似度认作经济相关、信息传播或收益预测。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-95b690796fd6ce99571d4341",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定有限简单Graph/DiGraph、无自环、N>=1；A_ij=w_ij当有i→j边，否则0，缺weight属性按1（无向图镜像），所有存在边权严格正且有限。c_j=Σ_i A_ij，q_j=c_j若c_j>0、否则1，P_ij=A_ij/q_j。S^(0)=I_N；每轮T=C Pᵀ S^(t) P，S^(t+1)_ii=1、S^(t+1)_ij=T_ij(i≠j)，C=.9。原生np.allclose(Sold,Snew,atol=1e-4)；在补核NumPy2.2.2有限float64语义下全元素|Sold−Snew|<=1e-4+1e-5|Snew|时break。默认最多1000轮但its+1==1000无条件抛错，成功返回前999轮内停下的新矩阵映射；全部节点对作为一个族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-95b690796fd6ce99571d4341",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in networkx.Graph or DiGraph, simple loop-free, N>=1; edge weight absent or finite strictly positive; finite representable column sums; graph fixed through call; native backend）：完整节点/边及weight属性；本合同额外排除其他图类、无效权值和并发修改，金融构图/时点缺失。。参数：source：审全节点对输出；范围selected None；源码默认None；target：审全节点对输出；范围selected None；源码默认None；importance_factor：每次前驱相似传播衰减；不按其它数值拆族；范围selected original default .9；源码默认0.9；max_iterations：终轮抛错逻辑保留；范围selected1000；源码默认1000；tolerance：传给allclose的绝对容差，不覆盖其默认相对容差；范围selected1e-4；源码默认0.0001"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-95b690796fd6ce99571d4341",
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+        "harvest-source-11d15da2a54528d863a1305b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/边/weight定义、阈值、数据供应商和PIT MISSING",
+    "实际依赖环境、BLAS、资源规模/容差误差与数值运行未冻结",
+    "无收益、回测、交易成本、经济独立性或商用批准"
+  ],
+  "name": "由前驱节点对递推的 SimRank 结构相似度",
+  "native_source_id": "simrank_similarity",
+  "one_line": "在给定关系图上反复汇总前驱节点对的相似度，并固定每个节点与自身的相似度为1，得到全节点对结构相似矩阵。",
+  "record_id": "simrank_similarity",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/similarity.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers implementation; source attributes G. Jeh and J. Widom, SimRank: a measure of structural-context similarity, KDD2002. Supplemental allclose semantics: NumPy Developers. Original paper itself not collected or licensed by these code notices.",
+      "id": "harvest-source-95b690796fd6ce99571d4341",
+      "license": "BSD-3-Clause",
+      "locator": "native public function, defaults, original authors and all-pairs mapping:L1198-L1339; educational Python sibling differs in weights/tolerance; not selected:L1342-L1399; selected NumPy helper: column normalization, recurrence, stopping and exception:L1402-L1508",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "13c3fcbd6a8247eaf6485552a96f58f816f823847b07351cfe3ce1882631eed5",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/similarity.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers implementation; source attributes G. Jeh and J. Widom, SimRank: a measure of structural-context similarity, KDD2002. Supplemental allclose semantics: NumPy Developers. Original paper itself not collected or licensed by these code notices.",
+      "id": "harvest-source-ee984db19528f53267982e96",
+      "license": "BSD-3-Clause",
+      "locator": "native float array/default weight and directed adjacency meaning:L893-L970; all-node finite simple Graph/DiGraph adjacency path:L1052-L1128",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "704777808d7ebe0dcc09412066d25a1564e5ac4a83f8ecac3c78ccea0b82570e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/convert_matrix.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers implementation; source attributes G. Jeh and J. Widom, SimRank: a measure of structural-context similarity, KDD2002. Supplemental allclose semantics: NumPy Developers. Original paper itself not collected or licensed by these code notices.",
+      "id": "harvest-source-9bc7c4ec626786f0185a037d",
+      "license": "BSD-3-Clause",
+      "locator": "node iteration and count:L454-L506; edge view:L1386-L1441; degree property for zero-edge early return:L1509-L1545; graph type flags:L1583-L1589; edge count via unweighted degrees:L1917-L2010",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6708c0bdc9aa744e0c70d57c4b75ea517cfe6a183d589c737baca4333c241734",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/graph.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers implementation; source attributes G. Jeh and J. Widom, SimRank: a measure of structural-context similarity, KDD2002. Supplemental allclose semantics: NumPy Developers. Original paper itself not collected or licensed by these code notices.",
+      "id": "harvest-source-a1d2954aa21ab69c1ac1d3f7",
+      "license": "BSD-3-Clause",
+      "locator": "DiGraph inherits Graph iteration/count:L87-L89; directed edge view uses outgoing edges:L968-L1029; directed degree sum for edge count:L1078-L1120; directed simple flags:L1256-L1262",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "212a06e63ba05bfbf2ce48f038acd4cf1057ed26ce49342b3e586427892e58a2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/digraph.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers implementation; source attributes G. Jeh and J. Widom, SimRank: a measure of structural-context similarity, KDD2002. Supplemental allclose semantics: NumPy Developers. Original paper itself not collected or licensed by these code notices.",
+      "id": "harvest-source-11d15da2a54528d863a1305b",
+      "license": "BSD-3-Clause",
+      "locator": "native all-node degree initialization, call and iteration:L534-L657; undirected degree inheritance and iteration:L669-L735; all out-edge attribute values/defaults:L937-L991; one occurrence per undirected edge:L1010-L1051; out-edge view selects successors and calls data view:L1232-L1309; EdgeView extends OutEdgeView:L1399-L1402; undirected data view selection:L1470-L1485",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "60d216370be05f02407138ddec4e23e26073a8e2085144261254f24a393835df",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/reportviews.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers implementation; source attributes G. Jeh and J. Widom, SimRank: a measure of structural-context similarity, KDD2002. Supplemental allclose semantics: NumPy Developers. Original paper itself not collected or licensed by these code notices.",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 copyright and conditions:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers implementation; source attributes G. Jeh and J. Widom, SimRank: a measure of structural-context similarity, KDD2002. Supplemental allclose semantics: NumPy Developers. Original paper itself not collected or licensed by these code notices.",
+      "id": "harvest-source-c3ceec4be9bcca680bef64b7",
+      "license": "BSD-3-Clause",
+      "locator": "allclose explicit default relative tolerance and delegated isclose:L2239-L2330; isclose finite ordinary array comparison, second argument is reference:L2333-L2453",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "bec88470c8a0e101f031ff473f999aa8e845b1b96a19b87c02d138717d3c0fbc",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/numpy/_core/numeric.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers implementation; source attributes G. Jeh and J. Widom, SimRank: a measure of structural-context similarity, KDD2002. Supplemental allclose semantics: NumPy Developers. Original paper itself not collected or licensed by these code notices.",
+      "id": "harvest-source-2ba9c9fa57c4e2708e63a8fd",
+      "license": "BSD-3-Clause",
+      "locator": "NumPy BSD3 notice:L1-L30",
+      "revision": "fd8a68e4978defd094cffa23c71d7de7fb213e3f",
+      "sha256": "01fb016849aa427edb1bbbbd55f91c26ca6cadb32a5b20e7f000655dd05b0760",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/numpy/numpy/blob/fd8a68e4978defd094cffa23c71d7de7fb213e3f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

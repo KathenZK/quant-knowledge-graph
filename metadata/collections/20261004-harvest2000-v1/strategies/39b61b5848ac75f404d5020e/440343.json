@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "量能扩张伴随方向确认可能区分可持续行情；三状态等待是否减噪尚无经济有效性证据。",
+    "missing": [
+      "没有经过核实的论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像一一对应尚未核实。",
+    "依赖Pine内建函数和运行时；未编译、执行、下载行情或回测。",
+    "基线近邻已按正文比较，但全库机制去重仍待独立复核。",
+    "实际标的、频率、合约单位、成交模型与完整成本未冻结。",
+    "变量ShortEntry不是卖空交易。",
+    "rising/falling不是连续逐bar单调条件，依赖Pine标准函数语义。",
+    "退出E不重置信号状态。"
+  ],
+  "name": "成交量相对均量三状态与价格方向多头",
+  "native_source_id": "440343",
+  "one_line": "用短长成交量均值之比、区间新高低检测和价格方向切换三状态，仅多头状态允许持有。",
+  "record_id": "440343",
+  "relations": [],
+  "rights": {
+    "derived_results": "没有回测结果；未宣称上游源码、论文、数据或商业内部研究使用已获授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E6%88%90%E4%BA%A4%E9%87%8F%E9%9C%87%E8%8D%A1%E5%99%A8%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Volume-based-Trend-Following-Trading-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确给出；原始发布版本与转载授权未核，上传者不等同实现作者。",
+      "id": "fmz-440343-published-code",
+      "license": "NOASSERTION; no recognized source license notice; repository has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "1097b8fc339d84f6c43bbf18e13553bd7c0b584d130e76466bae80a8c57d3126",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E6%88%90%E4%BA%A4%E9%87%8F%E9%9C%87%E8%8D%A1%E5%99%A8%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Volume-based-Trend-Following-Trading-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-440343-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一当前图表标的；策略主体没有固定证券代码。FMZ回测头的BTC_USDT是转载包装，未证明原作者只适用于该标的。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-440343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "显式percent佣金0.075；滑点、点差、融资/资金费率缺失，未当成完整实际成本。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-440343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前q==1且close>close[13]时调用BUY多头入口；没有实际空头入口。名为ShortEntry的变量只用于状态转换。状态1持续时可反复调用入口，由运行时决定重复入口处理。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-440343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v4；当前bar的价量先更新指标，再以仅上一状态分支更新q，最后提交entry与close。日期输入和_testPeriod函数存在但未被订单调用。未显式逐tick或收盘成交设置；成交和历史/实时一致性未核。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-440343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "q==0或E成立时strategy.close(BUY)。E平仓不修改q，所以状态仍为1时，后续价格重新高于13根前收盘可再次入场。价格方向转差若尚未满足状态清零或E，本身不直接退出。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-440343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认strategy.percent_of_equity，每次100%权益，账户币种USD；没有显式qty覆盖。未声明动态风险预算或加仓上限，实际重复入口和购买力需运行时核验。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-440343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "没有固定止损、止盈或时间上限。200根成交量总和为0的分母未防护。信号状态与实际持仓可因E退出而不同步，这是原实现行为，不应改写为状态一定等于仓位。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-440343-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "v=sum(volume,34)/(sum(volume,200)/(200/34))，等价于34根均量/200根均量。A=rising(v,21)或crossover(v,1)；L=A且close>close[13]，S=A且close<close[13]；F=falling(v,13)，E=crossover(v,1.2)且close<close[13]。rising/falling保留为Pine v4窗口函数，不将其误写成连续21根上升/13根下降。状态q初值0，上一状态p=nz(q[1])；p=0时L改为1、S改为2；p=1时S或F改为0；p=2时L或F改为0；其他情况延续p，不在同一次计算从1直接跳2。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-440343-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口以图表bar计，策略未强制单一运行周期；标题与FMZ回测配置没有原作者适用性证明，原始频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-440343-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未见跨资产筛选或动态池逻辑；计算和交易对象是当前图表。具体市场、交易日历、价格调整、合约乘数与可交易约束尚未冻结。"
+    }
+  }
+}

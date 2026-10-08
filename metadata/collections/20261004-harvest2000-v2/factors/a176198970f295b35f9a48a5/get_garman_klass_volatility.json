@@ -1,0 +1,123 @@
+{
+  "economic_basis": {
+    "hypothesis": "把日内极值范围与开收盘变动共同用于波动度量。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-22ce9d02698dcaf0a7ff94de",
+        "harvest-source-a0fec134309b6bf81dd6b8d3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅在整个估计窗口/分组结束、所有输入已观测并发布后可得；拟合系数及统计量不得回填为窗口内的实时因子。PIT数据与发表延迟缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-22ce9d02698dcaf0a7ff94de",
+        "harvest-source-a0fec134309b6bf81dd6b8d3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "以正的、同口径且已完成的日OHLC计算每日期间项。 按显式groups，或用已有PeriodIndex.asfreq映射为所选周/月/季/年分组后取均值。 按源码period映射缩放；显式groups也仍使用period选择A。 边界：输出是所选period的尺度，不能把所有period都叫年化波动。 源码无正价/OHLC关系强校验；错误输入可能产生负期间项或NaN。 不包含前收盘至本日开盘的独立跳空项，不采纳docstring声称能处理opening jump的宽泛说法。 分组mean会跳过NaN项，源码不检验完整日历期或连续日；因此缺观测/尚未结束的期也可计算，调用者须另行检查。groups为Series时按索引标签对齐，ndarray按位置分组；仅长度一致不足以保证同组。 groups未给时，实际to_period_index helper只接受PeriodIndex，DatetimeIndex会抛TypeError，不会自动转换；源函数docstring对此不准确。显式groups仍不免除period校验与缩放。 输出：一个完整统计构造；参数、窗口及多输出分量不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-22ce9d02698dcaf0a7ff94de",
+        "harvest-source-a0fec134309b6bf81dd6b8d3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把日内极值范围与开收盘变动共同用于波动度量。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-22ce9d02698dcaf0a7ff94de",
+        "harvest-source-a0fec134309b6bf81dd6b8d3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "v_t=0.5*ln(H_t/L_t)^2-(2ln2-1)*ln(C_t/O_t)^2；按组取mean(v_t)，输出sqrt(mean(v))*sqrt(A_period)；A={weekly:252/52,monthly:252/12,quarterly:252/4,yearly:252}。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-22ce9d02698dcaf0a7ff94de",
+        "harvest-source-a0fec134309b6bf81dd6b8d3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "open_prices（pandas Series or DataFrame; compatible labeled axes; PeriodIndex required when groups=None）：每日开盘价；high_prices（pandas Series or DataFrame; compatible labeled axes; PeriodIndex required when groups=None）：每日最高价；low_prices（pandas Series or DataFrame; compatible labeled axes; PeriodIndex required when groups=None）：每日最低价；close_prices（pandas Series or DataFrame; compatible labeled axes; PeriodIndex required when groups=None）：每日收盘价。参数：period：必填；分组频率及缩放系数；范围weekly/monthly/quarterly/yearly；源码默认None；groups：可覆盖分组，但不覆盖period有效性校验/缩放；范围pandas Series按index标签对齐，或与输入等长np.ndarray按位置；None要求PeriodIndex；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-22ce9d02698dcaf0a7ff94de",
+        "harvest-source-a0fec134309b6bf81dd6b8d3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "JerBouma/FinanceToolkit",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或进行数值复现",
+    "NumPy/Pandas/SciPy/sklearn版本及默认行为未冻结",
+    "金融数据、无风险收益与基准、供应商、数据发布时点和修订快照未选定",
+    "未验证经济收益有效性或市场适用假设"
+  ],
+  "name": "Garman–Klass 开高低收波动估计",
+  "native_source_id": "get_garman_klass_volatility",
+  "one_line": "把日内极值范围与开收盘变动共同用于波动度量。",
+  "record_id": "get_garman_klass_volatility",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/risk/realized_volatility_model.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-22ce9d02698dcaf0a7ff94de",
+      "license": "MIT",
+      "locator": "get_garman_klass_volatility:L138-L205; _validate_period:L21-L26; _group_and_scale:L29-L69; imports and explicit constants:L1-L20",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "5dbc00ece087e1fa480c85484c7637faf74427d0e0e885161d9d4ecff3d91fba",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/risk/realized_volatility_model.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-cb2abb9f4ee81dee928c5ef7",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "20f27d76a82699c1a5926ed41e8d1d8681ab3d554492559a9bfbd6f0d1ee2eef",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-a0fec134309b6bf81dd6b8d3",
+      "license": "MIT",
+      "locator": "period and scaling constants:L15-L30; to_period_index:L200-L225",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "d06e59b8607cbbc2479267d1ee7739dd2468ba265b1052a1e8e510821c9e8c4e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/utilities/statistics_model.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

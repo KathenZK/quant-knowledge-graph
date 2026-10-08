@@ -1,0 +1,152 @@
+{
+  "economic_basis": {
+    "hypothesis": "采购的时间灵活性可能有价值，但较低的当期价差可能仍值得接受，以减少未来采购不足罚款。这里是给定估值分布下的合同决策定义；不把期权估值或优化目标当作现实预期净收益、免费套利或经济有效性证据。",
+    "missing": [
+      "未执行作者代码、最优化、定价或回测；未下载行情。价值函数最优性不是本仓库经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "arxiv.org",
+  "lab": null,
+  "missing_information": [
+    "只审作者v1的惩罚分支Eq1/2/6。不给qmax、K、A/B、期限、频率或价格模型默认值，也不以量化离散求解器/Longstaff–Schwartz比较另计策略。",
+    "给定正价格Markov输入和有限一阶矩作为本条适用范围；原Prop1.1采用正价格与终值多项式界。不能外推负电价下罚款符号与价值保证。条件分布是来源估值输入，现实概率、风险溢价和校准未闭合。",
+    "局部最低采购量qmin可以大于0，故当期S<K也不能自行不买。累计目标是软约束：有限A/B不保证最终Q在区间内，不偷偷采用硬约束递推Eq7。",
+    "保留连续q区间最大化；标准分段线性罚款并不满足原Theorem1.2全局连续可微的全部假设，未核其非零条件，因此不据正文bang-bang叙述强制只买qmin或qmax。",
+    "Q记录过去采购数量，不是可反复注入/提取的库存；不含售回已行权数量、储气吞吐、持有库存成本、发电模式切换或自动对冲交易。源Remark1.1和独立作者综述说明这些资产可共享广义控制模型，保留亲缘关系。",
+    "未建立Markov转移核、条件期望数值方案、网格插值、最优量并列处理、缺失报价或模型失效处理；没有执行优化、量化、作者代码或回测。",
+    "当期q(S−K)和终值罚款是合同模型现金流，不等于真实已可成交价差；合约购买权利金、佣金、运输/储存/交割、税费、保证金和违约成本未给，未默填零。",
+    "初始合约取得、采购申报截止、基准价格发布时间、实际交割与支付次序未完整给出。不可直接迁为交易所自动下单或现实账户账本。",
+    "arXiv摘要原页链接assumed-1991-2003许可，许可页仅说明arXiv假定拥有非独占分发权；不是向本仓库授予市场数据、源码或商业使用许可。保留2007提交与该许可链接并存的来源事实，不自行改成CC；商用REVIEW_REQUIRED。",
+    "先读的Jaillet–Ronn–Tompaidis作者稿和Carmona–Ludkovski综述只用于同族范围与差异核对。前者罚款符号/边界表述差异不默补为本条规则；不声称复现多个版本。"
+  ],
+  "name": "Bardou等：带累计采购量罚款的摆动供货合约行权",
+  "native_source_id": "0705.2110",
+  "one_line": "在每期采购上下限内，根据价格与累计采购量选择行权数量，权衡当期价差与到期采购不足或超额的罚款。",
+  "record_id": "0705.2110",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未验证估值、最优采购量、收益或交割可行性。",
+    "metadata": "原生身份、定位与自撰中文规则；原文、图像、源码及行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://arxiv.org/licenses/assumed-1991-2003/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Olivier Aj Bardou, Sandrine Bouthemy, Gilles Pagès. Optimal quantization for the pricing of swing options. Author-submitted arXiv0705.2110v1; not asserted identical to2009 journal publication.",
+      "id": "bardou-bouthemy-pages-0705-2110v1-pdf",
+      "license": "Versioned arXiv abstract links assumed-1991-2003 license, whose page describes arXiv assumed non-exclusive distribution rights only. Not a CC or commercial data/code grant. Preserve this recorded link despite2007 submission; commercial scope REVIEW_REQUIRED.",
+      "locator": "Physical pp2–3 §1.1/1.1.1 Eq1/2; pp4–5 Prop1.1 Eq6; p5 Theorem1.2 restrictions. Selected continuous-quantity penalized branch only, no hard Eq7/quantization implementation.",
+      "revision": "arXiv0705.2110v1 submitted15May2007; author manuscript6April2007; sha256:958fcd2477a177e57aeb17d10581c4e80597fafcf715fa90b3a847938a776711",
+      "sha256": "958fcd2477a177e57aeb17d10581c4e80597fafcf715fa90b3a847938a776711",
+      "supports": [
+        "作者版本及范围",
+        "所选合同定义"
+      ],
+      "url": "https://arxiv.org/pdf/0705.2110v1",
+      "verification": "FETCHED_PINNED_AUTHOR_DOCUMENT_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "arXiv author-submission record; submitter Gilles Pages via CCSD proxy.",
+      "id": "arxiv-0705-2110v1-abstract",
+      "license": "Versioned arXiv abstract links assumed-1991-2003 license, whose page describes arXiv assumed non-exclusive distribution rights only. Not a CC or commercial data/code grant. Preserve this recorded link despite2007 submission; commercial scope REVIEW_REQUIRED.",
+      "locator": "Original HTML L120 submission; title/authors/version and related journal DOI; L206 license link. Identity/license only, no formula evidence.",
+      "revision": "arXiv0705.2110v1 abstract HTTP snapshot sha256:7998f65b54939db1a11c23789da2ac2f56f87410824709c5859e26e5772ae5e2",
+      "sha256": "7998f65b54939db1a11c23789da2ac2f56f87410824709c5859e26e5772ae5e2",
+      "supports": [
+        "来源身份或许可范围"
+      ],
+      "url": "https://arxiv.org/abs/0705.2110v1",
+      "verification": "FETCHED_PINNED_ORIGINAL_HTML"
+    },
+    {
+      "attribution": "arXiv license page linked by the exact paper abstract.",
+      "id": "arxiv-assumed-license",
+      "license": "Versioned arXiv abstract links assumed-1991-2003 license, whose page describes arXiv assumed non-exclusive distribution rights only. Not a CC or commercial data/code grant. Preserve this recorded link despite2007 submission; commercial scope REVIEW_REQUIRED.",
+      "locator": "Original HTML L15–28 describe URI and presumed perpetual non-exclusive arXiv distribution right. Scope does not grant third-party commercial rights.",
+      "revision": "arXiv assumed-license HTTP snapshot sha256:dfe5bdbd72f269aaf1cbbb2fcae418267571b6df6fe6c9e139dc73918b37fe13",
+      "sha256": "dfe5bdbd72f269aaf1cbbb2fcae418267571b6df6fe6c9e139dc73918b37fe13",
+      "supports": [
+        "来源身份或许可范围"
+      ],
+      "url": "https://arxiv.org/licenses/assumed-1991-2003/",
+      "verification": "FETCHED_PINNED_ORIGINAL_HTML"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "bardou-bouthemy-pages-0705-2110v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对象是已经持有的能源供货摆动合约，来源举天然气、电力。每个行权点以固定执行价K购买q单位，合同模型的当期收益是q(S−K)。S是给定Markov基准价格；作者指出理想现货本身未必可交易，实际可考虑日前交割合约。这里没有把两种报价自动视为同一可成交资产，也没有冻结某交易所合约、时区或实物运输设施。"
+    },
+    "cost": {
+      "evidence": [
+        "bardou-bouthemy-pages-0705-2110v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "所选定义明确计入固定采购价K：每期模型收益q(S−K)；到期按S_T乘欠量/超量及A/B形成负罚款，并以r将未来金额折现至当前决策时点。罚款是经济损失而非正收入，A/B不是佣金率。原文没有冻结取得合同的期初权利金、撮合点差/冲击、物流、税费、保证金和违约损失；这些缺项不设为0，折现也不等于真实融资账户。"
+    },
+    "entry": {
+      "evidence": [
+        "bardou-bouthemy-pages-0705-2110v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "初始Q_0=0，合同已存在；在每个k<n按当前s,Q取上述最优采购量，在合同固定价K行权并在模型中获得q_k(s−K)，随后Q_(k+1)=Q_k+q_k。qmin>0时必须至少采购qmin，即使当期价差为负也不能擅自空仓；只有qmin=0且所选argmax为0时，本期才不采购。存在多个argmax时，来源未固定并列选择方式，不补趋势或盈利筛选门槛。"
+    },
+    "execution_time": {
+      "evidence": [
+        "bardou-bouthemy-pages-0705-2110v1-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：来源只定义合同决策时点与对当前/历史价格的适应性，未固定采购申报截止、所用日前价格何时可知、报单形式、部分/拒绝交割、支付时序和账户融资。Bellman时点q(S−K)是模型收益合同，未验证同一时刻可执行两腿价差。原始源码、求解与回测均未运行，不能据定义完整就宣称账户回测或实盘可用。"
+    },
+    "exit": {
+      "evidence": [
+        "bardou-bouthemy-pages-0705-2110v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每期采购完成后，其数量永久进入Q；所选合同不允许把已采购量卖回以降低累计量。到T不再作新采购，仅按当时S_T和最终Q_T支付负的终值罚款：低于Qmin惩罚欠量，高于Qmax惩罚超量，区间内罚款为0。没有逐仓止盈止损、库存清空或退出合约再入的规则；已有合同初始购买与最终实物交割账本另缺。"
+    },
+    "position": {
+      "evidence": [
+        "bardou-bouthemy-pages-0705-2110v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "控制变量是每期非负采购数量q，连续取自[qmin,qmax]，不等同账户权益权重或杠杆倍数；累计Q_{k+1}=Q_k+q。在正价格有限罚款分支，总量越出目标区间仍可发生并支付罚款，未设强制最后一棒补足或超量售回。保留原连续最大化，不把Theorem1.2在光滑终值与非零条件下的bang-bang结论无条件应用到Eq2的折线罚款。没有把qmax默认设1或把合约拆成多个独立策略。"
+    },
+    "risk": {
+      "evidence": [
+        "bardou-bouthemy-pages-0705-2110v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "局部数量上下限是真正的动作约束；累计目标是软罚款控制，有限A/B不构成欠量、超量、亏损或回撤上限。正价格范围外Eq2符号可能失去罚款含义，本条不外推负价。给定模型下价值最大不保证真实市场盈利；转移分布、最优量并列、边界网格、信用和交割可行性未核。与库存/生产切换/订单配置共享动态规划或数量罚款，不以原语、资产、参数、数值算法或JRT作者版本再拆计数。"
+    },
+    "signal": {
+      "evidence": [
+        "bardou-bouthemy-pages-0705-2110v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "令V_n(s,Q)=−s[A max(Qmin−Q,0)+B max(Q−Qmax,0)]。按Eq6由后向前，V_k(s,Q)=max_(q∈[qmin,qmax]){q(s−K)+exp[−r(t_(k+1)−t_k)] E[V_(k+1)(S_(k+1),Q+q)|S_k=s]}。每个状态的行权量q*_k属于该最大化的argmax集合；状态含当前价格和采购前累计量Q。条件期望使用给定的来源估值分布，未声称是已校准现实概率。有限罚款分支不追加Q+q的硬可行性区间，也不使用后文省略折现的硬约束Eq7。"
+    },
+    "timeframe": {
+      "evidence": [
+        "bardou-bouthemy-pages-0705-2110v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "决策点为合同预先给定的t_0至t_(n−1)，t_n=T只处理终值；原文一年只是常见合同例子，未锁定每天或每小时。每期观察已可用的S及此前路径，数量q_k对这些历史信息适应；Q_k=Σ_(l<k)q_l是本次采购前的累计量。递推用相邻日期的真实时间间隔和与r一致的时间单位折现，不能拿未来实现价格替代当前条件期望。"
+    },
+    "universe": {
+      "evidence": [
+        "bardou-bouthemy-pages-0705-2110v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入是一个合同及其行权日历t_0<…<t_n=T、固定K和r、局部数量0≤qmin≤qmax<∞、累计目标0≤Qmin≤Qmax、有限正罚款系数A/B和给定Markov转移分布。选择正价格且有限一阶矩的输入范围，以保持Eq2罚款非正并使相应期望有意义；这是本条适用限制，不是来源软件校验。不是横截面选股、合约扫描或看过未来价格后选择行权序列。"
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "在完整时间窗口上用动态规划比较所有候选分段，输出事件强度或高斯点测量均值的分段边界；按固定实现及明确避开回溯缺陷的输入域登记。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-2f85d7a8e091e9d99fb0be61"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只能在全部事件/测量及误差都可用且窗口闭合后计算；动态规划使用全窗，可在追加观测后重选早期边界，不允许把全窗状态回填到过去。市场PIT、日历、数据修订政策及供应商未固定。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-2f85d7a8e091e9d99fb0be61"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条只审fitness=\"events\"或\"measures\"的函数字符串入口；映射到Events/PointMeasures并调用公共FitnessFunc.fit。regular_events、自定义FitnessFunc和对象实例状态不纳入已审合同，同属原生分段族而不另计数。 输入t为已排序有限时点。events且x=None时同一时点的重复事件合并成计数；无重复时每点计数1。显式x要求与唯一时点等长的一维数组；events中必须非负整数计数，measures中为实数测量。measures缺sigma默认为1，否则要求正有限标量或同长向量。 validate_input用np.unique得到排序时点；显式x按unq_ind重排，但sigma没有同样重排。故本合同要求t预先递增且x/sigma已按同一位置对齐，不能把可接受未排序输入说成异方差误差也会自动对齐。 创建中点单元，首尾恰为最早/最晚观测时点，不外推半格、不补交易日历空档。由反向累积和一次求每个候选末块的计数或高斯a/b；高斯fitness没有时间长度项，也不额外减c=.5Σx²/σ²，因为其对总样本分段比较是公共项。 逐末端R比较所有开始k，把每块惩罚减一次，k>0时加此前best_(k−1)。np.argmax取首个最大值，故完全相等时保留最早块起点。函数只返回分段边界，不返回强度/均值拟合值、best分数或实时交易信号。 回溯严格按源码N槽数组、从ind=N写入末边界后不断跳到last_(ind−1)。当路径有至多N−1块时能同时保存起点0和终点N；N个单格块需要N+1槽而原实现不足。B<N是本条额外有效域，源码没有先检查或告警，不借未执行状态掩盖它。 对事件和高斯测量使用同一动态规划分段结构；不同fitness、块数、边界坐标、先验参数、时间/数值轴用途和语言移植作为同一族。 边界：只有一个唯一时点会产生零长度单元；本合同N>=3且严格正单元宽，排除该退化。极近/极大时点可能因浮点中点相消丢分辨率，有限输入不保证全部算术安全。 N个单格块时真实DP目标可能已有明确最优解，但固定回溯只返回N个边界并合并最早两格；不得修成N+1槽后仍称原实现。必须检查实际回溯B<N后才使用本条最优性描述。 源码允许x的若干广播shape但其原地加零有行为边界；本合同显式x固定一维等长，不审标量广播。来源对NaN/Inf、sigma非正值及先验参数未提供完整保护。 p0在Events文档已明确不保证等于真实误报率，需另行无信号校准；此处没有做任何校准，也不借贝叶斯名义保证状态是真实市场制度。 全窗拟合可能随后来数据改变早期切点；只能窗末取得，不能把最终分段回填成早先已知状态。异常事件漏报/市场停盘、供应商修订及误差模型未冻结。 输出：一个完整构造族；窗口、方向、语言实现和同族原生输出/选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-2f85d7a8e091e9d99fb0be61"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在完整时间窗口上用动态规划比较所有候选分段，输出事件强度或高斯点测量均值的分段边界；按固定实现及明确避开回溯缺陷的输入域登记。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-2f85d7a8e091e9d99fb0be61"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "预处理后有N>=3个严格递增时点t_0,…,t_(N−1)。单元边界e_0=t_0，e_i=(t_(i−1)+t_i)/2（1<=i<N），e_N=t_(N−1)。对候选块[k,R]，T=e_(R+1)−e_k。events令n=Σ_(j=k..R)x_j，F=n ln(n/T)，n=0时F=0；measures令a=.5Σσ_j^(−2)，b=−Σx_jσ_j^(−2)，F=b²/(4a)。每块惩罚λ优先取ncp_prior；否则gamma非None取−ln(gamma)；否则取4−ln(73.53 p0 N^(−.478))，p0默认.05。令best_(−1)=0；best_R=max_(0<=k<=R)[F(k,R)−λ+best_(k−1)]，last_R取第一个最大值的k。由N反复跳到last_(ind−1)直至0得到边界索引；研究合同要求这个最优回溯产生的块数B<N，才把返回e边界视为完整最优分段。实际源码回溯缓冲仅N槽；若B=N会把最早内部边界1覆盖为0，丢掉该切点，这种输入被明确排除。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-2f85d7a8e091e9d99fb0be61"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "t（ordinary finite real one-dimensional array, nondecreasing for unbinned events; strictly increasing for explicit x; at least N>=3 unique times）：完整已发布观测窗；不要求等间隔。单位与所有观测时间统一，中点和时差必须有限且严格正。预先排序是避免sigma未同步重排的额外研究合同。；x（events: None or length-N finite nonnegative integer-valued array; measures: length-N finite real array）：None仅表示事件时点每次出现计1；显式计数时不接受重复时点。高斯测量必须给x；不把股票成交量自动当满足泊松事件模型。；sigma（measures only: None, positive finite scalar, or aligned length-N positive finite real array）：误差标准差；必须和已排序t/x逐位置对齐，来源不会按索引标签校准。；reviewed_partition_domain（DP traceback block count B<N and all intermediate arithmetic finite）：用于排除固定来源的N槽回溯边界缺陷；这不是源码已校验的约束，也未执行数值证明。若B=N，保留源行为诊断但不得声称输出完整最优分段。。参数：fitness：块适合度类型，不拆不同数据模型为新增；范围reviewed events or measures strings only；源码默认events；p0：经验惩罚式的参数，不是本库已校准的误报概率；范围research 0<p0<1 and resulting finite penalty; used only without ncp_prior/gamma；源码默认0.05；gamma：若给出则覆盖p0，lambda=-ln gamma；范围None or research finite 0<gamma<=1；源码默认None；ncp_prior：直接每块惩罚，最高优先级；范围None or research finite nonnegative scalar；源码默认None；sigma：高斯测量误差尺度，不是拟合样本波动率；范围measures: None->1, positive finite scalar or length-N vector; events: None only；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-2f85d7a8e091e9d99fb0be61"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "astropy/astropy",
+  "lab": null,
+  "missing_information": [
+    "市场输入及事件/Gaussian模型适配、窗口、PIT发布时间和误差数据来源未固定",
+    "回溯安全域B<N和浮点边界未执行验证；非安全域不作最优分段声明",
+    "底层NumPy版本、误报率和原论文权利未冻结",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "按块适合度和块数惩罚分段的 Bayesian Blocks",
+  "native_source_id": "bayesian_blocks",
+  "one_line": "在完整时间窗口上用动态规划比较所有候选分段，输出事件强度或高斯点测量均值的分段边界；按固定实现及明确避开回溯缺陷的输入域登记。",
+  "record_id": "bayesian_blocks",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/astropy/astropy/blob/073180b48616b3a4097c176eda9cb21fedbd3bd0/astropy/stats/bayesian_blocks.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Astropy Developers；固定源注明Scargle等2013与Bellman动态规划参考。这里核对维护者实现，不声称原论文全部复现。",
+      "id": "harvest-source-2f85d7a8e091e9d99fb0be61",
+      "license": "BSD-3-Clause",
+      "locator": "module provenance, imports and native symbols:L1-L60; native defaults, input alignment, corrected prior and fitness arguments:L96-L216; full dynamic-programming objective and exact limited traceback:L218-L318; event likelihood and counts validation:L321-L371; Gaussian point-measure likelihood and input requirement:L440-L480; public signature and source contract:L483-L537; source attribution and native dispatcher:L571-L602",
+      "revision": "073180b48616b3a4097c176eda9cb21fedbd3bd0",
+      "sha256": "9d922d69ab0836413480f421614d86750eb9bca2012c8542a03bf9df57b8b950",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/astropy/astropy/blob/073180b48616b3a4097c176eda9cb21fedbd3bd0/astropy/stats/bayesian_blocks.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Astropy Developers；固定源注明Scargle等2013与Bellman动态规划参考。这里核对维护者实现，不声称原论文全部复现。",
+      "id": "harvest-source-206ebfc32a05027ca60df222",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 copyright and conditions:L1-L26",
+      "revision": "073180b48616b3a4097c176eda9cb21fedbd3bd0",
+      "sha256": "97d28d33c40cadc630cddfca53969fdd9dc44ede20faa2d892ba730933e9a20e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/astropy/astropy/blob/073180b48616b3a4097c176eda9cb21fedbd3bd0/LICENSE.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Astropy Developers；固定源注明Scargle等2013与Bellman动态规划参考。这里核对维护者实现，不声称原论文全部复现。",
+      "id": "harvest-source-1545fbfb35ff25e01233d6fa",
+      "license": "BSD-3-Clause",
+      "locator": "official project identity:L1-L40",
+      "revision": "073180b48616b3a4097c176eda9cb21fedbd3bd0",
+      "sha256": "a0ba81fff3b3dde70e201e9a20f6d9cacc4d4e8157ffe0816432391831774cb2",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/astropy/astropy/blob/073180b48616b3a4097c176eda9cb21fedbd3bd0/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

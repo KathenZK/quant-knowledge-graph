@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "趋势、路径效率、波动区间和量参与的一致性或可筛选趋势延续；这是研究假说，未验证评分或仓位映射带来收益。",
+    "missing": [
+      "无盈利、样本外、因果归因或经济独立性证明。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "没有执行/编译上游源码或下载行情；计算数值、实际成交和回测未验证。",
+    "具体标的、行情版本、会话/日历和真实交易成本需另行冻结。",
+    "版权声明只按源码记录，不扩展覆盖论文、数据或商业内部研究；商业状态 REVIEW_REQUIRED。"
+  ],
+  "name": "五项连续趋势评分与分数风险仓位",
+  "native_source_id": "LcA4mcE6",
+  "one_line": "把方向趋势、RSI、路径效率、ATR分位和量参与相加，分数越过85才入场，并用同一分数决定止损风险仓位。",
+  "record_id": "LcA4mcE6",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行策略与回测，没有绩效结果。",
+    "metadata": "本记录只保存自撰规则和来源定位；保留发布用户与源码署名，身份真实性未独立核验。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://mozilla.org/MPL/2.0/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "JayadevRana",
+      "id": "tradingview-LcA4mcE6-published-code",
+      "license": "MPL-2.0 source header notice; authorship/other rights not independently verified",
+      "locator": "公开Pine JSON的source字段；精确decoded行段见本记录review.field_spans",
+      "revision": "PUB;54a24b01bb6045e3a0e1b124b65c8ae4@1",
+      "sha256": "df3ce4e0538083f8b2cf42a61cb8ed682124e88267c144e4b6d0cd9a70e9cc3a",
+      "supports": [
+        "源码默认公式、真实控制流与下单请求"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B54a24b01bb6045e3a0e1b124b65c8ae4/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "JayadevRana",
+      "id": "tradingview-list-01269c2d29150855064a",
+      "license": "REVIEW_REQUIRED",
+      "locator": "公开列表init-data image_url=LcA4mcE6; script_id_part/version/user/chart_url",
+      "revision": "sha256:01269c2d29150855064ac1e98002b5afa57dceb9620adccc6262d72d08e17676",
+      "sha256": "01269c2d29150855064ac1e98002b5afa57dceb9620adccc6262d72d08e17676",
+      "supports": [
+        "公开脚本ID、发布版本、发布用户与原页身份；不支持交易规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/?script_access=open&script_type=strategies&sort=latest_popular",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "tradingview-LcA4mcE6-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "使用当前图表 OHLCV 与 syminfo.pointvalue；源码未锁证券、交易所、报价币种或期货合约。列表配图资产不作为冻结标的。"
+    },
+    "cost": {
+      "evidence": [
+        "tradingview-LcA4mcE6-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码设百分比佣金0.05、滑点2 ticks，初始资金10000。融资、借券、资金费率、点差、税费和容量均未提供；平台参数不等于真实可成交成本。"
+    },
+    "entry": {
+      "evidence": [
+        "tradingview-LcA4mcE6-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认多空均开启。暖机后确认棒、实际空仓、多头分本棒>=85且前棒<85，计算数量q>0才市价开多；空头同理，并要求本棒不是多头信号。采用 if/else if，因此一棒只走一个开仓分支。没有持仓中换向或因分数持续高于85而追加入场。"
+    },
+    "execution_time": {
+      "evidence": [
+        "tradingview-LcA4mcE6-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "入场和分数衰减市价退出显式要求 barstate.isconfirmed；持仓止损按每次脚本计算更新。声明未开启 process_orders_on_close、calc_on_every_tick 或 calc_on_order_fills。这里只记录下单请求与 if/else 顺序；没有执行模拟，不能把信号收盘价当已核成交价，真实下一可成交时点与止损触发顺序仍需复现。"
+    },
+    "exit": {
+      "evidence": [
+        "tradingview-LcA4mcE6-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "入场时冻结初始保护价：多 C−3ATR14，空 C+3ATR14，并发对应 stop。后续已持多且没有入场分支时 trail=max(nz(旧trail,C−3ATR),C−3ATR)，持空取min并更新止损单；确认棒自身方向分<35另发市价平仓。无固定止盈。空仓且无入场分支把trail清为na；保护价只朝有利方向移动。"
+    },
+    "position": {
+      "evidence": [
+        "tradingview-LcA4mcE6-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "q 由源码显式计算，覆盖 strategy 声明默认固定1单位。t=c((score−85)/max(100−85,1))，风险百分数=.5+(1−.5)t，风险现金=权益×该百分数/100；距离d=3ATR。若d>0则 qRisk=风险现金/(d×pointvalue)，否则0；qCap=权益/(C×pointvalue)；q=max(min(qRisk,qCap),0)，仅q>0入场。初始资金10000，pyramiding=0，margin_long/short=100。"
+    },
+    "risk": {
+      "evidence": [
+        "tradingview-LcA4mcE6-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始风险目标仅为公式目标，不保证实际止损损失；跳空、点值、数量步长和交易所最小量未复现。qCap 分母的 C 与 pointvalue 未显式验证正值；没有离散手数取整或货币换算。ATR分位缺失取50、成交量缺失的中性评分和总分nz都是来源真实边界。公式与状态静读通过，Pine未编译或运行。"
+    },
+    "signal": {
+      "evidence": [
+        "tradingview-LcA4mcE6-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "记 C/O/V 为收盘/开盘/成交量，c(x)=max(0,min(1,x))。EMA快55慢233，RSI14，chg=C−C[20]，path=20棒Σ|ΔC|，ER=path>0?abs(chg)/path:0。ATR14的200棒百分位 p 缺失取50；VM=SMA20(nz(V))，有量标记 nz(VM)>0，相对量 v=有量?nz(V)/VM:0。多头趋势分=10·[C>EMA233]+10·[EMA55>EMA233]，空头两不等式反向；动量多/空为20c((RSI−50)/20)、20c((50−RSI)/20)。效率分仅 chg>0 的多头或 chg<0 的空头取20c(ER/.40)，其余0。共同波动分 p<20 时20p/20，p>85时20c((100−p)/15)，否则20。有量时多头仅C>O取20c(v−.5)、空头仅C<O取该值，其余0；无量两侧各10。各侧总分为 nz(趋势+动量+效率+波动+参与)，不把缺失的总和拆成分别补零。"
+    },
+    "timeframe": {
+      "evidence": [
+        "tradingview-LcA4mcE6-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "所有 EMA、RSI、ATR、分位和路径窗口都以当前图表棒计；不请求其他周期。源码未固定运行周期，入场要求 bar_index>max(233,200) 和确认棒。"
+    },
+    "universe": {
+      "evidence": [
+        "tradingview-LcA4mcE6-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "单图表、单标的时序模型；没有横截面筛选、轮换或可交易池规则。hasVol=nz(VM)>0 不成立时，多空参与分各取中性10，不能把该分支视为补全真实成交量。"
+    }
+  }
+}

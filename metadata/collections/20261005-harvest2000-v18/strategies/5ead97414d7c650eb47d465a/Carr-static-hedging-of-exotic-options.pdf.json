@@ -1,0 +1,137 @@
+{
+  "economic_basis": {
+    "hypothesis": "在给定连续扩散、零持有漂移及波动对称条件下，普通欧式期权组合可以在终点和障碍边界匹配路径依赖支付。这里只核复制构造和模型前提；未验证市场价格符合条件、实际对冲误差、收益或成本优越性。",
+    "missing": [
+      "未运行、未回测；论文模型最优性和实证不是仓库验收结论。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "engineering.nyu.edu/PeterCarr",
+  "lab": null,
+  "missing_information": [
+    "原件为NYU托管的1998年6月JF53(3)论文，PDF内页1165–1190；URL里的2019-03仅存储路径，非策略提出/修订日。",
+    "选一个完整DOC复制代表，整个PCS静态复制家族只算一个候选；上下障碍、敲入/敲出、多障碍、市场和参数不拆新增。",
+    "局部波动对称围绕障碍H且首次触障碍时成立，不是围绕初始远期，也不是观测隐波smile对称就已验证。",
+    "源价过程是在T零息债计价测度下的连续零漂移远期；现货替代需额外零carry。没有核实际收益分布或定价假设。",
+    "理论比例K/H通常不是整数合约；保证金、现金和可用行权价链未闭合，不补最近档或取整版。",
+    "触障碍要同时平全部两腿；静态指中间不连续调delta，不是期内无退出。零清仓净值不抹去初始期权支出。",
+    "成本与真实执行MISSING；不将论文精确复制结论宣称为已验证无风险收益、经济有效或可直接回测。",
+    "NYU faculty页面只支持Peter Carr与托管机构关系，该当前短列表没有这份1998论文的直接链接；论文题名署名版本由原PDF首页固定。faculty个人页web返回403，未绕过。",
+    "原PDF及机构页未确认开放再分发/商业许可；仅自撰规则定位进入候选，全文和图像不入Git，商业REVIEW_REQUIRED。"
+  ],
+  "name": "Carr–Ellis–Gupta：买卖权对称下的单障碍期权静态复制",
+  "native_source_id": "Carr-static-hedging-of-exotic-options.pdf",
+  "one_line": "用一份看涨多头和反射行权价的比例看跌空头复制向下敲出看涨，触障碍一并退出，未触则到期。",
+  "record_id": "Carr-static-hedging-of-exotic-options.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、优化器或回测。",
+    "metadata": "作者原生文件/DOI身份、定位及自撰中文规则；不发布论文原文、图像、源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://engineering.nyu.edu/sites/default/files/2019-03/Carr-static-hedging-of-exotic-options.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Peter Carr, Katrina Ellis and Vishal Gupta, Static Hedging of Exotic Options, The Journal of Finance53(3),June1998,pp1165–1190. NYU-hosted journal PDF, authorship and edition from PDF frontmatter. Chinese paraphrase by curator.",
+      "id": "carr-ellis-gupta-static-hedging-pdf",
+      "license": "NYU institutional-hosted journal paper. No open redistribution or commercial permission established from this PDF or institution page. Public accessibility and affiliation do not transfer publisher or market-data rights. Source fulltext/images not distributed; commercialuse REVIEW_REQUIRED.",
+      "locator": "Physicalpp1–3 journal identity/§I Eq2–5 zero-drift diffusion and local-volatility PCS; pp5–7 §II.A Eq7 DOC hedge; p22 execution limitations/AppendixA1 T-bond numeraire; pp23–24 PCS derivation inspected, not independent proof validation. SelectedDOC only.",
+      "revision": "Journal of Finance53(3),June1998,pp1165–1190; NYU-hosted PDF sha256:99970094bc6ca4d40662ff394a53ecceda0da559158019af784faba3ed116970",
+      "sha256": "99970094bc6ca4d40662ff394a53ecceda0da559158019af784faba3ed116970",
+      "supports": [
+        "障碍处买卖权对称、反射行权价与比例期权腿及首次触障碍退出"
+      ],
+      "url": "https://engineering.nyu.edu/sites/default/files/2019-03/Carr-static-hedging-of-exotic-options.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_UNIVERSITY_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "NYU Tandon Finance and Risk Engineering faculty publication page.",
+      "id": "static-hedge-nyu-faculty-publications",
+      "license": "Publisher/institution page; no permission inferred from public accessibility. Fulltext not redistributed.",
+      "locator": "HTML lines2007/2049 identify Peter Carr as faculty-publications section/profile; current list has later Static Hedging of Standard Options at2095, not a direct citation/link for the selected1998 Exotic paper. Institutional association only; 1998identity comes from originalPDF.",
+      "revision": "HTTP snapshot 2026-10-04T22:34:17.080107+00:00; sha256:7fccf4f650399cf249abe5d89c1a87bfab6b34cd1f4fddf13a629db1d4de5594",
+      "sha256": "7fccf4f650399cf249abe5d89c1a87bfab6b34cd1f4fddf13a629db1d4de5594",
+      "supports": [
+        "Peter Carr与托管机构的关联；不冒充1998论文直接链接证据"
+      ],
+      "url": "https://engineering.nyu.edu/academics/departments/finance-and-risk-engineering/research/faculty-publications",
+      "verification": "FETCHED_PINNED_AUTHOR_AFFILIATED_BIBLIOGRAPHIC_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "carr-ellis-gupta-static-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "复制一单位同一标的、到期T、执行价K、向下障碍H的欧式看涨敲出支付。交易腿为到期相同的普通欧式看涨与看跌，不持有正股对冲腿，也不要求另买一份障碍期权。标的按论文为交割T的远期价格F_t；用于现货障碍时还须满足零持有成本条件。未冻结某只股票、货币、商品或交易所。"
+    },
+    "cost": {
+      "evidence": [
+        "carr-ellis-gupta-static-hedging-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：论文假设市场无摩擦，Eq7只给起始期权价格差及模型下触障碍两腿等值。零carry是标的持有漂移前提，与零交易手续费不同；这里不把两者混称免费交易。真实买卖价差、佣金、税费、卖put保证金融资、部分成交及同步平仓冲击均未给定。"
+    },
+    "entry": {
+      "evidence": [
+        "carr-ellis-gupta-static-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "目标障碍合约开始时，同时建立上述一份call多头及K/H份put空头，支付call权利金并收取put权利金。组合用于匹配一单位DOC支付；若用于对冲卖出DOC的负债，负债与此复制资产仍须在账户中分别记录，不将模型恒等式当成免费套利开仓。没有股票动量门、价格比择时或首次触H后才建仓的规则。"
+    },
+    "execution_time": {
+      "evidence": [
+        "carr-ellis-gupta-static-hedging-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：已知理论顺序为起始同时组篮、期内固定份额、首次触H时同时卖call/回补put，或未触时到期结算。结论段提可用障碍条件单，但没有真实交易所跨腿条件单、监控采样、可成交报价、撮合延迟、整张映射、失效/部分成交及到期交割账本；不能据此默认所有腿在触障碍价瞬时成交。本次没有运行原代码、行情或交易接口。"
+    },
+    "exit": {
+      "evidence": [
+        "carr-ellis-gupta-static-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "若T以前首次触H，卖掉全部call并买回全部put；PCS模型下两项清仓现金流抵消，复制篮子变为零并不重新进入。若从未触H则持有至T，put因H²/K<H而无价值，call支付max(F_T−K,0)，匹配仍存续DOC。保持固定腿数量不表示触障碍后继续持有；零清仓净值也不表示初始权利金或整段累计盈亏为零。"
+    },
+    "position": {
+      "evidence": [
+        "carr-ellis-gupta-static-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每一单位DOC对应+1 call与−K/H put；K、H为同一价格单位，K/H无量纲，H²/K仍为价格。允许理论分数份额，不擅乘100或舍入成交易所整张；一般账户按目标负债名义同比例缩放。未给杠杆、保证金、现金缓冲、短put担保和承受跳空所需资本。不是满仓百分比模型，原文例K=100/H=95的1.0526份只是比例示例。"
+    },
+    "risk": {
+      "evidence": [
+        "carr-ellis-gupta-static-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "精确复制依赖无跳跃的连续路径、同到期期权可交易、首次触H能同时平两腿及PCS对称。若价格跳过障碍、局部波动不对称或现货有非零持有漂移，两腿触障碍时未必等值；不能延用零平仓结论。源脚注举现货股票股息率等于无风险率、FX两国利率相等、商品便利收益等于无风险率作为其简化零carry前提，不称真实市场常态。本条不采§IV非零carry上下界，也不复制美式/亚洲或多障碍扩展。保证金和流动性可导致模型外损失，未运行定价、对冲仿真或回测。"
+    },
+    "signal": {
+      "evidence": [
+        "carr-ellis-gupta-static-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "令K_p=H²/K、q_p=K/H。买入1单位call(K,T)，卖出q_p单位put(K_p,T)。源Eq7为DOC(K,H)=C(K)−(K/H)P(H²/K)，H<K；到F=H时由PCS得C(K)=(K/H)P(H²/K)，两腿市值抵消。反射的是行权价，不是把认购/认沽delta配平；不加低买高卖预测信号。当前组合在F>H时一般有非零价值，不能把只在障碍成立的等值关系当成起始零成本。"
+    },
+    "timeframe": {
+      "evidence": [
+        "carr-ellis-gupta-static-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在障碍期权建立时装配一次普通期权篮子；保持数量，直到首次触及H或到期T。障碍在存续期内连续有效，若触及即停止本次复制；不是只检查日/分钟收盘，也不是持有固定若干K线后滚动。T来自目标合约，不把图中的一年示例当默认期限。"
+    },
+    "universe": {
+      "evidence": [
+        "carr-ellis-gupta-static-hedging-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入仍存续的合约，F_0>H>0、K>H、T>0；可取得同标的同到期的call(K,T)和put(H²/K,T)。连续价格、无套利无摩擦，T到期零息债为计价基准时dF/F=σ(F,t)dW。源§II要求首次到障碍处PCS成立，即局部波动率以H为反射轴：σ(f,t)=σ(H²/f,t)；确定性时间波动σ(t)是充分特例。此处说的是local volatility，不能用市场隐含波动率微笑近似对称替代。"
+    }
+  }
+}

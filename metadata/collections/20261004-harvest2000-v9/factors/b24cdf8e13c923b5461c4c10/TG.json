@@ -1,0 +1,150 @@
+{
+  "economic_basis": {
+    "hypothesis": "把多个低尾概率的经验CVaR按固定网格权重合成，给极端损失更细的排序权重；登记原实现的离散近似，不冒称精确连续积分。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "RiskFunctions.TG把一维/行向量转成Tx1并拒绝多列或非有限值；使用np.sort沿样本维升序，然后与owa_tg生成的权重相乘。docstring返回处误写Ulcer Index，实际不计算财富/回撤。 owa_tg把a_sim转int，网格从α降到.0001后反转；本条只审α>.0001且α<1、int(a_sim)>=2的合理递增网格合同，源码未主动做这些完整检查。 owa_wcvar按zip(alphas,weights)加总各owa_cvar；每个CVaR保留分位边界上的部分概率权重，不是把所有x<=经验分位的样本直接等权。 a_sim只是用几个CVaR近似连续尾部权重的数值精度选项，不生成多个独立因子。所有观测都在同一完整收益窗口内，没有时间顺序权重、资产仓位或交易信号。 边界：T*a<1时该CVaR的全部权重落在最差样本；小样本会让许多网格节点重复同一最差观测，这不构成独立风险信息。 a_sim=1会访问alphas[1]而出错，α低于.0001会反转成不合理的降序网格；本条不对这些未审路径补造默认行为。 输出保留收益的尺度和损失负号，不强制非负，不把它当无量纲基尼系数；常量收益或全正收益也未被拒绝。 此实现为有限网格的CVaR加权和，不声称精确连续Tail Gini，不另计各网格CVaR或上下尾TGRG。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把多个低尾概率的经验CVaR按固定网格权重合成，给极端损失更细的排序权重；登记原实现的离散近似，不冒称精确连续积分。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "收益升序x_(1)..x_(T)。对尾概率a，k=ceil(Ta)：v_i(a)=−1/(Ta)若i<k，v_k(a)=−1+(k−1)/(Ta)，i>k为0；C(a)=Σv_i(a)x_(i)。令m=int(a_sim)，a_j为linspace(α,.0001,m)反转后的网格，j=0..m−1。b_0=a_1 a_0/a_(m−1)^2；内部b_j=(a_(j+1)−a_(j−1))a_j/a_(m−1)^2；b_(m−1)=(a_(m−1)−a_(m−2))/a_(m−1)。TG=Σ_j b_j C(a_j)，实现先合成每个排序位置权重再点积。默认α=.05、m100；网格、双尾及其求解包装不分拆。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X（nonempty finite real return series, 1D or Tx1/1xT array-like; recommended T>=2）：同一采样频率的完整收益窗口；函数把1xT转为Tx1，拒绝多行多列及NaN/Inf。价格到收益、simple/log口径、成本与时间发布规则均不由本函数生成。。参数：alpha：最大低尾概率，须大于硬编码网格下端；范围research .0001<alpha<1；源码默认0.05；a_sim：CVaR近似网格点数，源码会int截断；范围research int(a_sim)>=2；源码默认100；grid_min_alpha：网格最小尾概率；范围source constant；源码默认0.0001"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0",
+        "harvest-source-11791aea7816b756ed448e86"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "dcajasn/Riskfolio-Lib",
+  "lab": null,
+  "missing_information": [
+    "收益输入变量、采样频率、供应商、时区/PIT及修订政策未固定",
+    "实际依赖/求解器版本与数值输出尚未执行冻结",
+    "无收益方向或样本外经济有效性证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "递增尾概率加权的尾部基尼近似",
+  "native_source_id": "TG",
+  "one_line": "把多个低尾概率的经验CVaR按固定网格权重合成，给极端损失更细的排序权重；登记原实现的离散近似，不冒称精确连续积分。",
+  "record_id": "TG",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/riskfolio/src/RiskFunctions.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-33a1babff54280c7a77dbbc0",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer license and numerical imports:L1-L17; native TG shape validation and sorted weighted output:L1649-L1686",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "2156737cc64527f439b172f0a448b6aa48fbfd1f0b1710b02454dff722ceb7c7",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/riskfolio/src/RiskFunctions.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-d716f1091c2d4ef07fac883d",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 full license:L1-L27",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "7f7a68d261604e432e818993f92b74b636c632e31f207730dd189267044aa5e6",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-4f72c990401395c3f1dc6c92",
+      "license": "BSD-3-Clause",
+      "locator": "lower bounds only, not an exact numerical environment:L1-L15",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "999b816f857730883e03b6455426e4a635e36822d1b3bc2e04aa2b6b29fe4955",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/requirements.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-11791aea7816b756ed448e86",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 and numerical imports:L1-L10; fractional CVaR weights, weighted blend and exact Tail Gini grid:L83-L166",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "03a05d27b12d44d42aa175b97bb1b3c6279f4bcc11d53019a50f25ceb6442b05",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/riskfolio/src/OwaWeights.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-62293b58121f24792ab9c2bb",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer OWA formulation source attribution:L803-L811",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "68b06232402ae268774ae715806c79271fa691c476b657d352123f838197d734",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/docs/source/riskfoliolib/biblio.bib",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

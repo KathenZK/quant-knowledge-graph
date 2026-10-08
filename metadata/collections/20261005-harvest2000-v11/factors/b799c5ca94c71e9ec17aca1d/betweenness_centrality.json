@@ -1,0 +1,105 @@
+{
+  "economic_basis": {
+    "hypothesis": "对每个节点，累计全部可达起点终点对的最短路径有多少份额经过它；描述给定图中的路径中介程度，不声称交易或信息真的沿最短路径传播。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ec753d2190428780d14b8657"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图方式、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ec753d2190428780d14b8657"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始化所有节点介数为0。k=None逐个以每个图节点为源s；weight=None用广度优先搜索，不读取边权属性。带权Dijkstra和抽样k分支不在本条已审合同中。 BFS从s开始，记录距离D、前驱列表P和最短路径数σ，初始σ_s=1。首次发现邻居时距离加1；每遇到满足D_w=D_v+1的边，就给σ_w累加σ_v并登记v为前驱。 逆BFS出栈次序累计依赖：对每个w和前驱v，δ_v += σ_v(1+δ_w)/σ_w。默认对w≠s把δ_w加到节点总分；endpoints=True额外给源加可达其它节点个数，并给每个其它可达w加1。 全部源处理后，按公式归一。无向图在默认归一分支已按有序可能对数除，不再额外除2；只有非归一输出需把双向重复计数除2。 归一分母使用全图节点数，不按各连通分量或实际可达对数调整。添加不相连孤立节点也能降低其它节点的归一分数。 节点坐标、是否含端点、归一开关、图方向均为同一算法族选项，不拆数量；本条没有收录边介数或单独采样近似为新因子。 边界：空图返回空dict；不含端点时少于3个节点均为0。包含端点时两个相连节点有有效贡献，不能一概把所有n<3图置0。 不可达对不贡献但归一仍按全图可能对数；不等于在可达样本上取平均，也不等于经过节点的路径总数。 σ以浮点数累加，巨大路径数可能溢出或失去精度；没有实际运行、复杂度或数值稳定性测试。 权重None和kNone的明确子合同避免把未核Dijkstra、负权、零权或抽样偏差推断为已审；外部backend不在本记录冻结范围。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ec753d2190428780d14b8657"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对每个节点，累计全部可达起点终点对的最短路径有多少份额经过它；描述给定图中的路径中介程度，不声称交易或信息真的沿最短路径传播。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ec753d2190428780d14b8657"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条固定k=None、weight=None，完整遍历所有源节点。令n为总节点数，σ_st为s到t的最短路径条数，σ_st(v)为其中经过v的条数；不可达对贡献0。B_ord(v)=Σ_(有序s≠t) σ_st(v)/σ_st；默认endpoints=False时不计v=s或v=t。normalized=True默认输出B_ord/[(n−1)(n−2)]；endpoints=True把每条路径的两端也计入，归一分母改为n(n−1)。normalized=False时有向图返回B_ord，无向图返回B_ord/2。令N=n（含端点）或n−1（不含端点），N<2时源码直接返回累计值，本条小图下为0，不做零分母除法。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ec753d2190428780d14b8657"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in networkx.Graph or DiGraph, simple, loop-free; weight=None ignores edge attributes）：完整固定关系图；不要求连通。金融节点、关系生成、方向与PIT尚未提供。。参数：k：全部源节点，抽样分支不计入已审定义；范围only None reviewed；源码默认None；weight：按边数衡量最短距离，边属性不参与；范围only None reviewed；源码默认None；normalized：全图可能有序对归一；False无向时除2；范围bool；源码默认True；endpoints：是否把最短路径起点和终点计入同一节点份额构造；范围bool；源码默认False；seed：原生随机状态装饰器存在，但本条不调用抽样；范围not consumed by source sampling when k=None；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ec753d2190428780d14b8657"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/边/权重/方向和阈值构图、完整节点宇宙及PIT缺失",
+    "外部backend与具体运行依赖版本未冻结，未执行上游实现",
+    "没有金融收益、风险有效性或因果传播证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "按最短路径份额计算的节点介数",
+  "native_source_id": "betweenness_centrality",
+  "one_line": "对每个节点，累计全部可达起点终点对的最短路径有多少份额经过它；描述给定图中的路径中介程度，不声称交易或信息真的沿最短路径传播。",
+  "record_id": "betweenness_centrality",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers固定内置实现；Brandes/Freeman、Wasserman–Faust、Burt等原概念归属按各源码References保留。公开内容为自撰计算定义与固定源码定位，未复制论文全文。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现；Brandes/Freeman、Wasserman–Faust、Burt等原概念归属按各源码References保留。公开内容为自撰计算定义与固定源码定位，未复制论文全文。",
+      "id": "harvest-source-ec753d2190428780d14b8657",
+      "license": "BSD-3-Clause",
+      "locator": "native defaults, all-pair normalization and graph conventions:L18-L104; original algorithm and measure references:L111-L129; complete all-source main path:L216-L244; unweighted BFS distances, predecessor and shortest-path counts:L402-L424; dependency accumulation with and without endpoints:L461-L483; complete nonsampling rescale branch:L503-L541",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "63b6b4713510ac7145ca277967535e5b3c75d81d2d802b20131de9975fd3fbaa",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/centrality/betweenness.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

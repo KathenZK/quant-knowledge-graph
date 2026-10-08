@@ -1,0 +1,135 @@
+{
+  "economic_basis": {
+    "hypothesis": "在选定收益率曲线和利差不确定范围内，用完整现金流贴现而非一阶久期近似衡量不利估值，再与偏离原组合的程度折中。最坏情形只相对于输入U和定价模型，不构成实际保本、收益提高或经济有效性证据。",
+    "missing": [
+      "论文模型和数值图未作为本次经济验证；没有运行求解或回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi:10.1007/s10957-024-02436-z",
+  "lab": null,
+  "missing_information": [
+    "构造输入必须先给定现金流C、名义曲线与利差、h_nom、非空紧凸U及lambda>0；本条没有伪造估计窗、预测器、定期更新或行情数据。",
+    "论文§7.2将椭球半径印为F^(-1)(1-alpha)，同时称alpha为置信水平、99%为更大不确定集；与§3.3.2的(1-alpha)置信度记号及示例描述不协调。保留原文，不代改alpha或凭图反推代码参数；该历史示例未复现。",
+    "φ=0.5||h-h_nom||_1按论文持仓数量h定义；不是已说明的金额换手或真实费率。未补报价差、佣金、冲击、税费或执行资金扣除。",
+    "未给出固定再平衡钟点、成交时滞、订单和最小债券交易单位；六个月是示例现金流离散期，不是调仓周期。",
+    "现金流被视为已知且非负，信用/选择权风险通过spread表征；未定义实际违约、赎回路径、跨币种换汇对冲或未来票息再投资。",
+    "要求对数价值定义有效；预算为正且所持债券有正现金流。未擅自给不可行输入、零现值、多个最优解、求解容差与失败退路。",
+    "仅论文描述核实；未采集示例市场数据、未审/运行配套代码、未运行优化器或回测；作者结果不作为本次复现。商用授权REVIEW_REQUIRED。"
+  ],
+  "name": "Robust Bond Portfolio：以最坏曲线和利差现值约束偏离的债券配置",
+  "native_source_id": "robust_bond_portfolio",
+  "one_line": "以债券现金流的精确贴现值寻找最坏收益率曲线与利差，在只多且名义预算不变时折中持仓偏离和最坏对数价值；仅定义给定输入的组合构造。",
+  "record_id": "robust_bond_portfolio",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行上游代码、优化器或回测。",
+    "metadata": "来源原生页面/仓库slug、论文方程定位及自撰中文定义；不发布论文全文、公式图片、源码和行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://web.stanford.edu/~boyd/papers/pdf/robust_bond_portfolio.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Eric Luxenberg, Philipp Schiele, Stephen Boyd, Robust Bond Portfolio Construction via Convex–Concave Saddle Point Optimization, JOTA, online May13,2024. Chinese paraphrase by catalog curator.",
+      "id": "luxenberg-schiele-boyd-robust-bond-pdf",
+      "license": "PDF title page: The Author(s), under exclusive licence to Springer Science+Business Media, LLC, part of Springer Nature, 2024. No explicit redistribution or commercial-use permission established; author hosting is not a paper/data license. Original Chinese rule paraphrases only; commercial scope REVIEW_REQUIRED.",
+      "locator": "Physicalpages4–5 cashflows/PV/Eqs1–4;7 compact convex U;9 scenario hull;11–12 Eqs10/12 and constraints;20 section7.4 L1 objective. Physicalpage19 example confidence label discrepancy preserved. PDF-derived lines plus original visual formulas.",
+      "revision": "JOTA final version published May13,2024; DOI10.1007/s10957-024-02436-z; PDF sha256:0d6ecad0b958d0315acac1157f4e4ac00c79b2a013a925a2699d61ced26b3914",
+      "sha256": "0d6ecad0b958d0315acac1157f4e4ac00c79b2a013a925a2699d61ced26b3914",
+      "supports": [
+        "现金流贴现、只多名义预算、最坏曲线利差的精确现值目标、持仓L1偏离与实施缺项"
+      ],
+      "url": "https://web.stanford.edu/~boyd/papers/pdf/robust_bond_portfolio.pdf",
+      "verification": "FETCHED_PINNED_FINAL_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Stephen P. Boyd author website, Stanford University.",
+      "id": "boyd-robust-bond-author-page",
+      "license": "No independent permission established for author-page fulltext; not republished. Does not transfer PDF, code or data rights.",
+      "locator": "Original HTML lines39–64 identifies title, authors, JOTA2024 and Final version link to the pinned PDF. Linked code not acquired or executed in this review.",
+      "revision": "HTTP snapshot 2026-10-04T20:10:46.869553+00:00; sha256:63e56e13d9e02a79129b11e893bbe8990497cd06042627643a16a919d14426b7",
+      "sha256": "63e56e13d9e02a79129b11e893bbe8990497cd06042627643a16a919d14426b7",
+      "supports": [
+        "第一方作者身份与论文版本链接"
+      ],
+      "url": "https://web.stanford.edu/~boyd/papers/robust_bond_portfolio.html",
+      "verification": "FETCHED_PINNED_AUTHOR_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "luxenberg-schiele-boyd-robust-bond-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "n只具有固定非负现金流c_i,t的债券，t=1…T；本金和票息都计入，到期后现金流为0，所有债券在T以内到期。h_i是债券持有数量、h_i>=0。基本定价假设把一条基准收益率曲线y_t与各债券的平行利差s_i相加，不把历史价格技术信号作为输入。"
+    },
+    "cost": {
+      "evidence": [
+        "luxenberg-schiele-boyd-robust-bond-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：§4.1只说名义目标和预算可以扩展交易成本，没有给本条的价差、佣金、冲击、税费或成本扣除方程。§7.4的0.5||h−h_nom||_1是持仓偏离目标，不能把它解释成已校准的交易费，也不能把缺成本当零。"
+    },
+    "entry": {
+      "evidence": [
+        "luxenberg-schiele-boyd-robust-bond-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按式(10)求新持仓h∈argmin_{h∈H}[0.5||h−h_nom||_1−lambda·Δ_wc(h)]，lambda>0；L1名义目标来自§7.4。其等价形式是min_h max_(y,s∈U)[0.5||h−h_nom||_1−lambda·Δ(h,y,s)]。输出是完整目标持仓；相对原持仓增加的部分是配置增持含义，原文未给出订单类型和成交路径。不是先选择最坏曲线后独立优化，也不是概率加权期望收益。"
+    },
+    "execution_time": {
+      "evidence": [
+        "luxenberg-schiele-boyd-robust-bond-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：源文使用t=0当前名义曲线、利差和持仓来定义一次组合构造，输出h；未指定可交易数据发布时间、收盘/开盘成交、求解结束到订单的延迟或固定调仓时间。示例2022-09-12是静态估值截面，不是已闭合的日/月调仓回测。"
+    },
+    "exit": {
+      "evidence": [
+        "luxenberg-schiele-boyd-robust-bond-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "同一次构造会把原持仓减到求得的新h；目标h_i=0表示该债券目标配置清零。来源只定义原持仓到新持仓的优化，不设止盈/止损、持有期到点退出或持续滚动事件规则；债券到期后现金流为0是现金流模型条件，不能据此补造票息再投资和到期滚券程序。"
+    },
+    "position": {
+      "evidence": [
+        "luxenberg-schiele-boyd-robust-bond-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "选择论文的基本只多、同名义价值约束H={h>=0: p_nom^T h=p_nom^T h_nom}，不自加行业/评级/久期帽或借款。h是数量而非直接权重；名义金额权重为p_nom_i*h_i/V_nom（在V_nom>0下和为1，这是预算式的换算）。φ=0.5||h−h_nom||_1按数量差的原式保留，不偷换成0.5Σp_i|Δh_i|。lambda为给定正参数，未钉单一默认值；§7.4图示1/5/15不拆成策略。"
+    },
+    "risk": {
+      "evidence": [
+        "luxenberg-schiele-boyd-robust-bond-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "最坏情形保护只对给定U及现金流贴现模型成立；U选取和lambda影响结果，不能据凸优化性质承诺实盘收益。U紧凸，φ凸，H凸；若H也紧则来源用极小极大定理给鞍点表示，但未保证解唯一。全零现金流/零预算导致log问题的输入不能当有效；需显式处理不可行、病态、数值和并列解，原文未给生产退路。§7.2半径F^-1(1−alpha)与将99%称更大集合的示例记号不一致，保持为未解校准缺项；不修成另一公式。"
+    },
+    "signal": {
+      "evidence": [
+        "luxenberg-schiele-boyd-robust-bond-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "y_t与s_i均为每现金流期间的连续复利收益率/利差，s_i>=0，t按相同现金流期计数；图表才转成年化，半年一期示例的年化y为2*y_t，不能把年化数直接代入贴现式。给定名义y_nom、s_nom和h_nom，p_nom_i=Σ_t c_i,t exp[-t(y_nom_t+s_nom_i)]，V_nom=p_nom^T h_nom。任一曲线/利差下p_i(y,s)=Σ_t c_i,t exp[-t(y_t+s_i)]，V(h,y,s)=Σ_i h_i p_i(y,s)，Δ(h,y,s)=log V(h,y,s)−log V_nom。输入U是非空紧凸的曲线/利差集合；Δ_wc(h)=min_(y,s∈U)Δ。此处用精确现值，而非式(11)一阶久期近似。若U用§3.3.1有限情景凸包，最坏值可能在凸包内部，不能只取各给定顶点中最小值；本条不另指定情景生成器或置信半径。"
+    },
+    "timeframe": {
+      "evidence": [
+        "luxenberg-schiele-boyd-robust-bond-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：论文没有规定定期再平衡频率。t=0表示本次配置时点，t=1…T是现金流期限；示例期长六个月、T=60用于贴现30年现金流，不能解释成每半年交易。"
+    },
+    "universe": {
+      "evidence": [
+        "luxenberg-schiele-boyd-robust-bond-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "这是对已给债券池和名义持仓h_nom的配置函数。原文实例从2022-09-12的AGGG成分按AAA/AA/A/BBB及0–3/3–5/5–10/10–20/20–30年分成20桶，各选市值最大债券，h_nom沿用各桶总权重；这只是静态演示宇宙，不推广为持续更新的选券策略，也不把不同债券池计为新构造。"
+    }
+  }
+}

@@ -1,0 +1,231 @@
+{
+  "economic_basis": {
+    "hypothesis": "在延迟状态空间逐参考点测量非常近的返回及其时间聚集程度，再概括不同位置的局部维、持续性与二者关联。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-a5b56ac82b17675a080c666c",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-211b9ee3002fbf8e79167d96",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-a5b56ac82b17675a080c666c",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-211b9ee3002fbf8e79167d96",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认ac先对y去均值，F=FFT(y−mean(y),2^(nextpow2(N)+1))，acf=real(IFFT(F*conj(F)))/零阶值，截取前N项；等价未作逐滞后样本数修正的全窗归一自协方差。取第一个严格小于0的滞后，等于0不算越过；有效ACF始终不负时取N−1，全NaN才返回NaN。 tau默认ac、m3、w默认{ac,1}，仅审默认ac与数值正整数延迟/维度。maxN默认full；若限长则先取最早maxN个原始点，再嵌入及确定w；比例Theiler窗口使用嵌入行数n。 至少要求n>=max(ceil(15/(1−q))+2w+mOrder+1,100)，否则返回单一NaN。重置BF_ResetSeed(default)至Mersenne Twister种子0，再randperm抽min(nPoles,n)个pole。 每pole先按时间带删邻居，再删除距离0的精确重复状态。若正距离个数<15/(1−q)或严格超过q分位的事件少于15，则该pole的d与theta均留NaN。 持续性在已删时间带和零距离点的压缩序列E上向前看mOrder个剩余观测，不是原始等时距日历中的mOrder根bar；跨被删除间隙的连续性也按压缩序列处理。 θ分子仅对前L−mOrder位置计孤立事件并除L−mOrder，分母Nu/L则包含末端事件；因此有限样本可能超过1，源码上裁1。分子不是事件数直接除Nu。 propValidPoles只检查d非NaN；d和theta的均值/std各自删NaN，corr则取二者同时非NaN的交集，至少10个且两者方差非零。不能把三种有效集合悄悄统一。 边界：q很高或量化重复值多可令实际事件不足15，即使全局长度门槛通过仍失败。严格g>u，等于分位阈的点不算极值事件。 全序列相同状态被零距离排除，不能加微小噪声/eps凑出高维估计；positive-distance缺口会压缩持续性的时间轴。 默认ac没有严格过零时tau/w可能取N−1并使嵌入/门槛失败，而非辅助解析一律返回NaN。 局部维使用均值超额倒数，形式与Hill型对数核相关；新构造是逐pole延迟几何、时间排除与O’Brien持续性联合分布，不把单独d或theta再拆条。也不从源码注释的渐近理论推断有限金融窗口的真实维数。 BF_ResetSeed单独CC-BY-NC-SA-4.0；核心与其余已审helpers各自GPL-3.0-or-later。工具箱、随机数、quantile插值、浮点依赖未运行冻结。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-a5b56ac82b17675a080c666c",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-211b9ee3002fbf8e79167d96",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在延迟状态空间逐参考点测量非常近的返回及其时间聚集程度，再概括不同位置的局部维、持续性与二者关联。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-a5b56ac82b17675a080c666c",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-211b9ee3002fbf8e79167d96",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Y_ij=y_(i+(j−1)τ)，n为嵌入行数。随机无放回取至多nPoles个pole j。删掉|i−j|<=w与距离D_ij=||Y_i−Y_j||为0的点，按剩余时间顺序构造g_i=−ln(D_ij)；u=quantile(g,q)，E_i=1[g_i>u]，L=len(E)，Nu=ΣE。Nu>=15时d_j=1/mean_(E=1)(g−u)。若L>mOrder+1，A=Σ_(i=1..L−mOrder) E_i*1[Σ_(h=1..mOrder)E_(i+h)=0]，θ_j=min{[A/(L−mOrder)]/[Nu/L],1}。返回有效d比例、d与θ各自omitnan均值/样本std，及两者同有效pole至少10且两边std>0时的Pearson相关。一整族不按pole或维度拆数。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-a5b56ac82b17675a080c666c",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-211b9ee3002fbf8e79167d96",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（finite real time-ordered evenly sampled externally standardized vector）：完整状态窗口；源文假设z-score，函数不自动做。近返距离需大量有效状态，长度门槛依q和Theiler带计算。。参数：tau：延迟；范围default ac or positive integer reviewed; adaptive ac1e/mi outside reviewed contract；源码默认ac；m：嵌入维度；范围research integer>=2; automatic dimension outside contract；源码默认3；q：近返尾部阈分位；范围research real in (0,1)；源码默认0.98；theilerWin：排除pole附近时间带；范围default ac multiplier1 or integer>=0 reviewed；源码默认['ac', 1]；nPoles：无放回参考点数，上限嵌入行数；范围research positive integer；源码默认200；mOrder：在压缩事件序列向前检验步数；范围research positive integer；源码默认5；maxN：显式裁剪只取最早原始点；范围full or positive integer sufficient for gates；源码默认full；randomSeed：默认重置全局种子0；范围default/none/numeric scalar as BF_ResetSeed；源码默认default"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-a5b56ac82b17675a080c666c",
+        "harvest-source-feec739939d9575d8c13fe84",
+        "harvest-source-211b9ee3002fbf8e79167d96",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e",
+        "harvest-source-b3c0bdfaa2f2c23b099d0a11"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "状态近返极值的局部维与持续性分布",
+  "native_source_id": "NL_EVTLocalDim",
+  "one_line": "在延迟状态空间逐参考点测量非常近的返回及其时间聚集程度，再概括不同位置的局部维、持续性与二者关联。",
+  "record_id": "NL_EVTLocalDim",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/NL_EVTLocalDim.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-a5b56ac82b17675a080c666c",
+      "license": "GPL-3.0-or-later",
+      "locator": "native local dimension/persistence contract and cited algorithm origins:L1-L103; author and GPL notice:L107-L133; defaults, crop, embedding, gates and seeded pole sample:L138-L202; distance filtering, exceedance MLE, exact persistence normalization and all outputs:L204-L263",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "d7d71d16bec73a313bdaf67f4db453055877db6b55c08fbd82c85a60c0e8b54c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/NL_EVTLocalDim.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-feec739939d9575d8c13fe84",
+      "license": "GPL-3.0-or-later",
+      "locator": "native contract and GPL notice:L1-L56; input and numeric/default ac delay:L58-L104; numeric dimension and embedding matrix:L110-L200",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "dd7d80d452cd8349e9b94bea4ed4bed9ab50f9183bc867c22ffc9af71adfd26e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/PeripheryFunctions/BF_Embed.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-211b9ee3002fbf8e79167d96",
+      "license": "GPL-3.0-or-later",
+      "locator": "Theiler contract, GPL and default ac/integer dispatch:L1-L84",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "4000d9041ecfbb37f874e47a0c492b4f110b6d14a7a820fab57f339816a4ca0b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/PeripheryFunctions/BF_TheilerWindow.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-2b8e681d7d72c4abd58f8700",
+      "license": "GPL-3.0-or-later",
+      "locator": "first crossing native implementation:L1-L99",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "e74746e2fd92d080f80a4829214e9433d17ff2dcf463f03d78a3e81dde0c60fe",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/CO_FirstCrossing.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-73d2de861382cc78a1172a49",
+      "license": "GPL-3.0-or-later",
+      "locator": "native contract, GPL and defaults:L1-L76; Fourier ACF normalization and exact-match cache:L91-L159",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "80d88552c6092c1b5a31207985a98bc20d70f99045659f30a4f6316a9a63afa6",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/CO_AutoCorr.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-fa0e64fddccda873ff1aff5e",
+      "license": "GPL-3.0-or-later",
+      "locator": "GPL, all-NaN, strict crossing and no-crossing fallback:L1-L70",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "9c946dbe680441c26a39b37994ac2820b27bb4c66917d5c9fef2dda4931520c6",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/PeripheryFunctions/BF_PointOfCrossing.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-b3c0bdfaa2f2c23b099d0a11",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "separate CC license and seed dispatch:L1-L57",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "54ab0354d059a7c3ab075f3d7ef63c3b92c4ac9544ea3d0411169ac033b3acc6",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/PeripheryFunctions/BF_ResetSeed.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

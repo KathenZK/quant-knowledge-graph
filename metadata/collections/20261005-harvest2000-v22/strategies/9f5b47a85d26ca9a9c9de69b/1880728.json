@@ -1,0 +1,140 @@
+{
+  "economic_basis": {
+    "hypothesis": "来源用企业外生净收支的波动和每次调拨的固定成本，解释为什么现金余额需要一个不操作区及偏向下侧的回归内点。持有现金损失利息、频繁变现证券增加调拨费，两者形成取舍。这里是流动性配置模型而非证券价格反转信号；长期模型成本最小不代表现实净收益、借款可得或现金安全已验证。",
+    "missing": [
+      "未运行源码、求解、仿真或回测；成本模型最优性不充作经济验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi.org/10.2307",
+  "lab": null,
+  "missing_information": [
+    "本条只取零漂移p=q=1/2、独立平稳净现金流与两个合并账户的正文分支；不将三次根式外推到有系统漂移、季节付款或多层账户。",
+    "论文把银行要求的最低余额归零后讨论可支配余额。自撰记号L只把这一外生金额平移回来，不将L解释为策略自行学习的风控最优值。",
+    "σ²是每日净经营现金变化的货币平方/日，ν是每货币单位每日收益率；不能把年化百分数、股票收益波动或经营收入规模直接代入。没有给可用训练样本、滚动更新计划或实际参数默认值。",
+    "界内不交易，触上下界时整个余额回到同一个内点z；不是比例交易费模型中只反射到边界的微小连续交易。严格选首次达到边界的理论政策，不默补离散大额现金跳过边界后的程序。",
+    "成本目标是长期平均调拨费加现金机会成本；论文明确忽略费用的利息、利息的复利并采用平均余额近似。没有完整费用扣款、证券计息和结算账户递推，不能将γ直接扣入一个未给出的净值账本。",
+    "证券余额可以因连续补现金而变负，原文假定可使用信用额度或短期借款；未给额度、担保、融资价差及失效动作。不能宣传为无借款、无破产或本金保护。",
+    "即时调拨是模型假设，实际证券整手/期限/赎回/成交延迟/跨日结算、超越边界与参数落格规则未闭合。最低银行余额改变时的无成本平移也是论文假设，非现实保证。",
+    "原件为1966出版文章的大学站扫描副本，封面保留JSTOR条款与2015下载戳；当前出版页普通HTTP为403且未绕过，Crossref登记仅核身份。没有开放许可；新作者arXiv2024文的CC BY-NC-ND许可不授予1966原文任何权利。",
+    "未执行代码、模拟、优化、回测或交易接口；大学站可读不等于商用授权，原PDF和图片均不公开入Git。"
+  ],
+  "name": "Miller–Orr：固定调拨费下现金与短期证券的触界回归内点配置",
+  "native_source_id": "1880728",
+  "one_line": "以净现金流方差和固定调拨费计算上下界；余额触界时一次调回内点，界内不交易。",
+  "record_id": "1880728",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行来源实现、优化器、仿真或回测。",
+    "metadata": "来源原生身份、精确定位及自撰中文规则；不发布论文、图像、代码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.jstor.org/terms"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Merton H. Miller and Daniel Orr, A Model of the Demand for Money by Firms, Quarterly Journal of Economics80(3),413–435 (August1966), DOI10.2307/1880728. Scan served by campello.fearp.usp.br; institutional mirror, not verified author upload or publisher delivery.",
+      "id": "miller-orr-1966-published-pdf",
+      "license": "Published QJE1966 paper, JSTOR terms printed on the institutional copy; no open redistribution or commercial-use grant established. Original Chinese rule metadata and locators only, not source fulltext/images. The CC BY-NC-ND license of a different2024 article is not inherited. Commercial use REVIEW_REQUIRED.",
+      "locator": "University-hosted scanned publication copy. Physicalpp6–12 = printedpp417–423: §II.1 assumptions, §II.2 Eq1–13, §II.3 borrowing footnote; pp16–17 nonzero-drift excluded scope. Physicalp1 JSTOR identity/terms, p2 authors/title. Text locators use pinned pdftotext derivative; all core formulas visually checked.",
+      "revision": "QJE80(3),1966-08,pp413–435; institutional JSTOR copy cover accessed2015-04-22; sha256:e86a7d43c907ddb7fef169808a7770389ae07416ab03d1770f50660635203be5",
+      "sha256": "e86a7d43c907ddb7fef169808a7770389ae07416ab03d1770f50660635203be5",
+      "supports": [
+        "现金/流动证券两账户与外生经营现金流",
+        "固定每次调拨费和机会利息成本",
+        "上下界触发回同一内点及三次根政策",
+        "归零最低余额、长期近似和借款限制"
+      ],
+      "url": "https://campello.fearp.usp.br/1880728.pdf",
+      "verification": "FETCHED_PINNED_PUBLISHED_PAPER_INSTITUTIONAL_COPY_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Crossref DOI registration for OUP article10.2307/1880728",
+      "id": "crossref-10-2307-1880728",
+      "license": "Crossref bibliographic registration metadata; not a license grant for the journal article. Paper commercial use REVIEW_REQUIRED.",
+      "locator": "JSON L1 message.DOI/title/author/published-print/container-title/volume/issue/page; confirms DOI, paper title, Miller/Orr, QJE80(3),August1966 and initialpage413. Does not itself provide the rule or certify host redistribution rights.",
+      "revision": "Crossref DOI record HTTP snapshot sha256:38a8b0855cd696cf39ee88f2c681b769de2587c101876d82fffa8bc9b661a116",
+      "sha256": "38a8b0855cd696cf39ee88f2c681b769de2587c101876d82fffa8bc9b661a116",
+      "supports": [
+        "已出版论文的题名作者及DOI身份"
+      ],
+      "url": "https://api.crossref.org/works/10.2307/1880728",
+      "verification": "FETCHED_PINNED_PRIMARY_BIBLIOGRAPHIC_REGISTRY"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "miller-orr-1966-published-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "现金不生息；证券组合按每货币单位每日ν获得收益。经营净流量在每1/t日以相同概率1/2增加或减少m个货币单位，独立平稳，因此每日方差σ²=m²t。现金变化的这一随机过程排除两账户间主动调拨及证券到期本金，后者假定立即再投资。γ是每次调拨固定的货币成本；c、z、h、L及调拨名义均为金额，非股票收益、权益比例或股数。"
+    },
+    "cost": {
+      "evidence": [
+        "miller-orr-1966-published-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "模型每次任一方向的转移都收相同固定γ，不依赖金额和距离上次操作的时间；持有可支配现金的机会成本为ν乘其长期平均额。J=γσ²/[z(h−z)]+ν(h+z)/3，ν为每日利率而非年化百分数。来源脚注明确该成本流近似忽略调拨费用上的利息、利息复利及对现金逐时积分；比例手续费另属未采扩展。实际佣金、赎回价差、税、信用借款费差和费用从哪一账户支付未给，不能把缺项变成零或将J当实盘净值扣款。"
+    },
+    "entry": {
+      "evidence": [
+        "miller-orr-1966-published-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "当可支配现金首次达到下界0，即总现金C=L，变现证券或使用来源假定的短期信用安排，向现金账户调入z*，使现金回到L+z*。在0<c<h*时不进行组合调拨，不因价格下跌或每日方差变化自动买卖；本条假定参数固定。来源按一次调拨后的状态分析循环，未规定任意初始持仓必须立即做一笔额外交易。"
+    },
+    "execution_time": {
+      "evidence": [
+        "miller-orr-1966-published-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：论文假定两账户间转移可即时完成，监测到余额达到上下界就调回z。没有实际银行/证券交易时钟、先收付款后确认的消息顺序、现金跳跃越界处理、可用/在途资金、整手取整、信用审批和失败回退合同；原文电话交易示例不是已实现接口。σ²的日单位与调拨事件时点分开保留，未模拟真实成交或现金账。"
+    },
+    "exit": {
+      "evidence": [
+        "miller-orr-1966-published-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "当可支配现金首次达到上界h*=3z*，把h*−z*=2z*从现金转入流动证券组合，现金回到L+z*；不是把证券仓全部清空。下界发生的是证券变现补现金，上界发生的是现金投资证券，两方向都回相同内点。源的模型边界是“达到”，本条不改成仅严格穿越才动作；离散现金跳过界值的金额规则和终止退出尚未定义。"
+    },
+    "position": {
+      "evidence": [
+        "miller-orr-1966-published-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每次下界调入金额z*，每次上界转出金额2z*；目标可支配现金为z*，不固定现金占全账户百分比。长期平均可支配余额(h*+z*)/3=4z*/3，不是每期应调到4z*/3。证券账户持仓是历次净调拨累积的结果，原p423脚注明确其余额可能为负，并假定可利用信用额度或其他短借；不能擅加0下限后仍称原政策。没有逐券数量、固定总财富或杠杆帽。"
+    },
+    "risk": {
+      "evidence": [
+        "miller-orr-1966-published-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只有在独立平稳、零漂移净现金流、可即时转换和固定同向/反向费用的所选模型内使用三次根式。ν≤0、σ²=0或γ=0的退化情形不套同一内点规则；非零漂移另有原文表格/附录，不据改参数继续外推。最低余额L是外生银行约定，不是风险概率保证；借款可用性、证券变现价格与多账户付款协调仍未核。源也指出定时税费/工资/分红可能形成可预测流，模型的随机游走假设并非现实事实。目标是长期调拨成本与闲置利息的取舍，不是最大回撤控制、证券价格均值回复或已证明收益。"
+    },
+    "signal": {
+      "evidence": [
+        "miller-orr-1966-published-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在L以上定义可支配余额c，设0<z<h；取长期日均成本J(z,h)=γσ²/[z(h−z)]+ν(h+z)/3。第一项由平均两次调拨间隔D=z(h−z)/σ²而来，第二项由稳态三角余额分布的均值(h+z)/3而来。正文Eq11–13给z*=(3γσ²/(4ν))^(1/3)，h*=3z*；原大写Z=h−z只是代数辅助量，本摘要不用它冒充回归目标。实际总现金的下界L、目标L+z*、上界L+h*是原归零约定的平移表达；γ、ν、σ²和L均须事先给定，不偷读后续收支。"
+    },
+    "timeframe": {
+      "evidence": [
+        "miller-orr-1966-published-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "事件驱动：从一次调拨后的内点c=z开始，任由经营收支使余额在0与h之间变化，第一次达到任一边界即调拨回z并重复。基础现金增减试验间隔为1/t日，单位例如小时只是说明，策略不是强制每小时调仓。论文求长期平均成本，E[N]/T的频率等于1/D是T趋大时的结论；不把公式称为任意有限规划期限的精确收益。没有终止日证券全清算或每月重估界值规则。"
+    },
+    "universe": {
+      "evidence": [
+        "miller-orr-1966-published-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "企业的一个经营现金账户和一个独立管理的流动证券组合；来源举国库券、存单、商业票据及其他货币市场工具作为第二账户内容，但未规定逐券筛选、到期梯队或具体基金。银行要求的最低余额是外部给定，本条记为L≥0；研究的可支配现金c=C−L。只选两账户、零漂移、γ>0、ν>0、σ²>0分支，不把企业销售或股票行情当宇宙生成器。"
+    }
+  }
+}

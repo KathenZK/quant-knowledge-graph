@@ -1,0 +1,155 @@
+{
+  "economic_basis": {
+    "hypothesis": "用高斯相关映射寻找时间依赖曲线的第一个局部低点。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-d99ff6b16521153c13a4ac90",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "等时间间距样本；均值、标准差及所有统计量使用整个输入窗口；只在整个窗口样本已观测并发布后可得，不允许把全窗口输出回填为早先时点的已知特征。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-d99ff6b16521153c13a4ac90",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入按相等时间间隔采样；按原C入口先要求n>=10且输入有限；z_i=(x_i-mean(x))/s，s=sqrt(Σ(x_i-mean(x))²/(n-1))。窗口必须非恒定，单独原生C函数接收的是已标准化z。 每个滞后分别在两个截短子序列上计算Pearson相关，和全窗ACF的分母口径不同。 在高斯假设下把平方相关映射成互信息曲线。 源码循环保存的是从延迟1开始的零基索引，所以真实极小滞后为k时返回k-1；保留原生行为，不擅自修成k。 边界：只有两侧均严格较小才算极小，平台不算。 |r|=1使对数发散，子样本方差0可产生NaN；没有额外修复。 返回数字混合零基极小索引与T哨兵；用户应按来源语义解释，不能直接称所有输出为真实周期长度。 输出：一个标量；窗口、分箱、正负方向和API语言绑定不另算新条"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-d99ff6b16521153c13a4ac90",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用高斯相关映射寻找时间依赖曲线的第一个局部低点。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-d99ff6b16521153c13a4ac90",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入按相等时间间隔采样；按原C入口先要求n>=10且输入有限；z_i=(x_i-mean(x))/s，s=sqrt(Σ(x_i-mean(x))²/(n-1))。窗口必须非恒定，单独原生C函数接收的是已标准化z。 T=min(40,floor((n+1)/2))；r_k=Corr(z[0:n-k],z[k:n])，I_k=-0.5ln(1-r_k²)。找到最早k∈[2,T-1]使I_k<I_(k-1)且I_k<I_(k+1)，源码返回k-1；没有则返回T。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-d99ff6b16521153c13a4ac90",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（evenly sampled ordered double vector）：有限、非恒定、等时间间隔采样的按时间排列数值窗口，n>=10；市场变量、真实采样间距、缺失处理和时间戳需另行绑定，不可把不规则事件序列直接当等间距样本。参数：maximum_lag：搜索最大延迟；范围fixed; actual bound also uses half sample size；源码默认40"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-d99ff6b16521153c13a4ac90",
+        "harvest-source-597240971e17f8f9d1c6e29e",
+        "harvest-source-40fd2cfd3831b7fe559fc341"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "DynamicsAndNeuralSystems/catch22",
+  "lab": null,
+  "missing_information": [
+    "未编译/执行来源C代码或验证平台数值一致性",
+    "C运行时、编译器、浮点及内存安全未做复现验证",
+    "实际等采样间距、缺失插补约定、市场变量/时间戳/供应商/PIT历史未冻结",
+    "没有金融预测收益有效性证据"
+  ],
+  "name": "高斯互信息曲线首个极小的原生索引",
+  "native_source_id": "IN_AutoMutualInfoStats_40_gaussian_fmmi",
+  "one_line": "用高斯相关映射寻找时间依赖曲线的第一个局部低点。",
+  "record_id": "IN_AutoMutualInfoStats_40_gaussian_fmmi",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/C/IN_AutoMutualInfoStats.c"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-d99ff6b16521153c13a4ac90",
+      "license": "GPL-3.0-or-later",
+      "locator": "IN_AutoMutualInfoStats_40_gaussian_fmmi:L15-L62",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "da8c920d8094d8f415a1ef7b70dfc29a9158134b368be7056732e6e738f4652b",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/C/IN_AutoMutualInfoStats.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-597240971e17f8f9d1c6e29e",
+      "license": "GPL-3.0-or-later",
+      "locator": "canonical input quality checks and z-score preprocessing:L27-L70",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "295b06e810fb00507f52bdf4dc7bd46b4f304f3f423a2f99d700ad11d1dffc55",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/C/main.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-40fd2cfd3831b7fe559fc341",
+      "license": "GPL-3.0-or-later",
+      "locator": "mean:L29-L37; sample stddev:L94-L103; zscore_norm2:L181-L189; Pearson segment correlation and autocorr_lag:L138-L163",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "13ce45289a86c0287acdfd61b7d2cf97043a38b72241860ab0df1bc11cfa0ad3",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/C/stats.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-3cfc6a3a24a21c9116b1479b",
+      "license": "GPL-3.0-or-later",
+      "locator": "GPL v3 license:L1-L674",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "catch22 authors and contributors; Carl Henning Lubba et al.; DynamicsAndNeuralSystems/catch22",
+      "id": "harvest-source-5880de6029391154f8aed213",
+      "license": "GPL-3.0-or-later",
+      "locator": "authorship and GPLv3-or-later declaration:L1-L60",
+      "revision": "19e322b2fa8e9ef8372f7fe639d6f4eb882f6716",
+      "sha256": "53368c86b844f521e9d0a85e5d388a3f59b1826a666a5d99a22915285269108b",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/DynamicsAndNeuralSystems/catch22/blob/19e322b2fa8e9ef8372f7fe639d6f4eb882f6716/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

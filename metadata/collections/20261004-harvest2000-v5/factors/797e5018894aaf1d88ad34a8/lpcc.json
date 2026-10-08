@@ -1,0 +1,149 @@
+{
+  "economic_basis": {
+    "hypothesis": "以窗口的自相关拟合线性预测多项式，再把该多项式的对数功率谱变换成绝对倒谱向量。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "要求输入一维ndarray且长度至少n_coeff；不先去均值或除以方差，自相关来自scipy.signal.correlate(signal,signal,full)。 将取出的自相关值写入float32，再构造Toeplitz矩阵并直接求逆乘负的滞后向量；不是Burg算法，也没有岭正则或稳定根修正。 系数前置1之后，对该多项式系数向量做长度n_coeff的FFT，平方幅度取自然对数，IFFT后取绝对值。原生lpcc标签不意味着保留标准有符号倒谱。 n_coeff个输出作为一个表征算法，不按系数坐标或多项式阶数新增。 边界：直接矩阵求逆可能在奇异/病态矩阵失败，源码没有正则、条件数门槛或异常兜底。float32自相关截断精度是实现合同。 lpcc的零分支检查的是系数总和==0，而非所有系数逐项为0；不得把该判据改写成同义。 多项式FFT出现零时log(0)会产生非有限值，源码不加epsilon；无有效性保证。 函数读取signal.ndim/size，一般Python list不满足该输入接口；本条明确1D实数ndarray。 未中心化意味着水平项可主导预测系数；绝对值又移除了倒谱符号，不能把它等同有符号金融AR系数。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "以窗口的自相关拟合线性预测多项式，再把该多项式的对数功率谱变换成绝对倒谱向量。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "p=n_coeff−1。原始未去均值x的full自相关取r_0..r_p，并存成float32。R_ij=r_|i−j|，i,j=0..p−1。若ΣR=0则c为n_coeff个0；否则c=[1, −inv(R)*(r_1..r_p)]。lpcc若Σc=0直接返回同长度零向量；否则输出|IFFT(log(|FFT(c)|²))|。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "signal（1D finite real numpy ndarray, nonempty, ordered and evenly sampled）：等时间间隔的完整观测窗口；价格/收益/其他观测绑定缺失。N>=n_coeff，研究域n_coeff>=2。。参数：n_coeff：输出系数数目；AR阶数为n_coeff−1；范围research contract integer>=2 and <=N；源码默认12"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-69aca4321017f6f302b163db",
+        "harvest-source-e4e516cdc1e2597301bca76f"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "fraunhoferportugal/tsfel",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "NumPy/SciPy/PyWavelets等运行环境未冻结；固定源码调用与完整数值复现是不同状态",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "线性预测多项式的绝对倒谱系数",
+  "native_source_id": "lpcc",
+  "one_line": "以窗口的自相关拟合线性预测多项式，再把该多项式的对数功率谱变换成绝对倒谱向量。",
+  "record_id": "lpcc",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/tsfel/feature_extraction/features.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-69aca4321017f6f302b163db",
+      "license": "BSD-3-Clause",
+      "locator": "lpcc:L1559-L1591; imports and environment boundary:L1-L8",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "8b1270b22219f230648165bcadbd6c7e2a215e1c0a4ee9c0d642310e5a55c6d2",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/tsfel/feature_extraction/features.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-e4e516cdc1e2597301bca76f",
+      "license": "BSD-3-Clause",
+      "locator": "lpc:L221-L263; create_symmetric_matrix:L193-L218; imports and environment boundary:L1-L4",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "0053fc891e55939dc54aaedf34bb4de31001e302e13d1b38c3cd29fe6a2819ab",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/tsfel/feature_extraction/features_utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-307e5ae686a88bfe0114b8a0",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L29",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "b8f68990bee0d6c6cfceab3c13f4da6a74ce66db8eacdad89a12614e5f551aed",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-1e00b2abb469b52324fb2765",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_attribution:L1-L48",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "6dab75dcafe1d8f033aafbc53e75f34d47507841849d44bf5b4a5085c0345663",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/AUTHORS.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2020-2025, Fraunhofer AICOS；TSFEL与University of Bremen Cognitive Systems Lab合作开发；引用Barandas/Folgado等(2020)软件说明仅作归属。",
+      "id": "harvest-source-33d9503e658fb0c6f0e9d4a7",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_attribution:L1-L177",
+      "revision": "9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274",
+      "sha256": "d8cb28567d39a645b558e3679da1933c22441ebbee006aa3eeec035df7f98760",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/fraunhoferportugal/tsfel/blob/9c1b01ca44d9282b0e03a54fd0b5fe4b3047f274/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

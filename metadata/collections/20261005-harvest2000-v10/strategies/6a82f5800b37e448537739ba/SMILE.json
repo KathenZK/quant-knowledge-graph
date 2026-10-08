@@ -1,0 +1,119 @@
+{
+  "economic_basis": {
+    "hypothesis": "期权相对报价反映波动率曲线形状，据其改变认购方向，希望在收取期权溢价与参与反弹间切换；这是原方法的研究动机，未验证预测能力、收益或风险优势。",
+    "missing": [
+      "未验证经济有效性、收益、风险优越性或可交易复制。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "Cboe Global Indices",
+  "lab": null,
+  "missing_information": [
+    "未取得期权链、OPRA逐笔/报价、国库券率及可交易合同；没有源码执行、回测或成交验证。",
+    "核心交易决策可定位，完整指数计算未复现。现金日收益公式L140–147与文字存在疑点；不自行补−1。",
+    "原方法引用Cboe Index Policies and Practices；本轮未采该依赖，特殊市场中断、输入缺失及并列delta选档处理未获完整规定。",
+    "公开原件权利声明严，原文、图表和数据不入Git；自撰元数据不授予指数、商标或市场数据许可。"
+  ],
+  "name": "SMILE：认沽认购报价比驱动的风险逆转与空头宽跨式切换",
+  "native_source_id": "SMILE",
+  "one_line": "每月用25-delta SPX认沽/认购中间报价比选择认购多空，认沽恒为空头，现金国库券按认沽行权价抵押。",
+  "record_id": "SMILE",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行源码、未回测或产生经济有效性结论。",
+    "metadata": "自撰定义与出处定位；公开可读取不等于获得来源或数据授权。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://cdn.cboe.com/api/global/us_indices/governance/SMILE_Methodology.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Cboe Global Indices",
+      "id": "cboe-smile-pdf",
+      "license": "©2025 Cboe及关联方，All Rights Reserved；PDF页脚含CONFIDENTIAL，公开可读取不是可分发/商用授权。L277–280声明复制、存储、派生和利用内容受事先许可限制；只提交自撰事实性规则摘要与定位，商业使用/数据及指数产品许可均REVIEW_REQUIRED。",
+      "locator": "官方PDF物理页码与pdftotext派生文本行号；原PDF SHA为出版来源，派生文本非HTTP响应，见review.field_spans",
+      "revision": "Version 2.0; Last Revised Date 2025-02-14; PDF sha256:23582b1df2daad7be425ad5426dfed61c0c9c78e875c42d33778a672c3e89fbc",
+      "sha256": "23582b1df2daad7be425ad5426dfed61c0c9c78e875c42d33778a672c3e89fbc",
+      "supports": [
+        "策略方法、仓位、再平衡及明确缺项"
+      ],
+      "url": "https://cdn.cboe.com/api/global/us_indices/governance/SMILE_Methodology.pdf",
+      "verification": "FETCHED_PINNED_FIRST_PARTY_DOCUMENT_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "cboe-smile-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "标普500SPX一个月认沽和认购期权，加一月期美国国库券现金腿；按方法单位组合持仓，没有股票现货腿。"
+    },
+    "cost": {
+      "evidence": [
+        "cboe-smile-pdf"
+      ],
+      "status": "MISSING",
+      "text": "没有明确交易手续费、税费、执行滑点或冲击成本参数。新仓VWAP及无交易时买/卖报价回退是指数估值约定，不是完整可实现成本。原免责声明说明理论指数可能不反映费用、税及买卖开销。"
+    },
+    "entry": {
+      "evidence": [
+        "cboe-smile-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "建立一单位组合：国库券金额为认沽行权价Kput的100%，卖出认沽一份，并按R条件买入或卖出认购一份。期权新仓使用11:30–12:00 ET的成交量加权价格。原件先描述排除新认购交易中OPRA大写A–H和小写f–t代码，再对保留的认购/认沽成交作量权均价；不把首句未明确的认沽过滤擅自扩展。卖出的期权若时段内无成交，取12:00前最后买价；买入认购无成交则取最后卖价。"
+    },
+    "execution_time": {
+      "evidence": [
+        "cboe-smile-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月第三个星期五滚动，交易所假日提前到前一营业日；11:00 ET确定新合约/价格比，11:30–12:00 ET估值成交，再持有至下一到期。非滚动日收盘使用16:00 ET前最后买卖报价均值；指数15秒发布频率不是交易频率。实际能否按该时段成交未验证。"
+    },
+    "exit": {
+      "evidence": [
+        "cboe-smile-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有本期认沽和认购到下一滚动日到期结算，再按新信号重建组合；非滚动日期权数量保持不变。滚动时把国库券账户与旧期权结算价值合成当前净值，再按新单位组合比例投入。原件称到期期权在11:00 ET视为到期；未给本条专用盘中止损、止盈或提前退出。1986-06至1992-10历史区段原文另用16:00 ET滚动。"
+    },
+    "position": {
+      "evidence": [
+        "cboe-smile-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "以一份空认沽、一份方向可变认购以及现金Kput定义单位组合；以当期指数净值按同一组成比例缩放，不把一份期权等同未说明的账户合约张数/乘数。非滚动日期权份额不变，现金账户计息。完整收益计算存在未决边界：L140写M_t=(1+Rf)M_{t-1}，L143–147印Rf=(1/(1−28/360×USB4WTA))^(日差/28)，未见−1；按字面零利率会使现金翻倍，与“日利率”文字不协调。本次只保留异常，不代改公式。"
+    },
+    "risk": {
+      "evidence": [
+        "cboe-smile-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "认沽空头承担下跌风险；R>1.5时认购空头并无现货多头覆盖，方法未定义亏损上限、保证金动态处理或盘中止损。T-bill抵押按认沽行权价并不能被解释成所有期权组合风险有界。选择并列、数据空缺及现金计息公式疑点需要后续澄清；这里审核的是来源描述，不是可直接运行或经济有效性验证。"
+    },
+    "signal": {
+      "evidence": [
+        "cboe-smile-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每次月度滚动，R=所选认沽中间报价/所选认购中间报价。R<=1.5时认购方向为买入；R>1.5时方向为卖出。认沽方向始终卖出。这个信号是期权价格比，不是两项隐含波动率之比，也不按每日价格比翻转。delta输入与比值在11:00 ET确定。"
+    },
+    "timeframe": {
+      "evidence": [
+        "cboe-smile-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度换仓并持有一个期权到期周期；日常计值，非滚动日不改变期权数量。"
+    },
+    "universe": {
+      "evidence": [
+        "cboe-smile-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度滚动时从下一到期日的SPX认沽及认购中，分别选行权价对应delta最接近25的合约。delta由Black公式计算，全部输入取11:00 ET以前最后可得值。原件未在本段给出并列delta、无报价或无合适档位时的选档规则，不补其他指数规则。"
+    }
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "economic_basis": {
+    "hypothesis": "把输入序列作为逐步外力，描述带摩擦势阱粒子的轨迹分布、过井次数与记忆，不把虚拟粒子当真实市场物理机制。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-89162510dd16ec3c13551a56",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只在完整窗口全部已观测并发布后计算；不可把窗口估计回填为内部时点实时值。上游无PIT、交易日历或自动金融滚动保护。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-89162510dd16ec3c13551a56",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "双势阱默认[α,κ,Δt]=[2,.1,.1]，正弦势默认[1,1,1]。更新位置使用完整a_i Δt²，不是常加速度公式的二分之一系数；它与先更新v再更新x的辛Euler一致。 N个输入生成N个状态，最后一个输入y_N不进入积分，初始0状态仍参与全部轨迹统计。源码不自动标准化输入，幅度单位会影响非线性势的响应。 轨迹结束后，只检查isnan(x_N)或|x_N|>1e10，触发返回单一NaN。没有每步提前终止或对所有中间状态限幅。 ACF使用全轨迹去均值后零填充FFT，零阶归一并保留前N项；延迟超过N−1返回NaN。连续零穿越取第一次ACF从非负到严格负的两点线性插值；若一直不负返回N−1，全NaN返回NaN。 阈值a的跨越频率为Σ 1[(x_(i−1)−a)(x_i−a)<0]/(N−1)，a=0及双势阱±α。恰落在阈值的相邻点不会被计为跨越。 边界：建议有限数值输入且N>=51以使三个滞后ACF均有定义；源码不强制这一下限，短序列会产生部分NaN/零分母，空序列可能索引报错。 恒定轨迹的ACF为0/0，首次零穿越返回NaN。暴走检查只看最后位置，不能解释成整个轨迹已经数值稳定。 没有PIT、价格/收益绑定或市场参数标定；势阱轨迹是确定性转换特征，不能从名称推断真实价格动力学。 默认势参数、sine/dblwell方向和11/13项摘要不拆新增；更新公式与原函数固定版本绑定，不能换成dt²/2后保留同一来源身份。 输出：完整一个算法族；系数向量、坐标/方向、窗口/参数不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-89162510dd16ec3c13551a56",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把输入序列作为逐步外力，描述带摩擦势阱粒子的轨迹分布、过井次数与记忆，不把虚拟粒子当真实市场物理机制。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-89162510dd16ec3c13551a56",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始化x_1=v_1=0。对i=2..N：a_i=F(x_(i−1))+y_(i−1)−κv_(i−1)；v_i=v_(i−1)+a_i Δt，x_i=x_(i−1)+v_(i−1)Δt+a_i Δt²=x_(i−1)+v_i Δt。双势阱F(x)=−x³+α²x；正弦势F(x)=−sin(x/α)/α。返回x的mean、median、样本std、max−min、mean(x>0)、相邻乘积严格<0的比例，以及|ACF_x(1)|、|ACF_x(10)|、|ACF_x(50)|、ACF首次严格过零的线性插值滞后和|x_N|；双势阱另返回跨越+α/−α的比例。所有势类型、参数和轨迹摘要合计一族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-89162510dd16ec3c13551a56",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "y（finite real time-ordered evenly sampled vector; research N>=51）：完整输入窗口；无自动标准化，单位需外部固定。y_N未进入积分，状态统计仍需整段已可得。。参数：whatPotential：势函数；范围dblwell or sine; both bundled one family；源码默认dblwell；params：势尺度、摩擦系数、积分步长；不是市场真实采样秒数；范围finite α>0, κ>=0, Δt>0 research contract; sine default [1,1,1]；源码默认[2, 0.1, 0.1]"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-89162510dd16ec3c13551a56",
+        "harvest-source-2b8e681d7d72c4abd58f8700",
+        "harvest-source-73d2de861382cc78a1172a49",
+        "harvest-source-fa0e64fddccda873ff1aff5e"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "benfulcher/hctsa",
+  "lab": null,
+  "missing_information": [
+    "未执行上游代码、未回测",
+    "MATLAB及工具箱版本/默认数值行为未冻结；只审静态计算定义，没有运行复现",
+    "金融输入、窗口长度/采样单位、数据PIT与发布时间缺失",
+    "无收益方向、预测能力或经济有效性证据"
+  ],
+  "name": "输入驱动势阱粒子的非线性轨迹统计",
+  "native_source_id": "PH_ForcePotential",
+  "one_line": "把输入序列作为逐步外力，描述带摩擦势阱粒子的轨迹分布、过井次数与记忆，不把虚拟粒子当真实市场物理机制。",
+  "record_id": "PH_ForcePotential",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/PH_ForcePotential.m"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-89162510dd16ec3c13551a56",
+      "license": "GPL-3.0-or-later",
+      "locator": "native identity, equations, potential defaults and GPL:L1-L75; default dispatch, force and exact symplectic integration:L81-L124; end-only blowout check and complete trajectory outputs:L144-L174",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6026ea33b208438391a1be1b8f0a2757bb231a7c7fe579b528a582bbd796672d",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/PH_ForcePotential.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-2b8e681d7d72c4abd58f8700",
+      "license": "GPL-3.0-or-later",
+      "locator": "first crossing native implementation:L1-L99",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "e74746e2fd92d080f80a4829214e9433d17ff2dcf463f03d78a3e81dde0c60fe",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/CO_FirstCrossing.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-73d2de861382cc78a1172a49",
+      "license": "GPL-3.0-or-later",
+      "locator": "native contract, GPL and defaults:L1-L76; Fourier ACF normalization and exact-match cache:L91-L159",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "80d88552c6092c1b5a31207985a98bc20d70f99045659f30a4f6316a9a63afa6",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/Operations/CO_AutoCorr.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-fa0e64fddccda873ff1aff5e",
+      "license": "GPL-3.0-or-later",
+      "locator": "GPL, all-NaN, strict crossing and no-crossing fallback:L1-L70",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "9c946dbe680441c26a39b37994ac2820b27bb4c66917d5c9fef2dda4931520c6",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/PeripheryFunctions/BF_PointOfCrossing.m",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-5fce51b3f873c6124e93790e",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L106",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "6f59a0bc2b9e0dd896c160a079303bf76dade7ddfea387eb6827e4cea8ac14b4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (C) 2013-2026 / 2026 Ben D. Fulcher；原算法作者及论文见对应固定源码文献部分，本条不转存论文全文。",
+      "id": "harvest-source-50a009c9a23a2c467acd4031",
+      "license": "CC-BY-NC-SA-4.0",
+      "locator": "framework license scope and attribution:L1-L93",
+      "revision": "a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2",
+      "sha256": "937e69f48eba6c8a9ec0db131b7c7e04b0323a9fa86e1a1666bf08dda8a45321",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/benfulcher/hctsa/blob/a9ef2ba4ab217a8d7db6dd4605f42bb464e1d1c2/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

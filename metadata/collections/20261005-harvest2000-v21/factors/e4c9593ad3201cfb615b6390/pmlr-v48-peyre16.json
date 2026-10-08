@@ -1,0 +1,104 @@
+{
+  "economic_basis": {
+    "hypothesis": "在保持两组对象权重的软匹配中，最小化两组内部距离的平方差，用于比较未逐点对齐的整体结构。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-fffbef41c42bf45806ba2bed"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "两组矩阵、权重及其估计所用全部样本已发布后才可得；用于两个历史窗口比较时以较晚窗口结束为可用时点，不能将之后的结构匹配回填为较早信号。具体市场、训练截止、输入修订与PIT MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-fffbef41c42bf45806ba2bed"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入为两组内部距离矩阵C与D，尺寸n×n、m×m可不同；以及各自严格正且和为1的权重p/q。本条选择有限度量空间支：矩阵有限、对称、非负、对角0、不同点距离正且满足三角不等式。论文也讨论一般kernel/非度量矩阵，但不把那部分性质自动扩至本条。 所有矩阵行/列及对应权重在各组内部一致排列；两组之间没有预先给定逐点对应，也没有必须存在的跨组距离矩阵。不能把未匹配两组的距离逐元素相减，或强制n=m和同索引匹配。 可行耦合T>=0满足sum_j T_ij=p_i与sum_i T_ij=q_j。T是质量分配而非一对一置换，可将一个点的权重拆给另一组多个点；p q^T保证非空，但只是一个可行点，不通常最优。 按原文2.2节明确的L2(a,b)=.5(a−b)^2，求G=min_T .5 sum_(i,k,j,l)(C_ik−D_jl)^2 T_ij T_kl。保留所有有序下标，包含对角项，不改成排对角U统计量。耦合出现两次，所以是二次优化，不是普通Wasserstein对固定跨组成本作线性输运。 数学目标连续且耦合多面体紧，因此全局最小值存在；最优T可不唯一。所审输出G是一个非负差异值，平方距离量纲；不将G直接叫满足三角不等式的距离。度量测度空间按保测等距同构取商后，原文为sqrt(G)给出距离性质；平方根、常数缩放和匹配矩阵输出仍同一族。 同文p4 Remark2写f1=a²,f2=b²,h1=a,h2=2b，其组合给(a−b)²，与p3半平方差一个系数2。本条明示采用p3 Eq4定义及2.2节L2，保留该冲突，不声称复现p4梯度或任一库软件数值。源文件不改写。 不加入熵项，不以Sinkhorn局部迭代输出替代此全局最小值。原文正则化问题仍非凸，实际推荐步长不被其引用理论完整覆盖；本条未选择求解器、停止条件、误差证书或运行环境。论文重心、KL损失、维数、单位、正则化/实现变化保守不在本目标另拆数量。 作为量化特征需另行定义两组对象、历史窗口、内部距离和权重。不能把形状或分子例的结果写成金融有效性；G小表示已给结构相似，不证明价格水平、收益均值、因果或未来盈利相似。 边界：原文p3半平方和p4Remark2平方有归一差异，已选明确表达而不默默混合。 只审有限度量输入；不是任意协方差/核矩阵上皆有距离公理。 严格正权是明确研究子域；原定义允许零权，去零权或一般kernel扩展未另审/另计。 全局最小定义不等于已有可用求解器；局部最优与全局最优须分开，未执行或回测。 每组内部距离和p/q都可能由整窗训练得到；金融时点、数据版本、缩放和估计误差MISSING。 论文作者版权保留，未从当前空白PMLR许可模板或开源实现推断该2016原件的具体商用授权；市场数据另审。 输出：一个全局最小差异值G，连同平方根/常数单位/耦合坐标归一族；不是数值执行结果"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-fffbef41c42bf45806ba2bed"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在保持两组对象权重的软匹配中，最小化两组内部距离的平方差，用于比较未逐点对齐的整体结构。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-fffbef41c42bf45806ba2bed"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "C∈R^(n×n)、D∈R^(m×m)为有限度量矩阵，p_i>0、q_j>0且各和1。Pi(p,q)={T>=0:T1_m=p,T^T1_n=q}。G(C,D,p,q)=min_(T in Pi) (1/2)Σ_(i=1..n)Σ_(k=1..n)Σ_(j=1..m)Σ_(l=1..m)(C_ik−D_jl)^2 T_ij T_kl。全部有序对、含对角；输出原文p3 Eq4半平方损失下的G，不取sqrt、不加熵正则。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-fffbef41c42bf45806ba2bed"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "C,D（finite real symmetric metric matrices, n,m>=1, zero diagonal, positive off diagonal and triangle inequality）：每组对象内部距离，同一物理单位；无跨组对应或跨组距离输入。；p,q（strictly positive finite probability vectors of lengths n,m; sum1 each）：与各自矩阵对象顺序一致的质量/重要性。均匀是原文可选例，无强制默认；金融绑定缺失。。参数：loss：原文半平方归一，p4另一归一保留冲突；范围selected .5(a−b)^2 from Section2.2; not software default；来源默认值None；本条选定half_square_loss；entropy_regularization：只选精确无正则定义，不声称正则算法等价；范围excluded; unregularized Eq4；来源默认值None；本条选定0"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-fffbef41c42bf45806ba2bed"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "pmlr",
+  "lab": null,
+  "missing_information": [
+    "金融对象、两组距离矩阵及权重定义与PIT MISSING",
+    "全局求解器、误差/最优性证书和资源开销未选定执行",
+    "样本估计/缩放及经济有效性未验证",
+    "具体原件和输入数据商业权利未核定"
+  ],
+  "name": "两组内部距离的 Gromov–Wasserstein 匹配差异",
+  "native_source_id": "pmlr-v48-peyre16",
+  "one_line": "在保持两组对象权重的软匹配中，最小化两组内部距离的平方差，用于比较未逐点对齐的整体结构。",
+  "record_id": "pmlr-v48-peyre16",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://proceedings.mlr.press/v48/peyre16.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Gabriel Peyre, Marco Cuturi, Justin Solomon. Gromov-Wasserstein Averaging of Kernel and Distance Matrices. ICML2016, PMLR48:2664–2672. Nativekey pmlr-v48-peyre16. Original GW attribution to Facundo Memoli retained. Self-authored Chinese mathematical metadata.",
+      "id": "harvest-source-fffbef41c42bf45806ba2bed",
+      "license": "COPYRIGHT_2016_AUTHORS; SPECIFIC_REUSE_GRANT_NOT_ESTABLISHED",
+      "locator": "title authors year, source attribution and author copyright: physical PDF p1-p1; registered-space linear optimal transport versus intrinsic quadratic matching: physical PDF p2-p2; histogram simplex and coupling constraints, Eq4 and explicit half squared loss: physical PDF p3-p3; metric domain restriction, conflicting square-loss scaling in Remark2 and nonconvex solver boundary: physical PDF p4-p4; scientific applications are nonfinancial and do not establish trading effectiveness: physical PDF p8-p8",
+      "revision": "PMLR volume48 peyre16,2016,2664–2672; publisher object content hash",
+      "sha256": "f72903b57f10adc5feef3b6f5d2fbc133884ca929db9f9dca3b2ecada93e750c",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://proceedings.mlr.press/v48/peyre16.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Gabriel Peyre, Marco Cuturi, Justin Solomon. Gromov-Wasserstein Averaging of Kernel and Distance Matrices. ICML2016, PMLR48:2664–2672. Nativekey pmlr-v48-peyre16. Original GW attribution to Facundo Memoli retained. Self-authored Chinese mathematical metadata.",
+      "id": "harvest-source-6e92504a50930f923c521cdd",
+      "license": "NOASSERTION_WEBPAGE_SHELL",
+      "locator": "title authors volume year abstract:L120-L126; native bibliographic key pages conference dates and exact PDF link:L137-L150",
+      "revision": "PMLR volume48 peyre16,2016,2664–2672; publisher object content hash",
+      "sha256": "2e014c130287662382ede68aa787dbdfef67456a4b5ed40e0db943d093cf2b5e",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://proceedings.mlr.press/v48/peyre16.html",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

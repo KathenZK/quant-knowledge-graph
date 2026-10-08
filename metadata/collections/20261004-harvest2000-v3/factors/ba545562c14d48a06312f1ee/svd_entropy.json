@@ -1,0 +1,149 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述一个延迟坐标矩阵的奇异值集中程度。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "所有统计量使用整个已完成输入窗口；只在该窗口所有样本已观测并发布后可得，不得回填为窗口内过去时点可知特征。窗口长度、真实采样间距和PIT数据未固定。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "_embed要求1D/2D数组、order>=2、delay>=1且order*delay<=N；本条采用原文单个1D时间序列合同。 构造由延迟坐标组成的矩阵，不先减均值、不先标准化；按奇异值本身归一，非平方奇异值/解释方差。 计算归一奇异值的base2熵；参数order/delay及是否归一不作为新条。 边界：_embed允许2D输入，但svd_entropy对所有奇异值使用无axis的全局sum，不能把该路径宣称为各通道独立输出。 全零输入导致奇异值和为0；_xlogx的NaN项留下0，可能得到0而非缺失；这不证明序列可用。 无去均值意味着平移会改变嵌入矩阵与奇异值分布；归一分母仍是log2(order)，即使实际可得奇异值数小于order。 NumPy SVD实现、收敛及平台数值环境未锁；NaN/Inf可能直接导致底层SVD失败。 输出：一个算法族；多输出、轴/通道、窗口/参数及归一选项不另计数"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述一个延迟坐标矩阵的奇异值集中程度。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "单序列x构造Y_(i,j)=x_(i+j*delay)，j=0..order-1，i=0..N-(order-1)*delay-1；σ=svd(Y,compute_uv=False)；w_j=σ_j/Σσ_j；H=-Σ_(w_j>0)w_j log2(w_j)；normalize=True时除log2(order)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（1D finite real array-like; this record fixes the single-series interface）：等时间间隔采样、按时间排序的有限实数窗口；具体价格/收益/链上序列绑定另行固定。参数：order：延迟嵌入列数；范围integer>=2；源码默认3；delay：相邻嵌入列相隔样本数；范围integer>=1; order*delay<=N；源码默认1；normalize：除log2(order)；范围bool；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "raphaelvallat/antropy",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或金融回测",
+    "NumPy/SciPy/Numba及运行环境未冻结；来源pyproject只设依赖下限",
+    "市场输入绑定、采样周期、供应商、PIT修订与可得时间缺失",
+    "无金融收益方向/预测能力证据"
+  ],
+  "name": "延迟嵌入矩阵的奇异值分布熵",
+  "native_source_id": "svd_entropy",
+  "one_line": "描述一个延迟坐标矩阵的奇异值集中程度。",
+  "record_id": "svd_entropy",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/entropy.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-72ce1c194f1d762ba6062718",
+      "license": "BSD-3-Clause",
+      "locator": "svd_entropy:L417-L528; imports, constants and declarations:L1-L72",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "414e8de360d5cfbac43e5d58f3466032031bc9edcb417a14fa138ff2e8e47ae5",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/entropy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-d8d8e75b46b9f1696d69bd7a",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L29",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "e77f97cfd2a40e4c2e02742dfedd7957c7ed397664e93c0a7bbbaf0bb6c82caf",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-f07530fff185f4f6a34b6d57",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L287",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "07d745a1c2ed8000994c718f7eeaf385e8679c3eaa304953ce28f69b892dfb78",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-197424b14812774ea6d92020",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L111",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "ffe54c637a9c3acf704078608e505e79209e58bb449b96148efb85b1c4a4d3c1",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-b750632eba387336c6456655",
+      "license": "BSD-3-Clause",
+      "locator": "_embed:L12-L61; _xlogx:L132-L142; imports, constants and declarations:L1-L11",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "365514efe21dc5ec409786e1d3bdc034cf7a4f62ab802d326fdcd1f20c4a36cc",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

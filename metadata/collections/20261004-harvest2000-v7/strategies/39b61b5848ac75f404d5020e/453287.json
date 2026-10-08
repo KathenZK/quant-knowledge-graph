@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说：较长RSI改善背景下，短动量交叉或强调近期价格的平方权线可提供择时；分支重叠和双向共门的经济含义未证实。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "WMA支入口与同棒RSI极值close可重合；pending独审，不宣称所有信号形成真实仓位。"
+  ],
+  "name": "RSI六十棒改善门下的MACD与平方权价线双入口",
+  "native_source_id": "453287",
+  "one_line": "两方向均要求RSI较60棒前改善，分别用MACD交叉及平方加权价线两个入口，RSI达到相反阈值才平对应方向。",
+  "record_id": "453287",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/MACD%E5%92%8CRSI%E7%BB%93%E5%90%88%E7%9A%84%E8%87%AA%E7%84%B6%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5-MACD-and-RSI-Combined-Natural-Trading-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-453287-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "2b7b7fd424be0a3ecaf29046d32607e8766affe12a9e1aa05ffd232b098553b1",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/MACD%E5%92%8CRSI%E7%BB%93%E5%90%88%E7%9A%84%E8%87%AA%E7%84%B6%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5-MACD-and-RSI-Combined-Natural-Trading-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-453287-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-453287-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "佣金按成交额0.01%；未给滑点、借贷/资金费与真实点差。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-453287-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "四个独立if按Long、Short、Long WMA、Short WMA顺序请求市价，各自ID；同向两个入口可在同棒提出。qty未显式给，沿用100%权益声明；不擅自合成一个AND入口或宣称两条均已成交。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-453287-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先MACD分支entry、RSI分支close，再计算平方权q后WMA分支entry及对应close；多/空60棒门相同。没有显式tick/收盘成交开关，未执行外来代码，未验证同棒不同ID请求实际成交。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-453287-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "g且R>70时close Long，并在后段close Long WMA；g且R<30时分别close Short/Short WMA。无固定stop/target、反向g或价格穿q退出。WMA支在R>70仍可请求long，随后同次计算触发close，保留该重叠，不补70上界。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-453287-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "initial_capital=10000，percent_of_equity=100，未显式pyramiding；四ID是请求分支，不代表可同时持四份100%权益，实际净仓及同棒顺序未核。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-453287-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "两方向都要求RSI比60棒前升高，故空头条件不是动量镜像；WMA入口与极值退出会同棒重合，存在请求清仓/重进路径。无硬止损或杠杆约束，未核这些请求效果；不能把tf变量名误作多周期确认。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-453287-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "R=RSI14(C)，g=(R−R[60]>0)；源码标tf_1h实际为同图表60棒变化，不是小时聚合。MACD12/26/9，m均=SMA14(MACD线)默认。MACD多=线上穿信号且MACD>m均且50<R<70且g；空=线下穿信号且MACD<m均且30<R<50且g。另q=sum(i=0..19,C[i]×(20−i)^2)/sum(i=0..19,(20−i)^2)；独立多=C>q且R>50且g，独立空=C<q且R<50且g，没有MACD分支的70/30上/下界。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-453287-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称或注释中的建议周期不等于冻结交易周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-453287-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

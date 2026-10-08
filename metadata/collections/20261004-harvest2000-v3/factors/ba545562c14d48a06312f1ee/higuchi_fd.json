@@ -1,0 +1,149 @@
+{
+  "economic_basis": {
+    "hypothesis": "估计按不同抽样间距度量的路径长度如何随尺度变化。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "所有统计量使用整个已完成输入窗口；只在该窗口所有样本已观测并发布后可得，不得回填为窗口内过去时点可知特征。窗口长度、真实采样间距和PIT数据未固定。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "把输入转float64一维数组，kmax通过int转为K，逐整数步长k与每个起始偏移m构造抽稀子路径。 累计子路径相邻绝对增量，并按代码中的两处k与有效增量数归一；对偏移求平均曲线长度。 对log长度与log逆步长作整体斜率拟合，输出一个估计器；不同K和窗口不拆条。 边界：N<2K可使部分n_m=0而除0；来源未统一校验。kmax非整数会int截断，负/零值可能导致底层错误。 L(k)<=0被置log值负无穷；恒定输入或退化尺度不能作为可靠维数。 辅助回归在分母加1e-9，不是无修正精确OLS；不能省略后宣称逐值相同。 这是几何/尺度估计方法，不把得到的数值当作已证明的市场分形维数或预测能力。 输出：一个算法族；多输出、轴/通道、窗口/参数及归一选项不另计数"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "估计按不同抽样间距度量的路径长度如何随尺度变化。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "k=1..K,m=0..k-1，n_m=floor((N-m-1)/k)；L_m(k)=(N-1)/(k²*n_m)*Σ_(j=1..n_m)|x_(m+jk)-x_(m+(j-1)k)|；L(k)=mean_m L_m(k)。以a_k=ln(1/k), b_k=ln L(k)作带截距线性拟合，斜率=[KΣab-ΣaΣb]/[KΣa²-(Σa)²+1e-9]。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（1D finite real array-like converted to float64; require N>=2*K for nonzero segment counts）：等时间间隔采样、按时间排序的有限实数窗口；具体价格/收益/链上序列绑定另行固定。参数：kmax：最大抽稀步长；范围integer K>=2, research-safe domain N>=2*K；源码未检查这些边界；源码默认10"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-bda6389d367dbbf0cefd62fd",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "raphaelvallat/antropy",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或金融回测",
+    "NumPy/SciPy/Numba及运行环境未冻结；来源pyproject只设依赖下限",
+    "市场输入绑定、采样周期、供应商、PIT修订与可得时间缺失",
+    "无金融收益方向/预测能力证据"
+  ],
+  "name": "多采样步长曲线长度的 Higuchi 维数估计",
+  "native_source_id": "higuchi_fd",
+  "one_line": "估计按不同抽样间距度量的路径长度如何随尺度变化。",
+  "record_id": "higuchi_fd",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/fractal.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-bda6389d367dbbf0cefd62fd",
+      "license": "BSD-3-Clause",
+      "locator": "higuchi_fd:L232-L330; _higuchi_fd:L202-L229; imports, constants and declarations:L1-L13",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "ea127be7fbe8467fd425092e13338d082f056265f25330318f49d3825f99e2cf",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/fractal.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-d8d8e75b46b9f1696d69bd7a",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L29",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "e77f97cfd2a40e4c2e02742dfedd7957c7ed397664e93c0a7bbbaf0bb6c82caf",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-f07530fff185f4f6a34b6d57",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L287",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "07d745a1c2ed8000994c718f7eeaf385e8679c3eaa304953ce28f69b892dfb78",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-197424b14812774ea6d92020",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L111",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "ffe54c637a9c3acf704078608e505e79209e58bb449b96148efb85b1c4a4d3c1",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-b750632eba387336c6456655",
+      "license": "BSD-3-Clause",
+      "locator": "_linear_regression:L64-L94; imports, constants and declarations:L1-L11",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "365514efe21dc5ec409786e1d3bdc034cf7a4f62ab802d326fdcd1f20c4a36cc",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

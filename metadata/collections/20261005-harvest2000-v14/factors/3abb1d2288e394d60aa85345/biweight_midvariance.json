@@ -1,0 +1,137 @@
+{
+  "economic_basis": {
+    "hypothesis": "按样本中位数及中位绝对偏差计算有限支撑的Tukey权重，降低远端观测的影响，并产生位置、尺度和成对协变统计；这些原生输出共享构造，整族只登记一条。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-e6642da0e552dd4f09037a0a",
+        "harvest-source-d9f5d6b8bd3b488e6428bc5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随样本及配对变量均已观测并发布后才可计算；不把全窗统计回填到窗内更早时刻。当前缺金融输入、数据供应商、bar收盘/修订时点、市场时钟和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-e6642da0e552dd4f09037a0a",
+        "harvest-source-d9f5d6b8bd3b488e6428bc5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审无mask、无单位、全部有限数值的NumPy数组。单变量location/variance/scale使用一维数组和axis=None、ignore_nan=False；covariance用变量×观测矩阵，correlation用两个相同长度一维数组，按位置配对而不按时间戳自动对齐。其它masked、ignore_nan=True、显式M和多轴路径不在此已审合同。 _stat_functions在这个普通数组合同下选择np.median和np.sum；数据转float64。M=None先取样本中位数；median_absolute_deviation helper另取median(data)，然后median(abs(data−median(data)))。MAD不依赖用户假设中心，也没有标准差校准倍数。 位置函数先处理标量MAD=0或NaN，返回M；否则构建u，令|u|>=1的权为0，计算一次加权残差均值加回M。没有循环更新中心或迭代到M估计收敛，不能把它称为完整迭代robustfit回归。 方差函数在标量MAD=0或NaN时直接返回mad²；其它情况用严格|u|<1保留样本。默认n为总输入数；modify_sample_size=True才改成保留数。分子是残差平方乘(1−u²)^4，分母是[(1−u²)(1−5u²)求和]的绝对值平方；没有除N−1或额外年化。scale只调用midvariance再开平方。 协方差将一维数据扩成一行，拒绝非一维/二维。每行独立取中位数和MAD，求A_ai=d_ai w_ai及每行D_a，再算A A^T和D D^T。默认全矩阵乘同一个N；修改样本数时，mask转float后inner(mask,mask)得到每对变量共同保留样本数，不是两变量保留样本的并集。 协方差先完成除法，再把MAD=0的变量对应行列全部写成0。相关函数显式检查x/y都是一维且shape相同，调用两行covariance，直接用C01/sqrt(C00*C11)。源码无零分母、负数舍入或范围[-1,1]裁剪保护。 原生location、midvariance、scale、midcovariance、midcorrelation全部并入一条构造家族，平方/开方、归一化、变量对、参数与modify_sample_size选项均不拆数。 边界：MAD=0不仅可能是完全常量，也可能是多数相同但仍含极端值。位置返回中位数、尺度返回0是原定义分支，不证明资产无风险。 阈值使用严格|u|<1；恰在阈值点权重为0。普通数值中位数按偶数样本中间两值平均，未做加权中位数或按时间排序。 c很小/特殊离散样本可使有效样本为空或D=0，原函数在np.errstate内允许NaN/Inf。正c、有限输入/运算和非零有效分母是研究合同；源码没有统一预防全部退化。 协方差modify_sample_size=True的n_ab随变量对变化，不能自动声称整矩阵正半定。固定默认False、有限有效D时具有共同Gram缩放结构，但仍未做浮点PSD/运行检验。 相关没有范围裁剪，零方差直接导致未定义；不能把协方差行列置0推成相关0。默认covariance/scale的c=9与location的c=6不同，来源原默认都保留，未人为统一。 本条有限普通数组合同排除masked、Quantity、ignore_nan=True、多轴及用户提供M路径；原实现具有这些接口不代表本条完整验证。用于相关金融序列时没有自动显著性、独立性或收益解释。 输出：一个完整构造族；窗口、方向、语言实现和同族原生输出/选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-e6642da0e552dd4f09037a0a",
+        "harvest-source-d9f5d6b8bd3b488e6428bc5e"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "按样本中位数及中位绝对偏差计算有限支撑的Tukey权重，降低远端观测的影响，并产生位置、尺度和成对协变统计；这些原生输出共享构造，整族只登记一条。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-e6642da0e552dd4f09037a0a",
+        "harvest-source-d9f5d6b8bd3b488e6428bc5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条固定M=None、普通有限float64数组，单变量axis=None且ignore_nan=False。对变量a：m_a=median_i x_ai，s_a=median_i|x_ai−m_a|（原始MAD，不乘1.4826），d_ai=x_ai−m_a，u_ai=d_ai/(c s_a)，I_ai=1(|u_ai|<1)，w_ai=I_ai(1−u_ai²)²，D_a=Σ_i I_ai(1−u_ai²)(1−5u_ai²)。位置L_a=m_a+Σd_ai w_ai/Σw_ai（原默认c=6）。方差V_a=n_aΣd_ai²w_ai²/D_a²，尺度sqrt(V_a)（原默认c=9）。默认n_a=N；modify_sample_size=True时n_a=ΣI_ai。协方差C_ab=n_abΣ_i d_ai w_ai d_bi w_bi/(D_a D_b)，默认n_ab=N，modify_sample_size=True时n_ab=Σ_i I_ai I_bi；相关r_ab=C_ab/sqrt(C_aa C_bb)。协方差/相关默认c=9。单变量MAD=0时位置返回中位数、方差/尺度返回0；协方差将MAD为0的行列置0，相关包装此时仍直接0/0，不特殊返回0。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-e6642da0e552dd4f09037a0a",
+        "harvest-source-d9f5d6b8bd3b488e6428bc5e"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "data（ordinary finite real NumPy ndarray: length-N vector for univariate functions or shape(p,N) for covariance, p>=1,N>=2; converted to float64）：同一窗口的观察值，矩阵每行一种变量、每列同一次已配对观察。允许MAD为0并按源退化规则记录；要求核心算术不过流，非零MAD变量的D不为0才能把输出当有限统计。；x,y（two ordinary finite real one-dimensional NumPy ndarrays with identical shape(N,),N>=2, for biweight_midcorrelation only）：相关包装的两个配对数值序列；不接受两列DataFrame代替该合同。零MAD时保留NaN的源边界，不补成0相关。。参数：c：MAD倍数带宽，|u|>=1归零；原函数没有主动验证c正性；范围research finite real >0；源码默认location: 6.0; scale/midvariance/midcovariance/midcorrelation: 9.0；M：原接口也允许外给位置，但此处固定样本中位数合同，不宣称全部广播/标量路径已审；范围reviewed None only；源码默认None；axis：单变量全样本计算，协方差固定每行一个变量；范围reviewed None for 1D location/scale/midvariance; covariance has no axis parameter；源码默认None；ignore_nan：仅单变量三函数有此参数；协方差/相关没有这个参数；范围reviewed False; ordinary finite arrays only；源码默认False；modify_sample_size：True时只修改样本数因子；协方差是共同保留计数；范围False or True in scale/variance/covariance/correlation; not an argument of location；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-e6642da0e552dd4f09037a0a",
+        "harvest-source-d9f5d6b8bd3b488e6428bc5e"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "astropy/astropy",
+  "lab": null,
+  "missing_information": [
+    "金融输入/变量配对、窗口、供应商、发布/修订时点和PIT未固定",
+    "NumPy及可选依赖的实际版本、浮点误差与平台环境未冻结",
+    "未核原论文全文与数据商用许可；不提供收益/因果方向",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "Tukey 双权重的稳健位置、尺度与协变构造族",
+  "native_source_id": "biweight_midvariance",
+  "one_line": "按样本中位数及中位绝对偏差计算有限支撑的Tukey权重，降低远端观测的影响，并产生位置、尺度和成对协变统计；这些原生输出共享构造，整族只登记一条。",
+  "record_id": "biweight_midvariance",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/astropy/astropy/blob/073180b48616b3a4097c176eda9cb21fedbd3bd0/astropy/stats/biweight.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Astropy Developers；源码说明使用Tukey biweight，位置/尺度引用Beers、Flynn、Gebhardt 1990和NIST定义。这里审核Astropy固定实现，未声称原论文/NIST文档许可随源码授予。",
+      "id": "harvest-source-e6642da0e552dd4f09037a0a",
+      "license": "BSD-3-Clause",
+      "locator": "module identity and whole native family:L1-L24; ordinary array statistical helpers:L27-L56; location defaults, formula and attribution:L59-L130; complete location implementation:L144-L194; scale native defaults:L197-L205; scale attribution and square-root wrapper:L293-L320; variance native defaults:L323-L331; variance attribution and complete computation:L418-L504; covariance native defaults:L507-L512; covariance definition and pairwise count:L547-L595; covariance source attribution:L645-L647; complete covariance implementation:L670-L720; correlation defaults:L723-L729; correlation input shape and normalization:L801-L814",
+      "revision": "073180b48616b3a4097c176eda9cb21fedbd3bd0",
+      "sha256": "3d22a7264255bd75dff9ba1e0a84e477b7a240e9d6a5d28a68f1347dd7cad93e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/astropy/astropy/blob/073180b48616b3a4097c176eda9cb21fedbd3bd0/astropy/stats/biweight.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Astropy Developers；源码说明使用Tukey biweight，位置/尺度引用Beers、Flynn、Gebhardt 1990和NIST定义。这里审核Astropy固定实现，未声称原论文/NIST文档许可随源码授予。",
+      "id": "harvest-source-d9f5d6b8bd3b488e6428bc5e",
+      "license": "BSD-3-Clause",
+      "locator": "native raw MAD definition and signature:L788-L820; complete MAD helper selected ordinary finite path:L839-L877",
+      "revision": "073180b48616b3a4097c176eda9cb21fedbd3bd0",
+      "sha256": "369be085dd1c8094b8aa6e29be1f23f8fbbe2b39d0cc29e2ef8280820290f424",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/astropy/astropy/blob/073180b48616b3a4097c176eda9cb21fedbd3bd0/astropy/stats/funcs.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Astropy Developers；源码说明使用Tukey biweight，位置/尺度引用Beers、Flynn、Gebhardt 1990和NIST定义。这里审核Astropy固定实现，未声称原论文/NIST文档许可随源码授予。",
+      "id": "harvest-source-206ebfc32a05027ca60df222",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 copyright and conditions:L1-L26",
+      "revision": "073180b48616b3a4097c176eda9cb21fedbd3bd0",
+      "sha256": "97d28d33c40cadc630cddfca53969fdd9dc44ede20faa2d892ba730933e9a20e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/astropy/astropy/blob/073180b48616b3a4097c176eda9cb21fedbd3bd0/LICENSE.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Astropy Developers；源码说明使用Tukey biweight，位置/尺度引用Beers、Flynn、Gebhardt 1990和NIST定义。这里审核Astropy固定实现，未声称原论文/NIST文档许可随源码授予。",
+      "id": "harvest-source-1545fbfb35ff25e01233d6fa",
+      "license": "BSD-3-Clause",
+      "locator": "official project identity:L1-L40",
+      "revision": "073180b48616b3a4097c176eda9cb21fedbd3bd0",
+      "sha256": "a0ba81fff3b3dde70e201e9a20f6d9cacc4d4e8157ffe0816432391831774cb2",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/astropy/astropy/blob/073180b48616b3a4097c176eda9cb21fedbd3bd0/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

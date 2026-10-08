@@ -1,0 +1,155 @@
+{
+  "economic_basis": {
+    "hypothesis": "在合并样本的每个不同取值上，比较各组累计人数与共同分布下预期人数，按尾部位置和并列数加权；检验对象为组分布整体差异。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "全部组样本和标签已观察并发布后才可计算，不能把全窗结果回填到早先。金融资产/窗口/数据来源/时点仍MISSING，未执行源算法、采集市场数据或回测。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "明确variant=\"midrank\"、method=None。先np.asarray每组、hstack合并升序Z、unique得不同值Zstar。源只检查组数、空组和合并至少两个不同值；本条额外固定一维有限float64、每组>=2、正有限V及全部分母/中间算术有效，不能说源已完整校验。 每个不同z上用左右searchsorted得到合并计数l_j和组内计数f_ij。B_j是合并中位名次前的半计数，M_ij是该组中位经验累计人数；不是仅对每组平均秩作平方，也不是先算连续数据公式再统一做一个ties乘数。全部不同值都入和，包括最小及最大；保留N*l_j/4的离散校正。 H来自组大小倒数；h/g严格按降序倒数cumsum及再除2..N−1形成。V式包含组数、各组大小及总样本数；标准化先减k−1后除sqrt(V)，不把A_raw当最终statistic，也不截负值为0。 令m=k−1，七个临界参考q=b0+b1/sqrt(m)+b2/m。其中b0=[.675,1.281,1.645,1.96,2.326,2.573,3.085]，b1=[−.245,.25,.678,1.149,1.822,2.364,3.615]，b2=[−.105,−.305,−.362,−.391,−.396,−.345,−.154]；对应p_ref=[.25,.1,.05,.025,.01,.005,.001]。S<min(q)返回.25且告警，S>max(q)返回.001且告警；否则用np.polyfit(q,ln(p_ref),2)拟合全部七点，再exp(polyval(coeff,S))。边界相等走拟合分支，不直接取端点概率。 固定源码注释写probit，但实际使用自然对数log(sig)，不改成正态逆CDF。此commit实际返回SignificanceResult(statistic,pvalue)，不返回critical_values；文件内旧Anderson_ksampResult声明不参与此返回。官方滚动文档与该commit签名差异不覆盖固定版本。 right/continuous和置换p分支可见但不纳入本次已审计算路径，未来补审仍同一个Anderson–Darling族。NumPy排序、polyfit的浮点运行环境尚未冻结或执行；数学最小二乘描述不保证本平台逐bit输出。 边界：这是一组样本整体分布同一性的诊断，可能对位置、尺度或尾部差异响应，不能由大S判断收益方向，也不输出样本外盈利概率。 不同样本内及样本间的独立性、固定分组等校准条件未在金融时间序列验证；重叠窗口、同一资产多次入组和事后选择分组影响解释。 本条n_i>=2并要求正有限方差式和分母；源还可接受某些单元素组但可能退化，N<=3也不满足标准化分母，不借源未拒绝宣称支持。全体相同会被明确拒绝。 范围外p只表示来源表格的上/下截界；范围内是对数概率拟合，不是精确概率。浮点拟合端点并非强制等于参考表端点；没有额外数值clip。 全部组样本和标签已观察并发布后才可计算，不能把全窗结果回填到早先。金融资产/窗口/数据来源/时点仍MISSING，未执行源算法、采集市场数据或回测。 输出：一个完整Anderson–Darling分布比较族；组数、数据选项、参数、原始/标准化统计量和p不拆新增"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在合并样本的每个不同取值上，比较各组累计人数与共同分布下预期人数，按尾部位置和并列数加权；检验对象为组分布整体差异。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "k>=2组普通NumPy一维有限float64样本，n_i>=2，N=Σn_i；合并有至少两个不同值z_j。l_j为合并样本等于z_j的点数，B_j=#{all x<z_j}+l_j/2；f_ij=#{group i x=z_j}，M_ij=#{group i x<=z_j}−f_ij/2。默认variant=midrank：A_raw=(N−1)/N·Σ_i (1/n_i)Σ_j[(l_j/N)(N M_ij−n_i B_j)^2/(B_j(N−B_j)−N l_j/4)]。H=Σ_i1/n_i；c_l=Σ_(r=0..l)1/(N−1−r)，l=0..N−3；h=1+c_(N−3)，g=Σ_l c_l/(l+2)。a=(4g−6)(k−1)+(10−6g)H；b=(2g−4)k²+8hk+(2g−14h−4)H−8h+4g−6；c=(6h+2g−2)k²+(4h−4g+6)k+(2h−6)H+4h；d=(2h+6)k²−4hk。V=(aN³+bN²+cN+d)/[(N−1)(N−2)(N−3)]，要求V>0及中间量有限；返回statistic S=[A_raw−(k−1)]/sqrt(V)，可为负。伴随p按固定七个参考值的对数概率二次最小二乘拟合与范围外截界求得，详见步骤；不另计A_raw、标准化、p或组数。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "samples（k>=2 ordinary NumPy1D finite float64 samples; each n_i>=2; pooled>=2 unique values; all denominator/arithmetic finite, V>0）：完整组样本与已固定组标签；金融字段、市场频率与发表时点另外固定。参数：variant：对并列值用中位经验累计人数；范围reviewed explicit midrank; right/continuous same family not reviewed here；源码默认midrank；method：按固定表格近似p；PermutationMethod未审；范围reviewed None only；源码默认None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-701f1f6dbf5d9baab9f7ceac",
+        "harvest-source-8b75a55d87853f7f61280e73",
+        "harvest-source-dcaa4b2ca5e08690e90c3e75"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "scipy/scipy",
+  "lab": null,
+  "missing_information": [
+    "未执行来源算法、未回测、未冻结数值运行环境",
+    "金融输入、市场、窗口、组标签生成/PIT发布时间缺失",
+    "p值在金融序列下的校准和多重检验未审",
+    "不证明收益方向、经济独立性或商业许可"
+  ],
+  "name": "按合并经验分布尾部加权的多组 Anderson–Darling 诊断",
+  "native_source_id": "anderson_ksamp",
+  "one_line": "在合并样本的每个不同取值上，比较各组累计人数与共同分布下预期人数，按尾部位置和并列数加权；检验对象为组分布整体差异。",
+  "record_id": "anderson_ksamp",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_morestats.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-701f1f6dbf5d9baab9f7ceac",
+      "license": "BSD-3-Clause",
+      "locator": "complete selected midrank cumulative tie kernel:L2593-L2633; public native scope, parameters and reference attribution:L2678-L2750; complete current dispatcher, normalization, seven-point log fit and actual return:L2789-L2866",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "16149a4eec5c1005a120d400b8c34852e0d29037436bed20e99a543b679679ca",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_morestats.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "license:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-088c1d9c7042eaaa4ba39300",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer_scope:L1-L81",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "6a4d55e53007e0d509dc30f5a8d460c280f0f5bcf2567c910948e7eb23047b10",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-8b75a55d87853f7f61280e73",
+      "license": "BSD-3-Clause",
+      "locator": "xp_capabilities changes documentation/testing metadata and returns original function; no computational wrapper:L868-L980",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "14dbc9a53b4f6bb8dffe8fb302574fed5a522b619ce15696b1e29766d81b238c",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/_lib/_array_api.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "SciPy Developers；原始算法参考文献保留在固定源码docstring。Copyright (c) 2001-2002 Enthought, Inc. 2003, SciPy Developers.",
+      "id": "harvest-source-dcaa4b2ca5e08690e90c3e75",
+      "license": "BSD-3-Clause",
+      "locator": "actual SignificanceResult fields are statistic and pvalue:L136-L137",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "f83fbd7a76afa61a865820917184eabd67d5ebc04cde4db102ba1ba86e94d0cb",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/stats/_stats_py.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

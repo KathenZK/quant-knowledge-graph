@@ -1,0 +1,103 @@
+{
+  "economic_basis": {
+    "hypothesis": "基于单位价格区间的成交密度、局部极值及收盘位置描述价格/量状态；来源称其为吸筹派发，但K线本身不能证明参与者身份或真实持仓变化。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-olfpEvv8-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认事件须当前bar确认，关闭选项时盘中可能消失。输入成交量缺失不能默认为0；末尾nz(volume)只用于全局无成交量提示，不改变核心事件公式。数据日历、复权和引擎语义仍未冻结。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-olfpEvv8-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "历史均值与极值全部以先前一根结束，当前根不进入自身阈值。确认门为关闭onlyConfirmed或barstate.isconfirmed。两类事件可同时为真；最终数值状态按低位优先输出+1，否则高位−1，否则0；不是可同时持有的两个订单。只按一个原生组合定义收录，密度中间量不另外计数。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-olfpEvv8-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "基于单位价格区间的成交密度、局部极值及收盘位置描述价格/量状态；来源称其为吸筹派发，但K线本身不能证明参与者身份或真实持仓变化。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-olfpEvv8-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "R=H−L，d=V/max(R,tick)；A=SMA_5(R)[1]、D=SMA_5(d)[1]。lowEvent=L<=lowest_5(L)[1]，highEvent=H>=highest_5(H)[1]；密度门d>=2D，振幅门R<=1.4A（可关闭）。低位输出需确认门、V>0、lowEvent及两门，且100(C−L)/R>=位置门；高位反向用highEvent及100(H−C)/R。R为0时两个收盘位置均取100。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-olfpEvv8-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "H/L/C/V与最小跳动tick。新极值、振幅均值、密度均值窗口默认各5；振幅限制默认开启，倍数1.4；密度倍数2；收盘位置门0%；默认只在确认K线触发。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-olfpEvv8-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可为形态研究提供明确的事件特征；没有交易仓位、出场或经济有效性。源码说明其参考Siudek的xStation指标，本记录只验证该公开Pine实现，不声称复现Siudek原版。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未取得所参考Siudek原始定义的对应版本。",
+    "未执行Pine及验证数据异常。",
+    "未证明吸筹派发或收益方向。"
+  ],
+  "name": "量幅密度与新极值联合状态（Accumulation Distribution Density）",
+  "native_source_id": "olfpEvv8",
+  "one_line": "用单位振幅成交量相对前窗均值的异常，结合新高低及振幅门生成离散状态。",
+  "record_id": "olfpEvv8",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "piecioshka",
+      "id": "tradingview-olfpEvv8-published-code",
+      "license": "MPL-2.0 source notice",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;ff53290f4c234b07930f0b2e0d6b4858@1.0",
+      "sha256": "3f91954a47d5144aa1427ac11400e2f35cab1295bd8467caf69105b8c8d4beb1",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3Bff53290f4c234b07930f0b2e0d6b4858/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / piecioshka",
+      "id": "tradingview-list-ff045adee2efe79816d8",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=olfpEvv8；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:ff045adee2efe79816d88b5588081435e31194e0800f1a0139841c12625880b1",
+      "sha256": "ff045adee2efe79816d88b5588081435e31194e0800f1a0139841c12625880b1",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-58/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

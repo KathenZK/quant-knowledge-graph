@@ -1,0 +1,135 @@
+{
+  "economic_basis": {
+    "hypothesis": "当同步储备和协议规则准确、模型交易能够按可行顺序完成时，联合求数量可能识别固定报价或逐对启发式漏掉的可行交换。只是假设：模型正净流并不保证扣除链上费用、竞争和执行风险后有正收益。",
+    "missing": [
+      "未运行、未回测；论文模型最优性和实证不是仓库验收结论。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi:10.1145/3490486.3538336",
+  "lab": null,
+  "missing_information": [
+    "仅审所选Eq2及§4套利效用的定义；不是链上机器人、智能合约、资金方案或回测实现。",
+    "收益目标是原币种数量之和，非统一货币；单位变化会改变最优路由。未默加外部价格估值或代币权重。",
+    "网络、同步储备、真实交易函数、手续费、币种单位及输入有效域须固定；不自动覆盖所有Uniswap版本、集中流动性或任意非凹机制。",
+    "Psi>=0是最终逐币净流约束，不约束执行中间资金峰值；实际初始资金、借贷、跨链/跨交易顺序、原子性及失败后果未闭合。",
+    "所选Eq2没有固定gas；§6另有gas扩展但未并入，模型套利不等于真实费用后盈利。",
+    "零或近零最优值、不可行/超时、并列解、精度和币数舍入没有已验收处理；未执行求解或经济验证。",
+    "ACM2022原页许可允许注明来源的摘要，个人/课堂复制范围不等于商业分发原文或源码许可；原文、图片和代码不入Git，商用REVIEW_REQUIRED。"
+  ],
+  "name": "CFMM Network Arbitrage：按储备与协议费用联合求解的池间套利流",
+  "native_source_id": "cfmm_routing",
+  "one_line": "把多个交易池的非线性储备约束放入同一个优化问题，求各池付出与收到的币数，使每种币净流入非负并最大化净流入币数之和。",
+  "record_id": "cfmm_routing",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、优化器或回测。",
+    "metadata": "作者原生文件/DOI身份、定位及自撰中文规则；不发布论文原文、图像、源码或行情。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://web.stanford.edu/~boyd/papers/cfmm_routing.html"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Guillermo Angeris, Alex Evans, Tarun Chitra and Stephen Boyd, Optimal Routing for Constant Function Market Makers, ACM EC2022,115–128, DOI10.1145/3490486.3538336. Stanford author-linked finalpaper. Chinese paraphrase by catalog curator.",
+      "id": "angeris-cfmm-routing-pdf",
+      "license": "Stanford author page links finalACM paper. PDFpage1 grants credited abstracting and noncommercial personal/classroom copying under stated conditions, with other reuse requiring permission. Copyrightowner/authors2022, publicationrightsACM. Not an open-code or market-data license. No fulltext/images distributed; commercialuse REVIEW_REQUIRED.",
+      "locator": "Physicalpp2–7 §2Eq1/2, §3execution/no-tradecontext and §4arbitrageutility; p11§6 fixedcostexcluded and §7executiongap; p1authorship/rights. Derivedtextlines independentlychecked against formulaimages.",
+      "revision": "ACM EC2022,pp115–128,July2022; author-hosted final PDF sha256:d50087036cba2226c930e81e40fc5fcd34ee1d9024d681bf6908e8e3f842d561",
+      "sha256": "d50087036cba2226c930e81e40fc5fcd34ee1d9024d681bf6908e8e3f842d561",
+      "supports": [
+        "储备约束、协议费用、逐币净流与套利篮子联合优化"
+      ],
+      "url": "https://web.stanford.edu/~boyd/papers/pdf/cfmm_routing.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_UNIVERSITY_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Stephen Boyd Stanford faculty publication page.",
+      "id": "cfmm-stanford-author-page",
+      "license": "Publisher/institution page; no permission inferred from public accessibility. Fulltext not redistributed.",
+      "locator": "AuthorHTML title, fourauthors, ACM EC2022citation and direct finalPDF link; separatecode link does not establish code-paperlicense equivalence.",
+      "revision": "HTTP snapshot 2026-10-04T21:19:11.510450+00:00; sha256:3290e2113ccce2f0f493576643f01f8b13d41709f70cd7f2331acb4c036a3ee6",
+      "sha256": "3290e2113ccce2f0f493576643f01f8b13d41709f70cd7f2331acb4c036a3ee6",
+      "supports": [
+        "作者、题名、期刊版本及许可缺项定位"
+      ],
+      "url": "https://web.stanford.edu/~boyd/papers/cfmm_routing.html",
+      "verification": "FETCHED_PINNED_AUTHOR_AFFILIATED_BIBLIOGRAPHIC_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "angeris-cfmm-routing-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "n种代币及m个CFMM交易池；每池交易其中n_i种，2<=n_i<=n。这里token指币种，Delta_i/Lambda_i/R_i是各币种的数量，不是美元权重。A_i为n×n_i的0/1局部到全局币种映射。原文5池3币仅示例，不固定实际链、池地址或代币列表。"
+    },
+    "cost": {
+      "evidence": [
+        "angeris-cfmm-routing-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "协议费用通过gamma_i仅作用于付入量Delta_i：交易函数比较phi_i(R_i+gamma_i*Delta_i-Lambda_i)与phi_i(R_i)，不能把gamma乘收到量或Psi。本条Eq2不计固定链上费用；§6明确另设q_i和二元是否使用池的变量，但本条未纳入其MICP及启发式，也没有给各币数量和与某种gas记账币的换算。固定gas、闪电贷、失败交易、矿工/验证者支付等真实费用须另定；模型U>0不等于净收益>0。"
+    },
+    "entry": {
+      "evidence": [
+        "angeris-cfmm-routing-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "模型判据为最优U(Psi*)>U(0)=0，同时逐币种Psi*>=0；返回每池的Delta_i*和Lambda_i*，分别表示付给池和从池取回的数量。不是把所有币都买入，也不必限制成单个三边环；一条币可在多个池间流转且总净流不负。无正目标时不报告模型套利；零结果是否已证明最优须下游求解状态与容差，不能把超时或失败当成无套利。"
+    },
+    "execution_time": {
+      "evidence": [
+        "angeris-cfmm-routing-pdf"
+      ],
+      "status": "MISSING",
+      "text": "顺序在定义层仅为取得R_i/phi_i/gamma_i/A_i→求解合法局部篮子→尝试完成整体交换。原文明确不规定链上理想执行，列举逐次交易和闪电贷原子交易两种可能；结论又把不同链的执行框架列为后续工作。本条不选定其中一种、不补资金、排序、滑点限额、超时回退或最终确认，实际成交时点为MISSING。未调用协议、执行源码、求解器或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "angeris-cfmm-routing-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "这是同一批交换完成后的净收支构造，结束时留下Psi的非负币篮子，而非等报价收敛再平仓。没有另行卖成稳定币、法币或固定记账币的规则，也没有时间止损或持有期。原文另讲清算篮子和购买篮子的效用，那些是同族的其他用途，本条未拿来补造套利后的平仓或兑现。"
+    },
+    "position": {
+      "evidence": [
+        "angeris-cfmm-routing-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "交易规模由整个网络优化共同决定，各Delta_i/Lambda_i非负，函数约束限制该池交换后的有效储备；Psi是全网净收到量，不是各池局部仓位上限。Psi>=0只保证整个交换篮子的最终逐币净收支，局部腿仍可能先付出大量币。它不证明零初始资金就能按任意顺序成交；初始融资、闪电贷额度/费用和逐腿资金峰值未在所选Eq2中约束。没有账户百分比、保证金、杠杆或统一美元资本帽。"
+    },
+    "risk": {
+      "evidence": [
+        "angeris-cfmm-routing-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "所选问题要求输入池函数凹且递增、储备和数量坐标合法、求解得到可行且全局最优结果；没有生产级精度、并列解选择、整数币数舍入、储备异常或不可解退路。无套利的模型结论只对应该时点网络和协议费假设，不能跨过储备变化、竞争交易、MEV、合约风险或链重组。最终净额非负不等于逐腿资金可行；目标数量和也不是风险调整后的货币收益。论文提供最优性/无交易条件，本条不新增一个独立因子或借此证明真实经济无风险。"
+    },
+    "signal": {
+      "evidence": [
+        "angeris-cfmm-routing-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按§4所选效用，Psi>=0时U(Psi)=1^T*Psi，否则U=-infinity。联合选择全部池的非负付出Delta_i和收到Lambda_i，令Psi=Σ_i A_i*(Lambda_i-Delta_i)，在phi_i(R_i+gamma_i*Delta_i-Lambda_i)>=phi_i(R_i)及函数非负储备定义域内最大化U。这里大于等于为Eq2凸形式，原池接受规则Eq1为相等；来源在递增效用假设下说明最优点达到边界。目标是原单位的各币净数量之和，未按美元价值归一；更改币单位会改变最优解，不宣称美元利润最优。"
+    },
+    "timeframe": {
+      "evidence": [
+        "angeris-cfmm-routing-pdf"
+      ],
+      "status": "MISSING",
+      "text": "这是单个给定储备状态上的一次篮子交换优化，来源没有固定日线、分钟线、扫描频率或再平衡日历，故时间频率为MISSING。仅在重新取得有效网络状态时才能另求新问题；不把它改写为持有到价差回归的时间序列策略。"
+    },
+    "universe": {
+      "evidence": [
+        "angeris-cfmm-routing-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定完整的池集合、每池当时储备R_i、费用折扣gamma_i∈(0,1]和凹且递增的交易函数phi_i，函数定义域为非负储备。原文列和函数、几何均值以及权重正且和为1的加权几何均值为例；实际池函数由输入提供，不把任意集中流动性池自动等同于这些公式。当前网络及储备的同步区块、来源、历史版本与更新时间未冻结。"
+    }
+  }
+}

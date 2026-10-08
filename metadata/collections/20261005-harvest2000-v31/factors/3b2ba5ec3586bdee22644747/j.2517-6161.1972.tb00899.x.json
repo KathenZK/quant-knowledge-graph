@@ -1,0 +1,105 @@
+{
+  "economic_basis": {
+    "hypothesis": "完整risk-set条件似然族；不是以原logrank的score/系数换输出计数，不给未识别的绝对期限风险。",
+    "missing": [
+      "未验证金融事件预测、因果解释、收益或交易适用性。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-1fc2f1cd0b7785a3979b8e4b"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "完整样本的T/delta/Z与发布修订已知之后可评价整窗目标；拟合模型只可在其训练窗口结束后使用。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-1fc2f1cd0b7785a3979b8e4b"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "主定义按Cox1972原扫描的印刷p188/191–193 Eq12/13/21/22。Crossref给同标题/作者/卷期的原生DOI，页码187–202而JSTOR封面187–220含讨论；不宣称另外取得publisherPDF，也不把元数据1972-01-01当精确首发日。 有限数学合同选定共同观察原点、固定协变量、每人最多一个事件和右删失；不把尚未入组者放入风险集。本条不补左截断、左/区间删失、再发生事件、竞争风险或未来协变量。 在每个实际事件时刻先用T_l>=tau_i建立风险集；同点右删失者在该时点仍在风险集，随后才被移出。删失没有失败分子，但在退出前参与每个分母；不能把delta0样本删掉或当在T时失败。 按观测下标枚举大小m_i的所有不同子集，原Eq22不是仅按不同z值去重；重复协变量仍代表不同个体，组合多重性影响Z。只发生删失而没有事件的时点没有独立likelihood贡献，但改变后续风险集。 无并列时给定发生一次失败，每个风险者的条件选择概率为softmax(betaᵀz)；lambda0(t)这个任意共同基线因条件化而消去。概率和为1指谁失败，不是每个个体在一个月或任意未来区间的无条件失败概率。 存在同点失败时采用原离散扩展Eq21/22：相对的是离散失败odds，条件于观察失败总数m_i。它在连续小间隔极限接到比例hazard，但有限离散概率不能无条件写成lambda=exp(beta z)lambda0。不得用(sum exp)^m的Breslow或Efron近似替换这次精确subset合同。 完整目标是随事件风险集变化的条件贡献乘积之log。风险集自身由此前结果决定，原p192已指出不能当作独立固定总体抽样；不把形式乘积夸大为给所有随机风险集同时条件后的普通独立联合likelihood。 自撰等价说明：若同一风险集各个体的Bernoulli odds为exp(a_i+betaᵀz_l)，在给定总成功数m_i后，共同分母Π_l(1+exp(a_i+betaᵀz_l))与exp(m_i a_i)抵消，精确得到Eq22。m_i1即conditional multinomial-logit；后续这类风险集conditional-logit不再单计。 与已有CHS firm-month logistic的区别是完整观察/条件目标：旧逐行Bernoulli的log目标含Σ_l[y_l eta_l−ln(1+exp eta_l)]，同时使用0与1频率并估截距；本条先由T/delta生成事件时点风险集，再条件于m_i使基线/截距信息消去。不能仅把旧输入列改名或设某个固定截距就得到所有risk-set的归一目标；重新条件化改变所保留的响应信息和估计对象。 原Eq14–17的score对参数beta求导。以w_i(A)=exp(betaᵀs_i(A))/Z_i表示，U=Σ_i[s_i(D_i)−Σ_Aw_i(A)s_i(A)]，I=Σ_i[Σ_Aw_i(A)s_i(A)s_i(A)ᵀ−mu_i mu_iᵀ]。这只是同一目标的导数/观测信息，不作为另一个新特征，未提供反矩阵或置信区间默认。 原p193二组z∈{0,1}在beta0时，U=Σ_i[d1_i−m_i*n1_i/r_i]；r_i>1时I=Σ_i m_i(r_i−m_i)/(r_i−1)*(n1_i/r_i)*(1−n1_i/r_i)，r_i1项0。只要I>0，U/sqrtI精确就是现有logrank，包含tie超几何修正。新提名不来自该已登记零点检验，也不拆它的Z/p。 对有限beta，所有subset权重严格正且ell有限<=0；有限最优beta并不保证存在。自撰解析边界：两人z=(1,0)，第一人t1失败、第二人t2>t1删失，则ell=−ln(1+exp(−beta))，sup0仅beta→+infinity达到，因此B*为空。没有为了给出数字而加惩罚/截断或挑有限大系数。 在常数协变量、共线性、无可比较失败或所有risk-set总员都同点失败时，目标可能平坦/不可识别；保留全体最优解。每个risk-set共同加到所有z上的常向量在分子分母消去，尤其不能估出独立截距。 所选固定z下，严格递增的时间变换不改变顺序、tie和风险集，因而目标相同；重复时间如何产生、测量精度/四舍五入本身仍必须事前固定。时间依赖z是原文允许的扩展，但当前未用其未知轨迹补定义，不另计参数/窗口。 原p191说可迭代求MLE并用渐近论，但严谨删失假设仍需建立，删失可依赖z；不是要求完全独立于所有协变量，也不是说任意信息性删失无害。本条只审核有限条件目标，没有iid金融保证、显著性校准或MLE求解器。 本目标消去基线，不给绝对存活函数或期限违约概率。原p194–195另讨论baseline/survivor估计Eq37/38，本条不采这些附属估计，也不搬用后世Breslow基础hazard公式充作1972原文。 金融应用须在完整观测窗与事件/删失原因已知后取得，并对z的原可用日期和训练范围作PIT冻结；不能把窗口末拟合beta回填成窗口起点已知的风险因子。多资产同步冲击、退出选择、停牌或退市会破坏常用解释，尚未验证。 该记录只提一个完整风险集协变量条件似然族，未来PHReg/coxph/lifelines、优化器、正则/窗口/tie选项与参数坐标不按名称再计。本来源无软件运行合同，式子明确不代表计算/研究通过。 边界：右删失与事件标记是输入事实，不自动从价格缺口或退市推断；金融事件/观察机制和全部PIT仍MISSING。 重复协变量/同点事件允许；exact ties枚举按不同个体，全部m=r只有一个子集故该贡献0。NaN/Inf/负时长/左或区间删失不在合同。 全删失合法地给平坦目标；separation可使有限argmax空。不能将缺解、平坦或数值失败统一返回零系数或无风险。 常数列/共线性导致不可识别，不擅加ridge或伪逆；relativehazard/score/info/absolute概率不能混为一个数。 精确实数公式不是某数值实现；大样本subset枚举资源、log-sum-exp稳定性、容差、停止与最优性证书都未固定，未运行上游算法。 与conditional multinomial-logit精确等价、与logrank零点score精确共享、与Bernoulli odds条件化关系保留；不得宣称数学或经济独立。 原临床实例和渐近检验不是金融收益证据；源码许可不存在，论文再分发/商业权利未取得。 扫描PDF核心无可机器提取公式；native1628B覆盖封面并含35FF。公式只绑定父PDF与实际13页图，未以OCR或手写文本冒充原生行段。 输出：完整ell(beta)及有限全局argmax集合（可空/多值）；事件条件概率、导数及相对风险解释均同族，未生成任何数值拟合。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-1fc2f1cd0b7785a3979b8e4b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "完整risk-set条件似然族；不是以原logrank的score/系数换输出计数，不给未识别的绝对期限风险。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-1fc2f1cd0b7785a3979b8e4b"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给n>=1个观测(T_l,delta_l,z_l)，T_l为同一起点的有限非负终止时长，delta_l∈{0,1}表示失败或右删失，z_l∈R^p为预先可得的固定协变量(p>=1)。以不同已发生事件时点tau_i升序分组，D_i={l:T_l=tau_i,delta_l=1}，m_i=|D_i|，R_i={l:T_l>=tau_i}，r_i=|R_i|。给任意有限beta∈R^p，对每个A⊂R_i、|A|=m_i令s_i(A)=Σ_(l∈A)z_l，Z_i(beta)=Σ_(A⊂R_i,|A|=m_i)exp(betaᵀs_i(A))。完整条件对数目标ell(beta)=Σ_i[betaᵀs_i(D_i)−ln Z_i(beta)]。无并列m_i=1时退化原Eq13：Σ_i[betaᵀz_fail,i−lnΣ_(l∈R_i)exp(betaᵀz_l)]。输出整条ell(beta)及有限全局最优解集合B*=argmax_(beta∈R^p)ell(beta)，B*可空或不唯一；给定beta的事件归属概率为上述分子/Z_i。全删失时空和ell=0、B*=R^p。该完整风险集条件似然为一个族，参数、score/info、riskratio、单个响应或tie实现不拆计数。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-1fc2f1cd0b7785a3979b8e4b"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "T（length-n finite real nonnegative observed durations;n>=1;common origin and unit）：事件时长或右删失终止时长，原观测下标保留；不预先删掉删失者。；delta（length-n labels in {0,1}）：1为已发生事件，0为在T终止的右删失；全部需实际已知。；Z（n-by-p finite real covariate matrix;p>=1;duplicates/collinearity allowed）：每行对应同一个体；本合同固定协变量并需在事件前可得，真实金融列/发布时点缺。。参数：beta：共同协变量参数；给定参数评分与整条目标/拟合解集合属于同一完整族，不拆坐标。；范围R^p; no automatic intercept, penalty, bound or estimator；来源默认值None；本条选定explicit finite real p-vector when evaluating ell; whole R^p for mathematical argmaxset；ties：纸面原定义不是软件默认，不把Breslow/Efron或随机打散tie当等价运行。；范围all distinct observation-index subsets of riskset size m_i; m1 includesEq13；来源默认值None；本条选定original1972 Eq22 exact subsets conditional on m_i；covariate_scope：明确选定原模型子合同；不导入未知的time-varying/left-truncated扩展。；范围same p finite real coordinates for every observation；来源默认值None；本条选定fixed pre-observation finite z_l"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-1fc2f1cd0b7785a3979b8e4b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "doi.org/10.1111",
+  "lab": null,
+  "missing_information": [
+    "金融事件、协变量、观察终止/删失原因、数据供应商与PIT MISSING",
+    "适用删失/个体依赖/比例风险或离散odds假设未经金融验证",
+    "数值solver/依赖/精度/收敛/最优性认证/资源成本未冻结未执行",
+    "绝对baseline/survival/期限违约概率未定义为输出；不能用相对hazard替代",
+    "原论文商用及再分发权利REVIEW_REQUIRED；输入数据授权MISSING"
+  ],
+  "name": "Cox 风险集协变量条件似然",
+  "native_source_id": "j.2517-6161.1972.tb00899.x",
+  "one_line": "按事件与右删失记录形成每次风险集，对给定失败人数下的失败者身份建立完整条件似然；保留无有限最优解和不可识别情形。",
+  "record_id": "j.2517-6161.1972.tb00899.x",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源算法、数值拟合或行情回测；商用权利仍需单独审核。",
+    "metadata": "自撰中文定义与事实摘要；保留归属、来源版本和定位。原PDF、图页、源码与数据不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://web.stanford.edu/~lutian/coursepdf/cox1972paper.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "D.R.Cox, Regression Models and Life-Tables, JRSS SeriesB34(2),1972; original scanned pages187–198 read forselectedEq13/22. Stanford-hosted scan and Crossref DOIidentity. Chinese metadata selfauthored.",
+      "id": "harvest-source-1fc2f1cd0b7785a3979b8e4b",
+      "license": "JSTOR_PERSONAL_NONCOMMERCIAL_NOTICE_NO_OPEN_LICENSE_VERIFIED",
+      "locator": "Original scanned article: physical p3-8,12 for Eq13/22 and tied-subset/risk-set contract; p1 identity/rights; p9-10 excluded baseline discussion; exact visual page hashes in review",
+      "revision": "Cox1972 Regression Models and Life-Tables; Stanford-hosted JSTOR scan, exact PDF bytes; cover range187–220 includes discussion",
+      "sha256": "e7eceabbc2b17c48f63b4a9888ff3e0435481ac7a0df924039c1e0a623db23cd",
+      "supports": [
+        "固定协变量与右删失风险集、完整精确条件目标及来源解释边界"
+      ],
+      "url": "https://web.stanford.edu/~lutian/coursepdf/cox1972paper.pdf",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Crossref bibliographic registry for the Cox1972 work",
+      "id": "harvest-source-c5c304f1d21d3665d3bc9d1e",
+      "license": "NOASSERTION_METADATA_REUSE",
+      "locator": "Original Crossref JSON L1: DOI/title/author/volume/issue; bibliographic page range kept separate from scan including discussion",
+      "revision": "Crossref original JSON response; title/author/volume34 issue2 bibliographic identity only",
+      "sha256": "ce31028bf9f85f0db634cf3f62ebd884a66e619278db9556b02f5c5a3e3c13cc",
+      "supports": [
+        "书目身份，不能替代公式或商用授权"
+      ],
+      "url": "https://api.crossref.org/works/10.1111/j.2517-6161.1972.tb00899.x",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

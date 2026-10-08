@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "可研究一个对象相对其周边结构的局部稀疏程度，或同一对象在不同尺度上的异常形状。未建立收益方向、稳定风险概率或金融显著性。",
+    "missing": [
+      "金融字段/数据时点/校准和收益关系未验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-8516ebfe76f8f3f645bcfad7"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "所选全体样本与坐标版本均可得之后；不能把包含未来样本的局部分数回填早期时间。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-8516ebfe76f8f3f645bcfad7"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "以CMU-CS-02-188 November2002技术报告为主定义，纸面Table1、Eq1–3及Def3逐页视觉核过。URL名含icde03不改封面2002身份，未获得2003会议版逐式相等证据。 每个输入对象保留观测下标，重复坐标不去重。原文允许任意距离，本代表合同固定欧氏；距离、坐标尺度和样本集合必须事先明确，不能把不同度量当多条新因子。 外半径r定义samplingneighborhood，内半径αr定义countingneighborhood。二者都用<=且含self，内半径count按全体n对象，而不是只在focal的外邻域内截取。然后只对外邻域成员的count作均值/总体std。 Table1的std除数是外邻域个数而非n−1。MDEF是focalcount相对邻居count均值的短缺；可以为负，表示focalcount高于该局部均值，不是坏数据或概率。 原Eq1/2分母处的n_hat参数次序在r,alpha与alpha,r之间混排；Table1与文字均明确相同sampling/counting含义。这里用μ统一命名，保留原排版问题，不把它解读成交换两半径的新估计器。 sMDEF只是同一count局部std除以μ，不是再将MDEF除std的Zscore。σ=0时全部a_j相同，而focal自身在集合里，MDEF=0；严格0>0为false，完整数学定义无需epsilon或排除相同点。 r=0只包含同坐标对象，各内count同其重数，MDEF与sMDEF为0；n1或所有点同坐标也定义良好。足够大r使全部innercount为n时同样0；不声称所有稀疏点都必被flag。 原Def3画n_i(αr)与μ_i(r)及μ±3σ，和这里profile是同一家族。采用原α=.5、阈值3作为代表，半径列表/范围是显式研究输入；没有从原文模糊minscale段造一个默认自动r选择。 印刷p8建议至少20个samplingneighbors，却在同段用n_hat_min=20这个均值count记号；保留文字/符号差异。本条对指定r的有限定义不依赖该统计推荐，未宣称少量样本有误报率保证。 原Lemma1的Chebyshev论证针对局部假设分布；不能直接作为扫描多个r与多个点后整体falsealarm≤1/9的保证。金融时间/截面依赖和选择作用未验证，阈值只是来源定义的heuristic。 印刷p11称只看focalcriticaldistances和除α的值即可。静态三点反例见边界报告：邻居到第三点的innercount可在这些值之外改变，故不批准这条优化扫描为整个profile的精确solver，也不声称已证明其阈值误判。直接按Eq1–3在任意给定r评价的数学定义未受影响。 PyOD固定LOCI代码另外存在<=sampling与<inner不一致，mdef/std零除且只在mean>=20时更新的score；普通两重合簇即可到0/0。该实现独立HOLD，不借纸面完整定义提升代码质量，也不把库BSD许可证推给原论文。 整条profile是一个构造；MDEF、normalizedspread、plot、阈值、尺度族与未来准确实现不得分开计数。这里没有学习出的边界、收益方向、交易规则或概率解释。 金融用途只能在选定训练/比较样本全部可得后描述局部相对稀疏度；若样本含未来资产/未来bar，早期分数会前视。特征单位、标准化、距离、池内对象的PIT和更新周期仍MISSING。 边界：n>=1,d>=1且有限实数；重复、singleton、r0、全同对象合法并保留self计数。空输入/NaN/Inf不是本数学合同。 对象i必须来自输入集合；新外部query若加入集合会改变counts，未擅给固定训练外推规则。 σ0时MDEF0和flagfalse；μ>=1。MDEF可以负，不把零spread、负MDEF或非flag当无金融风险。 参数和wholeprofile同族；原局部Chebyshev不证明全扫描误报率或金融有效性。 原paperfocalcritical优化不足以覆盖全profile的静态反例保留；aLOCI采样/quad-tree近似及运行复杂度未批准。 PyOD代码HOLD：0/0、严格边界和输出聚合差异都未修，不运行代码。 直接数学公式完整不等于数值实现通过；大规模距离资源、精度、并行、稳定性和供应商PIT全部待研究。 原PDF公开可访问不等于开放许可；只准备自撰定义和来源pins，raw/全文/页图不入Git。 输出：每个原观察点在显式r的MDEF、sMDEF及等价count/plot/flag整族；非外部query概率或独立多条特征。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-8516ebfe76f8f3f645bcfad7"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可研究一个对象相对其周边结构的局部稀疏程度，或同一对象在不同尺度上的异常形状。未建立收益方向、稳定风险概率或金融显著性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-8516ebfe76f8f3f645bcfad7"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "有限n>=1个有身份的点x_i∈R^d(d>=1)，允许坐标重复，距离固定欧氏。代表原文α=1/2；给每个显式r>=0，N_i(r)={j:||x_i−x_j||<=r}，n_i(r)=|N_i(r)|，a_j(r)=n_j(αr)。μ_i(r)=|N_i(r)|^−1Σ_(j∈N_i(r))a_j(r)，σ_i(r)=[|N_i(r)|^−1Σ_(j∈N_i(r))(a_j(r)−μ_i(r))²]^(1/2)。MDEF_i(r)=1−a_i(r)/μ_i(r)，sMDEF_i(r)=σ_i(r)/μ_i(r)。完整输出是这些量随显式尺度r的profile，点尺度flag为MDEF_i(r)>3*sMDEF_i(r)，可在事先指定尺度集合内取any，但不把各尺度/分量/flag拆新。式子不除σ；self包含使μ_i>=1。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-8516ebfe76f8f3f645bcfad7"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X（finite indexed real n-by-d sample;n>=1,d>=1;repeatedcoordinates allowed）：每行一个观测身份；全部样本用于内count，focal与self保留，金融特征/单位/PIT未定。。参数：alpha：内counting半径相对外sampling半径比例。；范围paperchosenrepresentative1/2;other0<alpha<1 samefamily；来源默认值None；本条选定0.5；radii：事先指定评价尺度；候选数学定义每个r完整，不批准原文优化criticalscan。；范围finite real r>=0;noautomaticmin20searchdefault；来源默认值None；本条选定explicit finite nonempty list of r>=0 or exact mathematical profile over predeclared radius interval；threshold_multiplier：严格MDEF>3sMDEF；不是MDEF/sMDEF或经全扫描校准的p值。；范围papersuggested3;otherthresholds samefamily；来源默认值None；本条选定3"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-8516ebfe76f8f3f645bcfad7"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "LOCI/MDEF完整局部count profile一族；固定α=.5、k3为代表，显式r，不把PyOD缺陷代码当数学实现。 仅作完整已观测样本内的局部稀疏度研究；金融输入/PIT、异常校准及收益未验证。"
+    }
+  },
+  "identity_namespace": "cmu/technical-reports",
+  "lab": null,
+  "missing_information": [
+    "金融样本/特征缩放/距离/PIT/刷新时钟未冻结",
+    "数字实现、正确allradius搜索、精度/资源合同未固定未执行",
+    "原论文开放或商用许可未知，PyOD许可不传递",
+    "整体扫描报警校准、收益或金融风险解释未验证"
+  ],
+  "name": "双半径局部计数偏离曲线",
+  "native_source_id": "CMU-CS-02-188",
+  "one_line": "比较一个点的内半径邻居数与周边对象的平均计数，并保留整个尺度曲线和局部离散度。",
+  "record_id": "CMU-CS-02-188",
+  "relations": [],
+  "rights": {
+    "derived_results": "定义审阅不代表数值实现或经济有效性；论文许可未知、商业使用REVIEW_REQUIRED。PyOD BSD2仅用于held参考代码。",
+    "metadata": "自撰中文定义与事实摘要；保留来源、版本和版权边界。论文、源码、页图及原数据不公开。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.cs.cmu.edu/~christos/PUBLICATIONS/icde03-loci-tr.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Spiros Papadimitriou,Hiroyuki Kitagawa,Phillip B.Gibbons,Christos Faloutsos;CMU-CS-02-188 November2002 technical report. SeparatePyOD implementation authorWinstonLi/adaptedCloudy10 assourcecomments;Chinese metadata selfauthored.",
+      "id": "harvest-source-8516ebfe76f8f3f645bcfad7",
+      "license": "UNKNOWN_NO_OPEN_LICENSE_VERIFIED",
+      "locator": "CMU-CS-02-188 November2002; physical p8 Table1,p9 Eq1-3,p13 Def3; p11 and p14 source boundaries; exact native text and original scale-to1500 page pins retained",
+      "revision": "CMU-CS-02-188 November2002 original author technical report; exact28-pagePDF, not assumed equal ICDE2003 publication",
+      "sha256": "c1cb9bbf9c77267edfe61556498f18e44e2cf9db57b35fbef483e11ce716d4c4",
+      "supports": [
+        "原论文完整显式半径局部count profile；描述定义，不批准优化扫描或PyOD实现"
+      ],
+      "url": "https://www.cs.cmu.edu/~christos/PUBLICATIONS/icde03-loci-tr.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Spiros Papadimitriou,Hiroyuki Kitagawa,Phillip B.Gibbons,Christos Faloutsos;CMU-CS-02-188 November2002 technical report. SeparatePyOD implementation authorWinstonLi/adaptedCloudy10 assourcecomments;Chinese metadata selfauthored.",
+      "id": "harvest-source-63f9784035b312e8cd578fde",
+      "license": "BSD-2-Clause",
+      "locator": "adapter attribution and dependencies:L1-L15; focalcritical values andclosed sampling radius:L18-L78; constructor, strict innerneighborhood andunprotectedzero-spreadscore:L146-L215; fit andquery batch recomputation:L217-L242",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "20dc7f97b482fc04915d32499041aff8e1381a736346435af84a03a8882e324d",
+      "supports": [
+        "HELD_IMPLEMENTATION_BOUNDARY_ONLY_NOT_SELECTED_DEFINITION"
+      ],
+      "url": "https://raw.githubusercontent.com/yzhao062/pyod/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/pyod/models/loci.py",
+      "verification": "PINNED_REFERENCE_REVIEWED_NOT_SELECTED_IMPLEMENTATION"
+    },
+    {
+      "attribution": "Spiros Papadimitriou,Hiroyuki Kitagawa,Phillip B.Gibbons,Christos Faloutsos;CMU-CS-02-188 November2002 technical report. SeparatePyOD implementation authorWinstonLi/adaptedCloudy10 assourcecomments;Chinese metadata selfauthored.",
+      "id": "harvest-source-a8a0d8cb843a38a183b536c0",
+      "license": "BSD-2-Clause",
+      "locator": "completeBSD2:L1-L25",
+      "revision": "3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58",
+      "sha256": "2aad003d1faca304e013f82e5088e8cb1c364470d4755e1e2175922a9872bf56",
+      "supports": [
+        "HELD_PYOD_LICENSE_ONLY_NOT_PAPER_LICENSE"
+      ],
+      "url": "https://raw.githubusercontent.com/yzhao062/pyod/3a71f47bb2cb9b7c8a09fc92e5c67510d7198b58/LICENSE",
+      "verification": "PINNED_REFERENCE_REVIEWED_NOT_SELECTED_IMPLEMENTATION"
+    }
+  ]
+}

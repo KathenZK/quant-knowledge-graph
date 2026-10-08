@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "不同平滑器的排列共振及状态交替可能减少重复追价；收益驱动和止损贡献均仅研究假说。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "只审核三个开关全true默认实现；源码其它分支未按7种组合拆条。",
+    "源码明确Permission Pending；镜像账号不是原作者授权证明。"
+  ],
+  "name": "双 T3 与六层 MavilimW 共振的交替状态策略",
+  "native_source_id": "427390",
+  "one_line": "默认同时启用T3、T3 Fibo与MavilimW，以价格和两T3相对排列切换多空，并用历史相反状态抑制重复入场。",
+  "record_id": "427390",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E5%A4%9A%E5%9D%87%E7%BA%BF%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E5%90%88%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Combined-Moving-Average-Crossover-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 creator & compiler: Bartu Altan, Markdown L166; inspired by KIVANÇ ÖZBİLGİÇ @fr3792 and @mavilim0732, L167; Permission Pending, L168；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-427390-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "2547c9a2624d092eb340d85e05310353265d728d42f8eb458f834ef7f3ff4e60",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E5%A4%9A%E5%9D%87%E7%BA%BF%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E5%90%88%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5Combined-Moving-Average-Crossover-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-427390-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-427390-published-code"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：没有手续费、滑点、借券或资金费参数，未验证现实成本。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-427390-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "定义b(X)=barssince(X[1])。多entry事件=b(L)>b(S)?L:na；空entry事件=b(S)>b(L)?S:na；须能比较之前两类状态的历史出现。代码用这些过滤事件依次发entry(\"Long\",true)和entry(\"Short\",false)，不是每棒满足排列就开仓。首次尚未出现两类状态时barssince的na会抑制事件。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-427390-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "未显式设置收盘成交/逐tick重算。指标和先前状态距离算完后按多侧三单、空侧三单顺序发请求；实际撮合与同bar净持仓改变未运行核对。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-427390-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多close事件=b(S)>b(L)?S:na；空close事件=b(L)>b(S)?L:na；分别close同ID。每棒另挂多止损avg_price×0.97、空止损avg_price×1.03，未给TP。执行顺序为多entry、close、stop，然后空entry、close、stop；同bar反转及止损触发优先级未运行。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-427390-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始资本100、currency.USD、default_qty_type=percent_of_equity、value=75；entry无qty。未声明pyramiding/保证金；相反方向entry可能有反转数量，不能等同净仓永远恰为75%。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-427390-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "3%止损以引擎持仓均价动态计算，非手写固定开仓价。三态交替依赖barssince先前历史和na；起始暖机/止损后同状态是否重入需按原事件条件，而不能补成连续重买。代码署名Bartu Altan并称向Kıvanç请求许可尚待批准，原作者链/商业许可仍REVIEW_REQUIRED。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-427390-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定三个开关全true。p=(H+L+2C)/4。T3(l,a)用p串联六层EMA_l得E1…E6，再以−a³E6+(3a²+3a³)E5+(−6a²−3a−3a³)E4+(1+3a+a³+3a²)E3合成。T=T3(8,0.7)，F=T3(5,0.618)。W为C顺序WMA3→WMA5→WMA8→WMA13→WMA21→WMA34；非成交量加权。默认多状态L=(C>T且C>W且F>T)，空状态S=(C<T且C<W且F<T)；多平状态=S，空平状态=L。其它开关组合不扩计新策略。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-427390-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-427390-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "economic_basis": {
+    "hypothesis": "同期限现金流被事先锁定时，借贷与远期换汇不一致可能留下正差额。实际边际融资、可投资渠道、交易对手、抵押和容量约束可能吃掉该差额；原文的历史套利证据不是本仓库验证结果。",
+    "missing": [
+      "未计算价差、执行交易或回测；论文历史套利统计不当本仓库经济证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "bis.org/publ",
+  "lab": null,
+  "missing_information": [
+    "选定主文§I.A与显示式(2)的美元借入方向，输入是已经换成相同持有期的利息比例和外币每单位的美元即期/远期价格。不把年化百分数、swap-pips或OIS报价直接当作这些输入。",
+    "原物理p41脚注44写GBP每年365天/其余360，物理p67 Online Appendix C第3项反写多数365/UK360；原件保留，未择其一修正。真实币种日计数、两地节假日与结算日算法未闭合。",
+    "原物理p41(A.2)在外国借入方向括号前印减号，与主文(3)及正差额叙述不相容；本条未采用反方向(A.2)，也未默改原式。主文式后文字把显示(2)/(3)称(1)/(2)，保留定位差异。",
+    "物理p67 pips示例把F=1.1001/S=1.000与1pip并列，数值差不能对应；不把示例用作行情变换器。选定使用直接给定的outright报价，不修例子。",
+    "持有期投资利息必须事先锁定且与负债/远期到期一致。央行存款便利可能中途降息，作者脚注21承认但在其实证忽略；不能因此称任何央行存款策略都已无风险。",
+    "借款用套利者实际边际成本，不以银行间指示利率、政策利率、OIS固定率或GC repo低率冒充可取得的完整期限融资；OIS不提供本金，滚动隔夜借贷另有资金风险。",
+    "按给定1美元或共同名义N缩放各腿不等于无限杠杆或零资金需求。商业票据融资量、保证金、资本、集中度、可交易名义和实际账户预算未给定。",
+    "价差g已包含借款ask、投资bid、即期ask和远期bid，仍未包含全部收费、税、冲击、清算、保证金资金及交易对手损失；g>0不保证实际扣全部成本净盈利。",
+    "公式同时锁定四腿与同日到期是模型要求。实际报价同步容差、原子执行、腿失败撤销、支付对付和早退/违约处置未给；执行字段MISSING。",
+    "这是来源全族的单次roundtrip定义，不把各币对/到期/CP与CD/央行与TBill分别计数，不新增basis因子或论文实证复制。没有源码执行、回测或行情下载；BIS版权及市场数据许可分开，商业REVIEW_REQUIRED。"
+  ],
+  "name": "Rime等：同期限借贷与远期全额换回的抛补利差交易",
+  "native_source_id": "work651",
+  "one_line": "同时借入美元、换成外币并投资，将外币到期本息按已锁定远期换回美元偿债，只把计入借贷和换汇报价后的正差额视为模型机会。",
+  "record_id": "work651",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未取得执行或现实无风险套利证据。",
+    "metadata": "原生身份、定位及自撰中文定义；原文/图像/源码/市场数据不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.bis.org/publications/working-paper-651-segmented-money-markets-and-covered-interest-parity-arbitrage.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Dagfinn Rime, Andreas Schrimpf and Olav Syrstad. Segmented money markets and covered interest parity arbitrage. BIS WorkingPaper651, July2017, manuscript2017-06-25.",
+      "id": "bis-work651-pdf",
+      "license": "PDF p2: Copyright Bank for International Settlements2017, all rights reserved; attributed brief excerpts may be reproduced or translated. No blanket code, fulltext or financial-data license. Self-authored metadata only; commercial use REVIEW_REQUIRED.",
+      "locator": "Physicalp12 §I.A full roundtrip; p13 displayedEq2 with bid/ask; p14–15 funding/investment access; p20 OIS rollover caveat; p24 §III.B andnotes33/34; p41/p67 preserved convention/sign conflicts. Lines refer to derived text.",
+      "revision": "BIS WorkingPaper651 July2017; manuscript version2017-06-25; sha256:728be9b63a2f1208f5f52167e229b147be07add1fdd0e841c43e3190cc2c92f0",
+      "sha256": "728be9b63a2f1208f5f52167e229b147be07add1fdd0e841c43e3190cc2c92f0",
+      "supports": [
+        "第一方现金流构造、版本及边界"
+      ],
+      "url": "https://www.bis.org/publications/working-paper-651-segmented-money-markets-and-covered-interest-parity-arbitrage.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_DOCUMENT_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Bank for International Settlements official publication page.",
+      "id": "bis-work651-publication-page",
+      "license": "PDF p2: Copyright Bank for International Settlements2017, all rights reserved; attributed brief excerpts may be reproduced or translated. No blanket code, fulltext or financial-data license. Self-authored metadata only; commercial use REVIEW_REQUIRED.",
+      "locator": "Official title/authors/WorkingPaper651/publication date and PDF link; identity evidence only.",
+      "revision": "BIS official work651 publication HTML HTTP sha256:a712c047b2c238ead0b90eb7008af2f76927c0f91ff9fe40837e8951108aeca4",
+      "sha256": "a712c047b2c238ead0b90eb7008af2f76927c0f91ff9fe40837e8951108aeca4",
+      "supports": [
+        "官方出版和作者身份"
+      ],
+      "url": "https://www.bis.org/publications/working-paper-651-segmented-money-markets-and-covered-interest-parity-arbitrage",
+      "verification": "FETCHED_PINNED_ORIGINAL_HTML"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "bis-work651-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美元借款、外币投资、即期换汇和相同到期的外汇远期组成一个完整现金流篮子。来源以借1美元、买欧元、投资30天并预先锁定换回为例，实务可用外汇掉期表达即期加远期。这里采美元借入方向，不把未抛补的高息货币多头或外国债券自身价格风险并入。外币到期本息全额换回是式(2)所要求的数量匹配，不只对冲初始本金。"
+    },
+    "cost": {
+      "evidence": [
+        "bis-work651-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源明确用美元借款ask、外币投资bid、即期买外币ask、远期卖外币bid；不能用四项中间价。借款利息是实际边际资金成本，与外币持有期投资收入分别进入g。来源要求所有腿充分扣成本，本文没有补一组佣金、税、冲击、抵押资金及清算费，也不把缺项填0。其“风险低”或“资本成本反映在报价”是论文讨论范围，不作为所有主体实际净利润结论。"
+    },
+    "entry": {
+      "evidence": [
+        "bis-work651-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "仅在g>0且四腿在同一时点实际可取得、成本与风险条件满足时构成来源的抛补利差交易。以N美元为给定正名义：按借款ask借N；按即期ask用N换得N/S^a外币；将此外币本金按投资bid锁定至T；同时按远期bid卖出N(1+r_FX^b)/S^a外币、约定T交割。数量是从式(2)的本息匹配直接展开，不另加信号。原文要求计入全部成本但没有统一额外收费模型，所以g>0只是必要的报价判据，不声称任何小正g都应真实开仓。"
+    },
+    "execution_time": {
+      "evidence": [
+        "bis-work651-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：来源的逻辑时点很明确：借款、即期、远期和投资同时锁定，各腿同到期；脚注要求近同时可交易报价避免执行风险。但没有具体时区、扫描时刻、报价过期容差、原子成交机制、部分成交/腿失败处理和跨市场交割安排。不能把论文每日统计或30天例子当已完成的下单/账户时钟。"
+    },
+    "exit": {
+      "evidence": [
+        "bis-work651-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有各合同至共同到期T，收回N(1+r_FX^b)/S^a外币本息并履行已售远期，取得N(F^b/S^a)(1+r_FX^b)美元，再偿还N(1+r_USD^a)美元，理想剩余N×g。此为原现金流序列及式(2)的会计展开；不等待价差收敛才平仓，也不以到期即期价重估换回金额。提前赎回、展期、止盈止损、违约和保证金不足时的退出均未定义。"
+    },
+    "position": {
+      "evidence": [
+        "bis-work651-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源按借1美元归一；N>0只作为外部给定规模，使借款、即期外币本金、到期投资和远期交割按同一比例缩放。外币远期名义覆盖到期本息，不是两腿各50%权益。自融资roundtrip是起始借款供投资的理想现金流表述，不意味着账户可无限借钱或没有抵押需求。原文明确MMF集中度限制、融资成本随筹款量上升及内部/监管资产负债表约束，但没有一个可执行N的优化式或资本百分比。"
+    },
+    "risk": {
+      "evidence": [
+        "bis-work651-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "主要边界为实际融资可得性、同期限锁定、投资风险及交易对手。OIS本身不能筹本金，靠隔夜滚借复制可能中断；央行存款也可能在持有期调低报酬，作者承认后忽略的风险不在本库消失。FX掉期即使有抵押仍有交易对手风险。原附录p41与p67的360/365相反，p41反向(A.2)符号及p67pips示例亦不闭合；当前只采主文美元方向且直接给定持有期利息/远期价格。无收益保证、止损、杠杆上限或信用处置程序，未跑任何交易或回测。"
+    },
+    "signal": {
+      "evidence": [
+        "bis-work651-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "显示式(2)为(1+r_USD^a)≥(F^b/S^a)(1+r_FX^b)时不存在该方向模型盈利。将其两边相减得到g=(F^b/S^a)(1+r_FX^b)−(1+r_USD^a)，单位是每1美元借款在T留下的美元额；g>0为报价口径机会，g≤0不做该方向。a/b分别ask/bid，利息为同持有期比例，F是outright价格而非pips。此差额来自当时已锁定报价，不用未来S_T、贴水横截面排名或预测汇率。来源附录年计息天数和反向(A.2)存在冲突，因此未把附录市场换算当闭合实现。"
+    },
+    "timeframe": {
+      "evidence": [
+        "bis-work651-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在t同时订立各腿，持有到共同T；§I.A用30天只是说明，不冻结每月再平衡的运行日历。借贷利息和远期必须对应整个同一期限，不能把短借长投或每天滚隔夜当相同合同。完成后是否续做、何时再次扫描以及跨币机会如何组合，来源没有给统一账户规则。"
+    },
+    "universe": {
+      "evidence": [
+        "bis-work651-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定同一起息/到期、可同时成交的S^a>0与F^b>0（均为每单位外币的美元价），以及该主体真实美元借款利息r_USD^a和外币无风险投资利息r_FX^b；两者都是整个持有期的比例，要求1+r>0。输入域不是算法自动校验。资金须能借到且投资渠道可进入；文中优先考察CP融资，投资用短政府券或合格主体可用的央行设施。央行设施若期中可改息不满足锁定支付，不能自动套用无风险结论。不存在按最高央行利率排序的币池筛选。"
+    }
+  }
+}

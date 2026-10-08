@@ -1,0 +1,104 @@
+{
+  "economic_basis": {
+    "hypothesis": "量化在多次尝试与非正态收益条件下观察夏普的统计证据强弱。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅在整个估计窗口/分组结束、所有输入已观测并发布后可得；拟合系数及统计量不得回填为窗口内的实时因子。PIT数据与发表延迟缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "用试验间夏普方差和有效独立试验数构造零技能下最大夏普的基准近似。 把该基准送入同源probabilistic Sharpe helper；按收益偏度及原始峰度修正标准误。 输出模型下的统计量；PSR helper与无选择校正的特例不单独增加一条。 边界：源码N<=1均回落0基准，负试验数也不会被拒绝；统计适用域应另验证。 方差负、标准误根号项<=0及n不足未完整防护。 独立性与试验数量必须有真实搜索账本；不能用该数值证明收益真实或代替样本外检验。 n_trials先转np.asarray，丢掉pandas标签后用于位置广播；其余pandas运算仍可能标签对齐。各输入形状、顺序与标签需调用者统一，不能假设全部输入自动按标签配对。 输出：一个完整统计构造；参数、窗口及多输出分量不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "量化在多次尝试与非正态收益条件下观察夏普的统计证据强弱。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N>1时SR*=sqrt(VarSR)*[(1-γE)Φ^-1(1-1/N)+γE Φ^-1(1-1/(Ne))]；N<=1时SR*=0。DSR=Φ[(SR-SR*)sqrt(n-1)/sqrt(1-skew*SR+((rawKurt-1)/4)*SR²)]，γE=0.5772156649015329。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "sharpe_ratio（pandas Series or DataFrame or float）：与样本频率一致的观察夏普；sharpe_ratio_variance（pandas Series or DataFrame or float）：尝试过的有效独立方案间夏普方差；n_trials（pandas Series or DataFrame or float or int）：包括未展示/失败方案在内的有效独立试验数，研究域N>=1；n_observations（pandas Series or DataFrame or float or int）：收益观测数n>1；skewness（pandas Series or DataFrame or float）：同一收益样本的偏度；kurtosis（pandas Series or DataFrame or float）：原始非超额峰度；正态为3而非0。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "JerBouma/FinanceToolkit",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或进行数值复现",
+    "NumPy/Pandas/SciPy/sklearn版本及默认行为未冻结",
+    "金融数据、无风险收益与基准、供应商、数据发布时点和修订快照未选定",
+    "未验证经济收益有效性或市场适用假设"
+  ],
+  "name": "校正试验选择效应的夏普统计量",
+  "native_source_id": "get_deflated_sharpe_ratio",
+  "one_line": "量化在多次尝试与非正态收益条件下观察夏普的统计证据强弱。",
+  "record_id": "get_deflated_sharpe_ratio",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/performance/performance_model.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-99a8336dd3a67158dadfd559",
+      "license": "MIT",
+      "locator": "get_deflated_sharpe_ratio:L910-L1002; get_probabilistic_sharpe_ratio:L831-L907; imports and explicit constants:L1-L31",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "7475deeb890b2cd86b8e491df6491ad782ce4a5db59fe3e9b11513edb8dcc013",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/performance/performance_model.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-cb2abb9f4ee81dee928c5ef7",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "20f27d76a82699c1a5926ed41e8d1d8681ab3d554492559a9bfbd6f0d1ee2eef",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "economic_basis": {
+    "hypothesis": "原作者的用途是由有限补贴的市场运营者承接不同时间到达的交易，形成关于事件结果的价格信息。对数评分差与库存成本报价的等价关系为定义依据；信息质量、实际交易需求、可兑付和真实运营成本均未验证。这不是已证明能盈利的交易者选边策略，也不把模型损失上界当作实盘风险保证。",
+    "missing": [
+      "未执行源码、部署、求解、模拟或回测；补贴和信息用途不等于盈利证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "hanson.gmu.edu",
+  "lab": null,
+  "missing_information": [
+    "本条为预测市场运营者的做市构造；论文明确运营者可能支付补贴换信息，不表示方向交易盈利。模型不估计实际事件概率，也不承诺价格准确。",
+    "N个结果必须互斥且穷尽，每份获胜证券兑付1美元；结果认定、争议、延期、取消、违约、合规可交易范围和真实合约身份未给。",
+    "采用固定b及q0=0均匀初价；没有把b做成随总份额变化的流动性敏感规则。N、b及事件集合未冻结生产数值。",
+    "C(0)=b logN只是所选成本函数的常数，实际累计交易收款为C(q)−C(0)，不可把C(0)误记成已收到的交易现金或已落实补贴。",
+    "允许有符号数量和卖单的数学规则不提供交易者抵押/信用/借券和负份额债务履约机制；初始准备金与可接受订单的实际风险约束仍缺。",
+    "损失上界在有限报价、完整兑付和模型收支中成立；不覆盖计算误差、延迟、抢跑、欺诈、平台费用、资金利息及事件认定风险。",
+    "总成本差是交易本金/成交代价，不是平台收费。无完整基础设施、交易手续费、资金和清算成本；不可按零费用推实盘经济性。",
+    "Hanson的做市库存x与Chen–Pennock的交易者持有量q符号角色不同；本条统一用q表示运营者对交易者的净或有份额负债，未混用两式的正负号。",
+    "只审原作者数学定义和明确等价的后续推导；未执行源码、合约、优化器、撮合模拟或回测。商业使用REVIEW_REQUIRED；arXiv非排他分发声明不等于开放商用许可。"
+  ],
+  "name": "Hanson LMSR：按或有份额总成本差结算的有限补贴做市",
+  "native_source_id": "mktscore.pdf",
+  "one_line": "给定互斥且穷尽的事件结果，用对数总成本差承接份额买卖，按库存重新报价并在结果确定后兑现获胜份额。",
+  "record_id": "mktscore.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未验证预测质量、可交易、盈利或运营风险。",
+    "metadata": "来源原生身份、定位与自撰中文规则；原文、图像、代码与行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Robin Hanson, Logarithmic Market Scoring Rules for Modular Combinatorial Information Aggregation, January 2002 manuscript hosted by author at GMU; request redirects to mason.gmu.edu/~rhanson/mktscore.pdf.",
+      "id": "hanson-lmsr-200201-pdf",
+      "license": "No general open redistribution/commercial license established. Hanson author hosting does not grant third-party commercial reuse; arXiv nonexclusive distribution rights for Chen–Pennock apply to hosting and do not license Hanson or underlying events/data. Only original Chinese metadata/identity/locators proposed; commercial REVIEW_REQUIRED.",
+      "locator": "PDF physical p1 identity/date; p3 finite disjoint events; pp4–6 logarithmic scoring, sequential score differences, inventory-price relation Eq6 and cost limits; p7 combinatorial scope not added as variants. Text lines refer to pinned pdftotext derivative.",
+      "revision": "Robin Hanson, January 2002 author manuscript; HTTP snapshot sha256:fb1520ff080adaf8deff74d6789ca8d0b2d78a6979add1731468c0d1ceeb47b9",
+      "sha256": "fb1520ff080adaf8deff74d6789ca8d0b2d78a6979add1731468c0d1ceeb47b9",
+      "supports": [
+        "原生身份与版本",
+        "市场评分/成本报价的明确等价链",
+        "或有证券收付与状态规则",
+        "补贴损失界和运营缺项"
+      ],
+      "url": "https://hanson.gmu.edu/mktscore.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_DOCUMENT_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Yiling Chen and David M. Pennock, A Utility Framework for Bounded-Loss Market Makers, UAI2007 pp49–56; fixed arXiv v1 upload in 2012. Later equivalent formulation, not a version of Hanson manuscript.",
+      "id": "chen-pennock-1206-5252v1-pdf",
+      "license": "No general open redistribution/commercial license established. Hanson author hosting does not grant third-party commercial reuse; arXiv nonexclusive distribution rights for Chen–Pennock apply to hosting and do not license Hanson or underlying events/data. Only original Chinese metadata/identity/locators proposed; commercial REVIEW_REQUIRED.",
+      "locator": "PDF physical p1 UAI2007 identity; pp2–3 fixed-utility purpose, mutually exclusive exhaustive outcomes, uniform b logN bound; p5 §5.1 four-step cost/order/settlement account; p6 Eq15–17 exact equivalence; p7 liquidity and uniform q0=0. Two-column layout checked against original pages.",
+      "revision": "Chen and Pennock, UAI2007 pp49–56; arXiv:1206.5252v1 uploaded 2012-06-20; sha256:de14d8949353001bf7af5fd07846e4df0cb301edff6d054bbcb48311fe087df0",
+      "sha256": "de14d8949353001bf7af5fd07846e4df0cb301edff6d054bbcb48311fe087df0",
+      "supports": [
+        "原生身份与版本",
+        "市场评分/成本报价的明确等价链",
+        "或有证券收付与状态规则",
+        "补贴损失界和运营缺项"
+      ],
+      "url": "https://arxiv.org/pdf/1206.5252v1",
+      "verification": "FETCHED_PINNED_AUTHOR_DOCUMENT_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "arXiv versioned abstract, Chen and Pennock. UAI2007 publication distinct from2012 upload.",
+      "id": "arxiv-1206-5252v1-abstract",
+      "license": "No general open redistribution/commercial license established. Hanson author hosting does not grant third-party commercial reuse; arXiv nonexclusive distribution rights for Chen–Pennock apply to hosting and do not license Hanson or underlying events/data. Only original Chinese metadata/identity/locators proposed; commercial REVIEW_REQUIRED.",
+      "locator": "HTML L41 title/authors; L120 and L173 2012-06-20 submission; L135 UAI2007; L184 nonexclusive-distrib/1.0 license link. Identity/rights only, no rule support.",
+      "revision": "arXiv:1206.5252v1 abstract HTTP snapshot sha256:2d8309fd8736fb5cb1f7a5c0a0fa0bab7dbb951e04e94fc2b1290a2e1b634bc2",
+      "sha256": "2d8309fd8736fb5cb1f7a5c0a0fa0bab7dbb951e04e94fc2b1290a2e1b634bc2",
+      "supports": [
+        "版本身份",
+        "权利链接"
+      ],
+      "url": "https://arxiv.org/abs/1206.5252v1",
+      "verification": "FETCHED_PINNED_VERSIONED_ABSTRACT"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "chen-pennock-1206-5252v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "N种事件证券，第i种每份在结果i发生时支付1美元，其余结果支付0。q_i为交易者净持有/市场尚未结清的i证券份额，对运营者是该结果下的负债，不能解读成运营者买入i的投资权重。现金收付与或有份额分开记账；没有股票、币对或期权到期价的默认映射。"
+    },
+    "cost": {
+      "evidence": [
+        "hanson-lmsr-200201-pdf",
+        "chen-pennock-1206-5252v1-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：有限交易的C(q_new)−C(q_old)是买卖或有份额的总成交收付，不能当作另收的手续费。来源的连续报价在无限小交易处买卖价差为零，有限数量仍会移动价格并产生积分代价。Hanson明确省略通信、计算价格和实施交易成本；平台费用、资金占用利息、支付清算及抵押成本没有闭合，不能默设为0，也不能仅凭b lnN补贴上界推净收益。"
+    },
+    "entry": {
+      "evidence": [
+        "chen-pennock-1206-5252v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "运营者建立q0=0的市场，预先选择b与结果集合。每当交易者提出有限的买卖篮子Δq，按当前状态算q_new=q_old+Δq及ΔC；ΔC>0由交易者付给运营者，ΔC<0由运营者付出卖单所得，随后把净份额更新为q_new并以新梯度报价。模型没有先判断外部价格涨跌、最小利润或做多做空阈值；交易者需求是外生请求。来源允许负数量表示卖出，但未给可接受请求的抵押和信用检查，不能据此承诺无限裸卖可履约。"
+    },
+    "execution_time": {
+      "evidence": [
+        "hanson-lmsr-200201-pdf",
+        "chen-pennock-1206-5252v1-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：描述顺序为读取当前净份额→计算有限篮子成本差→收付并更新份额→发布新报价→结果已知后兑付。论文未规定并发请求的串行化/成交原子性、付款确认、报价有效期、开关市时刻、结果公布延迟、争议处置或实际结算接口。没有把数学上的连续可交易性写成现实零延迟，未验证任何订单执行或资金账本。"
+    },
+    "exit": {
+      "evidence": [
+        "chen-pennock-1206-5252v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "交易进行中，反向篮子可减少或改变交易者净份额，也按同一成本差收付，没有固定止盈止损或持有期。结果i确定时，每份i证券兑付1美元，其余证券为0，结束该市场的或有负债；按净份额记账时该状态的净结算负债为q_i，负净份额的实际收款仍依赖未定义的履约安排。这里没有另加临近结束时强平、外部对冲或重新开市规则。"
+    },
+    "position": {
+      "evidence": [
+        "chen-pennock-1206-5252v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "运营者不是选择Σ权重=1的资产组合，而是逐单累计有符号负债q；报价p的和为1不表示持仓总和为1。从q0=0开始实际交易现金累计A(q)=C(q)−C(0)，C(0)=b lnN；在状态i，若另给初始准备金W0，则模型终值现金为W0+A(q)−q_i。均匀初价LMSR的最大模型补贴/交易损失不超过b lnN，因此W0≥b lnN在完整履约和该模型收支下足够覆盖此终值缺口；这是原上界与结算账的直接解释，不代表来源提供了真实托管/保证金部署。q本身没有股票数量帽、杠杆倍数或波动目标；不可把常数C(0)当作已经收到的本金。"
+    },
+    "risk": {
+      "evidence": [
+        "hanson-lmsr-200201-pdf",
+        "chen-pennock-1206-5252v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "固定b>0、有限且互斥穷尽的N和完整净额履约是范围。由于C(q)≥max_i q_i，q_i−[C(q)−C(0)]≤b lnN；该最坏模型损失是补贴约束，不是正期望收益或所有真实风险上限。有限q报价不触及0/1，极端概率只能作极限；数值指数溢出/下溢、舍入、信用和事件认定风险未解决。Chen–Pennock将均匀LMSR与负指数效用做市明确等价：运营者维持期望效用水平，不是像EGM那样对收益分布求最优投资组合。熵、softmax、指数效用都不另计新因子；不同b/N/事件题目也不另计策略。"
+    },
+    "signal": {
+      "evidence": [
+        "hanson-lmsr-200201-pdf",
+        "chen-pennock-1206-5252v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "这是一套库存报价规则。以自然对数和固定b>0定义C(q)=b ln[Σ_j exp(q_j/b)]，瞬时单价p_i(q)=∂C/∂q_i=exp(q_i/b)/Σ_j exp(q_j/b)。有限q下各价严格在0与1之间且和为1；它不是外部预测概率输入的softmax选边信号。收到有符号篮子Δq后，总成交代价为ΔC=C(q+Δq)−C(q)，不能用旧报价p(q)·Δq替代有限交易积分。原始评分式s_i(r)=b ln r_i，历次从旧报告到新报告的评分差会望远镜相消；这里用来源明确证明等价的成本表示保留实际收支和符号。"
+    },
+    "timeframe": {
+      "evidence": [
+        "hanson-lmsr-200201-pdf",
+        "chen-pennock-1206-5252v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按交易请求顺序更新，没有历史价格形成期或固定K线频率。市场从给定初始状态开始，允许多名交易者先后多次买卖，每次使用更新前的份额向量计算收付款，再更新份额与报价；最终在事件结果已知后兑付。具体开放/关闭时间和兑付日历是未给输入，不能套为日内高频、每日再平衡或读取事后结果开仓。"
+    },
+    "universe": {
+      "evidence": [
+        "hanson-lmsr-200201-pdf",
+        "chen-pennock-1206-5252v1-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在启动前给定有限N≥2个互斥且穷尽的事件结果；每个结果对应一种可交易的或有证券。选择原文均匀初始概率的范围：q0=(0,…,0)，p_i(q0)=1/N，固定b>0。不是按收益/因子排名选择证券；不扩写复杂条件事件分解、市场间关联或预言机。若结果划分不穷尽或彼此重叠，不能沿用本条的Σp=1和损失结论。"
+    }
+  }
+}

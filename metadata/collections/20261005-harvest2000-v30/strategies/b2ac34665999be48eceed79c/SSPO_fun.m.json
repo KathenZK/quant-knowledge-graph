@@ -1,0 +1,211 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者以峰价恢复潜力和稀疏配置提升短期财富为动机。本条只采固定有限迭代映射，不采其原目标必有鞍点、全局收敛或有效收益的主张。",
+    "missing": [
+      "来源规则已静态梳理，未做计算语义执行、经济有效性或账户回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "github.com/laizhr/SSPO",
+  "lab": null,
+  "missing_information": [
+    "只静态读固定作者代码与明确依赖，没有执行 MATLAB、外来代码、求解器、历史行情或账户回测。",
+    "输入是外部给定资产收益倍数矩阵；未给持续可交易股票池、成分历史、复权/退市处理、缺价修补、交易日历、真实成交和资金约束。",
+    "原作者仓库的引用/免责文字不是完整开源许可证；仅发布自撰定义与来源定位，代码/论文/市场数据授权分别保留 REVIEW_REQUIRED。",
+    "对每输入行恢复目标只是源模型的比例配置，不是交易所订单、成交价格或可实际无摩擦调仓保证。",
+    "有限迭代结果与论文原始优化器最优解分开；未核收敛或收益。",
+    "依赖MATLAB Wavelet Toolbox wthresh；公开官方文档辅助说明soft阈值，不是已执行的工具箱二进制验证。"
+  ],
+  "name": "SSPO：峰价预测与有限稀疏对偶迭代的组合配置",
+  "native_source_id": "SSPO_fun.m",
+  "one_line": "对峰价恢复预测执行有上限的线性求解、软阈值与预算残差迭代，再把放大原始权重投影为只多组合。",
+  "record_id": "SSPO_fun.m",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED; no claim of reproduced paper optimum or economic validation.",
+    "metadata": "原生函数ID、固定commit及自撰中文规则/定位；不发布上游源码、论文全文、图像或市场数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/laizhr/SSPO/blob/2fac74d5ca6a75476c69c04963830bb35a0e263b/README.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-sspo-readme-md",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "README.md native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "2fac74d5ca6a75476c69c04963830bb35a0e263b",
+      "sha256": "4dd95f26669deee51c75ffbd3bf6dd332d21255b51f68629f535f8eb40bd3e83",
+      "supports": [
+        "作者署名/论文定位及免责文字"
+      ],
+      "url": "https://github.com/laizhr/SSPO/blob/2fac74d5ca6a75476c69c04963830bb35a0e263b/README.md",
+      "verification": "FETCHED_PINNED_REPOSITORY_DOCUMENT"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-sspo-sspo_fun-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "SSPO_fun.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "2fac74d5ca6a75476c69c04963830bb35a0e263b",
+      "sha256": "c545e6f717a6f2b65ede145d5db33ebfe8aacd90d5e420fa1fdbd6fc6eda97a5",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/SSPO/blob/2fac74d5ca6a75476c69c04963830bb35a0e263b/SSPO_fun.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-sspo-sspo_run-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "SSPO_run.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "2fac74d5ca6a75476c69c04963830bb35a0e263b",
+      "sha256": "be4088702b69f394156c077c33825d4daa90c3d2c7ce69cc6315cfded36011c1",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/SSPO/blob/2fac74d5ca6a75476c69c04963830bb35a0e263b/SSPO_run.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-sspo-simplex_projection_selfnorm2-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "simplex_projection_selfnorm2.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "2fac74d5ca6a75476c69c04963830bb35a0e263b",
+      "sha256": "1640b6f6bc30394a13ea95133d11b0007e345cae591b0f65e7d70c1b2b51950f",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/SSPO/blob/2fac74d5ca6a75476c69c04963830bb35a0e263b/simplex_projection_selfnorm2.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai and original paper coauthors; JMLR",
+      "id": "sspo-paper-pdf",
+      "license": "Journal/author document rights independent of repository source and market data; self-authored metadata only, no source fulltext distributed; commercial REVIEW_REQUIRED.",
+      "locator": "Original JMLR paper; formulas physically visually checked; line ranges refer only to exact pdftotext24.04.0 derived text.",
+      "revision": "JMLR 19(63):1–28,2018; HTTP SHA256 ef14005487080e777845afe26ea158262c40f57bcb45b411f3cb421ad6fab783",
+      "sha256": "ef14005487080e777845afe26ea158262c40f57bcb45b411f3cb421ad6fab783",
+      "supports": [
+        "模型方程、来源署名、算法与理论限制"
+      ],
+      "url": "https://jmlr.org/papers/volume19/17-558/17-558.pdf",
+      "verification": "FETCHED_PINNED_PDF_VISUAL_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai and original paper coauthors; JMLR",
+      "id": "sspo-paper-page",
+      "license": "Journal/author document rights independent of repository source and market data; self-authored metadata only, no source fulltext distributed; commercial REVIEW_REQUIRED.",
+      "locator": "JMLR original author/publication page and explicit code link.",
+      "revision": "JMLR 19(63):1–28,2018; HTTP SHA256 094e7299266a188f899cd362c70118b774a05857b923c774be995e89fb65d6b4",
+      "sha256": "094e7299266a188f899cd362c70118b774a05857b923c774be995e89fb65d6b4",
+      "supports": [
+        "作者出版物到代码仓的明确链接"
+      ],
+      "url": "https://jmlr.org/papers/v19/17-558.html",
+      "verification": "FETCHED_PINNED_HTML"
+    },
+    {
+      "attribution": "MathWorks official documentation",
+      "id": "mathworks-wthresh",
+      "license": "MathWorks documentation; source/marketdata permission not inherited. REVIEW_REQUIRED.",
+      "locator": "Official dependency semantics, original HTML L937–944 for wthresh or L846–880 for quadprog; not executable source or toolbox version pin.",
+      "revision": "HTTP snapshot SHA256 8ca03366483263c0f461f42fda9055e7ef7f87b597c1638991c850ef084533e6",
+      "sha256": "8ca03366483263c0f461f42fda9055e7ef7f87b597c1638991c850ef084533e6",
+      "supports": [
+        "调用参数的公开文档语义，未执行工具箱"
+      ],
+      "url": "https://www.mathworks.com/help/wavelet/ref/wthresh.html",
+      "verification": "FETCHED_PINNED_OFFICIAL_DOCUMENTATION"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "lai-sspo-sspo_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入T×N价格收益倍数矩阵；源码没有固定可交易标的，期初目标为N列等权。数据集/论文绩效不构成本条的实际市场配置或资产池准入证明。"
+    },
+    "cost": {
+      "evidence": [
+        "lai-sspo-sspo_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认c=0；接口可接opts.tran_cost。runner一期倍数g_t=(x_t·b_t)*(1−c/2*Σ|b_t−h_(t−1)|)，h_t=b_t⊙x_t/(x_t·b_t)，h_0=0，初配费为c/2。费用不进入内部权重迭代；实际佣金/价差/冲击/税费、成交容量及非正含费倍数处理未给。"
+    },
+    "entry": {
+      "evidence": [
+        "lai-sspo-sspo_fun-m",
+        "lai-sspo-sspo_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "第1期等权满仓。每一更新都从上一目标b_t重启内部b/g及rho=0，不把上一期内部对偶状态延续；用最终投影正权重配置下一期。收益后漂移份额仅用于成本；不把内部允许负的b当作实际空头持仓。"
+    },
+    "execution_time": {
+      "evidence": [
+        "lai-sspo-sspo_fun-m",
+        "lai-sspo-sspo_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先计已持b_t的第t期收益，再根据截至t的窗口形成b_(t+1)，下行使用新目标。源码没有信息发布时间、订单类型、成交价格或数值求解耗时合同；只确认模型索引顺序，不宣称可成交。"
+    },
+    "exit": {
+      "evidence": [
+        "lai-sspo-sspo_fun-m",
+        "lai-sspo-sspo_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "新目标替代旧目标，投影为0的资产下一期不配置；没有独立止损、止盈、现金防守或终点清仓。原始soft g的零分量不等于最后实际组合必然为0，最终用的是zeta*b而不是g。"
+    },
+    "position": {
+      "evidence": [
+        "lai-sspo-simplex_projection_selfnorm2-m",
+        "lai-sspo-sspo_fun-m",
+        "lai-sspo-sspo_run-m",
+        "sspo-paper-pdf"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "最终持仓在非负、和1单纯形。归一助手先在 max(abs(v))>10^6 时反复把整个 v 除以10，再降序排列u、累加s_j，取最后满足u_j>(s_j−1)/j的j，令a=(s_j−1)/j、b=max(v−a,0)。因此极端输入下是先缩小再投影，不能无条件称为对原v的欧氏投影。 原始b/g只为算法变量，500为最终投影前缩放，不是500倍杠杆；原始b的稀疏与实际权重稀疏不可混同。"
+    },
+    "risk": {
+      "evidence": [
+        "lai-sspo-simplex_projection_selfnorm2-m",
+        "lai-sspo-sspo_fun-m",
+        "sspo-paper-pdf"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只选默认opts=[]有限迭代合同。源码L57错误地以是否存在max_iter决定读取ABSTOL：只自定义max_iter却不提供ABSTOL会报缺字段；自定义ABSTOL而不设max_iter则被忽略，未修代码。终止残差只反映Σb，不保证原优化目标最优。论文Eq12在仿射预算上没有b≥0约束，某些预测差下原始线性+L1目标可无下界；Huber在尾部线性，不能采信§3.3.1无条件严格凸/鞍点结论。本条保留代码有限步骤，不把它改为有最优解的模型；异常值、数值溢出和工具箱版本未验证。"
+    },
+    "signal": {
+      "evidence": [
+        "lai-sspo-sspo_fun-m",
+        "lai-sspo-sspo_run-m",
+        "mathworks-wthresh",
+        "sspo-paper-pdf"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "按opts=[]默认：M=10000、tol=10^-4、zeta500、lambda.5、gamma.01、eta.005，tau=lambda/gamma。在runner已完成t时，若t<window+1用xhat=data(t,:)；否则xhat=max(close[t−window+1:t,:])/close[t,:]。phi=−1.1log(xhat)−1；b=g=b_t，rho=0。每次b=(tau I+eta11ᵀ)^(-1)[tau*g+(eta−rho)1−phi]；g=sign(b)*max(|b|−gamma,0)（逐元素soft）；res=Σb−1；rho←rho+eta*res。若|res|<tol停止，否则至第M次；最后对zeta*b调用归一助手。停止只检查预算残差，不检查b−g或对偶最优残差。"
+    },
+    "timeframe": {
+      "evidence": [
+        "lai-sspo-sspo_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每输入行一次更新：现有权重承接t收益，再调用SSPO_fun(...,t+1,...)形成下一行目标。默认window5，没有日期对象、月末等调仓时钟或真实成交时间。"
+    },
+    "universe": {
+      "evidence": [
+        "lai-sspo-sspo_fun-m",
+        "lai-sspo-sspo_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "资产列固定；close第1行为1，第i≥2行乘data(i,:)生成相对价格。输入须有限正倍数以支持log/除法；没有缺价、复权、退市或新资产处理。opts=[]是原明确示例，未自补其他筛选规则。"
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "economic_basis": {
+    "hypothesis": "对照目标阈值比较超额收益总量与不足总量。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅在整个估计窗口/分组结束、所有输入已观测并发布后可得；拟合系数及统计量不得回填为窗口内的实时因子。PIT数据与发表延迟缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "逐点减去同频率最低可接受收益MAR。 正超额的总和除以负超额绝对值总和；恰等于阈值的观测对两者贡献均为0。 按完整输入窗口或两层索引DataFrame的第0层分别聚合，不把MAR或窗口替换另计。 边界：无负超额时分母0，来源未兜底；全缺失输入也可退化0/0。 这不是收益均值除标准差；不把Gain-to-Pain、Kappa一阶等可代数换写版本再单列。 仅DataFrame且索引恰有两层时按第0层分期，每列单独统计；MultiIndex Series不会进入分期分支。函数不主动按时间排序，序列顺序须由输入保证。 输出：一个完整统计构造；参数、窗口及多输出分量不另计"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对照目标阈值比较超额收益总量与不足总量。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Ω(MAR)=Σmax(r_t-MAR,0) / Σmax(MAR-r_t,0)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "returns（pandas Series or DataFrame）：同频率收益序列。参数：minimum_acceptable_return：目标收益阈值；范围real，须与收益同频率；源码默认0.0"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-99a8336dd3a67158dadfd559"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "JerBouma/FinanceToolkit",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或进行数值复现",
+    "NumPy/Pandas/SciPy/sklearn版本及默认行为未冻结",
+    "金融数据、无风险收益与基准、供应商、数据发布时点和修订快照未选定",
+    "未验证经济收益有效性或市场适用假设"
+  ],
+  "name": "超过目标收益的收益损失总量比",
+  "native_source_id": "get_omega_ratio",
+  "one_line": "对照目标阈值比较超额收益总量与不足总量。",
+  "record_id": "get_omega_ratio",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/performance/performance_model.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-99a8336dd3a67158dadfd559",
+      "license": "MIT",
+      "locator": "get_omega_ratio:L1716-L1777; imports and explicit constants:L1-L31",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "7475deeb890b2cd86b8e491df6491ad782ce4a5db59fe3e9b11513edb8dcc013",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/financetoolkit/performance/performance_model.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2025 Jeroen Bouma; FinanceToolkit contributors",
+      "id": "harvest-source-cb2abb9f4ee81dee928c5ef7",
+      "license": "MIT",
+      "locator": "MIT License:L1-L21",
+      "revision": "a232ddf84d4bb2da17e5385b7862873b6943c2a8",
+      "sha256": "20f27d76a82699c1a5926ed41e8d1d8681ab3d554492559a9bfbd6f0d1ee2eef",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/JerBouma/FinanceToolkit/blob/a232ddf84d4bb2da17e5385b7862873b6943c2a8/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

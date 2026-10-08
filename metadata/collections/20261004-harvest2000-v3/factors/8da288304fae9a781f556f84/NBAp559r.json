@@ -1,0 +1,102 @@
+{
+  "economic_basis": {
+    "hypothesis": "对观测K线的尺度异常和形状作联合描述，不预判下一根方向；跳空份额是TR超出当根H−L的占比，并非完整的开盘跳空分解。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-NBAp559r-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "数值排名与标签按当前未确认OHLC即时计算，标记和警报须bar确认；只有历史排名参考窗排除了当前根。任一坏OHLC会使接下来200根参考窗不齐，不能跳过坏根缩短窗口。没有行情、复权、tick变更或Pine运行检验。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-NBAp559r-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "四个q均有效才ready。四个异常旗标独立：TR异常=q_TR>=95且TRtick>0；实体异常=Btick>0且q_B>=95且B/(H−L)>=55%；上影异常=Utick>0且q_U>=95且U/(H−L)>=20%；下影异常=Dtick>0且q_D>=95且D/(H−L)>=20%。后三项不要求TR异常；零幅份额为0。标签优先级：未就绪−1、双影异常1、仅上影2、仅下影3、实体异常按C>=O取4否则5、TR异常且max(0,TR−(H−L))/TR>=35%取6、其他TR异常7、普通0。各异常旗标相互独立，最终标签有上述优先级。统计窗对ready及各旗标做累计差，实时bar用前根累计差，只展示已确认可用根中的频率；这些是已见频率而非预测概率。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-NBAp559r-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对观测K线的尺度异常和形状作联合描述，不预判下一根方向；跳空份额是TR超出当根H−L的占比，并非完整的开盘跳空分解。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-NBAp559r-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "有效根要求OHLC及前C非缺失、H>=max(O,C)、L<=min(O,C)、tick>0。四分量为TR=max(H−L,|H−C[1]|,|L−C[1]|)，B=|C−O|，U=H−max(O,C)，D=min(O,C)−L，分别round(分量/tick)。对当前分量x与前200根同分量比较，q=100/200×Σ(1[x>x_i]+0.5×1[x=x_i])；要求当前和前200根全部有效，且x>0，否则有效的零值q=0、缺失窗q=na。当前根不进参考窗。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-NBAp559r-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "O/H/L/C、前收盘和正tick。默认前窗200根，异常分位95，影线占H−L至少20%、实体至少55%，事件统计窗100根；各分量及标签作为一族，不按四通道拆数量。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-NBAp559r-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "用于K线形态分层或数据描述。基础实体/影线特征库中已有，这里仅登记来源的前窗中秩、份额门和有顺序分类的一个完整组合。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未执行Pine和验证tick/缺失值运行语义。",
+    "没有收益、方向或商业用途有效性证明。"
+  ],
+  "name": "K线四分量前窗中秩与幅度份额联合分类（Tail Range Percentile Radar）",
+  "native_source_id": "NBAp559r",
+  "one_line": "把真实波幅、实体与两侧影线按tick取整后，相对前窗独立排序，再以影线或实体份额划分异常K线。",
+  "record_id": "NBAp559r",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Pineify",
+      "id": "tradingview-NBAp559r-published-code",
+      "license": "NOASSERTION; no license header in this saved script",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;0d411a0d94784f328daba1001622c824@1.0",
+      "sha256": "0eb838912e62b3edbba3b06410134fcc2c195e755ffe11311a431cc6ba544022",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B0d411a0d94784f328daba1001622c824/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / Pineify",
+      "id": "tradingview-list-d463e4316477d35e3f33",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=NBAp559r；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:d463e4316477d35e3f3339253ab791bbb79658ca8439b6d68900d82ef1b961d4",
+      "sha256": "d463e4316477d35e3f3339253ab791bbb79658ca8439b6d68900d82ef1b961d4",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-53/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "回调后连续收复首棒收盘可能反映趋势恢复；过滤与反色退出的组合没有收益证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "标题1-2-3不等于标准枢轴1-2-3型态。",
+    "不承诺当前第四根开盘成交，信号包含第四根收盘。"
+  ],
+  "name": "四棒实体路径与EMA MACD共振的双向策略",
+  "native_source_id": "444003",
+  "one_line": "先阳后阴并连续两棒站上首棒收盘，配合均线与MACD方向做多；镜像做空，以随后反向颜色棒平仓。",
+  "record_id": "444003",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/1-2-3-%E5%BD%A2%E6%80%81%E4%B8%8E-EMAMACD-%E5%92%8C%E7%AC%AC%E5%9B%9B%E6%A0%B9%E8%9C%A1%E7%83%9B%E7%BA%BF%E5%BB%B6%E4%BC%B8%E7%9A%84%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A51-2-3-Pattern-Quantitative-Trading-Strategy-with-EMAs-MACD-and-4th-Candle-Extension.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-444003-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "853669501a85444ef9bf57e01e3647d9c79320a36a4eca8009e12b3f0b265537",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/1-2-3-%E5%BD%A2%E6%80%81%E4%B8%8E-EMAMACD-%E5%92%8C%E7%AC%AC%E5%9B%9B%E6%A0%B9%E8%9C%A1%E7%83%9B%E7%BA%BF%E5%BB%B6%E4%BC%B8%E7%9A%84%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A51-2-3-Pattern-Quantitative-Trading-Strategy-with-EMAs-MACD-and-4th-Candle-Extension.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-444003-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-444003-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未声明佣金、滑点、点差或融资成本，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-444003-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多形态及多过滤全部满足且strategy.opentrades==0时Buy多头5单位；空形态及空过滤全部满足且无开放交易时Sell空头5单位。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-444003-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5；按当前bar与过去三bar更新信号；按多入口→多退出→空入口→空退出的源码顺序提交。未显式收盘成交/逐tick/成交重算，当前bar先入后close的成交效果未核。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-444003-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前C<O且opentrades>0时strategy.close(Buy,qty=5)；C>O且opentrades>0时关闭Sell 5单位。只针对相应入口ID；十字星本身不平仓。未设价格止损、目标或时间退出。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-444003-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "两方向入口均固定qty=5，对应close亦qty=5；不按资产价格、权益或止损风险动态缩放。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-444003-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "一根反色bar仅触发市价关闭，不能当作保证价格止损。各方向条件可在没有对应仓位时调用close但由入口ID限定；未核成交和单位乘数。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-444003-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多形态C[3]>O[3]、C[2]<O[2]、C[1]>C[3]、C>C[3]；空为四项反向。过滤多C>EMA9(C)且C>EMA20(C)且MACD(12,26,9)线>信号，空反向。MACD线=EMA12(C)−EMA26(C)，信号=EMA9(MACD线)。未要求第二棒收盘相对第一棒，也未要求当前突破第一棒高点。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-444003-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-444003-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

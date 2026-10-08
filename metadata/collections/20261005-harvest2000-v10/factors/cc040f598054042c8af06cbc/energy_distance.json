@@ -1,0 +1,156 @@
+{
+  "economic_basis": {
+    "hypothesis": "把两组观测的跨组平均距离与各自内部平均距离作比较，描述同一特征空间内分布差异；可作样本窗口变化诊断，但不直接给交易方向或显著性。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-9b07d28df010a7546cef802b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-9b07d28df010a7546cef802b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "_transform_to_2d把1D数组变单列；X和Y不要求样本数相同，但列数和各列语义/量纲必须一致。本构造不要求行一一配对，也不进行排序、时间对齐或重采样。 分别计算X内、Y内和X–Y的距离幂矩阵，均为欧氏范数e次幂。距离helper按类型选SciPy cdist或直接广播路径；后者跨组矩阵方向可能为m×n，mean聚合不受转置影响。 默认V_STATISTIC保留组内全部矩阵元素，零对角包含在分母；U_STATISTIC明确只取严格上三角k=1，因距离对称等价排除自对的有序平均。不得把V的自匹配处理误报为源缺陷。 estimation_stat允许枚举或U/V/u_statistic/v_statistic大小写字符串，通过from_string解析；其它不在研究合同的对象未必主动拒绝。平均默认np-compatible mean，三项组合后直接返回，没有非负截断。 同一构造的e、V/U、两组窗口长度和标的维度不分拆；测试统计量、重抽样和显著性接口本条不审不计。两组所有输入需在计算时已经发布，不能用未来对照窗为过去时点生成实时特征。 边界：e区间只触发警告而非拒绝；NaN/Inf、空样本或不同列数没有统一友好入口检查，可能由底层运算报错或传播NaN。 U版需要n,m>=2，否则严格上三角为空且mean退化；U的有限样本值可以为负，源码没有截零。V数学目标非负也不代表浮点输出已验证。 V版完全相同样本理论上为0，U对相同有限样本不必为0，因为组内排自对而跨组保留对应零距离；不是自动通过的实现等价测试。 源码名称energy_distance与部分别库返回该量的平方根不同；本条按固定源三均值差记录，不能仅同名假定数值相同。 没有市场状态标签、分布显著性检验、PIT或样本独立性验证。要作滚动比较，两个窗口的起止/交叠/数据版本仍待单独固定。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-9b07d28df010a7546cef802b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把两组观测的跨组平均距离与各自内部平均距离作比较，描述同一特征空间内分布差异；可作样本窗口变化诊断，但不直接给交易方向或显著性。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-9b07d28df010a7546cef802b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "设X有n行、Y有m行，二者同p列且同尺度；d(u,v)=||u−v||₂^e，研究0<e<2默认1。原默认V估计 E_V=2/(nm)Σ_iΣ_j d(X_i,Y_j)−1/n²Σ_iΣ_j d(X_i,X_j)−1/m²Σ_iΣ_j d(Y_i,Y_j)。原生U选项把组内项改成2/[n(n−1)]Σ_(i<j)d(X_i,X_j)和2/[m(m−1)]Σ_(i<j)d(Y_i,Y_j)，跨组项不变。返回这个差值，不再开平方，不乘nm/(n+m)的检验系数，不给p值。average=None的原生默认为全部元素的算术mean；自定义average不在本合同。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-9b07d28df010a7546cef802b"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（finite real numpy ndarray n×p or length-n vector; n>=2,p>=1）：第一组已观察样本。研究合同统一n>=2以覆盖U选项；价格/收益/其它分量必须与y同量纲定义。；y（finite real numpy ndarray m×p or length-m vector; m>=2, same p as x）：第二组样本，行数可不同，不必按行配对；不得以未知未来样本构造过去时点信号。。参数：exponent：距离幂；不作为不同族；范围research finite0<e<2; outside only warning；源码默认1；average：原生默认算术均值；范围None reviewed -> array namespace mean; custom callable excluded；源码默认None；estimation_stat：是否从组内平均排除自身配对；范围V_STATISTIC or U_STATISTIC; aliases U/V supported；源码默认EstimationStatistic.V_STATISTIC"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ead6567a6836aa2af8e85dd8",
+        "harvest-source-4f7ce9aaabbec9d349ca5631",
+        "harvest-source-9b07d28df010a7546cef802b"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "vnmabus/dcor",
+  "lab": null,
+  "missing_information": [
+    "实际NumPy/SciPy/array_api_compat依赖版本及数值后端未运行固定",
+    "输入供应商/观测发布时间/PIT和金融坐标定义缺失",
+    "没有假设检验、回测或经济有效性证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "两组样本跨组与组内距离的能量差异",
+  "native_source_id": "energy_distance",
+  "one_line": "把两组观测的跨组平均距离与各自内部平均距离作比较，描述同一特征空间内分布差异；可作样本窗口变化诊断，但不直接给交易方向或显著性。",
+  "record_id": "energy_distance",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/dcor/distances.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "dcor维护者Carlos Ramos Carreño及软件论文合作者José L. Torrecilla；距离统计原理论作者Székely、Rizzo、Bakirov按源码README归因。审维护者实现，不冒称原数学论文作者代码。",
+      "id": "harvest-source-ead6567a6836aa2af8e85dd8",
+      "license": "MIT",
+      "locator": "distance backends and imports:L1-L18; explicit Euclidean-power and SciPy distance paths:L23-L106; pairwise shape contract and same-object dispatch:L109-L161",
+      "revision": "0b989bb54d6f55f75f16d2a44ed97596ab718292",
+      "sha256": "1a55f112e116edfb69a91c2dbc155732e550b1017af3f5b66f3b884ec76a6686",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/dcor/distances.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "dcor维护者Carlos Ramos Carreño及软件论文合作者José L. Torrecilla；距离统计原理论作者Székely、Rizzo、Bakirov按源码README归因。审维护者实现，不冒称原数学论文作者代码。",
+      "id": "harvest-source-4f7ce9aaabbec9d349ca5631",
+      "license": "MIT",
+      "locator": "native compile options:L31-L56; array namespace and nonnegative sqrt wrapper:L77-L114; shape conversion and distance backend eligibility:L134-L170",
+      "revision": "0b989bb54d6f55f75f16d2a44ed97596ab718292",
+      "sha256": "f19a7bdd4734c8bb5b063e58f30986c84cf2e0bbc7dfc656ffa504758c2ce1df",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/dcor/_utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "dcor维护者Carlos Ramos Carreño及软件论文合作者José L. Torrecilla；距离统计原理论作者Székely、Rizzo、Bakirov按源码README归因。审维护者实现，不冒称原数学论文作者代码。",
+      "id": "harvest-source-000d4884d895ede7259f6054",
+      "license": "MIT",
+      "locator": "package scope and biased/unbiased families:L5-L26; software attribution and original mathematical references:L57-L111",
+      "revision": "0b989bb54d6f55f75f16d2a44ed97596ab718292",
+      "sha256": "545cf7bc86acf8350eb4ff783dbf6b6e82971eba1006dc1c4af6da0bc54475a9",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "dcor维护者Carlos Ramos Carreño及软件论文合作者José L. Torrecilla；距离统计原理论作者Székely、Rizzo、Bakirov按源码README归因。审维护者实现，不冒称原数学论文作者代码。",
+      "id": "harvest-source-f66606fb1d6042b5692d90f3",
+      "license": "MIT",
+      "locator": "MIT license:L1-L21",
+      "revision": "0b989bb54d6f55f75f16d2a44ed97596ab718292",
+      "sha256": "be0b87241d3a60d0b372b85ea90b25963dbba03ff40b6507b93dfc91b548fc41",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "dcor维护者Carlos Ramos Carreño及软件论文合作者José L. Torrecilla；距离统计原理论作者Székely、Rizzo、Bakirov按源码README归因。审维护者实现，不冒称原数学论文作者代码。",
+      "id": "harvest-source-9b07d28df010a7546cef802b",
+      "license": "MIT",
+      "locator": "native estimator enum, parsing and exponent warning:L1-L75; strict upper triangle and exact mean contrast:L78-L128; native signature and documented input meanings:L131-L164; public input transform and distance calls:L192-L209",
+      "revision": "0b989bb54d6f55f75f16d2a44ed97596ab718292",
+      "sha256": "d26e2e8dc7c38664bc2dba53d856f300e085bfba6d99f6bd29ecc6ab46305b26",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/vnmabus/dcor/blob/0b989bb54d6f55f75f16d2a44ed97596ab718292/dcor/_energy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

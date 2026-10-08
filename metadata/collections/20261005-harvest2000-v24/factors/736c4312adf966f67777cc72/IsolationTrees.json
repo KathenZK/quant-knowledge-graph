@@ -1,0 +1,170 @@
+{
+  "economic_basis": {
+    "hypothesis": "无监督描述样本几何位置在随机轴切分下被隔离的难易；未验证市场异常的含义或收益。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-27c91f7a5981023376ceacd3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "森林训练样本全已发布后才能冻结并用于当前查询；不得用全时段训练再回填历史。查询坐标也须已知。窗口、字段/单位、训练更新时间、供应商和PIT均MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-27c91f7a5981023376ceacd3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "原生公开接口为IsolationTrees和AnomalyScore，原作者Fei Tony Liu的R-Forge项目、官方包页和包DESCRIPTION三重绑定0.0-26/Revision4。源下载URL可更新，身份最终绑定HTTP tar.gz SHA；每个成员由tarfile.extractfile精确字节派生，单独hash/行跨度不冒充HTTP正文。 选原函数默认分支而非为了计数重写算法：ntree10、rowSampFALSE、colSampFALSE、nmin1、rFactor1、AnomalyScore appRangeFALSE且用森林原ntree/hlim。输入是文档要求的全数值非factor data.frame；至少2列，避免data.frame单列子集drop等未审类型分支；N>=3且至少一列有不同值，保证根能分裂。 R wrapper以data.matrix转换double，分配每树min(N,2^hlim)*2−1=2N−1节点。hlim由ceil(log2N)得到且源码至少设2。初始训练行索引1..N；每树继续使用上树分区后的同一索引排列，所有N行仍保留，未重新按原行序排序。 rowSampFALSE不进入抽样交换，colSampFALSE使用全部列且忽略colWeight。树数、深度、抽样大小和属性权等未来实现/参数变体不另计。本条不以原包rowSampTRUE的交换法冒称论文均匀无放回抽样。 每个待分节点先消耗一个unif_rand选择rFactor分支，因rFactor=1总走randomSplit。randomSplit先对所有d列计算当前节点min/max并逐列各消耗一个均匀伪随机U，连常量列也消耗；阈值为ceil(U*RAND_MAX)/RAND_MAX的格点比例。随后每次选属性再消耗一个U，ceil(U*q)−1给局部候选池下标，遇常量交换至池尾并减少q后重试。不是先只挑非恒定列再只生成一个阈值；同种子时调用顺序重要。 R当前官方扩展手册只补unif_rand为均匀伪随机接口/GetRNGstate与PutRNGstate语义，不证明2009/2012历史运行环境。当前定义对显式给定的0<U<1随机流和编译RAND_MAX条件化；研究合同排除自定义RNG返回端点/NaN。历史RNG种类、种子、平台RAND_MAX及位级结果均未冻结。 训练SortAndLocate用<=划入左边，原论文Alg2和原包预测却用<。ceil格点可能恰给最大值，导致训练左边全体、右边空；不是概率零的连续模型可以抹掉的代码分支。它仍按源建子节点，n=0/1端点由avgPL置0，查询等阈值时向右会和原训练成员路由不同。 树采用连续数组广度优先追加两个孩子。达到hlim或孩子样本数<=1标TERMINAL，全常量节点randomSplit返回splitAtt=-1也标TERMINAL。循环另受2N−1容量控制；空子节点/无效分割可能让容量先耗尽，留下NODE_TOSPLIT节点。评分只对NODE_INTERIOR继续，所以这些节点也以已有nSam修正并停止；不擅自扩容或继续到完全隔离。 评分appRangeFALSE每跨一条内部边p增1，不使用区间外减权。跟随原比较到叶/非INTERIOR或原hlim后，加c_src(nSam)；所有树累加再除T，score用同训练N的c_src(N)作分母。查询可为训练外的同坐标数据，但不会重估森林；没有自动去重、补缺、标准化、阈值或标签。 rt.h宏对m>1统一使用ln(m−1)+Euler常数近似，包括m=2，故c_src(2)=2*0.5772156649−1≈0.1544313298，不是论文精确谐波c(2)=1。原论文Eq1给谐波并允许近似，但不把本实现近似在小叶上的数值称作精确谐波。c_src(0)=c_src(1)=0来自明确宏分支。 预测辅助isoby/isoat还引用lastSplitPoint；如果树根未分裂该变量未初始化。此合同要求全训练至少一非恒定列且足够节点并给合法正随机流，根会分裂；这是额外研究使用域，不是源码主动修复。当前只审outF/meanPath，辅助属性归因不作为已审特征或额外计数。 原包matrix输入会在返回时引用仅data.frame分支赋值的colnlevels，故本条遵守原文档data.frame要求。分类factor、rFactor<1的SDGain、colSamp、rowSamp、appRangeTRUE和外部手工损坏forest均不在审阅合同；排除项不冒称实现安全或与论文等价。 论文物理1–6页给隔离路径思想、谐波标度、子样本ψ及伪代码，作为原始归属/比较证据。论文实验t100/ψ256与原包默认t10/全N不同；paper异常少且异质的假说不是金融收益证据。这里只提名一个原族及已明确默认实现，不按paper/code或n改值额外计数。 边界：有限输入和至少一非恒定列/合法R随机流/可分配整数大小是额外研究域，未执行且不证明所有机器算术安全。缺值、Inf、全恒定、单列类型drop、分类factor或自制forest不在当前合同。 训练<=与预测<不一致、最大格点空右叶、容量提前截断及c(2)近似均按原代码保留，未修正上游或掩盖为NOT_EXECUTED。 RAND_MAX、RNGkind/seed/版本、编译器与R内存/数值环境未冻结，无法声称原实验或位级复现；定义仍完整给出对随机流和M的映射。 源码默认未子采样，包函数边界与论文实验默认不同；该实现能描述完整分数不等于验证其异常检测质量。 分数是孤立难易的规范化变换，不是异常概率、金融方向、可交易信号或校准风险；不设置source外固定阈值。 R/C逐文件GPL2-or-later，而DESCRIPTION/COPYRIGHTS列GPL2；保留逐层许可原话，不把软件许可套在IEEE论文、大学网页或行情。 输出：AnomalyScore$outF与pathLength的完整查询向量；同一族。属性辅助isoby/isoat和标签不属于已审输出。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-27c91f7a5981023376ceacd3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "无监督描述样本几何位置在随机轴切分下被隔离的难易；未验证市场异常的含义或收益。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-27c91f7a5981023376ceacd3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定原作者IsolationForest0.0-26/Rev4默认分支：训练N>=3、d>=2数值data.frame，ntree=T=10，rowSamp=FALSE，colSamp=FALSE，nmin=1，rFactor=1；h=max(2,ceil(log2N))，每树容量B=2N−1。每棵从全X和depth0开始，按源码广度优先索引处理可分节点；depth>=h停止，容量已用至B时停止追加；子节点样本数<=1终止。某节点所有候选列取min a_j,max b_j；先为每列取R unif_rand产生U_j，设p_j=a_j+(b_j−a_j)ceil(U_j M)/M，M=编译环境RAND_MAX。再以ceil(U·q)−1随机选尚存属性索引，常量列删去并重试；全常量则终止。训练左组为x_j<=p_j、右组为x_j>p_j。查询遍历反而以y_j<p_j左，否则右；在叶或非INTERIOR节点停止，令e为实际经过的边数、m为训练节点样本数。c_src(m)=0(m<=1)，否则2[ln(m−1)+0.5772156649]−2(m−1)/m。h_t(y)=e+c_src(m)，meanPath(y)=Σ_t h_t(y)/T，outF(y)=2^(−meanPath(y)/c_src(N))。整片评分向量、平均路径、参数/实现变体归一个Isolation Forest族；此处严格保留训练<=和查询<差异、格点阈值与近似c，不冒称论文完全复现。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-27c91f7a5981023376ceacd3"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X（R numeric nonfactor data.frame N>=3,d>=2; all finite; at least one nonconstant column; representable allocation and finite arithmetic）：完整训练集合，原记录顺序和列顺序保留，不自动标准化；不得在金融回测中包含未来样本。；Y（numeric nonfactor query data.frame with>=1rows and same d>=2 columns in exactly matching order, all finite）：可等于X或新观测；本接口不校验列名语义，不自动重训森林。。参数：ntree：一整片森林只有一个构造族；范围selected native10, whole family across positive integer tree counts；源码默认10；本条选定10；hlim：不与AnomalyScore手工指定不同深度混用；范围max(2,ceil(log2N))；源码默认as.integer(ceiling(log2(nrow(x)))) then at least2；本条选定native default；rowSamp：默认全N不抽样，paper psi256不是此默认；范围False；源码默认False；本条选定False；colSamp：使用全部d列；colWeight此分支不参与选择；范围False；源码默认False；本条选定False；nmin：大小0/1子节点停止；范围1；源码默认1；本条选定1；rFactor：只走randomSplit，仍消耗分支选择U；范围1；源码默认1；本条选定1；appRange：评分每条内部边均计1；范围False；源码默认False；本条选定False；RAND_MAX_and_random_stream：原source依赖而非新增调参；当前数值值/种类/种子MISSING，只审条件化计算映射；范围explicit positive integer M=platform RAND_MAX and all used0<U<1; floating intermediates finite；源码默认external C implementation constant and active R RNG state；本条选定None"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-27c91f7a5981023376ceacd3"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "r-forge/iforest",
+  "lab": null,
+  "missing_information": [
+    "金融输入、训练窗/PIT/重训频率与查询可得时间未定",
+    "历史R与RNG种类/种子、平台RAND_MAX、编译器及机器算术未冻结",
+    "原包其它sampling/SDGain/appRange/factor类型分支未审；无上游修复或运行验证",
+    "原论文/网页/行情一般商业使用权未核定",
+    "异常阈值和收益/风控有效性未验证"
+  ],
+  "name": "随机轴切分后的平均隔离路径评分",
+  "native_source_id": "IsolationTrees",
+  "one_line": "以多棵随机轴划分树中到叶的修正路径长度，描述一个向量相对训练集合的孤立难易。",
+  "record_id": "IsolationTrees",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://download.r-forge.r-project.org/src/contrib/IsolationForest_0.0-26.tar.gz"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Fei Tony Liu, IsolationForest R-Forge0.0-26/Revision4 (2009; tar packaged2012); original paper Fei Tony Liu, Kai Ming Ting, Zhi-Hua Zhou, Isolation Forest, ICDM2008, DOI10.1109/ICDM.2008.17. Self-authored Chinese algorithm summary.",
+      "id": "harvest-source-27c91f7a5981023376ceacd3",
+      "license": "GPL-2 package notice; individual R/C headers GPL-2.0-or-later",
+      "locator": "IsolationForest/R/IsolationTrees.R:L1-L19 (file copyright and GPL2-or-later notice); IsolationForest/R/IsolationTrees.R:L21-L109 (complete native data.frame wrapper/defaults/C call/output); IsolationForest/R/AnomalyScore.R:L21-L70 (complete score wrapper, sample-size choice and C call); IsolationForest/src/rTrees.c:L1-L19 (original C copyright and GPL2-or-later notice); IsolationForest/src/rTrees.c:L20-L91 (forest construction, RNG state, selected nonsubsampling path); IsolationForest/src/rTrees.c:L95-L184 (complete breadth-first tree loop and capacity/depth/leaf controls); IsolationForest/src/rTrees.c:L293-L363 (complete randomSplit, discrete split grid and constant-attribute retries); IsolationForest/src/rtMisc.c:L128-L139 (array zeroing helpers); IsolationForest/src/rtMisc.c:L194-L208 (training partition uses <= with exact returned last-left index); IsolationForest/src/rtMisc.c:L308-L323 (reference/attribute swaps used by selected path); IsolationForest/src/rtDepth.c:L21-L101 (complete selected appRangeFALSE traversal, mean corrected path and score); IsolationForest/src/rt.h:L21-L24 (bool and include guard); IsolationForest/src/rt.h:L107-L116 (native node tags and exact avgPL macro); IsolationForest/NAMESPACE:L1-L6 (native library and public exported names); IsolationForest/DESCRIPTION:L1-L13 (Fei Tony Liu, package0.0-26, R dependency and R-Forge revision4); IsolationForest/COPYRIGHTS:L1-L13 (package attribution and GPL2 statement); IsolationForest/COPYING:L1-L345 (complete bundled GPL2 text); IsolationForest/man/IsolationTrees.Rd:L1-L48 (native documented data.frame input, defaults and original2008 paper attribution); IsolationForest/man/AnomalyScore.Rd:L1-L48 (native score/path outputs and paper attribution); IsolationForest/changes.log:L1-L1 (author version0.026 memory leak change note)",
+      "revision": "IsolationForest0.0-26; Repository/R-Forge/Revision4; original HTTP tar.gz sha256",
+      "sha256": "e7e3e806be5cc4647e38a73830483a795b7263b799a092e48911170e27654842",
+      "supports": [
+        "输入、参数、完整代码定义与边界"
+      ],
+      "url": "https://download.r-forge.r-project.org/src/contrib/IsolationForest_0.0-26.tar.gz",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Fei Tony Liu, IsolationForest R-Forge0.0-26/Revision4 (2009; tar packaged2012); original paper Fei Tony Liu, Kai Ming Ting, Zhi-Hua Zhou, Isolation Forest, ICDM2008, DOI10.1109/ICDM.2008.17. Self-authored Chinese algorithm summary.",
+      "id": "harvest-source-f2032d1270c8d829b9739dd2",
+      "license": "NOASSERTION_WEBPAGE_SHELL",
+      "locator": "L214-L232: official package version, source archive link and revision",
+      "revision": "R-Forge package page observed HTTP snapshot; version0.0-26/revision4",
+      "sha256": "afde6dfdff67baeb26c76d5f85db0aad3015be830838830abab2760786429deb",
+      "supports": [
+        "身份、许可或版本差异补充；不替代选定代码定义"
+      ],
+      "url": "https://r-forge.r-project.org/R/?group_id=479",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Fei Tony Liu, IsolationForest R-Forge0.0-26/Revision4 (2009; tar packaged2012); original paper Fei Tony Liu, Kai Ming Ting, Zhi-Hua Zhou, Isolation Forest, ICDM2008, DOI10.1109/ICDM.2008.17. Self-authored Chinese algorithm summary.",
+      "id": "harvest-source-8e954144ddbb53d6360c5595",
+      "license": "NOASSERTION_WEBPAGE_SHELL",
+      "locator": "L205-L212: project licensing category; L260-L270: Fei Tony Liu project administrator",
+      "revision": "R-Forge iforest project observed HTTP snapshot",
+      "sha256": "eb8e4209fcfe183c6de58d566081cf65ff6f49feb3b5bb7282f779a6f92f6e8d",
+      "supports": [
+        "身份、许可或版本差异补充；不替代选定代码定义"
+      ],
+      "url": "https://r-forge.r-project.org/projects/iforest/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Fei Tony Liu, IsolationForest R-Forge0.0-26/Revision4 (2009; tar packaged2012); original paper Fei Tony Liu, Kai Ming Ting, Zhi-Hua Zhou, Isolation Forest, ICDM2008, DOI10.1109/ICDM.2008.17. Self-authored Chinese algorithm summary.",
+      "id": "harvest-source-c10cecca88a46b7307175516",
+      "license": "R Core Team manual notice: verbatim with notices; modified/translated whole derived work under identical notice conditions",
+      "locator": "L252-L270: R manual version4.6.1 and copyright/verbatim-modification/translation conditions; L16051-L16088: unif_rand uniform pseudorandom interface and Get/PutRNGstate, privateRNG/seed boundary",
+      "revision": "R Extensions manual4.6.1(2026-06-24) observed HTTP bytes; mathematical API reference not historical package runtime",
+      "sha256": "4f83a630fa0a68df34ab111847819bb9b3014922b09bf484db2d037d22295a59",
+      "supports": [
+        "身份、许可或版本差异补充；不替代选定代码定义"
+      ],
+      "url": "https://www.stat.math.ethz.ch/CRAN/doc/manuals/r-release/R-exts.html",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Fei Tony Liu, IsolationForest R-Forge0.0-26/Revision4 (2009; tar packaged2012); original paper Fei Tony Liu, Kai Ming Ting, Zhi-Hua Zhou, Isolation Forest, ICDM2008, DOI10.1109/ICDM.2008.17. Self-authored Chinese algorithm summary.",
+      "id": "harvest-source-9cf01f18ef7b58cf65743b5d",
+      "license": "NO_GENERAL_REUSE_GRANT_ESTABLISHED",
+      "locator": "physical PDF p1-1: original three authors, title and isolation rationale; physical PDF p2-2: random split shorter-path example; physical PDF p3-3: iTree termination prose; path length, harmonic c(n) and score Eq1–2; physical PDF p4-4: subsampling without replacement and intended effect; physical PDF p5-5: Algorithm1 forest subsampling and ceil(log2psi) height; physical PDF p6-6: Algorithms2–3 partition and leaf correction, experiment tree count",
+      "revision": "ICDM2008 original author-hosted PDF; DOI10.1109/ICDM.2008.17",
+      "sha256": "188a224c40786174ae6c9037d4a64e2ead1bf5bd1eb6da6334b42d3271021862",
+      "supports": [
+        "身份、许可或版本差异补充；不替代选定代码定义"
+      ],
+      "url": "https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/icdm08b.pdf",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Fei Tony Liu, IsolationForest R-Forge0.0-26/Revision4 (2009; tar packaged2012); original paper Fei Tony Liu, Kai Ming Ting, Zhi-Hua Zhou, Isolation Forest, ICDM2008, DOI10.1109/ICDM.2008.17. Self-authored Chinese algorithm summary.",
+      "id": "harvest-source-39cf87b9f98edc682c9fa07c",
+      "license": "NOASSERTION_WEBPAGE_SHELL",
+      "locator": "Pinned original identity page",
+      "revision": "Monash publication page observed HTTP snapshot",
+      "sha256": "97e52ee6dce11fe13f2179f607da68b88fbe8f2304634a0396ec64ae1b4ec69a",
+      "supports": [
+        "身份、许可或版本差异补充；不替代选定代码定义"
+      ],
+      "url": "https://research.monash.edu/en/publications/isolation-forest/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Fei Tony Liu, IsolationForest R-Forge0.0-26/Revision4 (2009; tar packaged2012); original paper Fei Tony Liu, Kai Ming Ting, Zhi-Hua Zhou, Isolation Forest, ICDM2008, DOI10.1109/ICDM.2008.17. Self-authored Chinese algorithm summary.",
+      "id": "harvest-source-6f2671ed6913a55466b69a6c",
+      "license": "NOASSERTION_REGISTRY_METADATA",
+      "locator": "JSON pointer /message: Exact paper DOI and three-author publication metadata",
+      "revision": "CrossRef exact DOI10.1109/ICDM.2008.17 HTTP snapshot",
+      "sha256": "2848c3bd3b298f2877dd5869752b5e21721087974bae8809d5155ae23ed52142",
+      "supports": [
+        "身份、许可或版本差异补充；不替代选定代码定义"
+      ],
+      "url": "https://api.crossref.org/works/10.1109/ICDM.2008.17",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

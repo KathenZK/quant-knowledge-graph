@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "既有趋势内短暂反向空隙或可能回补，但源码注释与实际方向冲突，经济解释仅为研究假说。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "源码FVG Up/Down注释与价差方向相反，摘要按公式记录。"
+  ],
+  "name": "趋势内反向三棒价格空隙与放量实体确认",
+  "native_source_id": "482850",
+  "one_line": "均线多头下出现向下价格空隙并放量、实体放大时做多；空头趋势向上空隙做空，按当次信号ATR挂退出。",
+  "record_id": "482850",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E9%AB%98%E9%A2%91%E4%BB%B7%E6%A0%BC%E5%A4%B1%E8%A1%A1%E5%8C%BA%E5%9F%9F%E5%8A%A8%E9%87%8F%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5%E5%9F%BA%E4%BA%8E%E6%8C%87%E6%95%B0%E5%9D%87%E7%BA%BF%E5%92%8CATR%E5%8A%A8%E6%80%81%E6%AD%A2%E7%9B%88%E6%AD%A2%E6%8D%9F-High-Frequency-Fair-Value-Gap-Momentum-Trading-Strategy-with-EMA-and-ATR-Based-Dynamic-Exit.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ianzeng123；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-482850-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "39e138dba5fbc98962b5df4b35e6b39ecad5f19138b6725c8f8bac5706fd5f2b",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E9%AB%98%E9%A2%91%E4%BB%B7%E6%A0%BC%E5%A4%B1%E8%A1%A1%E5%8C%BA%E5%9F%9F%E5%8A%A8%E9%87%8F%E4%BA%A4%E6%98%93%E7%AD%96%E7%95%A5%E5%9F%BA%E4%BA%8E%E6%8C%87%E6%95%B0%E5%9D%87%E7%BA%BF%E5%92%8CATR%E5%8A%A8%E6%80%81%E6%AD%A2%E7%9B%88%E6%AD%A2%E6%8D%9F-High-Frequency-Fair-Value-Gap-Momentum-Trading-Strategy-with-EMA-and-ATR-Based-Dynamic-Exit.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-482850-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-482850-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未显式佣金、滑点、点差或持仓费用，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-482850-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "validBullFVG时Long、validBearFVG时Short；全部条件要求同bar满足，无空仓/首次事件限制。保留实际反向空隙方向，不按注释Bullish/Bearish改成追随跳空方向。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-482850-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5，用当前完整高低收量与两棒前边界，先entry再同分支exit；无高周期数据请求或未来索引，未显式逐tick/收盘成交/成交重算，也未核实际成交。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-482850-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "同次多信号分支提交stop=C−1.2ATR14、limit=C+2ATR14；空分支stop=C+1.2ATR14、limit=C−2ATR14。只有相应信号分支调用exit，持仓中新同向信号可能重定价，不是按实际均价固定距离或独立止损跟踪。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-482850-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认10%权益，entry无qty覆盖；10%名义仓不等同账户风险10%。具体市场合约/保证金缺失，Forex标题未强制外汇数据。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-482850-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "注释方向与传统FVG名称相反，不能当实现作者已明确选择的经济理由；本次仅可审实际公式。没有风险比例定仓、保本移动或交易日终清仓。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-482850-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "趋势多EMA50(C)>EMA200(C)，空反向。量要求V>1.5SMA20(V)，实体abs(C−O)>SMA20(abs(C−O))。源码fvgUp为low[2]>当前high，实际向下空隙；fvgDown为high[2]<当前low，实际向上空隙。多用向下空隙+多趋势，空用向上空隙+空趋势。中间棒没有另设实体/穿越条件，也未等待回测缺口。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-482850-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-482850-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

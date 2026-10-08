@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "趋势与反弹仓可能需要不同退出规则和规模，按入场来源保存状态或可避免跨区后换策略；有效性尚未检验。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "limit=C不保证当棒收盘成交；不把条件消失误写成撤单。",
+    "明确分类为双模式策略，但没有回测、稳健性或商用授权结论。"
+  ],
+  "name": "SMA200 分区双模式买入与入场来源记忆退出",
+  "native_source_id": "426856",
+  "one_line": "SMA200上方全权益趋势买入，下方RSI2超卖半权益买入；离场规则由入场时的来源标签固定。",
+  "record_id": "426856",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E7%BB%93%E5%90%88%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E5%92%8C%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E7%9A%84%E9%87%8F%E5%8C%96%E7%AD%96%E7%95%A5Quantitative-Strategy-Combining-Mean-Reversion-and-Trend-Following.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 I11L；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-426856-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "2453ca90a850df287d3bfeed0e43d4f56e499762036d1fe61fcb90403d88ae68",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E7%BB%93%E5%90%88%E5%9D%87%E5%80%BC%E5%9B%9E%E5%BD%92%E5%92%8C%E8%B6%8B%E5%8A%BF%E8%B7%9F%E8%B8%AA%E7%9A%84%E9%87%8F%E5%8C%96%E7%AD%96%E7%95%A5Quantitative-Strategy-Combining-Mean-Reversion-and-Trend-Following.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-426856-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-426856-published-code"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：未声明手续费、滑点、融资或借券费；没有默认成本为零的现实假设。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-426856-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "满足任一区买条件且strategy.opentrades==0时，tradeOrigin保存isSmaBuy?\"SMA\":\"RSI\"，以qty=(equity/C)×positionSizeFactor请求多头；默认趋势因子1、回归因子0.5。持仓时不因跨区而更改tradeOrigin。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-426856-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "声明process_orders_on_close=false、calc_on_every_tick=false。每次先空仓开仓分支设置来源标签，再选该标签退出条件，可能发限价请求；实际下一可成交时点、限价是否成交尚未验证。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-426856-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "在日期门内，tradeOrigin为SMA时仅以C<0.95A判断退出，否则以R>80判断；成立时strategy.exit(\"Exit\",limit=C)。这是以判断当棒收盘为限价的退出请求，并非保证收盘成交的市价单。条件消失时没有取消未成交限价；持续满足会以新C更新同一ID。没有明确止损/最大持期。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-426856-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "声明初始资本100000、默认现金100000、pyramiding=1，但entry显式qty覆盖默认：趋势权益/C，回归0.5权益/C；空仓检查opentrades==0。没有做空或加仓分支。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-426856-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "退出沿入场模式记忆，不是按当下区间重新选择。趋势跌到SMA200的95%是随SMA移动的条件限价触发，并非相对买入价5%硬止损。回归仓无保护。未成交退出限价的滞留/更新及具体合约数量适配未运行。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-426856-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认均值回归与趋势两开关均true。A=SMA200(C)，R=RSI2(C)。回归区C<A，回归买R<20、平R>80；趋势区C>A，趋势买C>A、平C<0.95A。故等于A无入场。禁用开关的其它模式不作为新增定义。start_date输入为2000-02-01 12:00，但start_ts再用其年月日构造00:00，time>=start_ts才运行交易分支。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-426856-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-426856-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

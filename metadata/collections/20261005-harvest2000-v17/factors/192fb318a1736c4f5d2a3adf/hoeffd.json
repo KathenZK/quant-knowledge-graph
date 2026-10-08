@@ -1,0 +1,201 @@
+{
+  "economic_basis": {
+    "hypothesis": "对完整的两列成对样本，用边际秩和联合秩形成经有限样本修正的依赖统计量，并保留经验联合分布与边际乘积的平均/最大绝对差；本条只审统计量，不收原包装的近似p值。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-6e97599f68bb56decda2a570",
+        "harvest-source-7d768eb7f514ab2de0288e9e",
+        "harvest-source-82474c910acfe0427d0d09bf",
+        "harvest-source-9878e6264ce39dc609e476bc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "全部成对观测到齐、完整窗口结束且两列字段均已发布后可得；秩使用完整窗口，不可回填内部时点。供应商、修订、金融字段生成和PIT MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-6e97599f68bb56decda2a570",
+        "harvest-source-7d768eb7f514ab2de0288e9e",
+        "harvest-source-82474c910acfe0427d0d09bf",
+        "harvest-source-9878e6264ce39dc609e476bc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审hoeffd(x)中x为n×2、n>=5的普通R double矩阵，y未传，所有值有限且abs(value)<1e49、全部中间算术有限。该保守无缺失合同是研究约束，非源自动验证；不审多列、cbind包装或缺失删除结果。 R入口把storage.mode设double，行列数转integer，n<5直接stop；NAMESPACE以F_前缀注册本地例程，init.c将hoeffd绑定12个参数的Fortran调用。公式对应src/hoeffd.f90实际被调用内核，不把历史ratfor文件当本版执行源。 外层Fortran以值<1e49作为可用判断并按列对提取样本；本有限abs<1e49合同所有行均保留，n即原行数。每个i与每个j比较，边际相等贡献1/2，两坐标同时相等对联合秩贡献1/4；自身由初始1一次加入，不在循环重复加。 hoeff先计算全部R/S/Q，再依原乘积和求未经30缩放的h，并计算aad/maxad。R返回D=30*h；不能把文献中未乘30的D数值直接当本原生输出。 输出为对称2×2矩阵；内核h对角无条件设1/30，R层的30*h使返回D对角为1；aad/maxad对角保持0，n对角为各列可用数；分析依赖应读取非对角，不把对角1误判为数据非退化的证明。 原R包装还会调用phoeffd生成P，其中使用表插值/指数拟合。本文仅按D、n、aad、maxad明确定义合同，不审P、R approx的插值环境、尾概率或显著性；不会把P另拆新增定义。 固定F90文件头注明2024-10-26由ClaudeAI从Ratfor转换；这是真实维护版本的归属/转换历史，不等于原Hoeffding本人代码。历史Ratfor保留作比较，当前完整样本公式一致而缺失哨兵数值不同。 边界：文档称不足5个完整对返回NA，但当前F90给精确1e49，R只把严格>1e49改NA，因此该哨兵会漏过并乘30成为3e50；旧Ratfor用1e50。这条已审合同要求完整n>=5，排除该缺陷路径，绝不改写上游或宣称原源已修复。 R仅处理is.na，未拒绝Inf；Fortran可用判断只有<1e49，负Inf也可能被保留。额外有限/abs界合同不可省略。全部成对样本有效仍不保证统计校准。 相等比较是原double精确==，没有容差或排序抖动；并列改变联合秩。来源[-.5,1]范围注明无并列，不能推广到有并列数据，也不强制D非负。 D对称交换两变量且不指示正负方向；大值不证明因果或收益可预测。样本时序依赖和滚动重叠的显著性没有研究。 n与矩阵维度按R整数/Fortran整数传递，运算为real64；实现为嵌套比较O(n²)，不沿用文档所谓高效排序算法为本固定版性能保证。实际编译器/R版本、内存和数值误差未验证。 完整窗口参与每个观测的边际与联合秩；只有窗口结束且两个变量都已发布后可得，不能把最终秩或D回填为窗内实时信息。 输出：只审D、n、aad和maxad四个同族输出；原P/print不在公式合同，不另计概率或矩阵坐标"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-6e97599f68bb56decda2a570",
+        "harvest-source-7d768eb7f514ab2de0288e9e",
+        "harvest-source-82474c910acfe0427d0d09bf",
+        "harvest-source-9878e6264ce39dc609e476bc"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对完整的两列成对样本，用边际秩和联合秩形成经有限样本修正的依赖统计量，并保留经验联合分布与边际乘积的平均/最大绝对差；本条只审统计量，不收原包装的近似p值。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-6e97599f68bb56decda2a570",
+        "harvest-source-7d768eb7f514ab2de0288e9e",
+        "harvest-source-82474c910acfe0427d0d09bf",
+        "harvest-source-9878e6264ce39dc609e476bc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "给n>=5对有限数(x_i,y_i)。对j≠i定义c_x(i,j)=1[x_j<x_i]+.5·1[x_j=x_i]，c_y同理；R_i=1+Σ_j c_x，S_i=1+Σ_j c_y，Q_i=1+Σ_j c_x c_y。A=Σ_i(R_i−1)(R_i−2)(S_i−1)(S_i−2)，B=Σ_i(R_i−2)(S_i−2)(Q_i−1)，C=Σ_i(Q_i−1)(Q_i−2)。返回D=30[A−2(n−2)B+(n−2)(n−3)C]/[n(n−1)(n−2)(n−3)(n−4)]。a_i=|Q_i/n−(R_i/n)(S_i/n)|，aad=mean(a_i)，maxad=max(a_i)，配对数n也保留；D/aad/maxad及列对/有限样本修正/语言实现都算一个联合秩依赖构造族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-6e97599f68bb56decda2a570",
+        "harvest-source-7d768eb7f514ab2de0288e9e",
+        "harvest-source-82474c910acfe0427d0d09bf",
+        "harvest-source-9878e6264ce39dc609e476bc"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（ordinary R double matrix shape(n,2), 5<=n<=2**31-1, finite abs(values)<1e49 and finite all intermediate arithmetic; y omitted）：同一个完整窗口内按行成对的两个标量变量，可含并列。源码不对齐时间/标的、不排序成对行、不从价格定义收益；市场字段、固定窗口、供应商和PIT MISSING。。参数：y：仅输入已经配对的两列矩阵，不审cbind输入组合；范围reviewed absent；源码默认MISSING_ARGUMENT；D_scale：原返回把内核h乘30，非可调参数；范围source constant；源码默认30；ties：同坐标相等计1/2，联合同时相等计1/4；不是加入随机噪声解并列；范围source exact midrank rule；源码默认0.5"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-6e97599f68bb56decda2a570",
+        "harvest-source-7d768eb7f514ab2de0288e9e",
+        "harvest-source-82474c910acfe0427d0d09bf",
+        "harvest-source-9878e6264ce39dc609e476bc"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "harrelfe/Hmisc",
+  "lab": null,
+  "missing_information": [
+    "p值与其R插值/近似运行合同未审，不提供显著性结论",
+    "R/Fortran构建环境和实际数值执行未冻结",
+    "金融变量、对齐键、窗口、数据授权、发布时间和修订PIT未固定",
+    "经济用途为RESEARCH_ASSUMPTION；未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予原论文/书籍、输入数据或其他第三方素材权利"
+  ],
+  "name": "联合排序经验分布偏离独立性的 Hoeffding D",
+  "native_source_id": "hoeffd",
+  "one_line": "对完整的两列成对样本，用边际秩和联合秩形成经有限样本修正的依赖统计量，并保留经验联合分布与边际乘积的平均/最大绝对差；本条只审统计量，不收原包装的近似p值。",
+  "record_id": "hoeffd",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/harrelfe/Hmisc/blob/5b644531c11646ab617ea424265ca5ebde38181e/R/hoeffd.s"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Frank E Harrell Jr与Hmisc维护者实现，原文档归引Hoeffding1948及Hollander/Wolfe1973；当前F90文件保留明确AI转换历史，不把维护者代码称为原论文作者实现。",
+      "id": "harvest-source-6e97599f68bb56decda2a570",
+      "license": "GPL-2.0-or-later",
+      "locator": "native entry and excluded P helper boundary:L1-L3; complete reviewed wrapper preprocessing native call returned D and companion outputs:L36-L67",
+      "revision": "5b644531c11646ab617ea424265ca5ebde38181e",
+      "sha256": "8b859710d91884347c79a9ef248e2ba22b6896318de7998152dce548f00c87f6",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/harrelfe/Hmisc/blob/5b644531c11646ab617ea424265ca5ebde38181e/R/hoeffd.s",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Frank E Harrell Jr与Hmisc维护者实现，原文档归引Hoeffding1948及Hollander/Wolfe1973；当前F90文件保留明确AI转换历史，不把维护者代码称为原论文作者实现。",
+      "id": "harvest-source-7d768eb7f514ab2de0288e9e",
+      "license": "GPL-2.0-or-later",
+      "locator": "conversion attribution complete outer pair selection sentinel and symmetrization:L1-L67; complete finite-sample D and absolute ECDF difference kernel:L69-L108; complete marginal and joint tied rank kernel:L110-L146",
+      "revision": "5b644531c11646ab617ea424265ca5ebde38181e",
+      "sha256": "df95ff77d633aa53e0e238dac1c55967ece632fbcc71b609d81386979d44bf71",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/harrelfe/Hmisc/blob/5b644531c11646ab617ea424265ca5ebde38181e/src/hoeffd.f90",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Frank E Harrell Jr与Hmisc维护者实现，原文档归引Hoeffding1948及Hollander/Wolfe1973；当前F90文件保留明确AI转换历史，不把维护者代码称为原论文作者实现。",
+      "id": "harvest-source-82474c910acfe0427d0d09bf",
+      "license": "GPL-2.0-or-later",
+      "locator": "export and registered F_ prefix:L1-L3",
+      "revision": "5b644531c11646ab617ea424265ca5ebde38181e",
+      "sha256": "12993a6cbb8b1b0966a8e51746c8354985e66d2fd8bdd697074c49aa3a48719d",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/harrelfe/Hmisc/blob/5b644531c11646ab617ea424265ca5ebde38181e/NAMESPACE",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Frank E Harrell Jr与Hmisc维护者实现，原文档归引Hoeffding1948及Hollander/Wolfe1973；当前F90文件保留明确AI转换历史，不把维护者代码称为原论文作者实现。",
+      "id": "harvest-source-9878e6264ce39dc609e476bc",
+      "license": "GPL-2.0-or-later",
+      "locator": "native twelve-argument declaration:L14-L17; hoeffd registration and dynamic lookup disabled:L34-L54",
+      "revision": "5b644531c11646ab617ea424265ca5ebde38181e",
+      "sha256": "c6e0f671bc3348c230d96e644c0819fb9a3881480e6413842e85aef190280086",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/harrelfe/Hmisc/blob/5b644531c11646ab617ea424265ca5ebde38181e/src/init.c",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Frank E Harrell Jr与Hmisc维护者实现，原文档归引Hoeffding1948及Hollander/Wolfe1973；当前F90文件保留明确AI转换历史，不把维护者代码称为原论文作者实现。",
+      "id": "harvest-source-5d1f1159167550f4fcfeec72",
+      "license": "GPL-2.0-or-later",
+      "locator": "identity scaling ties outputs and doc/code sentinel discrepancy:L1-L56; original-paper and book attribution only:L67-L78",
+      "revision": "5b644531c11646ab617ea424265ca5ebde38181e",
+      "sha256": "82603b7ae05e8ef15fea9769d8be7251ed37564d99fb0e2db1253e000c09d244",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/harrelfe/Hmisc/blob/5b644531c11646ab617ea424265ca5ebde38181e/man/hoeffd.Rd",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Frank E Harrell Jr与Hmisc维护者实现，原文档归引Hoeffding1948及Hollander/Wolfe1973；当前F90文件保留明确AI转换历史，不把维护者代码称为原论文作者实现。",
+      "id": "harvest-source-359a6e2154a55fc28e21fead",
+      "license": "GPL-2.0-or-later",
+      "locator": "historical native counterpart; full-sample formula and different missing sentinel, not active core:L1-L121",
+      "revision": "5b644531c11646ab617ea424265ca5ebde38181e",
+      "sha256": "521e68983f0253990ec01bf996e2c0a5c8d270b494285f8e31bfa6734ea76de1",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/harrelfe/Hmisc/blob/5b644531c11646ab617ea424265ca5ebde38181e/src/ratfor/hoeffd.r",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Frank E Harrell Jr与Hmisc维护者实现，原文档归引Hoeffding1948及Hollander/Wolfe1973；当前F90文件保留明确AI转换历史，不把维护者代码称为原论文作者实现。",
+      "id": "harvest-source-8eaca247e476c32722d9dfb7",
+      "license": "GPL-2.0-or-later",
+      "locator": "maintainer repository package identity and GPL>=2 declaration:L1-L31",
+      "revision": "5b644531c11646ab617ea424265ca5ebde38181e",
+      "sha256": "4ebf9410a267e4cc0ad586ba7528f6ed4efe0d3d3ac2873e16a73bcc5e17fee4",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/harrelfe/Hmisc/blob/5b644531c11646ab617ea424265ca5ebde38181e/DESCRIPTION",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Frank E Harrell Jr与Hmisc维护者实现，原文档归引Hoeffding1948及Hollander/Wolfe1973；当前F90文件保留明确AI转换历史，不把维护者代码称为原论文作者实现。",
+      "id": "harvest-source-e64f547241fef58cf011b44e",
+      "license": "GPL-2.0-or-later",
+      "locator": "complete repository GPL2-or-later grant attribution and disclaimer:L1-L16",
+      "revision": "5b644531c11646ab617ea424265ca5ebde38181e",
+      "sha256": "c12bef243759f6ce1078c448535eeaa26e2889fa8456c5ff43b43202f5af8e75",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/harrelfe/Hmisc/blob/5b644531c11646ab617ea424265ca5ebde38181e/COPYING",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "economic_basis": {
+    "hypothesis": "作者把过去峰价视为可能恢复的价格水平，假说是离该水平相对较远的资产有较大恢复潜力；这不是已证实的收益来源，也不是按近期实际涨幅追买赢家的同义词。",
+    "missing": [
+      "来源规则已静态梳理，未做计算语义执行、经济有效性或账户回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "github.com/laizhr/PPT",
+  "lab": null,
+  "missing_information": [
+    "只静态读固定作者代码与明确依赖，没有执行 MATLAB、外来代码、求解器、历史行情或账户回测。",
+    "输入是外部给定资产收益倍数矩阵；未给持续可交易股票池、成分历史、复权/退市处理、缺价修补、交易日历、真实成交和资金约束。",
+    "原作者仓库的引用/免责文字不是完整开源许可证；仅发布自撰定义与来源定位，代码/论文/市场数据授权分别保留 REVIEW_REQUIRED。",
+    "对每输入行恢复目标只是源模型的比例配置，不是交易所订单、成交价格或可实际无摩擦调仓保证。",
+    "窗口和tran_cost是源接口参数，未由本采集者补一个默认市场方案。"
+  ],
+  "name": "PPT：历史峰值距离的固定范数组合更新",
+  "native_source_id": "PPT.m",
+  "one_line": "按历史峰价相对当前价的截面方向，以固定向量步长移动上一目标组合，再投影为只多权重。",
+  "record_id": "PPT.m",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED; NOT_TESTED; no claim of reproduced paper optimum or economic validation.",
+    "metadata": "原生函数ID、固定commit及自撰中文规则/定位；不发布上游源码、论文全文、图像或市场数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/laizhr/PPT/blob/92d26865d1f24b27583c29e6f0e82b51ef92f542/README.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-ppt-ppt-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "PPT.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "92d26865d1f24b27583c29e6f0e82b51ef92f542",
+      "sha256": "636c3bd47cba154bbf5558ca1ad2487bb330008d6cf107e3f2d382f74282cbec",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/PPT/blob/92d26865d1f24b27583c29e6f0e82b51ef92f542/PPT.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-ppt-ppt_run-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "PPT_run.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "92d26865d1f24b27583c29e6f0e82b51ef92f542",
+      "sha256": "b43861c0ad44087d91fb61302c081a49d8c8487b9e38717a59ef128f36a84abc",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/PPT/blob/92d26865d1f24b27583c29e6f0e82b51ef92f542/PPT_run.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-ppt-readme-md",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "README.md native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "92d26865d1f24b27583c29e6f0e82b51ef92f542",
+      "sha256": "150a226d6fb610d22755ee00d702d3afcc6686616f1448ca3276dce74e847f6a",
+      "supports": [
+        "作者署名/论文定位及免责文字"
+      ],
+      "url": "https://github.com/laizhr/PPT/blob/92d26865d1f24b27583c29e6f0e82b51ef92f542/README.md",
+      "verification": "FETCHED_PINNED_REPOSITORY_DOCUMENT"
+    },
+    {
+      "attribution": "Zhao-Rong Lai / laizhr; exact file header coauthors retained in ignored source; JMLR author pages directly link SPOLC and SSPO repositories. PPT/RPRT attribution is repository/header claim of the same account.",
+      "id": "lai-ppt-simplex_projection_selfnorm2-m",
+      "license": "No explicit license grant found in locked repository tree/README; author citation and, for SSPO/SPOLC, warranty disclaimer are not a permissive license. REVIEW_REQUIRED; no code fulltext redistributed.",
+      "locator": "simplex_projection_selfnorm2.m native physical lines; GB18030 strict reversible decode to UTF8 where original is not UTF8; exact field spans in review.",
+      "revision": "92d26865d1f24b27583c29e6f0e82b51ef92f542",
+      "sha256": "ebfa2ec0dfa8120b6d9bfd152ba0089aef0d3676e2bd5ea93f98e6149a36057a",
+      "supports": [
+        "固定作者实现、参数、依赖、持仓与时间顺序"
+      ],
+      "url": "https://github.com/laizhr/PPT/blob/92d26865d1f24b27583c29e6f0e82b51ef92f542/simplex_projection_selfnorm2.m",
+      "verification": "FETCHED_PINNED_SOURCE_CODE_STATIC_REVIEW"
+    },
+    {
+      "attribution": "MathWorks official documentation",
+      "id": "mathworks-max",
+      "license": "MathWorks documentation; original code/paper/market-data permissions are not inherited. REVIEW_REQUIRED.",
+      "locator": "Original official HTML splitlines; exact line spans in review. Current documentation only, not historical binary/version validation.",
+      "revision": "HTTP snapshot SHA256 eb2dc4b182b3f6407103ff4890047ad7e91e01bb1c54e77276bd81e5b6f37c25",
+      "sha256": "eb2dc4b182b3f6407103ff4890047ad7e91e01bb1c54e77276bd81e5b6f37c25",
+      "supports": [
+        "原生MATLAB调用的矩阵/向量形状语义；未运行，未固定历史运行环境"
+      ],
+      "url": "https://www.mathworks.com/help/matlab/ref/double.max.html",
+      "verification": "FETCHED_PINNED_OFFICIAL_DOCUMENTATION"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "lai-ppt-ppt-m",
+        "lai-ppt-ppt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "通用多资产价格收益倍数矩阵data，每列一项资产、每行一期；源码只给组合权重，没有冻结股票名称、交易场所或资产类别。论文署名只是来源归属，不据名称推定股票、期货或基金都可直接成交。"
+    },
+    "cost": {
+      "evidence": [
+        "lai-ppt-ppt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "runner按g_t=(x_t·b_t)*(1−c/2*Σ|b_t−h_(t−1)|)计一期倍数，c为显式输入tran_cost；h_t=b_t⊙x_t/(x_t·b_t)，初始h_0=0，因此首期成本项为c/2。c无源码默认值/现实校准。成本不进入权重求解；手续费、价差、冲击、税费和现金利息没有单独账本，高c导致非正倍数亦无保护。"
+    },
+    "entry": {
+      "evidence": [
+        "lai-ppt-ppt-m",
+        "lai-ppt-ppt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "第1期等权满仓。每次观察完t期，按上式得到下一期目标，目标正分量为持有比例；增加的目标对应增持。基础向量是上一期目标b_t，而不是收益后漂移份额；漂移份额仅供成本计算。没有价格交叉、交易方向开关或独立现金入场。"
+    },
+    "execution_time": {
+      "evidence": [
+        "lai-ppt-ppt-m",
+        "lai-ppt-ppt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先以既有b_t承接data(t,:)并记录收益，再用截至t的数据算b_(t+1)，在下行收益前使用该目标。runner虽先生成全矩阵synthetic close，更新只索引截至t的窗口；未核市场数据发布时间、下单延迟或成交，不能据模型顺序宣称实盘可成交。"
+    },
+    "exit": {
+      "evidence": [
+        "lai-ppt-ppt-m",
+        "lai-ppt-ppt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "每期用下一目标替代旧目标，目标为0的资产不再配置，下降的比例减持。没有逐笔止损、获利了结、最长持有期或回撤熔断；有限输入结束仅结束返回序列，不额外补期末清仓成本。"
+    },
+    "position": {
+      "evidence": [
+        "lai-ppt-ppt-m",
+        "lai-ppt-simplex_projection_selfnorm2-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "权重经助手构成非负、和为1的单纯形，无负权/融资或单项集中度帽。归一助手先在 max(abs(v))>10^6 时反复把整个 v 除以10，再降序排列u、累加s_j，取最后满足u_j>(s_j−1)/j的j，令a=(s_j−1)/j、b=max(v−a,0)。因此极端输入下是先缩小再投影，不能无条件称为对原v的欧氏投影。 不把100解释成100倍杠杆，它是投影前向量更新长度。"
+    },
+    "risk": {
+      "evidence": [
+        "lai-ppt-ppt-m",
+        "lai-ppt-ppt_run-m",
+        "lai-ppt-simplex_projection_selfnorm2-m",
+        "mathworks-max"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "中心向量为零时维持原目标；单资产时中心向量为0。window=1且N>1的非暖机分支用跨资产最大价而非逐资产时间峰值，不把此合法参数自动修成恒等预测或排除。有限输入下大步长与投影可能集中到少数资产，源码没有集中度/最大回撤约束。非有限价格、无效窗口、非正组合倍数和助手无有效rho没有生产处理；极端向量助手缩放会改变直接投影定义。已知数学规则不构成收益或稳定性验证。"
+    },
+    "signal": {
+      "evidence": [
+        "lai-ppt-ppt-m",
+        "lai-ppt-ppt_run-m",
+        "mathworks-max"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "以runner的t为当前已观察行。若t<window+1，xhat=data(t,:)；否则取synthetic close的[t−window+1,t]子矩阵C，再按源码未指定dim的max(C)除以当行close。window≥2且N≥2时max按列取窗内峰值；window=1且N>1时C是行向量，max返回当行所有资产的单个最大值，该标量再分别除以每项当行close，不能改写成各自/current=1。N=1时C是列向量，max为唯一资产窗口最大值；window=N=1时为原标量。u=xhat−mean(xhat)*1；若||u||_2非零，v=b_t+100*u/||u||_2，否则v=b_t；最后调用所附归一助手。函数参数名tplus1实际收到t，不可据名称把next-row收益送进去。"
+    },
+    "timeframe": {
+      "evidence": [
+        "lai-ppt-ppt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "逐输入行调仓，初始b_1=1/N；对第t行的现有b_t计收益后，若t<T才形成b_(t+1)。变量叫daily，但函数没有日期或交易时钟；window是外部参数，不擅定日/月或默认窗口。"
+    },
+    "universe": {
+      "evidence": [
+        "lai-ppt-ppt-m",
+        "lai-ppt-ppt_run-m"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "资产集在输入矩阵列中固定，N=size(data,2)。需有效有限正收益倍数以维持价格/除法含义；源码无主动选股、成分进出、缺值、零价或退市处理。synthetic close第1行为1，第i≥2行乘data(i,:)；这只是每列基准化，不读取未来价格。"
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说：长期价格方向、波幅极值滞回和周期动量方向一致时降低逆势信号；有效性未经检验。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "STC不升（包括持平）被归为空向，非严格下降；TTS比较当前ret而非前值；信号R不等于成交后R。"
+  ],
+  "name": "EMA侧、TTS滞回与STC斜率三态共识入场",
+  "native_source_id": "435133",
+  "one_line": "价对EMA、极值ATR滞回线和双层随机MACD斜率三者同向且状态新切换时入场，信号棒固定1R括号。",
+  "record_id": "435133",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E7%9F%AD%E7%BA%BF%E8%B7%9F%E8%B8%AA%E8%B6%8B%E5%8A%BF%E6%89%93%E5%8E%8B%E9%9C%87%E8%8D%A1%E7%AD%96%E7%95%A5EMA-Tracking-Trend-Suppressing-Oscillation-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 ajahanbin1374；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-435133-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "2b81e043e22dcf6a5f6a595467f2c3aafcce4223f46df4fd35075792e0553fd6",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E7%9F%AD%E7%BA%BF%E8%B7%9F%E8%B8%AA%E8%B6%8B%E5%8A%BF%E6%89%93%E5%8E%8B%E9%9C%87%E8%8D%A1%E7%AD%96%E7%95%A5EMA-Tracking-Trend-Suppressing-Oscillation-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-435133-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-435133-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "commission.percent=0.01%；未写滑点、资金费与点差。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-435133-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只有空仓且pos!=pos[1]并变为+1或−1才分别市价L/S；共识持续期间即便先前保护单退出，也不会仅凭持续状态立即重进，须再次状态变化。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-435133-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "calc_on_order_fills=false、calc_on_every_tick=false。先计算三方向和pos转变，再同信号块entry后exit；没有声明process_orders_on_close，未运行或核实括号同棒成交。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-435133-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多信号保存stop=min(C×.999,L[1]×.9998,L[2]×.9998)，limit=C+(C−stop)；空stop=max(C×1.001,H[1]×1.0002,H[2]×1.0002)，limit=C−(stop−C)。entry同块挂from_entry专属括号，只在新signal提交；不是每棒追踪，也没有共识消失立即平仓。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-435133-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始资本100，default_qty_type=percent_of_equity、default_qty_value=100；显式空仓门，没有合约单位或杠杆约束。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-435133-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "1R目标与含0.1%最低距离的前两棒极值保护；以信号C算R而非成交均价，跳空/手续费可改变实际盈亏比。共识离开后仍只由原括号管理，没有账户停止。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-435133-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "E=−1若C<EMA200，否则+1。TTS：v=WMA21(ATR1)，hi=highest(H,21)[1]−3v[1]，lo=lowest(L,21)[1]+3v[1]；ret=C>hi且C>lo时hi，C<lo且C<hi时lo，否则nz(ret[1],C)；T=C>ret则+1、C<ret则−1、相等沿用nz(T[1],0)。STC：m=EMA26(C)−EMA50(C)，k=100×(m−lowest(m,12))/(highest(m,12)−lowest(m,12))，分母不正沿用nz(k[1])；d若前值na取k，否则d[1]+.5(k−d[1])；再将d同样12棒随机化为q，零幅沿用nz(q[1])；s若前值na取q，否则s[1]+.5(q−s[1])。k/d/q/s函数持久初值0。S=s>s[1]为+1，否则−1（包含持平）。三者全+得pos=1，全−得−1，其余0。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-435133-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称或注释中的建议周期不等于冻结交易周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-435133-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

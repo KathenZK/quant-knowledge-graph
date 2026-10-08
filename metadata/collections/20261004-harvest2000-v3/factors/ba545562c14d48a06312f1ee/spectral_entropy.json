@@ -1,0 +1,149 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述功率在各频率之间的分散程度；这不是窗口内样本值或排序模式的熵。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "所有统计量使用整个已完成输入窗口；只在该窗口所有样本已观测并发布后可得，不得回填为窗口内过去时点可知特征。窗口长度、真实采样间距和PIT数据未固定。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "沿axis把整段输入送入所选SciPy功率谱估计调用；此包装层不自行定义窗口、去趋势、单/双边谱和FFT长度，未显式参数沿依赖默认。 以整段谱总和归一各频点功率。 通过_xlogx逐频点取p log2 p并求负和，按normalize选择是否归一到频点数。 边界：SciPy版本及其periodogram/welch默认设置未冻结；本条冻结上游调用和熵汇总，不把当前依赖文档默认当成已冻结运行环境。 _xlogx把零项视为0，也会令NaN项保持初始0：全零谱经0/0归一后可给出伪零熵；不能当作有效低复杂度。 归一分母是实际谱频点数的log2；只有一个频点时该分母为0。来源未统一检查NaN、Inf或足够样本。 输出：一个算法族；多输出、轴/通道、窗口/参数及归一选项不另计数"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述功率在各频率之间的分散程度；这不是窗口内样本值或排序模式的熵。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "P=Scipy.signal.periodogram(x,sf,axis)（默认fft分支），或welch(x,sf,nperseg,axis)；p_k=P_k/Σ_k P_k；H=-Σ_(p_k>0) p_k log2(p_k)；normalize=True时再除以log2(谱频点数)。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（array-like convertible to numpy ndarray; time along axis; 1D representative）：等时间间隔采样、按时间排序的有限实数窗口；具体价格/收益/链上序列绑定另行固定。参数：sf：等间距采样频率；范围finite positive sampling frequency，必填；来源包装未自行校验；源码默认None；method：功率谱估计方法，同一指标不因切换估计方式加条数；范围fft/welch；源码默认fft；nperseg：具体None行为由SciPy依赖决定；范围welch分支的分段长度或None；源码默认None；normalize：是否除log2频点数，不拆条；范围bool；源码默认False；axis：采样轴；范围valid array axis；源码默认-1"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-72ce1c194f1d762ba6062718",
+        "harvest-source-b750632eba387336c6456655"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "raphaelvallat/antropy",
+  "lab": null,
+  "missing_information": [
+    "未执行来源代码或金融回测",
+    "NumPy/SciPy/Numba及运行环境未冻结；来源pyproject只设依赖下限",
+    "市场输入绑定、采样周期、供应商、PIT修订与可得时间缺失",
+    "无金融收益方向/预测能力证据"
+  ],
+  "name": "功率谱概率分布的香农熵",
+  "native_source_id": "spectral_entropy",
+  "one_line": "描述功率在各频率之间的分散程度；这不是窗口内样本值或排序模式的熵。",
+  "record_id": "spectral_entropy",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/entropy.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-72ce1c194f1d762ba6062718",
+      "license": "BSD-3-Clause",
+      "locator": "spectral_entropy:L295-L414; imports, constants and declarations:L1-L72",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "414e8de360d5cfbac43e5d58f3466032031bc9edcb417a14fa138ff2e8e47ae5",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/entropy.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-d8d8e75b46b9f1696d69bd7a",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L29",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "e77f97cfd2a40e4c2e02742dfedd7957c7ed397664e93c0a7bbbaf0bb6c82caf",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-f07530fff185f4f6a34b6d57",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L287",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "07d745a1c2ed8000994c718f7eeaf385e8679c3eaa304953ce28f69b892dfb78",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-197424b14812774ea6d92020",
+      "license": "BSD-3-Clause",
+      "locator": "license/author/dependency declarations:L1-L111",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "ffe54c637a9c3acf704078608e505e79209e58bb449b96148efb85b1c4a4d3c1",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/pyproject.toml",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2018-2021, Raphael Vallat; AntroPy contributors; README acknowledges MNE-features, pyEntropy, pyrem and nolds inspirations/adaptations",
+      "id": "harvest-source-b750632eba387336c6456655",
+      "license": "BSD-3-Clause",
+      "locator": "_xlogx:L132-L142; imports, constants and declarations:L1-L11",
+      "revision": "dfbe688744021eb79c4745ceb02a1efc7cd3fbd8",
+      "sha256": "365514efe21dc5ec409786e1d3bdc034cf7a4f62ab802d326fdcd1f20c4a36cc",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/raphaelvallat/antropy/blob/dfbe688744021eb79c4745ceb02a1efc7cd3fbd8/src/antropy/utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

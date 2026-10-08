@@ -1,0 +1,103 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述K线收盘位置和成交量相对振幅对均价权重的调整。“Institutional”是来源命名，不能据此证明识别机构交易或隐藏吸筹。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-AuDovMOj-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认本周期使用当前未确认H/L/C/V。可选跨周期没有前根偏移或已收线限制，发展中高周期值可能变化；gaps_off不代表不重绘。零/缺失成交量及效率分母为0未设完整保护，不能默认为可用0。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-AuDovMOj-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "量差和效率各先按源码平滑，再构造非负权重下限1，最终取两VWMA之比。选跨周期时以request.security(tickerid,所选周期,本周期表达式,gaps_off)计算该周期主线；默认输出本周期主线。可视标准差带用当前图表C的126根标准差，即启用跨周期后也不自动换为跨周期标准差。这不是逐笔主动买卖量。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-AuDovMOj-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述K线收盘位置和成交量相对振幅对均价权重的调整。“Institutional”是来源命名，不能据此证明识别机构交易或隐藏吸筹。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-AuDovMOj-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "R=max(H−L,tick)，delta=V×((C−L)−(H−C))/R；d=VWMA_14(delta)（关闭量差时d=1）；e=V/R；a=e/VWMA_50(e)（关闭效率时a=1）；w=max(|d|×a×V,1)。本周期主线=VWMA_126(C×w)/VWMA_126(w)。在同窗有效样本和分母非零条件下等价于Σ(C×w×V)/Σ(w×V)，不能遗漏VWMA额外乘入的V。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-AuDovMOj-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "H/L/C、成交量V、最小跳动tick。基线长126；量差因子与量幅效率因子默认开启；量差VWMA窗14、效率VWMA窗50。跨周期默认关闭，选项默认D；标准差带默认关闭、倍数2。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-AuDovMOj-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可作为加权价格基线研究输入；双开关和带宽仅为同族参数，不计成多个因子。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "没有逐笔或订单簿输入，不支持机构识别断言。",
+    "成交量缺失、零分母与跨周期确认行为未运行验证。",
+    "未验证收益及商用权利。"
+  ],
+  "name": "量幅与收盘位置复合加权均线（CIMA发布版本）",
+  "native_source_id": "AuDovMOj",
+  "one_line": "用收盘位置估算量差及单位振幅成交量构造额外权重，再通过两条VWMA的比值计算基线。",
+  "record_id": "AuDovMOj",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Kenpachi_ii",
+      "id": "tradingview-AuDovMOj-published-code",
+      "license": "NOASSERTION; no license header in this saved script",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;e95f587415b34cd2b9bfae8d926d97a7@1.0",
+      "sha256": "016fbe17aa7c7adde0794d5323aedc75bbb639bb1c09b16ca5ee76afbcabdbf1",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3Be95f587415b34cd2b9bfae8d926d97a7/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / Kenpachi_ii",
+      "id": "tradingview-list-2d3859da4ab02499b6a7",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=AuDovMOj；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:2d3859da4ab02499b6a78355a7253139452f0514ad1940437973c2a1d28088b7",
+      "sha256": "2d3859da4ab02499b6a78355a7253139452f0514ad1940437973c2a1d28088b7",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-49/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

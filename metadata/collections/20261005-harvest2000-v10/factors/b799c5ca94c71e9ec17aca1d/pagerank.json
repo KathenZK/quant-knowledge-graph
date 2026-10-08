@@ -1,0 +1,124 @@
+{
+  "economic_basis": {
+    "hypothesis": "在按出边权归一的关系图中，计算加入重启与无出边节点再分配后的节点权重；不是资产配置建议，也不把图排名当作已证明的市场重要性。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9954883ac5e6bf75d92bdd81"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图方式、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9954883ac5e6bf75d92bdd81"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "公共pagerank直接调用_pagerank_scipy；本条仅审内置Graph/DiGraph稀疏实现，外部backend和私有Python/NumPy替代分支不视为已冻结计算语义。空图先返回{}。 依list(G)顺序，用to_scipy_sparse_array读取weight默认\"weight\"（缺失值1，None按1）。行和为0标记dangling，其余行左乘逆行和对角矩阵，得到出边归一P。 nstart=None用均匀初始，否则按图节点顺序取dict.get(node,0)再除sum；personalization同法但显式sum==0抛ZeroDivisionError。dangling=None引用p，否则按节点顺序取值归一；nstart/dangling的零和没有同样显式检查。 按公式迭代至L1增量严格小于N*tol，返回当前x；停止标准不是固定点残差上界或最大单节点误差，也不会额外重新归一返回向量。max_iter=0或负数时range无迭代，仍走失败抛错。 本条研究合同取0<α<1、有限非负初始/悬空向量且sum>0，personalization每个图节点严格正以保证重启覆盖；源码未统一验证这些数学前提。图边权有限严格正，节点可以孤立。 nstart/dangling/p个性化选项、权重字段、方向、窗口和节点数不增加条数；没有自动将高PageRank节点买入、低节点卖出。 边界：给dict的非图节点键忽略，缺图节点键置0；personalization研究合同要求全部节点>0是额外限制，并非源码主动检查。 nstart/dangling的sum=0可产生NaN后迭代失败；负权或相消会让“无出边”与行和0混淆，故明确排除，不把行和0都解释为拓扑孤立。 按N*tol检查，大N下阈值过宽可能很早停止；上游没有误差界或收益保障。依赖版本/浮点结果尚未执行冻结。 每个节点权重同一构造中的坐标，重启/初值和undirected转换不拆独立因子；高分不能未经金融构图和经济检验解释为更佳收益。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9954883ac5e6bf75d92bdd81"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在按出边权归一的关系图中，计算加入重启与无出边节点再分配后的节点权重；不是资产配置建议，也不把图排名当作已证明的市场重要性。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9954883ac5e6bf75d92bdd81"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N个节点，W_ij为i→j边权（无向图对称双向）；s_i=Σ_j W_ij。P_ij=W_ij/s_i若s_i>0，否则该行为0；D={i:s_i=0}。p、d、x0分别为归一重启、悬空再分配、初始非负向量。原生迭代x_(t+1)=α[x_t P+(Σ_(i∈D)x_ti)d]+(1−α)p，默认α=.85，p=x0=均匀，d=p。在||x_(t+1)−x_t||_1<N*tol时返回新x；默认tol=1e−6、max_iter=100，超限抛PowerIterationFailedConvergence。数学目标是对应重启Markov矩阵的左稳态，但记录返回的是有限容差迭代，不声称精确固定点。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9954883ac5e6bf75d92bdd81"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in simple networkx.Graph or DiGraph, loop-free, positive finite selected edge weights; isolated nodes allowed）：冻结图和完整节点宇宙；金融网络估计、边方向、重启解释与PIT尚缺。图可空时按原生早退{}处理，但不是可用排名样本。。参数：alpha：保留图上行走的比例；范围reviewed finite 0<alpha<1；源码默认0.85；personalization：重启分布，按图内节点重排归一；范围None=>uniform; research mapping finite strictly positive on every graph node；源码默认None；dangling：无出边节点质量的再分配分布；范围None=>personalization; research nonnegative mapping with positive graph-node sum；源码默认None；nstart：迭代初始状态；范围None=>uniform; finite nonnegative mapping with positive graph-node sum；源码默认None；weight：按出边归一前的关系强度；范围None or named finite positive edge attribute, missing1；源码默认weight；tol：L1增量阈值要再乘N；范围research finite positive；源码默认1e-06；max_iter：最大迭代次数，不能保证达到容差；范围research positive integer；源码默认100"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-ee984db19528f53267982e96",
+        "harvest-source-9954883ac5e6bf75d92bdd81"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融节点/边/权重/方向及阈值构图、节点宇宙和PIT缺失",
+    "数值依赖/NetworkX backend版本与浮点输出未执行冻结",
+    "没有金融收益、风险有效性或因果传播证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "含重启和悬空节点处理的 PageRank 权重",
+  "native_source_id": "pagerank",
+  "one_line": "在按出边权归一的关系图中，计算加入重启与无出边节点再分配后的节点权重；不是资产配置建议，也不把图排名当作已证明的市场重要性。",
+  "record_id": "pagerank",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX Developers固定内置实现，原文献归属按源码References保留；只公开自撰定义与精确来源定位，没有取得或复制原论文全文。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "NetworkX BSD3 license and copyright:L1-L37",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现，原文献归属按源码References保留；只公开自撰定义与精确来源定位，没有取得或复制原论文全文。",
+      "id": "harvest-source-ee984db19528f53267982e96",
+      "license": "BSD-3-Clause",
+      "locator": "adjacency input, weights and directed convention:L496-L568; exact sparse adjacency construction and default weight1:L666-L718",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "704777808d7ebe0dcc09412066d25a1564e5ac4a83f8ecac3c78ccea0b82570e",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/convert_matrix.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX Developers固定内置实现，原文献归属按源码References保留；只公开自撰定义与精确来源定位，没有取得或复制原论文全文。",
+      "id": "harvest-source-9954883ac5e6bf75d92bdd81",
+      "license": "BSD-3-Clause",
+      "locator": "native defaults and binding to scipy implementation:L1-L118; complete scipy helper including normalization and stopping:L364-L507",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "ffcc657c478626b5cf9fcd4d728d7997b99a1192c7cce09b12fd232fa5027005",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/link_analysis/pagerank_alg.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    }
+  ]
+}

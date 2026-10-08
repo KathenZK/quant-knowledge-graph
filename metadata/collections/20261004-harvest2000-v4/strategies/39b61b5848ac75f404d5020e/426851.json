@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "极值确认后沿波动尺度收敛的支撑阻力线可能区分回调与突破；中线退出能否减少趋势回吐尚无经济证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "日期输入未生效；不将作者给出的时段控件写成实际开仓限制。",
+    "只描述默认mirror=false；数值bool/na与同bar多空请求需要原平台运行审核。"
+  ],
+  "name": "唐奇安新极值确认斜线突破与通道中线退出",
+  "native_source_id": "426851",
+  "one_line": "60棒新高低后的下一棒确认枢轴，按记录的ATR带宽逐棒推移斜线；破线入场，反线或前棒中线交叉退出。",
+  "record_id": "426851",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E5%A4%9A%E9%87%8D%E6%94%AF%E6%92%91%E9%98%BB%E5%8A%9B%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%BF%BD%E8%B8%AA%E7%AD%96%E7%95%A5Trend-Following-Strategy-Based-on-Dynamic-Support-and-Resistance.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 未明确；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-426851-published-code",
+      "license": "NOASSERTION; no recognized license notice; mirror has no root LICENSE",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "dcc2adad519d1e343c10c7807c6a6b9ba79cf5d0dd26e3909af4268b55d56de6",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E5%A4%9A%E9%87%8D%E6%94%AF%E6%92%91%E9%98%BB%E5%8A%9B%E7%9A%84%E8%B6%8B%E5%8A%BF%E8%BF%BD%E8%B8%AA%E7%AD%96%E7%95%A5Trend-Following-Strategy-Based-on-Dynamic-Support-and-Resistance.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-426851-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-426851-published-code"
+      ],
+      "status": "MISSING",
+      "text": "源码明确commission_value=0.075、slippage=3；未显式commission_type，不擅自补百分比类型；3是平台滑点tick参数，现金影响取决于合约最小跳动。其他费用为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-426851-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认允许做空。C上穿SH设多入场；C下穿SL设空入场，各侧分别if/else-if判定。先处理多侧entry(\"L\")/close，再处理空侧entry(\"S\")/close；没有持仓门。testPeriod被硬编码true，输入的起止年月日算出时间但未用于交易过滤。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-426851-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "声明process_orders_on_close=true；源码先更新极值/斜线并删除越界线，再计算交叉和先多后空请求。枢轴需新极值后一棒确认；没有使用回绘后的历史位置生成历史订单。本次未执行，收盘处理能否成交及双请求结果未核。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-426851-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "多侧未触发本侧入场时，C下穿SL或下穿M[1]则close(\"L\")；空侧未触发本侧入场时，C上穿SH或上穿M[1]则close(\"S\")。均为条件市价平仓，无价格止损/止盈挂单。反向entry还可能反转，实际同bar订单相互作用未执行核对。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-426851-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "初始资本1000000，默认权益100%；entry无qty覆盖；pyramiding、保证金和合约换算未显式给定。多侧和空侧是独立流程，未强制互斥单信号。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-426851-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "不存在固定SL/TP。起止日期输入实际上不限制交易；斜线0/na初始化及数值转bool按源版本保留，零值资产边界和同棒两侧同时发单尚未运行。mirror_mode=true分支未作为本条默认规则或独立新策略。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-426851-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "默认Donchian长度60，T=highest(H,60)、B=lowest(L,60)、M=(T+B)/2；ATR14带C±ATR14。每棒newHigh=(H>T[1])、newLow=(L<B[1])；对应事件保存前棒带宽2ATR14[1]到持久变量AH/AL（初始0）。若newHigh[1]且H<T[1]，ph=H[1]，否则na；若newLow[1]且L>B[1]，pl=L[1]，否则na。默认mirror_mode=false，SH/SL初始0：ph数值为真则SH=ph，否则SH数值为真则SH=SH[1]−0.03AH；pl数值为真则SL=pl，否则SL数值为真则SL=SL[1]+0.03AL。AH/AL在每次新极值更新，故斜率也随事件更新；若B[1]>SH则SH=na，若T[1]<SL则SL=na。画图offset=−1只回绘确认点，交易使用当棒已算斜线。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-426851-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-426851-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

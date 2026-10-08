@@ -1,0 +1,105 @@
+{
+  "economic_basis": {
+    "hypothesis": "统计特征可描述已观测序列；金融预测用途和收益方向尚未验证。",
+    "missing": [
+      "无收益有效性、因果识别或样本外复现证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只能在输入窗口全部样本已观测且发布后计算；若用于金融研究，窗口必须仅包含决策时已知值。 窗口/采样频率/资产域/缺失处理未指定为市场实施；这不是已能直接回测的交易策略。"
+    },
+    "calculation": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "ql>=qh 时返回 0。按整个输入窗口的经验分位构造走廊，边界与并列值处理沿用 pd.qcut。 只保留变化起点与终点都在走廊中的相邻变化。 按 isabs 选择是否取绝对值，再调用名称为 f_agg 的 NumPy 聚合函数。 分箱失败或没有符合条件的相邻变化时返回 0。 边界：本条登记算法族，不把分位阈值和聚合模式组合展开为新增条数。 pd.qcut 边界、并列值及 NumPy 聚合语义需冻结依赖后复现；源码接口允许任意 getattr(np,f_agg)，本次不执行。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "隔离数值分布某个区间内的局部变化特征。 这是统计序列特征，未声称解释或预测投资收益。"
+    },
+    "formula": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "先以 pd.qcut(x,[ql,qh],labels=False) 确定走廊；D={x_i-x_{i-1}:两端均被分到走廊}；输出 f_agg(D) 或 f_agg(abs(D))。"
+    },
+    "inputs": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入x为按时间排序的一维有限数值样本；源码不绑定某资产或价格/收益变量。ql：0<=ql<qh<=1，走廊下分位；源码默认值=无默认值，调用时传入；qh：0<=ql<qh<=1，走廊上分位；源码默认值=无默认值，调用时传入；isabs：bool，是否用绝对变化；源码默认值=无默认值，调用时传入；f_agg：NumPy aggregation name，对条件相邻变化的聚合方式，例如 mean/var/std/median；源码默认值=无默认值，调用时传入"
+    },
+    "use_cases": {
+      "evidence": [
+        "tsfresh-tsfresh-feature_extraction-feature_calculators-py"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可以为数值序列的描述、聚类或后续研究提供输入；市场绑定、窗口和采样频率需单独确定，不把参数或输出分量展开为新因子。"
+    }
+  },
+  "identity_namespace": "blue-yonder/tsfresh",
+  "lab": null,
+  "missing_information": [
+    "市场输入绑定、窗口与采样频率尚未选择",
+    "数据供应商、时间戳与修订政策缺失",
+    "NumPy/Pandas 等依赖环境未冻结",
+    "未执行源代码或进行数值交叉验证",
+    "没有经济收益有效性证据"
+  ],
+  "name": "分位走廊内的相邻变化汇总",
+  "native_source_id": "change_quantiles",
+  "one_line": "隔离数值分布某个区间内的局部变化特征。",
+  "record_id": "change_quantiles",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行源码，未生成行情计算或回测结果；综合商业状态REVIEW_REQUIRED。",
+    "metadata": "自撰数学定义、参数与源码定位；保留tsfresh与贡献者归属，不复制来源全文。源码MIT不扩张至引用论文或输入数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/LICENSE.txt"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Copyright (c) 2016 Maximilian Christ, Blue Yonder GmbH; tsfresh contributors",
+      "id": "tsfresh-tsfresh-feature_extraction-feature_calculators-py",
+      "license": "MIT",
+      "locator": "change_quantiles:L1511-L1553; _roll:L56-L99",
+      "revision": "6af3c0030b6c9f02c3862a20e00cce87c984aa5b",
+      "sha256": "af78b02ff7d99d1e1c8fb0d56711fab00c0f84f63aeec969c091dd52fbdb228f",
+      "supports": [
+        "原生计算器定义、输入、参数与边界"
+      ],
+      "url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/tsfresh/feature_extraction/feature_calculators.py",
+      "verification": "PINNED_SOURCE_CODE_INDEPENDENTLY_REVIEWED"
+    },
+    {
+      "attribution": "Copyright (c) 2016 Maximilian Christ, Blue Yonder GmbH; tsfresh contributors",
+      "id": "tsfresh-LICENSE-txt",
+      "license": "MIT",
+      "locator": "LICENSE.txt:L1-L16",
+      "revision": "6af3c0030b6c9f02c3862a20e00cce87c984aa5b",
+      "sha256": "1804283622c8e51a4427aaa772d5ca522f89932fd610b294055435922af1c748",
+      "supports": [
+        "源码版权和许可声明；不支持公式或经济有效性"
+      ],
+      "url": "https://github.com/blue-yonder/tsfresh/blob/6af3c0030b6c9f02c3862a20e00cce87c984aa5b/LICENSE.txt",
+      "verification": "PINNED_LICENSE_NOTICE_READ"
+    }
+  ]
+}

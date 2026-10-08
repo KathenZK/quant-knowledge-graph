@@ -1,0 +1,129 @@
+{
+  "economic_basis": {
+    "hypothesis": "去趋势后周期变化可能用于均值回复定位，未证明该平滑或相位选择带来收益。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "零轴离场方向按代码，不能自动修成常见回归到零获利退出。"
+  ],
+  "name": "高斯平滑去趋势价格的半周期反转",
+  "native_source_id": "431392",
+  "one_line": "EMA滞后差经ALMA平滑后，在零轴一侧与自身滞后交叉入场；按相反滞后交叉或特定零轴方向退出。",
+  "record_id": "431392",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%96%AF%E5%B9%B3%E6%BB%91%E5%8E%BB%E8%B6%8B%E5%8A%BF%E5%8F%8D%E8%BD%AC%E7%AD%96%E7%95%A5Gaussian-Detrended-Reversion-Trading-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 © DraftVenture, Markdown L127; Strategy by KP, Markdown L178；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-431392-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "1c0f18b2063890e8fb8ddf36aed34186b1f52e29bd3b40654806e04d8b9e73a0",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E9%AB%98%E6%96%AF%E5%B9%B3%E6%BB%91%E5%8E%BB%E8%B6%8B%E5%8A%BF%E5%8F%8D%E8%BD%AC%E7%AD%96%E7%95%A5Gaussian-Detrended-Reversion-Trading-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-431392-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-431392-published-code"
+      ],
+      "status": "MISSING",
+      "text": "无显式手续费、滑点、点差和持仓费，成本MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-431392-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G上穿G[25]且G<0时Long；G下穿G[25]且G>0时Short。两个方向独立if，没有显式空仓限制，反向entry可改变既有仓位。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-431392-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v5；依次处理多entry、多close、空entry、空close。指标用当前C与历史EMA/G，未显式逐tick、成交重算或收盘成交；不将信号bar当已核成交bar。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-431392-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Long在G下穿G[25]或G下穿0时close；Short在G上穿G[25]或G上穿0时close。多头并非G上穿0就获利退出：源码零轴方向恰为下穿；空侧同理保留上穿0。无独立价格止损/止盈。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-431392-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "strategy.percent_of_equity默认15%，入口不覆盖qty；未按DPO或止损距离定风险。初始资本、杠杆、合约乘数未明确。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-431392-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "仅条件市价close，没有硬风险界限。G及其25棒滞后需要充分预热；默认50避免N/2奇数取整争议，其他参数执行未核。历史及实时交叉可能不同，未执行。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-431392-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N=50；barsback=N/2+1，默认26；D=C−EMA50(C)[26]。G=ta.alma(D,50,0.85,6)，参照G[25]。这里移动的是过去EMA，并未引用未来价格；ALMA的窗口、偏移、sigma分别50/0.85/6。不是直接对价格做ALMA快慢交叉。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-431392-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-431392-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

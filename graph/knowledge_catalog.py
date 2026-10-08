@@ -43,6 +43,9 @@ class KnowledgeCatalog:
         self._used_overlays = set()
         self._factor_entries, self._factor_source_rows = set(), set()
         self._source_review_versions = set()
+        self._collection_review_versions = set()
+        self._collection_definition_signatures = set()
+        self._collection_source_owners = {}
         self.counts = Counter()
         self.source_rows = Counter()
         collections = self.registry['collections']
@@ -55,7 +58,8 @@ class KnowledgeCatalog:
         loaders = {'csv_corpus': self._csv, 'classification': self._classification,
                    'factor_records': self._factors, 'reviewed_metadata': self._reviewed,
                    'reviewed_batches': self._batches, 'classification_batch': self._classification_batch,
-                   'source_followups': self._source_followups}
+                   'source_followups': self._source_followups,
+                   'source_collection': self._source_collection}
         # Dependency ordering is semantic, not the order of paths in the registry.
         for kind in loaders:
             for collection in collections:
@@ -431,6 +435,58 @@ class KnowledgeCatalog:
                 raise ValueError('Source path match is not supported by source URLs')
         return original
 
+    def _source_collection(self, directory):
+        from quantgraph.graph.collection_batch import validate_collection
+        result = validate_collection(self.root, directory)
+        refs = {(ref['identity_namespace'], ref['entity_type'], ref['record_id']): ref
+                for ref in self._json(directory + '/index.json')['records']}
+        for record in result['records']:
+            ns, kind, rid = (record[key] for key in ('identity_namespace', 'entity_type', 'record_id'))
+            review = result['reviews'][(ns, kind, rid)]
+            if review['dedup']['outcome'] != 'REVIEWED_DISTINCT_CONSTRUCTION':
+                raise ValueError('Only reviewed new definitions enter this collection adapter')
+            combined = dict(metadata=record, review=review)
+            revision = digest(encoded(combined))
+            identity = (ns, rid, revision)
+            if identity in self._collection_review_versions:
+                continue
+            signature = review['definition_signature']
+            if signature in self._collection_definition_signatures:
+                raise ValueError('Repeated collection definition across batches')
+            source_keys = result['source_keys'][(ns, kind, rid)]
+            for source_key in sorted(source_keys):
+                if source_key in self._collection_source_owners:
+                    raise ValueError(f'Repeated collection source definition across batches: {ns}:{rid} and '
+                                     f'{self._collection_source_owners[source_key]} share {source_key}')
+            eid = stable_id(ns, rid)
+            if eid in self.entries:
+                raise ValueError('New collection definition collides with an existing knowledge identity')
+            self._collection_review_versions.add(identity)
+            self._collection_definition_signatures.add(signature)
+            self._collection_source_owners.update((source_key, ns + ':' + rid) for source_key in source_keys)
+            entry = self._entry(ns, rid, record['name'])
+            self._classify(entry, kind, 'SOURCE_DEFINITION_REVIEWED', revision)
+            entry['record_kinds'].append('source_definition')
+            entry['source_names'].append(ns)
+            entry['source_names'].extend(source['attribution'] for source in record['sources'])
+            entry['markets'].extend(review.get('markets', []))
+            entry['frequencies'].extend(review.get('frequencies', []))
+            entry['content_subtypes'].append(review['subtype'])
+            entry['statuses']['collection_review'].append('REVIEWED_NEW_DEFINITION')
+            entry['statuses']['definition_verification'].append('CORE_RULES_REVIEWED')
+            fields = record.get('strategy_fields') or record['factor_fields']
+            entry['statuses']['source_verification'].extend(field['status'] for field in fields.values()
+                if field['status'] in {'SOURCE_CODE_REVIEWED', 'SOURCE_DESCRIPTION_REVIEWED'})
+            for name, value in review['states'].items():
+                entry['statuses']['commercial_rights' if name == 'commercial_use' else name].append(value)
+            entry['statuses']['source_origin'].append(review.get('source_origin', 'PINNED_PUBLISHED_VERSION'))
+            entry['missing_information'].extend(record['missing_information'])
+            ref = refs[(ns, kind, rid)]
+            self._version(entry, ns, rid, combined, directory + '/' + ref['path'],
+                          'COLLECTION_REVIEWED_METADATA', collection_batch=result['manifest']['batch_id'])
+            self.counts['source_collection_entries'] += 1
+            self.counts['collected_' + kind] += 1
+
     def stats(self):
         return dict(schema_version='quantgraph-knowledge-stats/v1', unique_entries=len(self.entries),
             kinds=dict(sorted(Counter(r['kind'] for r in self.entries.values()).items())),
@@ -438,7 +494,8 @@ class KnowledgeCatalog:
             source_rows=dict(self.source_rows), versions=len(self._versions), relationships=len(self.edges),
             classification_conflicts=sum(r['classification_conflict'] for r in self.entries.values()),
             classified_csv=sum(self.entries[r['entity_id']]['kind'] != 'unclassified' for r in self.csv_rows.values()),
-            **{k: self.counts[k] for k in ['reading_views', 'reviewed_representations', 'factor_variants', 'classification_decisions', 'source_reviews']},
+            **{k: self.counts[k] for k in ['reading_views', 'reviewed_representations', 'factor_variants', 'classification_decisions', 'source_reviews',
+                                          'source_collection_entries', 'collected_strategy', 'collected_factor']},
             counting_rule='Unique knowledge entries; evidence versions and source rows are not added to this count. No global economic-equivalence claim.')
 
     def _resolve(self, identity):

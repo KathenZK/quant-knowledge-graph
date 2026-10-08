@@ -1,0 +1,157 @@
+{
+  "economic_basis": {
+    "hypothesis": "在由变形熵约束限定的概率权重集合中，求样本加权损失的最大值；是一种风险泛函，不把物理命名当作市场机制解释。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "有效输入先转Tx1并检查有限性；solver仅接受CLARABEL、MOSEK、SCS，指定的放最前。κ默认.3，α默认.05；研究合同固定0<κ<1、0<α<1。 第一条路径使用dual概率权重形式。幂锥本身给ν>=0、p>=0及|τ|约束；不要自行增加τ>=0或把其符号当源码显式约束。 dual按求解器队列求解；None才触发primal回退。primal中e是源码变量nu，其名字与dual的nu相同但作用不同，公式重命名以免混淆。 primal优化目标乘1000，但返回未经1000缩放的risk.value。两条路径都捕获SolverError并在非None有限值时break，最后只以None作为失败门槛；仍可能把最后的非有限非None结果返回。 不把docstring返回tuple当事实，实际return是risk.value.item()标量；最终失败报错文案误写EVaR，本条保留RLVaR身份。 当前固定CVXPY PowCone3D定义闭合所用三个变量的幂锥约束。实际安装版本、solver版本和最优性残差尚未运行固定，因此这里是优化目标和分支的静态审阅。 边界：不能将κ=0/1直接代入源码：有除κ、除(1−κ)以及锥指数开区间限制。即使数学上讨论极限，源码未实现极限替代。 不保证概率优化得到真实尾部发生概率；权重是给定经验样本上的最坏分布选择，不是已拟合市场概率模型。 EVaR以指数/对数熵界定风险，RLVaR用有限κ幂锥的不同可行集；同属熵类研究，不宣称经济概念独立。所有κ、dual/primal、求解器、RLDaR或双尾重包装不另计。 有限输入检查不等于数值问题可解；未运行验证约束残差、状态或解精度，未建立收益方向。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在由变形熵约束限定的概率权重集合中，求样本加权损失的最大值；是一种风险泛函，不把物理命名当作市场机制解释。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "设损失l_i=−x_i，κ∈(0,1)，c=[(1/(αT))^κ−(1/(αT))^(−κ)]/(2κ)。先求 max_(p,ν,τ) Σp_i l_i，约束Σp=1、0<=p_i<=1、Σ(ν_i−τ_i)/(2κ)<=c、(ν_i,1,p_i)∈P_(1/(1+κ))、(p_i,1,τ_i)∈P_(1−κ)。P_a={(u,v,w):u>=0,v>=0,u^a v^(1−a)>=|w|}。若返回None，改求 min t+c z+Σ(ψ_i+θ_i)，约束z>=0、−x_i−t+e_i+ω_i<=0、(z(1+κ)/(2κ),ψ_i(1+κ)/κ,e_i)∈P_(1/(1+κ))、(ω_i/(1−κ),θ_i/κ,−z/(2κ))∈P_(1−κ)。返回风险标量，不返回最优概率向量。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "X（nonempty finite real return series, 1D or Tx1/1xT array-like; recommended T>=2）：同一采样频率的完整收益窗口；函数把1xT转为Tx1，拒绝多行多列及NaN/Inf。价格到收益、simple/log口径、成本与时间发布规则均不由本函数生成。。参数：alpha：左尾水平，源码无直接区间检查；范围research 0<alpha<1；源码默认0.05；kappa：变形参数；不同κ属于同族；范围research 0<kappa<1；源码默认0.3；solver：幂锥求解器优先级；范围CLARABEL/MOSEK/SCS；源码默认CLARABEL"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-33a1babff54280c7a77dbbc0"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "dcajasn/Riskfolio-Lib",
+  "lab": null,
+  "missing_information": [
+    "收益输入变量、采样频率、供应商、时区/PIT及修订政策未固定",
+    "实际依赖/求解器版本与数值输出尚未执行冻结",
+    "无收益方向或样本外经济有效性证据",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "幂锥熵约束下的最坏样本损失",
+  "native_source_id": "RLVaR_Hist",
+  "one_line": "在由变形熵约束限定的概率权重集合中，求样本加权损失的最大值；是一种风险泛函，不把物理命名当作市场机制解释。",
+  "record_id": "RLVaR_Hist",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/riskfolio/src/RiskFunctions.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-33a1babff54280c7a77dbbc0",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer license and numerical imports:L1-L17; dual/primal power-cone problems and failure branches:L680-L822",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "2156737cc64527f439b172f0a448b6aa48fbfd1f0b1710b02454dff722ceb7c7",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/riskfolio/src/RiskFunctions.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-d716f1091c2d4ef07fac883d",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 full license:L1-L27",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "7f7a68d261604e432e818993f92b74b636c632e31f207730dd189267044aa5e6",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-4f72c990401395c3f1dc6c92",
+      "license": "BSD-3-Clause",
+      "locator": "lower bounds only, not an exact numerical environment:L1-L15",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "999b816f857730883e03b6455426e4a635e36822d1b3bc2e04aa2b6b29fe4955",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/requirements.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-62293b58121f24792ab9c2bb",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer original RLVaR optimization reference:L868-L876",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "68b06232402ae268774ae715806c79271fa691c476b657d352123f838197d734",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/docs/source/riskfoliolib/biblio.bib",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-5bee1dc20bea263ffe94d155",
+      "license": "Apache-2.0",
+      "locator": "Apache2, power cone inequality and exponent interval:L1-L74",
+      "revision": "5a53ac6d5becbb63af3a6fce32a91fee6c63dbb6",
+      "sha256": "104d717480d07399d78e31f22bd4d69f0f9b547d932fe2b203a131c476069de9",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/cvxpy/cvxpy/blob/5a53ac6d5becbb63af3a6fce32a91fee6c63dbb6/cvxpy/constraints/power.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Riskfolio-Lib copyright 2020–2026 Dany Cajas；代码实现/维护归属与原算法文献分开，原文献只据固定bibliography登记，并未在本批下载或复现论文全文。CVXPY参考源码另保留其作者与Apache-2.0许可。",
+      "id": "harvest-source-965ce59a3a082ffc40ea5b10",
+      "license": "Apache-2.0",
+      "locator": "Apache2 license:L1-L201",
+      "revision": "5a53ac6d5becbb63af3a6fce32a91fee6c63dbb6",
+      "sha256": "94d81cb282da837f4ace0df08b52fd1c72e07da9efb52e5aa6d556a5cea5286f",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/cvxpy/cvxpy/blob/5a53ac6d5becbb63af3a6fce32a91fee6c63dbb6/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

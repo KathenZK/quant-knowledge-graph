@@ -1,0 +1,137 @@
+{
+  "economic_basis": {
+    "hypothesis": "研究假说是保留库存以等待未来有利价格与当期卖出/买入的取舍，在有限存储和吞吐能力下有价值。作者的风险中性估值和仿真实验不是本仓库已证明的净收益，亦不保证实物设施可得。",
+    "missing": [
+      "未运行来源代码、优化器、模型标定或回测；定义支持不等于经济有效。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "web-docs.stern.nyu.edu/old_web/emplibrary",
+  "lab": null,
+  "missing_information": [
+    "未运行任何来源代码、动态规划、格点生成、模型标定、行情回测或实物交易；9项描述审核、真实执行合同MISSING。",
+    "实际存储权、设施合同、初始库存、价格曲线/波动/相关输入时点、信用/现金预算与地理基差未冻结；本条不是普通账户可直接交易的天然气ETF或期货价差。",
+    "只采Eq39–43的连续ADP政策；不声称已复现§5网格程序、Haugh树依赖、取整细则或最优性证明。",
+    "源Eq47的策略价值展示式没有写逐期delta^i，而Eq39–42递推含delta；本条只保存控制递推，不把Eq47补改为已审净值公式。RI的Eq36另以si写未来确定性收入，未解释其与当前曲线固定价的映射，本条不采该支路。",
+    "终值UN=0对所有剩余库存成立，不等于要求xN=0或给出到期免费全清算。",
+    "NYU机构保存的作者工作稿2008-E38与作者主页2010发表身份分开；未核二者正文完全一致，不把2010出版日期当此PDF版本。许可/商业使用REVIEW_REQUIRED。"
+  ],
+  "name": "Lai–Margot–Secomandi：现货与近月期货条件估值的天然气库存控制",
+  "native_source_id": "NGStorage.pdf",
+  "one_line": "按月在容量、注入和提取限额内，用缩减信息的动态规划选择买入入库、持有或提取卖出。",
+  "record_id": "NGStorage.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；没有求解、模拟或交易。",
+    "metadata": "来源原生身份、定位与自撰中文定义；原文、图像、源码、行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://web-docs.stern.nyu.edu/old_web/emplibrary/NGStorage.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Guoming Lai, Francois Margot, Nicola Secomandi, Tepper Working Paper 2008-E38, September 2008. NYU Stern institutional PDF mirror, not asserted identical to 2010 journal version.",
+      "id": "lai-margot-secomandi-ngstorage-pdf",
+      "license": "Author working paper publicly hosted by NYU; author publication list confirms related published article. No open redistribution or commercial-use grant established. Chinese definition metadata and source locators only; commercial use REVIEW_REQUIRED.",
+      "locator": "PDF physical p1 cover/version; pp5–9 model/input/action/cost/timing; p15 Eq39–42; p16 Eq43–46; pp18–19 ADP-vs-RADP and value caveat; pp20–22 numerical approximation boundary. Lines refer to pinned pdftotext derivative; formulas visually checked.",
+      "revision": "Tepper Working Paper 2008-E38, September 2008; NYU institutional snapshot sha256:843a6168bd012603ea0b89f44f011b832ca91b6bcdf5635d49440acbaf3747d9",
+      "sha256": "843a6168bd012603ea0b89f44f011b832ca91b6bcdf5635d49440acbaf3747d9",
+      "supports": [
+        "实物天然气存储容量和吞吐合同",
+        "燃料损耗/注入提取现金流",
+        "双层条件期望降维ADP与三行动库存政策",
+        "月度商贸与月内实物操作时序"
+      ],
+      "url": "https://web-docs.stern.nyu.edu/old_web/emplibrary/NGStorage.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_PAPER_INSTITUTIONAL_MIRROR_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Guoming Lai author homepage publication list",
+      "id": "guoming-lai-publications-html",
+      "license": "Author working paper publicly hosted by NYU; author publication list confirms related published article. No open redistribution or commercial-use grant established. Chinese definition metadata and source locators only; commercial use REVIEW_REQUIRED.",
+      "locator": "UTF-8 HTML L329 identifies Lai/Margot/Secomandi, same title, OR58(3):564–582 and DOI10.1287/opre.1090.0768. Bibliographic support only, does not link the NYU PDF or assert version equality.",
+      "revision": "Author publications HTML snapshot sha256:327b891c2528b761b0b31db79001a4214669bd9a86c74c96eef45bf1941feaf6",
+      "sha256": "327b891c2528b761b0b31db79001a4214669bd9a86c74c96eef45bf1941feaf6",
+      "supports": [
+        "论文作者与后续发表身份"
+      ],
+      "url": "https://guoming.us/",
+      "verification": "FETCHED_PINNED_AUTHOR_PUBLICATION_LIST"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "lai-margot-secomandi-ngstorage-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "需要一份允许买入、注入、储存、提取和卖出的天然气存储合同及可成交现货市场；不是只交易天然气ETF。x和a表示实物能量数量，来源用mmBtu表述容量与日吞吐，选定模型再换为每月可注入/提取总量。F_i,j是Ti时到期Tj的期货价格，s_i=F_i,i为当期现货价；期货曲线用于估值输入，本条没有另给期货对冲张数。αI、αW在现金流中反映燃料，不能又在库存递推里重复扣减。"
+    },
+    "cost": {
+      "evidence": [
+        "lai-margot-secomandi-ngstorage-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "即时货币收支r(a,s)：a<0为(αI*s+cI)*a；a=0为0；a>0为(αW*s−cW)*a。αI≥1、0<αW≤1为买/卖侧燃料损耗价格调整，cI>0、cW>0为每单位注入/提取费用；负a使买入成为现金流出。δ用于后续价值贴现，不能误当燃料效率。Remark3明确此模型不另计按库存持有的实物保管费；这不是现实零费用声明。合同租金、现货价差、税、融资利差、保险、运输及实际结算费用未完整给出。"
+    },
+    "entry": {
+      "evidence": [
+        "lai-margot-secomandi-ngstorage-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月取a_i∈argmax_{a∈A(xi)}[r(a,si)+δ E[U_(i+1)(xi−a,s_next)|Fi,i+1]]。a_i<0则当期买入并安排注入，−a_i为增加的库存量，付款按燃料与注入费调整；a_i=0则不交易。原Theorem1等价表达为两个随(i,si,Fi,i+1)变化的库存目标b_low≤b_high：若xi<b_low，a_i=max(CI,xi−b_low)；区间内含两端点为0。两目标来自上述优化，不是任意百分比或固定价差阈值；并列最优解如何挑选未定。"
+    },
+    "execution_time": {
+      "evidence": [
+        "lai-margot-secomandi-ngstorage-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：模型明确商业买卖发生在Ti，实物注入/提取发生在Ti与Ti+1之间，到Ti+1才成为可用/不可用库存。决策只取当时观察的xi、si、Fi,i+1；这是月度模型时点而非已闭合的市场执行账本。具体地点报价、时间戳、成交量/滑点、对手和信用、实物调度确认、价格与结算先后、部分履约及失败处理未规定。未下单、执行源码、求解或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "lai-margot-secomandi-ngstorage-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "若a_i>0则提取并卖出；xi>b_high时a_i=min(CW,xi−b_high)，下一期库存xi+1=xi−a_i。吞吐限额可能使一次只能接近目标，不会无视CW全部清仓。持续至最后决策T_(N−1)，T_N后停止所选合同的价值递推。终值对任意xN都设0，没有xN=0硬约束、免费清算、残存天然气交割收入或续租规则；当卖出边际收入不利时，不能自动补最后一月卖尽。"
+    },
+    "position": {
+      "evidence": [
+        "lai-margot-secomandi-ngstorage-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "实物库存始终在[0,xbar]，每月注入限额CI<0、提取限额CW>0。A(x)=[max(CI,x−xbar),0]∪[0,min(x,CW)]；行动后库存x−a不越界，只有买入、持有、卖出三者之一。没有库存做空或同一期同时注入和提取；也不是现金权重和为1的证券组合。规模由现有库存和合同能力控制，资金/融资预算、保证金、整单位和按权益比例上限未写。初始库存给定，不默设空仓或满仓。"
+    },
+    "risk": {
+      "evidence": [
+        "lai-margot-secomandi-ngstorage-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "仅审给定风险中性曲线分布与确定设施约束下的数学控制，不证明真实P测度收益。初始曲线降维会丢信息，Remark5只在特殊短期限给相等结论，一般N≥4并无U与全状态最优值的固定大小关系。初始参数误差、相关矩阵不合法、缺价/负价、设施故障和地域基差未给退路；无账户亏损止损。§5说明100点库存离散、条件价格树与就近取值是实现近似，本条不以未运行程序替代连续定义。Eq47展示总价值未印δ^i而递推含δ，保留原文差异，不据该式报净收益；RI和事后完美信息DUB支路不并入交易输入。"
+    },
+    "signal": {
+      "evidence": [
+        "lai-margot-secomandi-ngstorage-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "先按§4倒推：U_N(x,s_N)=0；u_i(x,s,f)=max_{a∈A(x)}{r(a,s)+δ E[U_(i+1)(x−a,s_next)|f]}；U_i(x,s)=E[u_i(x,s,F̃_i,i+1)|s,F_0,i+1]。这里δ是一个月度阶段的无风险贴现因子；内层将给定当前近月期货f后的下月现货分布积分，外层用初始曲线和该阶段现货条件下的近月期货分布降维。F_0,N=F_(N−1),N=0、s_N=0是终点约定。实际在Ti把当时观察到的(xi,si,Fi,i+1)代入u_i的同一argmax取a_i，不能用之后实际现货代替期望。该U是缩减信息近似，不能称为完整曲线状态的精确最优值。"
+    },
+    "timeframe": {
+      "evidence": [
+        "lai-margot-secomandi-ngstorage-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "合同覆盖N个月度期货到期时点Ti，在每个Ti观察当前库存、现货价si与近月期货Fi,i+1后选择当月行动。ADP值函数及政策在T0计算一次，此后按新观察状态查询；这不同于每期用新整条曲线重算的RADP版本。N为剩余合同阶段，不把12/24月实验个数强设默认；模型月内不做第二次方向决策。"
+    },
+    "universe": {
+      "evidence": [
+        "lai-margot-secomandi-ngstorage-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给定有限月度到期集合I={0,…,N−1}、初始库存x0∈[0,xbar]及初始整条曲线F0。选择文中多维Black风险中性模型：dF(t,Tj)/F(t,Tj)=σj dZj(t)，σj>0为期限专属常数，dZj dZk=ρjk dt，ρjk∈[−1,1]、ρjj=1；相关结构须能定义共同布朗运动。现货与期货价格均取正。输入模型参数、合同容量、月吞吐和费用外部给定，不把2006年的四组实验报价或示例相关性当默认。没有动态选品种或金融账户股票池。"
+    }
+  }
+}

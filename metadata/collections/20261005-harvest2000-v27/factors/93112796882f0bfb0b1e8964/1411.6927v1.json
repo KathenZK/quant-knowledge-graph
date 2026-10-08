@@ -1,0 +1,116 @@
+{
+  "economic_basis": {
+    "hypothesis": "精确有限样本半空间深度；原生论文定义与数值求解器、金融用途分别判断。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-35cd013aa9aac59a570c408a"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "完整参考样本和query均已观测、发布且修订版本已固定后才可计算；不得以整窗样本给早期点回填实时分数。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-35cd013aa9aac59a570c408a"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "固定同一坐标系的完整参考样本X和查询z，中心化y_i=x_i−z。每个下标质量1/N；没有拟合均值、标准差、距离或分类器，也不从未来样本补充X。 对每个非零法向p，形成闭半空间{y:pᵀy>=0}并数其中样本；等号计入。平面可固定经过原点，因为任意含query的闭半空间可平移至query而不增加所含观测数。 在全部方向上取最小整数k并输出k/N；p和任意正倍数给同一侧，p与−p两种方向都在候选域。可归一到单位球而不改变目标；最小值来自有限整数值集合而可达到，不声明最优方向唯一。 若m个样本恰等query，先保留其必然计数m；其余非零差向量求最小半空间计数后加m。m=N单独给HD1；这是精确定义等价整理而非编写/执行原作者递归算法。 目标对每个非零y_i的独立正径向缩放不变，原p15也提可选单位化。只有方向符号与重数决定query深度；样本远近变动未跨query方向时不改变分数。 原文p6以nHD记整数版，p10给按线性子空间分解的理论递归，p15说明包装预处理；本条未采集/执行C++实现、未核全部枚举和浮点返回。所收完整数学定义不冒称已闭合数值计算环境。 返回的标量可描述已给多变量样本中query的中央程度；多query批输出和深度区域不是新的因子。低值不自动构成金融风险、收益方向或交易动作。 边界：等质量按观测下标计数，重复样本保留重数；不能去重后给唯一点等权。输入允许数据落于低维仿射子空间、允许query等于一个或多个样本；不要求满秩、逆协方差或连续分布。 半空间是闭的：pᵀ(x_i−z)=0仍计入。令m为恰等z的观测数，则每方向至少计m；m=N时HD=1。移除m个零向量后应将整数最小计数加m，再除原N，不除N−m。 N有限时HD取{0,1/N,...,1}；若m=0，可选无其它边界点的方向，反向两侧计数和N，所以HD<=floor(N/2)/N。原p2称maximum value1/2按上界理解，不保证每个样本达到1/2；n奇数也不可强补半个样本。 凸包外HD=0，凸包内至少1/N；边界可以是正值。若所有样本都等query，HD=1，否则不要据均值或中心标签设1。数值算法失败不是深度0的证据。 任何非奇异共同仿射变换保持定义；一般降维投影不保证相同值。对固定query把每个非零差向量单独乘任意正数也保持全部点积符号，因此HD不变；不把原径向长度/欧氏距离补进分数。 d1特例就是左右闭经验尾比例的最小值，与一维秩/分位共享；本条显式选d>=2，所有维度、query坐标、区域、方向及归一整数版本仍一族，未来不拆。 有限/随机方向子集的最小值只能给真HD的上界；除非另有完整覆盖/最优证明，不能标为精确。原文精确算法及可执行C++、浮点符号容差/枚举退化/资源性能均未本次验证。 p6后理论假设移除零点且张成全空间是为了递归证明；本条核心只用p5原始定义，未把该算法前提假称必要输入。原p15先处理exact-query重数和可选逐点单位化，与定义边界一致。 深度是经验几何质量，不是尾部损失大小、概率预测、p值或已校准异常概率；金融字段/单位/时间窗口/参考样本、供应商和PIT均MISSING。 原v1版本页明确CC BY-NC-SA3.0（非商业、相同方式共享）；不是后来期刊版本或原Tukey1975文献的授权。当前只有自撰事实元数据，原PDF/文本/页图不入公开Git，commercial仍REVIEW_REQUIRED。 输出：唯一数学标量HD∈{0,1/N,...,1}；达到最小的方向可多解，本条不输出某任意方向或异常标签。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-35cd013aa9aac59a570c408a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "精确有限样本半空间深度；原生论文定义与数值求解器、金融用途分别判断。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-35cd013aa9aac59a570c408a"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给N>=1个有限实d维观测x_i（d>=2，按下标等质量1/N，允许重复和秩亏）及同维query z。HD(z|X)=(1/N)min_(p∈R^d,p≠0)Σ_(i=1..N)1{pᵀ(x_i−z)>=0}。等价于在所有包含z的闭半空间中取最小经验质量，可仅考虑边界穿过z的半空间。整数nHD=N·HD及区域/方向/query输出都属一族；不采用随机有限方向的近似值。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-35cd013aa9aac59a570c408a"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X（N-by-d finite real observation array, N>=1,d>=2; repeated rows and affine rank deficiency allowed; equal mass per original observation）：完整参考样本；维度d>=2是明确研究口径，重复点不得去重后重设等权，数据/PIT未固定。；z（finite real d-vector in same feature coordinate system）：外部给定query，可等于样本、位于凸包边界/外部；不使用未来信息。。保留来源原生口径，不扩单位、资产或窗口变体。"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-35cd013aa9aac59a570c408a"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "arxiv",
+  "lab": null,
+  "missing_information": [
+    "金融变量/单位、query与参考样本、数据源及PIT MISSING",
+    "未选定/验证精确数值算法、容差、最优方向证书、运行环境和资源边界",
+    "无收益、异常标签、p值、交易规则或商用许可批准"
+  ],
+  "name": "全部闭半空间中最少样本质量的 Tukey 深度",
+  "native_source_id": "1411.6927v1",
+  "one_line": "在所有包含查询点的闭半空间中，取所含参考样本比例的最小值，描述该点在多变量样本中的中央程度；重复观测和边界点按原定义计入。",
+  "record_id": "1411.6927v1",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://arxiv.org/pdf/1411.6927v1"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Rainer Dyckerhoff and Pavlo Mozharovskyi, Exact computation of the halfspace depth, arXiv1411.6927v1. Internal date2014-11-24, submitted2014-11-25. Authors attribute original halfspace-depth idea to John W. Tukey1975; this is the fixed source for the finite definition, not a claim that these authors first invented Tukey depth.",
+      "id": "harvest-source-35cd013aa9aac59a570c408a",
+      "license": "CC-BY-NC-SA-3.0",
+      "locator": "Original authors/title/date and exact arXivv1 stamp; attribution to Tukey1975 historical origin: physical PDF p1-p1; Closed-halfspace centrality, convex-hull support, ties and upper-bound discussion; links to projection/regression depth: physical PDF p2-p2; Random finite projections yield upper bounds; exact depth is not an arbitrary finite-direction approximation: physical PDF p4-p4; Section2 primary unnumbered finite HD definition and translation invariance: physical PDF p5-p5; Integer nHD, equal-query removal, closed boundary counts; full-span assumption belongs later theoretical argument: physical PDF p6-p6; Proposition1 perturbation proof under stated nonzero sample theory assumptions: physical PDF p7-p7; Theorem2 recursion is one family of solvers, not selected executable contract: physical PDF p10-p10; Wrapper removes exact-query copies and adds counts, optional individual unit-norm scaling; implementations and performance not reproduced: physical PDF p15-p15",
+      "revision": "arXiv1411.6927v1 submitted2014-11-25; internal manuscript date2014-11-24",
+      "sha256": "1a26a3c614a4907edd0ea37574b3e29a736f08b6ebdd8841a615bee9c54b1892",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://arxiv.org/pdf/1411.6927v1",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Rainer Dyckerhoff and Pavlo Mozharovskyi, Exact computation of the halfspace depth, arXiv1411.6927v1. Internal date2014-11-24, submitted2014-11-25. Authors attribute original halfspace-depth idea to John W. Tukey1975; this is the fixed source for the finite definition, not a claim that these authors first invented Tukey depth.",
+      "id": "harvest-source-092d20421dcee98809710f51",
+      "license": "ARXIV_SITE_NOTICE; paper license separately CC-BY-NC-SA-3.0",
+      "locator": "exact version title and authors:L114-L128; submission history and precise CC BY-NC-SA3 license href:L163-L187",
+      "revision": "arXiv1411.6927v1 submitted2014-11-25; internal manuscript date2014-11-24",
+      "sha256": "0e1c033bdf92048cb618551e2e9993a59687be946b4dbc7cf6ec1ad3bf6d50dd",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://arxiv.org/abs/1411.6927v1",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Rainer Dyckerhoff and Pavlo Mozharovskyi, Exact computation of the halfspace depth, arXiv1411.6927v1. Internal date2014-11-24, submitted2014-11-25. Authors attribute original halfspace-depth idea to John W. Tukey1975; this is the fixed source for the finite definition, not a claim that these authors first invented Tukey depth.",
+      "id": "harvest-source-cdb259d0594686d2bb97e2fb",
+      "license": "LICENSE_TEXT; not a change to original paper terms",
+      "locator": "license identification:L629-L636; legalcode link, attribution/noncommercial/sharealike and exceptions/warranties:L691-L774",
+      "revision": "CC BY-NC-SA3.0 deed HTTP snapshot2026-10-05",
+      "sha256": "62a0e177d54ad856c2c5ebae62a19269e60a03259f7e592dbcbb0c61759fee2c",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

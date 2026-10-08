@@ -1,0 +1,103 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述波动与净位移共同决定平滑速度后的价格带状态；来源名称中的Ehlers滤波指本源码的位移权重实现，不据此归因成原论文完整复现。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-cQcESVhS-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前图表价参与平滑及close比较，没有收线门，实时状态会变化。滞后σ不使整个指标自动仅用已收线数据；默认缺失比较回退1/0、滤波少量有效对及初始化须保留。未核Pine数值、数据复权或经济效果。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-cQcESVhS-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "r=(src−src[1])/src[1]；前值为0或na时r=0。σ=stdev_22(r)[1]，带为U=F+2σF、L=F−2σF。状态初始0，close>U置+1，否则close<L置−1，否则保持；输入src变更不改变最终比较用close。σ仅取前一根，而F用当前；滤波缺失样本对被跳过，所以预热阶段可能用少于9对。定义限定正常正价格F>0，使带顺序有意义，不将负价或任意振荡输入视为受支持用途。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-cQcESVhS-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述波动与净位移共同决定平滑速度后的价格带状态；来源名称中的Ehlers滤波指本源码的位移权重实现，不据此归因成原论文完整复现。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-cQcESVhS-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "A=ATR_15，D=|src−src[15]|，A0=SMA_30(A)，D0=SMA_30(D)；u=A/A0、v=D/D0，各自基线为0或na时对应比率取1（Pine v6比较规则）。z=clip((u+v)/4,0,1)，α=0.084+(0.330−0.084)z。X首值/前值缺失时取src，否则X=X前值+α(src−X前值)；Y=EMA_5(X)。对i=0..8中Y[i]与Y[i+2]均有效者，w_i=|Y[i]−Y[i+2]|，F=Σ(w_iY[i])/Σw_i；权重和非正时F=SMA_9(Y)。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-cQcESVhS-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "src默认(H+L+C)/3；另用H/L/C计算ATR、close判断状态。默认ATR与净位移窗15，基线均值窗30，平滑系数界0.084/0.330，EMA窗5，位移滤波窗9、间距2，收益波动窗22，上下倍数各2。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-cQcESVhS-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为正价格序列的复合技术特征；自适应均线、滤波与方向带是一个原生组合，未单独拆出重复EMA/ATR因子。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "未执行源码，不证明数值复现。",
+    "只登记源码确切构造，未核Ehlers历史归属。",
+    "正价格域外的带反转风险未解决，不扩张适用范围。"
+  ],
+  "name": "双归一活动度自适应滤波与滞后一阶收益波动带（Volatility Adaptive Filtered Trend）",
+  "native_source_id": "cQcESVhS",
+  "one_line": "把ATR与净位移相对自身均值的比率映射为平滑系数，再用位移加权滤波和前期收益标准差形成方向状态。",
+  "record_id": "cQcESVhS",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "SchizoQuant",
+      "id": "tradingview-cQcESVhS-published-code",
+      "license": "MPL-2.0 source notice",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;c4c0ce4dbcaf4a0fae2e36f97a819593@1.0",
+      "sha256": "21419856fadba1040b843652ec8e1e5ddf91d63db9c53c15807c9916e7861024",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3Bc4c0ce4dbcaf4a0fae2e36f97a819593/1",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / SchizoQuant",
+      "id": "tradingview-list-6754e32174f2b46d6732",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=cQcESVhS；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:6754e32174f2b46d67329fc58bee706424bc9037dbaa5cac3b030c1a05987a6d",
+      "sha256": "6754e32174f2b46d67329fc58bee706424bc9037dbaa5cac3b030c1a05987a6d",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-20/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

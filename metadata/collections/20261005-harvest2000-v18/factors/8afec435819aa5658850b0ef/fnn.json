@@ -1,0 +1,176 @@
+{
+  "economic_basis": {
+    "hypothesis": "先在给定维度找时间相隔足够远的最近状态，再多加一个延迟坐标，统计原邻居的距离是否明显膨胀。输出用于检查状态空间重构的维度选择，不直接给出最佳维度、真实混沌或交易方向。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-06bbf2506b695be9859c3117",
+        "harvest-source-45f578a98e0f34e525633fad"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只能在完整x窗口以及所有延迟坐标已观察并发布后使用；每个d的邻居在整窗搜索，不能把最终比例回填到窗口内部或原起点。数据供应商、修订与发布时间MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-06bbf2506b695be9859c3117",
+        "harvest-source-45f578a98e0f34e525633fad"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只审公共fnn的metric=euclidean、maxnum=None、parallel=False路径；默认parallel=True保留为未审并行运行选项。x为有限一维NumPy float64等时距序列，dim是非空正整数列表，τ正整数、w非负整数，R和A正有限。 对每个d，reconstruct(x[:-τ],d,τ)与reconstruct(x,d+1,τ)分别生成Y/Z，恰有共同m=N−dτ行。不是先用全部N−(d−1)τ个d维起点找邻居后再裁掉末尾。 neighbors建立cKDTree(Y)，p=2；maxnum=None令maxnum=2w+3，且源码要求maxnum<m。逐起点依次请求k=2..maxnum+1个最近点，剔除|j−i|<=w及距离0，在第一个出现有效点的查询中取距离次序中的首个有效点。 本条额外研究合同要求每个d满足m>=2w+4，全部Y行互不相同、有效最近距离唯一且所有距离/方差运算有限为正。由此不用依赖KDTree的同距并列排序或重复点搜索失败；源码本身没有完整主动验证这些合同。 固定SciPy参考源码给出query默认eps=0、无限distance_upper_bound、p2欧氏和按k近邻返回的接口语义；仅用作依赖合同，不冒称nolitsa历史环境已锁到这版SciPy，也未审/执行整个KDTree构建、Numba JIT或二进制数值路径。 第一标志仅比较新增最后坐标差除原d维距离；第二标志用完整d+1维欧氏距离除原始整个x的np.std(x)。该std未显式ddof，采用普通NumPy默认ddof=0的数学合同；环境版本未执行冻结。不是用裁后的Y列标准差，也不是新旧距离比做第二检验。 utils.dist的Numba标注内核逐坐标平方求和后开方。将两个布尔条件分别求均值，再对其逻辑OR求均值；不把两比例相加，不自动选择曲线首次到0的维度或平稳平台。 parallel=False经parallel_map的processes=1顺序列表推导返回，再np.asarray(r).T，输出3×len(dim)数组。维度变化会改变m和有效起点集合，曲线各点并非同一个完整样本规模。 边界：只要某个起点在maxnum搜索预算内找不到正距离且时间够远的邻居，函数直接异常；没有跳过该起点、填0、调大预算或重新抖动数据。 常量数据σ=0及重复延迟状态不在研究合同；源码没有统一零方差兜底。有限x也可能在差的平方或比值溢出。 同距最近邻的新增坐标可能不同，实际并列顺序影响输出；当前显式唯一近邻合同排除这项，不能声称所有输入都与实现版本无关。 m与d相关；高维距离集中、噪声和阈值会影响比例，小比例不证明真实吸引子维数或金融可预测性。没有p值、置信区间或交易规则。 本条不收Cao afn的平均膨胀作为额外条目，也不将R/A检验、维度、市场、距离范数或语言实现拆数。 输出：一个3×len(dim)假近邻比例数组；整个FNN族一条，不输出自动选择的最佳维度"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-06bbf2506b695be9859c3117",
+        "harvest-source-45f578a98e0f34e525633fad"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "先在给定维度找时间相隔足够远的最近状态，再多加一个延迟坐标，统计原邻居的距离是否明显膨胀。输出用于检查状态空间重构的维度选择，不直接给出最佳维度、真实混沌或交易方向。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-06bbf2506b695be9859c3117",
+        "harvest-source-45f578a98e0f34e525633fad"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "N点有限float64序列x，指定整数τ>=1、维度d>=1、时间排除w>=0。m=N−dτ，Y_i=(x_i,...,x_(i+(d−1)τ))，Z_i=(Y_i,x_(i+dτ))，i=0..m−1；只在同样m个起点中选j_i=argmin_(|j−i|>w,||Y_j−Y_i||>0)||Y_j−Y_i||₂。令r_i=||Y_i−Y_ji||₂，Δ_i=|x_(i+dτ)−x_(ji+dτ)|，s_i=||Z_i−Z_ji||₂，σ=sqrt[Σ_(t=0..N−1)(x_t−mean(x))²/N]。a_i=1[Δ_i/r_i>R]，b_i=1[s_i/σ>A]。返回按给定dim顺序排列的三行(mean_i a_i,mean_i b_i,mean_i(a_i OR b_i))。默认R10、A2；阈值为严格大于。全部d坐标、两检验及OR、距离选择和阈值都属一个FNN构造族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-06bbf2506b695be9859c3117",
+        "harvest-source-45f578a98e0f34e525633fad"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "x（1D finite NumPy float64 ndarray, equally spaced, finite positive full-window variance; finite squared-distance and ratio arithmetic）：完整观察序列；金融字段/收益变换、异常/缺失处理、等时距化和PIT尚缺。不得把不等时距事件索引当相同时间步。；per-d embedding validity（for every d, m=N−dτ>=2w+4, pairwise distinct embedded Y rows, unique admissible nearest neighbor and positive finite distances）：额外研究约束，排除零距/并列和默认搜索预算不足；不是源码自动保证或已数值验证。。参数：dim：整个诊断曲线，不拆每个维度；范围nonempty list of positive integers with each m=N−dτ>=2w+4；源码默认[1]；tau：额外延迟坐标按固定采样间隔延后τ，未自动选延迟；范围positive integer；源码默认1；R：新增坐标差/原距离的严格门槛；范围positive finite real；源码默认10.0；A：完整新增维距离/原始全窗标准差的严格门槛；范围positive finite real；源码默认2.0；metric：cityblock/chebyshev未逐路审核，未来亦不因选范数新增族；范围reviewed euclidean only；源码默认euclidean；window：时间近邻排除含边界|i−j|<=w和自己；范围nonnegative integer w；源码默认10；maxnum：源设置2w+3，实际k搜索最高2w+4；范围reviewed None；源码默认None；parallel：源默认并行不是本次已审串行执行合同；范围reviewed explicit False；源码默认True"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-06bbf2506b695be9859c3117",
+        "harvest-source-45f578a98e0f34e525633fad"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "manu-mannattil/nolitsa",
+  "lab": null,
+  "missing_information": [
+    "原论文授权、输入行情权利、金融输入和PIT未建立",
+    "NumPy默认std语义按普通NumPy数学合同解释，历史依赖/Numba编译/浮点及查询并列行为未执行验证",
+    "比例到可用维度/金融状态的选择规则和经济证据未定义",
+    "经济用途为RESEARCH_ASSUMPTION；未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予原论文/书籍、输入数据或其他第三方素材权利"
+  ],
+  "name": "增加延迟坐标后失真的近邻比例",
+  "native_source_id": "fnn",
+  "one_line": "先在给定维度找时间相隔足够远的最近状态，再多加一个延迟坐标，统计原邻居的距离是否明显膨胀。输出用于检查状态空间重构的维度选择，不直接给出最佳维度、真实混沌或交易方向。",
+  "record_id": "fnn",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/manu-mannattil/nolitsa/blob/447cd5e44332e0b2071398c2d5ac7fd80175c544/nolitsa/dimension.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NoLiTSA维护者实现；原生docstring归引Kennel等1992的FNN方法。不是论文作者本人维护源码或原论文全部数值复现。SciPy固定文件仅为当前依赖合同补充。",
+      "id": "harvest-source-06bbf2506b695be9859c3117",
+      "license": "BSD-3-Clause",
+      "locator": "native API description imports:L1-L17; complete fnn core public contract dispatch and output:L99-L196",
+      "revision": "447cd5e44332e0b2071398c2d5ac7fd80175c544",
+      "sha256": "be1a4ca3c56f592991b1a1e42ff625a947006d5d0b6995a096dc90df8d21a107",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/manu-mannattil/nolitsa/blob/447cd5e44332e0b2071398c2d5ac7fd80175c544/nolitsa/dimension.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NoLiTSA维护者实现；原生docstring归引Kennel等1992的FNN方法。不是论文作者本人维护源码或原论文全部数值复现。SciPy固定文件仅为当前依赖合同补充。",
+      "id": "harvest-source-45f578a98e0f34e525633fad",
+      "license": "BSD-3-Clause",
+      "locator": "NumPy cKDTree and Numba dependencies:L19-L25; distance dispatch:L61-L91; complete Euclidean distance inner loop:L108-L119; complete budgeted temporal-exclusion nearest-neighbor search:L168-L238; serial map selection and native parallel alternative:L241-L283; complete forward delay reconstruction:L286-L309",
+      "revision": "447cd5e44332e0b2071398c2d5ac7fd80175c544",
+      "sha256": "3e56b8e517d6a522cd2d77896204071bbd574357e487e071e5818fba023d9a2a",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/manu-mannattil/nolitsa/blob/447cd5e44332e0b2071398c2d5ac7fd80175c544/nolitsa/utils.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NoLiTSA维护者实现；原生docstring归引Kennel等1992的FNN方法。不是论文作者本人维护源码或原论文全部数值复现。SciPy固定文件仅为当前依赖合同补充。",
+      "id": "harvest-source-97e623da790ba9d928f0d40d",
+      "license": "BSD-3-Clause",
+      "locator": "complete BSD3 license:L1-L29",
+      "revision": "447cd5e44332e0b2071398c2d5ac7fd80175c544",
+      "sha256": "2f96a4a94efd5a92ea1160503279017df8469ba119172ced832e0b9bf52d2284",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/manu-mannattil/nolitsa/blob/447cd5e44332e0b2071398c2d5ac7fd80175c544/LICENSE",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NoLiTSA维护者实现；原生docstring归引Kennel等1992的FNN方法。不是论文作者本人维护源码或原论文全部数值复现。SciPy固定文件仅为当前依赖合同补充。",
+      "id": "harvest-source-bbb4354d5dca9ed0a85576bf",
+      "license": "BSD-3-Clause",
+      "locator": "maintainer scope original publication and license attribution:L1-L65",
+      "revision": "447cd5e44332e0b2071398c2d5ac7fd80175c544",
+      "sha256": "d59d1ab6b5d0de041f8a729664966d7cac79f5d8e32f6f33375cd18d6a18795e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/manu-mannattil/nolitsa/blob/447cd5e44332e0b2071398c2d5ac7fd80175c544/README.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NoLiTSA维护者实现；原生docstring归引Kennel等1992的FNN方法。不是论文作者本人维护源码或原论文全部数值复现。SciPy固定文件仅为当前依赖合同补充。",
+      "id": "harvest-source-2fd15fbd8e0541ef5a53fa38",
+      "license": "BSD-3-Clause",
+      "locator": "version dependency declarations no pinned historical NumPy/SciPy runtime:L1-L31",
+      "revision": "447cd5e44332e0b2071398c2d5ac7fd80175c544",
+      "sha256": "694a04a29ad86df013a525ca47e17120b80048a804f6c8779e1abea70916311d",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/manu-mannattil/nolitsa/blob/447cd5e44332e0b2071398c2d5ac7fd80175c544/setup.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NoLiTSA维护者实现；原生docstring归引Kennel等1992的FNN方法。不是论文作者本人维护源码或原论文全部数值复现。SciPy固定文件仅为当前依赖合同补充。",
+      "id": "harvest-source-be0bff5d08e3572befb4c558",
+      "license": "BSD-3-Clause",
+      "locator": "current reference constructor defaults float64 and nonfinite rejection:L561-L591; current query nearest-neighbor mathematical contract defaults and returns:L699-L759; current scalar-k expansion and query output layout:L812-L877",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "4a752853abb4fcc8dbcaaf73a2a42e6933356a9e617422326999b9f0c2f383d7",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/spatial/_ckdtree.pyx",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NoLiTSA维护者实现；原生docstring归引Kennel等1992的FNN方法。不是论文作者本人维护源码或原论文全部数值复现。SciPy固定文件仅为当前依赖合同补充。",
+      "id": "harvest-source-5d99ef1477823ae45e3c5b11",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 notice for supplemental current dependency reference:L1-L30",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/scipy/scipy/blob/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

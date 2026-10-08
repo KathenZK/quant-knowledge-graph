@@ -1,0 +1,127 @@
+{
+  "economic_basis": {
+    "hypothesis": "逐付款日消除通胀浮动并匹配剩余固定现金流，可把TIPS与名义国债的相对价格差转为可研究的整套价差构造。不同流动性、抵押便利、借券和融资约束可使价差持续；本次没有验证价差存在、可成交或扣费盈利。共享一价法则不等于经济上独立的新收益来源。",
+    "missing": [
+      "未运行来源代码、定价器、估计器、执行模拟或回测；定义支持不等于经济有效。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi.org/10.1111",
+  "lab": null,
+  "missing_information": [
+    "只选择同一付款日、同到期的§I复制构造。来源实证中15/31日错配用YTM映射估值，不是可无风险搬移真实现金流的交易。",
+    "表I/附录把本金写100*I_T，§I.A与§VI.D明确有max(100,100*I_T)本金保护；保留实际额外非负通缩支付，不称所有状态精确相等，不追加未定义的floor出售。",
+    "核心输入是当时可约定的各付款日固定因子F_t和相同参考指数I_t。附录1980至2009全样本季节性回归含早期回测未来信息，且中心化季节项到乘法因子的归一转换未完整展开；不采作可交易输入生成器。",
+    "初始组合金额和未来本息支付闭合不等于借券/CSA抵押/融资/跨腿成交账本闭合，真实成本与时钟仍MISSING。",
+    "源用t同时表示付款日序号和复利到期时间，未给实际年分数日计数；F_t应按匹配互换合同给定，不能直接把半年度序号当年数。",
+    "不同TIPS发行基准日与新开互换基准日的合同缩放未在简式中展开；只在两个I_t定义完全匹配的所选输入合同内成立，不从现券代码自动推定。",
+    "例子正文p2157写February15,2025，而TableII标题p2159写January15,2025；该日期矛盾不拿来固定本条合约。",
+    "论文原PDF为作者UCLA页面托管的期刊版，带JSTOR使用条款；未建立源码/论文/数据商业许可。只整理自撰规则，不发布全文、图像或行情。",
+    "没有运行源码、估计器、定价器、执行模拟或回测；来源实证收益与对风险的论断不是本次复核结论。"
+  ],
+  "name": "Fleckenstein–Longstaff–Lustig：通胀互换与STRIPS匹配的TIPS—名义国债复制",
+  "native_source_id": "jofi.12032",
+  "one_line": "对相同付款日和到期的债券，用逐期通胀互换固定TIPS现金流，再以有符号STRIPS补齐名义国债本息；记录完整复制构造及相对价格用途，不把期限错配估值、通缩保护或融资风险抹去。",
+  "record_id": "jofi.12032",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未验证历史误价、收益或可成交。",
+    "metadata": "来源原生身份、定位与自撰中文定义；原文、图像、源码、行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "http://about.jstor.org/terms"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Matthias Fleckenstein, Francis A. Longstaff, Hanno Lustig, The TIPS-Treasury Bond Puzzle, JF69(5):2151–2197 (2014), author UCLA Anderson PDF.",
+      "id": "fleckenstein-longstaff-lustig-tips-treasury-2014-pdf",
+      "license": "Author-hosted published Journal of Finance article with JSTOR terms notice. No open redistribution or commercial-use license established for article or Bloomberg data. Only self-authored Chinese metadata and locators; commercial use REVIEW_REQUIRED.",
+      "locator": "PDF physical p1 journal identity; pp5–8 §I and TableI; pp9–11 example/date conflict/costs/mismatch; pp17–18 implementation limits; pp25/30 deflation floor/repo/shorting; pp39–41 AppendixA. Derived text TableI is corrupted by rotated-table OCR; p8 original visual controls. No OCR correction disguised as original bytes.",
+      "revision": "Journal of Finance LXIX(5), October 2014, pp2151–2197, DOI10.1111/jofi.12032; author-hosted journal PDF snapshot sha256:2efdf8836eb105e0194a37b633bfe6e935d1a3714f776903a3f82c5aaabcac65",
+      "sha256": "2efdf8836eb105e0194a37b633bfe6e935d1a3714f776903a3f82c5aaabcac65",
+      "supports": [
+        "逐付款日通胀互换与STRIPS现金流复制",
+        "相对价格用途与名义持仓",
+        "本金通缩floor和实施限制",
+        "历史期限错配/CPI估计的范围界限"
+      ],
+      "url": "https://www.anderson.ucla.edu/sites/default/files/documents/areas/fac/finance/longstaff%20TIPS.pdf",
+      "verification": "FETCHED_PINNED_AUTHOR_HOSTED_JOURNAL_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fleckenstein-longstaff-lustig-tips-treasury-2014-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国名义国债、同现金流日历的TIPS通胀保值国债、每一付款日一份零息通胀互换及同日到期的Treasury STRIPS。按原始100美元本金单位定义；c和s分别是名义债与TIPS每半年度未调通胀的美元票息，不把年票息率直接代入。互换收固定、付与TIPS相同的通胀因子，起始现金流为0。STRIPS是到期付1美元的零息国债支付单位。"
+    },
+    "cost": {
+      "evidence": [
+        "fleckenstein-longstaff-lustig-tips-treasury-2014-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：源p2160对一组历史例子假定国债/TIPS/STRIPS买卖价差为2/6/4个tick（tick=1/32），通胀互换为6bp，并讨论repo与借券费。这些是历史估算而非本条统一净成本账本；逐腿半差或全差、佣金、税、跨腿冲击、借券持续利息、抵押资金及失败处理没有合成可执行合同。零息互换起始价值0和复制价B均不是零交易成本，缺项不填0。"
+    },
+    "entry": {
+      "evidence": [
+        "fleckenstein-longstaff-lustig-tips-treasury-2014-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "为复制一单位名义债，在0买入100本金单位的TIPS，逐付款日签收固定付通胀的互换，按x_t正则买入、负则卖空STRIPS。若用于论文强调的名义国债较贵方向，再卖空同单位名义国债，理想初始净流入为P−B；这一步是静态复制与相对价格用途，不是论文给定的扣成本开仓阈值。没有补成P−B>某bps自动下单、借到钱再加杠杆或反向对称交易；可执行最低价差、可借额度及同时成交合同未给。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fleckenstein-longstaff-lustig-tips-treasury-2014-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：理论先观察同期价格与合同、固定各腿名义、再按约定付款日结算；没有现实报价同步、下单先后、日计数、借券确认、跨腿部分成交、抵押品追缴和交割时钟。实证日收盘价及合约半年付款不等于当天能按所有中间价同步成交。本次没有执行来源代码、交易、定价或回测。"
+    },
+    "exit": {
+      "evidence": [
+        "fleckenstein-longstaff-lustig-tips-treasury-2014-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按已固定名义持有各腿，每个付款日以TIPS、互换及STRIPS收到的C_t抵付国债空头对应本息，最终T后这些合约到期结束。此为TableI现金流结构的直接持有解释，不依赖事后价差收敛时择机退出。没有滚续、止盈、止损或提前解约阈值。若真实TIPS本金保护触发，原简式之外还会留下通缩保护支付；不能擅自卖掉未在策略中定义的floor以强行声称完全抵消。"
+    },
+    "position": {
+      "evidence": [
+        "fleckenstein-longstaff-lustig-tips-treasury-2014-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每100名义本金：+1单位TIPS、−1单位目标名义国债；每个非末期互换名义为s，末期为s+100，STRIPS面值为x_t而非固定一张。x_t可以正或负；整个构造可以按共同名义缩放，不把它变成两腿各50%权益或自动美元中性。P−B的初始收支不等于保证金资本需求为零。真实TIPS本金为100max(1,I_T)时，相对于表I的100I_T多出100(1−I_T)_+，这是源本金保护条件的会计推论；它不改变应付国债名义，也不属于已卖出的期权。"
+    },
+    "risk": {
+      "evidence": [
+        "fleckenstein-longstaff-lustig-tips-treasury-2014-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "本条保留三重边界：第一，TableI本金简式忽略真实TIPS通缩floor，§VI.D承认此前估值抽掉该项，长TIPS方向留下非负附加支付，不能倒推反向也无风险；第二，仅完全匹配的现金流日历/指数合同能逐项抵消，YTM挪到期日只是历史估值近似；第三，中途相对价格、repo借券、对手方抵押和保证金变化可迫使亏损平仓，源明确区分教科书套利与受限投资者的实施。附录把1980至2009年CPI季节项用于2004起历史测算，且季节项变成乘法因子的归一细节不全，本条不采用为事前信号生成。沒有资本上限、清算顺序、异常报价和违约后的完整合同；不据论文收益或“mispricing”标签承诺可实现利润。"
+    },
+    "signal": {
+      "evidence": [
+        "fleckenstein-longstaff-lustig-tips-treasury-2014-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对每一付款日t定义n_t=s，最终n_T=s+100；目标名义支付C_t=c，最终C_T=c+100。源将零息互换固定支付因子记F_t=(1+f_t)^t；I_t为匹配通胀指数比。互换收付n_t(F_t−I_t)，与TIPS的n_t I_t相加得n_t F_t。再令STRIPS有符号面值x_t=C_t−n_t F_t，所有未来模型支付即C_t。复制初值成本B=V+Σ_t x_tD(t)，与名义债价格P比较，P−B是未计摩擦的价格差；它不是收益率预测、Z分数或通胀预期阈值。这里以各日期已约定的F_t为输入，不采附录全样本季节性估计。源t的序号/复利时间复用与实际日计数缺项保留，不将半年编号直接当年数。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fleckenstein-longstaff-lustig-tips-treasury-2014-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在起始0形成各腿一次，沿债券半年度付款日持有至共同T，逐期互换和STRIPS到期支付。T来自给定合约，不固定某个年数、33期或月频滚动。论文的日收盘采样用于历史估值，不意味着每天重新开仓；没有定期用新参数替换存续互换的规则。"
+    },
+    "universe": {
+      "evidence": [
+        "fleckenstein-longstaff-lustig-tips-treasury-2014-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "输入已给定的一对相同付款日和最终到期T的名义债与TIPS，以及覆盖每一付款日的通胀互换和STRIPS。P、V是同期债券价格，实证价格按应计利息调整；D(t)为到期付1的STRIPS价格。I_t必须在TIPS与互换两腿使用完全相同的参考CPI、基准与滞后：源TIPS参考指数按月初前三个月CPI-U并线性插值。只采TableI精确配对，不把全样本29对中15/31日错配的YTM换算当作真实等日期支付，也未定宇宙滚动或从全市场选最佳配对的排序。"
+    }
+  }
+}

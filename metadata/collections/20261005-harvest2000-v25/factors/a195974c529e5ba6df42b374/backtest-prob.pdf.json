@@ -1,0 +1,117 @@
+{
+  "economic_basis": {
+    "hypothesis": "检查既有试验集合中，样本内选择的赢家在互补数据上的相对表现；不把该比例解释成保证的未来失效概率。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-a4497bd238c0b132618a8d16"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "所有T行试验表现及试验选择账本已冻结后才可用；CSCV可倒置时间先后，不作真实OOS或回填历史信号。原回测成本/PIT、账户和配置完整性需另验。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-a4497bd238c0b132618a8d16"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "核心固定作者2015-02-27修订稿的Algorithm2.3、Eq2.3/2.4与§3.1。大学书目页记2017-04，Crossref的message.published.date-parts为2016-09；二者日期差异未解决。DOI仅关联同题发表作品身份，不据此推断其与2015原稿版本或公式等价。 M是已提供的每种真实试验配置在同一时间网格上的表现；不是价格矩阵，也不是此条新运行的回测。指标选择前需固定试验集合和表现口径，现金/无交易行不能随意删除造成异步。手续费、融资、资本与风险自由基准是否已扣在输入中需另有证据，缺项不能填0。 原算法允许可在子样本上估计的表现函数，常以Sharpe举例。本条明确选均值/总体标准差；只有输入本来是共同口径超额收益时才能作Sharpe解释。方差使用h分母是额外合同；所有评分使用相同h，若换h−1只产生共同正常数而不改数学排名，不额外计数。 选择连续等长时间块是保留原次序的明确研究合同；T不是S整数倍则本合同不定义，不默截尾补齐。S可显式给，原p22建议16而不是软件默认；改变S、N、窗口或评分函数不新增家族。 所有C(S,S/2)个半块集合都取，包括A及其补集两个方向，不把对称配对除2。每次分别在IS全部N配置中找唯一最优，再在OOS全部N配置中找该同一配置的相对秩；不是直接OOS挑最好，也不固定一次全样本冠军。 按原p9排名例使用升序秩1..N；原p12 c)括号误把J称testing set，但a)定义J为training且c)/e)明确IS，d)再换补集OOS。本条按这些显式矩阵/IS定义，不把括号笔误用于反转选择。 相对秩除N+1，使有限N时0<ω<1，logit总有限。Eq2.4本身是重复值的相对频数，不是连续Lebesgue密度；本条按离散质量求和，不用KDE、正态拟合或省略重复logit。 原Def2.2 Eq2.2写r_OOS<N/2，Algorithm2.3的ω与§3.1零logit门在偶数N时对应r_OOS<=N/2，两者差一个秩。此条明确选择后者完整算法统计，并保留冲突，不宣称它等于原严格式。偶数N是额外研究范围，用于排除恰λ=0的端点质量歧义；未声称来源只允许偶数试验。 原p11/p22均把S16文字组合数印作12,780，但Eq2.3 C(16,8)=12,870。本条按精确组合式；指出印刷数字差异，不改原件，也不把文字数字作分母。 原p21把均匀ω经logit的分布说近似标准正态；连续均匀的精确变换是logistic、此处有限N更是离散。本条不以该说法校准p值。p22用二项独立样本误差界，而各组合共享数据，未验证此独立性，不沿用其95%精度保证。 原p10明确IS指选择策略配置的样本，不是其内部模型训练期；本条只重组既有表现矩阵算评分，不在每个块重拟合底层模型。训练块可能时间晚于OOS块，因此是事后选择诊断，不是可按时间交易的walk-forward、前瞻证据或因果外推。 全部真实可行试验应披露；删掉失败试验或加故意劣质配置会改变排名。原p24对guided search另指定取每次完整搜索最终配置而非中间步；本条记录此来源限制，不擅自清洗未知试验账本。 强自相关、块长不匹配、未见结构变化、错误成本/PIT输入、未披露试验均可能使解释失效。φ是此有限均匀组合设计下的确定性低半区比例，不自动是真实未来失败概率、标准检验p值、亏损概率或某一策略无价值的概率。 原p25明确不能把降低PBO当选择/搜索目标；本条只供预先固定程序的研究诊断。logit、秩分布、φ、方向/块/性能函数与后续实现不拆新增，原文附带损失概率或随机占优分析未在本条扩成额外因子。 边界：并列评分、零方差、NaN/Inf、非同步观测、奇数N或不整除的T/S不在当前完整子合同；没有借任意tie-break补来源缺项。 偶数N、全正方差且无评分并列是研究约束，不是来源主动校验；未证明真实输入满足。 φ门和Def2.2严格不等式不一致、12780例算误差与密度/正态/独立误差边界均明示。 样本重用诊断不等于真实前瞻回测；此任务未运行任何试验、分块计算或行情采集。 原论文再分发/商业授权未核定；只公开自撰定义与pins，来源原件/图/日志保留ignored。 输出：K个logit构成的离散概率质量和低半区比例φ∈[0,1]；不是附带p值或实时策略信号。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-a4497bd238c0b132618a8d16"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "检查既有试验集合中，样本内选择的赢家在互补数据上的相对表现；不把该比例解释成保证的未来失效概率。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-a4497bd238c0b132618a8d16"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给有限同步表现矩阵M∈R^(T×N)，本合同N为偶数且N>=2，S为显式偶数2<=S<=T，T可被S整除且h=T/2>=2。将按时间排列的行切成S个连续等长块B_s。对每个A⊂{1,..,S}、|A|=S/2，取I_A=∪_(s∈A)B_s和补集O_A；两边各h行、保留原顺序。选定评分F(I,j)=μ_(I,j)/sqrt[(1/h)Σ_(t∈I)(M_tj−μ_(I,j))²]，μ_(I,j)=(1/h)Σ_(t∈I)M_tj。要求每个半样本各列评分有限、分母>0且评分两两不同。j_A=argmax_j F(I_A,j)；r_A=1+Σ_(k≠j_A)1{F(O_A,k)<F(O_A,j_A)}，即OOS中最差秩1、最好秩N。ω_A=r_A/(N+1)，λ_A=ln[ω_A/(1−ω_A)]。K=C(S,S/2)；f(a)=K^−1Σ_A1{λ_A=a}为离散质量，φ=K^−1Σ_A1{λ_A<0}=K^−1Σ_A1{r_A<=N/2}。偶数N使λ_A≠0，因而≤0和<0质量相同。输出完整logit质量分布和φ，均只计一个CSCV选择诊断族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-a4497bd238c0b132618a8d16"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "M（finite real T by N matrix; N even>=2; same synchronous ordered time rows for every configuration）：完整披露真实试验集合的共同口径表现，不是此条运行的回测结果；所有半样本评分须符合上述域。。参数：S：时间块数，原p22建议16，软件默认不存在；不同值不拆族；范围2<=S<=T; S dividesT andT/2>=2；来源默认值None；本条选定explicit even integer；performance_metric：原允许通用表现函数，本合同完整选定均值/标准差，费用/超额收益已否在输入由研究另证；范围all half-samples and columns have positive variance and distinct finite scores；来源默认值None；本条选定mean divided by population standard deviation on each half-sample"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-a4497bd238c0b132618a8d16"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "davidhbailey.com/dhbpapers",
+  "lab": null,
+  "missing_information": [
+    "原回测矩阵、净成本/PIT、试验账本完整性与数据授权未提供",
+    "数值实现、资源限额、浮点并列/异常行为未验证",
+    "经验比例对真实未来风险的统计校准未验证",
+    "原文一般复用/商用许可未确认"
+  ],
+  "name": "对称组合切分的策略选择过拟合诊断",
+  "native_source_id": "backtest-prob.pdf",
+  "one_line": "在全部等长半样本组合上重选最佳试验，再观察它在补集中的排名，形成事后选择稳定性分布。",
+  "record_id": "backtest-prob.pdf",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "David H. Bailey, Jonathan M. Borwein, Marcos López de Prado, Qiji Jim Zhu; The Probability of Backtest Overfitting, author manuscript revisedFebruary27,2015. Self-authored Chinese definition.",
+      "id": "harvest-source-a4497bd238c0b132618a8d16",
+      "license": "UNKNOWN_REUSE_RIGHTS",
+      "locator": "Exact four authors and manuscript revisedFebruary27,2015; published-work bibliographic dates are separate and unresolved: physical PDF p1-p1; Ascending ranks and abstract selection-process definition Eq2.1: physical PDF p9-p9; Printed strict rank<N/2 Eq2.2 and meaning of IS as strategy selection, not underlying model fit: physical PDF p10-p10; Algorithm2.3 complete synchronized matrix, equal even blocks, all subsets Eq2.3; printed12780 discrepancy: physical PDF p11-p11; Complementary original order, selected IS winner OOS rank, denominatorN+1/logit and empirical Eq2.4: physical PDF p12-p12; Full complementary pairs Figure1 and section3.1 nonpositive logit probability: physical PDF p13-p13; Deterministic exhaustive construction and source normal-approximation claim; not adopted as calibration: physical PDF p21-p21; S16 recommendation, wrong12780 arithmetic repeated, binomial-error claim and granularity/length limits: physical PDF p22-p22; Design limits: strong dependence, symmetry, equal sample mass: physical PDF p23-p23; Complete trial disclosure, source costs/PIT caveat, structural changes and guided-search scope: physical PDF p24-p24; Prohibition against optimizing this diagnostic; example itself not adopted as strategy: physical PDF p25-p25",
+      "revision": "Author manuscript revised2015-02-27; pinned original bytes",
+      "sha256": "d8bfbadaaedb430d9dec929646d92f3580fdf18238f34121ae7738fa1c69a63d",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "David H. Bailey, Jonathan M. Borwein, Marcos López de Prado, Qiji Jim Zhu; The Probability of Backtest Overfitting, author manuscript revisedFebruary27,2015. Self-authored Chinese definition.",
+      "id": "harvest-source-7d80301e36fb9e424dc9fe22",
+      "license": "NOASSERTION_WEBPAGE_SHELL",
+      "locator": "Same title and four authors; university Date of Publication4-2017, distinct from Crossref2016-09:L300-L318; Published work SSRN2326253 and DOI10.21314/JCF.2016.322, not proof of same2015 bytes:L324-L336",
+      "revision": "University bibliographic record HTTP snapshot; displayed2017-04, not same manuscript revision",
+      "sha256": "0bff6ebc088f0a4582640fdba3af31bc4ab2f7eb3a785861bc64dc2debb84df3",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://scholarworks.wmich.edu/math_pubs/42/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "David H. Bailey, Jonathan M. Borwein, Marcos López de Prado, Qiji Jim Zhu; The Probability of Backtest Overfitting, author manuscript revisedFebruary27,2015. Self-authored Chinese definition.",
+      "id": "harvest-source-deae68eb67002e39bd7fd385",
+      "license": "NOASSERTION_METADATA_REUSE",
+      "locator": "Pinned original JSON identity metadata: message.DOI, message.title, message.author, message.published.date-parts",
+      "revision": "Crossref DOI record HTTP snapshot; message.published.date-parts=[[2016,9]], not formula version",
+      "sha256": "cddadf0e806f3c1c51870a86f22ed8ed010d6becb52179b44f763c5000f77a1d",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://api.crossref.org/works/10.21314/JCF.2016.322",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

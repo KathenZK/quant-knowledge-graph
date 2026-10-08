@@ -1,0 +1,175 @@
+{
+  "economic_basis": {
+    "hypothesis": "对给定关系图求一个所有节点两两相连、节点权重和最大的子集，并返回其总权重；总权重可作图的结构统计量，最大子集只作为达到该数值的见证。没有附加金融选股或交易规则。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-5bc5ffd156d65bcbc9dbe7d4",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-4363605d86334b4e1c11e9a5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整构图所需节点、关系和权重信息均已观测并发布后才可计算；不把未来构成的图回填过去。当前缺金融构图、数据供应商、关系生效/修订时点和PIT。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-5bc5ffd156d65bcbc9dbe7d4",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-4363605d86334b4e1c11e9a5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "入口max_weight_clique构造MaxWeightClique helper，初始最优节点列表为空、最优权重0。weight默认字符串\"weight\"，要求每个节点都有同名属性，缺失抛KeyError；源码以isinstance(value,int)检验，非整数抛ValueError，不自动转int或给缺项1。 weight=None才统一每个节点权重1。helper按全图无权degree降序稳定排列全部节点，再丢弃权重<=0；排序度数仍包括这些被丢弃节点的连接，不按正权诱导子图重算排序。这只影响搜索顺序，不将度数当最终分数。 递归expand维护当前已两两相连集合C、总权重s和所有可延伸候选P。只在s严格大于当前最优时复制C保存；同权解不替换。 剪枝子程序在P副本上反复贪婪取独立集I：选当前列表第一点，再删除该点与其邻居，直到剩余为空。一个团与每个独立集最多交一节点；给P每点初始残余权w，取I中的最小残余δ，累计上界量U。 若U严格超过目标差B−s，就立即停止并返回当前尚未扣减本轮δ的P。否则从I各点的残余权扣δ、移除残余恰0的点，继续构建独立集覆盖。若完全覆盖时U仍不超过目标，返回空列表剪枝；不是每次把U误当精确最大团权重。 在返回的branching_nodes仍非空时取末元素v，并从本层P删去v。递归到C+[v]、s+w_v、以及本层剩余P中与v有边的节点列表；由于旧P已与C每个节点相连，新集合仍是团。递归返回后继续其它分支，保留一个最佳解。 最后返回helper的incumbent_nodes与incumbent_weight二元组，不返回所有最大团或所有按包含关系极大的团，也不将求解中用到的独立集另计为因子。 只审内置NetworkX Graph的原生Python路径；无GPU/其它backend分派，无时限/近似停止。没有修改原G的节点、属性或边；搜索状态都在自有列表/字典中。 边界：全部权重<=0或空图返回([],0)。有零权点时返回解可能在包含关系上还能扩张，但其目标值已经最优；不要将maximum weight误译成枚举maximal cliques。孤立的正权节点仍是合法单点团。 默认weight=\"weight\"不代表缺失节点属性自动为1；它会抛KeyError。实数权重即使数学上为整数值也不自动接受；例如普通1.0会被isinstance(...,int)拒绝。源码会接受bool这个int子类，本审合同显式排除以避免语义混乱。 目标只用节点权，边权大小、距离、相关系数数值在图给定后均被忽略。改变构图阈值和整数权重刻度会改变结果，未提供金融合理性或可比性。 存在同权最优时仅保留搜索先遇解；度并列的原节点插入顺序、递归弹出次序可能改变C*。W*不因合法的同权选择而改变，但不能把一份子集当唯一经济行业或唯一可交易篮子。 最坏情形搜索代价很高，代码无固定时间预算或迭代次数；递归深度接近Python限制可能报错。静态公式与分支核对不证明特定大图能完成，也不是实际求解/性能测试。 来源仅显式装饰器拒绝有向图，未主动拒绝全部多重图/自环。无向简单无自环是本条额外研究合同，不宣称入口所有其它输入都被拦截。 与最大独立集在补图上的优化为同构目标关系，不能未来把同一构造换成补图或反号参数再记一次新增；未把一般近似算法/枚举接口的每个实现另计。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-5bc5ffd156d65bcbc9dbe7d4",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-4363605d86334b4e1c11e9a5"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "对给定关系图求一个所有节点两两相连、节点权重和最大的子集，并返回其总权重；总权重可作图的结构统计量，最大子集只作为达到该数值的见证。没有附加金融选股或交易规则。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-5bc5ffd156d65bcbc9dbe7d4",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-4363605d86334b4e1c11e9a5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "给定有限无向简单无自环图G=(V,E)。若weight=None，w_v=1；否则w_v为每个节点所选属性的Python整数。W*=max{Σ_(v∈C)w_v : C⊆V且对任意不同u,v∈C均有{u,v}∈E}，允许空集权重0。返回(C*,W*)，其中C*为实现搜索中首先使当前最优严格提高而最终保留的一个解，不保证唯一。源实际先剔除w_v<=0，故C*不含0权节点，即使加入它仍可能保持最优值。weight=None时W*=|C*|是最大团节点数；整组不按大小、节点或返回坐标拆分。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-5bc5ffd156d65bcbc9dbe7d4",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-4363605d86334b4e1c11e9a5"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "G（finite built-in undirected simple loop-free networkx.Graph; selected node weights built-in Python int (research excludes bool), no missing selected attribute; empty graph and isolated nodes allowed）：给定的关系图，节点权重可以为零/负数并由算法排除；不是收益数组。金融节点、边、权重如何生成、整数刻度及信息可得时点尚缺。。参数：weight：指定的是节点权重，边上的同名weight完全不参与；None使目标为最大节点数量；范围None or a string node-attribute name; all selected attributes built-in int, research excludes bool；源码默认weight"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-5bc5ffd156d65bcbc9dbe7d4",
+        "harvest-source-9bc7c4ec626786f0185a037d",
+        "harvest-source-11d15da2a54528d863a1305b",
+        "harvest-source-4363605d86334b4e1c11e9a5"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "networkx/networkx",
+  "lab": null,
+  "missing_information": [
+    "金融构图、节点权重定义/整数刻度、资产宇宙与PIT缺失",
+    "Python运行环境、递归限制、最大可处理图规模和数值执行未固定",
+    "原论文全文逐式复核与论文/输入数据使用权未取得",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "两两相连子集的最大节点权重和",
+  "native_source_id": "max_weight_clique",
+  "one_line": "对给定关系图求一个所有节点两两相连、节点权重和最大的子集，并返回其总权重；总权重可作图的结构统计量，最大子集只作为达到该数值的见证。没有附加金融选股或交易规则。",
+  "record_id": "max_weight_clique",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/clique.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "NetworkX developers；固定源引用Tavares等2015与Warren/Hicks2016分支定界方法，源码明示与文中算法相似但不用bitsets，不称论文逐行复现。",
+      "id": "harvest-source-5bc5ffd156d65bcbc9dbe7d4",
+      "license": "BSD-3-Clause",
+      "locator": "helper identity, initial state and integer node-weight contract:L663-L704; complete incumbent, independent-cover bound, recursion and ordering:L706-L762; native public identity, objective, return and attribution:L765-L818",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6ce5ca8f397e69bbe6e46bc4220f88263eab0e26fb846a8dc01064309e5b44a0",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/algorithms/clique.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX developers；固定源引用Tavares等2015与Warren/Hicks2016分支定界方法，源码明示与文中算法相似但不用bitsets，不称论文逐行复现。",
+      "id": "harvest-source-9bc7c4ec626786f0185a037d",
+      "license": "BSD-3-Clause",
+      "locator": "native adjacency-existence predicate:L1302-L1341; ordinary degree property:L1510-L1545; built-in simple undirected type:L1583-L1589",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6708c0bdc9aa744e0c70d57c4b75ea517cfe6a183d589c737baca4333c241734",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/graph.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX developers；固定源引用Tavares等2015与Warren/Hicks2016分支定界方法，源码明示与文中算法相似但不用bitsets，不称论文逐行复现。",
+      "id": "harvest-source-11d15da2a54528d863a1305b",
+      "license": "BSD-3-Clause",
+      "locator": "degree weight=None initialization:L597-L604; single-node degree-call lookup:L619-L631; ordinary neighbor-count degree:L713-L734",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "60d216370be05f02407138ddec4e23e26073a8e2085144261254f24a393835df",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/classes/reportviews.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX developers；固定源引用Tavares等2015与Warren/Hicks2016分支定界方法，源码明示与文中算法相似但不用bitsets，不称论文逐行复现。",
+      "id": "harvest-source-4363605d86334b4e1c11e9a5",
+      "license": "BSD-3-Clause",
+      "locator": "directed-type guard applied to native public function:L24-L91",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "cce2cd262ad4a675b69e39deefd5b34fe53650f714bc16188dab7ecb01e4b66f",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/networkx/utils/decorators.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX developers；固定源引用Tavares等2015与Warren/Hicks2016分支定界方法，源码明示与文中算法相似但不用bitsets，不称论文逐行复现。",
+      "id": "harvest-source-80b8c632891de4c3585fabda",
+      "license": "BSD-3-Clause",
+      "locator": "BSD3 copyright and conditions:L1-L30",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "NetworkX developers；固定源引用Tavares等2015与Warren/Hicks2016分支定界方法，源码明示与文中算法相似但不用bitsets，不称论文逐行复现。",
+      "id": "harvest-source-e81237832f8d600f9a4c2c9e",
+      "license": "BSD-3-Clause",
+      "locator": "official project purpose and maintainers:L1-L34",
+      "revision": "31b74e96903d7f873b30c8ff36d71a4c9252b107",
+      "sha256": "f437309d99f5d72a71ff69b844561ac70bb68c68eb296ff4ec0063e9d53b6c4f",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/networkx/networkx/blob/31b74e96903d7f873b30c8ff36d71a4c9252b107/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

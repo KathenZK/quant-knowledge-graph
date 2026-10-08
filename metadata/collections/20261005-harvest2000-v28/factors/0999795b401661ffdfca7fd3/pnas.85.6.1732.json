@@ -1,0 +1,155 @@
+{
+  "economic_basis": {
+    "hypothesis": "记录Liu单纯形深度的完整数学定义，不把有缺陷的ddalpha实现当作已通过计算语义审核。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-4ca874bf0dccb8780f8a3a46",
+        "harvest-source-cd1caefddd823642b9d5c6f9",
+        "harvest-source-d94d4efe05aa60e10877b748"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只在X全部观测和query所需值已实现并发布后可得；整窗计数不能回填到样本早期时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-4ca874bf0dccb8780f8a3a46",
+        "harvest-source-cd1caefddd823642b9d5c6f9",
+        "harvest-source-d94d4efe05aa60e10877b748"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "核心仅取Regina Y. Liu的PNAS1988原文扫描页：1732 Eq2为二维三角包含率，Eq4定义一般p维S为所有凸组合；1733页首给一般样本公式。三个PNG是PMC直接HTTP原始扫描页，不是从取得的PDF渲染；没有PDF、OCR或人工转写冒充源文本。 把每一观测下标保留，生成全部C(n,p+1)个严格递增下标组合。相同坐标的两行也保持两个独立下标，不先去重。该经验U统计量是不放回选择不同下标子集，不能改成从经验分布独立有放回抽p+1次。 对每个子集，判断是否存在非负且总和1的λ精确重构z。存在即计1，不存在计0；不要求唯一λ或子集仿射满秩，不用逆矩阵存在性定义凸包。闭集合的面/边/顶点均计包含。 将包含数除以完整组合数，输出一个有理比例。n=p+1时只有一个子集，结果就是其闭凸包的0/1成员资格；这正是已发现的ddalpha通用实现缺陷边界，不替源码修补或声称数学定义已被它正确实现。 所有样本都等于z时，每个闭凸包都包含z，所以D_n=1；若z在全部样本凸包之外则0。若整体秩亏但z位于其仿射张成内，仍按原p+1子集统计，不能自动降到有效秩后改组合大小和分母。 论文总体定义用独立同分布随机顶点，有限样本统计由具体X直接决定。文中的连续密度、角对称、中心唯一、一致性和渐近要求用于相应统计结论，不是本有限计数公式的先决条件；金融时间依赖未因此得到解决。 该定义对共同可逆仿射变换和样本下标重排不变，这是凸组合成员资格与组合集合保持的数学性质；没有据此声明某个浮点求解器的容差判定或失败回退也不变。 原文还讨论以观测中的最大深度点/平局平均给样本median及L统计量，本条不提名这些附带估计器。query轮廓、维数、子集/近似/语言实现均保守一族，不按坐标或参数拆数。 已发现ddalpha1.3.16原始发布/镜像12文件相同，但软件HOLD0独立保留。当前没有通过审核的精确凸包成员数值算法、容差、并列/退化实现或大样本资源合同；数学定义完整不代表可直接金融回测。 边界：p>=2、n>=p+1为本条有限数学域；不限制三维、不要求任p+1点独立，不假设所有中间数值安全来批准有缺陷源码。原生软件入口不参与此定义。 重复值/退化凸包和边界均由非负凸组合闭定义处理；不能删除重复、只算内部、把线性方程非唯一当作不包含，或以数值失败替代0。 样本分母是C(n,p+1)且下标不同；不是n^(p+1)、随机抽样次数或仅非退化子集数量。全部query属于同族。 有限样本D_n可为1。1733 Theorem1总体上界2^(−p)带绝对连续假设，不可把它套到原子经验样本上截值。 1732的一维总体写法2F(x)[1−F(x)]忽略在x有原子的闭区间边界；本条p>=2直接使用1733离散下标公式和1732凸组合定义，不借该一维缩写推导含重复样本，也不替原文修改。 1733/1734有关中心唯一、单调轮廓、椭圆分布与渐近一致性的条件没有被一般有限样本自动满足。深度高不表示概率为真、离群检验p值或资产收益方向。 数学上共享halfspace、Zonoid、经验似然的样本中心性/凸包几何，但完整目标不同；精确例保留共同域与不同标量。未声称抽象数学或经济独立。 3页原图可视觉核完整公式，未取得原PDF，也没有可重抽PDF文本/重绘父PDF链。未来适配必须原生支持原始图像证据，不能制造父文件或空行span。 公开只自撰定义及引用；原扫描页/失败HTTP/源代码/本机审计不进入公开Git。商业与源图再分发仍REVIEW_REQUIRED。 输出：一个精确包含数/C(n,p+1)；全部query、维数、区域/median附带输出及实现版本整体只计一族，未计算市场结果。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-4ca874bf0dccb8780f8a3a46",
+        "harvest-source-cd1caefddd823642b9d5c6f9",
+        "harvest-source-d94d4efe05aa60e10877b748"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "记录Liu单纯形深度的完整数学定义，不把有缺陷的ddalpha实现当作已通过计算语义审核。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-4ca874bf0dccb8780f8a3a46",
+        "harvest-source-cd1caefddd823642b9d5c6f9",
+        "harvest-source-d94d4efe05aa60e10877b748"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "给n个有限实p维观测X=(x_1,…,x_n)，p>=2,n>=p+1，及同坐标query z。对每个严格递增下标集合I={i_1<…<i_(p+1)}，定义S_I={Σ_(j=1..p+1)λ_j x_(i_j):λ_j>=0,Σ_j λ_j=1}，即闭凸包（包括退化单纯形）。D_n(z|X)=C(n,p+1)^(−1) Σ_(|I|=p+1)1{z∈S_I}。全部不同下标子集等权；重复坐标仍是不同观测。输出精确有限样本包含比例，不是独立有放回抽样的经验分布plug-in，也不是有限随机抽样估计、总体概率估计置信度或已验证数值函数。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-4ca874bf0dccb8780f8a3a46",
+        "harvest-source-cd1caefddd823642b9d5c6f9",
+        "harvest-source-d94d4efe05aa60e10877b748"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X（n by p finite real observations, p>=2,n>=p+1; repeated coordinates and affine rank deficiency allowed）：完整同坐标样本，每行观测下标独立保留；不补缺/去重/自动降维。；z（finite real p-vector in the same coordinate system）：事先给定或注明选择时点的查询点，可在凸包内、边界或外。。参数：subset_measure：维数决定子集大小；无软件默认或被挑选的随机样本数；范围one exact empirical U-statistic; no sampling parameter；来源默认值None；本条选定uniform over all distinct-index subsets of size p+1"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-4ca874bf0dccb8780f8a3a46",
+        "harvest-source-cd1caefddd823642b9d5c6f9",
+        "harvest-source-d94d4efe05aa60e10877b748"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "doi.org/10.1073",
+  "lab": null,
+  "missing_information": [
+    "金融变量/窗口/query选择/供应商/PIT MISSING",
+    "未取得原PDF，无父PDF重绘或文本抽取链；原图源须真实适配",
+    "数值凸包成员算法及容差/失败处理未批准，ddalpha仍HOLD0",
+    "原论文再分发/商用授权和经济有效性未建立"
+  ],
+  "name": "全部样本单纯形的查询点包含比例",
+  "native_source_id": "pnas.85.6.1732",
+  "one_line": "枚举维数加一个不同观测下标组成的闭凸包，以包含查询点的比例描述其样本中心程度。",
+  "record_id": "pnas.85.6.1732",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC279852/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Regina Y. Liu, On a notion of simplicial depth, Proceedings of the National Academy of Sciences USA85(6):1732-1734, March1988, DOI10.1073/pnas.85.6.1732. Original scan images supplied via PMC/National Academy of Sciences.",
+      "id": "harvest-source-82f2323d27f56967b21c07ec",
+      "license": "NOASSERTION",
+      "locator": "original citation metadata:L94-L103; journal, title, author and DOI:L1346-L1365; page navigation and exact original PNG URLs with printed page labels and dimensions:L1383-L1389",
+      "revision": "original HTTP snapshot captured 2026-10-05T07:06:24.324724+00:00",
+      "sha256": "c1e6dc9d690dcd25a371b586f0064108f39f4923bc33d8e67206fa85b5b9bd79",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC279852/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Regina Y. Liu, On a notion of simplicial depth, Proceedings of the National Academy of Sciences USA85(6):1732-1734, March1988, DOI10.1073/pnas.85.6.1732. Original scan images supplied via PMC/National Academy of Sciences.",
+      "id": "harvest-source-ba6974d228db8a4bfff75982",
+      "license": "NOASSERTION",
+      "locator": "no explicit license means standard copyright; free access is not reproduction permission:L2052-L2054; digitized articles and absence of article-specific open license:L2096-L2102",
+      "revision": "original HTTP snapshot captured 2026-10-05T07:22:03.419970+00:00",
+      "sha256": "5dd737a3711b9a09039da2de76b5701599a94edace37557c8899b87f71020e75",
+      "supports": [
+        "论文身份、版本或许可范围，不能代替公式证据"
+      ],
+      "url": "https://pmc.ncbi.nlm.nih.gov/about/copyright/",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "Regina Y. Liu, On a notion of simplicial depth, Proceedings of the National Academy of Sciences USA85(6):1732-1734, March1988, DOI10.1073/pnas.85.6.1732. Original scan images supplied via PMC/National Academy of Sciences.",
+      "id": "harvest-source-4ca874bf0dccb8780f8a3a46",
+      "license": "NO_OPEN_LICENSE_IDENTIFIED",
+      "locator": "Original HTTP PNG printed page 1732; source URL/HTML img identity and PNG bytes independently checked; no PDF or OCR",
+      "revision": "PNAS85(6):1732-1734, March1988, DOI10.1073/pnas.85.6.1732; original printed page scans supplied by PMC; no PDF obtained",
+      "sha256": "4dd86ed572752f035a964fa9f2d03c3366b23d6b1f7fafb816fe89757d1f0ebe",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/1c1e/279852/f22c49491730/pnas00258-0012.png",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Regina Y. Liu, On a notion of simplicial depth, Proceedings of the National Academy of Sciences USA85(6):1732-1734, March1988, DOI10.1073/pnas.85.6.1732. Original scan images supplied via PMC/National Academy of Sciences.",
+      "id": "harvest-source-cd1caefddd823642b9d5c6f9",
+      "license": "NO_OPEN_LICENSE_IDENTIFIED",
+      "locator": "Original HTTP PNG printed page 1733; source URL/HTML img identity and PNG bytes independently checked; no PDF or OCR",
+      "revision": "PNAS85(6):1732-1734, March1988, DOI10.1073/pnas.85.6.1732; original printed page scans supplied by PMC; no PDF obtained",
+      "sha256": "acbe5ed05462e7aeffbb4407b083c485fd7ce3467efce0647cf5b6846dc2a34c",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/1c1e/279852/4e0ad946b628/pnas00258-0013.png",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Regina Y. Liu, On a notion of simplicial depth, Proceedings of the National Academy of Sciences USA85(6):1732-1734, March1988, DOI10.1073/pnas.85.6.1732. Original scan images supplied via PMC/National Academy of Sciences.",
+      "id": "harvest-source-d94d4efe05aa60e10877b748",
+      "license": "NO_OPEN_LICENSE_IDENTIFIED",
+      "locator": "Original HTTP PNG printed page 1734; source URL/HTML img identity and PNG bytes independently checked; no PDF or OCR",
+      "revision": "PNAS85(6):1732-1734, March1988, DOI10.1073/pnas.85.6.1732; original printed page scans supplied by PMC; no PDF obtained",
+      "sha256": "45ce4a0df3aa883c09b75e0544caafe500e698f395511e7a57ff8f4cda0fcbd7",
+      "supports": [
+        "原论文的输入、公式、参数子合同与边界"
+      ],
+      "url": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/1c1e/279852/4108463d410e/pnas00258-0014.png",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

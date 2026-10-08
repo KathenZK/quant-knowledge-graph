@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "阶梯式价格尺度可能过滤小波动并跟随较大趋势，但起点依赖及加仓暴露是否可控尚无证据。",
+    "missing": [
+      "没有经过核实的论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像一一对应尚未核实。",
+    "依赖Pine内建函数和运行时；未编译、执行、下载行情或回测。",
+    "基线近邻已按正文比较，但全库机制去重仍待独立复核。",
+    "实际标的、频率、合约单位、成交模型与完整成本未冻结。",
+    "风险输入名称不能覆盖实际Shares公式。",
+    "箱体不是滚动最高最低价通道，且同bar两个更新依序执行。",
+    "计数相等可能遗漏同一bar开平抵消、挂单等情况。"
+  ],
+  "name": "首价锚定百分比递移箱体的限价多头",
+  "native_source_id": "432966",
+  "one_line": "以历史首个价格初始化箱体，按滞后高低点乘比例移动上下沿，满足均线与交易计数门槛后在箱顶限价买入、旧箱底止损。",
+  "record_id": "432966",
+  "relations": [],
+  "rights": {
+    "derived_results": "没有回测结果；未宣称上游源码、论文、数据或商业内部研究使用已获授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%8A%A8%E6%80%81%E7%99%BE%E5%88%86%E6%AF%94%E7%9B%92%E5%AD%90%E8%B7%9F%E8%B8%AA%E7%AD%96%E7%95%A5The-Dynamic-Box-Percentage-Tracking-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 HermanBrummer 4 April 2021；原始发布版本与转载授权未核，上传者不等同实现作者。",
+      "id": "fmz-432966-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "7680047645aa2336abc554db7ebf7b2ff80b52e0a9177737f06f9202a0e0dfc4",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%8A%A8%E6%80%81%E7%99%BE%E5%88%86%E6%AF%94%E7%9B%92%E5%AD%90%E8%B7%9F%E8%B8%AA%E7%AD%96%E7%95%A5The-Dynamic-Box-Percentage-Tracking-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-432966-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一当前图表标的；策略主体没有固定证券代码。FMZ回测头的BTC_USDT是转载包装，未证明原作者只适用于该标的。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-432966-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未显式给出佣金、滑点、点差、资金费率和融资成本，成本为MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-432966-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "high>=当前top且close[1]>当前SMA50，同时opentrades[0]至[6]七个值相等，则strategy.order(\"En\",long,qty=Shares,limit=top)。这是六个相邻计数比较，不等价于精确检查六bar内没有成交；未要求当前空仓，也未见旧挂单的超时取消。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-432966-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v4，先按high[2]/low[1]递移箱体，再计算条件、限价单和已有多仓的止损。源码注释推荐日线/2日/3日，但没有强制周期；未显式成交后重算，首次成交到保护生效及未成交订单保留未核。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-432966-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "只要检测到position_size>0，调用strategy.exit(\"Ex\",\"En\",stop=bot[2])，止损用两bar前箱底；没有止盈、时间退出或其他市场退出。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-432966-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "RiskPerTrade默认10000，RiskRange=close×abs(0.9−1)=0.1close，Shares=10000/RiskRange。源码注释称风险金额，但分母不是实际限价入口top到止损bot[2]的距离，因此不能宣称每笔最大亏损10000。使用strategy.order，不借用strategy.entry的pyramiding语义解释限制。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-432966-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "箱体依赖加载历史的首次close，历史起点改变会改变后续路径。每bar两方向更新可先升后降。止损非单调、数量未绑定真实止损距离，跳空和多挂单/重复订单风险未验证。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-432966-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "首次执行时FirstBar=close>0?close:na，持久top=FirstBar×1.1、bot=FirstBar×0.9。每bar依次执行：若high[2]>top，top和bot各乘1.1；随后若low[1]<已更新bot，二者各乘0.9。两分支可同bar都执行，只各移动一次，不循环跨越所有箱格。过滤均线为当前SMA(close,50)。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-432966-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "作者源码注释写仅多头、日线/2日/3日图表，属于建议范围；策略未强制单一周期。本候选不把FMZ包装的1d当成原作者唯一频率。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-432966-published-code"
+      ],
+      "status": "MISSING",
+      "text": "未见跨资产筛选或动态池逻辑；计算和交易对象是当前图表。具体市场、交易日历、价格调整、合约乘数与可交易约束尚未冻结。"
+    }
+  }
+}

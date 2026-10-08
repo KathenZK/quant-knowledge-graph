@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "可把事先固定的两个市场状态窗口或横截面群体作分布几何比较，R较小提示其在该距离图中的标签分离。未指定获利方向、交易规则、因果或危机预测有效性。",
+    "missing": [
+      "非唯一MST的取树政策与浮点/求解器/并列环境未固定；原式对给定T明确。",
+      "金融特征与两组构造、独立/交换假设、PIT/数据权利及经济有效性MISSING。",
+      "原稿无开放复用许可；现代源码许可不能代替。",
+      "1979期刊最终版未取得，未宣称原稿完全等价；hyppo已发现缺陷仅HOLD证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-b02e9954ee013c82ab957372"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "全部两组观测及标签在统计计算前已发布，合并建图只能在完整窗口末。两窗口/PIT/供应商/修订/字段单位MISSING。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-b02e9954ee013c82ab957372"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源固定原作者机构SLAC托管的SLAC-PUB-2116(Rev.)，封面写May1978、June1978修订及to be published in Annals。所采41页原件是该版本，不用1979期刊DOI冒称原字节或逐式版本一致；ProjectEuclid下载得到反爬HTML没有充当论文。 输入两组非空、同维、同坐标尺度的有限实向量。保留每条观测身份及所属X/Y标签，N=m+n；数据坐标可重复，但重复/等距可能使最小树不唯一。距离选择在看标签/检验结果前固定，本代表采用Euclidean。 以N个观测为节点建立完全无向无自环图，边权为欧氏距离。忽略X/Y标签，取总边长最小且覆盖全部节点的一棵树T。它有N−1条边；该构造不按类别先各自建树，也不把不同label的距离改大。 从T删除两端来自不同样本的全部边。由于T无环，每删一条边使连通分量数增加1，因此剩余单色子树数R=1+Σ_(edge inT)1[labeli!=labelj]。孤立节点也算一棵子树，不能漏记。 两组非空时至少一条跨组边，所以2<=R<=N。X/Y全互换不改R。R小表示两样本在所选局部连接结构上较分离；它不是组间平均距离、违约概率或因果强度。 纸面p4给无两条距离相等时MST唯一这一充分条件；等距并不必然不唯一。若多棵MST，R可能随取树变化，必须另行冻结只依赖无标签几何/固定身份顺序的取树规则，原论文没有给通用并列规则。当前公式对给定合法T完整明确，未定T时不编造唯一输出或默认随机抖动。 原§4在固定MST和固定组大小的标签交换零假设下，E[R]=1+2mn/N。令C=Σ_i degree_T(i)(degree_T(i)−1)/2，N>=4时Var[R|T]=[2mn/(N(N−1))]{(2mn−N)/N +[(C−N+2)/((N−2)(N−3))][N(N−1)−4mn+2]}。这是原Eq14附属解释，不按标准化W或p值再增条。 只有上述方差正时W=(R−E[R])/sqrt(Var)有定义。原渐近正态论述还要求m,n增大且比例远离0/无穷、C=O(N)。N小、方差0、时间依赖或数据挑选后的市场样本不能自动用标准正态p值；本代表只输出R，不批准显著性软件或置换运行。 在一维且连续无并列时，MST连接相邻排序点，R退化为经典Wald–Wolfowitz游程。多维/不同距离/多棵orthogonalMST、标准化/方向/p值及实现保守归此runs族，不拆出新增名额；本文后续Smirnov排名流程未作为本条已审算法。 与一般Geary的精确仿射关系保留在dedup：未行归一的二值树权与二值label下R=1+(2mn/N)C_Geary。正式旧PySAL代表为行归一，数值一般不同但同族变换不作为新增依据。仅完整原作者双样本构图和混合目标被提名为组合构造，独审按这一完整组合构造计一个定义，不宣称数学或经济独立。 源§9强调逐坐标缩放可改变MST、从而改变R。整体正尺度或保持所有距离次序的变换在取树合同固定时保留T，但不把它推广到任意单调坐标变换。金融字段、单位、两样本窗口、是否交叠、标签定义与发布时间均须另锁。 固定hyppo官方源码另作HOLD实现证据：其文档(N,1)labels转置后Prim节点数取1，零距离边被truthy筛掉且INF=9999999是有限哨兵。未运行/修补软件，不将本纸面定义等同为该版本已正确实现。代码MIT-0许可不授予原论文/行情许可。 边界：两组必须非空且同坐标语义；NaN/Inf或不完整距离不是数学输入，未宣称软件会主动验证。 允许重复观测身份；坐标重复/等距可能导致多MST及不同R，未固定label-blind取树规则时输出不唯一。不得按标签优化选树。 只有两组均非空和合法树时2<=R<=N；单组/空样本不按缺省返回1充作有效检验。 N=2/3的R仍明确，原Eq14分母退化；方差0时标准化W无定义，不静默设0。 尺度/特征选取和距离会改变局部连接；无普适市场默认距离缩放。 按给定树和标签算R不需要收益预测；统计校准的独立/交换性、样本筛选与连续性假设没有金融实证证明。 全窗口合并点参与建树，未来观测会改变历史节点连接，禁止把全样本R回填当过去已知。 1978原稿与1979期刊版本未逐式比对；现代软件问题保留，论文清晰不代表软件复现。 输出：One integer R per whole two-sample input and fixed selectedMST;all scaling/p-values/coordinate orimplementationvariants samefamily."
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-b02e9954ee013c82ab957372"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可把事先固定的两个市场状态窗口或横截面群体作分布几何比较，R较小提示其在该距离图中的标签分离。未指定获利方向、交易规则、因果或危机预测有效性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-b02e9954ee013c82ab957372"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X={x1..xm},Y={y1..yn}为同维有限实向量，m,n>=1，N=m+n；z为保留身份的合并样本，label_i∈{X,Y}。Dij=||zi−zj||₂。取T∈argmin_(spanningtrees ofcompletegraph)Σ_(i,j∈T)Dij，不以label构图或破平局。R(T,label)=1+Σ_(i,j∈T)1[label_i!=label_j]，等于删除所有跨标签边后的连通分量数（含孤点）。唯一MST时输出唯一R；多MST时需外部先固定无标签取树规则，否则此定义不声称唯一标量。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-b02e9954ee013c82ab957372"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X,Y（nonempty finite real vectors ofcommonpositive dimension;observationidentitiesand two labels retained）：两组比较样本，不能按标签先改变坐标/距离；真实市场含义和PIT缺失。；T（a valid minimum-total-Euclidean-distance spanningtree of pooledobservations）：由已给无标签几何确定；若不唯一，外部冻结labelblind取树选择。不是源算法执行结果。。参数：distance：原文p4和p18允许generalizeddissimilarity；本代表选欧氏，不默补标准化。；范围fixed common-coordinate Euclidean representative;other source distances not newfamilies；来源默认null；本合同选值\"Euclidean\"；MST_tie_rule：原稿给无距离并列的唯一性充分条件，未给通用破平局；缺项保留。；范围ifMSTnonunique:mustfreezeone label-blind choice beforeevaluation；来源默认null；本合同选值null"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-b02e9954ee013c82ab957372"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "原作者1978修订版§3–4的完整两样本MST游程构造；不将现代库当前错误路径提升为可复现实现。 可把事先固定的两个市场状态窗口或横截面群体作分布几何比较，R较小提示其在该距离图中的标签分离。未指定获利方向、交易规则、因果或危机预测有效性。"
+    }
+  },
+  "identity_namespace": "slac/publications",
+  "lab": null,
+  "missing_information": [
+    "非唯一MST的取树政策与浮点/求解器/并列环境未固定；原式对给定T明确。",
+    "金融特征与两组构造、独立/交换假设、PIT/数据权利及经济有效性MISSING。",
+    "原稿无开放复用许可；现代源码许可不能代替。",
+    "1979期刊最终版未取得，未宣称原稿完全等价；hyppo已发现缺陷仅HOLD证据。"
+  ],
+  "name": "合并样本最小生成树的标签游程统计",
+  "native_source_id": "SLAC-PUB-2116",
+  "one_line": "忽略两组标签对合并样本构造欧氏最小生成树，再计删除跨组边后剩余的单色连通片数。",
+  "record_id": "SLAC-PUB-2116",
+  "relations": [],
+  "rights": {
+    "derived_results": "描述审核不是数值复现或经济验证。hyppo实现仅HOLD边界证据；MIT-0仅限该代码，不授权论文或数据。商业REVIEW_REQUIRED。",
+    "metadata": "自撰数学定义和来源事实，保留原作者、1978修订版本及许可未知边界。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.slac.stanford.edu/pubs/slacpubs/2000/slac-pub-2116.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "JeromeH.Friedman andLawrenceC.Rafsky,SLAC-PUB-2116(Rev.),June1978;separatehyppomaintainerNeuroData2025MIT-0. 中文定义自撰。",
+      "id": "harvest-source-b02e9954ee013c82ab957372",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "physical p1: original author/title/SLAC-PUB-2116 revised June1978; physical p6: complete pooled Euclidean graph;MST definition and sufficient uniqueness condition; physical p7: §4 original runs tree deletion construction; physical p8: Eq4 exact cross-label edge count plus1; physical p9: Eq5–7 mean under exchangeable labels; physical p10: Eq12–14 conditional variance and degree-pair count; physical p11: conditioning on frozen tree and asymptotic limits;not universal normality; physical p20: coordinate scale and distance choices;not invariance to anisotropic rescaling",
+      "revision": "SLAC-PUB-2116(Rev.);June1978;41physicalpages;not claimed byte-identical to1979journal",
+      "sha256": "ea9fbc858ae3d5fee72125d3a96d8b801982b06573cf7c58731688098282953a",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_COMPOSITE_DEFINITION"
+      ],
+      "url": "https://www.slac.stanford.edu/pubs/slacpubs/2000/slac-pub-2116.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "JeromeH.Friedman andLawrenceC.Rafsky,SLAC-PUB-2116(Rev.),June1978;separatehyppomaintainerNeuroData2025MIT-0. 中文定义自撰。",
+      "id": "harvest-source-95f221bedaad31273008e7d9",
+      "license": "MIT-0",
+      "locator": "L1–82: identity/documentedlabels(N,1)/transpose/statistic; L138–240: whole runs/MST/Prim core;not accepted implementation",
+      "revision": "a3a2ac323c34b7c98adbf8486bf112afc82f6705",
+      "sha256": "87bef12e9c3edb029b03136e7be9e4bcb4ff9e705710c32857775a5b743e973e",
+      "supports": [
+        "HELD_IMPLEMENTATION_BOUNDARY_ONLY_NOT_SELECTED_DEFINITION"
+      ],
+      "url": "https://raw.githubusercontent.com/neurodata/hyppo/a3a2ac323c34b7c98adbf8486bf112afc82f6705/hyppo/ksample/friedman_rafsky.py",
+      "verification": "PINNED_REFERENCE_REVIEWED_NOT_SELECTED_IMPLEMENTATION"
+    },
+    {
+      "attribution": "JeromeH.Friedman andLawrenceC.Rafsky,SLAC-PUB-2116(Rev.),June1978;separatehyppomaintainerNeuroData2025MIT-0. 中文定义自撰。",
+      "id": "harvest-source-f57227cc4763658042c239ab",
+      "license": "MIT-0",
+      "locator": "L1–16: complete MIT No Attribution notice;no paper license inference",
+      "revision": "a3a2ac323c34b7c98adbf8486bf112afc82f6705",
+      "sha256": "850497588649d5f0eb9d036b9adceb330055f7e52acd0e4cc74c60d4dca7405e",
+      "supports": [
+        "HYPPO_CODE_LICENSE_ONLY_NOT_PAPER_OR_DATA_LICENSE"
+      ],
+      "url": "https://raw.githubusercontent.com/neurodata/hyppo/a3a2ac323c34b7c98adbf8486bf112afc82f6705/LICENSE.md",
+      "verification": "PINNED_REFERENCE_REVIEWED_NOT_SELECTED_IMPLEMENTATION"
+    }
+  ]
+}

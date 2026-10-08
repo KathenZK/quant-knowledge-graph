@@ -1,0 +1,196 @@
+{
+  "economic_basis": {
+    "hypothesis": "可研究市场状态向量是否集中于较低维的局部几何结构，辅助冗余/复杂度诊断；不存在已证收益方向、交易规则或风险阈值。几何模型条件与市场数据适配未验证。",
+    "missing": [
+      "金融坐标、可用时点、单位、重复点处理研究政策和数据权利MISSING；不能默认输入适合局部Poisson模型。",
+      "原2017未明确最小二乘求解目标/舍入，后来源补合同已分层；不是原版本软件复现。",
+      "当前固定curve_fit只补无权平方残差的数学定义，DADApy历史SciPy/sklearn/MINPACK环境与数值准确性未冻结或执行。",
+      "全等保留近邻比目标不识别；源未保证每种退化输入的可靠返回。",
+      "DADApyGitAPI受限，commit来自已锁官方HTML currentOid并rawLines逐字比对；没有冒称取得完整Git tree。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-349e45a949774b41da4fcc20",
+        "harvest-source-fcb5b62d9e3e849ef1b819f4"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "所有点的全部坐标在统计前可用，整窗口末形成邻域/秩；输入供应商、修订、特征单位及PIT缺失。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-349e45a949774b41da4fcc20",
+        "harvest-source-fcb5b62d9e3e849ef1b819f4",
+        "harvest-source-a57314bf7441c7d3d64d56f0",
+        "harvest-source-e0ed93b6b626e002eebd0efa",
+        "harvest-source-9df6c075c028c4585528f67c"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "身份与版本分层：原作者Facco/d’Errico/Rodriguez/Laio的2017 ScientificReports原PDF给TwoNN几何与CDF直线定义；固定后续DADApy作者团队commit明确最小二乘代表。不是将后版本程序冒称2017原软件，也不声称已经运行或重现论文数值。 输入N>=3个同坐标单位的有限实向量，固定Euclidean距离；对每个观测排除其自身，取两个最近的其他观测的距离0<r1_i<=r2_i<∞。等距允许按距离次序理解，点身份的选择不改变相等距离值；若重复坐标使r1=0则此比率未定义，不偷偷删点或加抖动。 形成μ_i=r2_i/r1_i>=1并排序μ_(1)<=…<=μ_(N)。原理论由近邻壳体体积随r^d增长与足够局部均匀Poisson模型推出f(μ)=d μ^(−d−1)、F(μ)=1−μ^(−d)，不是所有有限样本的必然分布。 原文p3给F_emp(μ_(j))=j/N且拟合穿过原点的(-log(1−F),logμ)关系，随后明确其结果只拟合最小90%的μ。全部N点直接包含j=N会出现log0，不能将那个示意步骤当无条件有限程序。 后来源DADApy base默认mu_fraction=.9，n_eff=int(N*.9)，正数截取等同于向零取整。数学式K=floor(.9N)为理想实数解释；实际Python浮点乘法/int的舍入版本未运行冻结。保留最小K个logμ，但经验秩的分母始终N，不能重新按K归一。 对j=1..K令a_j=logμ_(j)，b_j=−log(1−j/N)。DADApy函数m*x传给curve_fit且不传sigma或bounds；SciPy固定源码文档明确默认无权平方残差目标。所收数学代表是argmin_dΣ(b_j−d a_j)^2，无截距。 若Σa_j²>0，该一参数凸目标唯一解为d_hat=Σa_j b_j/Σa_j²（自撰等价代数式，非声称源码直接按闭式计算）。若保留a全0，目标与d无关，不能识别唯一维数；不可将数值优化器的初值或警告输出误当确定估计。未审核/执行MINPACK/LAPACK求解环境。 公共完整数据支路data_fraction=1不抽样：用self.distances的第2/第1非自身邻列求μ、估d；输出中的intrinsic_dim_err被直接赋0.0，不能理解为统计标准误已证明为零。scale是第一/第二近邻距离全部2N项均值，两个辅助量不另算因子。 代码若math.isclose(mu_fraction,1)且algorithm=base会改用ml，ml=(N−1)/Σlogμ；它不是保留全CDF端点的OLS。此最大似然/有限样本修正及抽样、不同距离、截尾率归TwoNN整族，未单独提名；data_fraction<1的抽样聚合未收作已审代表。 构造器/近邻辅助代码仅作为静态输入链补证：非周期路径调用sklearn近邻，坐标路径在极小距离时只告警，remove_zero_dists/remove_identical_points须另显式调用；预计算距离输入不会证明对称性/同一几何/自身列正确。本文只给必要数学合同，未批准任意软件输入形式及其外部依赖运行。 原文p4说明边界、密度变化、曲率和样本量影响局部均匀假设，分数可非整数，也没有自动裁到坐标维数D。本文不复述其benchmark为本次已验证结果；金融特征选择/单位标准化和采样时点另定。 全点集合参与每个近邻与全体排序，加入未来点可改变全部距离和d_hat；只可在完整可用窗口结束后计算，不回填作过去已知。与Hill/EVT的共享Pareto/对数核及不同完整输入/目标保留在dedup，不宣称数学独立或收益因子有效。 边界：N<3缺两个非自身邻居；有限同尺度点云和正确自邻排除是数学前提，不代表源自动校验。 重复点r1=0时μ未定义；源码近零告警不修复，不能自动合并观测或smearing而宣称同一代表。 r2=r1允许μ=1；若保留logμ全零则无唯一OLS斜率，不能默认输出0、1或无穷。 0<K<N保证有限b；默认.9具此性质(N>=3)，原全文F_N=1步骤不直接可用；任意自定义极小mu_fraction可令K=0。 不同μ相等时其排序不改变同值a；排序次序不需按标签破平局，但误差估计仍不因而有效。 连续局部Poisson/常密度/足够采样是维数解释假设；离散价跳、重复报价和自相关市场状态不自动满足。 curve_fit实际迭代终止、浮点极端值、外部近邻引擎、历史依赖未执行；闭式是理想目标等价，不冒称数值返回逐位一致。 DADApy完整数据err=0是赋值占位，scale辅助输出；不能凭它生成置信区间或拆成新特征。 mu_fraction近1的自动ML切换与data_fraction<1随机抽样归同族；没有另计参数/实现。 原PDF正文和可见日期与native文本层可不同：p1原图是22September2017，native文本为xx xx xxxx；以图页核身份，不造原文或混称出版冲突。 输出：One whole-point-cloud intrinsic-dimension estimate when unique;degenerate nonunique mathematical objective explicitly unidentifiable,not a fabricated source runtime return;auxiliaryerr/scale not separatefactors."
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-349e45a949774b41da4fcc20"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可研究市场状态向量是否集中于较低维的局部几何结构，辅助冗余/复杂度诊断；不存在已证收益方向、交易规则或风险阈值。几何模型条件与市场数据适配未验证。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-349e45a949774b41da4fcc20",
+        "harvest-source-fcb5b62d9e3e849ef1b819f4",
+        "harvest-source-9df6c075c028c4585528f67c"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "N>=3个同尺度有限实向量；排除自身后0<r1_i<=r2_i<∞，μ_i=r2_i/r1_i。排序μ_(j)，按DADApy默认base取K=int(N*.9)，j=1..K，a_j=lnμ_(j)，b_j=−ln(1−j/N)。完整数学代表d_hat∈argmin_(d∈R)Σ_(j=1..K)(b_j−d a_j)^2；若Σa²>0唯一d_hat=Σab/Σa²，若Σa²=0则不识别唯一d。原2017局部Poisson推导F(μ)=1−μ^(−d)；具体无权LS目标与int截取由固定后来源DADApy明确，不伪装2017运行复现。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-349e45a949774b41da4fcc20",
+        "harvest-source-fcb5b62d9e3e849ef1b819f4",
+        "harvest-source-a57314bf7441c7d3d64d56f0"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "X（N×D finite real point coordinates, N>=3,D>=1, commonunits;nearest-other r1 strictlypositive）：每行完整观测向量；无自身、无默认时间禁配或坐标标准化；金融PIT缺失。；observation_identity_and_availability（one identity and as-of availability per point）：自身排除与全体样本截止时间必须明确，供应商/字段/采样率未定。。参数：distance：原稿允许多种距离；本数学代表固定欧氏，不自动标准化。；范围predefined common-coordinate metric;othermetrics samefamily；来源默认null；本合同选值\"Euclidean,nonperiodic\"；mu_fraction：来自DADApy默认，原2017实证段取前90%；保留K个但F分母N。；范围selected fixed0.9;other fractions samefamily;near1source switchesML；来源默认0.9；本合同选值0.9；algorithm：穿过原点无权LS；不批准数值curve_fit引擎。；范围base for selected mathematicalobjective;ml samefamily not additionalcandidate；来源默认\"base\"；本合同选值\"base\"；data_fraction：使用全部点，不把迭代误差估计纳入本代表。；范围full sample only;random subsampling not selected；来源默认1；本合同选值1"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-349e45a949774b41da4fcc20"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "原生TwoNN完整点云→两近邻比值→经验CDF斜率族；默认90%代表，不按ML/截尾率/距离/坐标或库移植拆数。 可研究市场状态向量是否集中于较低维的局部几何结构，辅助冗余/复杂度诊断；不存在已证收益方向、交易规则或风险阈值。几何模型条件与市场数据适配未验证。"
+    }
+  },
+  "identity_namespace": "nature/scientificreports",
+  "lab": null,
+  "missing_information": [
+    "金融坐标、可用时点、单位、重复点处理研究政策和数据权利MISSING；不能默认输入适合局部Poisson模型。",
+    "原2017未明确最小二乘求解目标/舍入，后来源补合同已分层；不是原版本软件复现。",
+    "当前固定curve_fit只补无权平方残差的数学定义，DADApy历史SciPy/sklearn/MINPACK环境与数值准确性未冻结或执行。",
+    "全等保留近邻比目标不识别；源未保证每种退化输入的可靠返回。",
+    "DADApyGitAPI受限，commit来自已锁官方HTML currentOid并rawLines逐字比对；没有冒称取得完整Git tree。"
+  ],
+  "name": "两近邻距离比的内在维数估计",
+  "native_source_id": "s41598-017-11873-y",
+  "one_line": "用每个样本第二与第一近邻的距离比，拟合其经验分布对应的过原点直线斜率。",
+  "record_id": "s41598-017-11873-y",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅原纸面几何/CDF与后作者明确LS目标的描述审核；数值近邻/curve_fit未复现，不能据代码许可推行情许可，商业REVIEW_REQUIRED。",
+    "metadata": "自撰数学定义与出处事实；2017论文CC-BY4含第三方例外，后续DADApy Apache2与SciPy BSD3逐源区分。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nature.com/articles/s41598-017-11873-y.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Facco, d’Errico, Rodriguez, Laio(2017),DOI10.1038/s41598-017-11873-y;laterDADApyAuthors fixedc3f7300… and SciPy fixedf91e22…;中文定义自撰。",
+      "id": "harvest-source-349e45a949774b41da4fcc20",
+      "license": "CC-BY-4.0_ARTICLE_WITH_THIRD_PARTY_EXCEPTIONS",
+      "locator": "physical p1: title/authors and visual publication date22September2017;native textlayer placeholder differs; physical p2: shell volume/Pareto ratio derivation underlocalconstantdensity; physical p3: CDF identity;throughorigin fit;explicit first90percent empirical representative; physical p4: boundary/density/curvature/sample-size limits and finite-sample examples; physical p8: article CC-BY4 attribution and thirdparty exception",
+      "revision": "ScientificReports7:12140;2017;DOI10.1038/s41598-017-11873-y;fixedpublisherPDF",
+      "sha256": "066501096eaf65332786a2cfcd1e5d79c3666ffb6ada25f12ce31ddaf1339c26",
+      "supports": [
+        "ORIGINAL_2017_GEOMETRIC_CDF_DEFINITION_NOT_LATER_NUMERICAL_RUN"
+      ],
+      "url": "https://www.nature.com/articles/s41598-017-11873-y.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    },
+    {
+      "attribution": "Facco, d’Errico, Rodriguez, Laio(2017),DOI10.1038/s41598-017-11873-y;laterDADApyAuthors fixedc3f7300… and SciPy fixedf91e22…;中文定义自撰。",
+      "id": "harvest-source-fcb5b62d9e3e849ef1b819f4",
+      "license": "Apache-2.0",
+      "locator": "L1–34: license/import curve_fit source ownership; L36–99: class and full noniterated 2NN ratio regression helper; L102–201: public params/full-data branch/nearone algorithm switch/zeroerror/scale",
+      "revision": "c3f7300c9f87fb9e19241f313ae0e023bca687b5",
+      "sha256": "260152c0c2269b45c123449c875beeca299db084e161700605c7df29b760b084",
+      "supports": [
+        "LATER_AUTHOR_TEAM_SELECTED_MATHEMATICAL_OBJECTIVE_NOT_RUNTIME_ACCEPTANCE"
+      ],
+      "url": "https://raw.githubusercontent.com/sissa-data-science/DADApy/c3f7300c9f87fb9e19241f313ae0e023bca687b5/dadapy/id_estimation.py",
+      "verification": "PINNED_SOURCE_DESCRIPTION_REVIEWED_NOT_RUNTIME_ACCEPTANCE"
+    },
+    {
+      "attribution": "Facco, d’Errico, Rodriguez, Laio(2017),DOI10.1038/s41598-017-11873-y;laterDADApyAuthors fixedc3f7300… and SciPy fixedf91e22…;中文定义自撰。",
+      "id": "harvest-source-a57314bf7441c7d3d64d56f0",
+      "license": "Apache-2.0",
+      "locator": "L1–31: license and imports; L34–155: class construction/coordinates/precomputed distances contracts; L158–211: distance dispatch; L215–259: optional explicit regularizers;not automatically invoked",
+      "revision": "c3f7300c9f87fb9e19241f313ae0e023bca687b5",
+      "sha256": "4f6308644c4314c3b27e66052f2e4a58c34225c77f0e6e01c7aa2c86568e3b20",
+      "supports": [
+        "STATIC_INPUT_CHAIN_BOUNDARY_NOT_EXTERNAL_ENGINE_REPRODUCTION"
+      ],
+      "url": "https://raw.githubusercontent.com/sissa-data-science/DADApy/c3f7300c9f87fb9e19241f313ae0e023bca687b5/dadapy/base.py",
+      "verification": "PINNED_SOURCE_DESCRIPTION_REVIEWED_NOT_RUNTIME_ACCEPTANCE"
+    },
+    {
+      "attribution": "Facco, d’Errico, Rodriguez, Laio(2017),DOI10.1038/s41598-017-11873-y;laterDADApyAuthors fixedc3f7300… and SciPy fixedf91e22…;中文定义自撰。",
+      "id": "harvest-source-e0ed93b6b626e002eebd0efa",
+      "license": "Apache-2.0",
+      "locator": "L1–28: license/imports; L69–166: distance sort/nearest-neighbor dispatch;zero-distance warning not repair",
+      "revision": "c3f7300c9f87fb9e19241f313ae0e023bca687b5",
+      "sha256": "c4fd6cecc3b2ede60729f5eb622441ea803649e9729eb9b6dde5b66f47f13347",
+      "supports": [
+        "STATIC_INPUT_CHAIN_BOUNDARY_NOT_EXTERNAL_ENGINE_REPRODUCTION"
+      ],
+      "url": "https://raw.githubusercontent.com/sissa-data-science/DADApy/c3f7300c9f87fb9e19241f313ae0e023bca687b5/dadapy/_utils/utils.py",
+      "verification": "PINNED_SOURCE_DESCRIPTION_REVIEWED_NOT_RUNTIME_ACCEPTANCE"
+    },
+    {
+      "attribution": "Facco, d’Errico, Rodriguez, Laio(2017),DOI10.1038/s41598-017-11873-y;laterDADApyAuthors fixedc3f7300… and SciPy fixedf91e22…;中文定义自撰。",
+      "id": "harvest-source-28239e57c5b2cec076f68e5e",
+      "license": "Apache-2.0",
+      "locator": "L99–109: nativeTwoNN attribution; L192–206: coauthor-team package citation",
+      "revision": "c3f7300c9f87fb9e19241f313ae0e023bca687b5",
+      "sha256": "a7cf5ace08f58c02d8c1340363326f239756631c8ab1063c279aa376ade32129",
+      "supports": [
+        "AUTHOR_TEAM_ATTRIBUTION_ONLY"
+      ],
+      "url": "https://raw.githubusercontent.com/sissa-data-science/DADApy/c3f7300c9f87fb9e19241f313ae0e023bca687b5/README.md",
+      "verification": "PINNED_SOURCE_DESCRIPTION_REVIEWED_NOT_RUNTIME_ACCEPTANCE"
+    },
+    {
+      "attribution": "Facco, d’Errico, Rodriguez, Laio(2017),DOI10.1038/s41598-017-11873-y;laterDADApyAuthors fixedc3f7300… and SciPy fixedf91e22…;中文定义自撰。",
+      "id": "harvest-source-b811950b6733b8ce365be2c2",
+      "license": "Apache-2.0",
+      "locator": "L1–201: complete Apache2 license;no paper/data implication",
+      "revision": "c3f7300c9f87fb9e19241f313ae0e023bca687b5",
+      "sha256": "43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1",
+      "supports": [
+        "CODE_LICENSE_ONLY_NOT_PAPER_OR_DATA_LICENSE"
+      ],
+      "url": "https://raw.githubusercontent.com/sissa-data-science/DADApy/c3f7300c9f87fb9e19241f313ae0e023bca687b5/LICENSE",
+      "verification": "PINNED_SOURCE_DESCRIPTION_REVIEWED_NOT_RUNTIME_ACCEPTANCE"
+    },
+    {
+      "attribution": "Facco, d’Errico, Rodriguez, Laio(2017),DOI10.1038/s41598-017-11873-y;laterDADApyAuthors fixedc3f7300… and SciPy fixedf91e22…;中文定义自撰。",
+      "id": "harvest-source-9df6c075c028c4585528f67c",
+      "license": "BSD-3-Clause",
+      "locator": "L590–633: curve_fit non-linear least-squares;unweighted default sigma; L706–728: returns optimal sum-of-squares params and covariance warning; L774–803: runtime/covariance caveats;no engine approval",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "2f63d854f3085279a29c9ce4219ef14cdfb792276e37ec0ed1cdac2992767581",
+      "supports": [
+        "SCIPY_DOCUMENTED_LEAST_SQUARES_OBJECTIVE_NOT_HISTORICAL_DEPENDENCY"
+      ],
+      "url": "https://raw.githubusercontent.com/scipy/scipy/f91e22cd3d9e984b8da31f899c755b2a43c60db4/scipy/optimize/_minpack_py.py",
+      "verification": "PINNED_SOURCE_DESCRIPTION_REVIEWED_NOT_RUNTIME_ACCEPTANCE"
+    },
+    {
+      "attribution": "Facco, d’Errico, Rodriguez, Laio(2017),DOI10.1038/s41598-017-11873-y;laterDADApyAuthors fixedc3f7300… and SciPy fixedf91e22…;中文定义自撰。",
+      "id": "harvest-source-023d066d47754a2e42cd55a6",
+      "license": "BSD-3-Clause",
+      "locator": "L1–30: complete SciPy root license;no paper/data grant",
+      "revision": "f91e22cd3d9e984b8da31f899c755b2a43c60db4",
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94",
+      "supports": [
+        "CODE_LICENSE_ONLY_NOT_PAPER_OR_DATA_LICENSE"
+      ],
+      "url": "https://raw.githubusercontent.com/scipy/scipy/f91e22cd3d9e984b8da31f899c755b2a43c60db4/LICENSE.txt",
+      "verification": "PINNED_SOURCE_DESCRIPTION_REVIEWED_NOT_RUNTIME_ACCEPTANCE"
+    }
+  ]
+}

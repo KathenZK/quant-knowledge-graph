@@ -1,0 +1,102 @@
+{
+  "economic_basis": {
+    "hypothesis": "描述成交活跃程度与价格波幅同时落入自身低分位时该状态的连续长度；长期压缩是否预示突破与方向尚未证明。",
+    "missing": [
+      "未开展收益有效性、因果或样本外验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "tradingview-mpkvlxpo-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "当前成交量、真实波幅与分位参与计算，没有收线门；实时状态可能变化。窗口以已有bar计数，非时间戳差。成交量缺失、预热与Pine缺失布尔行为未运行验证。"
+    },
+    "calculation": {
+      "evidence": [
+        "tradingview-mpkvlxpo-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "以标称周期换算窗口，分位基线最多4900根且至少100根。TR(true)在无前收盘时使用当根H−L，否则用真实波幅。分段阈值b24=max(1,round(1440/m))、b72=max(1,round(4320/m))；age为0为活跃，正值但<b24为初始，b24<=age<b72为成熟，age>=b72为深度。实际输出为连续静默bar的标称时长，遇休市/缺bar并非真实墙钟时长；多日日图也被当作1440分钟，周月图回退60，不能沿用来源的全周期物理时间宣传。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "tradingview-mpkvlxpo-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "描述成交活跃程度与价格波幅同时落入自身低分位时该状态的连续长度；长期压缩是否预示突破与方向尚未证明。"
+    },
+    "formula": {
+      "evidence": [
+        "tradingview-mpkvlxpo-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "n=max(1,round(24×60/m))，N=min(4900,max(100,round(180×24×60/m)))；v=SMA_n(V)，a=SMA_n(TR(true))。静默Q为percentrank_N(v)<=33.333且percentrank_N(a)<=33.333。若Q成立则age_t=age_(t−1)+1，否则age_t=0，初始0。主输出age×m/60。"
+    },
+    "inputs": {
+      "evidence": [
+        "tradingview-mpkvlxpo-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "图表成交量V、H/L/C、周期种类与倍数。默认短窗24小时、分位基线180天、分位上限33.333%。分钟图m=周期倍数；日图m=1440；秒图m=倍数/60；其他类型源码回退m=60。"
+    },
+    "use_cases": {
+      "evidence": [
+        "tradingview-mpkvlxpo-published-code"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "可用于有连续等间距观测的分钟、秒或单日日线的状态研究。对有休市的市场解释为标称交易bar时长；不把视觉分段阈值分别登记因子。"
+    }
+  },
+  "identity_namespace": "TradingView",
+  "lab": null,
+  "missing_information": [
+    "来源“物理时间”说法不覆盖休市、缺bar、多日日线及周月图，已限定解释。",
+    "没有运行或收益验证。"
+  ],
+  "name": "低量低真幅联合状态持续计数（Compression Clock）",
+  "native_source_id": "mpkvlxpo",
+  "one_line": "同时处于低成交量和低真实波幅历史分位时累计K线数量，再换算为标称小时。",
+  "record_id": "mpkvlxpo",
+  "relations": [],
+  "rights": {
+    "derived_results": "未执行上游源码、未产生行情计算或回测结果。",
+    "metadata": "仅发布自撰定义摘要和来源定位；保留原作者归属。源代码、网页正文和行情不入Git。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.tradingview.com/pine-script-docs/writing/publishing/"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "AAAAAA2020",
+      "id": "tradingview-mpkvlxpo-published-code",
+      "license": "NOASSERTION; no license header in this saved script",
+      "locator": "JSON source字段；Pine v6；核心定义行段逐字段绑定在reviews.json",
+      "revision": "PUB;98a3e47422e24447b2930ebdd16991fb@2.0",
+      "sha256": "64648903781664340b494c117349826c945ef2228ac4a085d742ea95fa8dfde5",
+      "supports": [
+        "输入、参数、计算顺序、输出及状态时点"
+      ],
+      "url": "https://pine-facade.tradingview.com/pine-facade/get/PUB%3B98a3e47422e24447b2930ebdd16991fb/2",
+      "verification": "FETCHED_PINNED_PUBLIC_SOURCE_REVIEWED"
+    },
+    {
+      "attribution": "TradingView / AAAAAA2020",
+      "id": "tradingview-list-736d738132e89178389b",
+      "license": "REVIEW_REQUIRED",
+      "locator": "原站列表init-data中的image_url=mpkvlxpo；chart_url、user.username、script_id_part与version",
+      "revision": "sha256:736d738132e89178389b064eae5185787c3868be293d47d86695f5180f31ab15",
+      "sha256": "736d738132e89178389b064eae5185787c3868be293d47d86695f5180f31ab15",
+      "supports": [
+        "作者、原生脚本身份、公开发布版本链接；不支持计算规则"
+      ],
+      "url": "https://www.tradingview.com/scripts/page-50/?script_access=open&script_type=indicators&sort=recent_extended",
+      "verification": "FETCHED_SOURCE_IDENTITY_REVIEWED"
+    }
+  ]
+}

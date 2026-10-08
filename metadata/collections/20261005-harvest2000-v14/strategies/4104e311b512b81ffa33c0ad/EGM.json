@@ -1,0 +1,135 @@
+{
+  "economic_basis": {
+    "hypothesis": "在所给混合收益模型内保留状态间均值和相关结构差异，用凹且递增的指数效用表达对下行结果的偏好。模型能描述非单一高斯形状是方法动机，不是该配置能提高实盘收益的证据。",
+    "missing": [
+      "仅数学构造；论文声明未生成或分析数据，本次未做经济验证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "doi:10.1007/s11081-023-09814-y",
+  "lab": null,
+  "missing_information": [
+    "必须先提供资产池、预测收益期间、混合分量数k及(π_i,μ_i,Σ_i)、gamma>0；论文没有给出统一估计窗、EM初始化、分量选择/更新或可交易时点。",
+    "k=1精确降为均值方差；重复相同分量也不能制造新构造。改变gamma、分量数或资产不拆计。EVaR给出风险厌恶选择关系，同文不另计一条。",
+    "本条选正概率、正定协方差的原始GM设置；全零协方差有限情景是论文退化说明，不借其无约束杠杆两资产算例覆盖当前只多约束。",
+    "混合模型一般不会把实际单期资产简单收益自动限制为>=−1；输入模型与真实财富、尾部和违约约束的适配尚未研究。未声称Gaussian能保证实际风险界。",
+    "频率、退出时点、成交滞后、交易费、冲击、税费和份额取整未定义；缺成本不作零。原目标没有跟踪既有持仓或换手惩罚。",
+    "论文声称本研究未生成或分析数据、将实务配置留待未来；只审公式，不执行其PDF代码示例/链接仓库，不运行优化或回测。",
+    "求解器/容差、非法π或Σ、数值溢出和退化输入处理未给生产合同；不凭凸性推断实现成功或经济有效。商用许可REVIEW_REQUIRED。"
+  ],
+  "name": "EGM：高斯混合收益分布下的指数效用配置",
+  "native_source_id": "EGM",
+  "one_line": "保留各高斯收益状态的概率、均值和协方差，以对数和指数形式精确最大化组合的期望指数效用，输出只多满仓权重。",
+  "record_id": "EGM",
+  "relations": [],
+  "rights": {
+    "derived_results": "NOT_EXECUTED；NOT_TESTED；未运行源码、优化器或回测。",
+    "metadata": "原文EGM简称、论文定位和自撰中文规则；不发布论文全文、图、源码或市场数据。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://web.stanford.edu/~boyd/papers/pdf/exp_util_gm_ret_portfolio.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Eric Luxenberg and Stephen Boyd, Portfolio construction with Gaussian mixture returns and exponential utility via convex optimization, Optimization and Engineering25:555–574(2024), online July27,2023. Chinese paraphrase by catalog curator.",
+      "id": "luxenberg-boyd-egm-final-pdf",
+      "license": "Title page: The Author(s), under exclusive licence to Springer Science+Business Media, LLC, part of Springer Nature, 2023. No paper redistribution or commercial-use grant established. Author hosting and linked code do not transfer rights to paper or data. Original Chinese summaries only; REVIEW_REQUIRED.",
+      "locator": "Physicalpages5–8 sections2–3: Gaussian mixture inputs, Eqs2–7, long-only example and k=1 reduction;11 section4.1 EVaR connection not separately counted;13 section5 no dataset/practical study. Fixed pdftotext lines with visual PDF equations.",
+      "revision": "Optimization and Engineering25:555–574(2024); online July27,2023; PDF sha256:da9857b69e1cc1093cd8aa370a15dd996ef7db36c25defe62aaf9bce71b2f728",
+      "sha256": "da9857b69e1cc1093cd8aa370a15dd996ef7db36c25defe62aaf9bce71b2f728",
+      "supports": [
+        "高斯混合收益输入、指数效用精确目标、只多权重、退化关系与缺项"
+      ],
+      "url": "https://web.stanford.edu/~boyd/papers/pdf/exp_util_gm_ret_portfolio.pdf",
+      "verification": "FETCHED_PINNED_FINAL_PDF_AND_VISUAL_FORMULAS_REVIEWED"
+    },
+    {
+      "attribution": "Stephen P. Boyd author website, Stanford University.",
+      "id": "boyd-egm-author-page",
+      "license": "No independent permission established for page fulltext. Not republished; does not transfer paper/code/data rights.",
+      "locator": "Original author HTML title/authors/Optimization and Engineering25:555–574(2024), Final version link to this PDF; linked code not downloaded or executed.",
+      "revision": "HTTP snapshot 2026-10-04T20:17:50.238169+00:00; sha256:f0d643ba72baa4757333db5ee876b1884e6d104ac84f5517b03c46c07473f726",
+      "sha256": "f0d643ba72baa4757333db5ee876b1884e6d104ac84f5517b03c46c07473f726",
+      "supports": [
+        "第一方作者及论文链接"
+      ],
+      "url": "https://web.stanford.edu/~boyd/papers/exp_util_gm_ret_portfolio.html",
+      "verification": "FETCHED_PINNED_AUTHOR_PAGE"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "luxenberg-boyd-egm-final-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "n个资产在一个指定期间内的收益向量r∈R^n，输入为k分量高斯混合GM({μ_i,Σ_i,π_i})；π_i是正概率且合计1，μ_i是n维均值，Σ_i是对称正定协方差。这里的混合分量描述整个资产收益向量的状态分布，不是先把资产聚成k簇后给每簇分仓。"
+    },
+    "cost": {
+      "evidence": [
+        "luxenberg-boyd-egm-final-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：式(7)目标仅为混合收益下的指数效用，来源在本构造中没有给佣金、价差、冲击、税费或换手惩罚。没有历史持仓变量，不能自行加入交易成本优化或把缺项记作零成本。"
+    },
+    "entry": {
+      "evidence": [
+        "luxenberg-boyd-egm-final-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "求w∈argmin K(w,−gamma)，约束w_i>=0且Σ_i w_i=1；这是§3.2明示的long-only构造，输出目标金额权重。gamma与分量参数在本次优化前已给，不是优化变量；不从实现回报反选gamma。对给定输入按解析的混合矩母函数建目标，不需要为了该目标额外Monte Carlo采样；并未运行求解。"
+    },
+    "execution_time": {
+      "evidence": [
+        "luxenberg-boyd-egm-final-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：论文只描述给定本次收益分布和约束后求目标w的顺序，没有给出行情收盘、信号生成、订单和成交的时点合同。数据可得性、参数估计截至时间、求解延迟和再平衡日历需另做研究；§5明确没有实际数据集，未把作者凸优化可解性当成回测就绪。"
+    },
+    "exit": {
+      "evidence": [
+        "luxenberg-boyd-egm-final-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "目标权重中w_i=0意味着不配置该资产，目标比例减少意味着组合调整时减配；来源没有基于价格的止盈/止损、持有期退出或下次调仓触发。式(7)本身不含原持仓状态和换手项，不能借此声称逐日保持常权重或立即成交。"
+    },
+    "position": {
+      "evidence": [
+        "luxenberg-boyd-egm-final-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "选择w>=0、Σw=1的原文代码示例约束：全部价值在给定n资产间分配，无做空、借款或额外单资产上限；输入池未强制含现金。本条不使用§3.4允许w负值的解析比较例。多分量非退化目标以一个构造收录，k=1时K去常数并除gamma后精确变成−μ_1^T w+(gamma/2)w^TΣ_1w，属于既有均值方差特例，不据此增加数量。"
+    },
+    "risk": {
+      "evidence": [
+        "luxenberg-boyd-egm-final-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "gamma为正风险厌恶参数；正定分量协方差与log-sum-exp保证所述目标凸，但这不验证参数、执行或经济收益。分量概率进入logπ_i并影响整个目标，不是简单等权/概率加权平均各状态最优权重。高gamma下才有minimax近似，低gamma极限趋向总体均值方差；不能把一般式替换成任一极限。原文未规定非法概率、退化/病态矩阵、求解容差和失败退路；GM的无限尾支持也不能当真实财富保证。"
+    },
+    "signal": {
+      "evidence": [
+        "luxenberg-boyd-egm-final-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "组合收益R=w^T r，各状态组合均值ν_i=w^T μ_i、方差σ_i²=w^T Σ_i w。效用U_gamma(a)=1−exp(−gamma*a)，gamma>0。最大化E[U_gamma(R)]等价于最小化K(w,−gamma)=logΣ_i exp[logπ_i−gamma*μ_i^T w+(gamma²/2)*w^TΣ_i w]。保留各分量的log-sum-exp二次式，不先用混合总体均值/协方差替代；它也不是直接取所有分量最坏值。"
+    },
+    "timeframe": {
+      "evidence": [
+        "luxenberg-boyd-egm-final-pdf"
+      ],
+      "status": "MISSING",
+      "text": "MISSING：r定义为某一指定期间的收益，但作者没有钉日/周/月频、回看窗口或再估计时钟。引言提到隐马尔可夫模型可逐期更新分量概率只是兼容性说明，不是本条规定的预测器和再平衡规则。"
+    },
+    "universe": {
+      "evidence": [
+        "luxenberg-boyd-egm-final-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源给一般n资产组合，不钉真实证券代码或筛选规则。n、π、各μ/Σ及gamma作为已知输入。§3.4的两资产±1/0例是说明性有限取值、允许空头的对照，未将其当成本条只多策略的冻结投资池，也未补入SPY等代码。"
+    }
+  }
+}

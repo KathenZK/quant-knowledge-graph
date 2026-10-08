@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "在延迟状态空间选时间上相隔的最近邻，再沿两条轨迹向前跟踪距离，估计平均对数距离随步数增长的斜率；不单凭其正负宣称市场混沌或可预测。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-8ee989ebfbde9c703a8dc026"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-8ee989ebfbde9c703a8dc026"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "原函数先把data转为float64数组，不主动降成一维；本条要求调用方预先保证一维有限、等时距且按时间排序。显式提供lag和min_tsep后不会执行FFT自动选参分支；原默认两者为None，不能把本条合同误称完整默认运行。 delay_embedding用前向索引形成状态，不先去均值或标准化。选择的两个起点都必须足以向前跟踪L步，最近邻搜索只使用距离矩阵左上Q×Q；不是对全部M起点取邻居再裁结果。 时间排除带包含|i−j|=w和主对角线；选定后两条轨迹同时推进，时间差不变。np.argmin只选一个最近邻；相同距离并列由NumPy argmin行为处理，不平均并列邻居，也不加噪声。 每个k先排距离恰为0的邻居对，再对距离取自然对数后求均值；不是先平均距离再取对数。非有限a_k整步删除，fit_offset在删除之后才切片，因此不一定等于跳过原始前k步。 fit=poly调用poly_fit中的np.polyfit(k,a,1)；有截距无权最小二乘。原默认fit=RANSAC依赖未固定的sklearn及随机采样，本条不审该分支、不把该默认或其ImportError回退当作已冻结数值实现。 本条核心是整个窗口上确定邻居后跟踪的统计估计；每个k都利用完整窗口形成邻居和轨迹，不得把斜率回填为窗口起点可用信号。所有窗口、嵌入维度、延迟、排除带和轨迹长度只算同一构造族。 边界：源码长度下限警告之外还有ntraj<=0或ntraj<2w+2的ValueError检查；距离行需要至少一个有限候选的条件由assert实现，Python优化模式可能不执行assert。 当所有轨迹步的a_k都非有限时，代码给poly=[−Inf,0]，返回−Inf/tau；这不是已识别的强收敛性。注释声称只剩一点也不能拟合，但条件实际是len(ks)<1：恰剩一个点或fit_offset切空仍会进入np.polyfit并可能警告/报错，不能理想化成统一返回−Inf。 常量或重复片段可选到距离0的最近邻；后续逐k排0，不重新挑非零邻居。有效邻居集合随k改变，比较斜率前应审其样本覆盖。 有限float64输入仍可能在平方欧氏距离时溢出。NaN/Inf没有统一输入拒绝，源码没有自动去缺失或稳健缩放；本条有效输入合同不表示上游主动校验。 显式lag/min_tsep/fit=poly为原函数已有选择，不新增自造估计器；默认自动选参和RANSAC未纳入已审计算合同。NumPy版本、rcond/秩警告等数值细节未运行冻结。 λ_hat正负只描述该有限窗口算法输出。噪声、非平稳性、观测变换和参数会影响结果，不能直接当作确定性混沌证明、预测能力或收益驱动证据。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-8ee989ebfbde9c703a8dc026"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "在延迟状态空间选时间上相隔的最近邻，再沿两条轨迹向前跟踪距离，估计平均对数距离随步数增长的斜率；不单凭其正负宣称市场混沌或可预测。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-8ee989ebfbde9c703a8dc026"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "本条审原生显式路径 fit=poly、整数lag=ℓ>=1、min_tsep=w>=0、tau>0。N个等间隔样本x，m=emb_dim；Y_i=(x_i,x_(i+ℓ),…,x_(i+(m−1)ℓ))，M=N−(m−1)ℓ。L=trajectory_len，Q=M−L+1，要求Q>=2w+2。先构建全部欧氏距离D_ij=||Y_i−Y_j||₂，把|i−j|<=w置Inf。每个i=0..Q−1只在j=0..Q−1内选初始距离最小的j_i。对k=0..L−1，I_k={i:D_(i+k,j_i+k) !=0}；a_k=mean_(i∈I_k) ln D_(i+k,j_i+k)，I_k为空则a_k=−Inf。删除a_k非有限的整步后，按保留顺序再跳过fit_offset个点。在至少两个不同k的研究有效合同下，用含截距无权OLS拟合a_k=βk+b，β=Σ(k−均值k)(a_k−均值a)/Σ(k−均值k)²；输出λ_hat=β/tau。零距离并不触发重选邻居，且各k有效邻居集合可以不同。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-8ee989ebfbde9c703a8dc026"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "data（one-dimensional finite real array-like converted to numpy float64, ordered and evenly sampled; N>=(m−1)*lag+trajectory_len+2*min_tsep+1）：完整可用窗口；必须有至少两个可用于拟合的有限平均对数距离步且无距离计算溢出。价格、收益、成交量或其它序列绑定未固定；函数不做PIT、时间排序或补缺失。。参数：emb_dim：延迟状态维度；范围research integer>=1 with Q>=2w+2；源码默认10；lag：状态坐标延迟步数，必须显式固定；范围reviewed explicit integer>=1; source None automatic FFT branch outside contract；源码默认None；min_tsep：时间排除带半宽，必须显式固定；范围reviewed explicit integer>=0; source None automatic mean-period branch outside contract；源码默认None；tau：原文单位秒/样本；输出斜率除以此采样间隔，真实单位需数据合同；范围research finite real>0；源码默认1；trajectory_len：最近邻配对向前跟踪步数；范围research integer>=2 and sufficient complete embedded trajectories；源码默认20；fit：明确记录原默认，本文使用原生OLS选项；范围reviewed native option poly only; RANSAC outside audited path；源码默认RANSAC；fit_offset：在删除非有限平均对数距离之后才切掉前若干点；范围research integer>=0 with at least2 finite surviving k after slicing；源码默认0；min_neighbors：仅用于未审的自动lag选择；本合同不影响计算；范围not used when lag is numeric；源码默认20；debug_plot：不绘图；范围False reviewed；源码默认False；debug_data：返回一个斜率；调试轨迹不拆新增；范围False reviewed; optional arrays are not new features；源码默认False"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-8ee989ebfbde9c703a8dc026"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "CSchoel/nolds",
+  "lab": null,
+  "missing_information": [
+    "原默认lag/min_tsep自动选参与RANSAC路径未纳入本合同",
+    "NumPy/Python实际运行版本和数值秩容差未冻结",
+    "真实输入序列、窗口、采样时钟和PIT发布规则缺失",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "最近邻轨迹对数距离增长的 Rosenstein 估计",
+  "native_source_id": "lyap_r",
+  "one_line": "在延迟状态空间选时间上相隔的最近邻，再沿两条轨迹向前跟踪距离，估计平均对数距离随步数增长的斜率；不单凭其正负宣称市场混沌或可预测。",
+  "record_id": "lyap_r",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/CSchoel/nolds/blob/f121feebf6b2cbd67a8cb855bd0fe8c39add3ad9/nolds/measures.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "nolds实现维护者Christopher Schölzel；Rosenstein、Collins、De Luca的1993算法论文在固定源码明确归因。所审是nolds的原生poly路径，不冒称论文作者代码或已完整复现论文。",
+      "id": "harvest-source-8ee989ebfbde9c703a8dc026",
+      "license": "MIT",
+      "locator": "imports and exact Euclidean distance:L1-L18; native explicit poly OLS branch:L21-L38; delay embedding and length requirement:L61-L115; native identity and Rosenstein trajectory algorithm:L117-L157; original paper attribution and parameter meanings:L178-L227; float64 conversion and optional automatic branches gate:L237-L244; numeric-path length gates nearest neighbors log trajectories and final return:L294-L369",
+      "revision": "f121feebf6b2cbd67a8cb855bd0fe8c39add3ad9",
+      "sha256": "53a59a5c24d737539f584d9f86c09228852768308a0539b6cbd7d3ead3eae52a",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/CSchoel/nolds/blob/f121feebf6b2cbd67a8cb855bd0fe8c39add3ad9/nolds/measures.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "nolds实现维护者Christopher Schölzel；Rosenstein、Collins、De Luca的1993算法论文在固定源码明确归因。所审是nolds的原生poly路径，不冒称论文作者代码或已完整复现论文。",
+      "id": "harvest-source-3bad80ea98aae60a1d66e50d",
+      "license": "MIT",
+      "locator": "maintainer package scope and algorithms:L17-L42; optional RANSAC dependency:L56-L68; maintainer educational scope and attribution:L88-L106",
+      "revision": "f121feebf6b2cbd67a8cb855bd0fe8c39add3ad9",
+      "sha256": "2dc045bb13d02fda9d9819d29f5f0d827dd13c6bdbcbab3c362b4389008652c2",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/CSchoel/nolds/blob/f121feebf6b2cbd67a8cb855bd0fe8c39add3ad9/README.rst",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "nolds实现维护者Christopher Schölzel；Rosenstein、Collins、De Luca的1993算法论文在固定源码明确归因。所审是nolds的原生poly路径，不冒称论文作者代码或已完整复现论文。",
+      "id": "harvest-source-ceddb970eb7e6d002a705d81",
+      "license": "MIT",
+      "locator": "MIT license and copyright:L1-L21",
+      "revision": "f121feebf6b2cbd67a8cb855bd0fe8c39add3ad9",
+      "sha256": "6cbfbb08b878fc2936ee0910f70d20eff1833d589b8e98c95dce27e61b05b67f",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/CSchoel/nolds/blob/f121feebf6b2cbd67a8cb855bd0fe8c39add3ad9/LICENSE.txt",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "nolds实现维护者Christopher Schölzel；Rosenstein、Collins、De Luca的1993算法论文在固定源码明确归因。所审是nolds的原生poly路径，不冒称论文作者代码或已完整复现论文。",
+      "id": "harvest-source-2408a78ff42d4514abb4ffbc",
+      "license": "MIT",
+      "locator": "version maintainer and license:L25-L38; dependency ranges only:L59-L67",
+      "revision": "f121feebf6b2cbd67a8cb855bd0fe8c39add3ad9",
+      "sha256": "b6e14aa8e55350141fc9b7c87c4fdfa4f2b2e06e914c24354a84e3dbe692a689",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/CSchoel/nolds/blob/f121feebf6b2cbd67a8cb855bd0fe8c39add3ad9/setup.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}

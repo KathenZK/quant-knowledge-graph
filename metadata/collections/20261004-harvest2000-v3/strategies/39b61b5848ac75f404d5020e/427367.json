@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "长期趋势内收盘包络收缩或用于寻找整理阶段，但亏损加仓可能放大回撤，未给有效性证据。",
+    "missing": [
+      "没有核实的原始论文、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "原作者发布URL、原始版本与镜像字节一致性尚未核实。",
+    "仅静态阅读，没有编译、执行外部源码、行情下载或回测。",
+    "baseline近邻正文已经比较，跨全库规则等价仍待独立复核。",
+    "市场、频率、可交易约束、成交模型与完整现实成本未冻结。",
+    "takeProfitVal只绘图，不能声称已实现止盈。",
+    "当前高低与历史收盘作比较，不能简化成普通inside bar。"
+  ],
+  "name": "前收盘包络内含棒与趋势内均价下加仓",
+  "native_source_id": "427367",
+  "one_line": "整个当前K线落在前九根收盘极值之间，且快EMA高于EMA200时做多；已有多仓且低于均价时可加一次。",
+  "record_id": "427367",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果；没有把镜像代码通知扩展为原论文、数据或未证实作者链的许可。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E4%B8%89%E8%A7%92%E5%BD%A2%E7%AA%81%E7%A0%B4%E8%B6%8B%E5%8A%BF%E8%BF%BD%E8%B8%AA%E7%AD%96%E7%95%A5Triangle-Breakout-Trend-Following-Strategy.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ镜像发布账号 ChaoZhang；源码署名声明 mohanee；原作者身份、原始发布版本及转载授权未验证，上传者不等同实现作者。",
+      "id": "fmz-427367-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "1d3f7fbfce4780c582b237c570b9d1afb32f7bec6a4672c0be8a81d8b0a168d0",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E4%B8%89%E8%A7%92%E5%BD%A2%E7%AA%81%E7%A0%B4%E8%B6%8B%E5%8A%BF%E8%BF%BD%E8%B8%AA%E7%AD%96%E7%95%A5Triangle-Breakout-Trend-Following-Strategy.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-427367-published-code"
+      ],
+      "status": "MISSING",
+      "text": "交易当前图表标的；标题或FMZ包装不是原作者资产范围证明，具体证券/合约代码为MISSING。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-427367-published-code"
+      ],
+      "status": "MISSING",
+      "text": "无显式手续费、滑点、点差和持仓费，成本MISSING。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-427367-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "条件成立且position_size<1时entry TBT LE；条件成立且position_size>=1且C<持仓均价时同ID再entry。仅多方向，每次3单位，pyramiding=2限制最多两次同向入口。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-427367-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v4，先初始entry，再同ID Add，再EMA反交叉close，再均价损失close；用当前OHLC判断内含棒，未显式逐tick/成交重算/收盘成交，实际加仓和退出先后未运行。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-427367-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "EMA13下穿EMA65时close TBT LE；或C<持仓均价×0.95时close。后者仅pos>=1才有非零stopLossVal。均价×1.05仅用于颜色绘图，实际Profit Exit整行被注释，不存在5%止盈单。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-427367-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "固定3单位/入口，pyramiding=2，初始资本10000 USD；不是3%权益。已有多仓且低于均价的再次入口属于加亏损仓，未按风险预算缩放。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-427367-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "5%为收盘阈值close而非盘中stop触发，不能保证亏损封顶5%。加仓会改变平均成本和清仓阈值；标的乘数/保证金不明，最多6单位不代表固定账户杠杆。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-427367-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "HH=highest(C[1],9)，LL=lowest(C[1],9)，当前L>LL且H<HH；区间来自前九棒收盘，不是九棒高低。另要求EMA13(C)>EMA200(C)。EMA65只参与退出，不要求EMA13>EMA65才入场。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-427367-published-code"
+      ],
+      "status": "MISSING",
+      "text": "窗口按图表bar计算，策略主体未强制周期；名称Days/ETF等不等于已冻结周期，频率为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-427367-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表策略，无跨资产选股/排序组合；实际市场、合约单位、交易日历、价格调整及交易约束未冻结。"
+    }
+  }
+}

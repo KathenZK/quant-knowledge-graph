@@ -1,0 +1,130 @@
+{
+  "economic_basis": {
+    "hypothesis": "历史上涨频率条件下的短期上涨次数分布，可能识别持续性变化；这是研究假说，不是预测准确率或收益证据。",
+    "missing": [
+      "没有经过核实的原始论文支持、独立样本或经济有效性证据。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fmzquant/strategies",
+  "lab": null,
+  "missing_information": [
+    "作者原始发布URL、原始版本与镜像一致性尚未核实。",
+    "依赖Pine内建函数及运行时；未编译、执行、下载行情或回测。",
+    "基线近邻经正文比较，但还没有独立复核的全库机制去重结论。",
+    "实际市场、周期、价格调整、合约规格及可交易约束未冻结。",
+    "CDF是历史构造统计量，不是经校准的未来概率。",
+    "实时tick会改变当根状态，不能宣称不重绘。"
+  ],
+  "name": "二项上涨计数概率的快慢平滑多头",
+  "native_source_id": "426601",
+  "one_line": "用长期上涨频率估计短窗上涨次数的二项累积概率，对概率做快慢EMA后决定持有或清仓。",
+  "record_id": "426601",
+  "relations": [],
+  "rights": {
+    "derived_results": "未生成回测结果。未断言源码、论文、数据或商业内部使用权；没有把镜像发布权限扩展为原作者授权。",
+    "metadata": "自撰中文规则摘要与来源定位；固定FMZ发布版本，转载链与原作者版本尚未确认。源码许可通知单列，商业状态REVIEW_REQUIRED；不发布源全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E4%BA%8C%E9%A1%B9%E5%88%86%E5%B8%83%E7%9A%84%E4%BB%B7%E6%A0%BC%E6%9E%81%E5%80%BC%E5%9B%9E%E5%BD%92%E7%AD%96%E7%95%A5Price-Extreme-Reversion-Strategy-Based-on-Binomial-Distribution.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "FMZ仓库发布账号 ChaoZhang；源码署名声明 pieroliviermarquis；转载链与原作者发布版本未核实，不把上传者视为实现作者。",
+      "id": "fmz-426601-published-code",
+      "license": "MPL-2.0 notice",
+      "locator": "公开FMZ固定版本Markdown内源码；每字段精确行段见reviews.json",
+      "revision": "7853bb2bf262c4567ac238d3552d97f0e50cb801",
+      "sha256": "b599dfa649cefa7fbd980e29d96e79512e3cd9dbc2bf56676324468964da2831",
+      "supports": [
+        "strategy_fields.assets",
+        "strategy_fields.cost",
+        "strategy_fields.entry",
+        "strategy_fields.execution_time",
+        "strategy_fields.exit",
+        "strategy_fields.position",
+        "strategy_fields.risk",
+        "strategy_fields.signal",
+        "strategy_fields.timeframe",
+        "strategy_fields.universe"
+      ],
+      "url": "https://github.com/fmzquant/strategies/blob/7853bb2bf262c4567ac238d3552d97f0e50cb801/%E5%9F%BA%E4%BA%8E%E4%BA%8C%E9%A1%B9%E5%88%86%E5%B8%83%E7%9A%84%E4%BB%B7%E6%A0%BC%E6%9E%81%E5%80%BC%E5%9B%9E%E5%BD%92%E7%AD%96%E7%95%A5Price-Extreme-Reversion-Strategy-Based-on-Binomial-Distribution.md",
+      "verification": "FIXED_COMMIT_MIRROR_CODE_MANUALLY_READ_NOT_EXECUTED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "fmz-426601-published-code"
+      ],
+      "status": "MISSING",
+      "text": "单一图表当前标的；策略主体没有固定证券代码。FMZ回测注释的BTC_USDT配置仅是转载包装，未确认为原作者适用市场。"
+    },
+    "cost": {
+      "evidence": [
+        "fmz-426601-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "源码声明slippage=1；没有声明佣金、点差或资金费率。1的具体最小价格单位换算取决于图表品种和Pine运行时，未当成现实成本。"
+    },
+    "entry": {
+      "evidence": [
+        "fmz-426601-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "EMA10(CDF)>EMA20(CDF)时提交Long多头入口；采用状态条件，每次满足都调用，未要求首次交叉。"
+    },
+    "execution_time": {
+      "evidence": [
+        "fmz-426601-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "Pine v4且calc_on_every_tick=true；实时每tick重新计算可使当根上涨状态及CDF改变。未启用收盘成交选项；历史/实时一致性及订单成交未核验。"
+    },
+    "exit": {
+      "evidence": [
+        "fmz-426601-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "EMA10(CDF)<EMA20(CDF)时关闭Long；相等时不提交新的进出信号。"
+    },
+    "position": {
+      "evidence": [
+        "fmz-426601-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "策略声明默认每次使用100%权益；没有显式qty覆盖，也未声明加仓次数。实际仓位、反复入口处理和成交需Pine v4运行时确认。"
+    },
+    "risk": {
+      "evidence": [
+        "fmz-426601-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "未见固定止损、最大回撤或时间退出；只用CDF平滑关系反向清仓。阶乘与小概率计算的数值稳定性尚未执行检验。"
+    },
+    "signal": {
+      "evidence": [
+        "fmz-426601-published-code"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "up=收盘高于前收；用近100根up均值作为二项成功概率p，用近20根上涨数k计算BinomialCDF(k,20,p)。再计算CDF的EMA10和EMA20；该量不是预测未来上涨概率。"
+    },
+    "timeframe": {
+      "evidence": [
+        "fmz-426601-published-code"
+      ],
+      "status": "MISSING",
+      "text": "计算窗口均以图表bar为单位；策略主体未强制周期。FMZ回测包装周期与原作者要求没有等价证明，原始运行周期为MISSING。"
+    },
+    "universe": {
+      "evidence": [
+        "fmz-426601-published-code"
+      ],
+      "status": "MISSING",
+      "text": "没有跨资产选股或动态股票池；源码运算针对当前图表序列。具体交易品种、合约乘数、交易日历和调整规则仍须另行冻结。"
+    }
+  }
+}

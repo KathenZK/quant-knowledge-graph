@@ -1,0 +1,131 @@
+{
+  "economic_basis": {
+    "hypothesis": "把同一时点各资产超过波动阈值的正负变化编码，再统计同向与反向出现的差，得到相关和协方差矩阵；三种归一化合并为同一族。",
+    "missing": [
+      "未检验金融预测、因果关系或交易收益。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "harvest-source-7915165d598315e52fe54529"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "完整尾随输入窗口均已观测且发布后才可计算；不把全窗统计回填为窗内更早可用值。当前未冻结行情供应商、交易所日历、bar收盘/修订时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "harvest-source-7915165d598315e52fe54529"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "主身份采用原作者gerber_cov_stat2。原输入要求二维numpy数值数组并直接访问.shape；未转换DataFrame、不补缺失、不对齐时间或删除行。研究合同限定有限float二维同窗同步收益、各列正方差。 标准差围绕列均值，但正负事件门槛比较原始R与±h*s，不先把收益去均值。正边用>=，负边用<=，等于阈值算事件。 stat2复制输入再把比较布尔结果写回副本，构建Gram形式并按事件数量归一。对有效非零h_j，数学上H为Gram矩阵；函数没有额外特征值裁剪或PSD修补。 原stat0/stat1用Python循环统计，先判断同向，再判断反向，最后stat1计双中性。二者assert 0<h<1；原stat2没有该assert。研究合同对全族统一要求0<h<1，但不冒称源码stat2主动检验。 返回实际是(协方差矩阵,相关矩阵)二元组。Riskfolio派生版stat2只返回协方差，并增加阈值assert/列标签包装；其stat0还加PSD修复。本记录按固定原作者版本，不把这些差别无声合入原规则。 边界：stat0某资产对没有任何共同超阈事件时P+N=0，Python计数相除会出错；不能只说返回NaN。stat1/stat2的退化归一化也没有统一错误处理。 全零列会使正负事件同时为1，stat2 Q=0、H对角0，归一化产生0/0；非有限输入也未被拒绝。研究合同排除这些输入，不给退化高相关作解释。 stat2的Gram结构在有效合同下给数学半正定，不是实际浮点特征值或后续组合优化已验证；stat0原实现没有强制半正定。 原作者固定树无LICENSE/COPYING或显式授权，只存自撰数学事实与来源；Riskfolio BSD不覆盖原作者未知权利，commercial为REVIEW_REQUIRED。 这是同期阈值符号计数，不是收益预测、因果领先关系或已验证稳健性的实证结论；整个矩阵及三变体不按坐标/阈值拆数。 输出：一个完整构造族；窗口、方向、语言实现和同族原生选项不拆新增条目"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "harvest-source-7915165d598315e52fe54529"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "把同一时点各资产超过波动阈值的正负变化编码，再统计同向与反向出现的差，得到相关和协方差矩阵；三种归一化合并为同一族。 该用途为定义层描述，未验证收益方向或经济独立性。"
+    },
+    "formula": {
+      "evidence": [
+        "harvest-source-7915165d598315e52fe54529"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "输入R∈R^(n×p)。s_j为每列总体标准差sqrt(mean((R_ij−列均值)^2))；阈值h默认.5。U_ij=1[R_ij>=h s_j]，D_ij=1[R_ij<=−h s_j]，Q=U−D。stat2：H=UᵀU+DᵀD−UᵀD−DᵀU=QᵀQ，C_jk=H_jk/sqrt(H_jj H_kk)，Σ_jk=C_jk s_j s_k，返回(Σ,C)。stat0/1逐资产对记录两列同时超同方向阈值的次数P、同时超反方向阈值次数N，以及同时严格落于中性带的次数NN；C0=(P−N)/(P+N)，C1=(P−N)/(n−NN)，再乘s_j s_k。三种native函数与阈值/资产对只计一个族。"
+    },
+    "inputs": {
+      "evidence": [
+        "harvest-source-7915165d598315e52fe54529"
+      ],
+      "status": "SOURCE_CODE_REVIEWED",
+      "text": "rets（finite float numpy ndarray n×p, n>=2,p>=2, same observation times and positive variance per column）：每行同一完整观测时点、每列资产收益；研究合同要求调用前自行对齐和审缺失。源码既不获取行情也不做数据PIT处理。。参数：threshold：正负事件阈值占全窗列总体标准差的比例；范围research0<h<1; stat0/1 assert, originalstat2 no assert；源码默认0.5；native_normalization_function：归一化变体合并为同族；范围stat0/stat1/stat2 are separate native functions, not an invented argument；源码默认gerber_cov_stat2"
+    },
+    "use_cases": {
+      "evidence": [
+        "harvest-source-7915165d598315e52fe54529"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作为可追溯的量化特征或诊断指标，应用时另行固定输入、采样时点和数据版本；没有直接的下单或回测结论。"
+    }
+  },
+  "identity_namespace": "yinsenm/gerber",
+  "lab": null,
+  "missing_information": [
+    "实际Python/NumPy/SciPy版本与数值重现未冻结",
+    "收益定义/采样频率/数据PIT与市场发布时间未固定",
+    "未回测或证明收益方向、预测能力及稳健性",
+    "未执行上游代码、未回测或证明收益方向",
+    "代码许可不授予论文、市场数据或其它第三方素材权利"
+  ],
+  "name": "超过波动阈值的 Gerber 同向变化矩阵",
+  "native_source_id": "gerber_cov_stat2",
+  "one_line": "把同一时点各资产超过波动阈值的正负变化编码，再统计同向与反向出现的差，得到相关和协方差矩阵；三种归一化合并为同一族。",
+  "record_id": "gerber_cov_stat2",
+  "relations": [],
+  "rights": {
+    "derived_results": "未运行源代码，未计算行情或回测；商业用途仍需独立核权。",
+    "metadata": "自撰中文数学与事实摘要，保存原生来源归属和定位；原文、代码与市场数据不入Git。来源许可证单独保留，不代表原论文或市场数据许可。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://github.com/yinsenm/gerber/blob/af04c2ee5adf342393b028b85ab5546f31c0c8d3/src/gerber.py"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "固定源码作者Yinsen Miao，原仓库链接The Gerber Statistic论文；Riskfolio维护者Dany Cajas文件链接同一原作者commit。未复制原代码或论文，也不据仓库自述断言完整论文复现。",
+      "id": "harvest-source-7915165d598315e52fe54529",
+      "license": "UNKNOWN_NO_LICENSE_GRANT_OBSERVED",
+      "locator": "author identity and imports:L1-L9; native stat0/1 formulas and validation:L19-L87; native stat2 exact signed Gram matrix and tuple return:L90-L121",
+      "revision": "af04c2ee5adf342393b028b85ab5546f31c0c8d3",
+      "sha256": "411cc24577d67cc83968dc5ffe075dfc087d56b0606948b31bc99a6e5175c585",
+      "supports": [
+        "输入、参数、公式与边界"
+      ],
+      "url": "https://github.com/yinsenm/gerber/blob/af04c2ee5adf342393b028b85ab5546f31c0c8d3/src/gerber.py",
+      "verification": "PINNED_CODE_REVIEWED"
+    },
+    {
+      "attribution": "固定源码作者Yinsen Miao，原仓库链接The Gerber Statistic论文；Riskfolio维护者Dany Cajas文件链接同一原作者commit。未复制原代码或论文，也不据仓库自述断言完整论文复现。",
+      "id": "harvest-source-fff2710d6f2e71bf7afb8c6a",
+      "license": "UNKNOWN_NO_LICENSE_GRANT_OBSERVED",
+      "locator": "repository identity and original paper link; commands not executed:L1-L8",
+      "revision": "af04c2ee5adf342393b028b85ab5546f31c0c8d3",
+      "sha256": "d89801fd078bf47910882c947630674dc087b50469735d9c6dbfcbd5ebceedd0",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/yinsenm/gerber/blob/af04c2ee5adf342393b028b85ab5546f31c0c8d3/readme.md",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "固定源码作者Yinsen Miao，原仓库链接The Gerber Statistic论文；Riskfolio维护者Dany Cajas文件链接同一原作者commit。未复制原代码或论文，也不据仓库自述断言完整论文复现。",
+      "id": "harvest-source-de81109d372e5294130cb0d1",
+      "license": "BSD-3-Clause",
+      "locator": "exact fixed original author link:L1-L3",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "dfb342a2cf52f46d81e99ec43ffd41a5ea57e2c89fd45134debfaee71c3eccd3",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/riskfolio/src/GerberStatistic.py",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    },
+    {
+      "attribution": "固定源码作者Yinsen Miao，原仓库链接The Gerber Statistic论文；Riskfolio维护者Dany Cajas文件链接同一原作者commit。未复制原代码或论文，也不据仓库自述断言完整论文复现。",
+      "id": "harvest-source-62293b58121f24792ab9c2bb",
+      "license": "BSD-3-Clause",
+      "locator": "paper authors including Yinsen Miao:L834-L842",
+      "revision": "1b6934dd3195767fa6351ea3d9e2baafbac4ec8f",
+      "sha256": "68b06232402ae268774ae715806c79271fa691c476b657d352123f838197d734",
+      "supports": [
+        "作者补充文档或许可，未用于替代计算规则"
+      ],
+      "url": "https://github.com/dcajasn/Riskfolio-Lib/blob/1b6934dd3195767fa6351ea3d9e2baafbac4ec8f/docs/source/riskfoliolib/biblio.bib",
+      "verification": "PINNED_DOCUMENT_REVIEWED"
+    }
+  ]
+}
