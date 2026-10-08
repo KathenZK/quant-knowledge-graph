@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "劳动力市场关联公司共享劳动力需求与供给冲击，投资者对关联公司信息反应迟缓（有限注意），使关联公司上月收益预测焦点公司下月收益。",
+    "missing": [
+      "样本短且不连续（收益2008年与2011–2017年），Burning Glass（现Lightcast）为商业数据，非公开；未扣交易成本；市值加权t值约2.1。",
+      "第407–410行另述把相似度减去公司中位数并按SIC3粒度设阈值得离散关联，组合所用LabRet为连续相似度加权，二者在组合中的关系原文未完全说明；第478行称要求关联信息在财年初可得，与“t年末计算、用于t+1年”一致但未逐月核对。",
+      "同文剔除SIC/TNIC关联、行业收益正交化、累计未来收益与形成期扩展属稳健性，未单列；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "cambridge.org/S0022109025101610",
+  "lab": null,
+  "missing_information": [
+    "样本短且不连续（收益2008年与2011–2017年），Burning Glass（现Lightcast）为商业数据，非公开；未扣交易成本；市值加权t值约2.1。",
+    "第407–410行另述把相似度减去公司中位数并按SIC3粒度设阈值得离散关联，组合所用LabRet为连续相似度加权，二者在组合中的关系原文未完全说明；第478行称要求关联信息在财年初可得，与“t年末计算、用于t+1年”一致但未逐月核对。",
+    "同文剔除SIC/TNIC关联、行业收益正交化、累计未来收益与形成期扩展属稳健性，未单列；未回测。"
+  ],
+  "name": "劳动力关联动量：按网上招聘职业构成（tf-idf加权）余弦相似度加权的关联公司上月收益LabRet，月初五分位多最高空最低（Liu–Wu）",
+  "native_source_id": "LW2026:labor-momentum-LabRet",
+  "one_line": "用Burning Glass招聘数据为每家公司构造当年职业需求向量（职业招聘数tf与公司总招聘数a的对数比再乘以log(N/df)），两两余弦相似度Labor_{ij}；在t年末计算、用于t+1年；LabRet_{i}=Σ_{j≠i}Labor_{ij}·Ret_j/Σ_{j≠i}Labor_{ij}。每月初按上月LabRet把股票分五组，做多最高组、做空最低组（等权或市值加权），每月重排。",
+  "record_id": "LW2026:labor-momentum-LabRet",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/437C230243B5CCD0174A333D4806F018/S0022109025101610a.pdf/labor-links-comovement-and-predictable-returns.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Yukun Liu, Xi Wu,《Labor Links, Comovement, and Predictable Returns》JFQA 61(1), 2026（CC BY 4.0开放获取出版版）。中文定义自撰。",
+      "id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+      "license": "CC BY 4.0（Creative Commons Attribution，期刊首页声明“unrestricted re-use, distribution and reproduction, provided the original article is properly cited”）",
+      "locator": "派生文本(pdftotext -layout)行段：assets L476–484（PDF物理页9）；universe L240–244（PDF物理页5）；universe L476–484（PDF物理页9）；universe L653–655（PDF物理页12）；signal L337–372（PDF物理页7）；signal L373–394（PDF物理页7,8）；signal L633–650（PDF物理页12）；entry L1193–1201（PDF物理页22）；entry L1233–1245（PDF物理页22）；exit L1193–1201（PDF物理页22）；exit L1233–1245（PDF物理页22）；position L1193–1201（PDF物理页22）；position L1203–1221（PDF物理页22）；risk L1233–1245（PDF物理页22）；risk L1203–1221（PDF物理页22）；risk L1470–1474（PDF物理页27）；risk L1504–1513（PDF物理页27）；timeframe L1193–1201（PDF物理页22）；execution_time L633–650（PDF物理页12）；execution_time L1193–1201（PDF物理页22）",
+      "revision": "期刊出版版（Open Access），Journal of Financial and Quantitative Analysis Vol. 61, No. 1, Feb. 2026, pp. 1–31（PDF页眉所印页码），DOI 10.1017/S0022109025101610；剑桥大学出版社cambridge.org原发，非镜像；31页；Supplementary Material未抓取；sha256 0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8",
+      "sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/437C230243B5CCD0174A333D4806F018/S0022109025101610a.pdf/labor-links-comovement-and-predictable-returns.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v46-jfqa-liu-wu-labor-links-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国上市公司普通股（CRSP/Compustat）。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原文未扣交易成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v46-jfqa-liu-wu-labor-links-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月初按上月LabRet把股票分为五组，做多LabRet最高组、做空最低组。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v46-jfqa-liu-wu-labor-links-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "劳动力相似度由t年招聘数据在t年末计算、只用于t+1年；每月初用上月已实现的关联公司收益排序。"
+    },
+    "exit": {
+      "evidence": [
+        "v46-jfqa-liu-wu-labor-links-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月，每月初重排。"
+    },
+    "position": {
+      "evidence": [
+        "v46-jfqa-liu-wu-labor-links-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "五分位组合，等权或市值加权；多最高20%、空最低20%的对冲组合。"
+    },
+    "risk": {
+      "evidence": [
+        "v46-jfqa-liu-wu-labor-links-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告：多空等权0.77%/月（标准误0.24）、市值加权0.75%（标准误0.35），年化约9.24%/9.00%；FF3 α 0.83%/0.82%，FF5 α 0.82%/0.62%；剔除SIC行业或TNIC关联后FF5 α等权0.61%/0.88%、市值加权0.64%/0.84%；累计未来收益在两个月内显著为正，形成期延长后收益下降。"
+    },
+    "signal": {
+      "evidence": [
+        "v46-jfqa-liu-wu-labor-links-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "w_{i,k,t}=[(1+log tf_{i,k,t})/(1+log a_{i,t})]·log(N_t/df_{k,t})（tf≥1时，否则为0），tf为公司i在t年职业k的招聘数，a为公司i当年全部招聘数，N为当年公司数，df为当年招聘过职业k的公司数；Labor_{i,j,t}=O_{i,t}·O_{j,t}/(‖O_{i,t}‖‖O_{j,t}‖)；LabRet_{i,t}=Σ_{j≠i}Labor_{ijt}·Ret_{jt}/Σ_{j≠i}Labor_{ijt}，相似度在t年末计算并匹配t+1年的收益。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v46-jfqa-liu-wu-labor-links-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度。"
+    },
+    "universe": {
+      "evidence": [
+        "v46-jfqa-liu-wu-labor-links-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Burning Glass Technologies网上招聘数据（覆盖2007年及2010–2016年，缺2008–2009年）与CRSP/Compustat合并；须至少有三个劳动力关联公司，剔除公用事业；收益月份为2008年及2011–2017年。"
+    }
+  }
+}
