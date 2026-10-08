@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "指数展期造成的可预期价差压力可被提前建立相同价差头寸捕获。",
+    "missing": [
+      "交易成本未给出。",
+      "使用收盘或结算价执行未明示。",
+      "工作论文2011-07版；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "cftc.gov/idc",
+  "lab": null,
+  "missing_information": [
+    "交易成本未给出。",
+    "使用收盘或结算价执行未明示。",
+    "工作论文2011-07版；未回测。"
+  ],
+  "name": "抢跑高盛商品指数展期（策略1）",
+  "native_source_id": "plstudy_33:goldman-roll-frontrun-S1",
+  "one_line": "对当月S&P-GSCI将展期的商品，于首个展期日前第10至第6个营业日每日建20%“空到期合约/多下一合约”价差，在指数展期期（第5–9营业日）每日平20%；按板块与全体等权。",
+  "record_id": "plstudy_33:goldman-roll-frontrun-S1",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.cftc.gov/sites/default/files/idc/groups/public/@swaps/documents/file/plstudy_33_yu.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Yiqun Mou,《Limits to Arbitrage and Commodity Index Investment: Front-Running the Goldman Roll》2011-07-15工作论文（CFTC网站托管）。中文定义自撰。",
+      "id": "v36-cftc-mou-2011-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L281–282（PDF物理页9）；universe L500–508（PDF物理页15）；signal L330–335（PDF物理页10）；entry L500–508（PDF物理页15）；exit L497–499（PDF物理页15）；position L546–557（PDF物理页16）",
+      "revision": "Yiqun Mou《Limits to Arbitrage and Commodity Index Investment: Front-Running the Goldman Roll》工作论文，2011-07-15版；CFTC托管；46页；sha256 2f01d38306f3f45f77d7cfef4ec7b5f45eb8ef49290a2d374068050c00f1c3fb",
+      "sha256": "2f01d38306f3f45f77d7cfef4ec7b5f45eb8ef49290a2d374068050c00f1c3fb",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.cftc.gov/sites/default/files/idc/groups/public/@swaps/documents/file/plstudy_33_yu.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v36-cftc-mou-2011-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "S&P-GSCI与DJ-UBSCI共同的19种商品期货（2010年在S&P-GSCI权重合计93.44%）。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "引用段未给交易成本；作者指出价差保证金约2–4%名义。"
+    },
+    "entry": {
+      "evidence": [
+        "v36-cftc-mou-2011-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在S&P-GSCI首个展期日前第10至第6个营业日，每日建立总价差头寸的20%：卖出指数当前持有的到期合约、买入其将展入的远月合约。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v36-cftc-mou-2011-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "营业日计数以S&P-GSCI展期日历为准；建仓/平仓价格时点（结算价）未在引用段写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v36-cftc-mou-2011-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在S&P-GSCI展期期内每日平掉20%价差，与指数展期头寸恰好对冲。"
+    },
+    "position": {
+      "evidence": [
+        "v36-cftc-mou-2011-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "全额抵押（无杠杆），未抢跑时资金投无风险资产；单商品收益按式(3)以两合约均价为分母；按农业、能源、畜牧、金属板块与全部商品等权，当月组合收益为当月展期商品的平均。"
+    },
+    "risk": {
+      "evidence": [
+        "v36-cftc-mou-2011-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日历价差对期限结构斜率有敞口（作者提到可用蝶式降低）；未设止损。"
+    },
+    "signal": {
+      "evidence": [
+        "v36-cftc-mou-2011-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "日历信号：S&P-GSCI在展期月第5至第9个营业日展期，每日展期20%（DJ-UBSCI为第6至第10营业日）。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v36-cftc-mou-2011-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日频建/平仓，月度循环。"
+    },
+    "universe": {
+      "evidence": [
+        "v36-cftc-mou-2011-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月仅交易当月S&P-GSCI将展期的商品。"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "外部净负债高且外债以外币计价国家的货币承担更高风险溢价。",
+    "missing": [
+      "外部数据实际发布滞后未在引用段量化。",
+      "表注写“月度再平衡”与脚注“实务年末再平衡”并存，以脚注为实施口径。",
+      "接受稿，未与RFS终版逐字比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v36-city-drs-global-imbalances-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "nfa与ldc为年度且有发布滞后；原文以年末数据前向填充，实盘需按真实发布时间再滞后。"
+    },
+    "calculation": {
+      "evidence": [
+        "v36-city-drs-global-imbalances-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度计算超额收益，但实务上全球失衡组合只在年末新nfa/ldc数据公布时再平衡（对比carry为月度）；计算净收益时假设P1做空外币、其余组合做多外币。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v36-city-drs-global-imbalances-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：净外债国且外债以外币计价的货币在全球坏状态下贬值，投资者要求风险溢价。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v36-city-drs-global-imbalances-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每期末：第一步按nfa=(外国资产−外国负债)/GDP将货币分成两篮；第二步在各篮内按ldc（外部负债中以本币计价的比例）重排，共分为5个组合；P1为外部负债主要以本币计价的债权国（最安全），P5为外部负债主要以外币计价的债务国（最风险）；IMB=P5−P1，组内等权平均货币超额收益。"
+    },
+    "inputs": {
+      "evidence": [
+        "v36-city-drs-global-imbalances-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "货币超额收益：Barclays/Reuters（Datastream）日度即期与1月远期汇率，取月末，RX_{t+1}=(S_{t+1}−F_t)/S_t，1983-10至2014-06，55国（另15个发达国家子样本），可用买卖价计算净收益。nfa：Lane–Milesi-Ferretti年末外国资产/负债与GDP；ldc：Benetrix–Lane–Shambaugh年末本币计价外债占比（1990–2012，1990比例回填至1983）；年末数据前向填充为月度。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v36-city-drs-global-imbalances-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "外汇横截面风险因子；与carry、货币价值、贸易货币因子对照。"
+    }
+  },
+  "identity_namespace": "openaccess.city.ac.uk/eprint",
+  "lab": null,
+  "missing_information": [
+    "外部数据实际发布滞后未在引用段量化。",
+    "表注写“月度再平衡”与脚注“实务年末再平衡”并存，以脚注为实施口径。",
+    "接受稿，未与RFS终版逐字比对；未回测。"
+  ],
+  "name": "全球失衡货币因子（IMB）",
+  "native_source_id": "13287:IMB",
+  "one_line": "先按净外国资产/GDP（nfa）把货币分两篮，再在篮内按外债本币计价占比（ldc）重排为5组；IMB=做多P5（负债国且外债多为外币）、做空P1（债权国且外债多为本币），组内等权。",
+  "record_id": "13287:IMB",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://openaccess.city.ac.uk/id/eprint/13287/1/FX_NFA_full.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Pasquale Della Corte, Steven J. Riddiough, Lucio Sarno,《Currency Premia and Global Imbalances》接受稿（City, University of London开放仓储；期刊版RFS 2016）。中文定义自撰。",
+      "id": "v36-city-drs-global-imbalances-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L473–485（PDF物理页14）；inputs L411–420（PDF物理页12）；inputs L448–466（PDF物理页13）；calculation L610–612（PDF物理页17）",
+      "revision": "Della Corte/Riddiough/Sarno《Currency Premia and Global Imbalances》作者接受稿（City Research Online，期刊RFS 29(8) 2016）；72页；样本至2014-06；sha256 06eee0adca97b83ca5a26c86761183ea40a28387c379a195107fcd01e6330512",
+      "sha256": "06eee0adca97b83ca5a26c86761183ea40a28387c379a195107fcd01e6330512",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://openaccess.city.ac.uk/id/eprint/13287/1/FX_NFA_full.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "波动率风险溢价高（波动保险便宜）的货币未来超额收益高于VRP低的货币。",
+    "missing": [
+      "货币清单与样本期需取原文第3.1节；本记录未逐一转写。",
+      "组内加权未在引用段明示（按“平均”理解为等权）。",
+      "接受稿，未与JFE终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v36-city-drs-vrp-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "需OTC货币期权隐含波动曲面（商业数据）；收益使用远期计算。"
+    },
+    "calculation": {
+      "evidence": [
+        "v36-city-drs-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每期末按1年期VRP把货币分五组：VRP最高20%入组合1（保险最便宜），最低20%入组合5；组内平均超额收益；VRP=多组合1、空组合5；追踪下一期收益，仅用形成时已知信息。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v36-city-drs-vrp-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：波动保险昂贵的货币对应投资者对其贬值风险的对冲需求，随后贬值。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v36-city-drs-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "VRP_{t,τ}=RV_{t−τ,t}−E^Q_t[RV_{t,t+τ}]：RV为过去τ期（252个交易日）日对数收益平方和开方的已实现波动率（作为物理测度期望代理），E^Q为由期权推得的无模型波动率互换利率；τ=1年。VRP高=波动保险便宜。"
+    },
+    "inputs": {
+      "evidence": [
+        "v36-city-drs-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "JP Morgan月末OTC货币期权隐含波动率（ATM、10/25-delta风险逆转与蝶式），以Bloomberg本外币利率换算为执行价与期权价，恢复对美元的一年期欧式期权，用于一年期波动率互换。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v36-city-drs-vrp-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "外汇横截面因子；与carry、FX波动β、风险逆转（偏度）对照。"
+    }
+  },
+  "identity_namespace": "openaccess.city.ac.uk/eprint",
+  "lab": null,
+  "missing_information": [
+    "货币清单与样本期需取原文第3.1节；本记录未逐一转写。",
+    "组内加权未在引用段明示（按“平均”理解为等权）。",
+    "接受稿，未与JFE终版比对；未回测。"
+  ],
+  "name": "货币波动率风险溢价（VRP）",
+  "native_source_id": "13156:FX-VRP",
+  "one_line": "VRP=过去一年已实现波动率−一年期无模型波动率互换利率（OTC期权隐含）；月末五分位，做多VRP最高（波动保险便宜）、做空最低。",
+  "record_id": "13156:FX-VRP",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://openaccess.city.ac.uk/id/eprint/13156/1/VRP_Paper_18Feb2015%20%28with%20Figures%29.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Pasquale Della Corte, Tarun Ramadorai, Lucio Sarno,《Volatility Risk Premia and Exchange Rate Predictability》接受稿（期刊版JFE 120(1), 2016）。中文定义自撰。",
+      "id": "v36-city-drs-vrp-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L564–570（PDF物理页12）；formula L589–597（PDF物理页13）；inputs L665–724（PDF物理页14,15）；calculation L973–989（PDF物理页20）；calculation L173–185（PDF物理页5）",
+      "revision": "Della Corte/Ramadorai/Sarno《Volatility Risk Premia and Exchange Rate Predictability》2015-02-18作者接受稿（City Research Online；期刊JFE 120(1) 2016, pp.21–40）；58页；sha256 a9d047e5b2e84bcc0548da0f64f34efc31127d80240d7f30c1e553238588bae4",
+      "sha256": "a9d047e5b2e84bcc0548da0f64f34efc31127d80240d7f30c1e553238588bae4",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://openaccess.city.ac.uk/id/eprint/13156/1/VRP_Paper_18Feb2015%20%28with%20Figures%29.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

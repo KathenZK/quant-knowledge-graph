@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "股息支付日的再投资资金对市场形成价格压力，高支付日市场收益更高。",
+    "missing": [
+      "交易成本与换手未在引用段给出。",
+      "“中位数”基于支付额还是支付率（图注称dividend payment，正文用payment yield）未完全统一。",
+      "NBER 2022-11版，未与期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "nber.org/papers",
+  "lab": null,
+  "missing_information": [
+    "交易成本与换手未在引用段给出。",
+    "“中位数”基于支付额还是支付率（图注称dividend payment，正文用payment yield）未完全统一。",
+    "NBER 2022-11版，未与期刊版比对；未回测。"
+  ],
+  "name": "股息支付日价格压力择时（市值加权大盘）",
+  "native_source_id": "w30688:dividend-payment-timing",
+  "one_line": "日股息支付率=当日全市场股息支付总额/前一日总市值；当日或前一日支付额高于过去252个交易日中位数时持有市值加权市场组合，否则空仓（零收益）。",
+  "record_id": "w30688:dividend-payment-timing",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w30688/w30688.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Samuel M. Hartzmark, David H. Solomon,《Predictable Price Pressure》NBER WP 30688（2022-11；后续期刊版未取得、未比对）。中文定义自撰。",
+      "id": "v36-nber-w30688-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L653–659（PDF物理页13）；signal L759–763（PDF物理页15）；signal L2652–2656（PDF物理页47）；entry L947–951（PDF物理页18）；exit L2652–2656（PDF物理页47）；position L947–959（PDF物理页18）",
+      "revision": "NBER Working Paper 30688, November 2022；63页；sha256 96844d617d0827be52d8105dfc2cb6935df11fd3835960138fb671ffb4cf63b7",
+      "sha256": "96844d617d0827be52d8105dfc2cb6935df11fd3835960138fb671ffb4cf63b7",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w30688/w30688.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v36-nber-w30688-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP市值加权市场组合；股息与收益来自CRSP（NYSE/NASDAQ/AMEX普通股10/11，普通现金股息，1926–2018）。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "引用段未给交易成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v36-nber-w30688-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "条件成立的交易日持有市值加权市场组合。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v36-nber-w30688-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日频收盘到收盘（按日收益计）；支付日与金额事前公告，可预先得知。"
+    },
+    "exit": {
+      "evidence": [
+        "v36-nber-w30688-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "条件不成立（支付额≤中位数）的交易日不持仓，收益记为零。"
+    },
+    "position": {
+      "evidence": [
+        "v36-nber-w30688-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "二元：100%市值加权市场组合或0；对照组为低支付日持有。"
+    },
+    "risk": {
+      "evidence": [
+        "v36-nber-w30688-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "未设止损、杠杆或波动控制。"
+    },
+    "signal": {
+      "evidence": [
+        "v36-nber-w30688-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "支付日股息支付率=当日全部股息支付总额÷前一日总市值；条件：当日或前一日股息支付高于过去252个交易日的中位数。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v36-nber-w30688-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日线。"
+    },
+    "universe": {
+      "evidence": [
+        "v36-nber-w30688-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美国全市场（单一指数组合）。"
+    }
+  }
+}

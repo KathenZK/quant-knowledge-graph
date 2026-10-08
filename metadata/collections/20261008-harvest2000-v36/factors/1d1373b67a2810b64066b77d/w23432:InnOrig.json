@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "创新原创性高的公司未来股票收益高于原创性低的公司。",
+    "missing": [
+      "2006年后专利数据来源未给出。",
+      "NBER 2017-05版，未与RFS终版比对。",
+      "未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v36-nber-w23432-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "依赖专利引用与技术类别数据，NBER库止于2006年，后续需USPTO/PatentsView替代。"
+    },
+    "calculation": {
+      "evidence": [
+        "v36-nber-w23432-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "1982–2007年每年6月末，对InnOrig非缺失公司按t−1年InnOrig的30/70分位分低/中/高三组；过去5年无专利但研发为正的公司并入低组；多高空低对冲组合；t−1年InnOrig在t−1年末可观测，留6个月滞后；持有t年7月至t+1年6月，市值加权月收益。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v36-nber-w23432-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：原创性创新更难模仿、带来更持久盈利，投资者对其低估。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v36-nber-w23432-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "单个专利原创性得分=该专利所引用专利被分配的唯一技术类别数（主、次三位技术类别）；公司当年InnOrig=过去五年授予该公司全部专利原创性得分的平均值。"
+    },
+    "inputs": {
+      "evidence": [
+        "v36-nber-w23432-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "NBER专利数据库（Hall–Jaffe–Trajtenberg更新版，1976-01至2006-12 USPTO授权专利：申请/授权日、主三位技术类别、被引、Compustat匹配）与哈佛商学院专利发明人库的次技术类别。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v36-nber-w23432-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股创新类因子；与创新效率（专利/研发）、技术关联动量对照。"
+    }
+  },
+  "identity_namespace": "nber.org/papers",
+  "lab": null,
+  "missing_information": [
+    "2006年后专利数据来源未给出。",
+    "NBER 2017-05版，未与RFS终版比对。",
+    "未回测；经济有效性未检验。"
+  ],
+  "name": "创新原创性（InnOrig）",
+  "native_source_id": "w23432:InnOrig",
+  "one_line": "专利原创性=其引用专利所属唯一技术类别数，公司InnOrig=过去5年获授专利原创性均值；每年6月末按上年InnOrig 30/70分位三分组（无专利但有研发入低组），市值加权持有12个月，做多高、做空低。",
+  "record_id": "w23432:InnOrig",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w23432/w23432.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "David Hirshleifer, Po-Hsuan Hsu, Dongmei Li,《Innovative Originality, Profitability, and Stock Returns》NBER WP 23432（2017-05；期刊版RFS 2018据外部书目，未取）。中文定义自撰。",
+      "id": "v36-nber-w23432-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L471–477（PDF物理页10）；inputs L421–447（PDF物理页9,10）；calculation L1198–1220（PDF物理页25）",
+      "revision": "NBER Working Paper 23432, May 2017；77页；sha256 d9305c9c5ac8e7afb986a03134a2e5fcf6d6a309b58aa31307bff6c0f1c9414a",
+      "sha256": "d9305c9c5ac8e7afb986a03134a2e5fcf6d6a309b58aa31307bff6c0f1c9414a",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w23432/w23432.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}
