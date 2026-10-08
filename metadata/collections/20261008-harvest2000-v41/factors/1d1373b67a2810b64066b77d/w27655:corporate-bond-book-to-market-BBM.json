@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "摊销账面价值相对市价越高（折价越深）的公司债，次月收益越高。",
+    "missing": [
+      "工作稿（2023-03修订）未与期刊版比对；网络附录未取。",
+      "月度调仓扣除全部客户交易成本后净α不显著，只有年度调仓、机构交易规模下净α显著。",
+      "同文的BG债券误定价信号与BBM在定义上不同，未收入本条；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v41-nber-w27655-bond-book-to-market-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "需要TRACE与FISD；月度调仓时多空组合月换手31%，全部客户交易的成本约50bp/月，超过19bp的毛α，净α不显著；年度调仓（买入持有）换手7%、毛α约减半（BBW与增广BBW模型下12bp与16bp），扣成本后增广BBW模型净α 12bp/月（t=2.06），作者称该版本在机构大额交易成本下仍有利润。"
+    },
+    "calculation": {
+      "evidence": [
+        "v41-nber-w27655-bond-book-to-market-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按BBM分五组，Q5为最“价值”（BBM最高）组；次月收益=(月末净价+应计利息+票息)/(月初净价+应计利息)−1，月初/月末净价分别取次月第一笔与最后一笔成交；违约债在持有月内保留并按保守规则计收益。作者报告Q5−Q1月均44bp（等权）与41bp（市值加权），年化夏普0.92与0.85；Q1月均57bp、Q5月均101bp（等权）。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v41-nber-w27655-bond-book-to-market-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者认为BBM高（深度折价）的债券被低估，其收益差主要反映误定价而非遗漏的风险。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v41-nber-w27655-bond-book-to-market-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "BBM_{j,t}=Book_{j,t}/PS_{j,t}；Book为每100面值的摊销发行价：FISD发行价，若折价或溢价发行则按会计规则在发行日至到期日之间直线摊销到各月末；PS为月t最近一笔TRACE成交的净价（flat price），但排除月t最后7天的成交（信号价与次月收益起始价至少间隔8个日历日）；FISD缺发行价（约30%）的债券不进入候选。"
+    },
+    "inputs": {
+      "evidence": [
+        "v41-nber-w27655-bond-book-to-market-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "增强版与标准版TRACE逐笔成交（信号用2003-01至2020-08，收益用2003-02至2020-09）与Mergent FISD发行条款；主样本为高级无担保、固定票息、除（通常为make-whole）赎回外无嵌入期权的债券，剔除金融业（SIC 60–69）、非美发行人或非美元债、剩余期限不足1年、价格低于面值1/20或高于10倍的成交，以及交易时已违约的债券。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v41-nber-w27655-bond-book-to-market-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "公司债横截面价值选券因子；可作长多组合的倾斜信号以回避做空成本，或与信用动量、利差残差价值因子对照。"
+    }
+  },
+  "identity_namespace": "nber.org/papers",
+  "lab": null,
+  "missing_information": [
+    "工作稿（2023-03修订）未与期刊版比对；网络附录未取。",
+    "月度调仓扣除全部客户交易成本后净α不显著，只有年度调仓、机构交易规模下净α显著。",
+    "同文的BG债券误定价信号与BBM在定义上不同，未收入本条；未回测。"
+  ],
+  "name": "公司债账面市值比BBM：摊销发行价/成交价五分位多空（Bartram–Grinblatt–Nozawa）",
+  "native_source_id": "w27655:corporate-bond-book-to-market-BBM",
+  "one_line": "每只公司债的“账面价值”取发行价按直线法摊销至到期的值（每100面值），除以月末前至少8个日历日的最近一笔TRACE成交净价，得到债券账面市值比BBM；每月末按BBM分五组，做多最高组（折价最深）、做空最低组，持有一个月；等权与市值加权都报告。",
+  "record_id": "w27655:corporate-bond-book-to-market-BBM",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w27655/w27655.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Söhnke M. Bartram, Mark Grinblatt, Yoshio Nozawa,《Book-to-Market, Mispricing, and the Cross-Section of Corporate Bond Returns》NBER WP 27655（2020-08，2023-03修订）。中文定义自撰。",
+      "id": "v41-nber-w27655-bond-book-to-market-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L447–461（PDF物理页11,12）；formula L463–466（PDF物理页12）；formula L434–436（PDF物理页11）；inputs L287–289（PDF物理页7）；inputs L293–303（PDF物理页8）；calculation L495–496（PDF物理页12）；calculation L362–365（PDF物理页9）；calculation L397–402（PDF物理页10）；calculation L650–661（PDF物理页16）；availability L1204–1216（PDF物理页29,30）；availability L1309–1330（PDF物理页32）",
+      "revision": "NBER Working Paper 27655，\"August 2020, Revised March 2023\"，NBER官网托管；63页；期刊版未比对；sha256 eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0",
+      "sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w27655/w27655.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}
