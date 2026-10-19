@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "低IVOL股票的Delta对冲认购收益高于高IVOL股票（期权定价对特异风险的溢价）。",
+    "missing": [
+      "五分位内期权的加权方式未在引用段说明。",
+      "交易成本结果未转写。",
+      "双栏PDF行段混排；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "rotman.utoronto.ca/facbios",
+  "lab": null,
+  "missing_information": [
+    "五分位内期权的加权方式未在引用段说明。",
+    "交易成本结果未转写。",
+    "双栏PDF行段混排；未回测。"
+  ],
+  "name": "特异波动率Delta对冲认购期权多空",
+  "native_source_id": "JFE108-2013:ivol-delta-hedged-call-ls",
+  "one_line": "每月末按上月FF3残差特异波动率五分位：买入最低IVOL股票的Delta对冲认购、卖出最高IVOL的，每日调整对冲，持有至下月末平仓。",
+  "record_id": "JFE108-2013:ivol-delta-hedged-call-ls",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www-2.rotman.utoronto.ca/facbios/file/Han_JFE_published.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jie Cao, Bing Han,《Cross section of option returns and idiosyncratic stock volatility》Journal of Financial Economics 108 (2013)。中文定义自撰。",
+      "id": "v36-rotman-cao-han-jfe2013-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L186–215（PDF物理页3）；universe L186–215（PDF物理页3）；signal L383–387（PDF物理页6）；entry L873–923（PDF物理页12）；exit L873–923（PDF物理页12）；position L873–923（PDF物理页12）；position L314–345（PDF物理页5）",
+      "revision": "JFE 108 (2013) 期刊排版PDF；多伦多大学Rotman教员页托管；19页；双栏排版，pdftotext行内左右栏混排；sha256 2e616634df8581b012941b3b098bb5010a1240de7e3aa983432669b056e7069a",
+      "sha256": "2e616634df8581b012941b3b098bb5010a1240de7e3aa983432669b056e7069a",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www-2.rotman.utoronto.ca/facbios/file/Han_JFE_published.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v36-rotman-cao-han-jfe2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国个股期权（OptionMetrics）与正股（CRSP）。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原文另节检验流动性与交易成本影响，本记录未转写其数值。"
+    },
+    "entry": {
+      "evidence": [
+        "v36-rotman-cao-han-jfe2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按IVOL分五分位；买入最低IVOL五分位股票的Delta对冲认购、卖出最高五分位的Delta对冲认购。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v36-rotman-cao-han-jfe2013-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月末形成；每日收盘调整对冲。"
+    },
+    "exit": {
+      "evidence": [
+        "v36-rotman-cao-han-jfe2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "期权头寸保持1张直至下月末平仓。"
+    },
+    "position": {
+      "evidence": [
+        "v36-rotman-cao-han-jfe2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "多头：买1张认购、卖Δ股正股（Black-Scholes Delta）；空头：卖1张认购、买Δ股；每个交易日调整Delta对冲；日收益H_{t+1}/H_t−1（H=ΔS−C），复利为月收益。Delta对冲收益定义见式(1)。"
+    },
+    "risk": {
+      "evidence": [
+        "v36-rotman-cao-han-jfe2013-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "卖出高IVOL期权有尾部风险；未设止损。"
+    },
+    "signal": {
+      "evidence": [
+        "v36-rotman-cao-han-jfe2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "IVOL=上月日收益对Fama-French三因子回归残差的标准差。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v36-rotman-cao-han-jfe2013-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月度换仓，日度对冲。"
+    },
+    "universe": {
+      "evidence": [
+        "v36-rotman-cao-han-jfe2013-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末每只可交易期权股票选一对最接近平值、到期日超过1个月中最短的认购/认沽；剔除到期前有除息的股票、违反无套利、零成交或零买价、买≥卖、中间价<1/8美元、交易日期不匹配，以及到期长于多数的期权。"
+    }
+  }
+}

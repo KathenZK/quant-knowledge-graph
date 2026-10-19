@@ -1,0 +1,2801 @@
+{
+  "batch_id": "20261008-harvest2000-v38",
+  "records": [
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0027",
+            "M3727",
+            "M0040",
+            "M3888",
+            "M0111"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0027",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0001-v2/metadata/source-records/M0027.json",
+              "row_sha256": "7c3e998ccfe52cc09582b5f43394ce9c1efd2987dc6182a51682c86cd7b9e31a",
+              "sha256": "2513595728b19f02de57a60b8d140da2e8411c91b6b12ea097e3722b5750d9ba"
+            },
+            {
+              "native_id": "M3727",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0037-v2/metadata/source-records/M3727.json",
+              "row_sha256": "9fe79e08669b233006305aaafee4b731b7a146f80a8b6338a876ac4bbfa84e8b",
+              "sha256": "a71a9f1a5fcdf7089ad997c1257f5adee687f0c1946ab776f07aba183b3e88c8"
+            },
+            {
+              "native_id": "M0040",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0001-v2/metadata/source-records/M0040.json",
+              "row_sha256": "a26dfa68a5e681d7074ff81997e3e7979ffa4d28b3783dccd46ce12cb2126efe",
+              "sha256": "dcf05b3851322ca185adc8982d9041da4417223c1374568c9e6197e7512cd64f"
+            },
+            {
+              "native_id": "M3888",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0039-v2/metadata/source-records/M3888.json",
+              "row_sha256": "9446fd0e0737ee83160ea6f0b001d15a7a5827859459b8cb39834608ad92e824",
+              "sha256": "13c908ffb64ab8bfe8dfe1b863aacd28e91c13c4982d7c43f0e514e0ace278ba"
+            },
+            {
+              "native_id": "M0111",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0111.json",
+              "row_sha256": "e7084d2e7466e860f36fe81f3e7cecb5b231af0db6f21a58490104c84288df18",
+              "sha256": "def1d498ebb6c4dcb40f432ba4dc15331158871f9513eb20af6c1641bcb9d15d"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "short-term reversal",
+            "短期反转",
+            "discount rate news",
+            "折现率冲击",
+            "cash flow news",
+            "within-industry"
+          ]
+        },
+        "compared_record_names": {
+          "M0027": "Fama-French短期反转ST_Rev",
+          "M0040": "FSCORE与短期反转",
+          "M0111": "股票短期反转",
+          "M3727": "CXO·残差短反转：月频；36月三因子α/波动排序，多最低五分位空最高，区域内中性（CXO ResidualSTR）",
+          "M3888": "QC·月频短反转大盘：月频；美元成交额Top100再市值Top20；做多上月ROC最差10、做空最好10，等权（QC STR·Mcap20·Mom1）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以收益分解后残差折现率冲击DR在行业内十分位排序的反转构造。M0027为FF按上月总收益的ST_Rev，M3727为36月三因子α/波动残差反转，M0040为FSCORE条件反转，M3888/M0111为大盘股上月/上周收益反转；均不剔除分析师现金流冲击。目录检索“discount rate news/折现率冲击/行业内反转”无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "DLS2011-within-industry-decile-sort-prior-month-DR-residual-r-minus-FF3-mu-minus-3stage-analyst-CF-long-most-negative",
+      "entity_type": "factor",
+      "field_spans": {
+        "calculation": [
+          {
+            "bytes": 296,
+            "derived_text_sha256": "8cb6709de3bd037115d5dd2fffed8912b58f368bd563cf0e09fc03ea67e66c19",
+            "first_line": 1027,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1031,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "1244b4c1ac8234c555a3295712256d15375f66ea377e8e3470013478a751b20e",
+            "source_id": "v38-nyfed-sr513-pdf",
+            "source_sha256": "4c8636a52b940acb4ec09649cefad88032b838e08935981761b75e3e3d85f85f"
+          },
+          {
+            "bytes": 366,
+            "derived_text_sha256": "8cb6709de3bd037115d5dd2fffed8912b58f368bd563cf0e09fc03ea67e66c19",
+            "first_line": 1252,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1258,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              21
+            ],
+            "sha256": "379bb20b762d376a928059e6fbc3c982a2619f49d615dc66669ce85236b29963",
+            "source_id": "v38-nyfed-sr513-pdf",
+            "source_sha256": "4c8636a52b940acb4ec09649cefad88032b838e08935981761b75e3e3d85f85f"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 1638,
+            "derived_text_sha256": "8cb6709de3bd037115d5dd2fffed8912b58f368bd563cf0e09fc03ea67e66c19",
+            "first_line": 845,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 882,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "db5fd39f6d71950028fb5e01907c571073e83317c13531ad2cd1b955ea65c97a",
+            "source_id": "v38-nyfed-sr513-pdf",
+            "source_sha256": "4c8636a52b940acb4ec09649cefad88032b838e08935981761b75e3e3d85f85f"
+          },
+          {
+            "bytes": 393,
+            "derived_text_sha256": "8cb6709de3bd037115d5dd2fffed8912b58f368bd563cf0e09fc03ea67e66c19",
+            "first_line": 886,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 892,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "c3c6bbfbbc926848ac19682a64d027604579533816cf6708890b742ee76adb3f",
+            "source_id": "v38-nyfed-sr513-pdf",
+            "source_sha256": "4c8636a52b940acb4ec09649cefad88032b838e08935981761b75e3e3d85f85f"
+          },
+          {
+            "bytes": 437,
+            "derived_text_sha256": "8cb6709de3bd037115d5dd2fffed8912b58f368bd563cf0e09fc03ea67e66c19",
+            "first_line": 939,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 946,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "063101fe36b7704d539fa2356527e9ef400c7e7902b4361bdf6065f3ceea59ec",
+            "source_id": "v38-nyfed-sr513-pdf",
+            "source_sha256": "4c8636a52b940acb4ec09649cefad88032b838e08935981761b75e3e3d85f85f"
+          },
+          {
+            "bytes": 254,
+            "derived_text_sha256": "8cb6709de3bd037115d5dd2fffed8912b58f368bd563cf0e09fc03ea67e66c19",
+            "first_line": 957,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 962,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "984e4904e55923f5de55e56e5bff6d92cf0a5ca12747b629af8084492d7c6d0b",
+            "source_id": "v38-nyfed-sr513-pdf",
+            "source_sha256": "4c8636a52b940acb4ec09649cefad88032b838e08935981761b75e3e3d85f85f"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 611,
+            "derived_text_sha256": "8cb6709de3bd037115d5dd2fffed8912b58f368bd563cf0e09fc03ea67e66c19",
+            "first_line": 731,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 745,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "f9eba70f0e8bf728647fcc2a61611bf28248212810f9518dbaf603e5e9bdd1ff",
+            "source_id": "v38-nyfed-sr513-pdf",
+            "source_sha256": "4c8636a52b940acb4ec09649cefad88032b838e08935981761b75e3e3d85f85f"
+          },
+          {
+            "bytes": 286,
+            "derived_text_sha256": "8cb6709de3bd037115d5dd2fffed8912b58f368bd563cf0e09fc03ea67e66c19",
+            "first_line": 764,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 768,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "df577cd4281a041ed085bd55d6199be15bec21b194c349be90894788b4bbc844",
+            "source_id": "v38-nyfed-sr513-pdf",
+            "source_sha256": "4c8636a52b940acb4ec09649cefad88032b838e08935981761b75e3e3d85f85f"
+          },
+          {
+            "bytes": 989,
+            "derived_text_sha256": "8cb6709de3bd037115d5dd2fffed8912b58f368bd563cf0e09fc03ea67e66c19",
+            "first_line": 1003,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1021,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "cdff64157429fc2863c37b7e7faf99149c3be2df293e86b7a1f32481e94c8a6a",
+            "source_id": "v38-nyfed-sr513-pdf",
+            "source_sha256": "4c8636a52b940acb4ec09649cefad88032b838e08935981761b75e3e3d85f85f"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "newyorkfed.org/research",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "SR513:DR-reversal"
+      ],
+      "record_id": "SR513:DR-reversal",
+      "record_sha256": "1fb1bc4dd80c21cd92fb375b0f9596f9150ffd111c04a5c9739498644ca6b468",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4508",
+            "M0829",
+            "M4501",
+            "M0348",
+            "M4146"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4508",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4508.json",
+              "row_sha256": "b8ecafd8f248e42f70f276b95db55be684a5738804c7acf240639f57f5cf1001",
+              "sha256": "75cae16e8943530f66e0ee4b5e61c813de7be2603d23d7e8f0a24912bcc6e167"
+            },
+            {
+              "native_id": "M0829",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0009-v2/metadata/source-records/M0829.json",
+              "row_sha256": "fbd6b10089be1c5ed9aab08e3a2529e0324411ae053793d55b9cd2317839dfc0",
+              "sha256": "67b2f51da4ad79803743ea8e597adccc8d3889dc239abc09b0f07b1dc194be10"
+            },
+            {
+              "native_id": "M4501",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4501.json",
+              "row_sha256": "1e457d45b5766e5044b5c0ab0fa6a4b8a31d07f99cfc7b1810f16ea3e8d4de05",
+              "sha256": "b1b9313832c7f937b7522d825d20cb2c793e2db2ebeb20800a0e258464a443be"
+            },
+            {
+              "native_id": "M0348",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0348.json",
+              "row_sha256": "6bbf6919333f71de1fb1b66616b0fb0eef45d7f3de580168b8366766f1b98b58",
+              "sha256": "b428dd3adb37db6917b4d2ee0d788208dcf49e7f75143d6dd0d68e199c39bd64"
+            },
+            {
+              "native_id": "M4146",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0041-v2/metadata/source-records/M4146.json",
+              "row_sha256": "8c9ad7bff78a59293bb4fc0d2a564efc9a5e732fa74f91d26ea00f76ff1673f7",
+              "sha256": "4e57a2540ad53a02e152991d91874d4658cea63e2c076421b3b35b8bc4a5b4cd"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "tail risk",
+            "尾部风险",
+            "PPUT",
+            "put protection",
+            "currency beta",
+            "货币组合"
+          ]
+        },
+        "compared_record_names": {
+          "M0348": "美元套息",
+          "M0829": "外汇偏度尾部风险溢价：EURUSD、AUDUSD、USDCAD、USDJPY，30日偏度低于-0.6做多、高于+0.6做空，每周等权",
+          "M4146": "AQR·ValMom·外汇价值：月末；价值=−5年实际汇率变化（PPP）；秩减均值加权多便宜空昂贵至1美元（AQR ValMom·FX·Value）",
+          "M4501": "Lustig·Roussanov·Verdelhan·HML_FX：月末；发达货币按远期贴水分六组；等多最高贴水组、空最低贴水组等权；持1月（LRV HML_FX·P6−P1）",
+          "M4508": "Menkhoff·Sarno·Schmeling·Schrimpf·外汇波动率风险：月末；货币对全球FX实现波动创新的β；等权多最低β三分位、空最高β三分位；持1月（MSSS FXVolβ·L1/S3）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以CBOE PPUT减标普500构造的美股尾部风险因子滚动β为排序变量的外汇横截面构造。M4508为全球FX实现波动创新β，M0829为单币种30日偏度择时，M4501/M0348为利差carry，M4146为PPP价值；v37集合APf13-Verdelhan为美元β条件组合。均不使用期权尾部因子β。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "FLX2019-FX-60m-rolling-beta-on-Tail-PPUT-minus-SPX-log-return-controlling-SPX-quintiles-equal-weight-low-minus-high",
+      "entity_type": "factor",
+      "field_spans": {
+        "calculation": [
+          {
+            "bytes": 739,
+            "derived_text_sha256": "005acc701a587443e715b2f27f67e7f625274f296aa23c16803f4ce185e9fa2b",
+            "first_line": 605,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 622,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17,
+              18
+            ],
+            "sha256": "b1b04054222c48b94255b0bb71531df5c79f20006069a1d5f9f6852475c3de90",
+            "source_id": "v38-frb-ifdp1253-pdf",
+            "source_sha256": "de4491b2027d12e185aa54d76d7174fff07f6e4bac121200bfc8e2559e4268ea"
+          },
+          {
+            "bytes": 230,
+            "derived_text_sha256": "005acc701a587443e715b2f27f67e7f625274f296aa23c16803f4ce185e9fa2b",
+            "first_line": 633,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 635,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              18
+            ],
+            "sha256": "77bfdeb4d70dfe40e7bb27fad9006fff8d647d7d52150e1ccaa5fbb0f654661d",
+            "source_id": "v38-frb-ifdp1253-pdf",
+            "source_sha256": "de4491b2027d12e185aa54d76d7174fff07f6e4bac121200bfc8e2559e4268ea"
+          },
+          {
+            "bytes": 850,
+            "derived_text_sha256": "005acc701a587443e715b2f27f67e7f625274f296aa23c16803f4ce185e9fa2b",
+            "first_line": 636,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 648,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              18,
+              19
+            ],
+            "sha256": "e661bdf46a816c6975a6a0e18a41b22f26858734b13a7d8ec5a2531fa41dd97b",
+            "source_id": "v38-frb-ifdp1253-pdf",
+            "source_sha256": "de4491b2027d12e185aa54d76d7174fff07f6e4bac121200bfc8e2559e4268ea"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 755,
+            "derived_text_sha256": "005acc701a587443e715b2f27f67e7f625274f296aa23c16803f4ce185e9fa2b",
+            "first_line": 484,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 492,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "5b26b3c4f3716c15c79e26678a8185cf7f2f1991ff64eed71198301cc98017a0",
+            "source_id": "v38-frb-ifdp1253-pdf",
+            "source_sha256": "de4491b2027d12e185aa54d76d7174fff07f6e4bac121200bfc8e2559e4268ea"
+          },
+          {
+            "bytes": 472,
+            "derived_text_sha256": "005acc701a587443e715b2f27f67e7f625274f296aa23c16803f4ce185e9fa2b",
+            "first_line": 493,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 505,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14,
+              15
+            ],
+            "sha256": "fe1c60bb5a9c93665d3bf0140de35c8ee48cbd38d2c3abde549cb749a318f82d",
+            "source_id": "v38-frb-ifdp1253-pdf",
+            "source_sha256": "de4491b2027d12e185aa54d76d7174fff07f6e4bac121200bfc8e2559e4268ea"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 598,
+            "derived_text_sha256": "005acc701a587443e715b2f27f67e7f625274f296aa23c16803f4ce185e9fa2b",
+            "first_line": 476,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 483,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "de4e703ab3cdcac789c35f2594c7b7705d60456fd85c58e323afab868ca7268c",
+            "source_id": "v38-frb-ifdp1253-pdf",
+            "source_sha256": "de4491b2027d12e185aa54d76d7174fff07f6e4bac121200bfc8e2559e4268ea"
+          },
+          {
+            "bytes": 499,
+            "derived_text_sha256": "005acc701a587443e715b2f27f67e7f625274f296aa23c16803f4ce185e9fa2b",
+            "first_line": 540,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 545,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "c7b20feff066d0f6a65a4cf8eae05ff814dd9d5e9d74cc3522c74350ad98468a",
+            "source_id": "v38-frb-ifdp1253-pdf",
+            "source_sha256": "de4491b2027d12e185aa54d76d7174fff07f6e4bac121200bfc8e2559e4268ea"
+          },
+          {
+            "bytes": 1027,
+            "derived_text_sha256": "005acc701a587443e715b2f27f67e7f625274f296aa23c16803f4ce185e9fa2b",
+            "first_line": 560,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 579,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16,
+              17
+            ],
+            "sha256": "1c385ffc95a772ec1030649e9a21c7d8c3bc7698b34e9b4e26df0ad706bce512",
+            "source_id": "v38-frb-ifdp1253-pdf",
+            "source_sha256": "de4491b2027d12e185aa54d76d7174fff07f6e4bac121200bfc8e2559e4268ea"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "federalreserve.gov/econres",
+      "markets": [
+        "FX_FORWARD"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "IFDP1253:US-tail-beta-FX"
+      ],
+      "record_id": "IFDP1253:US-tail-beta-FX",
+      "record_sha256": "b55d8998929580f915c717d3f504b78ed43e234fded3a9682292c353412fa2f6",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M6990",
+            "M6973",
+            "M4492",
+            "M4499",
+            "M0341"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M6990",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0070-v2/metadata/source-records/M6990.json",
+              "row_sha256": "c22cd5261f1eb6bb0a0219fcdd407eea758dd95df49941faddc21c634702cca7",
+              "sha256": "9a8f31502713792a4381b5df26d5cb6eec497b139e390b74fa5af0d2c81074a0"
+            },
+            {
+              "native_id": "M6973",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0070-v2/metadata/source-records/M6973.json",
+              "row_sha256": "7baaf6c01ba346fa663d0ab7c652a77b20c9930b4f9e0a5d511040f556127b98",
+              "sha256": "d55239e534a1c140be14d140d1b88578d358fa52d0259efa8d61b17a57b88424"
+            },
+            {
+              "native_id": "M4492",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4492.json",
+              "row_sha256": "5d0f2814a780efa7613c8dc6e05b1dadc47597b4ec415c00108a9521e49bc09e",
+              "sha256": "3e0c389895c0f3c17f83f55add54dc924da658e76800c837b320bc663b8d2501"
+            },
+            {
+              "native_id": "M4499",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4499.json",
+              "row_sha256": "569245c1d3fcdaeec5f9a06537445f7745066aa21384aa54ad14cb7b467aa7e8",
+              "sha256": "a4d1a15df45974156d36bfc2ba8f8046f635d44ab774a494a4f82a5f88b7b79c"
+            },
+            {
+              "native_id": "M0341",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0341.json",
+              "row_sha256": "6d1f84b8bda2e435ab3506cf03fa082d44fcc3fd9f186cb4b20ac2b95070a48a",
+              "sha256": "253110dccdce1a90b6f0accc3005dfdef6713c91b5d205adb9c39b111eeff679"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "idiosyncratic volatility",
+            "特质波动率",
+            "commodity futures",
+            "商品期货",
+            "S&P-GSCI",
+            "IVol"
+          ]
+        },
+        "compared_record_names": {
+          "M0341": "商品偏度效应",
+          "M4492": "Fuertes·Miffre·Rallis·商品双排序：月末；展期收益三分位取高/低；组内12月均收益中位分输赢；等多High-Winner空Low-Loser等权；持1月（FMR TS1-Mom12-1）",
+          "M4499": "Miffre·Rallis·商品动量12−1：月末；商品期货；过去12月均收益最高五分位等多、最低五分位等空；持1月（MR Mom·12-1·Q5/Q1）",
+          "M6973": "Ali·CAPM特异波动五分位多空：月末；IdioVolAHT=过去252日CAPM残差RMSE（≥100日）；市值加权多最低空最高持36月（Ali·IdioVolAHT·QuintileL/S）",
+          "M6990": "Ang·三因子特异波动十分位多空：月末；IdioVol3F=日超额对FF3残差波动；市值加权多最低空最高持1月（Ang·IdioVol3F·QuintileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以商品期货对S&P-GSCI日收益残差波动排序的商品横截面构造。M6990/M6973为美股三因子/CAPM特质波动（股票市场），M4492为展期×动量双排序，M4499为12−1动量，M0341为商品偏度；目录检索“商品特质波动”无命中。市场或核心信号不同。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "FMF2015-commodity-IVol-residual-std-daily-returns-on-SP-GSCI-over-R-months-quintile-long-low-short-high-EW-monthly",
+      "entity_type": "factor",
+      "field_spans": {
+        "calculation": [
+          {
+            "bytes": 275,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 379,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 383,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "f1aaf0fc202e2cd6e57a51b60d7de9e88f5fe8c2183ad19f2c90975dd02f48fd",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          },
+          {
+            "bytes": 740,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 458,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 472,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "a53fc846a4b603e163ff1e421e59cc62275e3d78f913d33dd3a6d4a68b216aee",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          },
+          {
+            "bytes": 95,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 488,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 488,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "2f6d15fa2a27ab75f6b31d80d333b965472b1d2b3399fda6443a9d71f08a3294",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 967,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 290,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 310,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "3ad39045655706fabd49fa73757108db81e49e332ebfc4f581f543f007abd110",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          },
+          {
+            "bytes": 464,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 447,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 455,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "7d7a4623b22c95d5bc8a9acb3dea82ceab4ec44816399bc45aa1d3e8c4ed9bf9",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 1120,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 214,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 237,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "913d0f5312b59f01cd7d5d0013f07fa1e8e89f26c45d64bb330c0cedd8f4cdae",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "openaccess.city.ac.uk/eprint",
+      "markets": [
+        "COMMODITY_FUTURES"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "6418:commodity-IVol-GSCI"
+      ],
+      "record_id": "6418:commodity-IVol-GSCI",
+      "record_sha256": "c27a1361463d6fcf212bc43dd31bbe5e25607f5a68130bdfb7233497b01ce187",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；同源另有6418:triple-screen-Mom-TS-IVol，资产或核心交易规则不同，非参数变体。"
+    },
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4508",
+            "M4501",
+            "M0348",
+            "M4146",
+            "M5575"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4508",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4508.json",
+              "row_sha256": "b8ecafd8f248e42f70f276b95db55be684a5738804c7acf240639f57f5cf1001",
+              "sha256": "75cae16e8943530f66e0ee4b5e61c813de7be2603d23d7e8f0a24912bcc6e167"
+            },
+            {
+              "native_id": "M4501",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4501.json",
+              "row_sha256": "1e457d45b5766e5044b5c0ab0fa6a4b8a31d07f99cfc7b1810f16ea3e8d4de05",
+              "sha256": "b1b9313832c7f937b7522d825d20cb2c793e2db2ebeb20800a0e258464a443be"
+            },
+            {
+              "native_id": "M0348",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0348.json",
+              "row_sha256": "6bbf6919333f71de1fb1b66616b0fb0eef45d7f3de580168b8366766f1b98b58",
+              "sha256": "b428dd3adb37db6917b4d2ee0d788208dcf49e7f75143d6dd0d68e199c39bd64"
+            },
+            {
+              "native_id": "M4146",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0041-v2/metadata/source-records/M4146.json",
+              "row_sha256": "8c9ad7bff78a59293bb4fc0d2a564efc9a5e732fa74f91d26ea00f76ff1673f7",
+              "sha256": "4e57a2540ad53a02e152991d91874d4658cea63e2c076421b3b35b8bc4a5b4cd"
+            },
+            {
+              "native_id": "M5575",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0056-v2/metadata/source-records/M5575.json",
+              "row_sha256": "671f5454966fe78a179607c47db222d67ad1bfb1c2b3078f4bfbc2b9f71c5713",
+              "sha256": "b4eb971f61766f2926ed7a759bb7a8eb9d528ea45dc853de524c700293aa52ca"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "correlation risk",
+            "相关性风险",
+            "FX correlation dispersion",
+            "外汇相关性",
+            "G10",
+            "beta sort"
+          ]
+        },
+        "compared_record_names": {
+          "M0348": "美元套息",
+          "M4146": "AQR·ValMom·外汇价值：月末；价值=−5年实际汇率变化（PPP）；秩减均值加权多便宜空昂贵至1美元（AQR ValMom·FX·Value）",
+          "M4501": "Lustig·Roussanov·Verdelhan·HML_FX：月末；发达货币按远期贴水分六组；等多最高贴水组、空最低贴水组等权；持1月（LRV HML_FX·P6−P1）",
+          "M4508": "Menkhoff·Sarno·Schmeling·Schrimpf·外汇波动率风险：月末；货币对全球FX实现波动创新的β；等权多最低β三分位、空最高β三分位；持1月（MSSS FXVolβ·L1/S3）",
+          "M5575": "Fidelity·股债60日负相关：日频；Corr(SPY,TLT,60)<0持SPY否则BIL（Corr60·Neg·SPY/TLT）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以G10货币对已实现相关性十分位离散度创新的滚动β排序的外汇构造。M4508为全球FX波动率创新β，M4501/M0348为利差carry，M4146为PPP价值，M5575为股债相关性择时（非外汇）；目录“correlation risk/相关性风险”仅M5575命中。核心信号不同。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "MSV2017-G10-FX-36m-rolling-beta-on-dFXC-top-minus-bottom-decile-pair-correlation-change-3-portfolios-short-HMLC",
+      "entity_type": "factor",
+      "field_spans": {
+        "calculation": [
+          {
+            "bytes": 1420,
+            "derived_text_sha256": "edc5752687f8b1d04310f3c1fdd536c36d333db9d9245660d962895782b55d42",
+            "first_line": 345,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 365,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7,
+              8
+            ],
+            "sha256": "c5afa8f9c14b99d0619c16f861dfe5b31a114c7f164af467cdcff510d50d54b7",
+            "source_id": "v38-warwick-msv-correlation-risk-pdf",
+            "source_sha256": "971c3153b090b2d602b1c9fade9a79a9a3704cd1bf9a1962597ae38743d7d306"
+          },
+          {
+            "bytes": 353,
+            "derived_text_sha256": "edc5752687f8b1d04310f3c1fdd536c36d333db9d9245660d962895782b55d42",
+            "first_line": 367,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 369,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "d62aa9b0b5fd134f966a6fe017922642d9716e3923bb3544af8f418fa87ecab7",
+            "source_id": "v38-warwick-msv-correlation-risk-pdf",
+            "source_sha256": "971c3153b090b2d602b1c9fade9a79a9a3704cd1bf9a1962597ae38743d7d306"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 1150,
+            "derived_text_sha256": "edc5752687f8b1d04310f3c1fdd536c36d333db9d9245660d962895782b55d42",
+            "first_line": 237,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 251,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5,
+              6
+            ],
+            "sha256": "b39912ef1bf13bc5ca8037b0d27495b172ecf1438bf78339579e86e553696c85",
+            "source_id": "v38-warwick-msv-correlation-risk-pdf",
+            "source_sha256": "971c3153b090b2d602b1c9fade9a79a9a3704cd1bf9a1962597ae38743d7d306"
+          },
+          {
+            "bytes": 478,
+            "derived_text_sha256": "edc5752687f8b1d04310f3c1fdd536c36d333db9d9245660d962895782b55d42",
+            "first_line": 319,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 322,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "13c58049e6c6422ac718c0bc3bebca684c0fc067533dace365463a3c5b7e1a8e",
+            "source_id": "v38-warwick-msv-correlation-risk-pdf",
+            "source_sha256": "971c3153b090b2d602b1c9fade9a79a9a3704cd1bf9a1962597ae38743d7d306"
+          },
+          {
+            "bytes": 352,
+            "derived_text_sha256": "edc5752687f8b1d04310f3c1fdd536c36d333db9d9245660d962895782b55d42",
+            "first_line": 343,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 345,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "a8512aecf7ab8445bca25e72bcdc90fed8b303de204178cdb1cc146c32e5b2e8",
+            "source_id": "v38-warwick-msv-correlation-risk-pdf",
+            "source_sha256": "971c3153b090b2d602b1c9fade9a79a9a3704cd1bf9a1962597ae38743d7d306"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 917,
+            "derived_text_sha256": "edc5752687f8b1d04310f3c1fdd536c36d333db9d9245660d962895782b55d42",
+            "first_line": 200,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 208,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5
+            ],
+            "sha256": "19eeeb1b2db55ec17bb5baf02bb7fd177da8046c8c6298ab8cc174ac5387d5af",
+            "source_id": "v38-warwick-msv-correlation-risk-pdf",
+            "source_sha256": "971c3153b090b2d602b1c9fade9a79a9a3704cd1bf9a1962597ae38743d7d306"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "wrap.warwick.ac.uk/eprint",
+      "markets": [
+        "FX_FORWARD"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "94014:FX-correlation-risk-beta"
+      ],
+      "record_id": "94014:FX-correlation-risk-beta",
+      "record_sha256": "df42fb736e133f6e5ebfd03f7101a498812be7e715375d66ea2db041b9f82620",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4411",
+            "M4416",
+            "M4505",
+            "M4422",
+            "M0341"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4411",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4411.json",
+              "row_sha256": "95e196ecfda773a4d409edb44368e1d12c29fc0650415b90c853eae9bdbb09c7",
+              "sha256": "4c9e27eccf58e4a0900c628a5aeb9e9d82880879d1953d1f8fe551cff323f967"
+            },
+            {
+              "native_id": "M4416",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4416.json",
+              "row_sha256": "738ec694b194f3aa68b3be09fbebc6c1d58dd3b573d150d4a5ad2d40fb1b13f6",
+              "sha256": "db897b46ebb984b27cc46ec86fc8f25d37676b728eb9a466d0d60ad020f7af86"
+            },
+            {
+              "native_id": "M4505",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4505.json",
+              "row_sha256": "216e1518edea9fad69b74d0c01014eff409c6891134256d6ea6b0c0887a029aa",
+              "sha256": "20227b862b377f7f74782f42f3addcb797f1bfba97c64b440cc0bafd219b9f30"
+            },
+            {
+              "native_id": "M4422",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4422.json",
+              "row_sha256": "3929e6507c621b07062a3fb07f5013926e4af36787609e7650deba8c55d955dc",
+              "sha256": "4886c51eb094ff6247b05f41bce61846d2967fa9975904e5d06ee176aa644023"
+            },
+            {
+              "native_id": "M0341",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0341.json",
+              "row_sha256": "6d1f84b8bda2e435ab3506cf03fa082d44fcc3fd9f186cb4b20ac2b95070a48a",
+              "sha256": "253110dccdce1a90b6f0accc3005dfdef6713c91b5d205adb9c39b111eeff679"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "Google search",
+            "搜索量",
+            "hazard fear",
+            "恐惧",
+            "attention",
+            "commodity futures"
+          ]
+        },
+        "compared_record_names": {
+          "M0341": "商品偏度效应",
+          "M4411": "Da·Engelberg·Gao·异常搜索量ASVI：周频；Russell3000；ASVI=log(SVI)−log(近8周SVI中位)；等高ASVI组等权做多、等低组等空；持约2周（DEG ASVI·2w）",
+          "M4416": "Quantpedia·加密Google情绪CSI⊕趋势A+D：月末；CSI=多关键词Google Trends兴趣等权（按截至当月末峰值归一）；ΔCSI与BTC月收益同号（同正A或同负D）则满仓BTC一月，否则现金（QP CryptoCSI·A+D）",
+          "M4422": "Boons·Prado·商品基差动量：月末；约21种商品；BM=近12月近月期货动量−次近月动量；等权多最高4、空最低4之近月合约（BP BasisMom·H4/L4·EW）",
+          "M4505": "Hong·Yogo·商品未平仓增长择时：月末；四部门美元OI等权；12月OI增长高于递推中位则满仓等权商品期货，否则T-bill；持1月（HY OI·12m·Timing）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以149个危害关键词Google搜索变化对商品周收益回归斜率之和排序的商品构造。M4411为美股个股异常搜索量ASVI，M4416为加密Google情绪择时，M4505为商品未平仓增长择时，M4422为基差动量，M0341为偏度；目录无商品×危害搜索记录。市场或核心信号不同。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "FFGM2019-commodity-weekly-CFEAR-sum-of-149-keyword-betas-on-standardized-dlog-GSVI-expanding-short-Q5-long-Q1-EW-1w",
+      "entity_type": "factor",
+      "field_spans": {
+        "calculation": [
+          {
+            "bytes": 664,
+            "derived_text_sha256": "1be383992e7f1353c4318af42dcd99e3aa2687b969c6578457dcc1134454e179",
+            "first_line": 670,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 682,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "de7730edde58a610845d74f1f1d4e5390d8575306470e093dbc084f9f8d45066",
+            "source_id": "v38-mpra-100528-pdf",
+            "source_sha256": "a62ac76913362a38546ee52de5ce44ebced8f5f3bf1e0b7d89a20b21a0e046d7"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 576,
+            "derived_text_sha256": "1be383992e7f1353c4318af42dcd99e3aa2687b969c6578457dcc1134454e179",
+            "first_line": 591,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 601,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "30b2e8b225f25fe02d79cde805dedbbe85ce35f282c29fc7ad12b6fd99043d9c",
+            "source_id": "v38-mpra-100528-pdf",
+            "source_sha256": "a62ac76913362a38546ee52de5ce44ebced8f5f3bf1e0b7d89a20b21a0e046d7"
+          },
+          {
+            "bytes": 1716,
+            "derived_text_sha256": "1be383992e7f1353c4318af42dcd99e3aa2687b969c6578457dcc1134454e179",
+            "first_line": 618,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 652,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "be49ab9d98fef33d70a6e9f0e0433b6c1f0c3fe4131d86bccf400051195757e2",
+            "source_id": "v38-mpra-100528-pdf",
+            "source_sha256": "a62ac76913362a38546ee52de5ce44ebced8f5f3bf1e0b7d89a20b21a0e046d7"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 654,
+            "derived_text_sha256": "1be383992e7f1353c4318af42dcd99e3aa2687b969c6578457dcc1134454e179",
+            "first_line": 465,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 477,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "16aa99ef478a7e83954e48dab2c8099089fe07f1c33cb9cb542dbb3d1b2eac50",
+            "source_id": "v38-mpra-100528-pdf",
+            "source_sha256": "a62ac76913362a38546ee52de5ce44ebced8f5f3bf1e0b7d89a20b21a0e046d7"
+          },
+          {
+            "bytes": 187,
+            "derived_text_sha256": "1be383992e7f1353c4318af42dcd99e3aa2687b969c6578457dcc1134454e179",
+            "first_line": 533,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 535,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "c1417cdfdd4b3072cec9a01fdd29723c3c02e038130b6eb8de0d3331f9a19b5d",
+            "source_id": "v38-mpra-100528-pdf",
+            "source_sha256": "a62ac76913362a38546ee52de5ce44ebced8f5f3bf1e0b7d89a20b21a0e046d7"
+          },
+          {
+            "bytes": 1094,
+            "derived_text_sha256": "1be383992e7f1353c4318af42dcd99e3aa2687b969c6578457dcc1134454e179",
+            "first_line": 699,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 725,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14,
+              15
+            ],
+            "sha256": "8f37b34f7721f6026aa29856936674270e34bd77f3e2ad00f1382595dc22bc35",
+            "source_id": "v38-mpra-100528-pdf",
+            "source_sha256": "a62ac76913362a38546ee52de5ce44ebced8f5f3bf1e0b7d89a20b21a0e046d7"
+          }
+        ]
+      },
+      "frequencies": [
+        "WEEKLY"
+      ],
+      "identity_namespace": "mpra.ub.uni-muenchen.de",
+      "markets": [
+        "COMMODITY_FUTURES"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "100528:CFEAR"
+      ],
+      "record_id": "100528:CFEAR",
+      "record_sha256": "344233e3ddaa05b48cef523bf49b52ae3333da2907797cbbf92aa3893a6c3a6f",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4505",
+            "M4422",
+            "M4499",
+            "M3668",
+            "M4492"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4505",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4505.json",
+              "row_sha256": "216e1518edea9fad69b74d0c01014eff409c6891134256d6ea6b0c0887a029aa",
+              "sha256": "20227b862b377f7f74782f42f3addcb797f1bfba97c64b440cc0bafd219b9f30"
+            },
+            {
+              "native_id": "M4422",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4422.json",
+              "row_sha256": "3929e6507c621b07062a3fb07f5013926e4af36787609e7650deba8c55d955dc",
+              "sha256": "4886c51eb094ff6247b05f41bce61846d2967fa9975904e5d06ee176aa644023"
+            },
+            {
+              "native_id": "M4499",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4499.json",
+              "row_sha256": "569245c1d3fcdaeec5f9a06537445f7745066aa21384aa54ad14cb7b467aa7e8",
+              "sha256": "a4d1a15df45974156d36bfc2ba8f8046f635d44ab774a494a4f82a5f88b7b79c"
+            },
+            {
+              "native_id": "M3668",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0037-v2/metadata/source-records/M3668.json",
+              "row_sha256": "fe0f31149d77cdd783a7b897e77bb0210d3cc8720a45775b62a31383ba2eec54",
+              "sha256": "359152295e130d280098b36c49ff932ae6b0eb9d64a28d23b895690e736e6dbb"
+            },
+            {
+              "native_id": "M4492",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4492.json",
+              "row_sha256": "5d0f2814a780efa7613c8dc6e05b1dadc47597b4ec415c00108a9521e49bc09e",
+              "sha256": "3e0c389895c0f3c17f83f55add54dc924da658e76800c837b320bc663b8d2501"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "hedging pressure",
+            "套保压力",
+            "COT",
+            "CFTC",
+            "commercial traders",
+            "跨资产"
+          ]
+        },
+        "compared_record_names": {
+          "M3668": "CXO·聪明钱指标SMI股债切换：周频；SMI>0持SPY，否则TLT；信号滞后1周（CXO SMI·SPY/TLT·1w）",
+          "M4422": "Boons·Prado·商品基差动量：月末；约21种商品；BM=近12月近月期货动量−次近月动量；等权多最高4、空最低4之近月合约（BP BasisMom·H4/L4·EW）",
+          "M4492": "Fuertes·Miffre·Rallis·商品双排序：月末；展期收益三分位取高/低；组内12月均收益中位分输赢；等多High-Winner空Low-Loser等权；持1月（FMR TS1-Mom12-1）",
+          "M4499": "Miffre·Rallis·商品动量12−1：月末；商品期货；过去12月均收益最高五分位等多、最低五分位等空；持1月（MR Mom·12-1·Q5/Q1）",
+          "M4505": "Hong·Yogo·商品未平仓增长择时：月末；四部门美元OI等权；12月OI增长高于递推中位则满仓等权商品期货，否则T-bill；持1月（HY OI·12m·Timing）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以CFTC商业交易者12个月平均净空比例三分位排序、覆盖四类期货的构造。M4505为未平仓总量增长择时，M4422为基差动量，M4499为12−1动量，M3668为标普期货聪明钱指标择时，M4492为展期×动量；v37集合TaleTwoPremiums-2017:hedger-Q为套保者周净交易（流量），非持仓水平；v36拒收R36-007仅因来源不可得。核心信号不同。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "FFFM2017-futures-4-asset-classes-12m-avg-commercial-short-minus-long-over-sum-tercile-long-high-short-low-EW-monthly",
+      "entity_type": "factor",
+      "field_spans": {
+        "calculation": [
+          {
+            "bytes": 1504,
+            "derived_text_sha256": "f53a0117eb6f6d67e244d380a5c89ab630699e51add56b14f4b7ba3b01d8ea10",
+            "first_line": 264,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 282,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7,
+              8
+            ],
+            "sha256": "d6088210dfb63061c5319b4a9d4bbc5a4a29778a3485c9c64c3eb15b1cce7a87",
+            "source_id": "v38-aut-hedging-pressure-everywhere-pdf",
+            "source_sha256": "2f0b97ea4512f45958f04fa21d1d7c8a46289d8242c0f85c865236f84c59ad68"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 1170,
+            "derived_text_sha256": "f53a0117eb6f6d67e244d380a5c89ab630699e51add56b14f4b7ba3b01d8ea10",
+            "first_line": 206,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 221,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "54ed2295f1c6412107eb606e48e253685e0faaf8806f31131808aa86c1feb060",
+            "source_id": "v38-aut-hedging-pressure-everywhere-pdf",
+            "source_sha256": "2f0b97ea4512f45958f04fa21d1d7c8a46289d8242c0f85c865236f84c59ad68"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 565,
+            "derived_text_sha256": "f53a0117eb6f6d67e244d380a5c89ab630699e51add56b14f4b7ba3b01d8ea10",
+            "first_line": 398,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 403,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "1a80b989be70d1c9a8020307c3bcdf17780b069b45948e150c6c9459a005d68e",
+            "source_id": "v38-aut-hedging-pressure-everywhere-pdf",
+            "source_sha256": "2f0b97ea4512f45958f04fa21d1d7c8a46289d8242c0f85c865236f84c59ad68"
+          },
+          {
+            "bytes": 111,
+            "derived_text_sha256": "f53a0117eb6f6d67e244d380a5c89ab630699e51add56b14f4b7ba3b01d8ea10",
+            "first_line": 419,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 420,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "d0abfc206f2d310ef61a8f2692d903db20253d7762c855d319b4bc95d551986a",
+            "source_id": "v38-aut-hedging-pressure-everywhere-pdf",
+            "source_sha256": "2f0b97ea4512f45958f04fa21d1d7c8a46289d8242c0f85c865236f84c59ad68"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "acfr.aut.ac.nz/assets",
+      "markets": [
+        "MULTI_ASSET_FUTURES"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "AUT-HP-2017:hedging-pressure-4-classes"
+      ],
+      "record_id": "AUT-HP-2017:hedging-pressure-4-classes",
+      "record_sha256": "d5b78c682baf587c94d64eec01b561a8c1b69d547b47ed088341323e6d35c952",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4492",
+            "M4499",
+            "M0341",
+            "M4422",
+            "M4151"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4492",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4492.json",
+              "row_sha256": "5d0f2814a780efa7613c8dc6e05b1dadc47597b4ec415c00108a9521e49bc09e",
+              "sha256": "3e0c389895c0f3c17f83f55add54dc924da658e76800c837b320bc663b8d2501"
+            },
+            {
+              "native_id": "M4499",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4499.json",
+              "row_sha256": "569245c1d3fcdaeec5f9a06537445f7745066aa21384aa54ad14cb7b467aa7e8",
+              "sha256": "a4d1a15df45974156d36bfc2ba8f8046f635d44ab774a494a4f82a5f88b7b79c"
+            },
+            {
+              "native_id": "M0341",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0341.json",
+              "row_sha256": "6d1f84b8bda2e435ab3506cf03fa082d44fcc3fd9f186cb4b20ac2b95070a48a",
+              "sha256": "253110dccdce1a90b6f0accc3005dfdef6713c91b5d205adb9c39b111eeff679"
+            },
+            {
+              "native_id": "M4422",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4422.json",
+              "row_sha256": "3929e6507c621b07062a3fb07f5013926e4af36787609e7650deba8c55d955dc",
+              "sha256": "4886c51eb094ff6247b05f41bce61846d2967fa9975904e5d06ee176aa644023"
+            },
+            {
+              "native_id": "M4151",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4151.json",
+              "row_sha256": "b40dca6fc890c77ef138c5405100a3f562b1ba34685a59921687a8754b409b35",
+              "sha256": "8a7698fb8dd3332713d2f797dc65afd4e6e6a958459befdfae846d300a19de34"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "triple screen",
+            "三重筛选",
+            "momentum",
+            "roll yield",
+            "idiosyncratic volatility",
+            "商品期货"
+          ]
+        },
+        "compared_record_names": {
+          "M0341": "商品偏度效应",
+          "M4151": "AQR·ValMom·商品动量：月末；商品期货；MOM2–12秩减均值加权多强空弱至1美元（AQR ValMom·Cmdty·Mom）",
+          "M4422": "Boons·Prado·商品基差动量：月末；约21种商品；BM=近12月近月期货动量−次近月动量；等权多最高4、空最低4之近月合约（BP BasisMom·H4/L4·EW）",
+          "M4492": "Fuertes·Miffre·Rallis·商品双排序：月末；展期收益三分位取高/低；组内12月均收益中位分输赢；等多High-Winner空Low-Loser等权；持1月（FMR TS1-Mom12-1）",
+          "M4499": "Miffre·Rallis·商品动量12−1：月末；商品期货；过去12月均收益最高五分位等多、最低五分位等空；持1月（MR Mom·12-1·Q5/Q1）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以动量、展期收益与IVol三者秩分之和五分位排序的商品组合策略。M4492为展期收益三分位内再按12月收益中位分的双排序（无IVol、非秩和），M4499为单一动量，M0341为偏度，M4422为基差动量，M4151为AQR动量；目录无三信号秩和记录。构造不同。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "FMF2015-commodity-triple-screen-rank-sum-Mom-TS-IVol-R-months-quintile-long-top-short-bottom-EW-1m",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 1120,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 214,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 237,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "913d0f5312b59f01cd7d5d0013f07fa1e8e89f26c45d64bb330c0cedd8f4cdae",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 188,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 688,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 690,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "315cab32898882d38bc8641fc0384ed88ccf007332c116c18009dae91bd00618",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 188,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 688,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 690,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "315cab32898882d38bc8641fc0384ed88ccf007332c116c18009dae91bd00618",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 95,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 488,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 488,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "2f6d15fa2a27ab75f6b31d80d333b965472b1d2b3399fda6443a9d71f08a3294",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 464,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 447,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 455,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "7d7a4623b22c95d5bc8a9acb3dea82ceab4ec44816399bc45aa1d3e8c4ed9bf9",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          },
+          {
+            "bytes": 857,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 670,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 686,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "9915e13a312ad2e10e63a00bd7b8d8356f33cafff6c8b7f15a67d72d38dee39a",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 1120,
+            "derived_text_sha256": "ef376ade113f01d2c81e86fd782f79b19f6d387ee83425a85790ceb58632cd53",
+            "first_line": 214,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 237,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "913d0f5312b59f01cd7d5d0013f07fa1e8e89f26c45d64bb330c0cedd8f4cdae",
+            "source_id": "v38-city-fmf-commodity-ivol-pdf",
+            "source_sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "openaccess.city.ac.uk/eprint",
+      "markets": [
+        "COMMODITY_FUTURES"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "6418:triple-screen-Mom-TS-IVol"
+      ],
+      "record_id": "6418:triple-screen-Mom-TS-IVol",
+      "record_sha256": "c3de916a59c49f7fafd8c7c12570a9a9430ce776d382fe6bd504f0f88ad23222",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；同源另有6418:commodity-IVol-GSCI，资产或核心交易规则不同，非参数变体。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4501",
+            "M0167",
+            "M3577",
+            "M0854",
+            "M4508"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4501",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4501.json",
+              "row_sha256": "1e457d45b5766e5044b5c0ab0fa6a4b8a31d07f99cfc7b1810f16ea3e8d4de05",
+              "sha256": "b1b9313832c7f937b7522d825d20cb2c793e2db2ebeb20800a0e258464a443be"
+            },
+            {
+              "native_id": "M0167",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0167.json",
+              "row_sha256": "a915206d97158c3abc21762d431da236f3e10cc146858970d7e2f19132672c2d",
+              "sha256": "53ff3f656872562fb610d4cc289ffb80398002787263568516d90a76aee5667b"
+            },
+            {
+              "native_id": "M3577",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3577.json",
+              "row_sha256": "19787ac996519a940885a2dc9e521829a0df986491741aa4bc95de89a8ea88f4",
+              "sha256": "b1895e9e34bc1f73f9de4107da56a4a6a1d3d511616362cc3c2b7f542a4d072c"
+            },
+            {
+              "native_id": "M0854",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0009-v2/metadata/source-records/M0854.json",
+              "row_sha256": "da87173b5e405cb30a6b123b866458440ad8ecb278cd6041acfa7526dc46a19a",
+              "sha256": "9cdb415c8970e6f2e958ae608ee9e2c319423e045bd6136234e292aed886dd2a"
+            },
+            {
+              "native_id": "M4508",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4508.json",
+              "row_sha256": "b8ecafd8f248e42f70f276b95db55be684a5738804c7acf240639f57f5cf1001",
+              "sha256": "75cae16e8943530f66e0ee4b5e61c813de7be2603d23d7e8f0a24912bcc6e167"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "volatility carry",
+            "波动率套息",
+            "forward volatility agreement",
+            "远期波动率",
+            "implied volatility slope",
+            "FX options"
+          ]
+        },
+        "compared_record_names": {
+          "M0167": "波动率风险溢价",
+          "M0854": "日频VIX体制切换波动率套息对冲：温和100% SVXY，风险100% UVXY，否则TQQQ；温和与风险截止未印成数字",
+          "M3577": "QP波动率风险溢价：月频；卖1月ATM跨式（5%权利金）并买15%OTM认沽对冲；余资投指数（QP VRP·Crash-Insured）",
+          "M4501": "Lustig·Roussanov·Verdelhan·HML_FX：月末；发达货币按远期贴水分六组；等多最高贴水组、空最低贴水组等权；持1月（LRV HML_FX·P6−P1）",
+          "M4508": "Menkhoff·Sarno·Schmeling·Schrimpf·外汇波动率风险：月末；货币对全球FX实现波动创新的β；等权多最低β三分位、空最高β三分位；持1月（MSSS FXVolβ·L1/S3）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以外汇隐含波动率曲线斜率五分位排序、交易远期波动率协议的构造。M4501为远期贴水carry（汇率而非波动率），M0167/M3577为美股卖跨式VRP，M0854为VIX体制切换，M4508为全球FX实现波动β；v36集合13156:FX-VRP为按已实现−互换波动率排序货币（交易汇率远期），资产与信号均不同。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "DKN2021-FX-FVA-quintiles-by-implied-vol-slope-24m-minus-3m-over-3m-buy-lowest-sell-highest-EW-monthly-VCA",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 628,
+            "derived_text_sha256": "fe6e99d98d446c097972c11e503cda1e96ee22366c0e88e8d9740b354e7bea41",
+            "first_line": 254,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 261,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "5e5ddcc90d7751a0e0d98e334462eba39728cf9b7b91e3d207bd9f3576dd1580",
+            "source_id": "v38-city-dkn-currency-vol-premia-pdf",
+            "source_sha256": "b771531840d81b6943b81ed4d350e1bcaef93b114c75b7b814793137b134eb2d"
+          },
+          {
+            "bytes": 773,
+            "derived_text_sha256": "fe6e99d98d446c097972c11e503cda1e96ee22366c0e88e8d9740b354e7bea41",
+            "first_line": 287,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 298,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "8e25c78b7004403ee189622c1a70b891b13efa590d5b967acfc471e8cf3c6533",
+            "source_id": "v38-city-dkn-currency-vol-premia-pdf",
+            "source_sha256": "b771531840d81b6943b81ed4d350e1bcaef93b114c75b7b814793137b134eb2d"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 556,
+            "derived_text_sha256": "fe6e99d98d446c097972c11e503cda1e96ee22366c0e88e8d9740b354e7bea41",
+            "first_line": 416,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 421,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "f36c6af05144798d5541c78671e6c971f0df65577b07d4d873771277d1402c2f",
+            "source_id": "v38-city-dkn-currency-vol-premia-pdf",
+            "source_sha256": "b771531840d81b6943b81ed4d350e1bcaef93b114c75b7b814793137b134eb2d"
+          },
+          {
+            "bytes": 191,
+            "derived_text_sha256": "fe6e99d98d446c097972c11e503cda1e96ee22366c0e88e8d9740b354e7bea41",
+            "first_line": 435,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 436,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "e3ee73fd4843bd70b55cd07cea10f99d926a2b94bd6aaca5d1b2ba87927d3130",
+            "source_id": "v38-city-dkn-currency-vol-premia-pdf",
+            "source_sha256": "b771531840d81b6943b81ed4d350e1bcaef93b114c75b7b814793137b134eb2d"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 556,
+            "derived_text_sha256": "fe6e99d98d446c097972c11e503cda1e96ee22366c0e88e8d9740b354e7bea41",
+            "first_line": 416,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 421,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "f36c6af05144798d5541c78671e6c971f0df65577b07d4d873771277d1402c2f",
+            "source_id": "v38-city-dkn-currency-vol-premia-pdf",
+            "source_sha256": "b771531840d81b6943b81ed4d350e1bcaef93b114c75b7b814793137b134eb2d"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 556,
+            "derived_text_sha256": "fe6e99d98d446c097972c11e503cda1e96ee22366c0e88e8d9740b354e7bea41",
+            "first_line": 416,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 421,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "f36c6af05144798d5541c78671e6c971f0df65577b07d4d873771277d1402c2f",
+            "source_id": "v38-city-dkn-currency-vol-premia-pdf",
+            "source_sha256": "b771531840d81b6943b81ed4d350e1bcaef93b114c75b7b814793137b134eb2d"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 469,
+            "derived_text_sha256": "fe6e99d98d446c097972c11e503cda1e96ee22366c0e88e8d9740b354e7bea41",
+            "first_line": 409,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 416,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "b3b0bc95b0fefe424767da09c0ee65c69fb687ce1e5be97f522645a5e4bb8125",
+            "source_id": "v38-city-dkn-currency-vol-premia-pdf",
+            "source_sha256": "b771531840d81b6943b81ed4d350e1bcaef93b114c75b7b814793137b134eb2d"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 628,
+            "derived_text_sha256": "fe6e99d98d446c097972c11e503cda1e96ee22366c0e88e8d9740b354e7bea41",
+            "first_line": 254,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 261,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "5e5ddcc90d7751a0e0d98e334462eba39728cf9b7b91e3d207bd9f3576dd1580",
+            "source_id": "v38-city-dkn-currency-vol-premia-pdf",
+            "source_sha256": "b771531840d81b6943b81ed4d350e1bcaef93b114c75b7b814793137b134eb2d"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "openaccess.city.ac.uk/eprint",
+      "markets": [
+        "FX_OPTIONS"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "24178:FX-vol-carry-VCA"
+      ],
+      "record_id": "24178:FX-vol-carry-VCA",
+      "record_sha256": "e3a98a5f4b095e23dc6e5836da484672affadc3b841f9b48138bddc874a76782",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4160",
+            "M4147",
+            "M4201",
+            "M4100",
+            "M4090"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4160",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4160.json",
+              "row_sha256": "cd076e32619ada7b9aeb7ffdc89f742675a8fdcdbf9f4758f14218c1d51813bb",
+              "sha256": "3739aec06669707ba0c0410b79eea4ac1549438fd0f700b438dfa23f0fab12a4"
+            },
+            {
+              "native_id": "M4147",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4147.json",
+              "row_sha256": "bbf4128e2f414a31b109499388214388e7dcfe832e4cbbfc541b9d2714ea86fa",
+              "sha256": "a2f77a4ec6abc05da1c51a77df781f9ab08ac446985a4f7f9da63df5dcb32cfb"
+            },
+            {
+              "native_id": "M4201",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4201.json",
+              "row_sha256": "88640e4f6a1498a035b562eec499a8f6bbb4435d52f7afb2f5c1ebf475e23b9b",
+              "sha256": "b8caf6eb7ea8e211daef20de95698a16556a64bd7d97027c6fd31712794a72be"
+            },
+            {
+              "native_id": "M4100",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0041-v2/metadata/source-records/M4100.json",
+              "row_sha256": "7f918e4cdd3fcbc42a174578590642d76a81f8dcd835ee080ec6bc310ed23f85",
+              "sha256": "52b5119db4cb267628ce733c5d7b98bcf6c8809135a6a7b8d67b9b173659d4e4"
+            },
+            {
+              "native_id": "M4090",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0041-v2/metadata/source-records/M4090.json",
+              "row_sha256": "4c0fc9ea8fc42f9f7f1f26e0c4631c9cc506af5509fd77e3f5e0ab7b28ec24aa",
+              "sha256": "138bada7b18cd213392f5725c0d8d2f6f34d0037a8ea241594e76f8f0139d101"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "swap spread",
+            "互换利差",
+            "Libor-repo",
+            "fixed income arbitrage",
+            "固定收益套利",
+            "convergence trade"
+          ]
+        },
+        "compared_record_names": {
+          "M4090": "NF·久期Carry·期限利差三分位：月末；10Y−1Y利差相对过去10年分位；上2/3做多久期超额、下1/3做空；次日收盘（NF Duration·Carry·Pctl）",
+          "M4100": "NF·久期Carry·5Y−2Y利差符号：月末；5年−2年期限利差；利差>0做多10Y空3M否则反向；持有1年十二重叠（NF Duration·Carry·5Y2Y）",
+          "M4147": "AQR·ValMom·债券价值：月末；10国10Y国债；价值=5年收益率变化；秩减均值加权多便宜空昂贵至1美元（AQR ValMom·Bond·Value）",
+          "M4160": "AQR·Carry·全球国债：月末；约10国10Y；carry≈利差+滚下；秩减均值加权多高空低至1美元（AQR Carry·Bond）",
+          "M4201": "AQR·TSMOM·国债期货：月末；发达国债期货；过去12月超额收益符号定多空；持有1月；仓位=40%/事前年化波动（AQR TSMOM·Bond）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以互换利差相对Libor−GC回购利差偏离10bp触发、收固定互换+做空国债的收敛交易。M4160为全球国债carry，M4147为国债价值，M4201为国债期货TSMOM，M4100/M4090为美债期限利差久期择时；目录检索“swap spread/互换利差”无命中。资产组合与信号不同。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "DLY2006-swap-spread-arb-receive-fixed-swap-short-par-treasury-if-SS-minus-Libor-GC-repo-gt-10bp-hold-to-convergence-or-maturity",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 812,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 172,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 181,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "8c9ce8cccca79158056c5a0ba81429292ef19a4ddaa3fc96fa46817c1e241d28",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 910,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 1091,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1103,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26,
+              27
+            ],
+            "sha256": "ea148679894c3ed8bfd2f15a3ed57b624cae49e7982e1b26882c0a695d9cf450",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 439,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 228,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 232,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "da7f1887933fd16a247b76ce83d7f563e29a651af69f6dda59b34b2330f73163",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          },
+          {
+            "bytes": 421,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 1085,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1089,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "14903540b7547ab530ec988ff2438c2f57e0d8d15f17bb83d1cba0db762dca05",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 265,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 233,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 235,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "e7959693d9a287f57be26f7664f33b831495ab2ad30768b07126eb9443c8b9d0",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          },
+          {
+            "bytes": 421,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 1085,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1089,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "14903540b7547ab530ec988ff2438c2f57e0d8d15f17bb83d1cba0db762dca05",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 527,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 238,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 243,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "87c023c19c7fdd3a3e8b382ff792b15187fce309634fbfe9fd3ff3110aa8a717",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 439,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 228,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 232,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "da7f1887933fd16a247b76ce83d7f563e29a651af69f6dda59b34b2330f73163",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 662,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 217,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 224,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "27074d329bf3e38e4fdac7e09f10071d85787453663c489ca8eba937ca2603b9",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "bankofcanada.ca/wp-content",
+      "markets": [
+        "US_INTEREST_RATE_SWAPS",
+        "US_TREASURY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "duarte4:swap-spread-arbitrage"
+      ],
+      "record_id": "duarte4:swap-spread-arbitrage",
+      "record_sha256": "71769a7446f089d7f0a0675ef9e314320f1965b7ccc3781a6f5238c61bd9f99a",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；同源另有duarte4:cap-volatility-arbitrage、duarte4:capital-structure-arbitrage，资产或核心交易规则不同，非参数变体。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0167",
+            "M3577",
+            "M0718",
+            "M2466",
+            "M0802"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0167",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0167.json",
+              "row_sha256": "a915206d97158c3abc21762d431da236f3e10cc146858970d7e2f19132672c2d",
+              "sha256": "53ff3f656872562fb610d4cc289ffb80398002787263568516d90a76aee5667b"
+            },
+            {
+              "native_id": "M3577",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3577.json",
+              "row_sha256": "19787ac996519a940885a2dc9e521829a0df986491741aa4bc95de89a8ea88f4",
+              "sha256": "b1895e9e34bc1f73f9de4107da56a4a6a1d3d511616362cc3c2b7f542a4d072c"
+            },
+            {
+              "native_id": "M0718",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0008-v2/metadata/source-records/M0718.json",
+              "row_sha256": "ef76e611ece6fdfad0700b527879a96b7ff06d05f8a64d5a9aa2ed97ce5c03a9",
+              "sha256": "bdf0e4fa1cae5a79b85af1eb5cce032abf9676cd6e1ce48f4be8df7a469a43c2"
+            },
+            {
+              "native_id": "M2466",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0025-v2/metadata/source-records/M2466.json",
+              "row_sha256": "c30f897c34800185f7c55c348fc25c7cc02f24fb4f426a00b86970184aa43462",
+              "sha256": "0e54adf5777132623a93dcd0c348f4f52b98adddb2320c36a8a3d14c9b2c02ad"
+            },
+            {
+              "native_id": "M0802",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0009-v2/metadata/source-records/M0802.json",
+              "row_sha256": "8e442c1474274b68c7a29ab106c43fd27d85ac81753f9c7c260768c3cfa9fdf6",
+              "sha256": "652c1b94bbaa71cfc1ec19cc14c06c4c34347562ca47b6c686c4b46c076edba1"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "volatility arbitrage",
+            "波动率套利",
+            "interest rate cap",
+            "利率上限",
+            "caplet",
+            "Eurodollar futures"
+          ]
+        },
+        "compared_record_names": {
+          "M0167": "波动率风险溢价",
+          "M0718": "VIX挂钩ETN日频波动率风险溢价",
+          "M0802": "标普500备兑组合：每月卖出平值认沽与百分之二虚值认购，认沽由一个月国库券抵押，认购由多头标普500抵押",
+          "M2466": "美股ETF：每日收盘前16分钟，eVRP=VIX−年化10日实现波动，结合VIX对VIX3M；VIXY目标±VIX/100，短波时余仓进SPY（QC Dual VIX Signal）",
+          "M3577": "QP波动率风险溢价：月频；卖1月ATM跨式（5%权利金）并买15%OTM认沽对冲；余资投指数（QP VRP·Crash-Insured）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "卖出美元平值利率上限并以欧洲美元期货Delta对冲的利率波动率卖方策略。M0167/M3577为美股SPY卖跨式VRP，M0718/M2466为VIX ETN择时，M0802为标普备兑；目录检索“caplet/利率上限”无命中。资产类别不同。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "DLY2006-short-ATM-USD-interest-rate-caps-delta-hedged-Eurodollar-futures-monthly-caplet-implied-minus-realized-variance-1vol-cost",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 1077,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 519,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 535,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13,
+              14
+            ],
+            "sha256": "76fee9ab890d02d0834c35b1f084c93c01890f29619fa8ba83668a360a3b904f",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 438,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 542,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 546,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "1b2fe12d5fe82be3a601dfd8ee7aecc5b3e6c6d661567fde38d153e2ae815133",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 167,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 532,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 533,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "c9332088335f1cb217d1102f3228577d2e78d92f4dc88150edd5af10f8b91ed9",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 777,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 1314,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1322,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "749a3646a29ea49405537f40b6e223b6b7f7f818660a0a249314534403c98fbc",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 509,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 1308,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1313,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "6456acaac74724fad4c2cf46bbdb94cb310fd566806c7db3b26f4f432645ac49",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          },
+          {
+            "bytes": 261,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 241,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 243,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "59e6f6325ccd84ef98bfc786880bfdbad7b2f92e14f6aabb703d8edf97fe54cd",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 348,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 1259,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1262,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              30
+            ],
+            "sha256": "ff14611a8f1105423a3449a2610bd00d9f546e1321009aa3da6f9f78c95de618",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 339,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 538,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 541,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "2c72919da893bcc3f70ace10b3c12aa127b19af1d15287b424ee0f4d9320fde4",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "bankofcanada.ca/wp-content",
+      "markets": [
+        "US_INTEREST_RATE_OPTIONS"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "duarte4:cap-volatility-arbitrage"
+      ],
+      "record_id": "duarte4:cap-volatility-arbitrage",
+      "record_sha256": "8296a46dc7c855e89d68eb7824d9dd6c25fefdc424a092bfc2f40bfd65ba4b2c",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；同源另有duarte4:swap-spread-arbitrage、duarte4:capital-structure-arbitrage，资产或核心交易规则不同，非参数变体。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4543",
+            "M3042",
+            "M4225",
+            "M4436",
+            "M6813"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4543",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4543.json",
+              "row_sha256": "16619e6c09e331c9b14522dfbcb8db0cad842573e634a94375b44d6947bf0420",
+              "sha256": "e3b2954012a9c2e4f9ca8217365108cc97268242ab07cb51fe3b29b8b3280502"
+            },
+            {
+              "native_id": "M3042",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0031-v2/metadata/source-records/M3042.json",
+              "row_sha256": "79e3018ca9b9085d85101af96fe4f11d8b0c0bfa1d6a1a28002164e410962824",
+              "sha256": "c214c461dbca40c575b28e89484afac1ee21b484be0a6921e8fea467df35d3a9"
+            },
+            {
+              "native_id": "M4225",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4225.json",
+              "row_sha256": "c39a9a4f7c25ab27fbce109705ea734ed7fab33298e77f76027c495e746faeca",
+              "sha256": "1dbaedfa9f31b70fcf6d4b31f91dce2f76f849e6842f805360c32a853cf2c306"
+            },
+            {
+              "native_id": "M4436",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4436.json",
+              "row_sha256": "58fd4c1486e1f44b5301d0e6a1233b0c546b5cbd9fc2906a52fd1dc79d147d60",
+              "sha256": "f71fab39a2aa3eba0028e03b0a77f5af51b8d7a47bdd2d839de819cb400f96b4"
+            },
+            {
+              "native_id": "M6813",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0068-v2/metadata/source-records/M6813.json",
+              "row_sha256": "eb8b8ea2c8459e98b9919cc9d1a2d648aa38eacff01a03995d4d7c3ae860fe6c",
+              "sha256": "c8950cd3447acf62e83ac20424222352b546c8ff2fc3defddbd48f545ea9c4f0"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "capital structure arbitrage",
+            "资本结构套利",
+            "CreditGrades",
+            "CDS",
+            "structural model",
+            "股票对冲"
+          ]
+        },
+        "compared_record_names": {
+          "M3042": "美股：月更成交额偏小盘750；CCA违约概率POD≥0.25（且≠1）则30日DOWN等权（Lean ContingentClaimsAnalysisDefaultPrediction）",
+          "M4225": "Campbell·Hilscher·Szilagyi·失败概率：年1月；CHS动态logit失败概率；最低10%（最安全）市值加权等多、最高10%等空；持12月（CHS FP·L10/S10·VW）",
+          "M4436": "Dichev·O-Score破产风险：月频；Ohlson O分；等权多最低70%风险、空最高十分位持1月（Dichev O·L70/S10·EW）",
+          "M4543": "Vassalou·Xing·默顿违约似然DLI多空：月末；Merton DD推DLI；等权/市值多最高违约风险五分位、空最低；持1月（VX DLI·Q5/Q1）",
+          "M6813": "Avramov·垃圾债动量十分位多空：月末；仅信用评级≤BBB（credrat≤14且>0）样本内Mom6m；|prc|>5且市值>NYSE20%；等权多最高空最低持1月（Avramov·Mom6mJunk·DecileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以CreditGrades模型CDS利差偏离触发、卖出CDS保护+股票Delta对冲的信用-股票相对价值交易。M4543为Merton违约似然股票多空，M3042为CCA违约概率选股，M4225为CHS失败概率，M4436为O-Score，M6813为垃圾债发行人股票动量；均只交易股票、不交易CDS。目录检索“capital structure arbitrage/CreditGrades”无命中。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "DLY2006-capital-structure-arb-short-5y-CDS-protection-when-market-gt-1plus-alpha-times-CreditGrades-model-spread-short-equity-delta-exit-convergence-or-180d",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 1221,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 606,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 625,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15,
+              16
+            ],
+            "sha256": "548e3b4a5f303223360ae8d4b256b84ae8a89e42bbf9776532b560963a012cd0",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 334,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 1374,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1377,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              33
+            ],
+            "sha256": "da86366e4c8b20b93bc710aac5415cbe69eefc50a625567df4f8c739ad72844d",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 436,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 667,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 671,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "c30afa3727de265bd987b34d23e87e3421923d4de5e8ed3fcc571533a481790e",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 170,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 672,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 673,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "8b77b974515c95fcb82d3ccf94d56f3d43b3ed309a79c299a327a8c17167ae66",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 195,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 1367,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1369,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              32
+            ],
+            "sha256": "f46bd8b519383f70cc0a5f1fe205aabb0c267fb7a052df405ba31a8691fce127",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          },
+          {
+            "bytes": 931,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 675,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 685,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "cfe68f3b90f371372406d638830782250f748854141af177f401bea54253a301",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 856,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 1342,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1351,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              32
+            ],
+            "sha256": "c6d01408cc5f5c8c6b853eb98eef61487e731e2f8f770026ea29693d17fe0a17",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          },
+          {
+            "bytes": 353,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 667,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 670,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "52cc70812650c25026d63abe29b66bcb9957e83a0e186c581c596588834b442f",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 249,
+            "derived_text_sha256": "ca6669ef54993029952830d3989e7f07194f1ae466ae6b9c142b0568cce1162e",
+            "first_line": 626,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 628,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "3bd4f8009f2ac2aa8d02876a7030ff0481bb12a210f8ca768a09fc0d507f8052",
+            "source_id": "v38-boc-duarte-longstaff-yu-pdf",
+            "source_sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1"
+          }
+        ]
+      },
+      "frequencies": [
+        "DAILY"
+      ],
+      "identity_namespace": "bankofcanada.ca/wp-content",
+      "markets": [
+        "CREDIT_DERIVATIVES",
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "duarte4:capital-structure-arbitrage"
+      ],
+      "record_id": "duarte4:capital-structure-arbitrage",
+      "record_sha256": "6d0b9c87e1c9ba9904deb055e45dc69e8376a445427e68a3a9bff23d6ec14a69",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；同源另有duarte4:swap-spread-arbitrage、duarte4:cap-volatility-arbitrage，资产或核心交易规则不同，非参数变体。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4148",
+            "M4499",
+            "M0539",
+            "M6813",
+            "M4150"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4148",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4148.json",
+              "row_sha256": "273b4a728042563ab2d35167e3bc43f3926a50f6173d4188b7a2810eb0b014d6",
+              "sha256": "5fd0a0f5d9ec4c23c45a018de30b309f6edff8d1254af5062671707383cc888b"
+            },
+            {
+              "native_id": "M4499",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4499.json",
+              "row_sha256": "569245c1d3fcdaeec5f9a06537445f7745066aa21384aa54ad14cb7b467aa7e8",
+              "sha256": "a4d1a15df45974156d36bfc2ba8f8046f635d44ab774a494a4f82a5f88b7b79c"
+            },
+            {
+              "native_id": "M0539",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0006-v2/metadata/source-records/M0539.json",
+              "row_sha256": "e1088d14bc6980139d42d4540367078f642c56d35ccb35b1b6524ae1b7784877",
+              "sha256": "792bbef4f1e3646e1b8ec244bc5cb7f4d2f851d87ee0009082fa7ac0cfde9b57"
+            },
+            {
+              "native_id": "M6813",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0068-v2/metadata/source-records/M6813.json",
+              "row_sha256": "eb8b8ea2c8459e98b9919cc9d1a2d648aa38eacff01a03995d4d7c3ae860fe6c",
+              "sha256": "c8950cd3447acf62e83ac20424222352b546c8ff2fc3defddbd48f545ea9c4f0"
+            },
+            {
+              "native_id": "M4150",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4150.json",
+              "row_sha256": "ae23986d6443869bf75b60adbc067610c5e4ea2219c1dbe28a21eab31639641f",
+              "sha256": "ae0b6ab36784f2e7b52b7a383e3a67927288c04eebcffdc2b09dc0a54837fe22"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "CDS momentum",
+            "CDS动量",
+            "credit default swap",
+            "信用违约互换",
+            "Markit",
+            "protection seller"
+          ]
+        },
+        "compared_record_names": {
+          "M0539": "Price momentum t-6 to t-1（ret_6_1）",
+          "M4148": "AQR·ValMom·债券动量：月末；同10国10Y；MOM2–12秩加权多强空弱至1美元（AQR ValMom·Bond·Mom）",
+          "M4150": "AQR·ValMom·国别指数动量：月末；同约18股指；MOM2–12秩加权多强空弱至1美元（AQR ValMom·Country·Mom）",
+          "M4499": "Miffre·Rallis·商品动量12−1：月末；商品期货；过去12月均收益最高五分位等多、最低五分位等空；持1月（MR Mom·12-1·Q5/Q1）",
+          "M6813": "Avramov·垃圾债动量十分位多空：月末；仅信用评级≤BBB（credrat≤14且>0）样本内Mom6m；|prc|>5且市值>NYSE20%；等权多最高空最低持1月（Avramov·Mom6mJunk·DecileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以单名CDS盯市持有期收益3个月形成、五分位卖赢家保护/买输家保护的信用衍生品动量。M4148为国债指数动量，M4499为商品动量，M0539为股票ret_6_1，M6813为垃圾评级股票的股价动量，M4150为国别股指动量；v37集合CFR-WP2010-04为公司债逐券动量、16863:CDS-RX为主权CDS水平排序货币。资产与信号均不同。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "LNS2014-single-name-5y-CDS-momentum-J3-K1-quintiles-sell-protection-winners-buy-protection-losers-EW-no-skip-19th-to-19th",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 887,
+            "derived_text_sha256": "31d92bf82e34d93cf8270aed551c0b4659d43b1f2c6d97f11409d8aac2aa10a8",
+            "first_line": 239,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 248,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "b489ba8f99e948d42779653ae1f003ca9f1c69e617e07dcff57f664a2cfd0a99",
+            "source_id": "v38-aea2015-lns-cds-momentum-pdf",
+            "source_sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 448,
+            "derived_text_sha256": "31d92bf82e34d93cf8270aed551c0b4659d43b1f2c6d97f11409d8aac2aa10a8",
+            "first_line": 564,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 568,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "7a5bbaa2e15c876cf47315a5e471146d1ad44f8b6fb380642cdeb901904de4ef",
+            "source_id": "v38-aea2015-lns-cds-momentum-pdf",
+            "source_sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc"
+          },
+          {
+            "bytes": 345,
+            "derived_text_sha256": "31d92bf82e34d93cf8270aed551c0b4659d43b1f2c6d97f11409d8aac2aa10a8",
+            "first_line": 578,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 581,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "f429d464ad2d48b64123a2d5d3120e200ba79666647c8240c39f55739fe63209",
+            "source_id": "v38-aea2015-lns-cds-momentum-pdf",
+            "source_sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc"
+          },
+          {
+            "bytes": 437,
+            "derived_text_sha256": "31d92bf82e34d93cf8270aed551c0b4659d43b1f2c6d97f11409d8aac2aa10a8",
+            "first_line": 583,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 587,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "88a3d36b716bb7298d33ec91387009f8e93cc91b0b84f3bb4329dcde682c8653",
+            "source_id": "v38-aea2015-lns-cds-momentum-pdf",
+            "source_sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 358,
+            "derived_text_sha256": "31d92bf82e34d93cf8270aed551c0b4659d43b1f2c6d97f11409d8aac2aa10a8",
+            "first_line": 493,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 496,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "e0c86a84fcbeef242c79f59cad7ce5f5dd9dca598b91d948079ed1fb79b95fff",
+            "source_id": "v38-aea2015-lns-cds-momentum-pdf",
+            "source_sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 174,
+            "derived_text_sha256": "31d92bf82e34d93cf8270aed551c0b4659d43b1f2c6d97f11409d8aac2aa10a8",
+            "first_line": 569,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 570,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "8b5610902a45a1cf19ee8bd19d8685468797b5b8f2165af69551947beea7104b",
+            "source_id": "v38-aea2015-lns-cds-momentum-pdf",
+            "source_sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 174,
+            "derived_text_sha256": "31d92bf82e34d93cf8270aed551c0b4659d43b1f2c6d97f11409d8aac2aa10a8",
+            "first_line": 569,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 570,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "8b5610902a45a1cf19ee8bd19d8685468797b5b8f2165af69551947beea7104b",
+            "source_id": "v38-aea2015-lns-cds-momentum-pdf",
+            "source_sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 1727,
+            "derived_text_sha256": "31d92bf82e34d93cf8270aed551c0b4659d43b1f2c6d97f11409d8aac2aa10a8",
+            "first_line": 448,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 470,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "207cbd961c595172b77891152028183d8e9c0ca7b1f1d2425a6c911dd5d5207f",
+            "source_id": "v38-aea2015-lns-cds-momentum-pdf",
+            "source_sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc"
+          },
+          {
+            "bytes": 358,
+            "derived_text_sha256": "31d92bf82e34d93cf8270aed551c0b4659d43b1f2c6d97f11409d8aac2aa10a8",
+            "first_line": 493,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 496,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "e0c86a84fcbeef242c79f59cad7ce5f5dd9dca598b91d948079ed1fb79b95fff",
+            "source_id": "v38-aea2015-lns-cds-momentum-pdf",
+            "source_sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc"
+          },
+          {
+            "bytes": 352,
+            "derived_text_sha256": "31d92bf82e34d93cf8270aed551c0b4659d43b1f2c6d97f11409d8aac2aa10a8",
+            "first_line": 563,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 566,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "0bab3bf4ae4bbc555ba38e869d94c921d10d87d9bdcc5b483503fdc876a9ff3b",
+            "source_id": "v38-aea2015-lns-cds-momentum-pdf",
+            "source_sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 887,
+            "derived_text_sha256": "31d92bf82e34d93cf8270aed551c0b4659d43b1f2c6d97f11409d8aac2aa10a8",
+            "first_line": 239,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 248,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "b489ba8f99e948d42779653ae1f003ca9f1c69e617e07dcff57f664a2cfd0a99",
+            "source_id": "v38-aea2015-lns-cds-momentum-pdf",
+            "source_sha256": "dd51ff0b3446cdb5d97b31aabe9999d49648cb7d544ca0df1478e058ddeee0fc"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "aeaweb.org/conference",
+      "markets": [
+        "CREDIT_DERIVATIVES"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "AEA2015-957:CDS-momentum-3-1"
+      ],
+      "record_id": "AEA2015-957:CDS-momentum-3-1",
+      "record_sha256": "bc221076e11f0f6617569b8074e8e8cde12d0f6b579cb08510a8c5ed5eb02ba5",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4160",
+            "M4147",
+            "M4201",
+            "M4100",
+            "M4090"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4160",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4160.json",
+              "row_sha256": "cd076e32619ada7b9aeb7ffdc89f742675a8fdcdbf9f4758f14218c1d51813bb",
+              "sha256": "3739aec06669707ba0c0410b79eea4ac1549438fd0f700b438dfa23f0fab12a4"
+            },
+            {
+              "native_id": "M4147",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4147.json",
+              "row_sha256": "bbf4128e2f414a31b109499388214388e7dcfe832e4cbbfc541b9d2714ea86fa",
+              "sha256": "a2f77a4ec6abc05da1c51a77df781f9ab08ac446985a4f7f9da63df5dcb32cfb"
+            },
+            {
+              "native_id": "M4201",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4201.json",
+              "row_sha256": "88640e4f6a1498a035b562eec499a8f6bbb4435d52f7afb2f5c1ebf475e23b9b",
+              "sha256": "b8caf6eb7ea8e211daef20de95698a16556a64bd7d97027c6fd31712794a72be"
+            },
+            {
+              "native_id": "M4100",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0041-v2/metadata/source-records/M4100.json",
+              "row_sha256": "7f918e4cdd3fcbc42a174578590642d76a81f8dcd835ee080ec6bc310ed23f85",
+              "sha256": "52b5119db4cb267628ce733c5d7b98bcf6c8809135a6a7b8d67b9b173659d4e4"
+            },
+            {
+              "native_id": "M4090",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0041-v2/metadata/source-records/M4090.json",
+              "row_sha256": "4c0fc9ea8fc42f9f7f1f26e0c4631c9cc506af5509fd77e3f5e0ab7b28ec24aa",
+              "sha256": "138bada7b18cd213392f5725c0d8d2f6f34d0037a8ea241594e76f8f0139d101"
+            }
+          ],
+          "scope": "coverage-map-v38.csv（M记录6971、因子变体1570、v1–v37集合407、已审11、v35拒收56、v36拒收34、v37拒收41）按关键词与同市场同核心信号检索，并逐一核对v35–v37集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "butterfly",
+            "蝶式",
+            "relative value",
+            "相对价值",
+            "replicating portfolio",
+            "government bonds"
+          ]
+        },
+        "compared_record_names": {
+          "M4090": "NF·久期Carry·期限利差三分位：月末；10Y−1Y利差相对过去10年分位；上2/3做多久期超额、下1/3做空；次日收盘（NF Duration·Carry·Pctl）",
+          "M4100": "NF·久期Carry·5Y−2Y利差符号：月末；5年−2年期限利差；利差>0做多10Y空3M否则反向；持有1年十二重叠（NF Duration·Carry·5Y2Y）",
+          "M4147": "AQR·ValMom·债券价值：月末；10国10Y国债；价值=5年收益率变化；秩减均值加权多便宜空昂贵至1美元（AQR ValMom·Bond·Value）",
+          "M4160": "AQR·Carry·全球国债：月末；约10国10Y；carry≈利差+滚下；秩减均值加权多高空低至1美元（AQR Carry·Bond）",
+          "M4201": "AQR·TSMOM·国债期货：月末；发达国债期货；过去12月超额收益符号定多空；持有1月；仓位=40%/事前年化波动（AQR TSMOM·Bond）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以同发行人三只债券匹配久期/凸性/面值的复制组合可交易收益率差±5bp触发的国债蝶式收敛交易。M4160为全球国债carry，M4147为国债价值，M4201为国债期货TSMOM，M4100/M4090为期限利差久期择时；目录检索“butterfly”仅命中期权蝶式与资产配置，“replicating portfolio/国债相对价值”无命中。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "FN2017-govt-bond-butterfly-3-bond-duration-convexity-par-matched-replication-weights-0-to-2-3-tradable-rv-gt-5bp-hold-to-zero-or-1y",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 1502,
+            "derived_text_sha256": "4686b0b359c9940a75da56ed9d2e16e933ea2f5daede9be377a885662eb95a2e",
+            "first_line": 296,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 321,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "1a314ecebdc706937a080265abfdab9b68ed340653e8a0585fd45a052fc167f9",
+            "source_id": "v38-boc-swp2017-44-pdf",
+            "source_sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 317,
+            "derived_text_sha256": "4686b0b359c9940a75da56ed9d2e16e933ea2f5daede9be377a885662eb95a2e",
+            "first_line": 648,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 652,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "70ef16fa371f8efd4d8402318a9a4d5ee8fd0895e06c116664da4f04e5f67d33",
+            "source_id": "v38-boc-swp2017-44-pdf",
+            "source_sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 761,
+            "derived_text_sha256": "4686b0b359c9940a75da56ed9d2e16e933ea2f5daede9be377a885662eb95a2e",
+            "first_line": 599,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 609,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "7b887ec41af9f6cc7ba37d792b9d0d0dcf115c18cc5d209bf250ca32fb2f5e8c",
+            "source_id": "v38-boc-swp2017-44-pdf",
+            "source_sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 761,
+            "derived_text_sha256": "4686b0b359c9940a75da56ed9d2e16e933ea2f5daede9be377a885662eb95a2e",
+            "first_line": 599,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 609,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "7b887ec41af9f6cc7ba37d792b9d0d0dcf115c18cc5d209bf250ca32fb2f5e8c",
+            "source_id": "v38-boc-swp2017-44-pdf",
+            "source_sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828"
+          },
+          {
+            "bytes": 301,
+            "derived_text_sha256": "4686b0b359c9940a75da56ed9d2e16e933ea2f5daede9be377a885662eb95a2e",
+            "first_line": 618,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 620,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "e33ccc8f57b6f33d3f7bd776d4b60d808fa058e1ddd2510e473517eb14ed4418",
+            "source_id": "v38-boc-swp2017-44-pdf",
+            "source_sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 255,
+            "derived_text_sha256": "4686b0b359c9940a75da56ed9d2e16e933ea2f5daede9be377a885662eb95a2e",
+            "first_line": 632,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 634,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "e6fb508036ec2339650a4d768db742a9e940e1468eeaa6fa721653e43bbc4ba9",
+            "source_id": "v38-boc-swp2017-44-pdf",
+            "source_sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828"
+          },
+          {
+            "bytes": 257,
+            "derived_text_sha256": "4686b0b359c9940a75da56ed9d2e16e933ea2f5daede9be377a885662eb95a2e",
+            "first_line": 654,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 656,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "9d2fff3af2107a2947e7a8f9aff76abd63a8a22d870e6c05b2423645faa887ca",
+            "source_id": "v38-boc-swp2017-44-pdf",
+            "source_sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828"
+          },
+          {
+            "bytes": 176,
+            "derived_text_sha256": "4686b0b359c9940a75da56ed9d2e16e933ea2f5daede9be377a885662eb95a2e",
+            "first_line": 687,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 689,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              18
+            ],
+            "sha256": "160ad6043467e63bcbe164d7e69847e9ab0998b3369dd2cab5d75f86be2e2d6f",
+            "source_id": "v38-boc-swp2017-44-pdf",
+            "source_sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 2285,
+            "derived_text_sha256": "4686b0b359c9940a75da56ed9d2e16e933ea2f5daede9be377a885662eb95a2e",
+            "first_line": 374,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 425,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "28193c4b988942af31ae2a8ffdd62be958ec1fe200ee7cd24ed441deae8db3fc",
+            "source_id": "v38-boc-swp2017-44-pdf",
+            "source_sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828"
+          },
+          {
+            "bytes": 2303,
+            "derived_text_sha256": "4686b0b359c9940a75da56ed9d2e16e933ea2f5daede9be377a885662eb95a2e",
+            "first_line": 432,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 482,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13,
+              14
+            ],
+            "sha256": "49ace5364ba7ee9ee8653bcf8475a787477ca4494d031aaf7143d9b04d1a01b8",
+            "source_id": "v38-boc-swp2017-44-pdf",
+            "source_sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 256,
+            "derived_text_sha256": "4686b0b359c9940a75da56ed9d2e16e933ea2f5daede9be377a885662eb95a2e",
+            "first_line": 593,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 596,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "3cf9ecfeceb5707f4ca87fab264bb17272b56ab855b501c4bc2e88cd7522df68",
+            "source_id": "v38-boc-swp2017-44-pdf",
+            "source_sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828"
+          }
+        ]
+      },
+      "frequencies": [
+        "DAILY"
+      ],
+      "identity_namespace": "bankofcanada.ca/wp-content",
+      "markets": [
+        "GLOBAL_SOVEREIGN_BONDS"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "SWP2017-44:butterfly-relative-value"
+      ],
+      "record_id": "SWP2017-44:butterfly-relative-value",
+      "record_sha256": "86f0994d386637d9aa9bb2d10981f5e349d31bdd374aaabf13926ead0626f209",
+      "reviewed_at": "2026-10-08T08:20:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v38 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批13条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    }
+  ],
+  "schema_version": "quantgraph-source-collection-reviews/v1"
+}

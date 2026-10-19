@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "过去六个月收益最高的公司债随后继续跑赢收益最低的公司债。",
+    "missing": [
+      "交易成本与做空公司债的可行性未在引用段处理。",
+      "全样本1973–1990期间不显著（作者自述），收益集中于1991–2008。",
+      "FDIC工作论文版，未与RFS期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "fdic.gov/analysis",
+  "lab": null,
+  "missing_information": [
+    "交易成本与做空公司债的可行性未在引用段处理。",
+    "全样本1973–1990期间不显著（作者自述），收益集中于1991–2008。",
+    "FDIC工作论文版，未与RFS期刊版比对；未回测。"
+  ],
+  "name": "公司债动量（6-1-6，十分位，重叠持有）",
+  "native_source_id": "CFR-WP2010-04:bond-momentum-6-1-6",
+  "one_line": "每月按债券t−6至t−1累计收益分十组，跳过第t月，等权做多赢家P10、做空输家P1，持有t+1至t+6共六个月，月度收益为六个重叠组合的等权平均。",
+  "record_id": "CFR-WP2010-04:bond-momentum-6-1-6",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.fdic.gov/analysis/cfr/working-papers/2010/2010-04.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Gergana Jostova, Stanislava Nikolova, Alexander Philipov, Christof W. Stahel,《Momentum in Corporate Bond Returns》FDIC CFR WP 2010-04（2010-05；期刊版据外部书目为RFS 26(7) 2013，未取）。中文定义自撰。",
+      "id": "v37-fdic-cfr-wp2010-04-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L121–148（PDF物理页4,5）；assets L484–492（PDF物理页11）；signal L688–694（PDF物理页15）；entry L694–700（PDF物理页15）；exit L700–702（PDF物理页15）；position L702–710（PDF物理页15）",
+      "revision": "FDIC Center for Financial Research Working Paper No. 2010-04, May 2010；45页；未与期刊版比对；sha256 021fea256aba5ccb39cb919fa7add585409cf3541ec5332e4f487ae47a89ce15",
+      "sha256": "021fea256aba5ccb39cb919fa7add585409cf3541ec5332e4f487ae47a89ce15",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.fdic.gov/analysis/cfr/working-papers/2010/2010-04.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v37-fdic-cfr-wp2010-04-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国公司债逐券月收益：Lehman、DataStream、Bloomberg（报价）与TRACE、FISD/NAIC（成交）合并，1973–2008共323万债券-月（月均约7,500只、2,000发行人）；成交类数据按日内成交量加权日价，月末价取最后五个交易日内最后可得价。"
+    },
+    "cost": {
+      "evidence": [
+        "v37-fdic-cfr-wp2010-04-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "引用段未计交易成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v37-fdic-cfr-wp2010-04-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "跳过第t月（避免买卖价反弹与短期反转），自t+1月起建仓：多P10、空P1。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v37-fdic-cfr-wp2010-04-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月末按月收益形成并建仓；成交时点与使用交易价还是报价未在引用段写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v37-fdic-cfr-wp2010-04-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个组合持有六个月（t+1至t+6）后平仓。"
+    },
+    "position": {
+      "evidence": [
+        "v37-fdic-cfr-wp2010-04-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "组合内等权；按Jegadeesh–Titman方法，第t月总收益为上月及之前最多六个月所建各组合当月收益的等权平均（重叠持有）。"
+    },
+    "risk": {
+      "evidence": [
+        "v37-fdic-cfr-wp2010-04-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "无止损；收益集中于非投资级债券。"
+    },
+    "signal": {
+      "evidence": [
+        "v37-fdic-cfr-wp2010-04-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月t按t−6至t−1累计收益（形成期）把债券分十组：P1输家、P10赢家。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v37-fdic-cfr-wp2010-04-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月度形成，六个月重叠持有。"
+    },
+    "universe": {
+      "evidence": [
+        "v37-fdic-cfr-wp2010-04-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "全部有连续六个月收益的公司债（文中另按投资级/非投资级分样本）。"
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "主动基金经理超配最重（经特质风险调整后）的股票代表其最高信念，这些股票随后跑赢市场与其余持仓。",
+    "missing": [
+      "主结果用持仓真实持有日，存在相对公开披露日的前视；按公开日建仓的完整结果原文只以图示和脚注说明，未给出表格。",
+      "特质波动率预测回归的系数与估计窗口在附录表A.V，未取得；本条按正文公式记录。",
+      "工作稿（2021-04）未与期刊终版比对；同文“最佳减其余”与前3/前5想法属同一信号的变体，未单列；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "personal.lse.ac.uk/polk",
+  "lab": null,
+  "missing_information": [
+    "主结果用持仓真实持有日，存在相对公开披露日的前视；按公开日建仓的完整结果原文只以图示和脚注说明，未给出表格。",
+    "特质波动率预测回归的系数与估计窗口在附录表A.V，未取得；本条按正文公式记录。",
+    "工作稿（2021-04）未与期刊终版比对；同文“最佳减其余”与前3/前5想法属同一信号的变体，未单列；未回测。"
+  ],
+  "name": "主动基金“最佳想法”组合：每只高主动基金信息比率最高的持仓等权合成（Antón–Cohen–Polk）",
+  "native_source_id": "ACP2021:best-ideas-active-fund-max-IR-holding",
+  "one_line": "对每只美国主动股票基金，用持仓权重相对市场权重的超配乘以该股CAPM特质波动率作为隐含信息比率，取最大者为该基金的“最佳想法”；只用最大信息比率处于全部基金前25%的基金，把所有最佳想法等权（多只基金同选则重复加权）组成多头组合，每季度第一天按新持仓重组，持有到季末。",
+  "record_id": "ACP2021:best-ideas-active-fund-max-IR-holding",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://personal.lse.ac.uk/polk/research/bestideas.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Miguel Antón, Randolph B. Cohen, Christopher Polk,《Best Ideas》2021-04工作稿（作者LSE个人主页托管）。中文定义自撰。",
+      "id": "v41-lse-polk-best-ideas-2021-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L331–346（PDF物理页10,11）；assets L473–473（PDF物理页14）；universe L331–346（PDF物理页10,11）；universe L370–373（PDF物理页11）；signal L242–264（PDF物理页9）；signal L1743–1752（PDF物理页48）；signal L629–644（PDF物理页19）；entry L347–355（PDF物理页11）；exit L450–457（PDF物理页14）；position L450–457（PDF物理页14）；risk L485–489（PDF物理页15）；risk L520–521（PDF物理页16）；risk L548–558（PDF物理页17）；risk L565–569（PDF物理页17）；cost L391–396（PDF物理页12）；timeframe L450–457（PDF物理页14）；execution_time L375–377（PDF物理页11）",
+      "revision": "作者工作稿《Best Ideas》，封面\"This Draft: April 2021\"，作者Christopher Polk在LSE的个人主页托管；50页；未与期刊终版（如有）比对；sha256 7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf",
+      "sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://personal.lse.ac.uk/polk/research/bestideas.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v41-lse-polk-best-ideas-2021-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "NYSE/AMEX/NASDAQ上市美股（CRSP），组建时股价不低于5美元。"
+    },
+    "cost": {
+      "evidence": [
+        "v41-lse-polk-best-ideas-2021-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原文未扣交易成本；作者称最佳想法偏大盘、低账面市值比、高盈利与高资产增长股票，典型基金对其最佳想法的持股约占该公司市值1.3%、占基金资产10.6%。"
+    },
+    "entry": {
+      "evidence": [
+        "v41-lse-polk-best-ideas-2021-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每期只保留“最大持仓IR”处于全部基金前25%的基金（作者称在50%至12.5%阈值间结果稳健），取这些基金各自的最佳想法组成组合。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v41-lse-polk-best-ideas-2021-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者主结果按基金持仓的真实持有日识别最佳想法，并称只用持仓公开日之后的信息构建的策略也有显著异常收益（指向图4）；实盘须在13F/N-PORT等披露后建仓（披露滞后通常数十日），本条执行时点为研究假设。"
+    },
+    "exit": {
+      "evidence": [
+        "v41-lse-polk-best-ideas-2021-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每季度第一天按新的持仓信息重组，持有并跟踪到季末，下季再换。"
+    },
+    "position": {
+      "evidence": [
+        "v41-lse-polk-best-ideas-2021-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "多头组合，每个最佳想法等权；若同一股票是多只基金的最佳想法则按次数加重；作者称改为唯一股票等权、市值加权或按基金投入金额加权，结果定性相近。"
+    },
+    "risk": {
+      "evidence": [
+        "v41-lse-polk-best-ideas-2021-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告（市场α法/组合α法）：五因子α 47bp/月（t=4.09）与43bp（t=3.89），六因子α 37bp（t=3.34）与35bp（t=3.29）；按全部基金持仓权重持有的“全部想法”组合六因子α仅6bp且不显著。买入持有十年后累计异常收益略高于20%，未见反转。流动性差的最佳想法表现更强（低流动性减高流动性59bp/月，t=2.56）。"
+    },
+    "signal": {
+      "evidence": [
+        "v41-lse-polk-best-ideas-2021-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "市场α法：tilt_{if}=λ_{if}−λ_{iM}（基金权重减市值权重）；在对角化协方差下α_{if}=k·σ_i²·tilt_{if}，IR_{if}=α_{if}/σ_i=k·σ_i·tilt_{if}，σ_i为下季CAPM特质波动率的预测值（季度回归σ_t=a+b·SIZE_{t−1}+c·BM_{t−1}+c·σ_{t−1}+d·σ_{t−5}，再向σ_{t−1}截面等权均值收缩；作者称直接用最近一期σ_{t−1}结果仍成立）；基金f的最佳想法为argmax_i IR_{if}。另有“组合α法”，以基金内只按其持仓的市值加权组合为基准计算tilt。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v41-lse-polk-best-ideas-2021-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "季度调仓（持仓按季度申报）。"
+    },
+    "universe": {
+      "evidence": [
+        "v41-lse-polk-best-ideas-2021-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Thomson Reuters共同基金持仓（季度申报），1983-01至2018-12的美国国内主动股票基金：股票投资超过500万美元且至少5只持仓；剔除名称含INDEX、IDX、S&P、FIXED、TAX、CONVERTIBLE、ANNUITY、VAR、CONV等的基金，只保留投资目标代码2、3、4、7、8且三分之二资产为普通股者，剔除国际基金。"
+    }
+  }
+}

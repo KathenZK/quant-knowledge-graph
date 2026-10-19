@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "剔除宏观基本面后仍被低估的货币随后获得更高超额收益。",
+    "missing": [
+      "季度货币超额收益rx的具体计算式未在引用段写出。",
+      "Panel B（EWMA φ=0.98截断20季）、C（单国VAR）、D（面板VAR）预期基本面变体未作为本记录主口径。",
+      "出口质量数据细节见原文另节，未转写；接受稿未与RFS终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v37-city-msss-currency-value-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "宏观数据为非平衡面板且有发布滞后；原文为季度频率，实盘需按真实发布日再滞后。"
+    },
+    "calculation": {
+      "evidence": [
+        "v37-city-msss-currency-value-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "线性权重：w_{j,t+1}=c_t(x_{j,t}−x̄_t)，c_t=1/Σ|x_{j,t}−x̄_t|，信号高于截面均值者为正权重；组合收益Σw·rx；每季末再平衡。Table 5 Panel A口径：每季直接把5年实际汇率变化对基本面回归，保存残差，按残差构建线性（及秩）组合。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v37-city-msss-currency-value-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：剔除基本面可解释部分后的实际汇率偏离更接近“真正的”错估，预测能力更强。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v37-city-msss-currency-value-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "实际汇率Q=P/(S·P*)（S为美元/外币；Q高=美元强、外币估值低），q=p−p*−s；价值信号Δ(5y)q_t=q_t−q_{t−5y}。每季度t做横截面回归Δ(5y)q_{j,t}=α_t+β_t·x_{j,t}+ε^q_{j,t}，x为四项基本面（或其预期代理）；残差ε^q即剔除基本面后的价值信号。"
+    },
+    "inputs": {
+      "evidence": [
+        "v37-city-msss-currency-value-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "GFD季末汇率与CPI（1970Q1–2014Q1，分析自1976Q1），23个经济体（22个对美元汇率，法意西1999年入欧后剔除）；GFD 3个月国债利率、名义GDP、人口；人均实际GDP（HBS效应）；产出缺口=递推扩展窗二次趋势回归偏差；IMF出口质量；Lane–Milesi-Ferretti净外国资产（更新至2014）。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v37-city-msss-currency-value-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "外汇价值因子的基本面调整版；与原始5年实际汇率价值、carry对照。"
+    }
+  },
+  "identity_namespace": "openaccess.city.ac.uk/eprint",
+  "lab": null,
+  "missing_information": [
+    "季度货币超额收益rx的具体计算式未在引用段写出。",
+    "Panel B（EWMA φ=0.98截断20季）、C（单国VAR）、D（面板VAR）预期基本面变体未作为本记录主口径。",
+    "出口质量数据细节见原文另节，未转写；接受稿未与RFS终版比对；未回测。"
+  ],
+  "name": "基本面调整货币价值（5年实际汇率变化残差εq）",
+  "native_source_id": "14851:FX-value-residual",
+  "one_line": "每季度把各货币5年对数实际汇率变化Δ(5y)q对四项宏观基本面（人均实际GDP、出口质量、净外国资产、产出缺口）做横截面回归，取残差εq；按线性权重w∝(εq−均值)、绝对权重和为1，季末再平衡。",
+  "record_id": "14851:FX-value-residual",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://openaccess.city.ac.uk/id/eprint/14851/13/FXVALUE_Rev3_cepr.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Lukas Menkhoff, Lucio Sarno, Maik Schmeling, Andreas Schrimpf,《Currency Value》接受稿（City, University of London开放仓储；期刊版RFS 30(2), 2017）。中文定义自撰。",
+      "id": "v37-city-msss-currency-value-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L356–376（PDF物理页8）；formula L606–607（PDF物理页12）；formula L905–929（PDF物理页18）；inputs L2149–2155（PDF物理页46）；inputs L2175–2197（PDF物理页46,47）；inputs L2204–2238（PDF物理页47）；calculation L791–816（PDF物理页16）；calculation L931–937（PDF物理页18）",
+      "revision": "Menkhoff/Sarno/Schmeling/Schrimpf《Currency Value》作者接受稿（City Research Online 14851；仓储引文标注RFS 30(2) 2017, pp.416–441）；54页；sha256 8d8c03c19a815ddee2ed37cac3e2d7009c163ea5519c3ecc9331a71ef7c7c990",
+      "sha256": "8d8c03c19a815ddee2ed37cac3e2d7009c163ea5519c3ecc9331a71ef7c7c990",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://openaccess.city.ac.uk/id/eprint/14851/13/FXVALUE_Rev3_cepr.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "员工对雇主评价改善（尤其职业机会与高管评价）的公司，随后一个季度股票收益高于评价恶化的公司。",
+    "missing": [
+      "作者接收稿（2018-07）未与JFE终版比对；网络附录（文字型评分、阈值稳健性）未取。",
+      "组合内具体权重以外的交易细节（季度末到建仓的时滞、交易成本）原文未写明。",
+      "Glassdoor数据的当前可得性与历史回填方式需另行确认；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v41-georgetown-glassdoor-employer-reviews-2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "需要Glassdoor评价数据（商业或网站抓取，受网站条款约束）；样本偏大盘股（平均市值238亿美元）；只覆盖评价数足够的公司。"
+    },
+    "calculation": {
+      "evidence": [
+        "v41-georgetown-glassdoor-employer-reviews-2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个日历季度末（2008-09至2016-06）按ΔRating分为最低五分位、中间三个五分位与最高五分位三组；持有下一季度，每只股票留在组合中三个月后再平衡。作者报告等权组合月均收益由最低组0.83%升至最高组1.66%，高减低月均0.84%（Newey–West t=2.67），四因子α 0.88%/月（t=2.70）；市值加权差0.74%、α 0.77%，多空年化夏普0.98。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v41-georgetown-glassdoor-employer-reviews-2018-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者认为员工评价变化揭示了雇主基本面的变化（与同期销售增长、盈利能力变化相关，并预测下季盈余意外），市场对这类信息反应迟滞。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v41-georgetown-glassdoor-employer-reviews-2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "ΔRating_{i,q}=Rating_{i,q}−Rating_{i,q−1}，Rating为公司i在日历季度q内全部员工评价总体星级（1–5星）的平均；只有当季至少15条评价的公司季度进入样本。"
+    },
+    "inputs": {
+      "evidence": [
+        "v41-georgetown-glassdoor-employer-reviews-2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Glassdoor员工评价（总体星级，另有职业机会、薪酬福利、工作生活平衡、高管、文化价值五项子评分与正反文字），2008-06至2016-06；按Glassdoor公司标识与名称手工匹配CRSP PERMNO，并用总部所在地与CEO姓名校验；覆盖3,906家公司，约占CRSP-Compustat公司数的65%、总市值的81%。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v41-georgetown-glassdoor-employer-reviews-2018-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股另类数据选股因子；可与盈余意外、分析师修正等基本面动量信号对照，或作季度调仓的增强信号。"
+    }
+  },
+  "identity_namespace": "faculty.georgetown.edu/qw50",
+  "lab": null,
+  "missing_information": [
+    "作者接收稿（2018-07）未与JFE终版比对；网络附录（文字型评分、阈值稳健性）未取。",
+    "组合内具体权重以外的交易细节（季度末到建仓的时滞、交易成本）原文未写明。",
+    "Glassdoor数据的当前可得性与历史回填方式需另行确认；未回测。"
+  ],
+  "name": "员工评分季度变化ΔRating：Glassdoor总体星级季变化五分位多空（Green–Huang–Wen–Zhou）",
+  "native_source_id": "GHWZ2019:employer-rating-change-quarterly",
+  "one_line": "每个季度末，对当季与上季都至少有15条Glassdoor员工评价的美国上市公司，计算总体星级（1–5星）当季均值减上季均值ΔRating；做多ΔRating最高五分位、做空最低五分位，持有一个季度（三个月）后重排；等权与市值加权都报告。",
+  "record_id": "GHWZ2019:employer-rating-change-quarterly",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://faculty.georgetown.edu/qw50/Green,Huang,Wen,Zhou_EmpRatings.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "T. Clifton Green, Ruoyan Huang, Quan Wen, Dexin Zhou,《Crowdsourced Employer Reviews and Stock Returns》2018-07接收稿（作者主页托管；终版JFE 2019未比对）。中文定义自撰。",
+      "id": "v41-georgetown-glassdoor-employer-reviews-2018-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L300–305（PDF物理页9）；formula L381–388（PDF物理页12）；inputs L245–256（PDF物理页8）；inputs L262–270（PDF物理页8）；calculation L381–388（PDF物理页12）；calculation L389–396（PDF物理页12）；calculation L397–417（PDF物理页12,13）；availability L262–270（PDF物理页8）；availability L320–322（PDF物理页10）",
+      "revision": "作者接收稿，封面\"July 2018\"（致谢编辑Bill Schwert与审稿人），作者Quan Wen在Georgetown的教师主页托管；63页；未与JFE 134(1):236–251（2019）终版比对；网络附录未取；sha256 bbd270797b23593149eace420b3787674addc98bb865425f27d834d3008ffc2b",
+      "sha256": "bbd270797b23593149eace420b3787674addc98bb865425f27d834d3008ffc2b",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://faculty.georgetown.edu/qw50/Green,Huang,Wen,Zhou_EmpRatings.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

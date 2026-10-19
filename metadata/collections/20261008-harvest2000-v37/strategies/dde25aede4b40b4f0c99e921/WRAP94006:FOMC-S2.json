@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "FOMC公告日美元相对高利差货币系统性走弱，宽松时更明显。",
+    "missing": [
+      "MPI需公告后约20–30分钟窗口的期货数据，实时判断紧缩并反手存在时滞，原文未讨论。",
+      "“利差为正”按月末远期贴水还是公告前一日判定未明确。",
+      "交易成本未计；同行评审稿未与JF终版逐字比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "wrap.warwick.ac.uk",
+  "lab": null,
+  "missing_information": [
+    "MPI需公告后约20–30分钟窗口的期货数据，实时判断紧缩并反手存在时滞，原文未讨论。",
+    "“利差为正”按月末远期贴水还是公告前一日判定未明确。",
+    "交易成本未计；同行评审稿未与JF终版逐字比对；未回测。"
+  ],
+  "name": "FOMC公告日做空美元（正利差货币，紧缩即反手，S2）",
+  "native_source_id": "WRAP94006:FOMC-S2",
+  "one_line": "每次预定FOMC公告前一日16:00 ET做空美元、做多对美利差为正的G10货币，持有至公告日16:00；若公告为紧缩（Nakamura–Steinsson式政策冲击），公告后立即反手为做多美元。",
+  "record_id": "WRAP94006:FOMC-S2",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://wrap.warwick.ac.uk/id/eprint/94006/1/WRAP-exchange-rates-monetary-policy-uncertainty-Mueller-2017.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Philippe Mueller, Alireza Tahbaz-Salehi, Andrea Vedolin,《Exchange Rates and Monetary Policy Uncertainty》同行评审稿（Warwick WRAP开放仓储；期刊版JF 72(3), 2017）。中文定义自撰。",
+      "id": "v37-warwick-mtv-fomc-fx-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L476–483（PDF物理页11）；assets L493–497（PDF物理页11）；universe L470–473（PDF物理页11）；signal L515–520（PDF物理页12）；signal L523–530（PDF物理页12）；entry L1197–1205（PDF物理页24）；exit L1277–1282（PDF物理页26）；position L698–710（PDF物理页15）",
+      "revision": "Mueller/Tahbaz-Salehi/Vedolin《Exchange Rates and Monetary Policy Uncertainty》作者同行评审稿（Warwick WRAP 94006；仓储引文标注JF 72(3) 2017, pp.1213–1252）；43页；sha256 8c1696bda8d22a2c85c1c24b20b1e3c1ca84f8565cf319b02c1c047a31ec462c",
+      "sha256": "8c1696bda8d22a2c85c1c24b20b1e3c1ca84f8565cf319b02c1c047a31ec462c",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://wrap.warwick.ac.uk/id/eprint/94006/1/WRAP-exchange-rates-monetary-policy-uncertainty-Mueller-2017.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v37-warwick-mtv-fomc-fx-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "G9货币对美元（AUD、CAD、EUR、JPY、NZD、NOK、SEK、CHF、GBP；欧元前用马克）Olsen逐笔报价，5分钟插值，16:00 ET取样；BBI与WM/Reuters日度即期与1月远期，远期贴水按线性计息叠加。"
+    },
+    "cost": {
+      "evidence": [
+        "v37-warwick-mtv-fomc-fx-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "引用段未给出交易成本；S2公告日平均22.54bp、年化Sharpe>0.9（按8/252年化）。"
+    },
+    "entry": {
+      "evidence": [
+        "v37-warwick-mtv-fomc-fx-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "S1：公告前一日16:00 ET做空美元、做多全部其他货币，若美联储宽松则持有至公告日16:00；若紧缩，公告后立即反手为做多美元、做空一篮货币。S2：同S1，但只用对美利差为正的货币。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v37-warwick-mtv-fomc-fx-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "公告前一日16:00 ET建仓、公告日16:00 ET平仓（报价按16:00 ET采样）；紧缩反手需等公告后期货窗口数据，存在时滞。"
+    },
+    "exit": {
+      "evidence": [
+        "v37-warwick-mtv-fomc-fx-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "公告日16:00 ET平仓（收益按公告日计）；样本1994-01-01至2013-12-31。"
+    },
+    "position": {
+      "evidence": [
+        "v37-warwick-mtv-fomc-fx-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "组合收益为成分货币超额收益的平均（等权一篮），即做空美元、做多一篮货币的美元中性仓位；按远期贴水排序的组合在每月末确定。"
+    },
+    "risk": {
+      "evidence": [
+        "v37-warwick-mtv-fomc-fx-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "无止损；每年仅约8个持仓日。"
+    },
+    "signal": {
+      "evidence": [
+        "v37-warwick-mtv-fomc-fx-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "事件信号：预定FOMC公告（约14:15 ET，精确时间取自Bloomberg新闻）；政策方向用MPI＝公告前后30分钟内联邦基金与欧洲美元期货（至一年）五个利率意外变化的第一主成分，正负区分紧缩/宽松。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v37-warwick-mtv-fomc-fx-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "事件日内（16:00前一日至16:00公告日，14:15附近可能反手）。"
+    },
+    "universe": {
+      "evidence": [
+        "v37-warwick-mtv-fomc-fx-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "1994-01-01至2013-12-31，每年8次预定FOMC，共160个公告日；剔除10次非预定会议的意外公告。"
+    }
+  }
+}

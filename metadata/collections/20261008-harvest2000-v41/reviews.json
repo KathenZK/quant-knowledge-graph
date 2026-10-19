@@ -1,0 +1,1890 @@
+{
+  "batch_id": "20261008-harvest2000-v41",
+  "records": [
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4165",
+            "M4191",
+            "M2389",
+            "M4513",
+            "M4175"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4165",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4165.json",
+              "row_sha256": "542273d4b5a9dea98cd40fecdfd39ada767cbefb6e6bafe1a593bbe2a62a7458",
+              "sha256": "b1cb5ccf3af43358389da09fda2c49c0f4de44239b6cd03dc8fdfcf0156fcbfa"
+            },
+            {
+              "native_id": "M4191",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4191.json",
+              "row_sha256": "c24e6464aee0c92ab1833b2f4457857b11e01874e8838aa109871507d75e848d",
+              "sha256": "6cbdc5b1e5e0ce6eca7a0d616697d099afca2d6e5a91d785476bee6673c82ac7"
+            },
+            {
+              "native_id": "M2389",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0024-v2/metadata/source-records/M2389.json",
+              "row_sha256": "3ca6e16ad2b5eaf1ffa389ef44bef007b0ffa63a25a5d3993bfd0cfcae5dcc1d",
+              "sha256": "3f355ffcbb742f2249e6512403e9bce59e16c1b671533f1f8b240360e96af9b4"
+            },
+            {
+              "native_id": "M4513",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4513.json",
+              "row_sha256": "b73479d4eb13d7feec26491e8d131f6478ed2731be91104bb454d32dac83db17",
+              "sha256": "dd0b4f76f8c1576331537d3cf8f2e9ab45d1fc89c92861e858807af32a59809e"
+            },
+            {
+              "native_id": "M4175",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4175.json",
+              "row_sha256": "45eb2510047136cbb6e2c9f0fa2579692cc725a684a874a630e31caf4b915d6d",
+              "sha256": "3c087e219fcbcb0a1d23126da3d6fc69eaf85f2bfc3dd4b54701e8ed50ce0a3c"
+            }
+          ],
+          "scope": "coverage-map-v41.csv（M记录6971、因子变体1570、v1–v40集合434、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19）按关键词与同市场同核心信号检索，并逐一核对v35–v40集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "bond book-to-market",
+            "债券账面市值比",
+            "BBM",
+            "amortized issue price",
+            "TRACE",
+            "corporate bond value"
+          ]
+        },
+        "compared_record_names": {
+          "M2389": "开源金工偏债转债相对信用债性价比（修正YTM−信用债YTM中位数；剥离转股条款影响）",
+          "M4165": "AQR·Carry·信用质量×期限：月末；Barclays八组合（Intermediate/Long × AAA/AA/A/BAA）；同美债式carry；秩权1美元多空（AQR Carry·Credit）",
+          "M4175": "AQR·全球套息因子GCF：月末；各资产类carry组合按样本波动倒数加权合成；等波动贡献（AQR Global Carry Factor）",
+          "M4191": "AQR·Carry1-12·信用质量×期限：月末；Barclays八组合；过去12个月末carry均值；秩减均值加权至1美元多空（AQR Carry1-12·Credit）",
+          "M4513": "Goyal·Welch·违约利差单变量择时：月末；递推DFY回归溢价；预测>历史均值满仓美股，否则T-bill；持1月（GW DFY·vsHA）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以“摊销发行价/最近成交净价”衡量逐券便宜程度的公司债价值因子。v40集合JOIM2018:corporate-bond-value-spread-residual用log(OAS)对久期、评级、波动或违约概率回归的残差（利差相对风险的偏离），本条只用价格与摊销发行价之比，不用利差、评级或违约模型，核心信号不同；v37集合LTR-2019:LTRBond为长期收益反转。M4165/M4191为信用指数级套息，M2389为转债相对信用债YTM性价比，M4513为违约利差择时股票，M4175为跨资产套息合成；目录检索“债券账面市值比/BBM/摊销发行价”无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "BGN2023-corporate-bond-book-to-market-amortized-issue-price-over-lagged-8day-TRACE-flat-price-quintile-Q5-Q1-EW-VW-monthly",
+      "entity_type": "factor",
+      "field_spans": {
+        "availability": [
+          {
+            "bytes": 788,
+            "derived_text_sha256": "8c232168c0b2f7e4e0847ac7c649714f92e506d3b30a3a7299252562ed77d2d3",
+            "first_line": 1204,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1216,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29,
+              30
+            ],
+            "sha256": "94e8eb37648b6bf3ec44fd0be6776b6b6c72b523f77a5f1d441fd808470cf74d",
+            "source_id": "v41-nber-w27655-bond-book-to-market-pdf",
+            "source_sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0"
+          },
+          {
+            "bytes": 2207,
+            "derived_text_sha256": "8c232168c0b2f7e4e0847ac7c649714f92e506d3b30a3a7299252562ed77d2d3",
+            "first_line": 1309,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1330,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              32
+            ],
+            "sha256": "f8ab8737bce896801eaf670b2deb4a7beb533e67a8e17ac49300a8938ddb5d4b",
+            "source_id": "v41-nber-w27655-bond-book-to-market-pdf",
+            "source_sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0"
+          }
+        ],
+        "calculation": [
+          {
+            "bytes": 211,
+            "derived_text_sha256": "8c232168c0b2f7e4e0847ac7c649714f92e506d3b30a3a7299252562ed77d2d3",
+            "first_line": 495,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 496,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "5d21e93a91002db8691846e87f2e7cd0db64ad394031e8bdca99574855c8d8d1",
+            "source_id": "v41-nber-w27655-bond-book-to-market-pdf",
+            "source_sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0"
+          },
+          {
+            "bytes": 421,
+            "derived_text_sha256": "8c232168c0b2f7e4e0847ac7c649714f92e506d3b30a3a7299252562ed77d2d3",
+            "first_line": 362,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 365,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "025476e46e238469409c471fc33e7241006dbb32e16a2f9f64eda2613a19e834",
+            "source_id": "v41-nber-w27655-bond-book-to-market-pdf",
+            "source_sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0"
+          },
+          {
+            "bytes": 612,
+            "derived_text_sha256": "8c232168c0b2f7e4e0847ac7c649714f92e506d3b30a3a7299252562ed77d2d3",
+            "first_line": 397,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 402,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "f8ff50a7a198a4ea6e98401836a886459e4e7dc566c9084d7f1e1ad29f1b1688",
+            "source_id": "v41-nber-w27655-bond-book-to-market-pdf",
+            "source_sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0"
+          },
+          {
+            "bytes": 1227,
+            "derived_text_sha256": "8c232168c0b2f7e4e0847ac7c649714f92e506d3b30a3a7299252562ed77d2d3",
+            "first_line": 650,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 661,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "34e8f318fcef53967dd00ae5937758a733a9dd99b0f18a6a882abccb33738408",
+            "source_id": "v41-nber-w27655-bond-book-to-market-pdf",
+            "source_sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 816,
+            "derived_text_sha256": "8c232168c0b2f7e4e0847ac7c649714f92e506d3b30a3a7299252562ed77d2d3",
+            "first_line": 447,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 461,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11,
+              12
+            ],
+            "sha256": "985e29edb071ccebff3f3ce7f40276699ac73e2e450e23e7f66e9ddce6b87bf4",
+            "source_id": "v41-nber-w27655-bond-book-to-market-pdf",
+            "source_sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0"
+          },
+          {
+            "bytes": 433,
+            "derived_text_sha256": "8c232168c0b2f7e4e0847ac7c649714f92e506d3b30a3a7299252562ed77d2d3",
+            "first_line": 463,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 466,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "842bda460e958ab839f7abe6ad727fa81d3117588b2e3e6cddd8337fc5bbb93e",
+            "source_id": "v41-nber-w27655-bond-book-to-market-pdf",
+            "source_sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0"
+          },
+          {
+            "bytes": 311,
+            "derived_text_sha256": "8c232168c0b2f7e4e0847ac7c649714f92e506d3b30a3a7299252562ed77d2d3",
+            "first_line": 434,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 436,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "f8696ba0d35c3715ebe696dab23e91a8618add8afbade7523fb18a4fad75b9a9",
+            "source_id": "v41-nber-w27655-bond-book-to-market-pdf",
+            "source_sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 306,
+            "derived_text_sha256": "8c232168c0b2f7e4e0847ac7c649714f92e506d3b30a3a7299252562ed77d2d3",
+            "first_line": 287,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 289,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "a53d57a30152f6e8574ec79e68670ab2b6f6eb023c037c44b693b317b65668cd",
+            "source_id": "v41-nber-w27655-bond-book-to-market-pdf",
+            "source_sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0"
+          },
+          {
+            "bytes": 1143,
+            "derived_text_sha256": "8c232168c0b2f7e4e0847ac7c649714f92e506d3b30a3a7299252562ed77d2d3",
+            "first_line": 293,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 303,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "25a032f5d5c7e00e86a3e53703e0f53b88afb8def3d7697efbe27d08e5368701",
+            "source_id": "v41-nber-w27655-bond-book-to-market-pdf",
+            "source_sha256": "eea702c3c760120f9c1811f9a2f1f9f63b759bb0015de2eb1e7bad30b955aca0"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "nber.org/papers",
+      "markets": [
+        "CORPORATE_BONDS"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "w27655:corporate-bond-book-to-market-BBM"
+      ],
+      "record_id": "w27655:corporate-bond-book-to-market-BBM",
+      "record_sha256": "3392b2cedda293e3e5c4ceb6515f42e93341dc480fe8604f23ec93535359e601",
+      "reviewed_at": "2026-10-08T09:49:53+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v41 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4522",
+            "M6569",
+            "M3811",
+            "M3858",
+            "M0339"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4522",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4522.json",
+              "row_sha256": "44d13c7beba720d2fcc44e90673335e823b8ac8ccf775341732671cb6690c363",
+              "sha256": "41deb1ecd5b92c33535453435402aa229dcedafd9dc9a4de9faa0484f9297cf9"
+            },
+            {
+              "native_id": "M6569",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0066-v2/metadata/source-records/M6569.json",
+              "row_sha256": "31caf67f18025e0e2fe55819c2ab29c6af3b1031caf0a6661b2e7ee64eb89941",
+              "sha256": "76f5b5f976d1355f89c0166af420109d1bfb8e2e5b45ff9ea66bce6459cd62bf"
+            },
+            {
+              "native_id": "M3811",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0038-v2/metadata/source-records/M3811.json",
+              "row_sha256": "d9525429f88733e9e6a81da7e387768192da6e639bc6727156fbacfb8121cec8",
+              "sha256": "a4e96b08061f51e2df925779925950f83df7e5ea5849d361e54f18499b5b6b30"
+            },
+            {
+              "native_id": "M3858",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0039-v2/metadata/source-records/M3858.json",
+              "row_sha256": "49660eebfab8ab64c6d5977e19ae912591aa61b3beb667046a089628f468668d",
+              "sha256": "301bd42742dfb9bdafca5308254dea7402ad38f9c5af6d6606bf1239c2d34e53"
+            },
+            {
+              "native_id": "M0339",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0339.json",
+              "row_sha256": "dd64d2e31fa0b901df5994385b5d71f39158432efb4f9b9e65b75ec0613cda38",
+              "sha256": "ddf1a3c29cf3d25b0a22d4bcb0fd339837468d4be4ee188d6210ab9ebcd65fbe"
+            }
+          ],
+          "scope": "coverage-map-v41.csv（M记录6971、因子变体1570、v1–v40集合434、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19）按关键词与同市场同核心信号检索，并逐一核对v35–v40集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "Glassdoor",
+            "员工评价",
+            "employer rating",
+            "雇主评分",
+            "employee satisfaction",
+            "crowdsourced"
+          ]
+        },
+        "compared_record_names": {
+          "M0339": "ESG因子动量",
+          "M3811": "CXO·SeekingAlpha净情绪多空：月频；标准化净情绪最高组等多最低组等权（CXO SA·NetSent·LS）",
+          "M3858": "CXO·BUZZ社交情绪：持有美股社交/新闻等正向洞察最高组（CXO BUZZ·SocialSent）",
+          "M4522": "Donangelo·Gourio·Kehrig·Palacios·劳动份额多空：年频；劳动份额=雇员工资/(工资+经营盈余)；市值/等权多最高劳动份额、空最低；持1年（DGKP LaborShare·H/L）",
+          "M6569": "Bazdresch·Belo·雇佣增长五分位多空：年6月末；Δemp/平均emp；等权多最低空最高持12月（Bazdresch·hire·QuintileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以Glassdoor员工总体星级的季度变化为信号的美股横截面因子。v37集合RW0716:best-companies-portfolio-I是《财富》最佳雇主榜等权买入（榜单水平，年度），不是众包评分的季度变化；M4522劳动份额、M6569雇佣增长为会计口径的劳动投入；M3811为Seeking Alpha文章情绪，M3858为社交媒体情绪ETF，M0339为ESG评级变化；目录检索“Glassdoor/员工评价/雇主评分”无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "GHWZ2019-glassdoor-overall-star-rating-quarterly-change-min15-reviews-top-vs-bottom-quintile-hold-3m-EW-VW-quarterly",
+      "entity_type": "factor",
+      "field_spans": {
+        "availability": [
+          {
+            "bytes": 724,
+            "derived_text_sha256": "398abd33ae9c2adc8004621c27d88191946e2b2830e763d05f46548bdb59e178",
+            "first_line": 262,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 270,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "7deb0f09fa3bfb19175a3e17e7d1e880d7cd7e20e94fd3c73094a95ccc7d7a0f",
+            "source_id": "v41-georgetown-glassdoor-employer-reviews-2018-pdf",
+            "source_sha256": "bbd270797b23593149eace420b3787674addc98bb865425f27d834d3008ffc2b"
+          },
+          {
+            "bytes": 267,
+            "derived_text_sha256": "398abd33ae9c2adc8004621c27d88191946e2b2830e763d05f46548bdb59e178",
+            "first_line": 320,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 322,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "c24e2defe972dba36c72711a38999dd316c2a305d0dbfb6fa713a7a2579a2312",
+            "source_id": "v41-georgetown-glassdoor-employer-reviews-2018-pdf",
+            "source_sha256": "bbd270797b23593149eace420b3787674addc98bb865425f27d834d3008ffc2b"
+          }
+        ],
+        "calculation": [
+          {
+            "bytes": 681,
+            "derived_text_sha256": "398abd33ae9c2adc8004621c27d88191946e2b2830e763d05f46548bdb59e178",
+            "first_line": 381,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 388,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "42a564389dc5d30f223d19a1002e5820c780123a71925ec6975ab2715023f8b9",
+            "source_id": "v41-georgetown-glassdoor-employer-reviews-2018-pdf",
+            "source_sha256": "bbd270797b23593149eace420b3787674addc98bb865425f27d834d3008ffc2b"
+          },
+          {
+            "bytes": 685,
+            "derived_text_sha256": "398abd33ae9c2adc8004621c27d88191946e2b2830e763d05f46548bdb59e178",
+            "first_line": 389,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 396,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "810eee4faccdde3129f6c8c169c267ef105a5183cca619fe2a9fb0c3b9908950",
+            "source_id": "v41-georgetown-glassdoor-employer-reviews-2018-pdf",
+            "source_sha256": "bbd270797b23593149eace420b3787674addc98bb865425f27d834d3008ffc2b"
+          },
+          {
+            "bytes": 1284,
+            "derived_text_sha256": "398abd33ae9c2adc8004621c27d88191946e2b2830e763d05f46548bdb59e178",
+            "first_line": 397,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 417,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "87b1252aa5b0b6baf47002a8e1f4f99620748c15f88a0c1a0e2ef6df87ce27d9",
+            "source_id": "v41-georgetown-glassdoor-employer-reviews-2018-pdf",
+            "source_sha256": "bbd270797b23593149eace420b3787674addc98bb865425f27d834d3008ffc2b"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 537,
+            "derived_text_sha256": "398abd33ae9c2adc8004621c27d88191946e2b2830e763d05f46548bdb59e178",
+            "first_line": 300,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 305,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "e638c1905e71fde94f37305c3a32f2ecdd7db6d92457f32f82435fb5cac1998d",
+            "source_id": "v41-georgetown-glassdoor-employer-reviews-2018-pdf",
+            "source_sha256": "bbd270797b23593149eace420b3787674addc98bb865425f27d834d3008ffc2b"
+          },
+          {
+            "bytes": 681,
+            "derived_text_sha256": "398abd33ae9c2adc8004621c27d88191946e2b2830e763d05f46548bdb59e178",
+            "first_line": 381,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 388,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "42a564389dc5d30f223d19a1002e5820c780123a71925ec6975ab2715023f8b9",
+            "source_id": "v41-georgetown-glassdoor-employer-reviews-2018-pdf",
+            "source_sha256": "bbd270797b23593149eace420b3787674addc98bb865425f27d834d3008ffc2b"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 1081,
+            "derived_text_sha256": "398abd33ae9c2adc8004621c27d88191946e2b2830e763d05f46548bdb59e178",
+            "first_line": 245,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 256,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "0899da8c2e724e51048488d4806756e4a1cb235a9ada34e891c7549a777c589a",
+            "source_id": "v41-georgetown-glassdoor-employer-reviews-2018-pdf",
+            "source_sha256": "bbd270797b23593149eace420b3787674addc98bb865425f27d834d3008ffc2b"
+          },
+          {
+            "bytes": 724,
+            "derived_text_sha256": "398abd33ae9c2adc8004621c27d88191946e2b2830e763d05f46548bdb59e178",
+            "first_line": 262,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 270,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "7deb0f09fa3bfb19175a3e17e7d1e880d7cd7e20e94fd3c73094a95ccc7d7a0f",
+            "source_id": "v41-georgetown-glassdoor-employer-reviews-2018-pdf",
+            "source_sha256": "bbd270797b23593149eace420b3787674addc98bb865425f27d834d3008ffc2b"
+          }
+        ]
+      },
+      "frequencies": [
+        "QUARTERLY"
+      ],
+      "identity_namespace": "faculty.georgetown.edu/qw50",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "GHWZ2019:employer-rating-change-quarterly"
+      ],
+      "record_id": "GHWZ2019:employer-rating-change-quarterly",
+      "record_sha256": "047ba7879af13501b957cfd92981d2504aef78bfa03e7cf2c9ac8fe5c4cb5e2e",
+      "reviewed_at": "2026-10-08T09:49:53+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v41 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0391",
+            "M6780",
+            "M4474",
+            "M1697",
+            "M6862"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0391",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0391.json",
+              "row_sha256": "09edf12ca872f16239235d76bff7c0cf03c6cae2c8d8cda0ad38842b5da7952f",
+              "sha256": "9c60a91aa161948ea0279571a576c04d0c4e4874f69cfc507d87bb02b3b8b75e"
+            },
+            {
+              "native_id": "M6780",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0068-v2/metadata/source-records/M6780.json",
+              "row_sha256": "c4d6b101ff50187b2ba7bba8d1f11b2487423fc32a8406857cc57639de926138",
+              "sha256": "37263da6dc6dcc33c2ced73f0e30e82e5c007605e6b24cc4c6fd67f565982caa"
+            },
+            {
+              "native_id": "M4474",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4474.json",
+              "row_sha256": "c698666d0ff47da97246af3b7fe54a34c63e215e7fb8e679e54045bde33c0124",
+              "sha256": "80be8cccdd4a99a84e7f590603dcad20afd2a19d0f3bc5fdd5da0b214bc1fc47"
+            },
+            {
+              "native_id": "M1697",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0017-v2/metadata/source-records/M1697.json",
+              "row_sha256": "890084f2b16cfadde2dfe16640b4b4674d2dc31a2cc482d3e2a52234f1532f45",
+              "sha256": "e3d4c7d7dad3d976e20e52cf02bc8ae0abf6c222b17a9ee9e88caed3bf8ef79a"
+            },
+            {
+              "native_id": "M6862",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0069-v2/metadata/source-records/M6862.json",
+              "row_sha256": "c64ce053ef90e1ecd414989a23e17a66fcb8bf18a8a6676e10c551a60d38abd9",
+              "sha256": "3c0fbf4bff146a0429bd81596ce25a15cf82b48e885058768d9474d690e40d37"
+            }
+          ],
+          "scope": "coverage-map-v41.csv（M记录6971、因子变体1570、v1–v40集合434、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19）按关键词与同市场同核心信号检索，并逐一核对v35–v40集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "best ideas",
+            "最佳想法",
+            "conviction",
+            "高信念持仓",
+            "mutual fund holdings",
+            "portfolio tilt"
+          ]
+        },
+        "compared_record_names": {
+          "M0391": "Breadth of ownership（DelBreadth）",
+          "M1697": "BigQuant社区：基金重仓增持池→杠杆/估值过滤→增持比例Top20→PB升序Top10月频等权",
+          "M4474": "Lou·预期流致价格压力：季末；E[FIPP]=持股×由滞后α预测的预期资金流；等权十分位多最高空最低；持约1–4季（Lou E[FIPP]·D10/D1·EW）",
+          "M6780": "Chen·机构持股广度变动十分位多空：月末；DelBreadth=机构持有人数季变；剔市值最低五分位；等权多最高空最低持3月（Chen·DelBreadth·DecileL/S）",
+          "M6862": "Nagel·高市净率残差机构持股五分位多空：月末；仅MB最高五分位；RIO_MB=滞后6月残差机构持股五分位；剔市值最低五分位；等权多高空低持1月（Nagel·RIO_MB·QuintileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以每只主动基金“超配×特质波动”最大的单一持仓为信号、跨基金等权合成的跟随持仓策略。M0391/M6780为机构持有人数变化（持股广度），M4474为Lou预期资金流价格压力，M1697为A股基金重仓增持池，M6862为Nagel残差机构持股；都不按单只基金内部的相对超配识别最高信念持仓。目录检索“best ideas/最佳想法/高信念”无命中。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "ACP2021-best-ideas-argmax-idio-vol-times-weight-minus-market-weight-top25pct-active-funds-EW-long-quarterly-price-ge-5",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 1170,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 331,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 346,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10,
+              11
+            ],
+            "sha256": "3b1413957396c7ef5ba210ba411fd2f325eb323644d8f55d28b7c5cf6ac668f5",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          },
+          {
+            "bytes": 84,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 473,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 473,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "ffef7474a01a408648a66f0250d08b183701f8ede6d84f222f94f9c32870b5ad",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 584,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 391,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 396,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "61969a03a84eae9ef0d91c492dda60bf015525e99ba48a29b495be730204929b",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 881,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 347,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 355,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "867374be42549e497176ef4b67fb9b29c1b62980d62d2a530479662ec9c9d6d8",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 269,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 375,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 377,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "208c1c55b1114e56658ea8c1c36c4cfd1e53573f1260954b3dd62f4651175e0c",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 704,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 450,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 457,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "7f16113385a1062bdcf4e6bb4c1279ffcefcda500bfbeca15567f257d52f12f3",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 704,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 450,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 457,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "7f16113385a1062bdcf4e6bb4c1279ffcefcda500bfbeca15567f257d52f12f3",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 484,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 485,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 489,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "dabc8bc9d03e9afa3ca661736b5c6ceb40fcf2aed853c3fd91fab31466be593d",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          },
+          {
+            "bytes": 163,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 520,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 521,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "85f4e2963e9a595bf4eff5b46c147c8f95166129463386e36af9965f4c511fdb",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          },
+          {
+            "bytes": 1047,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 548,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 558,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "d7e427cd0a28e35f89bf892d9e399a30f1855a216cde869871a3550eef449ca3",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          },
+          {
+            "bytes": 435,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 565,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 569,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "3d2372fe966b8f018a862a55de636a7610e41c1c74b60c7aac9438ec7864ffb9",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 942,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 242,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 264,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "c67db5441f589b495aa6824ee02cff854c939a60b6ff2c69f375a5866de2a629",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          },
+          {
+            "bytes": 1085,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 1743,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1752,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              48
+            ],
+            "sha256": "e056c802091dcf4b2be444790b2ded55336ffdd5738d7fa3e9a1903d546e6abd",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          },
+          {
+            "bytes": 1210,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 629,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 644,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              19
+            ],
+            "sha256": "6073c568ff626f504d0fd2805b5204d8ba711a4448b1a0cc1c293fe97abe244a",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 704,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 450,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 457,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "7f16113385a1062bdcf4e6bb4c1279ffcefcda500bfbeca15567f257d52f12f3",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 1170,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 331,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 346,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10,
+              11
+            ],
+            "sha256": "3b1413957396c7ef5ba210ba411fd2f325eb323644d8f55d28b7c5cf6ac668f5",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          },
+          {
+            "bytes": 389,
+            "derived_text_sha256": "9e062dd035039681b8e826b7fc29212983d51bdd51b7cf287fcd947deea71caf",
+            "first_line": 370,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 373,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "6b5a7611b6b7fc4f022cd7b678175f353c785a8ecf9a97f02e5a80ca933e5e2b",
+            "source_id": "v41-lse-polk-best-ideas-2021-pdf",
+            "source_sha256": "7ac2acbf41c8704dc9d5a2a906868af0d873eea6f7daa6666abbc6513f7fbdbf"
+          }
+        ]
+      },
+      "frequencies": [
+        "QUARTERLY"
+      ],
+      "identity_namespace": "personal.lse.ac.uk/polk",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "ACP2021:best-ideas-active-fund-max-IR-holding"
+      ],
+      "record_id": "ACP2021:best-ideas-active-fund-max-IR-holding",
+      "record_sha256": "e83e8241c8fcf18d91ca71e6852d9f6f661fbf8342a1d91da7966bf584092600",
+      "reviewed_at": "2026-10-08T09:49:53+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v41 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0429",
+            "M0430",
+            "M0424",
+            "M0874",
+            "M3610"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0429",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0005-v2/metadata/source-records/M0429.json",
+              "row_sha256": "f6d6a41efe944669ab6eb61a628916e8f851a56d0fa59c422240c031fa9f5003",
+              "sha256": "44c2f0b4f5b26db134f1c1914fef3d6ae70935eded5306d07d62da5d22f0784f"
+            },
+            {
+              "native_id": "M0430",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0005-v2/metadata/source-records/M0430.json",
+              "row_sha256": "1df98fdfac5a69fc1b116317e8e1165fd722f0c94a59c9e009b9c9c2a6be5ab8",
+              "sha256": "db7889073edecabae620211610389d6e4a2ced4f70d1cdea1d803486aa753ccd"
+            },
+            {
+              "native_id": "M0424",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0005-v2/metadata/source-records/M0424.json",
+              "row_sha256": "3016986e2de1e90675767733bb088b702bf62f3d159212bf2a0211f2c9184d0d",
+              "sha256": "a87f25584e5a2fd3c063c6eaef74be4b26d6ce414dd675e9d931c56692a3520e"
+            },
+            {
+              "native_id": "M0874",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0009-v2/metadata/source-records/M0874.json",
+              "row_sha256": "5a2340ea6d7fa6ae7485b94d284e1448d497e98d8977b2840c9a8f8bc8be3a2e",
+              "sha256": "373074a561c0f8d6d1daa5e149cd3b334cc1833afaf45146b1b09afd5b1458b6"
+            },
+            {
+              "native_id": "M3610",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3610.json",
+              "row_sha256": "b544b203183bb86bfa16252d4b18b105e46334da362c420d811175befb5d3f44",
+              "sha256": "faed7d13ea218fe02c153eb9450413b367a15f4697fca22c70b819c904957d6c"
+            }
+          ],
+          "scope": "coverage-map-v41.csv（M记录6971、因子变体1570、v1–v40集合434、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19）按关键词与同市场同核心信号检索，并逐一核对v35–v40集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "mood beta",
+            "情绪β",
+            "seasonality",
+            "季节性",
+            "January March September October",
+            "mood month"
+          ]
+        },
+        "compared_record_names": {
+          "M0424": "Off season long-term reversal（MomOffSeason）",
+          "M0429": "Return seasonality years 2 to 5（MomSeason）",
+          "M0430": "Return seasonality years 6 to 10（MomSeason06YrPlus）",
+          "M0874": "日历月季节性多空：价格高于5美元的100只流动股，相对一年前同一日历月总回报做多前5做空后5，50/50",
+          "M3610": "SI月末效应·N1：日频；仅持有新月第1个交易日的SPY，其余现金（SI TOTM·N1）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以“情绪月”个股对市场的回归斜率为信号，并按月份情绪方向翻转多空的季节策略。M0429/M0430（MomSeason）按同一日历月的历史平均收益排序且方向不翻转，M0424为非同月平均收益反转，M0874为一年前同月收益的流动股多空，M3610为月初持有SPY；都不估计对情绪月市场收益的敏感度，也不在低情绪月反向。作者显示情绪β吸收了同月收益的大部分预测力。v35拒收R35-056（Birru周内情绪）因无完整规则。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "HJM2019-mood-beta-regression-on-EW-market-in-Jan-Mar-Sep-Oct-plus-realized-top2-bottom2-months-10y-roll-lags2-5-decile-long-high-in-Jan-Mar-flip-in-Sep-Oct-EW",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 326,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 515,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 518,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "d7c1ca8134ffb447cb12e46224787687906bad01d4c05e1bdad18ff125cd5678",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 489,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 1100,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1104,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "dc42b349615e37ddf01ad07bcd7c385a0f2ad2bd10a6129f8473f288ef162635",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          },
+          {
+            "bytes": 911,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 2170,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2175,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              51
+            ],
+            "sha256": "d044faab342b0dc011cda5d61fd8bf52c282a6d07772ec4f7875f9c41898552d",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 391,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 1107,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1110,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "620cef8d30d0a3cb01aad905e56854ad88ed68a8d6947ef90d039b97906ff5ad",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          },
+          {
+            "bytes": 911,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 2170,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2175,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              51
+            ],
+            "sha256": "d044faab342b0dc011cda5d61fd8bf52c282a6d07772ec4f7875f9c41898552d",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 911,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 2170,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2175,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              51
+            ],
+            "sha256": "d044faab342b0dc011cda5d61fd8bf52c282a6d07772ec4f7875f9c41898552d",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 488,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 1119,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1123,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "18588cca7608d0f7e48e9332414d2fd24c3fb5c96555bb342a0d34cde82fba5d",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          },
+          {
+            "bytes": 3389,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 2183,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2216,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              51,
+              52
+            ],
+            "sha256": "5141a1c020adfcff075c68f6accbd837a4e511654584240b180114d2f0e84723",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 559,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 559,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 564,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "11511101dce7e878ec0078a8f12093ac61402a2f803271120742fb2db2a3e04b",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          },
+          {
+            "bytes": 540,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 616,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 626,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15,
+              16
+            ],
+            "sha256": "9e03220581c31581fe0e85b8dfae734f378722d37cf6496f0eab48635900136a",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          },
+          {
+            "bytes": 911,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 844,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 855,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              21
+            ],
+            "sha256": "d96681c75256c98741dca49a8160a10df3c4cfa80ca562e174dbb600d63f9c2d",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          },
+          {
+            "bytes": 235,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 878,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 880,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              21
+            ],
+            "sha256": "28c68731ca89e496b8bbf269be557a4649eb7ebe5e413bc1174f57e3cbd139c3",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          },
+          {
+            "bytes": 415,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 865,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 868,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              21
+            ],
+            "sha256": "33ae08786063da8419e854714d730a685bd4f68d4127ba444b91e02ed388db64",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 391,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 1107,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1110,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "620cef8d30d0a3cb01aad905e56854ad88ed68a8d6947ef90d039b97906ff5ad",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 326,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 515,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 518,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "d7c1ca8134ffb447cb12e46224787687906bad01d4c05e1bdad18ff125cd5678",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          },
+          {
+            "bytes": 911,
+            "derived_text_sha256": "0708b55f14c7dea891903e5ee465a1bee2f967e751953685f1ab86349b511360",
+            "first_line": 844,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 855,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              21
+            ],
+            "sha256": "d96681c75256c98741dca49a8160a10df3c4cfa80ca562e174dbb600d63f9c2d",
+            "source_id": "v41-nber-w24676-mood-betas-pdf",
+            "source_sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "nber.org/papers",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "w24676:mood-beta-mood-month-decile-flip"
+      ],
+      "record_id": "w24676:mood-beta-mood-month-decile-flip",
+      "record_sha256": "1347e9f46c48e11abbe1ce476317ce2faa45a731ec26072e34acf76d7615490f",
+      "reviewed_at": "2026-10-08T09:49:53+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v41 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M1487",
+            "M3575",
+            "M4464",
+            "M3582",
+            "M4232"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M1487",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0015-v2/metadata/source-records/M1487.json",
+              "row_sha256": "615d633f7500e4f435a1d0d0931d2260a2c1273a0713b820067844543fe46f21",
+              "sha256": "b2f5f676e169075779a6fe52cf09c9faa2c8099d1d51eaba0dac18daa144c1ca"
+            },
+            {
+              "native_id": "M3575",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3575.json",
+              "row_sha256": "223b34e4da719832d891c8245c531824d23776406b3da434a250e8859839f3fd",
+              "sha256": "a2257b5867c673ef2fe9a83ae935df91a21a0df5efcb4ba74181e9f4b2c7616f"
+            },
+            {
+              "native_id": "M4464",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4464.json",
+              "row_sha256": "eb08c48e261675fe020469a3d457bd8ef35cd71a900e97e8837a32fc0fd175ff",
+              "sha256": "47deb43e52909125f6c64675c54f64b89cbc4a1fa38b47da9d87e5c314bfef72"
+            },
+            {
+              "native_id": "M3582",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3582.json",
+              "row_sha256": "78df071f6a24352c7e3cbe7510bb552a145175fc6a05fba1ec91bd02f299ad09",
+              "sha256": "ea7bb99b386ceb291b8a584c38dd804e0bde0919a03e3e36643ad01ca8822874"
+            },
+            {
+              "native_id": "M4232",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4232.json",
+              "row_sha256": "ce7a5a49c6162adbbcfbcbb2e6ac16935c694aad5232635d6c44f6a4c1165c57",
+              "sha256": "8cfde2bfe7d64e28505b24654f247b01b9c62486316e7860d46932630a966bd1"
+            }
+          ],
+          "scope": "coverage-map-v41.csv（M记录6971、因子变体1570、v1–v40集合434、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19）按关键词与同市场同核心信号检索，并逐一核对v35–v40集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "earnings calendar",
+            "财报日期",
+            "scheduling disclosure",
+            "预约披露",
+            "Wall Street Horizon",
+            "advancer delayer"
+          ]
+        },
+        "compared_record_names": {
+          "M1487": "国信金工成长稳健组合（成长股池按距正式财报预约披露日间隔天数分档优先近端；样本多时多因子精选；100只等权）",
+          "M3575": "QP盈余公告溢价：月频；高成交集中五分位内；预期公告月多空非公告月；市值加权（QP Earnings Announcement Premium）",
+          "M3582": "QP盈余公告窗反转：大市值；公告前t−4..t−2最差五分位多最好空；持有t−1..t+1（QP Earnings-Window Reversal）",
+          "M4232": "Bernard·Thomas·盈余漂移SUE：季频公告后；标准化意外盈利最高/最低十分位；公告后持有约60交易日等权（BT PEAD·SUE·D1/D10）",
+          "M4464": "DellaVigna·Pollet·周五盈余公告漂移：周五公告；按SUE/意外分位等权多正意外空负意外；持至约公告后60–75交易日（DP FridayPEAD·L/S·EW）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以公司公布的财报预约日期相对市场预期日期的提前或推迟（REV）为信号、在预约财报周做多空的事件型周度策略。M1487为国信金工按距预约披露日间隔分档优先近端的选股（只用剩余天数，不用相对预期的修订方向），M3575为盈余公告溢价（预期公告月多空），M4464为周五公告的漂移，M3582为公告窗前反转，M4232为SUE漂移；都不使用日期修订方向。目录检索“财报日期修订/预约披露/Wall Street Horizon”无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "JS2018-earnings-calendar-revision-REV-uncon-minus-scheduled-trading-days-long-REV-gt-3-short-REV-lt-minus3-in-scheduled-announcement-week-weekly-min-positions",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 723,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 306,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 313,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "2f9cb99f7bb3905586eae9a2afa10519d551699b8050282ff4415325aaafeaff",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          },
+          {
+            "bytes": 914,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 371,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 381,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "94ac260b79822cb87eeb232e3122db85fa0278d8212c2a87c1c00e529064d2eb",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 510,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 917,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 922,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "9c83d00bfb2e8c01f1bed7d7e56b87530af2dc687be8ca450df0a36e3a7142b2",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          },
+          {
+            "bytes": 971,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 2015,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2022,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              60
+            ],
+            "sha256": "a84cc1239223ea3cdb3eecfd01c6222c3906aac855ffcfed4c285f6ec4a81268",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 510,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 917,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 922,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "9c83d00bfb2e8c01f1bed7d7e56b87530af2dc687be8ca450df0a36e3a7142b2",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          },
+          {
+            "bytes": 971,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 2015,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2022,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              60
+            ],
+            "sha256": "a84cc1239223ea3cdb3eecfd01c6222c3906aac855ffcfed4c285f6ec4a81268",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 510,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 917,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 922,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "9c83d00bfb2e8c01f1bed7d7e56b87530af2dc687be8ca450df0a36e3a7142b2",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          },
+          {
+            "bytes": 438,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 942,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 946,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              28
+            ],
+            "sha256": "0c942568391fe3e367f2836a820cc06bbd2bc3284c960d7a03a73fa54137f979",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 364,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 923,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 926,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "c5ebd3e1e7aff5a9587c4c7609cca2cf0dd766e389bb3f43a4e42537d0d56b66",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          },
+          {
+            "bytes": 438,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 942,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 946,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              28
+            ],
+            "sha256": "0c942568391fe3e367f2836a820cc06bbd2bc3284c960d7a03a73fa54137f979",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          },
+          {
+            "bytes": 373,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 608,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 612,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              18
+            ],
+            "sha256": "b40ad05cc21cf84d013873be96290c4f5048fea6bbe990e29094b83aa3160f5f",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          },
+          {
+            "bytes": 448,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 626,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 630,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              19
+            ],
+            "sha256": "20fb1c29de27aa4381c85e35618967bbec453e8ba2c44ebc6673c1fc427bd391",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 544,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 329,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 335,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "5056746086ca7c3b60dd4f9efc587a2696ea92b174f23eea996e7ab840aefd1d",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          },
+          {
+            "bytes": 799,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 362,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 370,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "7678732cd32ba3b7471507d47fe53fd7420c1f6a8745a3015096b6987eaced30",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          },
+          {
+            "bytes": 1261,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 414,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 436,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "14062b24ccf2f7a3073730b3d6d61517367565f6b9c5c0621062f43946e32cb9",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 510,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 917,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 922,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "9c83d00bfb2e8c01f1bed7d7e56b87530af2dc687be8ca450df0a36e3a7142b2",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 914,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 371,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 381,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "94ac260b79822cb87eeb232e3122db85fa0278d8212c2a87c1c00e529064d2eb",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          },
+          {
+            "bytes": 648,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 407,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 413,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "000f4ce9408aa401e70f49466d7c7b6c614c631ab65a2615bfae62882f1c6e28",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          },
+          {
+            "bytes": 263,
+            "derived_text_sha256": "00158c570c45de5ecb1bb88178212e77d8b286f5fbcce45d410e208ac75bad95",
+            "first_line": 336,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 338,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "2c125d2debb9e2321b6059fd00b4569cfbaab936d17189e618273e36859af267",
+            "source_id": "v41-mit-johnson-so-time-will-tell-pdf",
+            "source_sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd"
+          }
+        ]
+      },
+      "frequencies": [
+        "WEEKLY"
+      ],
+      "identity_namespace": "eso.scripts.mit.edu",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "JS2018:earnings-calendar-revision-weekly-long-short"
+      ],
+      "record_id": "JS2018:earnings-calendar-revision-weekly-long-short",
+      "record_sha256": "06cb38272f909b83c162f630af63fb762b7b7109de4c05e2ecf28a332f1d4c71",
+      "reviewed_at": "2026-10-08T09:49:53+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v41 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "alternative_data_equity_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M3575",
+            "M3582",
+            "M4464",
+            "M2631",
+            "M3783"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M3575",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3575.json",
+              "row_sha256": "223b34e4da719832d891c8245c531824d23776406b3da434a250e8859839f3fd",
+              "sha256": "a2257b5867c673ef2fe9a83ae935df91a21a0df5efcb4ba74181e9f4b2c7616f"
+            },
+            {
+              "native_id": "M3582",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3582.json",
+              "row_sha256": "78df071f6a24352c7e3cbe7510bb552a145175fc6a05fba1ec91bd02f299ad09",
+              "sha256": "ea7bb99b386ceb291b8a584c38dd804e0bde0919a03e3e36643ad01ca8822874"
+            },
+            {
+              "native_id": "M4464",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4464.json",
+              "row_sha256": "eb08c48e261675fe020469a3d457bd8ef35cd71a900e97e8837a32fc0fd175ff",
+              "sha256": "47deb43e52909125f6c64675c54f64b89cbc4a1fa38b47da9d87e5c314bfef72"
+            },
+            {
+              "native_id": "M2631",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0027-v2/metadata/source-records/M2631.json",
+              "row_sha256": "4664a1d225cf720dce7e3e1d907198ec94f167d4d17b5b66709009893d056bf5",
+              "sha256": "c61321f90dc53e29fbbdf4d0e96eb3af436ca0c92e62d123503a98c64e67cafc"
+            },
+            {
+              "native_id": "M3783",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0038-v2/metadata/source-records/M3783.json",
+              "row_sha256": "e5fdc059a680922b621390c8cc242fbcd8c67be4b93603f9bf4072dc1b5edcef",
+              "sha256": "55fd43a517691fcd1892d5047d6348125de4357eceacac3d1ec1d322fa3fb546"
+            }
+          ],
+          "scope": "coverage-map-v41.csv（M记录6971、因子变体1570、v1–v40集合434、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19）按关键词与同市场同核心信号检索，并逐一核对v35–v40集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "satellite imagery",
+            "卫星图像",
+            "parking lot",
+            "停车场",
+            "alternative data",
+            "earnings announcement"
+          ]
+        },
+        "compared_record_names": {
+          "M2631": "美股：Quiver内幕交易美元成交额最高10只每日09:00等权（QC Documentation Quiver insider）",
+          "M3575": "QP盈余公告溢价：月频；高成交集中五分位内；预期公告月多空非公告月；市值加权（QP Earnings Announcement Premium）",
+          "M3582": "QP盈余公告窗反转：大市值；公告前t−4..t−2最差五分位多最好空；持有t−1..t+1（QP Earnings-Window Reversal）",
+          "M3783": "QP·SUE∩EAR盈余漂移：季频；公告后第2日做多SUE与EAR双高五分位交、做空双低交，持有一季（QP PEAD·SUE∩EAR）",
+          "M4464": "DellaVigna·Pollet·周五盈余公告漂移：周五公告；按SUE/意外分位等权多正意外空负意外；持至约公告后60–75交易日（DP FridayPEAD·L/S·EW）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以卫星图像测得的零售商同店停车场占用率同比增长为信号、在财报3日窗口做多空的另类数据策略。M3575为盈余公告溢价，M3582为公告前收益反转，M4464为周五公告漂移，M3783为SUE与EAR交集的盈余后漂移，M2631为QuantConnect的Quiver内幕交易数据宇宙；都不使用卫星或车流数据。目录检索“卫星/停车场/parking”只命中“核心+卫星”资产配置，无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "KPPZ2025-satellite-same-store-parking-fill-rate-YoY-growth-top-vs-bottom-quartile-rolling-3m-cutoffs-long-short-earnings-day-minus1-to-plus1",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 2729,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 258,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 292,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5,
+              6
+            ],
+            "sha256": "1c6ec60591b0a6fa3ec4d905c706b9134f0bc78b1d7bf5ac5ac4addc646a27b3",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          },
+          {
+            "bytes": 334,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 296,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 299,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "c45ec39183078a8b32a2b7e5cf464dfe0e08ce9b29afb59ddad723f917f871e9",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 2729,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 258,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 292,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5,
+              6
+            ],
+            "sha256": "1c6ec60591b0a6fa3ec4d905c706b9134f0bc78b1d7bf5ac5ac4addc646a27b3",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 4294,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 600,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 653,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11,
+              12
+            ],
+            "sha256": "1e7cdbf3697a6572401344bafd339e21fff57d7185015a73ba9eb923feba3f4b",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 4294,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 600,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 653,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11,
+              12
+            ],
+            "sha256": "1e7cdbf3697a6572401344bafd339e21fff57d7185015a73ba9eb923feba3f4b",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 4294,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 600,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 653,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11,
+              12
+            ],
+            "sha256": "1e7cdbf3697a6572401344bafd339e21fff57d7185015a73ba9eb923feba3f4b",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          },
+          {
+            "bytes": 1071,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 664,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 676,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "7edccd94317fd05f47fdbffe0d29ab178bf435efe52a49f6b56c4d20bc32821d",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 493,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 654,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 659,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "030c1191825bf728560d6b3e6b81aaaaa44322b51cc9a9c7737e33d46c442e28",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          },
+          {
+            "bytes": 1071,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 664,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 676,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "7edccd94317fd05f47fdbffe0d29ab178bf435efe52a49f6b56c4d20bc32821d",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 1645,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 346,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 367,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "a044fe89663506b39cf07c692f3d811881fbcb619ba62a8b3ea9ced74682f58b",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          },
+          {
+            "bytes": 537,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 396,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 402,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "b3bc98a33d45d7bef7dce2d1eb1df1861f9ab7cfd8104601ea58119b35856b2e",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 4294,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 600,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 653,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11,
+              12
+            ],
+            "sha256": "1e7cdbf3697a6572401344bafd339e21fff57d7185015a73ba9eb923feba3f4b",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 334,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 296,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 299,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "c45ec39183078a8b32a2b7e5cf464dfe0e08ce9b29afb59ddad723f917f871e9",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          },
+          {
+            "bytes": 1645,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 346,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 367,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "a044fe89663506b39cf07c692f3d811881fbcb619ba62a8b3ea9ced74682f58b",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          },
+          {
+            "bytes": 2729,
+            "derived_text_sha256": "04adcbfcbb9141106c8dd255e68080a0bb0395b02e8edf5845b801924859e3f2",
+            "first_line": 258,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 292,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5,
+              6
+            ],
+            "sha256": "1c6ec60591b0a6fa3ec4d905c706b9134f0bc78b1d7bf5ac5ac4addc646a27b3",
+            "source_id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+            "source_sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d"
+          }
+        ]
+      },
+      "frequencies": [
+        "EVENT"
+      ],
+      "identity_namespace": "cambridge.org/jfqa",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "KPPZ2025:satellite-parking-fill-rate-earnings-window"
+      ],
+      "record_id": "KPPZ2025:satellite-parking-fill-rate-earnings-window",
+      "record_sha256": "c05a65d641ccdc08a9b1d9b695d67d56d1eb21c6b1d3abda341666a1d635d145",
+      "reviewed_at": "2026-10-08T09:49:53+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v41 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "alternative_data_equity_strategy",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    }
+  ],
+  "schema_version": "quantgraph-source-collection-reviews/v1"
+}

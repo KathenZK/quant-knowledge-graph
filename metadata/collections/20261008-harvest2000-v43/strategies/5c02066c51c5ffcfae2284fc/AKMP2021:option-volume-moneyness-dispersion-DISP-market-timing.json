@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "个股期权成交在行权价上越分散，市场整体意见分歧越大，在卖空限制下指数被高估，随后股权溢价更低。",
+    "missing": [
+      "均值方差权重的具体公式与方差估计窗口原文只写“基于历史数据”，未印明；本条按通常w=预测/(γσ²)理解，属假设，未写入核心字段。",
+      "2019-08作者终稿未与Critical Finance Review终版比对；补充材料（二元权重、替代DISP定义）未取；作者网站提供DISP序列与代码，本条未下载核对。",
+      "样本外期仅2001–2017年；原文未扣交易成本；同文3个月期限与AFD（分析师分歧）预测为变体或对照，未单列；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "eprints.lancs.ac.uk/136188",
+  "lab": null,
+  "missing_information": [
+    "均值方差权重的具体公式与方差估计窗口原文只写“基于历史数据”，未印明；本条按通常w=预测/(γσ²)理解，属假设，未写入核心字段。",
+    "2019-08作者终稿未与Critical Finance Review终版比对；补充材料（二元权重、替代DISP定义）未取；作者网站提供DISP序列与代码，本条未下载核对。",
+    "样本外期仅2001–2017年；原文未扣交易成本；同文3个月期限与AFD（分析师分歧）预测为变体或对照，未单列；未回测。"
+  ],
+  "name": "期权成交量价位离散度DISP择时：递推样本外预测的均值方差美股仓位（0–1.5倍，Andreou–Kagkadis–Maio–Philip）",
+  "native_source_id": "AKMP2021:option-volume-moneyness-dispersion-DISP-market-timing",
+  "one_line": "每月用个股期权（5–60天、剔除0.95–1.05近平值）各行权价成交量占比计算当日成交量加权价位K/S的离散度，取月内日均值再按市值加权得全市场DISP；月末用此前全部数据（初始5年）递推回归下月CRSP价值加权超额收益对DISP，得样本外预测，作为风险厌恶3的均值方差投资者在美股指数与无风险资产间配置，股票权重限制在0至1.5之间，逐月调整。",
+  "record_id": "AKMP2021:option-volume-moneyness-dispersion-DISP-market-timing",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://eprints.lancs.ac.uk/id/eprint/136188/1/DISP_CFR_full_final.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Panayiotis C. Andreou, Anastasios Kagkadis, Paulo Maio, Dennis Philip,《Dispersion in Options Investors' versus Analysts' Expectations: Predictive Inference for Stock Returns》2019-08作者终稿（Lancaster EPrints托管；CFR终版未比对）。中文定义自撰。",
+      "id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L300–342（PDF物理页6）；universe L185–195（PDF物理页4）；universe L918–952（PDF物理页20）；signal L142–183（PDF物理页3,4）；signal L173–176（PDF物理页3）；signal L243–257（PDF物理页5）；signal L300–342（PDF物理页6）；entry L300–342（PDF物理页6）；entry L352–355（PDF物理页6）；exit L300–342（PDF物理页6）；position L300–342（PDF物理页6）；risk L374–392（PDF物理页7）；risk L409–411（PDF物理页7）；risk L918–952（PDF物理页20）；timeframe L300–342（PDF物理页6）；execution_time L173–176（PDF物理页3）；execution_time L300–342（PDF物理页6）",
+      "revision": "作者终稿（文件名DISP_CFR_full_final，封面\"August 2019\"，致谢编辑Ivo Welch），英国兰卡斯特大学EPrints机构仓储托管（机构仓储）；35页；终版Critical Finance Review（2021）未比对；补充材料（Supplementary Material）未取；sha256 2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6",
+      "sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://eprints.lancs.ac.uk/id/eprint/136188/1/DISP_CFR_full_final.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP价值加权美股指数（实盘可用指数基金或期货替代）与无风险资产（1个月国库券）。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原文未扣交易成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末用截至当时的数据估计预测回归（初始样本期5年，首个预测为2001-01），按均值方差规则（风险厌恶系数3，方差用历史数据估计）确定下月美股指数权重。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "信号用当月倒数第二个交易日及以前的期权成交数据，月末调仓，预测只用当时可得数据。"
+    },
+    "exit": {
+      "evidence": [
+        "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "不设单独离场规则；每月末重新估计并调整权重，权重可降至0（全部持无风险资产）。"
+    },
+    "position": {
+      "evidence": [
+        "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "股票指数权重限制在0到1.5之间（按Campbell–Thompson的现实杠杆约束），其余资金持无风险资产。"
+    },
+    "risk": {
+      "evidence": [
+        "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告1个月期限策略年化夏普1.00、相对历史均值策略的确定性等价收益增量ΔCER 7.30%，3个月期限夏普0.73、ΔCER 5.53%；历史均值策略夏普为0.37与0.28；样本外R²为2.95%与5.18%；补充材料的二元权重版本仍优于历史均值策略。"
+    },
+    "signal": {
+      "evidence": [
+        "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "IDISP_{i,t}=(1/N)Σ_n √(Σ_j w_{i,n,j}Y²_{i,n,j}−(Σ_j w_{i,n,j}Y_{i,n,j})²)，w为第j个行权价在当日总成交量中的占比，Y=K/S；只用当日至少5个合约有成交的交易日且月内N≥10；以倒数第二个交易日作为月末以避免期权与股票收盘不同步；DISP_t=Σ_i v_{i,t}·IDISP_{i,t}，v为月末市值权重；再以递推回归得到下月股权溢价预测（DISP系数为负）。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度。"
+    },
+    "universe": {
+      "evidence": [
+        "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "信号覆盖OptionMetrics全部有期权的美国个股（1996-01至2017-12）；只用到期5–60天的期权，剔除价位0.95–1.05的近平值期权；样本外评估期2001-01至2017-12。"
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "剔除平行移动暴露后，美债各期限桶的中期动量仍能预测下月相对收益。",
+    "missing": [
+      "权重和为1的约束未在正文明写；线性规划最优解通常是角点，会集中于1–2个期限桶。",
+      "巴克莱期限子指数为商业数据，用ETF或现券复制会有跟踪误差。",
+      "同文多空版（权重−1..1、零久期，约207bp、IR 1.01）为另一变体，未单列；SR工作论文未与期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "newyorkfed.org/research",
+  "lab": null,
+  "missing_information": [
+    "权重和为1的约束未在正文明写；线性规划最优解通常是角点，会集中于1–2个期限桶。",
+    "巴克莱期限子指数为商业数据，用ETF或现券复制会有跟踪误差。",
+    "同文多空版（权重−1..1、零久期，约207bp、IR 1.01）为另一变体，未单列；SR工作论文未与期刊版比对；未回测。"
+  ],
+  "name": "美债期限桶久期中性动量（线性规划，Durham）",
+  "native_source_id": "SR657:duration-neutral-curve-momentum",
+  "one_line": "每月对巴克莱美国国债6个期限桶（1–3、3–5、5–7、7–10、10–20、20–30年）计算t−2至t−n月平均总收益（主口径为2–12月），用线性规划在权重0–1、组合久期等于国债指数久期的约束下最大化过去收益，持有一个月；只做多，对收益率曲线平行移动中性。",
+  "record_id": "SR657:duration-neutral-curve-momentum",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr657.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "J. Benson Durham,《Momentum and the Term Structure of Interest Rates》纽约联储Staff Report 657（2013-12）。中文定义自撰。",
+      "id": "v39-nyfed-sr657-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L299–317（PDF物理页7）；universe L386–394（PDF物理页9）；signal L299–317（PDF物理页7）；signal L349–379（PDF物理页8）；entry L333–347（PDF物理页8）；entry L349–379（PDF物理页8）；exit L333–347（PDF物理页8）；position L333–347（PDF物理页8）；position L436–450（PDF物理页10）；risk L396–404（PDF物理页9）；cost L452–476（PDF物理页10）；timeframe L436–450（PDF物理页10）",
+      "revision": "Federal Reserve Bank of New York Staff Report no. 657, December 2013；41页；未与期刊版比对；sha256 2fc51128c5b81d2e1a35f38ae74911f697b9645009a252a30b87de8089b62626",
+      "sha256": "2fc51128c5b81d2e1a35f38ae74911f697b9645009a252a30b87de8089b62626",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr657.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v39-nyfed-sr657-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国名义国债的6个期限子指数（Barclays Capital），使用各桶总收益、久期与市值数据；实盘需用对应期限国债或子指数跟踪组合。"
+    },
+    "cost": {
+      "evidence": [
+        "v39-nyfed-sr657-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原文称月均换手0.14–0.34（写作percent，与后文“约0.21”的口径不一致）；按当时全期限CUSIP平均（最大）买卖价差0.62（2.8）bp估算，年成本约1.5（7.1）bp。"
+    },
+    "entry": {
+      "evidence": [
+        "v39-nyfed-sr657-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月求解max w′R，约束0≤w_k≤1，且w′D_t=d_index,t（D为各桶久期中点，d_index为当月国债指数久期），按最优权重建仓。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v39-nyfed-sr657-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月末，使用截至t−2月的收益（跳过最近一个月）。"
+    },
+    "exit": {
+      "evidence": [
+        "v39-nyfed-sr657-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月，下月按新一期线性规划结果整体调仓；无单独止损。"
+    },
+    "position": {
+      "evidence": [
+        "v39-nyfed-sr657-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只做多，权重在0–1之间，组合久期与基准相同；平均配置偏重5–7年与7–10年桶，样本最后18个月接近杠铃型。权重和为1未在正文明写。"
+    },
+    "risk": {
+      "evidence": [
+        "v39-nyfed-sr657-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告：相对基准年均超额约96bp，跟踪误差150bp，信息比率0.64；超额收益正偏。久期中性只消除平行移动，斜率/曲率风险仍在。"
+    },
+    "signal": {
+      "evidence": [
+        "v39-nyfed-sr657-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "动量=各期限桶在t−2至t−n月（n=5…13，跳过最近一个月）的平均月总收益向量R；用连续的线性规划配置，而不是离散排名。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v39-nyfed-sr657-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度调仓；回看窗口2–12月（稳健性5–13月，9月窗口最好约120bp）。"
+    },
+    "universe": {
+      "evidence": [
+        "v39-nyfed-sr657-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "巴克莱期限子指数数据始于1996-12；2–12月窗口的样本为1998-01至2013-07，共187个月。"
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "高基差（升水）商品的远期合约相对滚动近月合约有更高的期限溢价，低基差（贴水）商品相反。",
+    "missing": [
+      "n>1时持有期跨多个双月，作者未说明重叠批次如何合并为组合收益。",
+      "组合收益为对数收益平均，不含再平衡效应，不等于可实现的组合收益。",
+      "接收稿托管于第三方内容平台（托管方未标明）；未与JF终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "storyblok.com/assets",
+  "lab": null,
+  "missing_information": [
+    "n>1时持有期跨多个双月，作者未说明重叠批次如何合并为组合收益。",
+    "组合收益为对数收益平均，不含再平衡效应，不等于可实现的组合收益。",
+    "接收稿托管于第三方内容平台（托管方未标明）；未与JF终版比对；未回测。"
+  ],
+  "name": "商品期限溢价：按近月基差分组的超额持有（持有到期合约−滚动近月）多空（Szymanowska等）",
+  "native_source_id": "SdRNG:basis-sorted-commodity-term-premium-excess-holding",
+  "one_line": "每两个月按近月对数基差（次近月与近月期货价差/期限）把21种商品分四组；在每组做“超额持有”：买入n期（4/6/8个月）合约持有到交割，同时做空连续滚动的近月合约；做多高基差组的超额持有、做空低基差组，赚取期限溢价（n=3时年化约1.44%）。",
+  "record_id": "SdRNG:basis-sorted-commodity-term-premium-excess-holding",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://a.storyblok.com/f/331657/x/17e020bced/an-anatomy-of-commodity-futures-risk-premia-szymanowska-and-de-roon-and-nijman-and-van-den-goorbergh-2013.pdf?sfvrsn=6"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Marta Szymanowska, Frans de Roon, Theo Nijman, Rob van den Goorbergh,《An Anatomy of Commodity Futures Risk Premia》作者接收稿（JF 69(1), 2014终版未比对）。中文定义自撰。",
+      "id": "v40-storyblok-szymanowska-anatomy-commodity-risk-premia-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L469–501（PDF物理页13,14）；universe L469–501（PDF物理页13,14）；signal L191–217（PDF物理页6,7）；signal L574–576（PDF物理页16）；entry L271–299（PDF物理页8,9）；entry L311–326（PDF物理页9）；entry L563–568（PDF物理页16）；exit L271–299（PDF物理页8,9）；exit L311–326（PDF物理页9）；position L506–513（PDF物理页14）；position L311–326（PDF物理页9）；risk L605–610（PDF物理页17）；risk L1389–1417（PDF物理页39）；timeframe L469–501（PDF物理页13,14）；timeframe L563–568（PDF物理页16）",
+      "revision": "作者接收稿（致谢中感谢编辑Cam Harvey与审稿人，无期刊排版；文件名标2013），托管于a.storyblok.com第三方内容平台（托管机构未标明）；45页；未与JF 69(1), 2014终版比对；sha256 d2b03c84c8e34e83afa5e1f07e5b09f429e062ca1c63c617f22f81f160ead560",
+      "sha256": "d2b03c84c8e34e83afa5e1f07e5b09f429e062ca1c63c617f22f81f160ead560",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://a.storyblok.com/f/331657/x/17e020bced/an-anatomy-of-commodity-futures-risk-premia-szymanowska-and-de-roon-and-nijman-and-van-den-goorbergh-2013.pdf?sfvrsn=6",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v40-storyblok-szymanowska-anatomy-commodity-risk-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRB数据的21种商品期货，分7类：能源3、肉类3、金属3、谷物4、油籽3、软商品3、工业原料2；用近月期货代替现货。"
+    },
+    "cost": {
+      "evidence": [
+        "v40-storyblok-szymanowska-anatomy-commodity-risk-premia-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "原文未扣交易成本；远月合约流动性较差，价差腿的买卖价差对约1–2%的年化溢价影响大。"
+    },
+    "entry": {
+      "evidence": [
+        "v40-storyblok-szymanowska-anatomy-commodity-risk-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个双月日按近月基差把21种商品分为四组（四分位）；对每组构建超额持有头寸：买入n期合约（n=2、3、4对应4、6、8个月）并持有至交割（Holding），同时做空连续n期滚动的一期近月合约（Short Roll）；做多最高基差组P4、做空最低基差组P1的超额持有。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v40-storyblok-szymanowska-anatomy-commodity-risk-premia-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "每个双月日建仓；具体日内时点未写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v40-storyblok-szymanowska-anatomy-commodity-risk-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "n期合约持有到交割日（t+n），Short Roll腿每期展期至下一个近月合约，n期后同时结束；每双月新建一批。"
+    },
+    "position": {
+      "evidence": [
+        "v40-storyblok-szymanowska-anatomy-commodity-risk-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "组内等权（以对数收益平均）；多高基差组、空低基差组，各腿为“长期限多头+滚动近月空头”的价差头寸，近似零成本。"
+    },
+    "risk": {
+      "evidence": [
+        "v40-storyblok-szymanowska-anatomy-commodity-risk-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告（表II）：超额持有P4−P1年化0.61%（n=2，t=1.72）、1.44%（n=3，t=2.91）、1.84%（n=4，t=3.00），年化波动1.75%–3.0%；期限溢价远小于现货溢价（同一基差排序的Short Roll P4−P1为年化−8.3%至−14.5%）。"
+    },
+    "signal": {
+      "evidence": [
+        "v40-storyblok-szymanowska-anatomy-commodity-risk-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对数基差y^(n)_t=(1/n)·ln(F^(n)_t/S_t)，即期货对数价格期限结构的斜率；排序用近月（n=1）基差，S取最近月合约，F^(1)取次近月合约（一期=两个月）。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v40-storyblok-szymanowska-anatomy-commodity-risk-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "双月频；持有期4、6、8个月（n=2–4）。"
+    },
+    "universe": {
+      "evidence": [
+        "v40-storyblok-szymanowska-anatomy-commodity-risk-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "1986-03至2010-12，双月频（每组至少3种商品）；交割月前一个月及交割月的价格剔除，比惯例提前一个月展期（T−1月之前）。"
+    }
+  }
+}

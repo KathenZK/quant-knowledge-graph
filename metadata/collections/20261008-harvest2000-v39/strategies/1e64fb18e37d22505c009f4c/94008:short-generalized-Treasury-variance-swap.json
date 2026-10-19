@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "美债期货期权隐含方差系统性高于随后实现方差，做空方差可赚取方差风险溢价。",
+    "missing": [
+      "美式期货期权转欧式远期期权的方法（Cakici–Zhu）在在线附录中，未转写。",
+      "月内建仓日与期权到期日的对齐方式未在引用段写明。",
+      "方差互换不是交易所标准合约，需用期权组合加期货动态对冲复制；作者稿未与RoF终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "wrap.warwick.ac.uk/eprint",
+  "lab": null,
+  "missing_information": [
+    "美式期货期权转欧式远期期权的方法（Cakici–Zhu）在在线附录中，未转写。",
+    "月内建仓日与期权到期日的对齐方式未在引用段写明。",
+    "方差互换不是交易所标准合约，需用期权组合加期货动态对冲复制；作者稿未与RoF终版比对；未回测。"
+  ],
+  "name": "做空一月期美债广义方差互换（GTVS，5/10/30年期国债期货期权）",
+  "native_source_id": "94008:short-generalized-Treasury-variance-swap",
+  "one_line": "每月用CME国债期货期权（清洗后按行权价样条插值隐含波动）按式(6)计算一月期公允方差执行价F̃=(2/p)[∫P/K²dK+∫C/K²dK]，做空广义Treasury方差互换（收F̃、付式(5)的日度广义已实现方差），持有一个月；作者报告月均收益约20%、年化夏普略低于2。",
+  "record_id": "94008:short-generalized-Treasury-variance-swap",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://wrap.warwick.ac.uk/id/eprint/94008/1/WRAP-bond-variance-risk-premiums-Mueller-2017.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Hoyong Choi, Philippe Mueller, Andrea Vedolin,《Bond Variance Risk Premiums》作者稿（Warwick WRAP开放仓储；期刊版RoF 21(3), 2017，未比对）。中文定义自撰。",
+      "id": "v39-warwick-cmv-bond-vrp-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L652–666（PDF物理页16）；universe L638–642（PDF物理页15）；signal L125–138（PDF物理页4）；signal L538–547（PDF物理页13）；signal L561–579（PDF物理页14）；entry L716–719（PDF物理页17）；entry L721–724（PDF物理页17）；entry L740–749（PDF物理页18）；exit L759–778（PDF物理页18）；exit L922–949（PDF物理页22）；position L922–949（PDF物理页22）；position L204–212（PDF物理页6）；risk L125–138（PDF物理页4）；risk L140–148（PDF物理页4）；cost L1128–1141（PDF物理页27）；timeframe L716–719（PDF物理页17）",
+      "revision": "Choi/Mueller/Vedolin《Bond Variance Risk Premiums》作者稿（Warwick WRAP 94008；仓储引文标注Review of Finance 21(3), 2017, pp.987–1022；稿件日期未知）；59页；sha256 ab06151d52acfc95c0c1f3bc92c49d9efc237ade33e855717a494fc0dff4b32b",
+      "sha256": "ab06151d52acfc95c0c1f3bc92c49d9efc237ade33e855717a494fc0dff4b32b",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://wrap.warwick.ac.uk/id/eprint/94008/1/WRAP-bond-variance-risk-premiums-Mueller-2017.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v39-warwick-cmv-bond-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CME 30年期国债期货、10年与5年期国债票据期货及其期权；期货在交割月前一个月的28日展期，期权按同一规则展期。"
+    },
+    "cost": {
+      "evidence": [
+        "v39-warwick-cmv-bond-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "假设按卖价买、按买价卖重算：平均收益最多下降约三分之一，方差互换年化夏普1.1–2.4。"
+    },
+    "entry": {
+      "evidence": [
+        "v39-warwick-cmv-bond-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月t：剔除期货/期权价格、行权价、期限或持仓为零的数据，剔除违反无套利边界的期权，剔除行权价<0.94F的认购与>1.06F的认沽；按行权价对隐含波动拟合样条，转为欧式价格后数值计算式(6)，以F̃为执行价做空一月期方差互换。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v39-warwick-cmv-bond-vrp-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "每月建仓，使用日终（CT 14:00）价格；月内具体建仓日未写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v39-warwick-cmv-bond-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "一个月到期结算：多头收益r=RṼ/F̃−1（式7），空头取其相反数；RṼ按式(5)用过去21个交易日的期货价格（CT 14:00）计算。"
+    },
+    "position": {
+      "evidence": [
+        "v39-warwick-cmv-bond-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "以F̃美元为抵押的全额抵押头寸（式7口径）；作者另测保证金约束版，收益下降但仍显著。"
+    },
+    "risk": {
+      "evidence": [
+        "v39-warwick-cmv-bond-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告：30/10/5年期月均收益21.2%/27.6%/18.7%，年化夏普略低于2；一月Delta对冲ATM跨式（10年期）约−7%、夏普约1.05。做空方差有显著尾部损失与追加保证金风险。"
+    },
+    "signal": {
+      "evidence": [
+        "v39-warwick-cmv-bond-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "无择时信号：每月固定做空一月期GTVS（押注方差风险溢价为负）；GTVS交换式(5)的广义已实现方差与公允执行价F̃（式6，可由静态期权组合加期货动态头寸完全复制）。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v39-warwick-cmv-bond-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度（一月期互换，基准期限τ=1个月）。"
+    },
+    "universe": {
+      "evidence": [
+        "v39-warwick-cmv-bond-vrp-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "30/10/5年期数据分别始于1982-10、1985-05、1990-06，止于2012-05；基准结果从1990-06开始，月度频率。"
+    }
+  }
+}

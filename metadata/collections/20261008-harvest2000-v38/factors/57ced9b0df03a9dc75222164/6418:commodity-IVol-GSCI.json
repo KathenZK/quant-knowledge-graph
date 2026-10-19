@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "残差波动率低的商品期货随后跑赢残差波动率高的商品期货。",
+    "missing": [
+      "基准模型（S&P-GSCI）是按样本内IVol组合表现事后选定的。",
+      "R取1/3/6/12月四种，原文未定单一主参数。",
+      "接受稿未与JFM终版逐字比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日结算价公开可得；基准因子为事后在8个候选中按表现选定，存在选择偏差。"
+    },
+    "calculation": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按IVol排序：做多IVol最低的20%商品、做空最高的20%；组内等权；全额抵押多空组合持有一个月后重复。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：仿照股票低特质波动异象，低IVol商品随后表现更好，并与动量、期限结构信号不完全重叠。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "r_{i,d}=α_i+β_i′F_d+ε_{i,d}（d为过去R={1,3,6,12}个月内的交易日），IVol_i=残差ε的标准差；主口径F取S&P-GSCI单一因子（作者在8个基准中选其IVol组合表现最佳者）。"
+    },
+    "inputs": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Datastream 27种商品期货日结算价（1979-01-02至2011-08-31；农产品12、能源5、畜产品4、金属5、木材1）；Bloomberg S&P-GSCI日价；持有最近月合约至到期前一月末，再换次近月。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "商品期货横截面因子；可与动量、展期收益合成（见同源三重筛选策略）。"
+    }
+  },
+  "identity_namespace": "openaccess.city.ac.uk/eprint",
+  "lab": null,
+  "missing_information": [
+    "基准模型（S&P-GSCI）是按样本内IVol组合表现事后选定的。",
+    "R取1/3/6/12月四种，原文未定单一主参数。",
+    "接受稿未与JFM终版逐字比对；未回测。"
+  ],
+  "name": "商品期货特质波动率（S&P-GSCI单因子残差）",
+  "native_source_id": "6418:commodity-IVol-GSCI",
+  "one_line": "每月末对每种商品用过去R个月日收益对S&P-GSCI做OLS，取残差标准差为IVol；做多IVol最低五分位、做空最高五分位，组内等权、全额抵押，持有一个月。",
+  "record_id": "6418:commodity-IVol-GSCI",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://openaccess.city.ac.uk/id/eprint/6418/1/JFM_SSRN_13Jan2014.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Ana-Maria Fuertes, Joëlle Miffre, Adrian Fernandez-Perez,《Commodity Strategies Based on Momentum, Term Structure and Idiosyncratic Volatility》接受稿（City, University of London开放仓储；期刊版JFM 35(3), 2015）。中文定义自撰。",
+      "id": "v38-city-fmf-commodity-ivol-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L290–310（PDF物理页7）；formula L447–455（PDF物理页10）；inputs L214–237（PDF物理页6）；calculation L379–383（PDF物理页9）；calculation L458–472（PDF物理页10）；calculation L488–488（PDF物理页11）",
+      "revision": "Fuertes/Miffre/Fernandez-Perez《Commodity Strategies Based on Momentum, Term Structure and Idiosyncratic Volatility》作者接受稿（City Research Online 6418，仓储引文标注Journal of Futures Markets 35(3), 2015, pp.274–297；文件名示2014-01-13）；42页；sha256 e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703",
+      "sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://openaccess.city.ac.uk/id/eprint/6418/1/JFM_SSRN_13Jan2014.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

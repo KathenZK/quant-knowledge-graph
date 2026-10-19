@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "互换利差偏离短端Libor−回购利差足够大时，收取利差年金长期可获正超额收益（承担银行业尾部风险）。",
+    "missing": [
+      "自举贴现曲线（三次样条插值、远期线性插值）细节仅概括，未全部转写。",
+      "触发值5/20bp稳健性结果未转写；Libor已停用，实盘需改用SOFR等替代基准。",
+      "工作稿未与RFS终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "bankofcanada.ca/wp-content",
+  "lab": null,
+  "missing_information": [
+    "自举贴现曲线（三次样条插值、远期线性插值）细节仅概括，未全部转写。",
+    "触发值5/20bp稳健性结果未转写；Libor已停用，实盘需改用SOFR等替代基准。",
+    "工作稿未与RFS终版比对；未回测。"
+  ],
+  "name": "互换利差套利（收固定互换+做空同期国债，触发10bp）",
+  "native_source_id": "duarte4:swap-spread-arbitrage",
+  "one_line": "每月比较各期限互换利差SS=CMS−CMT与当期3个月Libor−GC回购利差；差值>10bp则收固定互换、做空同期国债（<−10bp反向），持有至收敛或到期；各“单笔基金”等权，资本按10%年化波动缩放。",
+  "record_id": "duarte4:swap-spread-arbitrage",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.bankofcanada.ca/wp-content/uploads/2010/08/duarte4.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jefferson Duarte, Francis A. Longstaff, Fan Yu,《Risk and Return in Fixed Income Arbitrage: Nickels in Front of a Steamroller?》2006-03工作稿（期刊版据外部书目为RFS 20(3), 2007, pp.769–811，未取）。中文定义自撰。",
+      "id": "v38-boc-duarte-longstaff-yu-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L172–181（PDF物理页6）；universe L217–224（PDF物理页7）；signal L228–232（PDF物理页7）；entry L228–232（PDF物理页7）；entry L1085–1089（PDF物理页26）；exit L233–235（PDF物理页7）；exit L1085–1089（PDF物理页26）；position L238–243（PDF物理页7）；cost L1091–1103（PDF物理页26,27）",
+      "revision": "Duarte/Longstaff/Yu《Risk and Return in Fixed Income Arbitrage: Nickels in Front of a Steamroller?》Current version: March 2006（加拿大央行网站托管会议稿）；53页；未与RFS 20(3) 2007期刊版比对；sha256 e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1",
+      "sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.bankofcanada.ca/wp-content/uploads/2010/08/duarte4.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "两腿：收固定CMS、付浮动Libor的平价互换；做空同期限平价国债并以回购利率投资保证金。净现金流=收固定年金SS=CMS−CMT、付浮动S_t=L_t−r_t。"
+    },
+    "cost": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "国债买卖价差1/32、互换1bp、回购卖空利差10bp；按自举贴现曲线估值。"
+    },
+    "entry": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "差值>10bp：收固定$100名义互换并做空$100名义国债；<−10bp则反向；未触发时持现金（超额收益为0）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月末（数据为月末观测）。"
+    },
+    "exit": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有至收敛（剩余期限互换利差≤（反向为≥）短端利差）或互换与国债到期。"
+    },
+    "position": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每笔交易视为一只单笔基金，每月对所有存续基金收益等权平均；初始资本调整使指数年化波动10%（月2.887%）。"
+    },
+    "risk": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者指出：银行业危机时Libor飙升，付Libor一方面临大额负现金流（间接违约风险）。"
+    },
+    "signal": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月比较当期互换利差与当期短端利差（Libor−GC回购）之差。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月度检查与建仓，持有至收敛或到期。"
+    },
+    "universe": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "1988-11至2004-12月末数据：3个月Libor、2/3/5/7/10年期互换中间价、美联储H.15 CMT、3个月GC回购利率。"
+    }
+  }
+}

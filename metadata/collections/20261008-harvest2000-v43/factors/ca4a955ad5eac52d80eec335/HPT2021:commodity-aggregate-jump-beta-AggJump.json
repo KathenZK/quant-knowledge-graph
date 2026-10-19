@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "与总体跳跃风险因子正相关（β高）的商品期货提供危机对冲价值，下个月收益低于β低的商品。",
+    "missing": [
+      "JUMP因子构造（Cremers–Halling–Weinbaum 2015，基于标普500指数期权的市场中性、vega中性、gamma为正的跨式组合日收益）本文未重印，复现须查原文；依赖OptionMetrics，故AggJump实际可用样本应自1996年起，本文未单独列出该排序的起止期。",
+      "作者接收稿未印日期，未与Quarterly Journal of Finance终版比对；网络附录（分子样本表A4等）未取；分子样本结果较弱。",
+      "同文波动率之波动、动量、偏度等其他商品异象为不同信号，未在本条合并；AggVol（ΔVIX/VOL因子β）为相邻但不同的信号，未单列；原文未扣交易成本；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "JUMP因子需按Cremers等（2015）用标普500指数期权构造，本文未重印其构造细节；作者称分子样本期结果方向相同但统计上更弱，可能因样本缩短。原文未扣交易成本。"
+    },
+    "calculation": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按AggJump把商品分为三组（P1最低、P3最高；每月至少需6种商品），等权组合；对冲组合P3−P1在全额抵押下取P3收益的一半减P1收益的一半，另一半资金收无风险利率；逐月再平衡。作者报告P3−P1年化−4.63%（Newey–West标准误0.0161），CAPM、FF3、Carhart、FF5、BGR、FFFM α在−3.71%至−4.71%之间且显著，其中4个通过多重检验阈值；即实务方向为做多低β、做空高β。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者认为与总体跳跃风险正相关的商品可对冲危机，投资者愿意接受更低预期收益，与Cremers等（2015）对股票的发现一致。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "AggJump_{i,t}=β^{JUMP}_{i,t}，来自回归 r_{i,d}=α_{i,t}+β^{M}_{i,t}(r_{M,d}−r_{f,d})+β^{JUMP}_{i,t}·JUMP_d+ε_{i,d}，r_{i,d}为商品i日度超额收益，r_{M,d}−r_{f,d}为股票市场日超额收益，JUMP为Cremers等（2015）的跳跃因子；估计窗口为t之前12个月的日数据，t为月末调仓日。"
+    },
+    "inputs": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRB的26种商品期货与期权日数据（1959-08至2015-12，美元计价）；用最近月合约作现货合约、在到期前两个月所在月展期，固定期限持有；全额抵押超额收益 r_{t+1}=(F_{t+1,T}−F_{t,T})/F_{t,T}，且收益只比较同一合约；CRSP标普500总收益与OptionMetrics标普500指数期权（用于跳跃/波动因子）；Kenneth French网站的因子与1个月国库券利率。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "商品期货截面因子；可与动量、期限结构（展期收益）、套保压力、偏度、特质波动率等商品因子对照，或作为跨资产尾部风险对冲信号。"
+    }
+  },
+  "identity_namespace": "centaur.reading.ac.uk/100920",
+  "lab": null,
+  "missing_information": [
+    "JUMP因子构造（Cremers–Halling–Weinbaum 2015，基于标普500指数期权的市场中性、vega中性、gamma为正的跨式组合日收益）本文未重印，复现须查原文；依赖OptionMetrics，故AggJump实际可用样本应自1996年起，本文未单独列出该排序的起止期。",
+    "作者接收稿未印日期，未与Quarterly Journal of Finance终版比对；网络附录（分子样本表A4等）未取；分子样本结果较弱。",
+    "同文波动率之波动、动量、偏度等其他商品异象为不同信号，未在本条合并；AggVol（ΔVIX/VOL因子β）为相邻但不同的信号，未单列；原文未扣交易成本；未回测。"
+  ],
+  "name": "商品期货对总体跳跃风险因子的β（AggJump）：月末三分组全额抵押多低空高（Hollstein–Prokopczuk–Tharann）",
+  "native_source_id": "HPT2021:commodity-aggregate-jump-beta-AggJump",
+  "one_line": "每月末对每种商品期货用过去12个月日度超额收益回归 r_{i,d}=α+β^M(r_{M,d}−r_{f,d})+β^{JUMP}·JUMP_d+ε，其中JUMP为Cremers–Halling–Weinbaum（2015）基于标普500指数期权构造的总体跳跃风险因子；按β^{JUMP}把商品分三组，全额抵押下做多β最低组、做空β最高组（各半仓），持有一个月；原文报告高减低年化−4.63%。",
+  "record_id": "HPT2021:commodity-aggregate-jump-beta-AggJump",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://centaur.reading.ac.uk/100920/1/SSRN-id3567629.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Fabian Hollstein, Marcel Prokopczuk, Björn Tharann,《Anomalies in Commodity Futures Markets》作者接收稿（Reading CentAUR托管；终版QJF 2021未比对）。中文定义自撰。",
+      "id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L1056–1076（PDF物理页27,28）；inputs L217–226（PDF物理页6）；inputs L252–254（PDF物理页7）；inputs L290–305（PDF物理页8）；calculation L381–405（PDF物理页10,11）；calculation L394–398（PDF物理页10）；calculation L467–480（PDF物理页12）；calculation L1682–1691（PDF物理页39）；calculation L1703–1720（PDF物理页39）；availability L252–254（PDF物理页7）；availability L957–960（PDF物理页25）",
+      "revision": "作者接收稿（CentAUR封面标\"Accepted Version\"，正文为SSRN 3567629稿），英国雷丁大学CentAUR机构仓储托管（机构仓储）；正文未印日期；57页；终版Quarterly Journal of Finance 11(4):2150017（2021）未比对；网络附录未取；sha256 7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a",
+      "sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://centaur.reading.ac.uk/100920/1/SSRN-id3567629.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

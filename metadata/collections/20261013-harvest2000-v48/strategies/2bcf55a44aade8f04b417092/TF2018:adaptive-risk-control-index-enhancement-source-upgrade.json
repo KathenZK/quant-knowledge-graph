@@ -1,0 +1,110 @@
+{
+  "economic_basis": {
+    "hypothesis": "按实现TE自适应调整个股偏离上限，使跟踪误差在不同市场环境下更稳定。",
+    "missing": [
+      "因子清单、偏离网格与目标TE、调仓与费用未在可固定来源中给出。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "qkg-harvest2000-v48/csi-index-enhancement/tianfeng-2018-adaptive-risk-control",
+  "lab": null,
+  "missing_information": [
+    "规则不全（rule_completeness=规则不全）：核心规则未完整公开，不计入完整策略目标，不能视为可直接复现。",
+    "因子清单、偏离网格与目标TE、调仓与费用未在可固定来源中给出。",
+    "来源自报绩效未验证（REPORTED_UNVERIFIED）；本库未回测（execution_trials=0）。"
+  ],
+  "name": "【规则不全】天风自适应风险控制指数增强（M0968来源复核，不新增行）",
+  "native_source_id": "TF2018:adaptive-risk-control-index-enhancement-source-upgrade",
+  "one_line": "M0968的来源复核记录：收益端多维有效因子对称正交、逻辑相反权重归零；组合端最大化预期收益、行业与市值暴露与基准一致、约束个股相对成分权重最大偏离；自适应版按过去不同偏离约束下实际跟踪误差与目标跟踪误差的关系动态确定下期个股偏离度。不新增目录行。",
+  "record_id": "TF2018:adaptive-risk-control-index-enhancement-source-upgrade",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；规则不全；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留机构/作者、日期、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://bigquant.com/wiki/doc/dbRGXtkvea"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "天风证券金融工程，《金工专题报告：基于自适应风险控制的指数增强策略》，2018-07-05；BigQuant wiki 转载摘要。",
+      "id": "v48-tianfeng-2018-adaptive-risk-control-bigquant",
+      "license": "版权归原机构/作者所有；本库仅存自撰中文摘要、来源指针与行段哈希，不含原文全文。",
+      "locator": "BigQuant转载摘要“静态指数增强模型”“自适应风险控制下的指数增强模型”两节；快照行段：assets L119–122；universe L119–122；signal L117–117；entry L119–119；position L125–125；risk L121–121；risk L127–127",
+      "revision": "BigQuant wiki 转载天风证券金工专题报告摘要页（页面由qxiao创建，更新2022-01-14），HTML快照；正文PDF链接本次返回404；sha256 9d878753c3b4b32d84ed9225a7f8801d99e25cf14f2b63218c65852c1cbbb631",
+      "sha256": "9d878753c3b4b32d84ed9225a7f8801d99e25cf14f2b63218c65852c1cbbb631",
+      "supports": [
+        "SELECTED_PUBLISHED_DESCRIPTION"
+      ],
+      "url": "https://bigquant.com/wiki/doc/dbRGXtkvea",
+      "verification": "PINNED_PUBLISHED_PAGE_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v48-tianfeng-2018-adaptive-risk-control-bigquant"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "A股；沪深300、中证500、中证1000成分。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "摘要未给。"
+    },
+    "entry": {
+      "evidence": [
+        "v48-tianfeng-2018-adaptive-risk-control-bigquant"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "最大化组合预期收益的优化组合；约束行业、市值暴露与基准一致，并约束个股相对基准成分股最大偏离。"
+    },
+    "execution_time": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "摘要未给。"
+    },
+    "exit": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "随下期再优化调整。【缺】调仓频率摘要未写。"
+    },
+    "position": {
+      "evidence": [
+        "v48-tianfeng-2018-adaptive-risk-control-bigquant"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "自适应版：依据过去一段时间不同个股偏离约束下组合实际TE与目标TE的关系，动态确定下期个股权重偏离度。【缺】偏离网格、回看期与目标TE数值（前次采集自Scribd读到0.1%–0.5%网格、过去3个月、目标TE 4%，本次Scribd仅返回壳页，未能固定快照，未核实）。"
+    },
+    "risk": {
+      "evidence": [
+        "v48-tianfeng-2018-adaptive-risk-control-bigquant"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源自报（未验证）：静态中证500增强年化超额20.83%、相对最大回撤3.95%、IR 4.61；自适应中证500年化超额17.57%、相对最大回撤2.62%、IR 4.77、TE 3.31%。"
+    },
+    "signal": {
+      "evidence": [
+        "v48-tianfeng-2018-adaptive-risk-control-bigquant"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "规模、估值、成长、盈利、技术、流动性、波动等维度有效因子，对称正交去共线；滚动估计的因子权重方向与投资逻辑相反时处理（摘要句被截断）。【缺】具体因子清单与窗口。"
+    },
+    "timeframe": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "摘要未给调仓频率。"
+    },
+    "universe": {
+      "evidence": [
+        "v48-tianfeng-2018-adaptive-risk-control-bigquant"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对应宽基指数成分股（摘要未写成分外比例）。"
+    }
+  }
+}

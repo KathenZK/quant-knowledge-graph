@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "剔除预期收益与现金流消息后，上月折现率冲击最负的股票次月跑赢冲击最正的股票。",
+    "missing": [
+      "十分位组内加权方式（等权或市值）未在引用段写明。",
+      "因子风险溢价取全样本均值（前视），本记录未改写为递推口径。",
+      "同文3×3“收益×预测修正”非参数双排序（相关0.76）未单列；LTG/A2缺失填补规则见脚注8，未全部转写；工作论文版未与期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v38-nyfed-sr513-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "因子风险溢价按全样本均值设定存在前视，实盘应改为递推均值；I/B/E/S数据需付费；分析师覆盖不足的小盘股不在样本内。"
+    },
+    "calculation": {
+      "evidence": [
+        "v38-nyfed-sr513-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "行业用I/B/E/S两位SIGC代码的11个行业；每月在各行业内按上月DR把股票分十组，做多DR最负（底部十分位）、做空DR最正（顶部十分位），持有一个月（文中称基准DR反转策略）。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v38-nyfed-sr513-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：投资者对现金流消息反应不足、对非现金流（折现率/流动性）冲击反应过度，后者随后反转。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v38-nyfed-sr513-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "DR_{t+1}=r_{t+1}−µ_t−CF_{t+1}（残差定义）。CF_{t+1}=E_{t+1}[Σρ^j e_{t+j+1}]−E_t[Σρ^j e_{t+j+1}]，ρ=0.95；e为预期对数会计收益：第1–2年用分析师FY1/FY2预测A1、A2，第3–5年按长期增长率LTG外推，第6–10年线性收敛至截面平均LTG（g_t），第10年后为log(1+g_t/(1−ψ))；净资产按清洁盈余B_{t,t+j+1}=(B_{t,t+j}+X_{t,t+j+1})(1−ψ)，ψ=5%。"
+    },
+    "inputs": {
+      "evidence": [
+        "v38-nyfed-sr513-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP月收益；I/B/E/S分析师FY1/FY2/LTG预测（按月修正）；预期收益µ_t由FF三因子模型给出：β用前5年月收益滚动估计（至少36个月），因子风险溢价取样本期平均因子收益。样本为µ、CF、DR均可计算的股票-月（约2350只/月，约占CRSP市值75%），剔除形成时月末收盘价<5美元者。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v38-nyfed-sr513-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股短期反转的改进版本；与传统1月反转、残差反转对照。"
+    }
+  },
+  "identity_namespace": "newyorkfed.org/research",
+  "lab": null,
+  "missing_information": [
+    "十分位组内加权方式（等权或市值）未在引用段写明。",
+    "因子风险溢价取全样本均值（前视），本记录未改写为递推口径。",
+    "同文3×3“收益×预测修正”非参数双排序（相关0.76）未单列；LTG/A2缺失填补规则见脚注8，未全部转写；工作论文版未与期刊版比对；未回测。"
+  ],
+  "name": "折现率冲击行业内反转（DR-based reversal）",
+  "native_source_id": "SR513:DR-reversal",
+  "one_line": "把上月个股收益分解为预期收益µ（FF3滚动β）、现金流冲击CF（分析师预测三阶段增长模型）与残差折现率冲击DR=r−µ−CF；每月在I/B/E/S 11个行业内按上月DR分十组，做多DR最负组、做空DR最正组。",
+  "record_id": "SR513:DR-reversal",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr513.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Zhi Da, Qianqiu Liu, Ernst Schaumburg,《Decomposing Short-Term Return Reversal》纽约联储Staff Report 513（2011-09；期刊版未取、未比对）。中文定义自撰。",
+      "id": "v38-nyfed-sr513-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L845–882（PDF物理页15）；formula L886–892（PDF物理页15）；formula L939–946（PDF物理页16）；formula L957–962（PDF物理页16）；inputs L731–745（PDF物理页13）；inputs L764–768（PDF物理页13）；inputs L1003–1021（PDF物理页17）；calculation L1027–1031（PDF物理页17）；calculation L1252–1258（PDF物理页21）",
+      "revision": "Federal Reserve Bank of New York Staff Report no. 513, September 2011（初步结果稿）；45页；未与期刊版比对；sha256 4c8636a52b940acb4ec09649cefad88032b838e08935981761b75e3e3d85f85f",
+      "sha256": "4c8636a52b940acb4ec09649cefad88032b838e08935981761b75e3e3d85f85f",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr513.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

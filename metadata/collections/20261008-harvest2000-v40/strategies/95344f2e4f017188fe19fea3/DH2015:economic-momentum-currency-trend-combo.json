@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "宏观基本面（增长、通胀、利率、贸易）趋势相对更强国家的货币随后跑赢趋势较弱国家的货币。",
+    "missing": [
+      "799个子策略的“过去3年波动”与组合实现波动的估计窗口细节未完全写明。",
+      "日度短端利率时间趋势回归的Newey–West滞后取(h×21)^{1/3}（脚注6）；月度变量时间趋势回归的滞后阶数未单独写明。",
+      "Quantpedia转载的2015工作稿，未与JFE终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "quantpedia.com/www",
+  "lab": null,
+  "missing_information": [
+    "799个子策略的“过去3年波动”与组合实现波动的估计窗口细节未完全写明。",
+    "日度短端利率时间趋势回归的Newey–West滞后取(h×21)^{1/3}（脚注6）；月度变量时间趋势回归的滞后阶数未单独写明。",
+    "Quantpedia转载的2015工作稿，未与JFE终版比对；未回测。"
+  ],
+  "name": "货币经济动量组合：8项宏观变量1–60月趋势的秩加权子策略合成（Dahlquist–Hasseltoft）",
+  "native_source_id": "DH2015:economic-momentum-currency-trend-combo",
+  "one_line": "每月末对20种货币分别计算8项基本面（1月利率、收益率利差、10年利率、通胀、贸易差额、工业产出、零售、失业倒数）在1–60个月回看期的趋势（变动或线性时间趋势t值），每个变量×方法×回看期按截面秩构造美元中性多空子策略（共799个）；按过去3年波动倒数合成，再缩放到5%目标波动，持有一个月。",
+  "record_id": "DH2015:economic-momentum-currency-trend-combo",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://quantpedia.com/www/Economic_Momentum_and_Currency_Returns.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Magnus Dahlquist, Henrik Hasseltoft,《Economic Momentum and Currency Returns》2015-03-27工作稿（Quantpedia转载；终版JFE 2020未比对）。中文定义自撰。",
+      "id": "v40-quantpedia-dahlquist-hasseltoft-economic-momentum-wp2015-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L206–221（PDF物理页7）；universe L206–221（PDF物理页7）；universe L226–250（PDF物理页7,8）；signal L313–341（PDF物理页10,11）；signal L346–378（PDF物理页11）；entry L407–458（PDF物理页12,13,14）；entry L456–464（PDF物理页14）；exit L407–458（PDF物理页12,13,14）；position L407–458（PDF物理页12,13,14）；position L456–464（PDF物理页14）；risk L601–610（PDF物理页18）；risk L611–618（PDF物理页18）；cost L772–783（PDF物理页23）；timeframe L407–458（PDF物理页12,13,14）；execution_time L346–378（PDF物理页11）；execution_time L407–458（PDF物理页12,13,14）",
+      "revision": "作者工作稿，日期March 27, 2015，Quantpedia网站转载（非作者或机构托管）；48页；未与JFE 136(1), 2020终版比对；sha256 8c22f6ffa9177fc94b3384d652e9694635b37dd0eb45edcde0418bda9d4c2a70",
+      "sha256": "8c22f6ffa9177fc94b3384d652e9694635b37dd0eb45edcde0418bda9d4c2a70",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://quantpedia.com/www/Economic_Momentum_and_Currency_Returns.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v40-quantpedia-dahlquist-hasseltoft-economic-momentum-wp2015-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "19国货币加欧元对美元的一月期远期（欧元区成员货币用到1998-12-31后改用欧元）；超额收益R=(S_{t+1}−F_t)/F_t。另在网络附录报告G10子集。"
+    },
+    "cost": {
+      "evidence": [
+        "v40-quantpedia-dahlquist-hasseltoft-economic-momentum-wp2015-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "合成组合平均月换手85%；按10bp买卖价差（每次成本为半价差）估算，短期趋势子策略的净夏普在部分情形接近零，长期趋势受影响较小。"
+    },
+    "entry": {
+      "evidence": [
+        "v40-quantpedia-dahlquist-hasseltoft-economic-momentum-wp2015-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末对每个变量×趋势方法×回看期，按信号截面排序，权重w=θ·[rank(z)−平均rank]，θ使多空各1美元（美元中性），共799个子策略；各子策略按过去3年波动倒数加权并归一，再乘以5%/组合过去实现波动。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v40-quantpedia-dahlquist-hasseltoft-economic-momentum-wp2015-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月末（趋势指标均在月末计算，组合月末再平衡）。"
+    },
+    "exit": {
+      "evidence": [
+        "v40-quantpedia-dahlquist-hasseltoft-economic-momentum-wp2015-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月，月末重新计算全部趋势并调仓。"
+    },
+    "position": {
+      "evidence": [
+        "v40-quantpedia-dahlquist-hasseltoft-economic-momentum-wp2015-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "子策略美元中性、多空各1美元；合成组合按波动倒数加权并做5%目标波动缩放（简单波动择时）。脚注称改用前后五分位或四分位排序结果相近。"
+    },
+    "risk": {
+      "evidence": [
+        "v40-quantpedia-dahlquist-hasseltoft-economic-momentum-wp2015-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告：合成组合（combo）年化夏普1.10、Sortino 1.89、胜率68%；最差月为1995-03（−6.64%）、2008-09（−4.35%）、1999-07（−4.30%）；剔除利率类变量后夏普0.85；长期趋势（37–60月）夏普1.06高于短期（1–12月）0.81。"
+    },
+    "signal": {
+      "evidence": [
+        "v40-quantpedia-dahlquist-hasseltoft-economic-momentum-wp2015-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "短端利率：过去h=1–60个月的利率变动除以EWMA（0.94）日变动波动，或h×21日线性时间趋势回归斜率的Newey–West t值；其余月度变量：h=1–60月的变动（CPI、产出、零售、失业取对数）或h=24–60月时间趋势斜率t值；非利率变量使用滞后3个月的数据。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v40-quantpedia-dahlquist-hasseltoft-economic-momentum-wp2015-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度调仓；回看1–60个月。"
+    },
+    "universe": {
+      "evidence": [
+        "v40-quantpedia-dahlquist-hasseltoft-economic-momentum-wp2015-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Datastream日度即期与一月远期汇率，1976-01至2014-05；一月利率由抛补利率平价反推，其余7项来自OECD月度数据；贸易差额=(出口−进口)/(出口+进口)，失业取倒数，利差=短端减长端。"
+    }
+  }
+}

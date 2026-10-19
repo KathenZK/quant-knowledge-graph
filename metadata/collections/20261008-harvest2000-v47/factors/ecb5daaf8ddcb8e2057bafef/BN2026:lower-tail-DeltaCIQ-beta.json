@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "特异收益下尾的共通创新是系统性风险，高暴露股票要求更高的期望收益。",
+    "missing": [
+      "分位数因子分析依赖Chen et al.（2021）迭代算法（作者用其MATLAB代码），本条未复现数值；Supplementary Material未抓取。",
+      "月末用截至m的β在m月末形成、持有m+1，属常规月频收盘口径，已按v47前视口径标待复核；原文未给跳一日结果。",
+      "中位/上尾CIQ、水平与AR(1)创新、多期持有属稳健性或未定价腿，未单列；未扣交易成本；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "需CRSP与FF因子及Chen et al.（2021）QFA实现。摘要称控制标准因子、特质波动与尾部风险测度后仍显著。表7：PCA-SQ控制后十分位溢价6.75%（t=4.26）；FF6残差4.38%（t=2.84）；价>$5为6.71%（t=3.97）；市值>NYSE中位数4.92%（t=2.33）；1968–1996仅4.06%（t=1.72），1997–2024为10.87%（t=4.48）；t+2至t+12平均4.30%（t=4.05）。原文未扣交易成本。"
+    },
+    "calculation": {
+      "evidence": [
+        "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末用截至m的信息估ΔCIQ_LT的β，按全截面断点分十分位（稳健性用NYSE断点或五分位），等权或市值加权，做多高β、做空低β，持有m+1月。作者报告（1968–2024）：十分位等权高−低年化超额7.41%（t=4.30）、市值加权7.36%（t=2.73）；五分位等权5.44%（t=3.76）、市值加权4.09%（t=2.04）；十分位等权α在CAPM、FF3/FF5/FF6、含Herskovic CIV冲击与BAB的FF alt.、加反转或流动性、中介两因子、Q5模型下为7.18%–9.72%（t 3.59–6.39），M4为5.94%（t=3.17）；NYSE断点十分位溢价6.03%（t=3.80）。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者认为个股特异收益的下尾存在共通冲击，投资者对下尾共通恶化要求补偿；高暴露股票需更高预期收益。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对每月m、股票i，在t=m−59..m估FF3：r_{i,t}=α_{i,m}+β^{MKT}MKT_t+β^{SMB}SMB_t+β^{HML}HML_t+e_{i,t,m}；残差按窗内标准差标准化后，对τ∈{0.2,0.5,0.8}估e_{i,t,m}=γ_{i,m}(τ)CIQ_{t,m}(τ)+u_{i,t,m}(τ)，使P(u<0|CIQ)=τ（Chen et al. 2021 迭代分位数回归，取第一因子；符号使CIQ与截面已实现特异分位数正相关）。ΔCIQ_{t,m}(τ)=CIQ_{t,m}(τ)−CIQ_{t−1,m}(τ)。个股暴露：r_{i,t}=a_{i,m}+β^{CIQ}_{i,j,m}ΔCIQ_{t,m}^{(j)}+v，j∈{LT,C,UT}，τ=0.2为下尾。"
+    },
+    "inputs": {
+      "evidence": [
+        "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP月收益，普通股（shrcd 10/11），按Bali–Engle–Murray（2016）处理退市；窗内完整观测；价>$1；1963-01至2024-12，可预测收益自1968-01起。基线用FF3；稳健性用FF5/FF6。QFA实现跟随Chen et al.（2021）Econometrica网页MATLAB代码。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股月度尾部风险截面因子；可与Kelly–Jiang尾部β、特质波动、协偏度对照，或作为下尾共通风险状态变量。"
+    }
+  },
+  "identity_namespace": "cambridge.org/S002210902610307X",
+  "lab": null,
+  "missing_information": [
+    "分位数因子分析依赖Chen et al.（2021）迭代算法（作者用其MATLAB代码），本条未复现数值；Supplementary Material未抓取。",
+    "月末用截至m的β在m月末形成、持有m+1，属常规月频收盘口径，已按v47前视口径标待复核；原文未给跳一日结果。",
+    "中位/上尾CIQ、水平与AR(1)创新、多期持有属稳健性或未定价腿，未单列；未扣交易成本；未回测。"
+  ],
+  "name": "下尾共通特异分位数因子暴露ΔCIQ：60月滚动FF3残差做τ=0.2分位数因子分析取创新，再估个股对ΔCIQ_LT的β，月末十分位多高暴露空低暴露（Baruník–Nevrla）",
+  "native_source_id": "BN2026:lower-tail-DeltaCIQ-beta",
+  "one_line": "每月末用过去60个月（至少48个月观测）对每只股票估FF3并取残差，残差按窗内标准差标准化；用Chen–Dolado–Gonzalo（2021）分位数因子分析在τ=0.2估计共通特异分位数因子CIQ_LT，取其窗内一阶差分ΔCIQ；再在同一60月窗上把个股超额收益对ΔCIQ_LT做时序回归得β。按β十分位（或五分位）等权或市值加权，做多最高暴露、做空最低暴露，持有下月；价>$1，样本1968-01至2024-12。",
+  "record_id": "BN2026:lower-tail-DeltaCIQ-beta",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/368B902FD1C2451EE6F5A5DCC04C35F0/S002210902610307Xa.pdf/div-class-title-common-idiosyncratic-quantile-factors-and-asset-prices-div.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jozef Baruník, Matěj Nevrla,《Common Idiosyncratic Quantile Factors and Asset Prices》JFQA（CC BY 4.0 开放获取出版版）。中文定义自撰。",
+      "id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+      "license": "CC BY 4.0（Creative Commons Attribution，期刊首页声明“unrestricted re-use, distribution and reproduction, provided the original article is properly cited”）",
+      "locator": "派生文本(pdftotext -layout)行段：formula L136–146（PDF物理页3）；formula L157–197（PDF物理页3,4）；formula L198–208（PDF物理页4）；formula L426–440（PDF物理页8）；formula L1703–1747（PDF物理页30）；inputs L250–255（PDF物理页5）；inputs L136–146（PDF物理页3）；inputs L1703–1747（PDF物理页30）；calculation L452–458（PDF物理页8）；calculation L486–494（PDF物理页9）；calculation L542–547（PDF物理页9）；calculation L644–660（PDF物理页11）；calculation L1406–1429（PDF物理页24）；availability L27–32（PDF物理页1）；availability L1406–1429（PDF物理页24）；availability L644–660（PDF物理页11）",
+      "revision": "期刊出版版（Open Access），Journal of Financial and Quantitative Analysis，DOI 10.1017/S002210902610307X（OpenAlex 公开日期 2026-06-10；PDF 首页仅印 DOI）；剑桥大学出版社 cambridge.org 原发，非镜像；42 页；Appendix A–E 在同一 PDF；Supplementary Material 未抓取；sha256 e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106",
+      "sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/368B902FD1C2451EE6F5A5DCC04C35F0/S002210902610307Xa.pdf/div-class-title-common-idiosyncratic-quantile-factors-and-asset-prices-div.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

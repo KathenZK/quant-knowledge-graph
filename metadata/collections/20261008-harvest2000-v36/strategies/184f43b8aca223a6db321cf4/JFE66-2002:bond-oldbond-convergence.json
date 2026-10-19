@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "新券流动性溢价在下一次拍卖后下降，新老券利差收敛。",
+    "missing": [
+      "回购利率数据来源需取原文第4节。",
+      "托管方未核实为作者主页。",
+      "原文结论为净利润近零，属已知低效策略；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "static1.squarespace.com/krishnamurthy",
+  "lab": null,
+  "missing_information": [
+    "回购利率数据来源需取原文第4节。",
+    "托管方未核实为作者主页。",
+    "原文结论为净利润近零，属已知低效策略；未回测。"
+  ],
+  "name": "30年美债新老券收敛交易",
+  "native_source_id": "JFE66-2002:bond-oldbond-convergence",
+  "one_line": "每次30年期国债拍卖日卖空新券、买入老券（回购融资），久期中性（y·DP相等且固定），持有至下次拍卖日平仓并滚动。",
+  "record_id": "JFE66-2002:bond-oldbond-convergence",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://static1.squarespace.com/static/5e6033a4ea02d801f37e15bb/t/5f624561a8d03f77b87e868f/1600275809874/krishnamurthy_bond_spread_jfe.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Arvind Krishnamurthy,《The bond/old-bond spread》Journal of Financial Economics 66 (2002) 463–506。中文定义自撰。",
+      "id": "v36-krishnamurthy-jfe2002-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L82–91（PDF物理页2）；universe L14–20（PDF物理页1）；signal L357–359（PDF物理页7）；entry L357–359（PDF物理页7）；exit L82–91（PDF物理页2）；position L503–515（PDF物理页10）；cost L14–20（PDF物理页1）",
+      "revision": "JFE 66 (2002) 463–506 期刊排版PDF；Squarespace静态托管（文件名krishnamurthy_bond_spread_jfe.pdf，托管方是否为作者主页未核实）；44页；sha256 262a54a2a4112f123e8cd9697a2a7ef6e0a645cda4ed3273498ff521a4696408",
+      "sha256": "262a54a2a4112f123e8cd9697a2a7ef6e0a645cda4ed3273498ff521a4696408",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://static1.squarespace.com/static/5e6033a4ea02d801f37e15bb/t/5f624561a8d03f77b87e868f/1600275809874/krishnamurthy_bond_spread_jfe.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v36-krishnamurthy-jfe2002-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国30年期国债：新发行券（on-the-run）与上一期老券。"
+    },
+    "cost": {
+      "evidence": [
+        "v36-krishnamurthy-jfe2002-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者结论：尽管利差系统性收敛，平均利润接近零，新老券回购融资利率差是显著持有成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v36-krishnamurthy-jfe2002-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "拍卖日卖空新券并买入老券，两腿均在回购市场融资（老券回购融资、新券逆回购借券）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v36-krishnamurthy-jfe2002-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "标准结算为下一营业日；收益按式(2)(3)含回购利息计。"
+    },
+    "exit": {
+      "evidence": [
+        "v36-krishnamurthy-jfe2002-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "下一次拍卖日平仓，并在新一对新/老券上滚动。"
+    },
+    "position": {
+      "evidence": [
+        "v36-krishnamurthy-jfe2002-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "相对头寸使收益只对收益率利差敏感：ŷ·DP̂=y·DP（式4）；并令y·DP在时间上恒定（原文取1000，约合75美元面值老券/单位），即利差每变10bp约盈亏1美元。"
+    },
+    "risk": {
+      "evidence": [
+        "v36-krishnamurthy-jfe2002-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "利差可能不收敛；回购特殊利率（新券借券成本）是主要持有成本；未设止损。"
+    },
+    "signal": {
+      "evidence": [
+        "v36-krishnamurthy-jfe2002-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "事件信号：新30年期国债拍卖（发行）日。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v36-krishnamurthy-jfe2002-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日度盯市，持有一个拍卖周期（约6个月）。"
+    },
+    "universe": {
+      "evidence": [
+        "v36-krishnamurthy-jfe2002-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "1995-06-12至1999-11-15的各30年期拍卖周期。"
+    }
+  }
+}

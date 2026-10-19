@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "隐含波动率期限结构越陡（远期波动溢价越高）的货币对，其远期波动率协议随后收益越低。",
+    "missing": [
+      "交易成本与FVA场外可得性未在引用段讨论。",
+      "隐含方差的无模型计算细节在附录，未转写。",
+      "接受稿未与JFE终版逐字比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "openaccess.city.ac.uk/eprint",
+  "lab": null,
+  "missing_information": [
+    "交易成本与FVA场外可得性未在引用段讨论。",
+    "隐含方差的无模型计算细节在附录，未转写。",
+    "接受稿未与JFE终版逐字比对；未回测。"
+  ],
+  "name": "外汇波动率套息（远期波动率协议按隐含波动率曲线斜率排序）",
+  "native_source_id": "24178:FX-vol-carry-VCA",
+  "one_line": "每月末按各货币对24个月与3个月隐含波动率之比的斜率(SVOL24−SVOL3)/SVOL3把远期波动率协议（FVA）分五组等权；VCA=买入斜率最低组P5、卖出斜率最高组P1，持有一个月。",
+  "record_id": "24178:FX-vol-carry-VCA",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://openaccess.city.ac.uk/id/eprint/24178/1/TS_v35%20%5BJFE_Revision_v6%5D.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Pasquale Della Corte, Roman Kozhan, Anthony Neuberger,《The Cross-Section of Currency Volatility Premia》接受稿（City开放仓储；期刊版JFE 139(3), 2021）。中文定义自撰。",
+      "id": "v38-city-dkn-currency-vol-premia-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L254–261（PDF物理页7）；assets L287–298（PDF物理页8）；universe L254–261（PDF物理页7）；signal L409–416（PDF物理页11）；entry L416–421（PDF物理页11）；entry L435–436（PDF物理页12）；exit L416–421（PDF物理页11）；position L416–421（PDF物理页11）",
+      "revision": "Della Corte/Kozhan/Neuberger《The Cross-Section of Currency Volatility Premia》作者接受稿 March 30, 2020（City Research Online 24178，仓储引文标注JFE 139(3), 2021, pp.950–970）；100页；sha256 b771531840d81b6943b81ed4d350e1bcaef93b114c75b7b814793137b134eb2d",
+      "sha256": "b771531840d81b6943b81ed4d350e1bcaef93b114c75b7b814793137b134eb2d",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://openaccess.city.ac.uk/id/eprint/24178/1/TS_v35%20%5BJFE_Revision_v6%5D.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v38-city-dkn-currency-vol-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "JP Morgan与Bloomberg场外货币期权隐含波动率（ATM、10/25 delta，期限1/3/6/12/24月），月末采样，1996-01至2015-12，20个发达与新兴货币对美元；由此构造即期与远期隐含波动率。FVA月度超额收益rx=(FVOL^{τ1−1,τ2}_{t+1}−FVOL^{τ1,τ2}_t)/FVOL^{τ1,τ2}_t（τ1/τ为1/3、3/6、6/12、12/24月）。"
+    },
+    "cost": {
+      "evidence": [
+        "v38-city-dkn-currency-vol-premia-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "引用段未计交易成本；FVA为场外合约，可用跨期跨式组合复制。"
+    },
+    "entry": {
+      "evidence": [
+        "v38-city-dkn-currency-vol-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每期末按t日斜率把FVA分五组：P1斜率最高20%、P5最低20%；VCA=买P5、卖P1。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v38-city-dkn-currency-vol-premia-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月末按隐含波动率采样建仓；具体时点未在引用段写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v38-city-dkn-currency-vol-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度再平衡（持有一个月后按新斜率重组）。"
+    },
+    "position": {
+      "evidence": [
+        "v38-city-dkn-currency-vol-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "组内按波动率超额收益等权平均；对每个期限组合ℓ分别构建。"
+    },
+    "risk": {
+      "evidence": [
+        "v38-city-dkn-currency-vol-premia-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "卖出高斜率（远期波动溢价高）FVA，在波动率骤升时有尾部风险。"
+    },
+    "signal": {
+      "evidence": [
+        "v38-city-dkn-currency-vol-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "slope_t=(SVOL^{24}_t−SVOL^{3}_t)/SVOL^{3}_t（24月与3月即期隐含波动率）。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v38-city-dkn-currency-vol-premia-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月度。"
+    },
+    "universe": {
+      "evidence": [
+        "v38-city-dkn-currency-vol-premia-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "上述最多20个货币对（1996年9个、2015年20个）。"
+    }
+  }
+}

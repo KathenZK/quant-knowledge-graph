@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "公司把财报日期提前通常预示好消息、推迟预示坏消息，市场直到财报公布时才反映这一信息。",
+    "missing": [
+      "周度策略的组内权重（等权或市值加权）原文未写明。",
+      "周度策略用REV>3/REV<−3，与R-Score第二档从±3起算的边界不同（REV=±3不入组）；本条按Table 9记录。",
+      "作者接收稿未印日期，未与JFQA终版比对；同文按REV三分位的全样本周度版本属同一信号的变体，未单列；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "eso.scripts.mit.edu",
+  "lab": null,
+  "missing_information": [
+    "周度策略的组内权重（等权或市值加权）原文未写明。",
+    "周度策略用REV>3/REV<−3，与R-Score第二档从±3起算的边界不同（REV=±3不入组）；本条按Table 9记录。",
+    "作者接收稿未印日期，未与JFQA终版比对；同文按REV三分位的全样本周度版本属同一信号的变体，未单列；未回测。"
+  ],
+  "name": "财报日期预约修订周度多空：提前公告者做多、推迟公告者做空（Johnson–So）",
+  "native_source_id": "JS2018:earnings-calendar-revision-weekly-long-short",
+  "one_line": "公司首次公布下一次财报日期时，若预约日期比市场原先预期（Wall Street Horizon未确认日期）提前超过3个交易日则视为“提前者”，推迟超过3个交易日则为“推迟者”；在预约财报日所在的那一周做多提前者、做空推迟者，周度调仓；当周多空两侧持仓数不足最低要求时不交易。",
+  "record_id": "JS2018:earnings-calendar-revision-weekly-long-short",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://eso.scripts.mit.edu/docs/Time-Will-Tell.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Travis L. Johnson, Eric C. So,《Time Will Tell: Information in the Timing of Scheduled Earnings News》作者接收稿（未印日期，PDF元数据2017-06-22；终版JFQA 2018未比对）。中文定义自撰。",
+      "id": "v41-mit-johnson-so-time-will-tell-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L306–313（PDF物理页10）；assets L371–381（PDF物理页12）；universe L371–381（PDF物理页12）；universe L407–413（PDF物理页13）；universe L336–338（PDF物理页11）；signal L329–335（PDF物理页11）；signal L362–370（PDF物理页12）；signal L414–436（PDF物理页13）；entry L917–922（PDF物理页27）；entry L2015–2022（PDF物理页60）；exit L917–922（PDF物理页27）；exit L2015–2022（PDF物理页60）；position L917–922（PDF物理页27）；position L942–946（PDF物理页28）；risk L923–926（PDF物理页27）；risk L942–946（PDF物理页28）；risk L608–612（PDF物理页18）；risk L626–630（PDF物理页19）；timeframe L917–922（PDF物理页27）",
+      "revision": "作者接收稿（致谢编辑Jarrad Harford与审稿人），作者Eric So在MIT的个人站点托管；正文未印日期，PDF元数据创建于2017-06-22；63页；未与JFQA 53(6):2431–2464（2018）终版比对；sha256 f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd",
+      "sha256": "f7b4f9623ee1860285b2b0cb102f63bc4bdbbaef3527bfb3c15d81fbb11acacd",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://eso.scripts.mit.edu/docs/Time-Will-Tell.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v41-mit-johnson-so-time-will-tell-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "有Wall Street Horizon财报日历记录、且能匹配CRSP、Compustat与IBES的美股。"
+    },
+    "cost": {
+      "evidence": [
+        "v41-mit-johnson-so-time-will-tell-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "原文未扣交易成本；每周全换仓，多空持仓数少时集中度高。"
+    },
+    "entry": {
+      "evidence": [
+        "v41-mit-johnson-so-time-will-tell-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在公司预约财报日所在的日历周，做多REV>3的公司、做空REV<−3的公司。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v41-mit-johnson-so-time-will-tell-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者称所有日期公告均为公开信息；建仓时点为预约财报日所在周之初的研究假设，原文未写日内时点。"
+    },
+    "exit": {
+      "evidence": [
+        "v41-mit-johnson-so-time-will-tell-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一周，下一周按当周预约公告的公司重组。"
+    },
+    "position": {
+      "evidence": [
+        "v41-mit-johnson-so-time-will-tell-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "多空同时建仓；作者按当周多空两侧的最低持仓数（1、5、10、15只）分别测试，达不到要求的周不交易、记零收益。组内权重原文未写明。"
+    },
+    "risk": {
+      "evidence": [
+        "v41-mit-johnson-so-time-will-tell-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告周度多空四因子α在最低5只时为138bp/周（t=5.44），最低15只时为62bp/周（t=2.95）；最低5只版本1美元于2006–2013年增至9.57美元。按R-Score分组，提前者（R-Score=1）与推迟者（R-Score=0）在日期公告后一个月的收益差在各收益口径下都超过2.6%（t在3.95至5.17之间），市值加权时为1.53%至2.16%（t为2.01与2.13）。"
+    },
+    "signal": {
+      "evidence": [
+        "v41-mit-johnson-so-time-will-tell-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "REV=t_uncon−t：未确认预期日期（公告前一交易日Wall Street Horizon的预期日期，主要依据公司过去的公告习惯）减去公司公布的预约财报日期，单位为交易日；REV>0表示提前、<0表示推迟。R-Score：REV<−5为0（推迟），−5至−3为0.25，−2至+2为0.5，+3至+5为0.75，>+5为1（提前）；日历数据反映每个交易日美东凌晨4点前可得的信息。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v41-mit-johnson-so-time-will-tell-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "周度（按预约财报日所在周）。"
+    },
+    "universe": {
+      "evidence": [
+        "v41-mit-johnson-so-time-will-tell-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "2006–2013年，共18,959个公司季度；只取每个季度的第一次日期公告，且公告日r须在预约财报日t之前31至11个交易日之间（即t前两周之前的21日窗口）。"
+    }
+  }
+}

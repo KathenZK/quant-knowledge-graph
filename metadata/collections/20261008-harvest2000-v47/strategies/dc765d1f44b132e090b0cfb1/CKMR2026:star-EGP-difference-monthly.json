@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "行业明星盈利增长加速度相对非明星上升时，溢出信息未充分进入非明星股价，故高ΔEGP行业的非明星随后收益更高。",
+    "missing": [
+      "未扣交易成本；Supplementary Material（行业名单、IA.14均值表）未抓取。",
+      "表11标题写“sort equal-weighted industry portfolios”，正文写行业内非明星市值加权、行业权重为非明星市值之和；本条按正文与标题后半句的市值加权口径记录，待复核。",
+      "He–Narayanamoorthy盈利加速度在v35–v41因无开放全文拒收，本条是明星相对非明星的行业差，不是个股自身加速度；同文明星收益领先滞后另结果未单列。",
+      "未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "cambridge.org/S0022109026102610",
+  "lab": null,
+  "missing_information": [
+    "未扣交易成本；Supplementary Material（行业名单、IA.14均值表）未抓取。",
+    "表11标题写“sort equal-weighted industry portfolios”，正文写行业内非明星市值加权、行业权重为非明星市值之和；本条按正文与标题后半句的市值加权口径记录，待复核。",
+    "He–Narayanamoorthy盈利加速度在v35–v41因无开放全文拒收，本条是明星相对非明星的行业差，不是个股自身加速度；同文明星收益领先滞后另结果未单列。",
+    "未回测。"
+  ],
+  "name": "行业明星相对盈利增长加速度：按BEA行业内前四大市值明星相对非明星的ΔEGP月度差排序，市值加权做多最高11行业非明星、做空最低11行业非明星（Chhaochharia–Kumar–Motahari–Rantala）",
+  "native_source_id": "CKMR2026:star-EGP-difference-monthly",
+  "one_line": "每年12月末按市值把每个BEA行业前四大定为下一年明星。EGP=(EPS_t−EPS_{t−4})/公告前10日股价。行业月度ΔEGP Difference Monthly=（近3个月内公告的明星平均EGP−非明星平均EGP）相对三个月前窗口的变化。每月按上月末该指标对约55个行业做五分位，做多最高11行业非明星组合、做空最低11行业非明星组合（行业权重为该行业非明星市值之和），持有一个月。",
+  "record_id": "CKMR2026:star-EGP-difference-monthly",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/DC4518453F64B37D1DE1F07B759DF5F1/S0022109026102610a.pdf/div-class-title-star-firms-information-spillovers-and-predictable-industry-level-outcomes-div.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Vidhi Chhaochharia, Alok Kumar, Mehrshad Motahari, Ville Rantala,《Star Firms, Information Spillovers, and Predictable Industry-Level Outcomes》JFQA 61(6), 2026（CC BY 4.0 开放获取出版版）。中文定义自撰。",
+      "id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+      "license": "CC BY 4.0（Creative Commons Attribution，期刊首页声明“unrestricted re-use, distribution and reproduction, provided the original article is properly cited”）",
+      "locator": "派生文本(pdftotext -layout)行段：assets L428–440（PDF物理页9）；assets L1609–1619（PDF物理页28）；universe L428–440（PDF物理页9）；universe L470–473（PDF物理页9）；universe L1609–1619（PDF物理页28）；universe L1655–1666（PDF物理页29）；signal L540–545（PDF物理页10）；signal L551–555（PDF物理页11）；signal L572–574（PDF物理页11）；signal L575–581（PDF物理页11）；signal L600–601（PDF物理页11）；signal L1655–1666（PDF物理页29）；entry L1609–1619（PDF物理页28）；entry L1655–1666（PDF物理页29）；exit L1655–1666（PDF物理页29）；position L1609–1619（PDF物理页28）；position L1655–1666（PDF物理页29）；risk L1642–1644（PDF物理页29）；risk L1655–1666（PDF物理页29）；timeframe L1655–1666（PDF物理页29）；execution_time L575–581（PDF物理页11）；execution_time L1609–1619（PDF物理页28）",
+      "revision": "期刊出版版（Open Access），Journal of Financial and Quantitative Analysis Vol. 61, No. 6, Sep. 2026, pp. 2809–2841，DOI 10.1017/S0022109026102610；剑桥大学出版社 cambridge.org 原发，非镜像；33 页；Supplementary Material 未抓取；sha256 4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9",
+      "sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/DC4518453F64B37D1DE1F07B759DF5F1/S0022109026102610a.pdf/div-class-title-star-firms-information-spillovers-and-predictable-industry-level-outcomes-div.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国普通股（CRSP shrcd 10/11），按Compustat NAICS映射到BEA行业。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原文未扣交易成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月按上月末ΔEGP Difference Monthly对行业五分位，做多最高11个行业的非明星市值加权组合、做空最低11个行业的非明星市值加权组合。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "信号用截至上月末已公告的盈利；每月按上月末指标排序。属常规月频收盘口径，已标待复核。"
+    },
+    "exit": {
+      "evidence": [
+        "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月，每月重排。"
+    },
+    "position": {
+      "evidence": [
+        "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "行业层面五分位；组内以该行业全部非明星上月末市值之和为行业权重，再市值加权；多空为Q5−Q1。"
+    },
+    "risk": {
+      "evidence": [
+        "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告（表11，FF5+动量，Newey–West 3阶）：Q5−Q1月α 0.725%（t=2.35）；Q1 α 0.384%（t=1.89，派生文本未印负号，据Q5−Q1=0.725与Q5=0.341推断为负）、Q5 α 0.341%（t=1.44），中间三组不显著；正文称最低/最高五分位月均收益0.698%/1.292%（见Supplementary Table IA.14，未抓取）。同文以明星上月收益排序的非明星领先滞后另一结果（表12，Q5−Q1 α 0.465%，t=2.41）本条不收。"
+    },
+    "signal": {
+      "evidence": [
+        "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "EGP_i,t=(EPS_i,t−EPS_i,t−4)/Price_i,t，Price为公告前10日股价；行业内明星、非明星分别等权平均。季度ΔEGP Difference_j,t=(EGP^star_j,t−EGP^star_j,t−1)−(EGP^nonstar_j,t−EGP^nonstar_j,t−1)。月度版ΔEGP Difference Monthly按月t−1至t−3内公告的盈利计算（公告日取IBES ANNDATS与Compustat RDQ较早者），表11标题写为(EGPm^star_t−1−EGPm^nonstar_t−1)−(EGPm^star_t−4−EGPm^nonstar_t−4)。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度。"
+    },
+    "universe": {
+      "evidence": [
+        "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Gutiérrez–Philippon（2019）式明星：每年12月末按行业内市值排名取前四作为下一年明星（CRSP市值缺失用Compustat计算；两者皆缺或按市值不足四家时改用净销售额SALE排名）；每月要求行业至少5家非明星；60个BEA行业中5个因观测不足排除，策略用55个行业。收益样本1994–2020（表11观测数324个月）。"
+    }
+  }
+}

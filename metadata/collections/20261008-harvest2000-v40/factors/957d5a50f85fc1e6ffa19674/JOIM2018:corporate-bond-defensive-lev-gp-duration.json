@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "低杠杆、高毛利、短久期的发行人债券在风险调整后跑赢高杠杆、低毛利、长久期的债券。",
+    "missing": [
+      "三项合成的“等风险权重”所用波动窗口未写明；DTS去均值排除久期后，防御合成内久期分项的处理未细写；缺失值以0填补仅在回归部分说明。",
+      "控制价值与动量后不再显著，独立价值有限。",
+      "期刊版重印本；未回测；HvZ低风险因子（FAJ 2017）未取得开放全文，未逐字比对。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "需BAML成分与Compustat链接，私人发行人缺杠杆与毛利数据；公司债成本高，单位风险成本远大于股票。"
+    },
+    "calculation": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月计算防御特征；原文对特征在DTS（久期×利差）五分位内去均值，但明确把久期与套息排除在这一步之外（以免组合机械地混合高套息与低久期），防御合成中的久期分项如何处理未细写；按特征分五组做多Q5、做空Q1，组内市值加权，持有一个月；另报告5%恒定波动版本。作者报告Q5−Q1年化2.7%、波动2.4%、夏普1.11（恒定波动版8.3%、夏普1.21）；单独Fama–MacBeth t=5.0，但控制价值与动量后不显著（t=0.9）。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者引用低风险异象：加杠杆受限的投资者偏好高风险资产，使更安全的资产风险调整后收益更高；在信用市场以低杠杆、高盈利与短久期衡量安全。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "DEF=等风险合成{−Leverage, +GP/A, −Duration}；Leverage=(账面债务+少数股东权益+优先股−现金)/(上述净债务+股票市值)，按月初可得数据并假设财报滞后6个月；GP/A=毛利/总资产（Novy-Marx 2013）；Duration=BAML有效久期。作者刻意不用β与特质波动（二者等价于久期×利差的混合）。"
+    },
+    "inputs": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "同价值因子：BAML美国投资级与高收益指数代表性债券，1997-01至2015-04月度；杠杆与毛利需链接Compustat（约48%的样本）及发行人股票市值；久期来自BAML。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v40-aqr-common-factors-corporate-bond-joim2018-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "公司债低风险/质量选券因子；与价值、动量合成时边际贡献有限（作者发现其被价值与动量部分吸收）。"
+    }
+  },
+  "identity_namespace": "journal-of-investment-management/2018",
+  "lab": null,
+  "missing_information": [
+    "三项合成的“等风险权重”所用波动窗口未写明；DTS去均值排除久期后，防御合成内久期分项的处理未细写；缺失值以0填补仅在回归部分说明。",
+    "控制价值与动量后不再显著，独立价值有限。",
+    "期刊版重印本；未回测；HvZ低风险因子（FAJ 2017）未取得开放全文，未逐字比对。"
+  ],
+  "name": "公司债防御（低风险）：低市场杠杆＋高毛利率＋低久期合成（Israel–Palhares–Richardson）",
+  "native_source_id": "JOIM2018:corporate-bond-defensive-lev-gp-duration",
+  "one_line": "每月用发行人市场杠杆（净债务/(净债务+股票市值)，越低越好）、毛利/总资产（越高越好）与债券有效久期（越低越好）三项按等风险合成防御特征；原文称在DTS五分位内对特征去均值、但久期与套息不做此步，做多防御最强五分位、做空最弱五分位，组内市值加权，月度调仓。",
+  "record_id": "JOIM2018:corporate-bond-defensive-lev-gp-duration",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.aqr.com/-/media/AQR/Documents/Journal-Articles/Common-Factors-in-Corporate-Bond-Returns.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Ronen Israel, Diogo Palhares, Scott A. Richardson,《Common Factors in Corporate Bond Returns》JOIM 16(2), 2018（作者所在机构网站托管的期刊版重印本）。中文定义自撰。",
+      "id": "v40-aqr-common-factors-corporate-bond-joim2018-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L415–446（PDF物理页8）；formula L1484–1491（PDF物理页27）；formula L388–397（PDF物理页7）；inputs L269–290（PDF物理页5）；inputs L226–272（PDF物理页5）；inputs L1484–1491（PDF物理页27）；calculation L471–477（PDF物理页9）；calculation L479–490（PDF物理页9）；calculation L651–670（PDF物理页12）；calculation L617–620（PDF物理页11）；availability L865–884（PDF物理页16）",
+      "revision": "Journal of Investment Management 16(2), 2018, pp.17–46期刊版重印本（作者Israel、Palhares所在的AQR网站托管）；30页；sha256 cdd097f425467823e8cb72fb1cf7dad51bc35771914da34548821deacb7340f5",
+      "sha256": "cdd097f425467823e8cb72fb1cf7dad51bc35771914da34548821deacb7340f5",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.aqr.com/-/media/AQR/Documents/Journal-Articles/Common-Factors-in-Corporate-Bond-Returns.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

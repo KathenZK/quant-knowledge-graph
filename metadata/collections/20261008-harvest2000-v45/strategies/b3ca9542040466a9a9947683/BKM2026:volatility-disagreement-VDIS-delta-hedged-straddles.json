@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "投资者对未来波动的分歧越大，在做空期权受资本与保证金约束时乐观（高波动预期）者主导定价，期权被高估，随后Delta对冲跨式收益更低。",
+    "missing": [
+      "收益按中间价计，未做任何交易成本分析；个股跨式买卖价差通常很大，且价差主要来自做空高分歧组跨式（需保证金），实际可得收益未知。",
+      "信号依赖随机抽取的特征子集与超参数（随机种子未给出），以及Jensen–Kelly–Pedersen全部公开特征与30个期权隐含特征（含期权隐含融券费等需自建的变量），复现成本高、结果可能随随机抽样波动。",
+      "同文正交化VDIS、开仓量与套利限制分组、双重排序属对照或机制检验，未单列；Bali等（2025）的一阶矩“机器预测分歧”MFD为股票市场信号，本条为期权市场二阶矩分歧；工作论文未与期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "nber.org/papers/w35500",
+  "lab": null,
+  "missing_information": [
+    "收益按中间价计，未做任何交易成本分析；个股跨式买卖价差通常很大，且价差主要来自做空高分歧组跨式（需保证金），实际可得收益未知。",
+    "信号依赖随机抽取的特征子集与超参数（随机种子未给出），以及Jensen–Kelly–Pedersen全部公开特征与30个期权隐含特征（含期权隐含融券费等需自建的变量），复现成本高、结果可能随随机抽样波动。",
+    "同文正交化VDIS、开仓量与套利限制分组、双重排序属对照或机制检验，未单列；Bali等（2025）的一阶矩“机器预测分歧”MFD为股票市场信号，本条为期权市场二阶矩分歧；工作论文未与期刊版比对；未回测。"
+  ],
+  "name": "波动率分歧VDIS：100个随机森林“投资者”各用半数特征预测下月实现方差，取预测横截面标准差；每月第三个周五后的周一按VDIS十分位做多低分歧、做空高分歧个股Delta对冲跨式（Bali–Kelly–Mörke）",
+  "native_source_id": "BKM2026:volatility-disagreement-VDIS-delta-hedged-straddles",
+  "one_line": "模拟K=100名投资者，每人随机抽取约一半（81个）公开股票特征（Jensen–Kelly–Pedersen数据集）与30个期权隐含特征，并随机抽取随机森林超参数，用过去5年滚动面板（每12个月重估）预测下一持有期标的实现方差；VDIS=100个预测的横截面标准差。每月第三个周五后的周一，按VDIS把平值Delta对冲跨式分十组等权，做多VDIS最低组、做空最高组（原文高减低为−5.14%/月），持有至下月到期日，标的按日Delta对冲。",
+  "record_id": "BKM2026:volatility-disagreement-VDIS-delta-hedged-straddles",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w35500/w35500.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Turan G. Bali, Bryan T. Kelly, Mathis Mörke,《Volatility Disagreement in the Options Market》NBER Working Paper 35500（2026-07）。中文定义自撰。",
+      "id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L342–373（PDF物理页10）；assets L304–316（PDF物理页9）；universe L304–316（PDF物理页9）；universe L374–385（PDF物理页10,11）；universe L2085–2110（PDF物理页53）；signal L443–486（PDF物理页12,13）；signal L488–502（PDF物理页13）；signal L508–525（PDF物理页14）；signal L2705–2770（PDF物理页69,70）；signal L2807–2829（PDF物理页72）；entry L613–619（PDF物理页16）；entry L2085–2110（PDF物理页53）；entry L342–373（PDF物理页10）；exit L342–373（PDF物理页10）；position L613–619（PDF物理页16）；position L2085–2110（PDF物理页53）；risk L48–52（PDF物理页2）；risk L639–654（PDF物理页17）；risk L2085–2110（PDF物理页53）；timeframe L342–373（PDF物理页10）；timeframe L613–619（PDF物理页16）；execution_time L488–502（PDF物理页13）；execution_time L508–525（PDF物理页14）；execution_time L2085–2110（PDF物理页53）",
+      "revision": "NBER工作论文No. 35500（封面日期July 2026；NBER官网原发，非镜像；PDF内含网络附录IA1–IA5）；80页；版权页\"All rights reserved\"；期刊版未见；sha256 efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5",
+      "sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w35500/w35500.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国个股平值跨式（同一行权价与到期日的一张看涨加一张看跌，行权价取看涨Delta最接近0.50者），每日以标的股票做Delta对冲。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原文未做交易成本分析（收益按期权中间价计）。"
+    },
+    "entry": {
+      "evidence": [
+        "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月第三个周五后的周一，按截至t−1可得数据计算的VDIS把跨式分为十组，做多VDIS最低组、做空最高组（即原文高减低组合的反向）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "信号所用股票特征截至建仓前一个月末，期权隐含特征截至第三个周五收盘，周一建仓，二者均早于持有期；随机森林只用过去5年数据训练、每12个月重估，样本外预测。"
+    },
+    "exit": {
+      "evidence": [
+        "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有至下月第三个周五到期（遇假日用前一个周四），期间每个交易日收盘按OptionMetrics Delta调整对冲，对冲现金按无风险利率计息。"
+    },
+    "position": {
+      "evidence": [
+        "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "十分位组合，组内等权（稳健性用美元持仓量加权或剔除持仓量低于中位数者，见网络附录表IA5.1/IA5.2）。"
+    },
+    "risk": {
+      "evidence": [
+        "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告2001-01至2022-12 VDIS十分位高减低Delta对冲跨式收益−5.14%/月（Newey–West t=−7.20），期权CAPM α −6.68%（t=−9.85），HVX四因子α −4.32%（t=−3.89）；价差主要来自高分歧组（−7.24%/月），低分歧组OCAPM α为+1.64%。"
+    },
+    "signal": {
+      "evidence": [
+        "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "VDIS_{i,t}=√[(1/K)Σ_k(E_{k,t}[RV_{i,t+1}]−平均预测)²]，K=100；第k名投资者的预测为随机森林RF_k在其信息子集上的输出，信息子集为公共特征的随机50%（81个），超参数从树数{500,1000,2000,2500}、最大深度{3,4,5}、特征与观测子采样比例{0.025–0.15}、叶节点最少样本{5,10,15}中随机抽取；目标为建仓周一至到期日标的日对数收益平方和；用5年滚动窗口合并面板训练、每12个月重估，仅样本内对收益做1%缩尾。股票特征截至建仓前一个月末，期权隐含特征截至第三个周五（滞后一个工作日）。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度（期权到期周期）；对冲每日调整。"
+    },
+    "universe": {
+      "evidence": [
+        "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "OptionMetrics美国个股期权与CRSP标的，NYSE/AMEX/NASDAQ普通股，剔除金融与公用事业、上月收盘价低于5美元者；建仓时要求看涨腿Delta在0.25–0.75、卖价不低于买价、买价非零、隐含波动不缺失、持仓量非零；2001-01至2022-12，共5,678只标的。"
+    }
+  }
+}

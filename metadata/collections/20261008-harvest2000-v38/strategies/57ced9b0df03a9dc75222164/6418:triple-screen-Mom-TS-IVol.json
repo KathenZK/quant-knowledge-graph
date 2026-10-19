@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "同时具备强动量、高展期收益与低特质波动的商品期货随后跑赢三者最差者。",
+    "missing": [
+      "R取1/3/6/12月四种，未定单一主参数。",
+      "交易成本章节未转写。",
+      "IVol基准为事后选定；接受稿未与终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "openaccess.city.ac.uk/eprint",
+  "lab": null,
+  "missing_information": [
+    "R取1/3/6/12月四种，未定单一主参数。",
+    "交易成本章节未转写。",
+    "IVol基准为事后选定；接受稿未与终版比对；未回测。"
+  ],
+  "name": "商品三重筛选（动量+展期收益+特质波动秩和）",
+  "native_source_id": "6418:triple-screen-Mom-TS-IVol",
+  "one_line": "每月末对N种商品按过去R个月收益、平均展期收益、IVol（低者高分）分别赋1..N分，按总分排序，做多总分最高五分位、做空最低五分位，等权，持有一个月。",
+  "record_id": "6418:triple-screen-Mom-TS-IVol",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://openaccess.city.ac.uk/id/eprint/6418/1/JFM_SSRN_13Jan2014.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Ana-Maria Fuertes, Joëlle Miffre, Adrian Fernandez-Perez,《Commodity Strategies Based on Momentum, Term Structure and Idiosyncratic Volatility》接受稿（City, University of London开放仓储；期刊版JFM 35(3), 2015）。中文定义自撰。",
+      "id": "v38-city-fmf-commodity-ivol-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L214–237（PDF物理页6）；universe L214–237（PDF物理页6）；signal L447–455（PDF物理页10）；signal L670–686（PDF物理页14）；entry L688–690（PDF物理页14）；exit L688–690（PDF物理页14）；position L488–488（PDF物理页11）",
+      "revision": "Fuertes/Miffre/Fernandez-Perez《Commodity Strategies Based on Momentum, Term Structure and Idiosyncratic Volatility》作者接受稿（City Research Online 6418，仓储引文标注Journal of Futures Markets 35(3), 2015, pp.274–297；文件名示2014-01-13）；42页；sha256 e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703",
+      "sha256": "e6f70156e241bb9e7d84362a3d7eaf810dfed6a9b8a9404413d42d3f57cf2703",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://openaccess.city.ac.uk/id/eprint/6418/1/JFM_SSRN_13Jan2014.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "27种商品期货（Datastream日结算价，1979–2011），持有近月或次近月合约。"
+    },
+    "cost": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "原文另节讨论交易成本与流动性，本记录未转写。"
+    },
+    "entry": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按总分排序，买入总分最高的五分位、卖出最低的五分位。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月末按结算价形成并建仓；具体成交时点未在引用段写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月后按新得分重建。"
+    },
+    "position": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "多空腿内等权；全额抵押。"
+    },
+    "risk": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "无止损；商品数少（每腿约5种）集中度较高。"
+    },
+    "signal": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "三项得分：过去R个月收益（Mom，最好得N分）、近月与次近月对数价差的R月平均展期收益（TS，最高得N分）、对S&P-GSCI残差波动IVol（最低得N分）；总分=三者之和。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月度再平衡；R=1/3/6/12月。"
+    },
+    "universe": {
+      "evidence": [
+        "v38-city-fmf-commodity-ivol-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "同上27种商品中每月可得者。"
+    }
+  }
+}

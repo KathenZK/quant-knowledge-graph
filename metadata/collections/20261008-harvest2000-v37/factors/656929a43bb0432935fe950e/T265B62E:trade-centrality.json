@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "贸易网络外围国家货币的超额收益高于中心国家货币。",
+    "missing": [
+      "1−α=1时(I−W′)可逆性依赖贸易强度矩阵谱半径，原文未讨论。",
+      "39国名单见附录，未转写；未计交易成本。",
+      "2017-06会议稿，未与JF期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v37-aea2018-richmond-centrality-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "贸易与GDP为年度且有发布滞后；原文用“上一年”中心性，实盘需确认数据发布时点。"
+    },
+    "calculation": {
+      "evidence": [
+        "v37-aea2018-richmond-centrality-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月t按上一年贸易网络中心性把货币分4组、组内等权，每月再平衡（中心性按年更新）；外围组利率与超额收益更高，做多外围、做空中心组合年化Sharpe 0.56。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v37-aea2018-richmond-centrality-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：贸易网络中心国家消费更暴露于全球冲击，其货币在坏状态升值，利率与风险溢价更低。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v37-aea2018-richmond-centrality-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "双边贸易强度w_ijt=(X_ijt+X_jit)/(Y_it+Y_jt)（X为美元出口额、Y为美元GDP）；每年构造邻接矩阵W_t；中心性v_i=[(I−(1−α)W′)^{-1}·1]_i（Katz中心性），实证取1−α=1。"
+    },
+    "inputs": {
+      "evidence": [
+        "v37-aea2018-richmond-centrality-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "IMF Direction of Trade Statistics年度出口、World Bank年度美元GDP；欧元区自1999年合成一体；Barclays/Reuters月度外汇数据，39国，1984-01至2013-12；对数超额收益rx_t=f_{t−1}−s_{t−1}−Δs_t。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v37-aea2018-richmond-centrality-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "外汇横截面结构性因子；与carry、商品贸易货币、全球失衡因子对照。"
+    }
+  },
+  "identity_namespace": "aeaweb.org/conference",
+  "lab": null,
+  "missing_information": [
+    "1−α=1时(I−W′)可逆性依赖贸易强度矩阵谱半径，原文未讨论。",
+    "39国名单见附录，未转写；未计交易成本。",
+    "2017-06会议稿，未与JF期刊版比对；未回测。"
+  ],
+  "name": "贸易网络中心性货币组合（外围减中心）",
+  "native_source_id": "T265B62E:trade-centrality",
+  "one_line": "每年以双边贸易强度(X_ij+X_ji)/(Y_i+Y_j)构造邻接矩阵并计算Katz中心性；每月按上一年中心性把货币分4组等权，做多外围（低中心性）、做空中心国家货币。",
+  "record_id": "T265B62E:trade-centrality",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.aeaweb.org/conference/2018/preliminary/paper/T265B62E"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Robert J. Richmond,《Trade Network Centrality and Currency Risk Premia》2017-06工作论文（AEA 2018年会托管；期刊版据外部书目为JF 2019，未取）。中文定义自撰。",
+      "id": "v37-aea2018-richmond-centrality-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L578–590（PDF物理页13,14）；formula L823–869（PDF物理页19）；inputs L1241–1250（PDF物理页24）；calculation L1132–1142（PDF物理页22）；calculation L1146–1155（PDF物理页23）",
+      "revision": "Richmond《Trade Network Centrality and Currency Risk Premia》June 2017；AEA 2018年会预备论文PDF；56页；未与期刊版比对；sha256 dbe7a606f20f69b98cb19f2ddec1034f6a8d18e8478d84ec1b2c37744a7325a0",
+      "sha256": "dbe7a606f20f69b98cb19f2ddec1034f6a8d18e8478d84ec1b2c37744a7325a0",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.aeaweb.org/conference/2018/preliminary/paper/T265B62E",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

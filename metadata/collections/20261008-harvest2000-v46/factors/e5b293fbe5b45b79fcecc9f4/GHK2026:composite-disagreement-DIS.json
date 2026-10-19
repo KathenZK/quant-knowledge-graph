@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "卖空受限下，对分歧本身的分歧使股价相对基本面被高估，且各分歧维度相互放大；DIS越高的股票未来收益越低。",
+    "missing": [
+      "原文未给扣除交易成本与融券费后的净收益；主表剔除ISKEW为负的公司-月，全样本结果在表H.2（本条未核）；原始收益价差t=2.09，显著性主要体现在α上。",
+      "ISKEW取自Boyer–Mitton–Vorkink作者扩展至2022年的数据，非公开；月末计算信号并按同一月末收盘建仓，原文未给跳过一日的结果；分析师预测日期1994年前不可靠，样本自1994年起。",
+      "成分信号AFD（M4426/M7010）、预期特异偏度（M3912）、IVOL（M4421）、空头利息（M3588）已在目录，本条为模型推导的非线性复合（指数交互）而非单一成分；同文Fama–MacBeth、γ敏感性与换手代理变量属稳健性，未单列；工作论文未与期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "需CRSP、Compustat空头利息、I/B/E/S明细与BMV预期特异偏度（作者提供，非公开）。作者称样本（价>5美元、至少两名分析师）偏大盘，99%以上股票有正空头利息即可卖空，引D’Avolio（2002）称多数股票年融券费低于1%；剔除最不流动与散户持股最高的20%后CAPM α仍为年化21.5%（t=4.95）；市值加权且DIS分组持续，组合换手较低（表H.11）；原文未给扣费净收益。"
+    },
+    "calculation": {
+      "evidence": [
+        "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月t末计算DIS，剔除ISKEW为负的公司-月（对应命题2适用于正偏股票），按DIS分十组市值加权，计算t+1月收益；做多最低组、做空最高组（Low−High）。作者报告1994-01至2022-12：Low−High原始收益1.01%/月（t=2.09），CAPM α 1.78%（t=4.95），FF3 α 1.69%（t=5.53），Carhart α 1.42%（t=4.41），年化α分别21.3%、20.3%、17.0%；最高组CAPM α −1.49%/月。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者模型：卖空受限时，投资者对“分歧程度”本身也存在分歧，分歧的各个维度（基本面不确定性、成交/空头需求、偏度、信息精度）以乘法与指数形式交互推高价格，故高DIS股票被高估、随后收益低。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "d*=A·σr²·v·exp{[½·(P²/A²)·s]/[m/σa²+1/σµ²]}（式15），DIS=ln(1+d*)以缓解右偏；CRRA效用、初始财富为1时A=γ、P=1+γ，故P²/A²=(1+1/γ)²，取γ=2（作者在γ∈{0.5,1,2,4,8}下检验结论稳定）。"
+    },
+    "inputs": {
+      "evidence": [
+        "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "σr=IVOL（相对FF3的日残差标准差，%）；v=1+SIR（Compustat空头利息/流通股，2003年前补NASDAQ空头利息）；s=ISKEW（Boyer–Mitton–Vorkink基于60个月公司特征的预期特异偏度，作者处取得并扩展至2022年）；σa=AFD（Diether–Malloy–Scherbina财年EPS预测标准差/平均绝对预测，%）；m=ANALYSTADJ（当月有效预测分析师数/至少两名分析师公司的截面平均）；σµ=RVOL（当月日收益波动，%）。样本为CRSP与Compustat交集的NYSE/AMEX/NASDAQ普通股，剔除月末价低于5美元、当月有效日观测少于15个或零收益日不少于10个者，须有至少两名I/B/E/S分析师，1994-01至2022-12共719,940个月观测；作者称各变量只用组合形成时可得信息。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股月度截面因子；可与分析师分歧、特质波动、空头利息、预期偏度等单一成分因子对照，或作为高估股票的空头筛选。"
+    }
+  },
+  "identity_namespace": "nber.org/papers/w35049",
+  "lab": null,
+  "missing_information": [
+    "原文未给扣除交易成本与融券费后的净收益；主表剔除ISKEW为负的公司-月，全样本结果在表H.2（本条未核）；原始收益价差t=2.09，显著性主要体现在α上。",
+    "ISKEW取自Boyer–Mitton–Vorkink作者扩展至2022年的数据，非公开；月末计算信号并按同一月末收盘建仓，原文未给跳过一日的结果；分析师预测日期1994年前不可靠，样本自1994年起。",
+    "成分信号AFD（M4426/M7010）、预期特异偏度（M3912）、IVOL（M4421）、空头利息（M3588）已在目录，本条为模型推导的非线性复合（指数交互）而非单一成分；同文Fama–MacBeth、γ敏感性与换手代理变量属稳健性，未单列；工作论文未与期刊版比对；未回测。"
+  ],
+  "name": "复合分歧DIS：由模型推导的特质波动²×(1+空头利息)×exp[½(P/A)²·预期特异偏度/(相对分析师数/预测分歧²+1/收益波动²)]取ln(1+·)，剔除负偏度后市值加权十分位多低空高（Goulding–Harvey–Kurtović）",
+  "native_source_id": "GHK2026:composite-disagreement-DIS",
+  "one_line": "在CRRA效用（γ=2）下按模型式(15)计算d*=A·σr²·v·exp{½(P²/A²)·s/(m/σa²+1/σµ²)}，其中σr为FF3特质波动、v=1+空头利息比、s为Boyer–Mitton–Vorkink预期特异偏度、σa为Diether等分析师预测分歧、m为相对分析师人数、σµ为一个月日收益波动；DIS=ln(1+d*)。每月按DIS分十组（剔除预期偏度为负的公司-月），市值加权，做多最低组、做空最高组，持有一个月。",
+  "record_id": "GHK2026:composite-disagreement-DIS",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w35049/w35049.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Christian L. Goulding, Campbell R. Harvey, Hrvoje Kurtović,《Disagreement of Disagreement》NBER Working Paper 35049（2026-04）。中文定义自撰。",
+      "id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L1488–1509（PDF物理页22,23）；formula L1718–1718（PDF物理页25）；formula L1670–1681（PDF物理页25）；formula L1751–1756（PDF物理页26）；inputs L1684–1697（PDF物理页25）；inputs L1708–1714（PDF物理页25）；inputs L1726–1748（PDF物理页26）；inputs L1627–1647（PDF物理页24）；inputs L1660–1667（PDF物理页25）；calculation L1995–2000（PDF物理页29）；calculation L2002–2005（PDF物理页29）；calculation L2014–2044（PDF物理页30）；availability L2087–2134（PDF物理页31）；availability L1627–1647（PDF物理页24）；availability L1708–1714（PDF物理页25）",
+      "revision": "NBER工作论文No. 35049（封面日期April 2026；NBER官网原发，非镜像；版权页\"All rights reserved\"，仅允许引用不超过两段）；100页（含附录）；期刊版未见；sha256 5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d",
+      "sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w35049/w35049.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

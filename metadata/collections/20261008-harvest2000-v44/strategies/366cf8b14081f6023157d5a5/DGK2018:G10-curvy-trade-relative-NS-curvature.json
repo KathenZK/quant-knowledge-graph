@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "相对美国收益率曲线曲率更高的货币，预示中期短端利率路径更高，随后一个月相对美元升值，超额收益更高。",
+    "missing": [
+      "买高曲率、卖低曲率的方向取自同一样本（1991–2015）的表1面板回归符号，属样本内定方向；原文未给出递推或样本外定方向的结果。",
+      "信号与建仓同在月末，但信号来自零息收益率、成交按远期报价，二者不是同一价格；未检验滞后执行。k=1结果最好，k增大时夏普下降；2010年后跑输套息，作者归因于零利率下限。",
+      "同文水平、斜率排序与三组资产定价排序属同一框架的变体或对照，未单列；同作者ECB WP 2131为同一曲率信号的回归研究（已拒收）；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "ecb.europa.eu/pub/pdf/scpwps/ecb.wp2149",
+  "lab": null,
+  "missing_information": [
+    "买高曲率、卖低曲率的方向取自同一样本（1991–2015）的表1面板回归符号，属样本内定方向；原文未给出递推或样本外定方向的结果。",
+    "信号与建仓同在月末，但信号来自零息收益率、成交按远期报价，二者不是同一价格；未检验滞后执行。k=1结果最好，k增大时夏普下降；2010年后跑输套息，作者归因于零利率下限。",
+    "同文水平、斜率排序与三组资产定价排序属同一框架的变体或对照，未单列；同作者ECB WP 2131为同一曲率信号的回归研究（已拒收）；未回测。"
+  ],
+  "name": "G10货币“曲率交易”：按相对美国的Nelson–Siegel收益率曲线曲率排序，月末多最高k种、空最低k种（Dreher–Gräb–Kostka）",
+  "native_source_id": "DGK2018:G10-curvy-trade-relative-NS-curvature",
+  "one_line": "每月末对9种G10货币（澳、英、加、欧元/马克、日、新西兰、挪、瑞士、瑞典，兑美元）用3个月至10年零息收益率逐期OLS拟合Nelson–Siegel三因子（衰减参数φ=0.0609），取各国曲率因子减美国曲率因子；从美国投资者角度做美元中性对称组合，用一个月远期等权做多相对曲率最高的k种货币、做空最低的k种（1≤k≤4），持有一个月，按买卖价计入每月全换手成本。",
+  "record_id": "DGK2018:G10-curvy-trade-relative-NS-curvature",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp2149.en.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Ferdinand Dreher, Johannes Gräb, Thomas Kostka,《From carry trades to curvy trades》ECB Working Paper Series No 2149（2018-05）。中文定义自撰。",
+      "id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L377–382（PDF物理页11）；assets L331–335（PDF物理页10）；universe L331–335（PDF物理页10）；universe L349–352（PDF物理页10）；signal L263–276（PDF物理页9）；signal L299–308（PDF物理页9）；signal L337–344（PDF物理页10）；signal L420–425（PDF物理页12）；entry L420–425（PDF物理页12）；entry L377–382（PDF物理页11）；entry L1140–1151（PDF物理页30）；exit L405–418（PDF物理页12）；exit L1140–1151（PDF物理页30）；position L377–382（PDF物理页11）；position L420–425（PDF物理页12）；risk L451–457（PDF物理页13）；risk L1158–1185（PDF物理页31）；risk L521–531（PDF物理页15）；cost L384–403（PDF物理页11,12）；cost L1140–1151（PDF物理页30）；timeframe L331–335（PDF物理页10）；execution_time L331–335（PDF物理页10）；execution_time L405–418（PDF物理页12）",
+      "revision": "欧洲央行工作论文No 2149 / May 2018（央行官方工作论文系列，ECB官网原发，非镜像）；41页；未见期刊版，未比对；sha256 e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9",
+      "sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp2149.en.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "9种G10货币兑美元的一个月远期与即期（美元中性：做空融资货币换美元，再投向目标货币）。"
+    },
+    "cost": {
+      "evidence": [
+        "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "表3（第4节）按每月多空全换手计入买卖价差：新入组合用远期bid/ask，离场用即期ask/bid（表2）；第5节资产定价改用Menkhoff等（2012）按是否留在组合扣价差。"
+    },
+    "entry": {
+      "evidence": [
+        "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按相对曲率排序，按远期买价（bid）做多曲率最高的k种货币、按远期卖价（ask）做空曲率最低的k种货币。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月末用当月末零息收益率计算曲率并按当月末远期报价建仓，下月末按即期报价平仓；原文未给出滞后一期执行的结果。"
+    },
+    "exit": {
+      "evidence": [
+        "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月后在下月末按即期价平仓（多头离场用即期卖价ask、空头离场用即期买价bid，原文表2记号），随即按新排序重建；留在原组合的货币按中间价计。"
+    },
+    "position": {
+      "evidence": [
+        "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对称组合：做多与做空货币数相同，各k种（1≤k≤4），组内等权；美元中性。"
+    },
+    "risk": {
+      "evidence": [
+        "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告1991–2015年k=1年化均值6.67%、标准差11.99%、月偏度−0.23、夏普0.56；k=2/3/4夏普0.36/0.39/0.36，均高于同期远期贴水套息（夏普0.09–0.27）且无明显负偏；2010年后（零利率下限期）跑输传统套息。"
+    },
+    "signal": {
+      "evidence": [
+        "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "各国（含美国）每月用3个月至10年期零息名义收益率逐期OLS拟合 y_t(m)=L_t+S_t·(1−e^{−φm})/(φm)+C_t·[(1−e^{−φm})/(φm)−e^{−φm}]，φ=0.0609（Diebold–Li）；信号为相对曲率 C_t^i−C_t^{US}（稳健性检验用近似 C_t=2·y(2y)−(y(10y)+y(3m))，与NS曲率相关0.95）。作者表1面板回归中相对曲率对未来1–6个月货币超额收益系数为负（低相对曲率货币随后贬值），据此买高曲率、卖低曲率。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度。"
+    },
+    "universe": {
+      "evidence": [
+        "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "澳元、英镑、加元、欧元（1999年前为德国马克）、日元、新西兰元、挪威克朗、瑞士法郎、瑞典克朗兑美元；月末数据，1991-01至2015-12；按Della Corte等（2016）剔除1998年日、挪、瑞典危机月份，另剔除挪威1992-09至11、新西兰1998-02、瑞典1999-12。"
+    }
+  }
+}
