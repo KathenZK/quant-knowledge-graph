@@ -1,0 +1,94 @@
+{
+  "economic_basis": {
+    "hypothesis": "低标准化库存的商品期货未来风险溢价更高。",
+    "missing": [
+      "HP趋势的实时/单边估计方式未说明，全样本滤波有前视风险。",
+      "各商品库存数据来源与发布时滞见原附录B，未逐项核对。",
+      "多空腿收益是否扣除抵押利息、展期规则依原文期货收益构造，未在本条复述。",
+      "仅NBER 2007工作论文版，后续期刊版未比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v35-nber-w13249-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "HP滤波是双边平滑，若用全样本估计I*会引入前视；论文所引段落未说明实时（单边）估计与库存数据发布时滞，实盘需另定。"
+    },
+    "calculation": {
+      "evidence": [
+        "v35-nber-w13249-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末对可得商品按I/I*横截面排序，前一半（高库存）组成High组合、后一半（低库存）组成Low组合，等权；比较两组合收益。作者报告1969–2006年低库存组合年化跑赢高库存组合8.06%（t=3.19）。可交易构造为做多Low、做空High，月度再平衡。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v35-nber-w13249-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "存储理论：库存低时缺货风险与便利收益上升，期货风险溢价更高。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v35-nber-w13249-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对每个商品，月末实际库存为I，“正常库存”I*为对数库存序列的Hodrick–Prescott趋势值；信号为标准化库存x=I/I*（表中亦以100×log(I/I*)表示）。HP平滑参数：作者取160,000（季度口径）并按Ravn–Uhlig换算到月度×81。"
+    },
+    "inputs": {
+      "evidence": [
+        "v35-nber-w13249-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "31个有月度库存数据的商品（剔除糖与糙米；饲牛使用3个月后的活牛库存作当月水平）；各商品月度库存与期货收益；样本自1969-12起（首月7个商品）至2006。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v35-nber-w13249-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "商品期货横截面因子；可与基差/carry、动量对照（作者指出三者都与库存状态相关）。"
+    }
+  },
+  "identity_namespace": "nber.org/papers",
+  "lab": null,
+  "missing_information": [
+    "HP趋势的实时/单边估计方式未说明，全样本滤波有前视风险。",
+    "各商品库存数据来源与发布时滞见原附录B，未逐项核对。",
+    "多空腿收益是否扣除抵押利息、展期规则依原文期货收益构造，未在本条复述。",
+    "仅NBER 2007工作论文版，后续期刊版未比对；未回测。"
+  ],
+  "name": "商品期货标准化库存因子：按实际库存/正常库存(I/I*)排序",
+  "native_source_id": "w13249:normalized-inventory",
+  "one_line": "以HP滤波得到各商品的“正常库存”I*，月末按I/I*横截面排序，比较低库存半组与高库存半组的期货收益（做多低库存、做空高库存）。",
+  "record_id": "w13249:normalized-inventory",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w13249/w13249.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Gary B. Gorton, Fumio Hayashi, K. Geert Rouwenhorst,《The Fundamentals of Commodity Futures Returns》NBER WP 13249（2007-07；后续期刊版未取得、未比对）。中文定义自撰。",
+      "id": "v35-nber-w13249-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L529–533（PDF物理页14）；formula L548–557（PDF物理页14）；formula L589–591（PDF物理页15）；inputs L521–528（PDF物理页14）；calculation L713–727（PDF物理页18）；calculation L2273–2275（PDF物理页52）",
+      "revision": "NBER Working Paper 13249, July 2007；63页；sha256 e0533a62d4ccdd2b18d4b39d7fdec0c7f26367fb94ec8a877b927bfa16abf0ed",
+      "sha256": "e0533a62d4ccdd2b18d4b39d7fdec0c7f26367fb94ec8a877b927bfa16abf0ed",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w13249/w13249.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

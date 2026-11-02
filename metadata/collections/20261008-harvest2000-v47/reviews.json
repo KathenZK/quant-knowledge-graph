@@ -1,0 +1,756 @@
+{
+  "batch_id": "20261008-harvest2000-v47",
+  "records": [
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4518",
+            "M6783",
+            "M4421",
+            "M6803",
+            "M0387"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4518",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4518.json",
+              "row_sha256": "de410b33a8abbad6eaa364d4f431497d90e1eac15c890540cccd24436cd4d1c3",
+              "sha256": "b5bab04d54ee483c077e6df9d3ea610585d79ecc0af07aabe779485dc0650a40"
+            },
+            {
+              "native_id": "M6783",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0068-v2/metadata/source-records/M6783.json",
+              "row_sha256": "2284c8776fdbfd6b8b2bbb8eda57ab6b15f785a6703e3e616d93c83ca4bbd1d2",
+              "sha256": "cac536d0a2313f33bba736479ed80e9aa46864a9b2fa55101ede6bb15b24e9c2"
+            },
+            {
+              "native_id": "M4421",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4421.json",
+              "row_sha256": "da543b1a0a6b8a50213dab572a320fc54aefdaba8571b73322644cb5bbff36fa",
+              "sha256": "8eb5c8d87eb9dde62f8c038062c7260cba53e940e1c0f0c4e51e174f2b70fc77"
+            },
+            {
+              "native_id": "M6803",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0068-v2/metadata/source-records/M6803.json",
+              "row_sha256": "5e8d34b161253969c200f41bb1fe1a28fa833f3951c35fe1895f24e0a605d334",
+              "sha256": "a6d4f35f20b1915f2434dd52d1d3e62dcd7fe07e6282fdc7c42d9c76f350bae2"
+            },
+            {
+              "native_id": "M0387",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0387.json",
+              "row_sha256": "63be276124c1638f4f472ad40514fb8a8ab2166894c953c7e96becd069f2afdd",
+              "sha256": "401b415b4296c7588eefde46cb47715de0e55bbf230b439a0191ad828d9e1dda"
+            }
+          ],
+          "scope": "coverage-map-v47.csv（M记录6971、因子变体1570、v1–v46集合461、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29、v45拒收17、v46拒收8）按关键词与同市场同核心信号检索，并逐一核对v35–v46集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "common idiosyncratic quantile",
+            "共通特异分位数",
+            "CIQ",
+            "lower-tail",
+            "下尾",
+            "quantile factor",
+            "分位数因子",
+            "idiosyncratic tail"
+          ]
+        },
+        "compared_record_names": {
+          "M0387": "Coskewness using daily returns（CoskewACX）",
+          "M4421": "Ang·Hodrick·Xing·Zhang·特异波动：月频；上月日收益相对FF3残差σ；市值加权五分位；多最低IVOL、空最高IVOL持1月（AHXZ IVOL·Q1/Q5·VW）",
+          "M4518": "Kelly·Jiang·尾部风险β多空：月末；个股对共通尾风险λ的β；等权/市值多最高五分位、空最低五分位；持1月（KJ Tailβ·Q5/Q1）",
+          "M6783": "Kelly·尾部风险β五分位多空：年12月末；BetaTailRisk=120月尾部风险因子β；|价|>5；等权多最高空最低持12月（Kelly·BetaTailRisk·QuintileL/S）",
+          "M6803": "Harvey·协偏度三分位多空：月末；Coskewness=E[r̃_i r̃_m²]/(SD[r̃_i] SD[r̃_m]²)用过去60月去均值超额收益；shrcd≤11；市值加权多最低空最高持1月（Harvey·Coskewness·TercileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以FF3残差分位数因子分析得到的下尾共通创新暴露排序的美股因子。M4518/M6783为Kelly–Jiang共通尾部风险λ的β（日收益极端分位幂律），M4421为FF3特质波动，M6803/M0387为协偏度；本条信号是残差面板的τ=0.2分位数因子创新暴露，作者显示异于CIV/PCA-SQ/尾部β；目录与v35–v46集合检索“CIQ/common idiosyncratic quantile/共通特异分位数”无记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "BN2026-US-equity-FF3-resid-QFA-tau0.2-DeltaCIQ-LT-60m-beta-decile-EW-VW-long-high-short-low-hold-m+1",
+      "entity_type": "factor",
+      "field_spans": {
+        "availability": [
+          {
+            "bytes": 539,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 27,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 32,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              1
+            ],
+            "sha256": "9cf59703a8f416e6d25af79634ff569bb57cfbcefdc031956529629e2602488a",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 2491,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 1406,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1429,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              24
+            ],
+            "sha256": "62ca461d57d45492765a52f2999e00e2f37112b3ea7aec6a3f75f2fe16afe38c",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 1986,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 644,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 660,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "4f0cd2958f1ab9b9714232a4761b22b01163530749c89d3beb6298c2b0dfbddb",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          }
+        ],
+        "calculation": [
+          {
+            "bytes": 580,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 452,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 458,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "6923241159408b8303d920c7763c396e650fcbab40815914fa03e7f633632159",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 1131,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 486,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 494,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "150a42757edfb2d189278d185ff5a181f3b14bca36c18482716eec013233e385",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 493,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 542,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 547,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "1fa8b9fca8bece16836d81f89cb281a0e743fc1d60840896025d62102c3d3900",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 1986,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 644,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 660,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "4f0cd2958f1ab9b9714232a4761b22b01163530749c89d3beb6298c2b0dfbddb",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 2491,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 1406,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1429,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              24
+            ],
+            "sha256": "62ca461d57d45492765a52f2999e00e2f37112b3ea7aec6a3f75f2fe16afe38c",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 505,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 136,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 146,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              3
+            ],
+            "sha256": "a1ffbfd5dd892e137adf7952ad02c79034f1553a79f158619fd505987a9e66bd",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 2859,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 157,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 197,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              3,
+              4
+            ],
+            "sha256": "2f2d3cce3d6ea68d0273db43ad6aaeb8f84d3b53ed1ec1dd7d87e4010b0f1ef0",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 812,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 198,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 208,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              4
+            ],
+            "sha256": "bfc00ad218a6557b00fb3e2400c70b456a2ca751b29381a150adf0f50c5171c6",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 868,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 426,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 440,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "4bbfdff41255ee3cec7c268aa5117c76a7b4e9e6c9ffd0aaf0ec710786e7f7da",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 2870,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 1703,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1747,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              30
+            ],
+            "sha256": "fa75a377748e7b5b1c126e4fed69950dfccff2a84cef3b7a257140a92e30ce53",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 424,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 250,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 255,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5
+            ],
+            "sha256": "993b99735b58d62596d6771dfb3d21b1c8ec38f510c04cb0e9793513c7e32fc7",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 505,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 136,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 146,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              3
+            ],
+            "sha256": "a1ffbfd5dd892e137adf7952ad02c79034f1553a79f158619fd505987a9e66bd",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          },
+          {
+            "bytes": 2870,
+            "derived_text_sha256": "d4d77648d6c9a91a55a7c92227f56938d6bdecd3c4b23275ea3ed983c0e679c7",
+            "first_line": 1703,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1747,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              30
+            ],
+            "sha256": "fa75a377748e7b5b1c126e4fed69950dfccff2a84cef3b7a257140a92e30ce53",
+            "source_id": "v47-jfqa-barunik-nevrla-common-idiosyncratic-quantile-factors-oa-pdf",
+            "source_sha256": "e854f82ffc29831ce1eecbe1769ea25820a704f161d373d337afb9c00f134106"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "cambridge.org/S002210902610307X",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "BN2026:lower-tail-DeltaCIQ-beta"
+      ],
+      "record_id": "BN2026:lower-tail-DeltaCIQ-beta",
+      "record_sha256": "4d6f2a174c484e03f95d74a5ab6f5a575e2c44f28fd40cb54d5e115e119373a2",
+      "reviewed_at": "2026-10-08T13:27:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v47 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批2条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M6832",
+            "M0398",
+            "M3726",
+            "M4419",
+            "M6864"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M6832",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0068-v2/metadata/source-records/M6832.json",
+              "row_sha256": "d29dbdf9ddd5f71f9e6e22a290592947d71683c0ae5e4294bbd56924b1808a65",
+              "sha256": "6f3247d1486ebd33bdf09a25381da7f0cc4b522ba4d05134bf26d7a2110a7bdc"
+            },
+            {
+              "native_id": "M0398",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0398.json",
+              "row_sha256": "5c827b37ba3828126669757d6091c846859604fe175afd467794b98a488e2cb7",
+              "sha256": "fee1653fdb10000ae76dc703fb1fd871aa7d2fd8c472de17233c8657c4ba3eca"
+            },
+            {
+              "native_id": "M3726",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0037-v2/metadata/source-records/M3726.json",
+              "row_sha256": "45696ae3ecacfe3acf75972c371eaf54b9f509c4eca0ed3293ed2278ecb7f2a8",
+              "sha256": "099adf2d309fb5a4acb11bec112629788a4ca339bd43eadc318617f0f5206b1a"
+            },
+            {
+              "native_id": "M4419",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4419.json",
+              "row_sha256": "bc349831c6f2df3204845b751ba9c61b92317108e699dfdd4b45a550ebf8dd7c",
+              "sha256": "d52273877ec2cd5c88f81b1d3bbcb636274774e9d7fa8cce162f025617eb5685"
+            },
+            {
+              "native_id": "M6864",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0069-v2/metadata/source-records/M6864.json",
+              "row_sha256": "7ba808a6b4301197f6fe3fe0ef5f41b5d2f495460161341c365661662bee1532",
+              "sha256": "0e73ff6df6e532fafa76d7c87789a77d9513d70b785be5fba81fa0038819ff9c"
+            }
+          ],
+          "scope": "coverage-map-v47.csv（M记录6971、因子变体1570、v1–v46集合461、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29、v45拒收17、v46拒收8）按关键词与同市场同核心信号检索，并逐一核对v35–v46集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "star firms",
+            "明星企业",
+            "EGP difference",
+            "earnings growth acceleration",
+            "盈利增长加速度",
+            "industry spillover",
+            "行业溢出"
+          ]
+        },
+        "compared_record_names": {
+          "M0398": "Earnings surprise of big firms（EarnSupBig）",
+          "M3726": "CXO·跟随股领涨对冲：日频；强势领袖20%昨收益为正则等多弱跟随20%并对冲空SPY（CXO Follower·LeadLag）",
+          "M4419": "Cohen·Frazzini·客户动量：月初；供应商按上月客户组合收益五分位；价>$5；市值加权多最高客户收益组、空最低；月再平衡（CF CustMom·Q5/Q1·VW）",
+          "M6832": "Hou·大盘盈余惊喜渗透五分位多空：月末；EarnSupBig=同FF48内市值最高30%的标准化盈余惊喜均值；仅小盘（非该30%）赋值；等权多高空低持1月（Hou·EarnSupBig·QuintileL/S）",
+          "M6864": "Menzly·供应商动量十分位多空：月末；iomom_supp=BEA投入产出表加权供应商行业滞后收益；等权多8–10分位空1分位持1月（Menzly·iomom_supp·DecileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以BEA行业内明星相对非明星盈利增长加速度排序、交易非明星的美股策略。最近记录M6832/M0398为Hou（2007）EarnSupBig：同FF48行业市值前30%公司的标准化盈余惊喜均值赋给小盘股，个股层面等权五分位；本条用前四大明星对非明星的EGP加速度之差、行业层面排序并交易行业非明星组合，作者另控制分析师盈余惊喜仍显著；M3726为日频领袖–跟随者收益，M4419为客户动量，M6864为供应商行业动量，集合w25201:CS_RET为共同分析师关联动量，AEA2020为同城跨行业领先滞后；He–Narayanamoorthy个股盈利加速度仅有拒收记录（无开放全文）；目录与v35–v46检索“star firm/ΔEGP/明星相对盈利”无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "CKMR2026-US-equity-BEA-top4-star-vs-nonstar-DeltaEGP-monthly-3m-announcements-industry-quintile-VW-nonstar-long-top11-short-bottom11",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 1027,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 428,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 440,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "9a2a882a25139b727fe17edc41363c1a037e771759fbbb9c63eaf30bae692c31",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 869,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1609,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              28
+            ],
+            "sha256": "e5c5e3b4ec79a4d0af3c4efb97af1e538a88eb6e3c33e2ec70aa21d5bf429189",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 869,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1609,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              28
+            ],
+            "sha256": "e5c5e3b4ec79a4d0af3c4efb97af1e538a88eb6e3c33e2ec70aa21d5bf429189",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 1346,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1655,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1666,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29
+            ],
+            "sha256": "670eec5883dbebafde72939080a05be4fe5ed1aba6c0c17e86f3f2aa10fba941",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 584,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 575,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 581,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "e698a438544f832b1a34d95078bb83c3fa208b2e612b5d44d2d946ed98044314",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 869,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1609,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              28
+            ],
+            "sha256": "e5c5e3b4ec79a4d0af3c4efb97af1e538a88eb6e3c33e2ec70aa21d5bf429189",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 1346,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1655,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1666,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29
+            ],
+            "sha256": "670eec5883dbebafde72939080a05be4fe5ed1aba6c0c17e86f3f2aa10fba941",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 869,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1609,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              28
+            ],
+            "sha256": "e5c5e3b4ec79a4d0af3c4efb97af1e538a88eb6e3c33e2ec70aa21d5bf429189",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 1346,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1655,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1666,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29
+            ],
+            "sha256": "670eec5883dbebafde72939080a05be4fe5ed1aba6c0c17e86f3f2aa10fba941",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 242,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1642,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1644,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29
+            ],
+            "sha256": "a66ae79be0c7fc6a19a6733cb325f26991ba3912a0fd3f26d1b4d26e463d1f1d",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 1346,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1655,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1666,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29
+            ],
+            "sha256": "670eec5883dbebafde72939080a05be4fe5ed1aba6c0c17e86f3f2aa10fba941",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 428,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 540,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 545,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "980f4d8811a224b6eba56309ec043bcbf7815173e1f56cc2c231c7df5fcd33ea",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 285,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 551,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 555,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "d3c2b7a6669d0fa0c4d57dde806e1f1a4ab4c6e6dd444fb9963f293d4a080a0c",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 205,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 572,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 574,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "2b75e1fe4133567aacacec435ef2d899ac12e2397702a4307362d47608468fad",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 584,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 575,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 581,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "e698a438544f832b1a34d95078bb83c3fa208b2e612b5d44d2d946ed98044314",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 175,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 600,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 601,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "996ba1d06eb6d27cba35cb092653b53cfdfdf16a4877bbc64f250aba7558328a",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 1346,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1655,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1666,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29
+            ],
+            "sha256": "670eec5883dbebafde72939080a05be4fe5ed1aba6c0c17e86f3f2aa10fba941",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 1346,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1655,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1666,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29
+            ],
+            "sha256": "670eec5883dbebafde72939080a05be4fe5ed1aba6c0c17e86f3f2aa10fba941",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 1027,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 428,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 440,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "9a2a882a25139b727fe17edc41363c1a037e771759fbbb9c63eaf30bae692c31",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 361,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 470,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 473,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "6ae937b83efbe260e92548a0ee46a0ba6d1f7397b8ebb5730a8de8f82fe82e1a",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 869,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1609,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              28
+            ],
+            "sha256": "e5c5e3b4ec79a4d0af3c4efb97af1e538a88eb6e3c33e2ec70aa21d5bf429189",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          },
+          {
+            "bytes": 1346,
+            "derived_text_sha256": "247a672e8e84f0c4ef9c85dcca8fb8dfc984360bbc675e90776e684e3f1947fe",
+            "first_line": 1655,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1666,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29
+            ],
+            "sha256": "670eec5883dbebafde72939080a05be4fe5ed1aba6c0c17e86f3f2aa10fba941",
+            "source_id": "v47-jfqa-chhaochharia-kumar-motahari-rantala-star-firms-oa-pdf",
+            "source_sha256": "4b105ca3c21c391d939aa84cdf780c510ca6dda66276c9aea3f7afd85f2a0ea9"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "cambridge.org/S0022109026102610",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "CKMR2026:star-EGP-difference-monthly"
+      ],
+      "record_id": "CKMR2026:star-EGP-difference-monthly",
+      "record_sha256": "a1a8b07058f5bc08194823a3fcdaac6882763637ca8a644f8e86f88f8f6174ef",
+      "reviewed_at": "2026-10-08T13:27:50+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v47 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批2条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    }
+  ],
+  "schema_version": "quantgraph-source-collection-reviews/v1"
+}

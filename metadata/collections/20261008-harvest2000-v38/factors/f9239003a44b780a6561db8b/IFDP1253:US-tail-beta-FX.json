@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "对美股尾部风险暴露越低（越易在美股崩跌时贬值）的货币，远期超额收益越高。",
+    "missing": [
+      "再平衡频率未在引用段明写（滚动月度回归，按月推定）。",
+      "37国明细与剔除期仅部分转写；交易成本未在引用段处理。",
+      "IFDP工作论文版，期刊版未取；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v38-frb-ifdp1253-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "PPUT与汇率均为公开或常见商业数据；60个月滚动估计需前5年数据；再平衡频率按月推定。"
+    },
+    "calculation": {
+      "evidence": [
+        "v38-frb-ifdp1253-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对每种货币用60个月滚动窗口回归rx_{i,t}=α_i+β_{m,i}r_{m,t}+β_{Tail,i}Tail_t+ε（r_m为标普500收益），按滞后β_Tail分五组：P1最低20%、P5最高20%；各组等权；H−L=买P5卖P1，全样本年均−3.6%（Sharpe −0.54），故可交易方向为做多P1（尾部易损）、做空P5（尾部抗性）。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v38-frb-ifdp1253-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：对美股尾部风险呈负暴露的货币提供对冲，投资者愿接受更低溢价；组合兼具carry与动量特征。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v38-frb-ifdp1253-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Tail_t=[log PPUT_t−log PPUT_{t−1}]−[log SPX_t−log SPX_{t−1}]，即做多CBOE PPUT指数、做空标普500的零成本组合对数收益；PPUT在每月到期日后同时买入1单位标普500与1张首个低于95%指数值行权价的月度认沽（11:30–12:00 ET成交量加权价），第三个周五滚动。"
+    },
+    "inputs": {
+      "evidence": [
+        "v38-frb-ifdp1253-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CBOE的标普500与PPUT指数（1986年起）；BBI与WM/Reuters（Datastream）月末即期及1月远期汇率（外币/美元），1989-12至2018-04，37国（另含14个发达市场子样本），剔除CIP严重失效期；货币超额收益rx^k_t≈f^k_{t−1}−s^k_t。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v38-frb-ifdp1253-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "外汇横截面风险因子；与全球波动率β、carry、动量、偏度因子对照。"
+    }
+  },
+  "identity_namespace": "federalreserve.gov/econres",
+  "lab": null,
+  "missing_information": [
+    "再平衡频率未在引用段明写（滚动月度回归，按月推定）。",
+    "37国明细与剔除期仅部分转写；交易成本未在引用段处理。",
+    "IFDP工作论文版，期刊版未取；未回测。"
+  ],
+  "name": "美股尾部风险β货币组合（PPUT−SPX）",
+  "native_source_id": "IFDP1253:US-tail-beta-FX",
+  "one_line": "以CBOE PPUT（标普500+5%虚值月度认沽）对数收益减标普500对数收益为美股尾部风险因子Tail；每月用60个月滚动回归rx=α+β_m·r_m+β_Tail·Tail，按β_Tail把货币分五组等权，低尾部β组收益高于高尾部β组。",
+  "record_id": "IFDP1253:US-tail-beta-FX",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.federalreserve.gov/econres/ifdp/files/ifdp1253.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Zhenzhen Fan, Juan M. Londono, Xiao Xiao,《US Equity Tail Risk and Currency Risk Premia》IFDP 1253（2019-07，doi:10.17016/IFDP.2019.1253）。中文定义自撰。",
+      "id": "v38-frb-ifdp1253-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L484–492（PDF物理页14）；formula L493–505（PDF物理页14,15）；inputs L476–483（PDF物理页14）；inputs L540–545（PDF物理页16）；inputs L560–579（PDF物理页16,17）；calculation L605–622（PDF物理页17,18）；calculation L633–635（PDF物理页18）；calculation L636–648（PDF物理页18,19）",
+      "revision": "Board of Governors of the Federal Reserve System, International Finance Discussion Papers 1253, July 2019；51页；未与期刊版比对；sha256 de4491b2027d12e185aa54d76d7174fff07f6e4bac121200bfc8e2559e4268ea",
+      "sha256": "de4491b2027d12e185aa54d76d7174fff07f6e4bac121200bfc8e2559e4268ea",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.federalreserve.gov/econres/ifdp/files/ifdp1253.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

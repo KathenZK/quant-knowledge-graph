@@ -1,0 +1,116 @@
+{
+  "economic_basis": {
+    "hypothesis": "指数调入公告后被动资金调仓需求与关注度上升带来公告后短期正超额。",
+    "missing": [
+      "入场时点未写明（含前视风险）；交易成本未给；原文全文未取得，仅投资要点摘要。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "qkg-harvest2000-v48/csi-index-enhancement/haitong-2024-index-rebalance",
+  "lab": null,
+  "missing_information": [
+    "规则不全（rule_completeness=规则不全）：核心规则未完整公开，不计入完整策略目标，不能视为可直接复现。",
+    "入场时点未写明（含前视风险）；交易成本未给；原文全文未取得，仅投资要点摘要。",
+    "来源自报绩效未验证（REPORTED_UNVERIFIED）；本库未回测（execution_trials=0）。"
+  ],
+  "name": "【规则不全】海通中证500定期调整调入股公告后10日事件组合（R2，等权，对标中证500）",
+  "native_source_id": "HT2024:CSI500-inclusion-R2-event-ew",
+  "one_line": "每年6月、12月中证500定期调整公告后，等权买入公告调入股，持有至公告后第10个交易日（R2窗口），基准中证500。入场价格口径原文未写明；回测必须在公告次一交易日开盘入场。",
+  "record_id": "HT2024:CSI500-inclusion-R2-event-ew",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；规则不全；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留机构/作者、日期、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.hangyan.co/reports/3500707111195641816"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "海通证券金融工程，《金融工程专题报告：事件驱动策略之指数成分股调整表现回顾》，2024-11-06；行研转载页（慧博摘要页 https://www.hibor.com.cn/repinfodetail_3708062.html 同文）。",
+      "id": "v48-haitong-2024-index-rebalance-event-hangyan",
+      "license": "版权归原机构/作者所有；本库仅存自撰中文摘要、来源指针与行段哈希，不含原文全文。",
+      "locator": "海通证券专题报告“投资要点”（阶段R1–R4定义；中证500调入/调出统计段）；快照行段：assets L215–216；universe L215–216；signal L218–220；entry L218–219；exit L222–223；position L222–223；risk L231–235；timeframe L215–216",
+      "revision": "行研(hangyan.co)转载的海通证券金融工程专题报告投资要点页（发表2024-11-06，更新2024-11-14），HTML快照；sha256 4e0e9f14f66f961e5de7bca0090b9f9c1070ff43166342b2622f493e5401f51a",
+      "sha256": "4e0e9f14f66f961e5de7bca0090b9f9c1070ff43166342b2622f493e5401f51a",
+      "supports": [
+        "SELECTED_PUBLISHED_DESCRIPTION"
+      ],
+      "url": "https://www.hangyan.co/reports/3500707111195641816",
+      "verification": "PINNED_PUBLISHED_PAGE_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v48-haitong-2024-index-rebalance-event-hangyan"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "A股；中证500定期调整（每年6月、12月）中公告调入的股票。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原文摘要未给交易成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v48-haitong-2024-index-rebalance-event-hangyan"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原文：R2自指数调整公告日起。【缺】公告日收盘还是次一交易日开盘入场未写明；中证指数公司通常在收盘后公告，按公告日收盘入场含前视。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v48-haitong-2024-index-rebalance-event-hangyan"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "研究假设（非原文）：公告次一交易日开盘买入，第10个交易日收盘或次日开盘卖出，需与原文核对。"
+    },
+    "exit": {
+      "evidence": [
+        "v48-haitong-2024-index-rebalance-event-hangyan"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有至指数调整公告后第10个交易日（R2结束）。"
+    },
+    "position": {
+      "evidence": [
+        "v48-haitong-2024-index-rebalance-event-hangyan"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "调入股等权组合，只做多。"
+    },
+    "risk": {
+      "evidence": [
+        "v48-haitong-2024-index-rebalance-event-hangyan"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源自报（未验证）：2012年以来中证500调入组合R2相对基准胜率71%、次均超额0.57%；2017年6月以来胜率80%；调出组合R2胜率25%、次均−1.07%，R3胜率54%、次均+0.50%。未给回撤、止损或容量。"
+    },
+    "signal": {
+      "evidence": [
+        "v48-haitong-2024-index-rebalance-event-hangyan"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "事件信号：股票被公告调入中证500。阶段定义：R1=公告前20个交易日至公告日；R2=公告日至公告后10个交易日；R3=生效日至生效后5日；R4=生效日至生效后20日。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v48-haitong-2024-index-rebalance-event-hangyan"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "日频事件窗口，每年两次（6月、12月）。"
+    },
+    "universe": {
+      "evidence": [
+        "v48-haitong-2024-index-rebalance-event-hangyan"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每次中证500定期调整公告的调入名单（需历史PIT公告日期与名单）。"
+    }
+  }
+}

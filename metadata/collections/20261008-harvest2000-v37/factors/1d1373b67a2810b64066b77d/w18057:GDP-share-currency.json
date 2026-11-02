@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "经济规模小的国家货币获得高于大国货币的超额收益。",
+    "missing": [
+      "“经样本波动调整”（adjusted for fluctuations in the sample）的具体方法正文未给出，数据附录未在PDF中定位到。",
+      "高减低Sharpe仅约0.22，经济显著性弱。",
+      "NBER工作论文版，未与期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v37-nber-w18057-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "GDP为季度且有发布滞后；原文按季初排序，实盘需按发布时点滞后。"
+    },
+    "calculation": {
+      "evidence": [
+        "v37-nber-w18057-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每季初将全部可得货币按GDP份额分五分位，P1最小、P5最大；超额收益=3个月远期与到期时即期汇率的对数差（美国投资者），Panel C计入买卖价差；高减低策略做空P5、做多指定组合（P1−P5含价差均值2.8%/年、Sharpe 0.215）。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v37-nber-w18057-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：大国货币在大国冲击下充当对冲工具，其国内资产（含货币）预期收益更低；小国货币需补偿。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v37-nber-w18057-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "GDP份额=国家产出占OECD总产出的比例（各时点计算，原文称“经样本波动调整”）；欧元区1999年后以单一观测替代成员国。排序变量即GDP份额，低者为小国。"
+    },
+    "inputs": {
+      "evidence": [
+        "v37-nber-w18057-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "27个OECD国家季度数据1983–2007（入OECD或数据可得后纳入；1999后欧元区成员合并）；3个月远期与即期汇率（对美元，伦敦市场买卖价）；Datastream。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v37-nber-w18057-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "外汇横截面结构因子；与carry（小国利率常更高）、贸易中心性对照。"
+    }
+  },
+  "identity_namespace": "nber.org/papers",
+  "lab": null,
+  "missing_information": [
+    "“经样本波动调整”（adjusted for fluctuations in the sample）的具体方法正文未给出，数据附录未在PDF中定位到。",
+    "高减低Sharpe仅约0.22，经济显著性弱。",
+    "NBER工作论文版，未与期刊版比对；未回测。"
+  ],
+  "name": "国家经济规模（OECD GDP份额）货币组合",
+  "native_source_id": "w18057:GDP-share-currency",
+  "one_line": "每季初按发行国占OECD总产出份额把货币分五组；对3个月远期，做多最小国家组P1、做空最大国家组P5（含买卖价差的高减低Sharpe约0.22，1983–2007）。",
+  "record_id": "w18057:GDP-share-currency",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w18057/w18057.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Tarek A. Hassan,《Country Size, Currency Unions, and International Asset Returns》NBER WP 18057（2012-05；期刊版未取、未比对）。中文定义自撰。",
+      "id": "v37-nber-w18057-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L2228–2233（PDF物理页34）；formula L2299–2300（PDF物理页35）；inputs L2228–2230（PDF物理页34）；calculation L2336–2350（PDF物理页36）",
+      "revision": "NBER Working Paper 18057, May 2012；71页；未与期刊版比对；sha256 ebac4c3527696eda543f8d2e10bd8dbe48ce4ae4f4f5f4c688d4e77d0170a695",
+      "sha256": "ebac4c3527696eda543f8d2e10bd8dbe48ce4ae4f4f5f4c688d4e77d0170a695",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w18057/w18057.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

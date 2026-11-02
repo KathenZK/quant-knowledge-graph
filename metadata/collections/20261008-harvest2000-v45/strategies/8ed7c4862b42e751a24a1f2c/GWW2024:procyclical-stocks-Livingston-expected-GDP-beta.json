@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "与经济预期增长同向变动的顺周期股票在坏状态下表现差，投资者要求更高的风险溢价，故顺周期股票平均收益高于逆周期股票。",
+    "missing": [
+      "β估计窗口最后一个半年收益以建仓日收盘价计，原文未给出跳过一期再建仓的结果（但表10持有12–36个月的重叠组合价差仍显著）；四因子α仅在10%水平显著，溢价与动量正相关。",
+      "1992年6月前Livingston调查不含一期前视的月末水平预测，故用两期前视并取二阶滞后；Livingston调查的公布日期与月末建仓的精确间隔原文未逐期列示。原文未扣交易成本。",
+      "同文按规模/账面市值/动量的双重与三重排序、等权口径、同作者NBER w34402（2025）改用现金流β对特征组合排序，均属同一核心信号（对Livingston预期GDP增长的敏感度）的变体，未单列；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "nber.org/papers/w32509",
+  "lab": null,
+  "missing_information": [
+    "β估计窗口最后一个半年收益以建仓日收盘价计，原文未给出跳过一期再建仓的结果（但表10持有12–36个月的重叠组合价差仍显著）；四因子α仅在10%水平显著，溢价与动量正相关。",
+    "1992年6月前Livingston调查不含一期前视的月末水平预测，故用两期前视并取二阶滞后；Livingston调查的公布日期与月末建仓的精确间隔原文未逐期列示。原文未扣交易成本。",
+    "同文按规模/账面市值/动量的双重与三重排序、等权口径、同作者NBER w34402（2025）改用现金流β对特征组合排序，均属同一核心信号（对Livingston预期GDP增长的敏感度）的变体，未单列；未回测。"
+  ],
+  "name": "顺周期股票溢价：每年6月与12月用过去10年半年度收益对市场与Livingston调查滞后预期实际GDP增长回归，按GDP预期β十分位市值加权多最高空最低，持六个月（Goetzmann–Watanabe–Watanabe）",
+  "native_source_id": "GWW2024:procyclical-stocks-Livingston-expected-GDP-beta",
+  "one_line": "用费城联储Livingston调查中名义GDP与CPI水平的中位预测，构造两期前视的半年度预期实际GDP增长EGDP（Campbell–Diebold法），取其二阶滞后LEGDP（与当期实现期匹配，信号时点已公开）；每年6月与12月对每只股票用过去10年（20个半年）超额收益回归市场超额收益与LEGDP，按LEGDP系数分十组，市值加权做多β最高（顺周期）组、做空最低（逆周期）组，持有六个月。",
+  "record_id": "GWW2024:procyclical-stocks-Livingston-expected-GDP-beta",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w32509/w32509.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "William N. Goetzmann, Akiko Watanabe, Masahiro Watanabe,《Procyclical Stocks Earn Higher Returns》NBER Working Paper 32509（2024-05）。中文定义自撰。",
+      "id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L1440–1480（PDF物理页31）；universe L738–758（PDF物理页15,16）；universe L1440–1480（PDF物理页31）；signal L395–407（PDF物理页9）；signal L411–427（PDF物理页9）；signal L440–446（PDF物理页10）；signal L454–456（PDF物理页10）；signal L503–509（PDF物理页11）；signal L738–758（PDF物理页15,16）；entry L738–758（PDF物理页15,16）；entry L1440–1480（PDF物理页31）；exit L738–758（PDF物理页15,16）；exit L1440–1480（PDF物理页31）；position L738–758（PDF物理页15,16）；position L1440–1480（PDF物理页31）；risk L778–794（PDF物理页16）；risk L1440–1480（PDF物理页31）；risk L1060–1086（PDF物理页22）；risk L1858–1875（PDF物理页41）；risk L234–244（PDF物理页6）；timeframe L738–758（PDF物理页15,16）；execution_time L234–244（PDF物理页6）；execution_time L274–278（PDF物理页6）；execution_time L395–407（PDF物理页9）；execution_time L1060–1086（PDF物理页22）",
+      "revision": "NBER工作论文No. 32509（封面日期May 2024；NBER官网原发，非镜像；为作者2013年工作论文的大幅修订更新版）；44页；版权页\"All rights reserved\"；同作者后续NBER w34402（2025-10，改用现金流β）另行审核并拒收为同信号变体；sha256 720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9",
+      "sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w32509/w32509.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国普通股（NYSE、AMEX、NASDAQ）。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原文未扣交易成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每年6月与12月末按β_LEGDP把股票分十组，做多最高组（顺周期）、做空最低组（逆周期）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每年6月、12月用已公布的Livingston调查预测与截至当时的半年收益估计β并于期末建仓；作者称该组合完全基于各时点公开信息、可交易；持有12–36个月的延后结果见表10。"
+    },
+    "exit": {
+      "evidence": [
+        "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有六个月，至下一次6月或12月重新估计并调仓。"
+    },
+    "position": {
+      "evidence": [
+        "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "十分位组合，组内市值加权（等权结果作者称定性相似）；多第10组空第1组的零投资组合。"
+    },
+    "risk": {
+      "evidence": [
+        "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告1963-07至2022-12十分位10−1市值加权超额收益0.44%/月（t=2.32），FF三因子α 0.49%（t=2.55），四因子α 0.36%（t=1.86，p=0.06）；价差主要来自第10组；持有期延长至12/24/36个月（重叠子组合）10−1为0.42%/0.36%/0.30%仍显著，60个月为0.15%不显著；多空组合动量β为0.15。"
+    },
+    "signal": {
+      "evidence": [
+        "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "EGDP_t=ln(GDPX_t^{t+2}/CPI_t^{t+2})−ln(GDPX_t^{t+1}/CPI_t^{t+1})，取Livingston调查（每年6月、12月进行并公布）名义GDP与CPI水平的6个月与12个月前视中位预测；因1992年6月前无月末水平的一期前视预测，使用两期前视并取二阶滞后LEGDP使预测期与当期匹配；每只股票用过去20个半年度超额收益对MKT（CRSP市值加权超额收益，按月复利成半年）与LEGDP回归，取LEGDP系数β_LEGDP为信号。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "半年度调仓，月度收益。"
+    },
+    "universe": {
+      "evidence": [
+        "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "NYSE、AMEX、NASDAQ普通股，须有过去10年半年度收益；每组平均约190只；组合1963-06起建仓，月度收益1963-07至2022-12。"
+    }
+  }
+}

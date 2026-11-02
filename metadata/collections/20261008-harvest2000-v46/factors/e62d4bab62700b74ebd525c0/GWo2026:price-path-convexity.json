@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "当月价格路径越凸（先跌后涨或加速上涨使首末中点高于均价），下月收益越低；越凹则越高。",
+    "missing": [
+      "未扣交易成本，未报告换手（月频重排的短期信号，换手可能较高）；Supplementary Material（表IA1–IA7，含跳日与中间价检验明细）未抓取，跳日结果只取正文数字。",
+      "价格不做现金股利调整（作者称调整后几乎相同，表IA3未核）；主结果在月末收盘既算信号又按该价建仓，跳过首日版本为0.66%/月（t=4.93）。",
+      "同文10日/5日凸性、加速度、与上月收益双排、Fama–MacBeth及按年份/规模子样本属同一信号变体或稳健性，未单列；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只需CRSP日收盘价与调整因子，计算简单；作者称控制短期反转、动量、长期反转与流动性因子后α基本不变，跳过首日与改用中间价结果稳健。原文未扣交易成本，未报告换手。"
+    },
+    "calculation": {
+      "evidence": [
+        "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末（自1963年6月起）按当月凸性分五组，市值加权持有1个月（另有10日、5日版本），做多CON1、做空CON5。作者报告：1个月多空0.84%/月（t=6.29），月夏普0.23（年化0.80）；10日0.64%（t=7.31）、5日0.37%（t=4.94）；CAPM至FF5加UMD/SREV/LREV/LIQ的α为0.81%–0.96%/月（FF5+SREV为0.96%，t=6.41）；跳过形成后首日仍为0.66%/月（t=4.93），改用买卖中间价仅小幅下降。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者认为股价路径的曲率含有关于未来收益的信息，凸形路径（首末中点高于均价）之后收益偏低、凹形之后偏高；本条把它视为短期错误定价的研究假说，原文机制讨论未逐项核对，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Convexity_{i,t}=[(P1_{i,t}+PN_{i,t})/2−(P1+P2+…+PN)/N]/[(P1_{i,t}+PN_{i,t})/2]（式1）；P为日收盘价，拆股与股票股利对历史价格做调整，现金股利只在除息日体现、不回调历史价格（作者视拆股为永久、最显著的价格变化）；用价格而非收益计算。"
+    },
+    "inputs": {
+      "evidence": [
+        "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP日收盘价与价格调整因子；国内普通股（shrcd 10/11），NYSE/AMEX/NASDAQ（exchcd 1/2/3）；1963-07至2022-12；按Shumway（1997）处理缺失退市收益；剔除未调整月末价低于5美元者；形成月内首次进入或退出数据库、或有任一日收盘价缺失者当月剔除。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股短期（月、10日、5日）截面因子；可与短期反转、MAX、信息离散度等价格路径类信号对照或组合。"
+    }
+  },
+  "identity_namespace": "cambridge.org/S0022109025101725",
+  "lab": null,
+  "missing_information": [
+    "未扣交易成本，未报告换手（月频重排的短期信号，换手可能较高）；Supplementary Material（表IA1–IA7，含跳日与中间价检验明细）未抓取，跳日结果只取正文数字。",
+    "价格不做现金股利调整（作者称调整后几乎相同，表IA3未核）；主结果在月末收盘既算信号又按该价建仓，跳过首日版本为0.66%/月（t=4.93）。",
+    "同文10日/5日凸性、加速度、与上月收益双排、Fama–MacBeth及按年份/规模子样本属同一信号变体或稳健性，未单列；未回测。"
+  ],
+  "name": "价格路径凸性：当月首末日收盘价中点减当月日收盘均价再除以中点（只做拆股调整），月末五分位市值加权多最低凸性、空最高凸性（Gulen–Woeppel）",
+  "native_source_id": "GWo2026:price-path-convexity",
+  "one_line": "Convexity=[(P1+PN)/2−当月全部日收盘价均值]/[(P1+PN)/2]，P1、PN为当月首、末个交易日收盘价，价格只按拆股与股票股利调整、不按现金股利调整；中点高于均价为凸、低于均价为凹。每月末按凸性分五组市值加权，做多最低组（CON1）、做空最高组（CON5），持有一个月（亦可用10日/5日版本）。",
+  "record_id": "GWo2026:price-path-convexity",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/02CDE05B2C35A6D8E7581851B690F35D/S0022109025101725a.pdf/price-path-convexity-and-short-horizon-return-predictability.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Huseyin Gulen, Michael Woeppel,《Price-Path Convexity and Short-Horizon Return Predictability》JFQA 61(2), 2026（CC BY 4.0开放获取出版版）。中文定义自撰。",
+      "id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+      "license": "CC BY 4.0（Creative Commons Attribution，期刊首页声明“unrestricted re-use, distribution and reproduction, provided the original article is properly cited”）",
+      "locator": "派生文本(pdftotext -layout)行段：formula L256–290（PDF物理页5,6）；inputs L528–537（PDF物理页10）；inputs L256–290（PDF物理页5,6）；calculation L549–558（PDF物理页11）；calculation L578–595（PDF物理页11）；calculation L704–726（PDF物理页13）；calculation L121–124（PDF物理页3）；calculation L865–870（PDF物理页16）；availability L528–537（PDF物理页10）；availability L865–870（PDF物理页16）；availability L704–726（PDF物理页13）",
+      "revision": "期刊出版版（Open Access），Journal of Financial and Quantitative Analysis Vol. 61, No. 2, Mar. 2026, pp. 580–611，DOI 10.1017/S0022109025101725；剑桥大学出版社cambridge.org原发，非镜像；32页；Supplementary Material（表IA1–IA7）未抓取；sha256 ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425",
+      "sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/02CDE05B2C35A6D8E7581851B690F35D/S0022109025101725a.pdf/price-path-convexity-and-short-horizon-return-predictability.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

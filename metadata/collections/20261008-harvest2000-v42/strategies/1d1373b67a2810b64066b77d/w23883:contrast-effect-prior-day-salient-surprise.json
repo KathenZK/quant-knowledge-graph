@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "投资者以前一日显著的盈余意外为参照，前一日大公司意外越好，今日公告公司的同等消息显得越差，股价反应被反向扭曲，随后部分回归。",
+    "missing": [
+      "空头触发条件原文正文（L1039附近）与表5注均写作“高于第25百分位”，与同段“最高或最低四分位”及反转策略“高于第75百分位”不一致；本条按最高四分位记录，期刊终版未比对。",
+      "前视风险（已按v42更严规则审查后保留并标记）：t日公告名单取自事后的I/B/E/S实际公告日，实盘需依赖事前公布的财报日历；大市值公司通常提前数周预告日期，作者网络附录做了DellaVigna–Pollet日期调整稳健性，但未给出“仅用事前日历”的交易表。",
+      "NBER 2017-09稿未与JF 2018终版比对；同表t+2至t+50等反转持有期与“前一日最大公司意外”度量属同一信号的变体，未单列；交易成本可能吞没α；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "nber.org/papers",
+  "lab": null,
+  "missing_information": [
+    "空头触发条件原文正文（L1039附近）与表5注均写作“高于第25百分位”，与同段“最高或最低四分位”及反转策略“高于第75百分位”不一致；本条按最高四分位记录，期刊终版未比对。",
+    "前视风险（已按v42更严规则审查后保留并标记）：t日公告名单取自事后的I/B/E/S实际公告日，实盘需依赖事前公布的财报日历；大市值公司通常提前数周预告日期，作者网络附录做了DellaVigna–Pollet日期调整稳健性，但未给出“仅用事前日历”的交易表。",
+    "NBER 2017-09稿未与JF 2018终版比对；同表t+2至t+50等反转持有期与“前一日最大公司意外”度量属同一信号的变体，未单列；交易成本可能吞没α；未回测。"
+  ],
+  "name": "盈余公告对比效应：前一交易日大公司盈余意外低则做多今日公告股、高则做空（Hartzmark–Shue）",
+  "native_source_id": "w23883:contrast-effect-prior-day-salient-surprise",
+  "one_line": "每个交易日计算前一交易日公告盈余的大公司（市值高于NYSE第90百分位）按市值加权的盈余意外surprise_{t−1}；若其低于上一季度该变量分布的第25百分位，则在当天开盘买入当天公告盈余的大市值股票（NYSE第80百分位以上），若处于最高四分位则做空这些股票，持有当天与次日两个交易日；只有一侧时以市场组合对冲，组内按t−3日市值加权。",
+  "record_id": "w23883:contrast-effect-prior-day-salient-surprise",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w23883/w23883.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Samuel M. Hartzmark, Kelly Shue,《A Tough Act to Follow: Contrast Effects in Financial Markets》NBER WP 23883（2017-09；终版JF 2018未比对）。中文定义自撰。",
+      "id": "v42-nber-w23883-contrast-effects-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L1033–1051（PDF物理页19）；assets L2857–2872（PDF物理页54）；universe L662–687（PDF物理页12,13）；universe L566–568（PDF物理页11）；signal L570–597（PDF物理页11）；signal L613–657（PDF物理页12）；entry L1033–1051（PDF物理页19）；entry L1053–1073（PDF物理页19,20）；entry L2857–2872（PDF物理页54）；exit L1033–1051（PDF物理页19）；exit L1111–1117（PDF物理页20）；position L1033–1051（PDF物理页19）；risk L1053–1073（PDF物理页19,20）；risk L2877–2889（PDF物理页54）；risk L2857–2872（PDF物理页54）；cost L1075–1101（PDF物理页20）；cost L1111–1117（PDF物理页20）；timeframe L1053–1073（PDF物理页19,20）；execution_time L1033–1051（PDF物理页19）；execution_time L519–525（PDF物理页10）",
+      "revision": "NBER Working Paper 23883，\"September 2017\"，NBER官网托管；62页；未与Journal of Finance 73(4):1567–1613（2018）终版比对；网络附录未取；sha256 49002321a7d9cabe077792a03796943e9829c2acf11ee764a79000520765a1e5",
+      "sha256": "49002321a7d9cabe077792a03796943e9829c2acf11ee764a79000520765a1e5",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w23883/w23883.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v42-nber-w23883-contrast-effects-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "当天（t日）公告季度盈余、且市值高于NYSE第80百分位的美国普通股（CRSP/Compustat，盈余与预测来自I/B/E/S）；只有一侧有效时用市场组合作另一侧。"
+    },
+    "cost": {
+      "evidence": [
+        "v42-nber-w23883-contrast-effects-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者未定论：按Breen等（2002）方法，平均头寸1,000股大宗交易成本超过20bp，约等于α，会抹去收益；按Frazzini等（2012）机构实际成本中位8–10bp则仍有利润，但公告前流动性下降可能抬高成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v42-nber-w23883-contrast-effects-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "surprise_{t−1}低于上一季度surprise_{t−1}分布的第25百分位时，做多t日公告盈余的股票；处于上一季度分布的最高四分位时，做空t日公告股票（原文正文与表5注写作“高于第25百分位”，但同段与反转策略均写作最高四分位/第75百分位，见缺失说明）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v42-nber-w23883-contrast-effects-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "t日开盘建仓（开盘到开盘收益），信号只用t−1日及以前已公布的盈余与分析师预测。"
+    },
+    "exit": {
+      "evidence": [
+        "v42-nber-w23883-contrast-effects-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "自t日开盘建仓，持有t日与t+1日两个交易日（开盘到开盘收益）后平仓；每个持仓一天一笔交易。"
+    },
+    "position": {
+      "evidence": [
+        "v42-nber-w23883-contrast-effects-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "组内按t−3日市值加权，多个公告日内公司合并；交易日之间等权；若当天只有多（空）一侧有效，则做空（做多）市场组合作对冲。"
+    },
+    "risk": {
+      "evidence": [
+        "v42-nber-w23883-contrast-effects-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告五因子（市场、SMB、HML、UMD、短期反转）日α 0.189%（标准误0.0558，t>3），1,525个有效交易日；平均每年约76个交易日可执行（约30%），折合年化异常收益约15%；同表持有t+2至t+50日的反向（反转）策略日α −0.0257%。"
+    },
+    "signal": {
+      "evidence": [
+        "v42-nber-w23883-contrast-effects-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "个股盈余意外surprise_{i,t}=(实际EPS−公告前15至2天内各分析师最新预测的中位数)/公告前3日股价，按1%与99%缩尾；surprise_{t−1}=前一交易日公告的大公司（市值高于当月NYSE第90百分位）盈余意外按各自公告前3日（即t−4日）市值加权平均，再缩尾一次。作者另以前一日最大公司的意外作替代度量。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v42-nber-w23883-contrast-effects-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "日度，仅在前一日有大公司公告且其意外处于极端四分位、当天又有大公司公告的交易日交易。"
+    },
+    "universe": {
+      "evidence": [
+        "v42-nber-w23883-contrast-effects-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "1984–2013年，要求公告公司在公告前2–15天内至少有一条分析师预测，且前一交易日至少有一家NYSE第90百分位以上的大公司公告、并在其公告前3–16天有分析师预测；共75,897次盈余公告。"
+    }
+  }
+}

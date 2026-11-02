@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "不同贝塔估计方法给出的贝塔区间跨度越大的股票越被高估，随后一个月收益低于贝塔不确定性低的股票。",
+    "missing": [
+      "作者接收稿（2020-03-16）未与Journal of Banking & Finance终版比对；网络附录（等权、NYSE断点、子样本、替代定义表）未取。",
+      "1%缩尾、最少观测数等估计细节以及置信区间是否基于异方差稳健标准误，本文正文与附录A未写明。",
+      "同文随机抽取估计子集、标准差型等替代不确定性定义属同一核心信号的变体，未单列；溢价集中在卖空成本高的股票；原文未扣交易成本；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只需CRSP日度价格与市值，全部用t之前数据，月末可计算。作者显示溢价在卖空成本低的两组不显著、在卖空成本高的三组显著且随卖空成本上升而增大，提示空头腿实现难度；原文未扣交易成本。"
+    },
+    "calculation": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按Unc_β升序把股票分五组，市值加权持有一个月；5−1对冲组合做多最高组、做空最低组，实务方向为其反向。作者报告市值加权5−1年化−7.9%（5%水平显著），CAPM α约为平均收益的两倍且1%显著，Carhart与加Pástor–Stambaugh的五因子相近，FF5 α −6.4%（1%显著）；等权组合与NYSE断点结果相近，三个约22年子样本的四因子α均显著为负，扩展到1926年起结果相近。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者支持错误定价解释：投资者对贝塔看法分歧大、又存在卖空限制时，股价反映乐观者估值而被高估；高卖空成本（相对空头兴趣高）组溢价更大。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Unc_{β,j,t}=max_i β^{CI,(i)}_{j,t}−min_i β^{CI,(i)}_{j,t}，β^{CI,(i)}为第i种估计方法的贝塔95%置信区间；九种方法：HIST（12个月日数据OLS）、HIST6（6个月）、两种EWMA（全样本扩展窗口WLS，权重∝exp(−|t−τ|·ln2/ι)，ι=84与168个交易日，最多用10年日数据）、Dimson K=1–4（加入1至K期滞后市场收益，K≥2时第2期以后滞后合并为一项）、Scholes–Williams（(β⁻+β+β⁺)/(1+2ρ)）；除EWMA外均用12个月窗口；FP贝塔因无单一标准误不纳入主度量。"
+    },
+    "inputs": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP日度收益、价格与流通股：NYSE/AMEX/NASDAQ普通股（股票代码10/11），剔除封闭式基金与REIT（SIC 6720–6730、6798），剔除股价低于1美元的公司月，按Shumway方法处理退市收益；市场收益用CRSP价值加权指数，无风险利率与因子来自Kenneth French网站；样本1951-01至2015-12。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股截面选股因子；可与贝塔、特质波动、MAX、分析师分歧、波动率之波动等对照，或用于低风险组合的剔除过滤。"
+    }
+  },
+  "identity_namespace": "centaur.reading.ac.uk/90228",
+  "lab": null,
+  "missing_information": [
+    "作者接收稿（2020-03-16）未与Journal of Banking & Finance终版比对；网络附录（等权、NYSE断点、子样本、替代定义表）未取。",
+    "1%缩尾、最少观测数等估计细节以及置信区间是否基于异方差稳健标准误，本文正文与附录A未写明。",
+    "同文随机抽取估计子集、标准差型等替代不确定性定义属同一核心信号的变体，未单列；溢价集中在卖空成本高的股票；原文未扣交易成本；未回测。"
+  ],
+  "name": "贝塔不确定性：九种贝塔估计95%置信区间的总跨度，月末五分位市值加权多低空高（Hollstein–Prokopczuk–Wese Simen）",
+  "native_source_id": "HPW2020:beta-uncertainty-UncBeta",
+  "one_line": "每月末对每只美国普通股用九种常见贝塔估计（12个月与6个月历史贝塔、半衰期分别为1/3和2/3年的两种EWMA贝塔、滞后1–4期的Dimson贝塔、Scholes–Williams贝塔），各取95%置信区间，贝塔不确定性=所有区间上端最大值−下端最小值；按其分五组、市值加权，做多不确定性最低组、做空最高组，持有一个月。",
+  "record_id": "HPW2020:beta-uncertainty-UncBeta",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://centaur.reading.ac.uk/90228/1/Beta_Uncertainty.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Fabian Hollstein, Marcel Prokopczuk, Chardin Wese Simen,《Beta Uncertainty》作者接收稿（2020-03-16；Reading CentAUR托管，CC BY-NC-ND 4.0；JBF终版未比对）。中文定义自撰。",
+      "id": "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf",
+      "license": "CC-BY-NC-ND-4.0（CentAUR封面标注）",
+      "locator": "派生文本(pdftotext -layout)行段：formula L350–360（PDF物理页8）；formula L375–378（PDF物理页8）；formula L397–427（PDF物理页9）；formula L1548–1626（PDF物理页31,32）；inputs L307–323（PDF物理页7）；inputs L328–332（PDF物理页8）；calculation L605–657（PDF物理页13,14）；calculation L696–704（PDF物理页15）；calculation L752–764（PDF物理页16）；availability L1239–1255（PDF物理页25）",
+      "revision": "作者接收稿（CentAUR封面标\"Accepted Version\"），正文日期\"March 16, 2020\"，英国雷丁大学CentAUR机构仓储托管（机构仓储）；72页；终版Journal of Banking & Finance 116:105834（2020）未比对；网络附录（Online Appendix）未取；sha256 4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37",
+      "sha256": "4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://centaur.reading.ac.uk/90228/1/Beta_Uncertainty.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "历史波动远高于隐含波动的股票期权被低估，买跨式；反之高估，卖跨式。",
+    "missing": [
+      "2008-03工作论文版，未与JFE期刊版比对。",
+      "忽略提前行权。",
+      "未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "ruf.rice.edu/~jgsfss",
+  "lab": null,
+  "missing_information": [
+    "2008-03工作论文版，未与JFE期刊版比对。",
+    "忽略提前行权。",
+    "未回测；经济有效性未检验。"
+  ],
+  "name": "历史−隐含波动率差跨式多空",
+  "native_source_id": "goyal_041808:HV-IV-straddle-ls",
+  "one_line": "每月到期后首个交易日按log(HV/IV)十分位（HV=12个月日收益波动，IV=ATM认购认沽均值）；次日（周二）等权买入D10、卖出D1的近月平值跨式，持有至到期。",
+  "record_id": "goyal_041808:HV-IV-straddle-ls",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.ruf.rice.edu/~jgsfss/goyal_041808.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Amit Goyal, Alessio Saretto,《Cross-Section of Option Returns and Volatility》2008-03工作论文（期刊版JFE 2009据外部书目，未取）。中文定义自撰。",
+      "id": "v36-rice-goyal-saretto-2008-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L205–211（PDF物理页5）；universe L223–235（PDF物理页6）；signal L237–240（PDF物理页6）；signal L318–320（PDF物理页8）；entry L372–384（PDF物理页9）；exit L372–384（PDF物理页9）；position L396–400（PDF物理页10）；position L14–19（PDF物理页1）；cost L115–119（PDF物理页3）",
+      "revision": "Goyal/Saretto《Cross-Section of Option Returns and Volatility》March 2008工作论文；Rice大学研讨会托管；44页；未与JFE 2009期刊版比对；sha256 cb9eb797c9c183259ef661db460d2b21ceaa8f63254bd9ff6f917ee572a577ac",
+      "sha256": "cb9eb797c9c183259ef661db460d2b21ceaa8f63254bd9ff6f917ee572a577ac",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.ruf.rice.edu/~jgsfss/goyal_041808.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v36-rice-goyal-saretto-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国个股期权（OptionMetrics Ivy DB，1996–2005）与正股（CRSP）。"
+    },
+    "cost": {
+      "evidence": [
+        "v36-rice-goyal-saretto-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按有效价差=报价价差交易时，多空跨式月收益降至7.5%。"
+    },
+    "entry": {
+      "evidence": [
+        "v36-rice-goyal-saretto-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在信号日后的第二个交易日（周二）以收盘买卖中间价入场。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v36-rice-goyal-saretto-2008-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "信号日为到期后首个交易日，入场延后一日至周二。"
+    },
+    "exit": {
+      "evidence": [
+        "v36-rice-goyal-saretto-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有至下月到期，按到期内在价值结算；之后选新合约重复。"
+    },
+    "position": {
+      "evidence": [
+        "v36-rice-goyal-saretto-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "跨式=1张认购+1张认沽；各十分位等权；零成本多空：做多D10（HV远高于IV）、做空D1。"
+    },
+    "risk": {
+      "evidence": [
+        "v36-rice-goyal-saretto-2008-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "未设止损；忽略美式提前行权。"
+    },
+    "signal": {
+      "evidence": [
+        "v36-rice-goyal-saretto-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "HV=最近12个月日收益标准差；IV=平值认购与认沽隐含波动率均值；按log(HV)−log(IV)分十分位，D10差值最大（正）、D1最小（负）。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v36-rice-goyal-saretto-2008-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月度（期权到期周期）。"
+    },
+    "universe": {
+      "evidence": [
+        "v36-rice-goyal-saretto-2008-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月到期周六后的首个交易日（通常周一），每只股票选下月到期、moneyness（行权价/股价）在0.975–1.025内最接近平值的合约；过滤违反套利边界、卖<买、买价为0、价差低于最小变动、报价未变或无成交的观测。"
+    }
+  }
+}

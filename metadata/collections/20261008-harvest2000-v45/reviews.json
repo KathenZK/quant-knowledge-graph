@@ -1,0 +1,1986 @@
+{
+  "batch_id": "20261008-harvest2000-v45",
+  "records": [
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4543",
+            "M4225",
+            "M4436",
+            "M0168",
+            "M2729"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4543",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4543.json",
+              "row_sha256": "16619e6c09e331c9b14522dfbcb8db0cad842573e634a94375b44d6947bf0420",
+              "sha256": "e3b2954012a9c2e4f9ca8217365108cc97268242ab07cb51fe3b29b8b3280502"
+            },
+            {
+              "native_id": "M4225",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4225.json",
+              "row_sha256": "c39a9a4f7c25ab27fbce109705ea734ed7fab33298e77f76027c495e746faeca",
+              "sha256": "1dbaedfa9f31b70fcf6d4b31f91dce2f76f849e6842f805360c32a853cf2c306"
+            },
+            {
+              "native_id": "M4436",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4436.json",
+              "row_sha256": "58fd4c1486e1f44b5301d0e6a1233b0c546b5cbd9fc2906a52fd1dc79d147d60",
+              "sha256": "f71fab39a2aa3eba0028e03b0a77f5af51b8d7a47bdd2d839de819cb400f96b4"
+            },
+            {
+              "native_id": "M0168",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0168.json",
+              "row_sha256": "900bfe6d3fcaec9d8e8cb9dc195850e2f7564d24ca65507af2ef6a0e3f0cde40",
+              "sha256": "0b517ca7c61dedad74a3e92751a031e6f95e7391c0c97cf3f4042aad5417e55b"
+            },
+            {
+              "native_id": "M2729",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/subsets/batch-0028-public-v1/metadata/source-records/M2729.json",
+              "row_sha256": "19b4450d227a8f3eb10dad2b213bebcaf4ceb4b05abf103000f00cb013c529d2",
+              "sha256": "b4cb7067317bb2ebc458c1964e749e6c76e08179a644af28fa82f05d8b78f16f"
+            }
+          ],
+          "scope": "coverage-map-v45.csv（M记录6971、因子变体1570、v1–v44集合451、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29）按关键词与同市场同核心信号检索，并逐一核对v35–v44集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "default risk",
+            "违约风险",
+            "credit rating",
+            "信用评级",
+            "delta-hedged option returns",
+            "Delta对冲期权收益"
+          ]
+        },
+        "compared_record_names": {
+          "M0168": "离散度交易",
+          "M2729": "美股：EODHD未来1–5日有财报的股票，空仓时买≥30日到期ATM跨式1组（QC Documentation earnings straddle）",
+          "M4225": "Campbell·Hilscher·Szilagyi·失败概率：年1月；CHS动态logit失败概率；最低10%（最安全）市值加权等多、最高10%等空；持12月（CHS FP·L10/S10·VW）",
+          "M4436": "Dichev·O-Score破产风险：月频；Ohlson O分；等权多最低70%风险、空最高十分位持1月（Dichev O·L70/S10·EW）",
+          "M4543": "Vassalou·Xing·默顿违约似然DLI多空：月末；Merton DD推DLI；等权/市值多最高违约风险五分位、空最低；持1月（VX DLI·Q5/Q1）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以信用评级/违约概率排序个股Delta对冲期权的期权市场截面策略。M4543（Vassalou–Xing默顿DLI）、M4225（CHS失败概率）、M4436（Dichev O分）均为同类违约信号但交易股票本身（市场不同）；M0168为按分析师分歧买个股认沽卖指数认沽的离散度交易，M2729为财报前买跨式；集合v36 JFE108-2013:ivol-delta-hedged-call-ls为特质波动排序Delta对冲看涨（信号不同），goyal_041808:HV-IV-straddle-ls为历史减隐含波动排序跨式，v35 2021w-3:option-momentum为期权动量；目录检索“default risk/信用评级/违约 + option/期权”无期权市场违约排序记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "VX2024-US-single-stock-options-ATM-shortest-gt1m-delta-hedged-call-return-scaled-by-DeltaS-minus-O-monthly-quintile-SP-credit-rating-1to22-or-BS2008-default-prob-long-low-short-high-EW-OI-VW",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 907,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 674,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 692,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "9ff4c4e4bdb23d60ab7491556083b4b8b1a6d69f608865a86b890dce44bb8e34",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 839,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 708,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 725,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "742d417ee6afde880222d57aed44823a8db04faa487f8159aed4e2b5636bc13f",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 1681,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 727,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 760,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "50911eca9bbe6a52d0258f653e1526dd8c0a8099eab80a75cff0eff93c56ce0c",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 5134,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 1770,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1878,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29,
+              30,
+              31
+            ],
+            "sha256": "8ee148551e939e85a48d82f8071faaf539b8480552326d8a99cddac05d16340f",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 3170,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 2908,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2945,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              54
+            ],
+            "sha256": "40f33534de1ee74096b51aaa386307d741ef950ac4588ecc3b70915a877cdf3a",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 324,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 969,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 975,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "6a27c180dc141b63b226961554b111e279038dc092b047c7e81949bdc3c6242f",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 2721,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 2603,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2633,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              47
+            ],
+            "sha256": "58ab7dc4e92b4b066ca16a9d82bc6d6f876e7083596f01e7d1f1d6106f118dea",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 1681,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 727,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 760,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "50911eca9bbe6a52d0258f653e1526dd8c0a8099eab80a75cff0eff93c56ce0c",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 5134,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 1770,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1878,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29,
+              30,
+              31
+            ],
+            "sha256": "8ee148551e939e85a48d82f8071faaf539b8480552326d8a99cddac05d16340f",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 1681,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 727,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 760,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "50911eca9bbe6a52d0258f653e1526dd8c0a8099eab80a75cff0eff93c56ce0c",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 2721,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 2603,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2633,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              47
+            ],
+            "sha256": "58ab7dc4e92b4b066ca16a9d82bc6d6f876e7083596f01e7d1f1d6106f118dea",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 867,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 765,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 781,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "e5bec4ae7874ceed2470ee9443dab7ccd7e2dfd08dfaa074856611353880139e",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 1681,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 727,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 760,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "50911eca9bbe6a52d0258f653e1526dd8c0a8099eab80a75cff0eff93c56ce0c",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 2721,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 2603,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2633,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              47
+            ],
+            "sha256": "58ab7dc4e92b4b066ca16a9d82bc6d6f876e7083596f01e7d1f1d6106f118dea",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 324,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 969,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 975,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "6a27c180dc141b63b226961554b111e279038dc092b047c7e81949bdc3c6242f",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 2721,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 2603,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2633,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              47
+            ],
+            "sha256": "58ab7dc4e92b4b066ca16a9d82bc6d6f876e7083596f01e7d1f1d6106f118dea",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 1681,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 727,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 760,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "50911eca9bbe6a52d0258f653e1526dd8c0a8099eab80a75cff0eff93c56ce0c",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 619,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 983,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 995,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "b4095fb716a3ceb40796ddc29d74005fdd5e71309b73ca081654d9392f818e3b",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 2721,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 2603,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2633,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              47
+            ],
+            "sha256": "58ab7dc4e92b4b066ca16a9d82bc6d6f876e7083596f01e7d1f1d6106f118dea",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 867,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 765,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 781,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "e5bec4ae7874ceed2470ee9443dab7ccd7e2dfd08dfaa074856611353880139e",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 2104,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 789,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 822,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "7c073364825bebf86ce8be216c4abddf7a4264885802c91f86fee99ffbd47700",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 324,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 969,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 975,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "6a27c180dc141b63b226961554b111e279038dc092b047c7e81949bdc3c6242f",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 1681,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 727,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 760,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "50911eca9bbe6a52d0258f653e1526dd8c0a8099eab80a75cff0eff93c56ce0c",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 2721,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 2603,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2633,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              47
+            ],
+            "sha256": "58ab7dc4e92b4b066ca16a9d82bc6d6f876e7083596f01e7d1f1d6106f118dea",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 907,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 674,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 692,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "9ff4c4e4bdb23d60ab7491556083b4b8b1a6d69f608865a86b890dce44bb8e34",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 839,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 708,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 725,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "742d417ee6afde880222d57aed44823a8db04faa487f8159aed4e2b5636bc13f",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 867,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 765,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 781,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "e5bec4ae7874ceed2470ee9443dab7ccd7e2dfd08dfaa074856611353880139e",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          },
+          {
+            "bytes": 2721,
+            "derived_text_sha256": "eace950630025865b028006f81e374629cf3f55a7dded96279d5e3039dd9ec19",
+            "first_line": 2603,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2633,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              47
+            ],
+            "sha256": "58ab7dc4e92b4b066ca16a9d82bc6d6f876e7083596f01e7d1f1d6106f118dea",
+            "source_id": "v45-city-ro-vasquez-xiao-default-risk-option-returns-am-pdf",
+            "source_sha256": "682deac8a6814cf04595f6d8aa5c3f2ea340ffe4d5a883f1a18a7589b6114d03"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "openaccess.city.ac.uk/30902",
+      "markets": [
+        "US_EQUITY_OPTIONS"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "VX2024:default-risk-delta-hedged-equity-option-returns"
+      ],
+      "record_id": "VX2024:default-risk-delta-hedged-equity-option-returns",
+      "record_sha256": "38dee5e1b34a4c6846e87dd61b2235cc59b9e2f6d43d2a108e7c9f74f037b06e",
+      "reviewed_at": "2026-10-08T12:14:54+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v45 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0346",
+            "M4146",
+            "M4161",
+            "M3573",
+            "M0345"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0346",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0346.json",
+              "row_sha256": "0e3dc5cfc5f808eba8d92217af501635e4ea06301098bb2632e91c20ae48d745",
+              "sha256": "8970637468a0c0986286e1fddf603d1bed4b5129e9e8a2dd1f63cf1a88183521"
+            },
+            {
+              "native_id": "M4146",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0041-v2/metadata/source-records/M4146.json",
+              "row_sha256": "8c9ad7bff78a59293bb4fc0d2a564efc9a5e732fa74f91d26ea00f76ff1673f7",
+              "sha256": "4e57a2540ad53a02e152991d91874d4658cea63e2c076421b3b35b8bc4a5b4cd"
+            },
+            {
+              "native_id": "M4161",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4161.json",
+              "row_sha256": "dd3703f923cbc38ca0e16096f80969df23510d6b6cf26d3c4ffe74ffcc522acd",
+              "sha256": "ab0c11dd0476ada14a5ea201f3aa0d4119bda0e19d10fb7e1f3b2d8975e8ba42"
+            },
+            {
+              "native_id": "M3573",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3573.json",
+              "row_sha256": "5e4e9ed602fd65d902d5859d76d09837e849ced17673668e774eafbd6f974e95",
+              "sha256": "799aa816e87893cbf6a7ccd19a175fae404b48b107fff4518cec52648d171f2f"
+            },
+            {
+              "native_id": "M0345",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0345.json",
+              "row_sha256": "86cc51a0fec3acd5f5c39a5d65bbba465ae0fbcd3f53366e94f9d94a55c24c41",
+              "sha256": "9d5eea5da8b061bb1c84ada3ca815231bb51e3052f69e598932c89aa6ebb2345"
+            }
+          ],
+          "scope": "coverage-map-v45.csv（M记录6971、因子变体1570、v1–v44集合451、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29）按关键词与同市场同核心信号检索，并逐一核对v35–v44集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "monetary policy restrictiveness",
+            "货币政策紧缩度",
+            "M1 money demand residual",
+            "M1需求残差",
+            "real-time macro data",
+            "实时宏观数据",
+            "currency forwards",
+            "货币远期"
+          ]
+        },
+        "compared_record_names": {
+          "M0345": "外汇套息",
+          "M0346": "汇率PPP价值因子",
+          "M3573": "QP外汇动量：月频；10–20货币对USD；12月动量多最强3空最弱3（QP Currency Momentum）",
+          "M4146": "AQR·ValMom·外汇价值：月末；价值=−5年实际汇率变化（PPP）；秩减均值加权多便宜空昂贵至1美元（AQR ValMom·FX·Value）",
+          "M4161": "AQR·Carry·外汇：月末；约20发达货币；carry≈利率差；秩减均值加权多高息空低息至1美元（AQR Carry·FX）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以实时宏观数据估计的M1需求残差（央行紧缩度）排序货币的外汇截面策略。M0346与M4146为PPP/实际汇率价值，M4161与M0345为利率差套息，M3573为货币动量；v44收入DGK2018为收益率曲线曲率、FHLL2025为基差动量，集合Chen_Predict_FX-2013:delta-short-rate为短端利率变动；目录检索“money supply/M1/货币政策/货币供应”无外汇记录。作者明确与套息赛马且本信号胜出。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "BGX2025-16-OECD-currencies-real-time-60m-rolling-panel-M1-on-GDP-exports-imports-FE-first-diff-slopes-signal-minus-residual-over-M1-monthly-quintile-EW-long-restrictive-short-loose-1m-forward",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 1877,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 442,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 485,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9,
+              10
+            ],
+            "sha256": "04ba3baaa7d42b8068cca139bc3890e3342cf9347dc98f0b3423bdf89433f789",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 383,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 501,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 507,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "686418060efefe162644a50eeabe873511913afdc3762c07ef2d0ceaf58608c4",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 1047,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 420,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 440,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "0d0905c818b507331341fc3650a5126a5c645598bf25e21c99538594e1fd3390",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1503,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 608,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 641,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "53ba1d1f7d2517752813c347cebc9f5ae59a6148698a97439e47610fe315099e",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1919,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 1226,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1237,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "01078ff3d9e59174afc1775e0d2b525da3a91b96f2a68b3e0c290c02d80d42e8",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 403,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 110,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 116,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              3
+            ],
+            "sha256": "d000a147ed8dfe4df7e705cf06bc9fb22832c6903396312d3b8fee41887bc768",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 2791,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 318,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 379,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7,
+              8
+            ],
+            "sha256": "a41b553101a9bba0bfdb08dec7bf36c6fef50ce98029279029d04914a60329fa",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1047,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 420,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 440,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "0d0905c818b507331341fc3650a5126a5c645598bf25e21c99538594e1fd3390",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1503,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 608,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 641,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "53ba1d1f7d2517752813c347cebc9f5ae59a6148698a97439e47610fe315099e",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 1877,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 442,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 485,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9,
+              10
+            ],
+            "sha256": "04ba3baaa7d42b8068cca139bc3890e3342cf9347dc98f0b3423bdf89433f789",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1919,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 1226,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1237,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "01078ff3d9e59174afc1775e0d2b525da3a91b96f2a68b3e0c290c02d80d42e8",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 1503,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 608,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 641,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "53ba1d1f7d2517752813c347cebc9f5ae59a6148698a97439e47610fe315099e",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1919,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 1226,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1237,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "01078ff3d9e59174afc1775e0d2b525da3a91b96f2a68b3e0c290c02d80d42e8",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 573,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 53,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 58,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              2
+            ],
+            "sha256": "334ea149ed2e27088c90ab1cebfa83957e81c2e35d2cefc79bfa1be64dc530de",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 403,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 110,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 116,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              3
+            ],
+            "sha256": "d000a147ed8dfe4df7e705cf06bc9fb22832c6903396312d3b8fee41887bc768",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1503,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 608,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 641,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "53ba1d1f7d2517752813c347cebc9f5ae59a6148698a97439e47610fe315099e",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1919,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 1226,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1237,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "01078ff3d9e59174afc1775e0d2b525da3a91b96f2a68b3e0c290c02d80d42e8",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 688,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 799,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 811,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "e7e750c205c9f11a3acee08e84bdc3a21d00f9fbfc0158f3cc965e78c58f0e9f",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 200,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 221,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 223,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5
+            ],
+            "sha256": "4a4df7e4cf582e57093597c6e5d8cd92d1cb907120dbcd4a34895f87bb60e9fb",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 2002,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 226,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 269,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5,
+              6
+            ],
+            "sha256": "8df90bed11a9651fd47ddf85c443568c780e26b15fd59086a85bf38ee5355542",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1192,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 283,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 302,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6,
+              7
+            ],
+            "sha256": "5797aa335525788099e27d78b363203f293003f7eeea4eeb642aec1a151f419e",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 618,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 306,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 316,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "bb7dadb815e0f8234760935c911d7ebe4b51b9fe250016e1d9bcf7e5fcec53cd",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 2791,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 318,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 379,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7,
+              8
+            ],
+            "sha256": "a41b553101a9bba0bfdb08dec7bf36c6fef50ce98029279029d04914a60329fa",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 2181,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 381,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 418,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8,
+              9
+            ],
+            "sha256": "e6a636aaa1de9ab8b67f24ddb703126f3cd01960bfd3d55162a7d1a31afd4690",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1047,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 420,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 440,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "0d0905c818b507331341fc3650a5126a5c645598bf25e21c99538594e1fd3390",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 1192,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 283,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 302,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6,
+              7
+            ],
+            "sha256": "5797aa335525788099e27d78b363203f293003f7eeea4eeb642aec1a151f419e",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1047,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 420,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 440,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "0d0905c818b507331341fc3650a5126a5c645598bf25e21c99538594e1fd3390",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 383,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 501,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 507,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "686418060efefe162644a50eeabe873511913afdc3762c07ef2d0ceaf58608c4",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1192,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 283,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 302,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6,
+              7
+            ],
+            "sha256": "5797aa335525788099e27d78b363203f293003f7eeea4eeb642aec1a151f419e",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          },
+          {
+            "bytes": 1919,
+            "derived_text_sha256": "84b6abef8589bf75c166eef3475378ee60b87d7e941d8ac666a702070ede66c5",
+            "first_line": 1226,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1237,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "01078ff3d9e59174afc1775e0d2b525da3a91b96f2a68b3e0c290c02d80d42e8",
+            "source_id": "v45-nber-w33423-bartram-grinblatt-xu-monetary-policy-predicts-currency-pdf",
+            "source_sha256": "f4fd7859db4d51e7b3c2ab4f7d5b2638c7443853da43adaca44ead3bd3a241c1"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "nber.org/papers/w33423",
+      "markets": [
+        "FX_FORWARD"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "BGX2025:central-bank-restrictiveness-currency-forwards"
+      ],
+      "record_id": "BGX2025:central-bank-restrictiveness-currency-forwards",
+      "record_sha256": "8df2e6e26ef353d5ac420e5f13f2e29bed9c6b70d07a1435744436c6e8f12aeb",
+      "reviewed_at": "2026-10-08T12:14:54+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v45 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0108",
+            "M0655",
+            "M0665",
+            "M0379",
+            "M4541"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0108",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0108.json",
+              "row_sha256": "eaf76fd3d3a2c35ca3ac6142080638444d22f75494d8f5e5ed3f965350780dad",
+              "sha256": "68c86c43d71f1fac2364a3f6089c5d52df7d061c928c86414cee7f211174406c"
+            },
+            {
+              "native_id": "M0655",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0007-v2/metadata/source-records/M0655.json",
+              "row_sha256": "1f3e589f4f0a845bb979edaff78eea9f1196584b7632500c1706aaa263d132e5",
+              "sha256": "0a3d5a6ed69d25633878ba3bf5beb425b161bbd6b473fd4636b3e90b5b07eacf"
+            },
+            {
+              "native_id": "M0665",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0007-v2/metadata/source-records/M0665.json",
+              "row_sha256": "8d0847b3636b88161a5f54010c55531efcafd7c8d5ca209763f1b148915f89a1",
+              "sha256": "547bb2ebfb3ec7a4f7d84c3efcb2ce32e2e759f70e2766e0abd968e152fddc40"
+            },
+            {
+              "native_id": "M0379",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0379.json",
+              "row_sha256": "9e2bf6a4dbf1fa2957111d35edadd6648f791756bdafa8369d723723e0700f31",
+              "sha256": "a4c936e2a6761f1cc8e623228c1632db24e2a235da2f2f3518a8efaff4456d07"
+            },
+            {
+              "native_id": "M4541",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4541.json",
+              "row_sha256": "d7c5c571f504697d003ec039b9478db6de04feb4e6caf00548a31111ec3f96eb",
+              "sha256": "7d31eb7c84708de984f2508a68b2ebead19fc00ea6be8054e2271c04b31b5bcf"
+            }
+          ],
+          "scope": "coverage-map-v45.csv（M记录6971、因子变体1570、v1–v44集合451、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29）按关键词与同市场同核心信号检索，并逐一核对v35–v44集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "procyclicality",
+            "顺周期",
+            "Livingston Survey",
+            "Livingston调查",
+            "expected GDP growth beta",
+            "预期GDP增长β",
+            "macroeconomic beta",
+            "宏观β"
+          ]
+        },
+        "compared_record_names": {
+          "M0108": "股票低贝塔",
+          "M0379": "Tail risk beta（BetaTailRisk）",
+          "M0655": "TrendYCMacro：三项同比经济指标加Rachev与期限利差",
+          "M0665": "SPF调查衰退预期上升则离开60/40，国债收益率预期决定IEF或现金",
+          "M4541": "Kelly·Pruitt·截面B/M期望因子择时：月末；自组合B/M截面提单一贴现因子；预测溢价>历史均值满仓美股，否则T-bill；持1月（KP XS-BM·vsHA）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以个股收益对调查预期实际GDP增长的敏感度排序的美股截面策略。M0108为低贝塔（市场β），M0379为尾部风险β，M0655与M0665分别为用宏观同比指标与SPF衰退概率做资产择时（时间序列、非截面），M4541为Kelly–Pruitt截面B/M因子择时；目录检索“procyclical/GDP growth expectation/business-cycle beta/顺周期/Livingston”无记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "GWW2024-US-equity-semiannual-20-period-regression-on-MKT-and-second-lag-Livingston-expected-real-GDP-growth-beta-decile-VW-long-high-short-low-June-December-hold-6m",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 4679,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 1440,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1480,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "ef10a1a2365061389d79b436d6a47f1348fbc6f03d033888ecdec43e626d394f",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 1028,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 738,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 758,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15,
+              16
+            ],
+            "sha256": "338638a66e9ede101b9ea9ad477b2fd2d80c91f5f7b9d1f4a8bf9d39696b17f9",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 4679,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 1440,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1480,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "ef10a1a2365061389d79b436d6a47f1348fbc6f03d033888ecdec43e626d394f",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 569,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 234,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 244,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "0d6b51fdd96a3fbcf65127c3f46754114edf61309a32ea1d8dea835f85831021",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 291,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 274,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 278,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "d53ee5ec53b34918adda8daecd1498eea3cade4c4ea39e316a20ec67ac67d9e1",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 690,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 395,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 407,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "e7e21ebf7bc7b89f5a15bf47e812813c133716e229713036a8db6c6a6ce9ca31",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 1310,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 1060,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1086,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "f74511baffb28822631d3b5a9d08d74feaa8e5d2e66e2ed7b05551f63cd177de",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 1028,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 738,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 758,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15,
+              16
+            ],
+            "sha256": "338638a66e9ede101b9ea9ad477b2fd2d80c91f5f7b9d1f4a8bf9d39696b17f9",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 4679,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 1440,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1480,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "ef10a1a2365061389d79b436d6a47f1348fbc6f03d033888ecdec43e626d394f",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 1028,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 738,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 758,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15,
+              16
+            ],
+            "sha256": "338638a66e9ede101b9ea9ad477b2fd2d80c91f5f7b9d1f4a8bf9d39696b17f9",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 4679,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 1440,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1480,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "ef10a1a2365061389d79b436d6a47f1348fbc6f03d033888ecdec43e626d394f",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 866,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 778,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 794,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "a45fc442f4ad29295014047195e528257086a318e4b1cc1c597263ffcaaa3abe",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 4679,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 1440,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1480,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "ef10a1a2365061389d79b436d6a47f1348fbc6f03d033888ecdec43e626d394f",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 1310,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 1060,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1086,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "f74511baffb28822631d3b5a9d08d74feaa8e5d2e66e2ed7b05551f63cd177de",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 1021,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 1858,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1875,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              41
+            ],
+            "sha256": "2d34e293e3a40b2f9e236de31be79b90124721ed24f224bb2cc95cf64d97f8d0",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 569,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 234,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 244,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "0d6b51fdd96a3fbcf65127c3f46754114edf61309a32ea1d8dea835f85831021",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 690,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 395,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 407,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "e7e21ebf7bc7b89f5a15bf47e812813c133716e229713036a8db6c6a6ce9ca31",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 820,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 411,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 427,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "986da5959e1b9ab4cee4cf668462cd8b3b3d99cb897fc543864b3ceaadf84ea0",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 356,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 440,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 446,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "a48e3aeca8bde13dae4de55f02660813370f97c8987f0d6dda5c111d0f939a46",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 181,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 454,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 456,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "331a0d9e5450874f2b2d599ad181a22b4a0978fb3f0484d8a59a6f469f30ee7c",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 293,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 503,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 509,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "42e66d8e7297a5ed25c029fc67366f413e6ea0102269392305e84c73c5466ef8",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 1028,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 738,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 758,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15,
+              16
+            ],
+            "sha256": "338638a66e9ede101b9ea9ad477b2fd2d80c91f5f7b9d1f4a8bf9d39696b17f9",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 1028,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 738,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 758,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15,
+              16
+            ],
+            "sha256": "338638a66e9ede101b9ea9ad477b2fd2d80c91f5f7b9d1f4a8bf9d39696b17f9",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 1028,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 738,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 758,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15,
+              16
+            ],
+            "sha256": "338638a66e9ede101b9ea9ad477b2fd2d80c91f5f7b9d1f4a8bf9d39696b17f9",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          },
+          {
+            "bytes": 4679,
+            "derived_text_sha256": "322299e5280475719a7c8fab9f314ae78ced0415fadc53a1989a561b7acf3fc1",
+            "first_line": 1440,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1480,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "ef10a1a2365061389d79b436d6a47f1348fbc6f03d033888ecdec43e626d394f",
+            "source_id": "v45-nber-w32509-goetzmann-watanabe-watanabe-procyclical-stocks-pdf",
+            "source_sha256": "720b638b3f9a80cd19d633fe9eb1773c85b5a78b55c2dfd149547f84189f7ce9"
+          }
+        ]
+      },
+      "frequencies": [
+        "SEMIANNUAL"
+      ],
+      "identity_namespace": "nber.org/papers/w32509",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "GWW2024:procyclical-stocks-Livingston-expected-GDP-beta"
+      ],
+      "record_id": "GWW2024:procyclical-stocks-Livingston-expected-GDP-beta",
+      "record_sha256": "2da3d76c4fb0f5d8dcbc61ad79e10caa2f2dab7daf202f5ed04675bff32405b2",
+      "reviewed_at": "2026-10-08T12:14:54+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v45 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0168",
+            "M2523",
+            "M2729",
+            "M4426",
+            "M7010"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0168",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0168.json",
+              "row_sha256": "900bfe6d3fcaec9d8e8cb9dc195850e2f7564d24ca65507af2ef6a0e3f0cde40",
+              "sha256": "0b517ca7c61dedad74a3e92751a031e6f95e7391c0c97cf3f4042aad5417e55b"
+            },
+            {
+              "native_id": "M2523",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/subsets/batch-0026-public-v1/metadata/source-records/M2523.json",
+              "row_sha256": "dec5f63ee861dad3db2cd3282b701d86ad9fa1012ecb7f9c831e97032c5608e2",
+              "sha256": "75162e585e1e4dc814baf28d241ff278d078d5d30a7d924c5c5f18de8b171db8"
+            },
+            {
+              "native_id": "M2729",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/subsets/batch-0028-public-v1/metadata/source-records/M2729.json",
+              "row_sha256": "19b4450d227a8f3eb10dad2b213bebcaf4ceb4b05abf103000f00cb013c529d2",
+              "sha256": "b4cb7067317bb2ebc458c1964e749e6c76e08179a644af28fa82f05d8b78f16f"
+            },
+            {
+              "native_id": "M4426",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4426.json",
+              "row_sha256": "519e4040bf981d9bd7149f1f3b723033035fef2e41ed6826ca669699af521af9",
+              "sha256": "f1eb7f56ad6fe8800b3635de3bbe664cf86d4f6749af933c507376842151b0a2"
+            },
+            {
+              "native_id": "M7010",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0070-v2/metadata/source-records/M7010.json",
+              "row_sha256": "4dbbbb115bb98636c66a070b9d8d95ccea977a06c8a20102db29aa4996308cb1",
+              "sha256": "0cd60ef9d5c2386ed9b50fd4a8bdc844f9484b6cc07328d5a2331004afe92953"
+            }
+          ],
+          "scope": "coverage-map-v45.csv（M记录6971、因子变体1570、v1–v44集合451、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29）按关键词与同市场同核心信号检索，并逐一核对v35–v44集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "volatility disagreement",
+            "波动率分歧",
+            "random forest ensemble",
+            "随机森林集成",
+            "delta-hedged straddle",
+            "Delta对冲跨式"
+          ]
+        },
+        "compared_record_names": {
+          "M0168": "离散度交易",
+          "M2523": "美股期权：VIX相对自身SMA(24×21)的z分数取负整数张数，对SPX挂期约30日ATM跨式；z≈0则清仓，指派则清仓（QC Trading Volatility with Options）",
+          "M2729": "美股：EODHD未来1–5日有财报的股票，空仓时买≥30日到期ATM跨式1组（QC Documentation earnings straddle）",
+          "M4426": "Diether·Malloy·Scherbina·分析师预测分歧：月初；Disp=σ(FY1 EPS)/|μ|；价>$5；等权五分位；多最低分歧、空最高持1月（DMS Disp·Q1/Q5·EW）",
+          "M7010": "Diether·分析师预测分歧五分位多空：月末；预测分歧=σ(EPS预测)/|μ|；等权多最低空最高持1月（Diether·ForecastDisp·QuintileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以机器学习模拟投资者对实现方差预测的分歧排序个股Delta对冲跨式的期权截面策略。M0168为按分析师盈利预测分歧买个股认沽卖指数认沽（一阶矩分歧、不同构造），M4426与M7010为Diether等分析师预测分歧（股票市场），M2523为VIX z分数择时SPX跨式，M2729为财报前买跨式；集合v36 goyal_041808:HV-IV-straddle-ls为历史减隐含波动排序跨式，JFE108-2013为特质波动排序Delta对冲看涨，v35 2021w-3:option-momentum为期权动量，本批VX2024为违约风险排序Delta对冲看涨；目录检索“volatility disagreement/波动率分歧/forecast dispersion + straddle”无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "BKM2026-US-single-stock-ATM-straddles-daily-delta-hedged-VDIS-sd-of-100-random-forest-RV-forecasts-50pct-feature-subsets-5y-rolling-refit-12m-decile-EW-long-low-short-high-Monday-after-3rd-Friday-to-expiry",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 2409,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 342,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 373,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "d410f31f7966f8911c06fa3d95005501f04a071885bdd96cec65e3d35e3397d9",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 1108,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 304,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 316,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "4f8ea315f8c2741f2d9d3ff33010250f78514f690603b00bcca9bf8ebce7d3c4",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 555,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 613,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "0a3467177b0925615785c884757a12f2c566ad9d0a78589b2811e57e33ae5439",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 2290,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 2085,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2110,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              53
+            ],
+            "sha256": "1efa6586d55d9125c0ef2075350ec06a189fb58cb6c26c7976757eefb2c62cbf",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 2409,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 342,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 373,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "d410f31f7966f8911c06fa3d95005501f04a071885bdd96cec65e3d35e3397d9",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 1155,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 488,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 502,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "1636b54915156e4dbd92ec3eec8758a14f85373f925b4f7ce4bc315bbd6abc17",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 1427,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 508,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 525,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "00f11f28b867a5a5c4483d5000ab7f82e3fc752259322a1a4a27268b5f2dcb94",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 2290,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 2085,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2110,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              53
+            ],
+            "sha256": "1efa6586d55d9125c0ef2075350ec06a189fb58cb6c26c7976757eefb2c62cbf",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 2409,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 342,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 373,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "d410f31f7966f8911c06fa3d95005501f04a071885bdd96cec65e3d35e3397d9",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 555,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 613,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "0a3467177b0925615785c884757a12f2c566ad9d0a78589b2811e57e33ae5439",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 2290,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 2085,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2110,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              53
+            ],
+            "sha256": "1efa6586d55d9125c0ef2075350ec06a189fb58cb6c26c7976757eefb2c62cbf",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 467,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 48,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 52,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              2
+            ],
+            "sha256": "6417273def1a05f08efd51fc6a29aafebb1f1cf9934570989255884df6c7375c",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 1390,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 639,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 654,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "f6ab3ccd3998aec2b216550cb086b63fe8d442b70ac2543491cbf15d8bd2f146",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 2290,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 2085,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2110,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              53
+            ],
+            "sha256": "1efa6586d55d9125c0ef2075350ec06a189fb58cb6c26c7976757eefb2c62cbf",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 2876,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 443,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 486,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "f4696d7d368321ebcc0ee6ece9fc470af233526b9ae84ca8924190921f942f8a",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 1155,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 488,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 502,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "1636b54915156e4dbd92ec3eec8758a14f85373f925b4f7ce4bc315bbd6abc17",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 1427,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 508,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 525,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "00f11f28b867a5a5c4483d5000ab7f82e3fc752259322a1a4a27268b5f2dcb94",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 1840,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 2705,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2770,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              69,
+              70
+            ],
+            "sha256": "a22d4c22ce6acc635a366ffe6b61033089ab7acb9270c8a7ccdd9ece4e0cf0be",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 1203,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 2807,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2829,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              72
+            ],
+            "sha256": "b2fa1d4ce2c15f0c5924718b1abc5cb772be9495ba64a94dbe15e5631342889f",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 2409,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 342,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 373,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "d410f31f7966f8911c06fa3d95005501f04a071885bdd96cec65e3d35e3397d9",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 555,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 613,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "0a3467177b0925615785c884757a12f2c566ad9d0a78589b2811e57e33ae5439",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 1108,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 304,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 316,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "4f8ea315f8c2741f2d9d3ff33010250f78514f690603b00bcca9bf8ebce7d3c4",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 773,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 374,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 385,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10,
+              11
+            ],
+            "sha256": "3fd9ce96297dc05b59d4ff48f99b3189a6e8dfefe306f9454ba23a1c26aeb7e5",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          },
+          {
+            "bytes": 2290,
+            "derived_text_sha256": "0d25763e175e78ae61d9b1394141702bec4954edd84f4726c1641af797ee2d15",
+            "first_line": 2085,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2110,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              53
+            ],
+            "sha256": "1efa6586d55d9125c0ef2075350ec06a189fb58cb6c26c7976757eefb2c62cbf",
+            "source_id": "v45-nber-w35500-bali-kelly-moerke-volatility-disagreement-options-pdf",
+            "source_sha256": "efab6d0253480379da848132041f9edc359b05787b41a08ccfe7563976752da5"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "nber.org/papers/w35500",
+      "markets": [
+        "US_EQUITY_OPTIONS"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "BKM2026:volatility-disagreement-VDIS-delta-hedged-straddles"
+      ],
+      "record_id": "BKM2026:volatility-disagreement-VDIS-delta-hedged-straddles",
+      "record_sha256": "2046bacc428ad0280289df38393c4a95ef479ab71ff065cbeb3b1e6a021e46a6",
+      "reviewed_at": "2026-10-08T12:14:54+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v45 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    }
+  ],
+  "schema_version": "quantgraph-source-collection-reviews/v1"
+}

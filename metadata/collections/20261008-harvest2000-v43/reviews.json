@@ -1,0 +1,1219 @@
+{
+  "batch_id": "20261008-harvest2000-v43",
+  "records": [
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0829",
+            "M0345",
+            "M4161",
+            "M4508",
+            "M3573"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0829",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0009-v2/metadata/source-records/M0829.json",
+              "row_sha256": "fbd6b10089be1c5ed9aab08e3a2529e0324411ae053793d55b9cd2317839dfc0",
+              "sha256": "67b2f51da4ad79803743ea8e597adccc8d3889dc239abc09b0f07b1dc194be10"
+            },
+            {
+              "native_id": "M0345",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0345.json",
+              "row_sha256": "86cc51a0fec3acd5f5c39a5d65bbba465ae0fbcd3f53366e94f9d94a55c24c41",
+              "sha256": "9d5eea5da8b061bb1c84ada3ca815231bb51e3052f69e598932c89aa6ebb2345"
+            },
+            {
+              "native_id": "M4161",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4161.json",
+              "row_sha256": "dd3703f923cbc38ca0e16096f80969df23510d6b6cf26d3c4ffe74ffcc522acd",
+              "sha256": "ab0c11dd0476ada14a5ea201f3aa0d4119bda0e19d10fb7e1f3b2d8975e8ba42"
+            },
+            {
+              "native_id": "M4508",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4508.json",
+              "row_sha256": "b8ecafd8f248e42f70f276b95db55be684a5738804c7acf240639f57f5cf1001",
+              "sha256": "75cae16e8943530f66e0ee4b5e61c813de7be2603d23d7e8f0a24912bcc6e167"
+            },
+            {
+              "native_id": "M3573",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3573.json",
+              "row_sha256": "5e4e9ed602fd65d902d5859d76d09837e849ced17673668e774eafbd6f974e95",
+              "sha256": "799aa816e87893cbf6a7ccd19a175fae404b48b107fff4518cec52648d171f2f"
+            }
+          ],
+          "scope": "coverage-map-v43.csv（M记录6971、因子变体1570、v1–v42集合443、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15）按关键词与同市场同核心信号检索，并逐一核对v35–v42集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "skewness risk premium",
+            "偏度风险溢价",
+            "currency options",
+            "货币期权",
+            "semivariance",
+            "半方差"
+          ]
+        },
+        "compared_record_names": {
+          "M0345": "外汇套息",
+          "M0829": "外汇偏度尾部风险溢价：EURUSD、AUDUSD、USDCAD、USDJPY，30日偏度低于-0.6做多、高于+0.6做空，每周等权",
+          "M3573": "QP外汇动量：月频；10–20货币对USD；12月动量多最强3空最弱3（QP Currency Momentum）",
+          "M4161": "AQR·Carry·外汇：月末；约20发达货币；carry≈利率差；秩减均值加权多高息空低息至1美元（AQR Carry·FX）",
+          "M4508": "Menkhoff·Sarno·Schmeling·Schrimpf·外汇波动率风险：月末；货币对全球FX实现波动创新的β；等权多最低β三分位、空最高β三分位；持1月（MSSS FXVolβ·L1/S3）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以货币“已实现半方差偏度−期权隐含半方差偏度”为信号的月度截面因子。M0829为4个货币对30日收益偏度的时间序列阈值规则（只用历史偏度，无期权）；M0345/M4161为套息（利率差），M3573为货币动量，M4508为货币对全球外汇波动率创新的β；v36集合13156:FX-VRP为方差（而非偏度）风险溢价，v38集合24178:FX-vol-carry-VCA为远期波动率协议按隐含波动率期限斜率排序，IFDP1253:US-tail-beta-FX为美股尾部风险β；Rafferty货币偏度（R38-024/R40-015/R41-020）为另一篇论文且来源不可得；目录检索“skewness risk premium/偏度风险溢价/货币+期权偏度”无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "LSZ2025-currency-SRP-realized-semivariance-skew-lag3m-minus-implied-semivariance-skew-3m-OTC-options-monthly-quintile-EW-long-high-short-low-1m-forward",
+      "entity_type": "factor",
+      "field_spans": {
+        "availability": [
+          {
+            "bytes": 3635,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 1261,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1318,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              21,
+              22
+            ],
+            "sha256": "af04b8e9e47974c4067dc6089eec17c93e8ca06d2fca97149d5e0ee2f84a4b8b",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 555,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 415,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 428,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7,
+              8
+            ],
+            "sha256": "83f8f17ab091058efc2c2e682a408a9ac3adf5ebe27fd966e300d8389e6ecb14",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 521,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 1856,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1866,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              32
+            ],
+            "sha256": "3c63a90d7c9162f18c87615a519b2f347607774c8499808f7c0d0535c2e4b09b",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          }
+        ],
+        "calculation": [
+          {
+            "bytes": 386,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 1144,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1153,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              19,
+              20
+            ],
+            "sha256": "d08ade5ab5f85beb3ffa579ff50c6301a4bf78875bc2fbd60886086dce4a05fc",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 443,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 1225,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1233,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              21
+            ],
+            "sha256": "cccc9e638371b27895ce06b65546bd82bde2366f5e097ab2cacd9a2ecfcb0b64",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 973,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 1235,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1255,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              21
+            ],
+            "sha256": "53babcac55cf4df002f50c7f6161b068a14f076c56933b50ca9bd04ae15d228d",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 1582,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 1270,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1288,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "89b51b756463477c88ddfc2485a1141be02a0def508e31e8c89a917d9f17fb5a",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 1751,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 1057,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1098,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              18,
+              19
+            ],
+            "sha256": "d94b2b359762aaa530392cae9260cafccfd0336da448d40d7bf21ca3a66809c5",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 1428,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 630,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 659,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "94dbdb0bba46da51bf94371e16771d139c629802faf6a4371b7a86c22dce124e",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 1597,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 678,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 707,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "2fb8a244346a51662a8d5e7e305cd898060cbf3f5ec069f35be32a9bdf1a7e03",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 3618,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 709,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 777,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "c4319c4dbd2edc00d46a3cc7bfc0a0bbe95f5611f2af08f49f06a54c9ff182fb",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 877,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 808,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 824,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "5078d57dcf01e5f9417a4accd4ce917ac29fbc8fc0736ba30524f02d1945c3ad",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 413,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 880,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 889,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "16bdf999d5aed3902f9af6a4f6c17caf0e7dca3a4240baca6a92dedefdd05fc8",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 1009,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 1155,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1175,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              20
+            ],
+            "sha256": "55d69d1391f8b163a75c05f20cb7d73fffab967d6e24fd1c9800a957cf8d6ff5",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 511,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 941,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 951,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "2a54b5b6927a333b8debe060e4d91e780d0a7eff23592fd8328c9b6b68f89e20",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 1725,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 994,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1032,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              17
+            ],
+            "sha256": "22e5a4913079ecdc26e2a5f3dadcae2d528c6fce9a4db96760cda538ef727ba1",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 776,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 1037,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1055,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              18
+            ],
+            "sha256": "2a2036922cea6cdd6f9722b86cbf75d053c4df48182a5e8744000e50e8d3a55a",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          },
+          {
+            "bytes": 1751,
+            "derived_text_sha256": "8fc9a1d0e3b84500c4623e415c8e5a010c735668e6d642efa0d5d7c60f2de6c5",
+            "first_line": 1057,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1098,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              18,
+              19
+            ],
+            "sha256": "d94b2b359762aaa530392cae9260cafccfd0336da448d40d7bf21ca3a66809c5",
+            "source_id": "v43-cam-apollo-li-sarno-zinna-srp-currency-am-pdf",
+            "source_sha256": "94639979ab5c05279955d9ebbbc1cc7ab08f393bf26d718be690763420945884"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "repository.cam.ac.uk",
+      "markets": [
+        "FX"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "LSZ2025:currency-skewness-risk-premium-SRP"
+      ],
+      "record_id": "LSZ2025:currency-skewness-risk-premium-SRP",
+      "record_sha256": "c9934cb35b4d7e117eeacd05fe45964abb536e981805f4853d889d825ae3c751",
+      "reviewed_at": "2026-10-08T10:53:18+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v43 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0341",
+            "M3545",
+            "M0342",
+            "M4151",
+            "M6699"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0341",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0341.json",
+              "row_sha256": "6d1f84b8bda2e435ab3506cf03fa082d44fcc3fd9f186cb4b20ac2b95070a48a",
+              "sha256": "253110dccdce1a90b6f0accc3005dfdef6713c91b5d205adb9c39b111eeff679"
+            },
+            {
+              "native_id": "M3545",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0035-v2/metadata/source-records/M3545.json",
+              "row_sha256": "2e45de639089b3e3d6d0c9e97407f4010041b022a635fa46aecac8fcaff3c877",
+              "sha256": "88f14166063e921c54565d924706c55431584364178e1ebeb420dc22d7c2525f"
+            },
+            {
+              "native_id": "M0342",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0342.json",
+              "row_sha256": "921df4ae0d84f222c283fce0e8c07d85b21e65eef13e61993a8d69a2ec8172de",
+              "sha256": "260912cbe7b60fc6be6e89ca1b28cc19c17d4fa8201a41e6776a35c3a01c9d67"
+            },
+            {
+              "native_id": "M4151",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4151.json",
+              "row_sha256": "b40dca6fc890c77ef138c5405100a3f562b1ba34685a59921687a8754b409b35",
+              "sha256": "8a7698fb8dd3332713d2f797dc65afd4e6e6a958459befdfae846d300a19de34"
+            },
+            {
+              "native_id": "M6699",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0067-v2/metadata/source-records/M6699.json",
+              "row_sha256": "facfae3c4a6097408dbb8a3fe17ee5670072c2d329f3470e6ef1ea135bdbffa7",
+              "sha256": "b5c92f6b2c8799b0fffc0b1ef328de793de92660c6d4e6a4e520d3a9a8ac36ec"
+            }
+          ],
+          "scope": "coverage-map-v43.csv（M记录6971、因子变体1570、v1–v42集合443、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15）按关键词与同市场同核心信号检索，并逐一核对v35–v42集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "aggregate jump risk",
+            "总体跳跃风险",
+            "commodity futures",
+            "商品期货",
+            "jump beta",
+            "跳跃β"
+          ]
+        },
+        "compared_record_names": {
+          "M0341": "商品偏度效应",
+          "M0342": "商品动量",
+          "M3545": "QP商品偏度：月频；22种商品期货；按12月历史收益偏度；做多偏度最低3、做空最高3；等权（QP Skewness Commodities·L3/S3）",
+          "M4151": "AQR·ValMom·商品动量：月末；商品期货；MOM2–12秩减均值加权多强空弱至1美元（AQR ValMom·Cmdty·Mom）",
+          "M6699": "Ang·系统波动率β五分位多空：月末；对ΔVIX回归β；市值加权多最低空最高持1月（Ang·betaVIX·QuintileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以商品期货对标普500期权构造的总体跳跃风险因子之β为信号的月度截面因子。M0341/M3545为商品自身历史偏度，M0342/M4151为商品12个月动量；M6699为美股对ΔVIX的β（股票、总体波动而非跳跃）；v38集合6418:commodity-IVol-GSCI为商品特质波动率；v40集合BVV2012:vol-of-vol-implied-volatility为个股隐含波动之波动；目录检索“aggregate jump/跳跃风险/Cremers”只命中已实现跳跃诊断统计量与Cremers其他论文，无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "HPT2021-commodity-beta-on-CHW2015-JUMP-factor-controlling-market-daily-12m-monthly-terciles-EW-fully-collateralized-long-low-short-high",
+      "entity_type": "factor",
+      "field_spans": {
+        "availability": [
+          {
+            "bytes": 268,
+            "derived_text_sha256": "b76fa2d600dc24032fde9a51947bdf216565ad06c5185d7536d0c4662d560f03",
+            "first_line": 252,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 254,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "814b3ac7daf224a6864f0e89cbcc5a5f6a8fe4c6f4add1949a5fd481d05909be",
+            "source_id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+            "source_sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a"
+          },
+          {
+            "bytes": 370,
+            "derived_text_sha256": "b76fa2d600dc24032fde9a51947bdf216565ad06c5185d7536d0c4662d560f03",
+            "first_line": 957,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 960,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              25
+            ],
+            "sha256": "64ae9b19f04f58db6bded32de5de5080542e72e3e33395279a79e1e0dc15ab98",
+            "source_id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+            "source_sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a"
+          }
+        ],
+        "calculation": [
+          {
+            "bytes": 1634,
+            "derived_text_sha256": "b76fa2d600dc24032fde9a51947bdf216565ad06c5185d7536d0c4662d560f03",
+            "first_line": 381,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 405,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10,
+              11
+            ],
+            "sha256": "1d851b4aef8274cb92677c3ec34c1341cc54cceee3e8a79e5dacd8d5e803bc53",
+            "source_id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+            "source_sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a"
+          },
+          {
+            "bytes": 426,
+            "derived_text_sha256": "b76fa2d600dc24032fde9a51947bdf216565ad06c5185d7536d0c4662d560f03",
+            "first_line": 394,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 398,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "b7277f473318c62860ab816dfe5836fb61841d58a51c233594ff464002e53cd5",
+            "source_id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+            "source_sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a"
+          },
+          {
+            "bytes": 1282,
+            "derived_text_sha256": "b76fa2d600dc24032fde9a51947bdf216565ad06c5185d7536d0c4662d560f03",
+            "first_line": 467,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 480,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "661b144c8670ba1c7c7693ca256f10d8df8f7308bc98ccacc5c3be37bc5ba029",
+            "source_id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+            "source_sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a"
+          },
+          {
+            "bytes": 2082,
+            "derived_text_sha256": "b76fa2d600dc24032fde9a51947bdf216565ad06c5185d7536d0c4662d560f03",
+            "first_line": 1682,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1691,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              39
+            ],
+            "sha256": "fc4d2374330fd0df81b15e7e2c61bd1b5ea70e934a965f2d72d55b9dfd7e1e62",
+            "source_id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+            "source_sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a"
+          },
+          {
+            "bytes": 3461,
+            "derived_text_sha256": "b76fa2d600dc24032fde9a51947bdf216565ad06c5185d7536d0c4662d560f03",
+            "first_line": 1703,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1720,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              39
+            ],
+            "sha256": "c9aed09ab76bfb66002f83ff10a55f2d2df89632a9e1bc457cf8654ebb05d1ce",
+            "source_id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+            "source_sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 1473,
+            "derived_text_sha256": "b76fa2d600dc24032fde9a51947bdf216565ad06c5185d7536d0c4662d560f03",
+            "first_line": 1056,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1076,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27,
+              28
+            ],
+            "sha256": "86da070f8eef1fff3e62f71f5e7e4a6f780e8b432891dc2e10e426f3aa6301ae",
+            "source_id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+            "source_sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 868,
+            "derived_text_sha256": "b76fa2d600dc24032fde9a51947bdf216565ad06c5185d7536d0c4662d560f03",
+            "first_line": 217,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 226,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "46a7d798edb5dcad0165f2c0939ec124b51b8230f3ba179b68e76f0f3e7fb777",
+            "source_id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+            "source_sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a"
+          },
+          {
+            "bytes": 268,
+            "derived_text_sha256": "b76fa2d600dc24032fde9a51947bdf216565ad06c5185d7536d0c4662d560f03",
+            "first_line": 252,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 254,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "814b3ac7daf224a6864f0e89cbcc5a5f6a8fe4c6f4add1949a5fd481d05909be",
+            "source_id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+            "source_sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a"
+          },
+          {
+            "bytes": 1048,
+            "derived_text_sha256": "b76fa2d600dc24032fde9a51947bdf216565ad06c5185d7536d0c4662d560f03",
+            "first_line": 290,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 305,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "e85d970bc4c610d58302881fc3c72af57c891f9ba67073ebf30b0167793afba2",
+            "source_id": "v43-centaur-hollstein-prokopczuk-tharann-commodity-anomalies-am-pdf",
+            "source_sha256": "7535e38c47af1d59d56ead99879c20d654cc8c5539b74ec159b1712667ca610a"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "centaur.reading.ac.uk/100920",
+      "markets": [
+        "COMMODITY_FUTURES"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "HPT2021:commodity-aggregate-jump-beta-AggJump"
+      ],
+      "record_id": "HPT2021:commodity-aggregate-jump-beta-AggJump",
+      "record_sha256": "afa0ca0074b886955e42009c3de99a63115850715887a782ca9fbfd06c5bdf21",
+      "reviewed_at": "2026-10-08T10:53:18+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v43 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0108",
+            "M0002",
+            "M6699",
+            "M4421",
+            "M4544"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0108",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0002-v2/metadata/source-records/M0108.json",
+              "row_sha256": "eaf76fd3d3a2c35ca3ac6142080638444d22f75494d8f5e5ed3f965350780dad",
+              "sha256": "68c86c43d71f1fac2364a3f6089c5d52df7d061c928c86414cee7f211174406c"
+            },
+            {
+              "native_id": "M0002",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0001-v2/metadata/source-records/M0002.json",
+              "row_sha256": "6be4c9f6e93f4824146a02d00eedc759936da20e2bef106ce7376b8bdff5dce9",
+              "sha256": "b7901ff7e4830ae0be628ff376494097fb649a748586df701ee125570c453895"
+            },
+            {
+              "native_id": "M6699",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0067-v2/metadata/source-records/M6699.json",
+              "row_sha256": "facfae3c4a6097408dbb8a3fe17ee5670072c2d329f3470e6ef1ea135bdbffa7",
+              "sha256": "b5c92f6b2c8799b0fffc0b1ef328de793de92660c6d4e6a4e520d3a9a8ac36ec"
+            },
+            {
+              "native_id": "M4421",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4421.json",
+              "row_sha256": "da543b1a0a6b8a50213dab572a320fc54aefdaba8571b73322644cb5bbff36fa",
+              "sha256": "8eb5c8d87eb9dde62f8c038062c7260cba53e940e1c0f0c4e51e174f2b70fc77"
+            },
+            {
+              "native_id": "M4544",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4544.json",
+              "row_sha256": "e8f73f94605ced2600ce334a5d48e4c6da1dc3118856db6a158e6aaf37a37e5d",
+              "sha256": "1b1e7d04c3f9c30fd45d1e01460e414ad294770a6929e308ddd878a1559ac104"
+            }
+          ],
+          "scope": "coverage-map-v43.csv（M记录6971、因子变体1570、v1–v42集合443、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15）按关键词与同市场同核心信号检索，并逐一核对v35–v42集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "beta uncertainty",
+            "贝塔不确定性",
+            "beta estimator",
+            "贝塔估计方法",
+            "Dimson beta",
+            "confidence interval"
+          ]
+        },
+        "compared_record_names": {
+          "M0002": "国家股指低贝塔",
+          "M0108": "股票低贝塔",
+          "M4421": "Ang·Hodrick·Xing·Zhang·特异波动：月频；上月日收益相对FF3残差σ；市值加权五分位；多最低IVOL、空最高IVOL持1月（AHXZ IVOL·Q1/Q5·VW）",
+          "M4544": "Bali·Brown·Tang·经济不确定β多空：月末；个股对JLN宏观不确定指数β；等权/市值多最低十分位、空最高；持1月（BBT Uncβ·D1/D10）",
+          "M6699": "Ang·系统波动率β五分位多空：月末；对ΔVIX回归β；市值加权多最低空最高持1月（Ang·betaVIX·QuintileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以多种贝塔估计置信区间的总跨度（估计不确定性）为信号的美股月度因子，不按贝塔水平排序。M0108/M0002为低贝塔（贝塔水平）策略，M6699为对ΔVIX的β，M4421为特质波动率，M4544为对宏观不确定指数的β；目录检索“beta uncertainty/贝塔不确定/Dimson/Scholes–Williams”只命中价格特征M0534，无同构记录；作者显示在控制贝塔水平与贝塔标准误（SE）后溢价仍显著。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "HPW2020-beta-uncertainty-range-of-95pct-CIs-across-9-estimators-HIST12-HIST6-EWMA84-168-Dimson1-4-SW-monthly-quintile-VW-long-low-short-high",
+      "entity_type": "factor",
+      "field_spans": {
+        "availability": [
+          {
+            "bytes": 832,
+            "derived_text_sha256": "53120edd34810a56c194f17887b60e6ae1f4b38716eb9329112e3d38f71cf4c4",
+            "first_line": 1239,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1255,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              25
+            ],
+            "sha256": "9228bc74a2628152a1556f65675828c573d4237949d79342183287ae18069cd1",
+            "source_id": "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf",
+            "source_sha256": "4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37"
+          }
+        ],
+        "calculation": [
+          {
+            "bytes": 2380,
+            "derived_text_sha256": "53120edd34810a56c194f17887b60e6ae1f4b38716eb9329112e3d38f71cf4c4",
+            "first_line": 605,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 657,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13,
+              14
+            ],
+            "sha256": "d7eea0b2d8044f890f4acb1248a8c1064e5a011cf165dd2474f61de6734c05d3",
+            "source_id": "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf",
+            "source_sha256": "4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37"
+          },
+          {
+            "bytes": 459,
+            "derived_text_sha256": "53120edd34810a56c194f17887b60e6ae1f4b38716eb9329112e3d38f71cf4c4",
+            "first_line": 696,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 704,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "b24aea369eba53c4be8310cf3d625956fa10315bf31b90bceb86b88953a8e9f3",
+            "source_id": "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf",
+            "source_sha256": "4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37"
+          },
+          {
+            "bytes": 599,
+            "derived_text_sha256": "53120edd34810a56c194f17887b60e6ae1f4b38716eb9329112e3d38f71cf4c4",
+            "first_line": 752,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 764,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "b5849b01bc52cf83f91341f471325bc3473cbcae97e34967ee6012d74446582a",
+            "source_id": "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf",
+            "source_sha256": "4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 539,
+            "derived_text_sha256": "53120edd34810a56c194f17887b60e6ae1f4b38716eb9329112e3d38f71cf4c4",
+            "first_line": 350,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 360,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "392304e2e2a2d8de6713e4cf2082b28f7d442b71a9e31615e0e82e362e44f659",
+            "source_id": "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf",
+            "source_sha256": "4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37"
+          },
+          {
+            "bytes": 351,
+            "derived_text_sha256": "53120edd34810a56c194f17887b60e6ae1f4b38716eb9329112e3d38f71cf4c4",
+            "first_line": 375,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 378,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "37497ac390e2a8c79829a6ad9036e164dee630972f753c3511051960736b1c50",
+            "source_id": "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf",
+            "source_sha256": "4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37"
+          },
+          {
+            "bytes": 1353,
+            "derived_text_sha256": "53120edd34810a56c194f17887b60e6ae1f4b38716eb9329112e3d38f71cf4c4",
+            "first_line": 397,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 427,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "58cbe2ebb382cc88b1e74fefda141bfacb7f4d09ea4d2de0185e1c8342f1337e",
+            "source_id": "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf",
+            "source_sha256": "4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37"
+          },
+          {
+            "bytes": 5146,
+            "derived_text_sha256": "53120edd34810a56c194f17887b60e6ae1f4b38716eb9329112e3d38f71cf4c4",
+            "first_line": 1548,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1626,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31,
+              32
+            ],
+            "sha256": "862e74aaeafcc60f3419f00ccf09cec30b8128a6d080a9e893155e8c37fc272c",
+            "source_id": "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf",
+            "source_sha256": "4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 737,
+            "derived_text_sha256": "53120edd34810a56c194f17887b60e6ae1f4b38716eb9329112e3d38f71cf4c4",
+            "first_line": 307,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 323,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "5ba1bb342a02da7756f8c8a76fe2b12036b048a702e25dc2ceadda8cc2bd528b",
+            "source_id": "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf",
+            "source_sha256": "4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37"
+          },
+          {
+            "bytes": 269,
+            "derived_text_sha256": "53120edd34810a56c194f17887b60e6ae1f4b38716eb9329112e3d38f71cf4c4",
+            "first_line": 328,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 332,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "86689c639a5f5780d2e7f80a75b413fe32205e770d2514d03a91afca3890e56d",
+            "source_id": "v43-centaur-hollstein-prokopczuk-wese-simen-beta-uncertainty-am-pdf",
+            "source_sha256": "4eaf86e0589dcfbabb75be7e4dd11c5c58902ab5e3c6af6ccd317749069b2b37"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "centaur.reading.ac.uk/90228",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "HPW2020:beta-uncertainty-UncBeta"
+      ],
+      "record_id": "HPW2020:beta-uncertainty-UncBeta",
+      "record_sha256": "0434c813cc3d8eee87439d02982b7804c87e62e928ffa72503d2490f748b3da2",
+      "reviewed_at": "2026-10-08T10:53:18+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v43 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4459",
+            "M4489",
+            "M4507",
+            "M4512",
+            "M6774"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4459",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4459.json",
+              "row_sha256": "0686513d7861c4b2195aad8e1a9686c58a7e6a03e672254b3ddc1e271a710b02",
+              "sha256": "b9bb5e20ecd26e06f3522a1dc0ee87fb9fa71cecf719ef5220cbe6e02c71db30"
+            },
+            {
+              "native_id": "M4489",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4489.json",
+              "row_sha256": "3ef437a3ae7234c5fcb2f75aa4185f585b6b96b4ba4e300c651e754af1ff7f16",
+              "sha256": "5615a2209f330d645dba37424c9dd6c0e59933991b9eb6cb3c62aef67bc4504c"
+            },
+            {
+              "native_id": "M4507",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4507.json",
+              "row_sha256": "64db419f5c599487d9de1950393e924cf6aab487cf324a04337cd8035d11e853",
+              "sha256": "dc7f085e00946d560b61361bd6ba9bc6bfe4143a2770dc20a2fad200794332c8"
+            },
+            {
+              "native_id": "M4512",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4512.json",
+              "row_sha256": "6327ef531fcfe617e0d3ae426e2cf884cc019226d2326c4dfeaeb9e25cc5791f",
+              "sha256": "4a43b74d8fc5e3ba81354bee4be37f175bb4670885f4447c736415f9e5db99dd"
+            },
+            {
+              "native_id": "M6774",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0068-v2/metadata/source-records/M6774.json",
+              "row_sha256": "e0e0ed2b262fa2bef707c76a070b2fcc75a71920e125f0ad13927d70f8c8a000",
+              "sha256": "45ff1493f87a72f550b3470dcfd6d1faeca9e9f9ad786d5724e284322599fef4"
+            }
+          ],
+          "scope": "coverage-map-v43.csv（M记录6971、因子变体1570、v1–v42集合443、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15）按关键词与同市场同核心信号检索，并逐一核对v35–v42集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "option volume dispersion",
+            "期权成交量离散度",
+            "dispersion in beliefs",
+            "意见分歧",
+            "market timing",
+            "市场择时"
+          ]
+        },
+        "compared_record_names": {
+          "M4459": "Bollerslev·Tauchen·Zhou·方差风险溢价择时：月频；VRP=IV²−RV²（VIX²−实现方差）；VRP高则满仓美股指数、低则降仓/现金（BTZ VRP·Timing）",
+          "M4489": "Rapach·Strauss·Zhou·宏观组合预测择时：月末；Goyal–Welch十四预测回归等权合成；合成溢价预测>历史均值则满仓美股，否则T-bill；持1月（RSZ Comb·vsHA）",
+          "M4507": "Goyal·Welch·股息价格比单变量择时：月末；递推D/P回归溢价；预测>历史均值满仓美股，否则T-bill；持1月（GW DP·vsHA）",
+          "M4512": "Goyal·Welch·期限利差单变量择时：月末；递推TMS回归溢价；预测>历史均值满仓美股，否则T-bill；持1月（GW TMS·vsHA）",
+          "M6774": "Johnson·期权/股票成交量比五分位多空：月末；OptionVolume1=期权量/股量；等权多最低空最高持1月（Johnson·OptionVolume1·QuintileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以全市场个股期权成交量在行权价上的离散度（意见分歧）预测股权溢价、按均值方差规则择时的月度策略。M4459为方差风险溢价（VIX²−RV）择时，M4489为宏观预测组合择时，M4507/M4512为D/P与期限利差单变量择时（二元满仓/国库券），M6774为个股期权/股票成交量比截面因子（非价位离散度、非择时）；M0168为按分析师分歧买个股认沽的离散度交易；目录检索“期权成交+离散/价位/DISP”无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "AKMP2021-aggregate-VW-dispersion-of-option-volume-weighted-moneyness-5-60d-ex-ATM-recursive-OOS-forecast-mean-variance-gamma3-weight-0-1.5-monthly",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 2010,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 300,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 342,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "4bdf84ed790e6376babe738bfbbf7d358967fd04308d15f29e1a3d575573baa2",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 2010,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 300,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 342,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "4bdf84ed790e6376babe738bfbbf7d358967fd04308d15f29e1a3d575573baa2",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          },
+          {
+            "bytes": 407,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 352,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 355,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "e983996bde26527f982180e0e7f5ad352da046f0a171e082678bc827c70b7236",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 377,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 173,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 176,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              3
+            ],
+            "sha256": "ee27aab72244f996a03eeb767147491d8b22daf2214f3a09b8b0aa529f0ad856",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          },
+          {
+            "bytes": 2010,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 300,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 342,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "4bdf84ed790e6376babe738bfbbf7d358967fd04308d15f29e1a3d575573baa2",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 2010,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 300,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 342,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "4bdf84ed790e6376babe738bfbbf7d358967fd04308d15f29e1a3d575573baa2",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 2010,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 300,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 342,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "4bdf84ed790e6376babe738bfbbf7d358967fd04308d15f29e1a3d575573baa2",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 917,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 374,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 392,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "08c3c00b36954b1b4f531bbf44d206dceb91d5f9d3c9ab929a009dfc5ee9a8b0",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          },
+          {
+            "bytes": 300,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 409,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 411,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "963a43d33010f0fe7cb62a8d9f4dc76b5e6147a8a8308519fc00a48c786729b2",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          },
+          {
+            "bytes": 3045,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 918,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 952,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              20
+            ],
+            "sha256": "5dea7fcedc2f6a8a47162795c10250f782c106f31629d4f49c10e153e292d3d1",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 2331,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 142,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 183,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              3,
+              4
+            ],
+            "sha256": "a0b69ea6509bf11b469f9c9cada9afd27eba5142d6523ae845243a63155e5909",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          },
+          {
+            "bytes": 377,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 173,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 176,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              3
+            ],
+            "sha256": "ee27aab72244f996a03eeb767147491d8b22daf2214f3a09b8b0aa529f0ad856",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          },
+          {
+            "bytes": 748,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 243,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 257,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5
+            ],
+            "sha256": "4cb9b4fce4555092c8c09cd57b4135f4ea20bc2e68c932c3e1d2d26bc983c967",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          },
+          {
+            "bytes": 2010,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 300,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 342,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "4bdf84ed790e6376babe738bfbbf7d358967fd04308d15f29e1a3d575573baa2",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 2010,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 300,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 342,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "4bdf84ed790e6376babe738bfbbf7d358967fd04308d15f29e1a3d575573baa2",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 562,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 185,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 195,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              4
+            ],
+            "sha256": "e618eb86459f7f0c7fc27ab29a57ef55097330c569442e199caa464a8af51878",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          },
+          {
+            "bytes": 3045,
+            "derived_text_sha256": "1ec13e51a3a50907ae692d3b516dcfeae4137eb0516ee9df506861a5b0cc2d9b",
+            "first_line": 918,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 952,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              20
+            ],
+            "sha256": "5dea7fcedc2f6a8a47162795c10250f782c106f31629d4f49c10e153e292d3d1",
+            "source_id": "v43-lancaster-andreou-kagkadis-maio-philip-disp-cfr-pdf",
+            "source_sha256": "2b32e94ce86e1bfb2cc6dc287b25bea0178a2b08df88f9decca8e4c145e901c6"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "eprints.lancs.ac.uk/136188",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "AKMP2021:option-volume-moneyness-dispersion-DISP-market-timing"
+      ],
+      "record_id": "AKMP2021:option-volume-moneyness-dispersion-DISP-market-timing",
+      "record_sha256": "9ec8786bb9be4a844b17f7762a2ed9581d6aba5ad2b45db12292d76d435ba3fc",
+      "reviewed_at": "2026-10-08T10:53:18+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v43 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    }
+  ],
+  "schema_version": "quantgraph-source-collection-reviews/v1"
+}

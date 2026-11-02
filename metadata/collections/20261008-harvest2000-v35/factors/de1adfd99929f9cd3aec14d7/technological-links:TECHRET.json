@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "技术空间相近的公司过去收益正向预测本公司下月收益。",
+    "missing": [
+      "专利—公司匹配表与USPTO类别版本需另锁。",
+      "仅2017-10工作论文版，未与JFE终版比对。",
+      "未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v35-abfer-technological-links-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "专利授予信息按年度更新并滞后半年映射；专利数据版本与公司匹配表需另锁。"
+    },
+    "calculation": {
+      "evidence": [
+        "v35-abfer-technological-links-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月初按上月TECHRET把公司分十分位，月度再平衡，等权或价值加权；零成本组合买入最高10%、卖空最低10%。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v35-abfer-technological-links-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：投资者对技术关联公司的较隐晦信息反应迟缓，导致沿技术链的收益领先—滞后。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v35-abfer-technological-links-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "TECHRET_{i,t}=Σ_{j≠i} TECH_ij·RET_{j,t−k} / Σ_{j≠i} TECH_ij，主规格k=1（上月收益），稳健性k=3、6、12。TECH_ij=(T_i T_j')/[(T_i T_i')^{1/2}(T_j T_j')^{1/2}]，T_i=(s_1,…,s_427)为i过去5年滚动窗口内在427个USPTO技术类别的平均专利占比向量（Jaffe 1986非中心化相关），取值0–1且对称。"
+    },
+    "inputs": {
+      "evidence": [
+        "v35-abfer-technological-links-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Google专利数据（授予年t）匹配同财年Compustat，再匹配CRSP收益（t+1年7月至t+2年6月）；要求CRSP市值与SIC非缺失、上年末账面权益非负、过去5年至少1项授权专利；剔除持有期初股价低于1美元的股票；Shumway(1997)退市收益修正。TECH于每年t末按已公开的授权日计算并映射到下一年度7月起的12个月。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v35-abfer-technological-links-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股横截面动量溢出因子；与行业动量、客户动量、文本同行动量对照（作者称不同于行业动量）。"
+    }
+  },
+  "identity_namespace": "abfer.org/edocman",
+  "lab": null,
+  "missing_information": [
+    "专利—公司匹配表与USPTO类别版本需另锁。",
+    "仅2017-10工作论文版，未与JFE终版比对。",
+    "未回测；经济有效性未检验。"
+  ],
+  "name": "技术关联公司动量（TECHRET）",
+  "native_source_id": "technological-links:TECHRET",
+  "one_line": "以专利技术类别分布的非中心化相关为权重，计算技术相近公司上月加权收益TECHRET；月初十分位，做多高、做空低。",
+  "record_id": "technological-links:TECHRET",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://abfer.org/component/edocman/technological-links-and-predictable-returns/download?Itemid="
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Charles M. C. Lee, Stephen Teng Sun, Rongfei Wang, Ran Zhang,《Technological Links and Predictable Returns》2017-10-23工作论文（ABFER托管；期刊JFE 132(3), 2019据外部书目，未取）。中文定义自撰。",
+      "id": "v35-abfer-technological-links-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L891–944（PDF物理页19,20）；inputs L853–873（PDF物理页19）；inputs L944–948（PDF物理页20）；calculation L1014–1026（PDF物理页22）",
+      "revision": "Lee/Sun/Wang/Zhang《Technological Links and Predictable Returns》October 23, 2017工作论文；ABFER托管；61页；sha256 53a06bb0ad6065ebdc04fc122916eadcb825bafe0bb135a7f8f3f4a265691104",
+      "sha256": "53a06bb0ad6065ebdc04fc122916eadcb825bafe0bb135a7f8f3f4a265691104",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://abfer.org/component/edocman/technological-links-and-predictable-returns/download?Itemid=",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

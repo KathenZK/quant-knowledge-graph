@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "显著上行（高ST）股票吸引过度需求而被高估，后续收益较低；显著下行股票反之。",
+    "missing": [
+      "仅取得2017年2月工作论文版；后续期刊版未取得，参数或定义可能修订。",
+      "显著性数值并列时的排名处理未说明。",
+      "未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v35-cfr-cosemans-frehen-2017-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "只用当月日收益与当日市场收益，月末可得；显著性并列时的排名规则未述。"
+    },
+    "calculation": {
+      "evidence": [
+        "v35-cfr-cosemans-frehen-2017-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月按ST将股票分十分位，计算下月等权与价值加权超额收益；原文零成本组合为买高ST（第10组）、卖低ST（第1组），其收益为负；因此可交易方向为做多低ST、做空高ST，月度再平衡。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v35-cfr-cosemans-frehen-2017-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者假说：投资者过度加权显著的过去收益，显著上行的股票被高估、随后收益低；显著下行的股票被低估。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v35-cfr-cosemans-frehen-2017-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "对股票i在月t的每个交易日s：显著性σ(r_is, r̄_s)=|r_is−r̄_s|/(|r_is|+|r̄_s|+θ)（式(8)），r̄_s为当日市场收益；按σ降序得排名k_is（1为最显著）；显著性权重ω_is=δ^{k_is}/Σ_{s'}δ^{k_is'}π_{s'}（式(3)）；π_s=1/当月交易日数。ST_{i,t}=cov[ω_is, r_is]=Σ_s π_s ω_is r_is − Σ_s π_s r_is（式(9)）。参数θ=0.1，δ=0.7（取BGS 2012校准值）。"
+    },
+    "inputs": {
+      "evidence": [
+        "v35-cfr-cosemans-frehen-2017-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP中NYSE、AMEX、NASDAQ全部股票的日收益（1926-01至2015-12）；状态空间为过去一个月的日收益，每个状态概率为当月交易日数的倒数；当月至少15个日收益观测才计算ST；市场基准r̄_s采用等权CRSP指数。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v35-cfr-cosemans-frehen-2017-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股横截面行为金融因子；与MAX/偏度/彩票需求类因子对照（作者称不被其解释）。"
+    }
+  },
+  "identity_namespace": "cfr-cologne.de/kolloquium",
+  "lab": null,
+  "missing_information": [
+    "仅取得2017年2月工作论文版；后续期刊版未取得，参数或定义可能修订。",
+    "显著性数值并列时的排名处理未说明。",
+    "未回测；经济有效性未检验。"
+  ],
+  "name": "显著性理论值ST：日收益显著性权重与日收益的协方差",
+  "native_source_id": "CosemansFrehen-2017:ST",
+  "one_line": "按Bordalo–Gennaioli–Shleifer显著性函数对个股当月日收益相对等权市场的显著性排序加权，ST=cov(显著性权重,日收益)；高ST预期低收益。",
+  "record_id": "CosemansFrehen-2017:ST",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.cfr-cologne.de/download/kolloquium/2017/CosemansFrehen.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Mathijs Cosemans, Rik Frehen,《Salience Theory and Stock Prices: Empirical Evidence》2017-02工作论文（CFR Cologne研讨会PDF；后续期刊版未取得、未比对）。中文定义自撰。",
+      "id": "v35-cfr-cosemans-frehen-2017-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L490–497（PDF物理页10）；formula L538–556（PDF物理页11）；formula L722–728（PDF物理页14）；formula L752–767（PDF物理页14）；inputs L692–696（PDF物理页13）；inputs L799–807（PDF物理页15）；inputs L1275–1277（PDF物理页23）；calculation L894–910（PDF物理页16,17）",
+      "revision": "Cosemans/Frehen《Salience Theory and Stock Prices: Empirical Evidence》工作论文，First draft June 2016, This version February 2017；CFR Cologne研讨会托管；54页；sha256 24e3963b95f9d2f26f82c6abea4b05ea203d0dcd73c3dac868af1de2fd19f5e3",
+      "sha256": "24e3963b95f9d2f26f82c6abea4b05ea203d0dcd73c3dac868af1de2fd19f5e3",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.cfr-cologne.de/download/kolloquium/2017/CosemansFrehen.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

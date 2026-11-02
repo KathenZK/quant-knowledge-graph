@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "个股风险中性方差相对市场平均越高，其随后超额收益越高。",
+    "missing": [
+      "假设各股固定效应α_i相同（=0）为强假设，作者用面板回归检验，并非所有股票成立。",
+      "原文只给只做多的秩加权组合，未给多空版本。",
+      "LSE讨论稿（2016-11）未与JF终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v39-lse-fmg-dp760-martin-wagner-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "需付费OptionMetrics数据，仅覆盖有上市期权的大盘股（约为标普500的90%）；作者报告等权组合的夏普略高于模型组合，多头倾斜的增益主要体现在偏度与绩效费指标。"
+    },
+    "calculation": {
+      "evidence": [
+        "v39-lse-fmg-dp760-martin-wagner-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按式(12)计算每只股票的预期超额收益；组合权重w_i=rank[E_t R_{i,t+1}]^θ/Σ_i rank[E_t R_{i,t+1}]^θ，主口径θ=2，不做空，每月更新权重（与SVIX期限无关）；作者报告年化超额收益10.85%–12.53%、夏普0.44–0.51。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v39-lse-fmg-dp760-martin-wagner-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者推导：在投资者组合接近增长最优的假设下，股票预期超额收益由市场风险中性方差与个股相对平均风险中性方差决定（斜率½）。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v39-lse-fmg-dp760-martin-wagner-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "(E_t R_{i,t+1}−R_{f,t+1})/R_{f,t+1}=SVIX²_t+½(SVIX²_{i,t}−SVIX̄²_t)（式12）；SVIX²_t=var*_t(R_{m,t+1}/R_{f,t+1})，SVIX²_{i,t}=var*_t(R_{i,t+1}/R_{f,t+1})，SVIX̄²_t=Σ_i w_{i,t}SVIX²_{i,t}（w为相对市值）；SVIX²_{i,t}=2/(R_{f,t+1}S²_{i,t})·[∫_0^{F_{i,t}}put_{i,t}(K)dK+∫_{F_{i,t}}^∞call_{i,t}(K)dK]（指数同理），即按行权价等权的虚值认沽/认购组合价格。"
+    },
+    "inputs": {
+      "evidence": [
+        "v39-lse-fmg-dp760-martin-wagner-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "OptionMetrics标普100/500指数期权与成分股期权日度隐含波动率曲面（1996-01至2014-10），期权期限1/3/6/12个月对应同期限收益预测；CRSP日价格与收益、Compustat成分股名单、股本与账面权益；美式期权以OptionMetrics二叉树曲面视为欧式。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v39-lse-fmg-dp760-martin-wagner-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "期权隐含的横截面预期收益信号；可用于美股多头倾斜选股，或与β、规模、价值、动量预测对照。"
+    }
+  },
+  "identity_namespace": "researchonline.lse.ac.uk/eprint",
+  "lab": null,
+  "missing_information": [
+    "假设各股固定效应α_i相同（=0）为强假设，作者用面板回归检验，并非所有股票成立。",
+    "原文只给只做多的秩加权组合，未给多空版本。",
+    "LSE讨论稿（2016-11）未与JF终版比对；未回测。"
+  ],
+  "name": "SVIX期权隐含个股预期收益（Martin–Wagner）",
+  "native_source_id": "118957:SVIX-expected-stock-return",
+  "one_line": "用个股与指数虚值期权按行权价等权积分得到风险中性方差SVIX²，个股预期超额收益(E R_i−R_f)/R_f=SVIX²_m+½(SVIX²_i−市值加权平均SVIX²_i)，无需估计参数；作者按预期收益秩^2加权标普500成分股（只做多），每月调仓。",
+  "record_id": "118957:SVIX-expected-stock-return",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://researchonline.lse.ac.uk/id/eprint/118957/1/DP760.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Ian Martin, Christian Wagner,《What is the Expected Return on a Stock?》LSE FMG讨论稿760（2016-11）。中文定义自撰。",
+      "id": "v39-lse-fmg-dp760-martin-wagner-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L497–509（PDF物理页11）；formula L554–562（PDF物理页12）；formula L634–661（PDF物理页14）；formula L670–676（PDF物理页14,15）；inputs L604–614（PDF物理页13）；inputs L662–668（PDF物理页14）；calculation L1134–1145（PDF物理页25）；calculation L1186–1195（PDF物理页26）；availability L1208–1212（PDF物理页27）",
+      "revision": "LSE Financial Markets Group Discussion Paper No 760, November 2016（LSE Research Online 118957）；69页；未与JF期刊版比对；sha256 8cd85b798e9a3aef79c7326c0960d569fd2267c1f1118e0970896b5a17462823",
+      "sha256": "8cd85b798e9a3aef79c7326c0960d569fd2267c1f1118e0970896b5a17462823",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://researchonline.lse.ac.uk/id/eprint/118957/1/DP760.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

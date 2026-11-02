@@ -1,0 +1,1077 @@
+{
+  "batch_id": "20261013-harvest2000-v48",
+  "records": [
+    {
+      "backtest_status": "NOT_BACKTESTED",
+      "candidate_category": "event_driven",
+      "core_rules_complete": false,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M1574",
+            "M0972"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M1574",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0016-v2/metadata/source-records/M1574.json",
+              "row_sha256": "93296993fc15c8f1739d31126a68b59097dbdeb65721a117e972ea5526e2e287",
+              "sha256": "b7c5ddda9b9da5a82fad17093c9c94b48d70e228543103f86dc499645502ed40"
+            },
+            {
+              "native_id": "M0972",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0010-v2/metadata/source-records/M0972.json",
+              "row_sha256": "3419539d39c519dbeae492d9be9ea280360ffbaa1733e90eda19170fad9dd1ef",
+              "sha256": "78350b03b7ab32fff67b0be50e8acf69bd5e3f597991a57512a2af91c04d600b"
+            }
+          ],
+          "scope": "coverage-map-v47.csv（M记录6971、因子变体1570、v1–v46集合461及v35–v47拒收表）按“中证500/中证1000/指数增强/调入/跟踪误差/偏离”关键词与同市场同核心信号检索；逐条比对下列最近记录。",
+          "search_terms": [
+            "调入",
+            "成分股调整",
+            "指数调整",
+            "index inclusion",
+            "index addition"
+          ]
+        },
+        "compared_record_names": {
+          "M0972": "中欧中证500指数量化增强：跟踪误差硬约束",
+          "M1574": "方正金工A500资金流入驱动—非沪深300成分多头对标中证500（A500内非300约266只；组合内500成分权重约79.71%；行业偏离除非银外≤3%）"
+        },
+        "outcome": "INCOMPLETE",
+        "reason": "目录与v35–v47检索无A股中证500调入事件策略；v37拒收R37-012为美股S&P500调入公告买入（不同市场）。M1574为A500资金流入集合，非调入事件。规则不全：入场时点与费用缺失，按INCOMPLETE不计目标。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "HT2024-CSI500-periodic-inclusion-announce-to-T+10-EW-long",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 205,
+            "first_line": 215,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 216,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "f34775183f1fd88c52aee177a09a0889d59a61a624cfa72bba69a728b90a5f54",
+            "source_id": "v48-haitong-2024-index-rebalance-event-hangyan",
+            "source_sha256": "4e0e9f14f66f961e5de7bca0090b9f9c1070ff43166342b2622f493e5401f51a"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 212,
+            "first_line": 218,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 219,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "2cd4e572c4acd708bc6ec480d2507589275b4865b504148d0505d14c15598363",
+            "source_id": "v48-haitong-2024-index-rebalance-event-hangyan",
+            "source_sha256": "4e0e9f14f66f961e5de7bca0090b9f9c1070ff43166342b2622f493e5401f51a"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 219,
+            "first_line": 222,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 223,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "6878cbe7512ea2b841a946b8138367c0f2db07ec31b963b899535e39cadb9f2f",
+            "source_id": "v48-haitong-2024-index-rebalance-event-hangyan",
+            "source_sha256": "4e0e9f14f66f961e5de7bca0090b9f9c1070ff43166342b2622f493e5401f51a"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 219,
+            "first_line": 222,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 223,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "6878cbe7512ea2b841a946b8138367c0f2db07ec31b963b899535e39cadb9f2f",
+            "source_id": "v48-haitong-2024-index-rebalance-event-hangyan",
+            "source_sha256": "4e0e9f14f66f961e5de7bca0090b9f9c1070ff43166342b2622f493e5401f51a"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 424,
+            "first_line": 231,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 235,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "3b354786c964012a5ffa6aa7b8a475d97e437b9e2c83dd0a9bc68d23b7c70d86",
+            "source_id": "v48-haitong-2024-index-rebalance-event-hangyan",
+            "source_sha256": "4e0e9f14f66f961e5de7bca0090b9f9c1070ff43166342b2622f493e5401f51a"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 305,
+            "first_line": 218,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 220,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "439ac7b5c3e9323150b36e4b94adbfb91fc0846e6e34b7cafd936c9754d91ead",
+            "source_id": "v48-haitong-2024-index-rebalance-event-hangyan",
+            "source_sha256": "4e0e9f14f66f961e5de7bca0090b9f9c1070ff43166342b2622f493e5401f51a"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 205,
+            "first_line": 215,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 216,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "f34775183f1fd88c52aee177a09a0889d59a61a624cfa72bba69a728b90a5f54",
+            "source_id": "v48-haitong-2024-index-rebalance-event-hangyan",
+            "source_sha256": "4e0e9f14f66f961e5de7bca0090b9f9c1070ff43166342b2622f493e5401f51a"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 205,
+            "first_line": 215,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 216,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "f34775183f1fd88c52aee177a09a0889d59a61a624cfa72bba69a728b90a5f54",
+            "source_id": "v48-haitong-2024-index-rebalance-event-hangyan",
+            "source_sha256": "4e0e9f14f66f961e5de7bca0090b9f9c1070ff43166342b2622f493e5401f51a"
+          }
+        ]
+      },
+      "frequencies": [
+        "事件/日频"
+      ],
+      "identity_namespace": "qkg-harvest2000-v48/csi-index-enhancement/haitong-2024-index-rebalance",
+      "lookahead_notes": [
+        "中证指数公司一般在收盘后发布调整公告；若R2以公告日收盘价起算即含前视，回测必须用公告次一交易日开盘价入场。",
+        "调入名单必须用当时公告的PIT名单，不能用事后成分股。"
+      ],
+      "markets": [
+        "A股/中证500"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "missing_items": [
+        "入场时点：公告日收盘还是次一交易日开盘（原文未写明）",
+        "交易成本",
+        "“公告日后10个交易日”是否含公告日",
+        "超额计算口径（相对中证500价格指数/全收益）",
+        "仅摘要可见，原文PDF未取得"
+      ],
+      "native_source_ids": [
+        "HT2024:CSI500-inclusion-R2-event-ew"
+      ],
+      "published_date": "2024-11-06",
+      "record_id": "HT2024:CSI500-inclusion-R2-event-ew",
+      "record_sha256": "64e71b275e1845a9fe5dd449967f177966924b5db51ce43b77aa1c8068275934",
+      "reported_performance": {
+        "status": "REPORTED_UNVERIFIED",
+        "text": "2012年以来中证500调入组合R2胜率71%、次均超额0.57%；2017-06以来胜率80%（来源自报，未验证，未回测）。"
+      },
+      "reviewed_at": "2026-10-13T12:30:34+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v48 中证500/1000指增专题采集）逐条源文审核；规则不全，按INCOMPLETE不计目标",
+      "rule_completeness": "规则不全",
+      "source_origin": "PUBLISHED_PAGE_OR_REPOST",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "event_driven",
+      "within_batch_distinctness": "本批5条来源与核心构造各不相同；均为规则不全记录，不计目标。"
+    },
+    {
+      "backtest_status": "NOT_BACKTESTED",
+      "candidate_category": "risk_control_template",
+      "core_rules_complete": false,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0968",
+            "M1037",
+            "M0972"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0968",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0010-v2/metadata/source-records/M0968.json",
+              "row_sha256": "f6172f1cc814bbef1d83b83fdcdc3b901c1f9bed175a6ee01f05444f48ace2f3",
+              "sha256": "25e68e0d21a1f7a82797bddbac9cb9bb198a15c3c8d1ec597c2e088f9c010525"
+            },
+            {
+              "native_id": "M1037",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0011-v2/metadata/source-records/M1037.json",
+              "row_sha256": "f56e6e8c1de96e9dc98b446332aad42dcef0c858596316729d550e12665f2df7",
+              "sha256": "3f6c81422895da0b88cbf16d972fcd955505d50ec410ce8f74815c681f285271"
+            },
+            {
+              "native_id": "M0972",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0010-v2/metadata/source-records/M0972.json",
+              "row_sha256": "3419539d39c519dbeae492d9be9ea280360ffbaa1733e90eda19170fad9dd1ef",
+              "sha256": "78350b03b7ab32fff67b0be50e8acf69bd5e3f597991a57512a2af91c04d600b"
+            }
+          ],
+          "scope": "coverage-map-v47.csv（M记录6971、因子变体1570、v1–v46集合461及v35–v47拒收表）按“中证500/中证1000/指数增强/调入/跟踪误差/偏离”关键词与同市场同核心信号检索；逐条比对下列最近记录。",
+          "search_terms": [
+            "自适应",
+            "跟踪误差",
+            "个股偏离",
+            "天风"
+          ]
+        },
+        "compared_record_names": {
+          "M0968": "天风证券自适应风险控制指数增强",
+          "M0972": "中欧中证500指数量化增强：跟踪误差硬约束",
+          "M1037": "兴业证券大类因子加权指数增强（跟踪误差分档）"
+        },
+        "outcome": "EXISTING_DEFINITION",
+        "reason": "与M0968同来源同定义（同一BigQuant转载页），本条只是来源复核与缺项细化，按EXISTING_DEFINITION不新增行、不计目标。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "TF2018-adaptive-TE-stock-deviation-index-enhancement=M0968",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 689,
+            "first_line": 119,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 122,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "ac6412e19cf1c5f9f6a2d2f220fdd6fa1f3ce9b256efe012096d17bf4ee249c8",
+            "source_id": "v48-tianfeng-2018-adaptive-risk-control-bigquant",
+            "source_sha256": "9d878753c3b4b32d84ed9225a7f8801d99e25cf14f2b63218c65852c1cbbb631"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 311,
+            "first_line": 119,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 119,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "26e065a5e309f86e24f65586b9203c3389ea109a469e7ee0a8a8c2b657ed38da",
+            "source_id": "v48-tianfeng-2018-adaptive-risk-control-bigquant",
+            "source_sha256": "9d878753c3b4b32d84ed9225a7f8801d99e25cf14f2b63218c65852c1cbbb631"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 358,
+            "first_line": 125,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 125,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "9379d25caafc8e0ab6a736a461270e184eeecbd58d5fa0db29b4b8f6603cb88e",
+            "source_id": "v48-tianfeng-2018-adaptive-risk-control-bigquant",
+            "source_sha256": "9d878753c3b4b32d84ed9225a7f8801d99e25cf14f2b63218c65852c1cbbb631"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 125,
+            "first_line": 121,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 121,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "3002c989805f0726f5bd8153cac7227f75aafa51e39039dbb08ab7b69c8d0740",
+            "source_id": "v48-tianfeng-2018-adaptive-risk-control-bigquant",
+            "source_sha256": "9d878753c3b4b32d84ed9225a7f8801d99e25cf14f2b63218c65852c1cbbb631"
+          },
+          {
+            "bytes": 160,
+            "first_line": 127,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 127,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "1c4d6a87fa54c5ad1a467cf28dac10a2d88f71c9d0e3e3ca09e973c4ac427fbc",
+            "source_id": "v48-tianfeng-2018-adaptive-risk-control-bigquant",
+            "source_sha256": "9d878753c3b4b32d84ed9225a7f8801d99e25cf14f2b63218c65852c1cbbb631"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 672,
+            "first_line": 117,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 117,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "1b6a24e2991758d7253c5e2393c4a2f8ddac56ee98f27655b4b57cec5cc27632",
+            "source_id": "v48-tianfeng-2018-adaptive-risk-control-bigquant",
+            "source_sha256": "9d878753c3b4b32d84ed9225a7f8801d99e25cf14f2b63218c65852c1cbbb631"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 689,
+            "first_line": 119,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 122,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "ac6412e19cf1c5f9f6a2d2f220fdd6fa1f3ce9b256efe012096d17bf4ee249c8",
+            "source_id": "v48-tianfeng-2018-adaptive-risk-control-bigquant",
+            "source_sha256": "9d878753c3b4b32d84ed9225a7f8801d99e25cf14f2b63218c65852c1cbbb631"
+          }
+        ]
+      },
+      "frequencies": [
+        "未知"
+      ],
+      "identity_namespace": "qkg-harvest2000-v48/csi-index-enhancement/tianfeng-2018-adaptive-risk-control",
+      "lookahead_notes": [
+        "自适应偏离只能用截至调仓日已实现的TE，不得用当期或未来TE选择偏离。"
+      ],
+      "markets": [
+        "A股/沪深300/中证500/中证1000"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "missing_items": [
+        "有效因子完整清单与估计窗口",
+        "个股偏离网格、回看期、目标TE数值（Scribd来源未能固定）",
+        "调仓频率、成交价格、费用",
+        "正文PDF（BigQuant附件链接本次404）"
+      ],
+      "native_source_ids": [
+        "TF2018:adaptive-risk-control-index-enhancement-source-upgrade"
+      ],
+      "published_date": "2018-07-05",
+      "record_id": "TF2018:adaptive-risk-control-index-enhancement-source-upgrade",
+      "record_sha256": "042707046933b84511016d6e953036b2dcb3718c279d4f0a83d747dc76d6e644",
+      "reported_performance": {
+        "status": "REPORTED_UNVERIFIED",
+        "text": "静态500增强年化超额20.83%/IR4.61；自适应17.57%/IR4.77/TE3.31%（来源自报，未验证，未回测）。"
+      },
+      "reviewed_at": "2026-10-13T12:30:34+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v48 中证500/1000指增专题采集）逐条源文审核；规则不全，按INCOMPLETE不计目标",
+      "rule_completeness": "规则不全",
+      "source_origin": "PUBLISHED_PAGE_OR_REPOST",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "risk_control_template",
+      "within_batch_distinctness": "本批5条来源与核心构造各不相同；均为规则不全记录，不计目标。"
+    },
+    {
+      "backtest_status": "NOT_BACKTESTED",
+      "candidate_category": "risk_control_template",
+      "core_rules_complete": false,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0968",
+            "M1373",
+            "M1953",
+            "M1480"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0968",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0010-v2/metadata/source-records/M0968.json",
+              "row_sha256": "f6172f1cc814bbef1d83b83fdcdc3b901c1f9bed175a6ee01f05444f48ace2f3",
+              "sha256": "25e68e0d21a1f7a82797bddbac9cb9bb198a15c3c8d1ec597c2e088f9c010525"
+            },
+            {
+              "native_id": "M1373",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0014-v2/metadata/source-records/M1373.json",
+              "row_sha256": "6033883d32226192364e8051c6bf68bc486c7d30d84e8d1b2dadb3dde8d952ab",
+              "sha256": "59d0797ece6507d721a440ae47357bdfc88f5f56dbc69149f71da577694c7b54"
+            },
+            {
+              "native_id": "M1953",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0020-v2/metadata/source-records/M1953.json",
+              "row_sha256": "843bb312efa02b3dc4f3e18eadd145bb2a053aadbc6b087bca04537a9791fe4b",
+              "sha256": "182c7b182bb4ded1956dec443c223092c8e955c27e185eec982d4985f976d748"
+            },
+            {
+              "native_id": "M1480",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0015-v2/metadata/source-records/M1480.json",
+              "row_sha256": "8dfc23d990ede1d9480e4f452d9e3b467f8447efd0735d90038f3d865150f9bf",
+              "sha256": "5b0e9de3b79dc53f2465eda8f6bd5fbc8809e02fdf7d0e9cd084c1df2c75d885"
+            }
+          ],
+          "scope": "coverage-map-v47.csv（M记录6971、因子变体1570、v1–v46集合461及v35–v47拒收表）按“中证500/中证1000/指数增强/调入/跟踪误差/偏离”关键词与同市场同核心信号检索；逐条比对下列最近记录。",
+          "search_terms": [
+            "申万",
+            "个股偏离",
+            "行业偏离",
+            "超额波动",
+            "中证500指增"
+          ]
+        },
+        "compared_record_names": {
+          "M0968": "天风证券自适应风险控制指数增强",
+          "M1373": "国君金工Level2快照复合允许暴露（市值偏离≤0.5σ；行业权重偏离≤2.5%；得分最大化）",
+          "M1480": "国信金工单因子MFE组合（沪深300/中证500：中信一级行业相对暴露0；市值风格相对暴露0；个股偏离≤1%；成分内权重100%；月末；双边0.3%）",
+          "M1953": "国泰海通金工ICIR加权月频指数增强（风格+量价+基本面线性多因子；风格/个股/行业偏离约束；单边千2）"
+        },
+        "outcome": "INCOMPLETE",
+        "reason": "M0968为自适应TE定偏离、M1373为Level2快照允许暴露、M1953国泰海通、M1480国信MFE固定偏离；本条为按超额波动/行业权重分档偏离+价量敞口限制，目录无同构造。规则不全，按INCOMPLETE不计目标。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "SWHY2025-CSI500-stockdev-by-excessvol-0.3/0.5-inddev-by-weight-0.5/2-pv-exposure-0.2sd",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 403,
+            "first_line": 718,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 718,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "8be5139452527fe308110fd4a1c420e23833dd629b2510803af522fbd467ddcf",
+            "source_id": "v48-swhy-csi500-enhance-framework-fxbaogao",
+            "source_sha256": "e57400551babbf532af677e7f518fc8a6eaa615c18fa0d2af004aa43c39e7513"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 470,
+            "first_line": 721,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 722,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "df80ad5816e8945c4fa18a6969005d56622c53bad8312b6787d40b4f897b366f",
+            "source_id": "v48-swhy-csi500-enhance-framework-fxbaogao",
+            "source_sha256": "e57400551babbf532af677e7f518fc8a6eaa615c18fa0d2af004aa43c39e7513"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 168,
+            "first_line": 725,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 725,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "9245ba5ebc5485acfe3980fe71fc3ec0f01dec8a56fa3866da56b57c1f1ad4dd",
+            "source_id": "v48-swhy-csi500-enhance-framework-fxbaogao",
+            "source_sha256": "e57400551babbf532af677e7f518fc8a6eaa615c18fa0d2af004aa43c39e7513"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 1030,
+            "first_line": 721,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 725,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "9fd385b228251799fa37c1913fe525e4b743128d846e35e44efc3734fb6a6be6",
+            "source_id": "v48-swhy-csi500-enhance-framework-fxbaogao",
+            "source_sha256": "e57400551babbf532af677e7f518fc8a6eaa615c18fa0d2af004aa43c39e7513"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 307,
+            "first_line": 728,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 728,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "f2f8ccb57d9d0f360629fcbe91470095b02900657d7b2aaa6c2868957e586af6",
+            "source_id": "v48-swhy-csi500-enhance-framework-fxbaogao",
+            "source_sha256": "e57400551babbf532af677e7f518fc8a6eaa615c18fa0d2af004aa43c39e7513"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 390,
+            "first_line": 723,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 724,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "2a781bf1e971197f4f538a80591d59b8047337f11db07d46ee6c958e16a1a4a3",
+            "source_id": "v48-swhy-csi500-enhance-framework-fxbaogao",
+            "source_sha256": "e57400551babbf532af677e7f518fc8a6eaa615c18fa0d2af004aa43c39e7513"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 168,
+            "first_line": 725,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 725,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "9245ba5ebc5485acfe3980fe71fc3ec0f01dec8a56fa3866da56b57c1f1ad4dd",
+            "source_id": "v48-swhy-csi500-enhance-framework-fxbaogao",
+            "source_sha256": "e57400551babbf532af677e7f518fc8a6eaa615c18fa0d2af004aa43c39e7513"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 403,
+            "first_line": 718,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 718,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "8be5139452527fe308110fd4a1c420e23833dd629b2510803af522fbd467ddcf",
+            "source_id": "v48-swhy-csi500-enhance-framework-fxbaogao",
+            "source_sha256": "e57400551babbf532af677e7f518fc8a6eaa615c18fa0d2af004aa43c39e7513"
+          }
+        ]
+      },
+      "frequencies": [
+        "未知"
+      ],
+      "identity_namespace": "qkg-harvest2000-v48/csi-index-enhancement/swhy-2025-csi500-framework",
+      "lookahead_notes": [
+        "超额波动率、行业权重分档须用调仓日前数据计算。"
+      ],
+      "markets": [
+        "A股/中证500"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "missing_items": [
+        "底层alpha因子表（因子共振框架）",
+        "“超额波动率高/低”分档阈值与估计窗口",
+        "“高/低权重行业”分界",
+        "宏观筛选方法",
+        "目标函数、调仓频率、成交价格、费用",
+        "原报告作者与日期需原文复核（纪要页未列作者）"
+      ],
+      "native_source_ids": [
+        "SWHY2025:CSI500-enhancement-differentiated-constraints"
+      ],
+      "published_date": "2025-12-29（前次采集，未复核）；纪要页2026-08-20",
+      "record_id": "SWHY2025:CSI500-enhancement-differentiated-constraints",
+      "record_sha256": "52887bf71c509c7460c53ebcc22e9ab5993cea7bd5ba7479f9abf7f758462a2b",
+      "reported_performance": {
+        "status": "REPORTED_UNVERIFIED",
+        "text": "2025年样本外超额正2%–3%（来源自报，未验证，未回测）。"
+      },
+      "reviewed_at": "2026-10-13T12:30:34+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v48 中证500/1000指增专题采集）逐条源文审核；规则不全，按INCOMPLETE不计目标",
+      "rule_completeness": "规则不全",
+      "source_origin": "PUBLISHED_PAGE_OR_REPOST",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "risk_control_template",
+      "within_batch_distinctness": "本批5条来源与核心构造各不相同；均为规则不全记录，不计目标。"
+    },
+    {
+      "backtest_status": "NOT_BACKTESTED",
+      "candidate_category": "multi_factor_optimizer",
+      "core_rules_complete": false,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M1161",
+            "M1272",
+            "M1077",
+            "M0965"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M1161",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0012-v2/metadata/source-records/M1161.json",
+              "row_sha256": "bdbd878b78aa3c0814051a2745f9ca229987298d9962f9d9a39e707f03a1e5d1",
+              "sha256": "aad4add1964176d2da1f1876f242cea4349bb7e74e010755ff5994f6cc544cff"
+            },
+            {
+              "native_id": "M1272",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0013-v2/metadata/source-records/M1272.json",
+              "row_sha256": "816c190ee51411a8e21ba813db714070b8b82336ff4881894821ff31f9cda7be",
+              "sha256": "dcffc5271f5d87d5d85205974c85177b06174fb751fb00ddcd3483ad2acf0853"
+            },
+            {
+              "native_id": "M1077",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0011-v2/metadata/source-records/M1077.json",
+              "row_sha256": "13617a48af332ef764eb4203b7ced5fa83980fd500d8886e0c351a3cf5ad522c",
+              "sha256": "e8b73a95186fe81b3c717bbda2a4a7b4f7a026683bed7392c0e039d5588fa694"
+            },
+            {
+              "native_id": "M0965",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0010-v2/metadata/source-records/M0965.json",
+              "row_sha256": "c1041dc08dd0dee049578a877192c5ca74df3c123bf38544a636bcd55d94f4fc",
+              "sha256": "852c7467e5eaf5fc50046013cf0edf631091585a01854e7eac366f1121b1341f"
+            }
+          ],
+          "scope": "coverage-map-v47.csv（M记录6971、因子变体1570、v1–v46集合461及v35–v47拒收表）按“中证500/中证1000/指数增强/调入/跟踪误差/偏离”关键词与同市场同核心信号检索；逐条比对下列最近记录。",
+          "search_terms": [
+            "中证1000",
+            "指数增强",
+            "BigQuant",
+            "行业偏离",
+            "风格偏离"
+          ]
+        },
+        "compared_record_names": {
+          "M0965": "开源证券中证1000成分股五类因子等权指增（十分组多头）",
+          "M1077": "BigQuant社区：滚动ICIR动态加权多因子Top200每5日等权",
+          "M1161": "国盛金工量价多因子中证1000增强1.0（MAD去极+中性+截面标准化等权；月度；双边0.3%）",
+          "M1272": "华泰金工AI中证1000增强（成分权≥80%；个股偏离≤0.8%；Barra暴露<0.3；周双边换手30%；双边千四；周频）"
+        },
+        "outcome": "INCOMPLETE",
+        "reason": "M1161国盛量价等权月频、M1272华泰AI周频、M1077 BigQuant ICIR Top200每5日等权（无优化器约束）、M0965开源五类因子十分组；本条为6类等权+QP带行业±10%/风格0.5/成分0.3约束，目录无同源同构造。规则不全，按INCOMPLETE不计目标。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "BQ2025-CSI1000-6class-EW-MAD-neutral-QP-ind10-style0.5-member0.3-w0-1pct-5d-100",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 114,
+            "first_line": 174,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 174,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "b16e46b89eba1e5304b3cf475dc94d8604bd5b8aac61456bb56941678661c595",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 48,
+            "first_line": 179,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 179,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "6ca8a4ca5a1b2b8805d1be5896a41f66dbd8f0e53b29f7f2ccf3421114ff284f",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 644,
+            "first_line": 153,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 164,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "c4345e6e05e60649dc24e721c050e5b27cd4fdf4bed572cd59ceaed091795496",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 65,
+            "first_line": 175,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 175,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "4d00e8c3487d667b2ea061931d6a75e11c0512619d12d74c041dac06a9124ea4",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 137,
+            "first_line": 176,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 177,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "15407f440a224d80681be02c89c47d5098f4080263c099b65f20da0762d7120d",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 399,
+            "first_line": 181,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 183,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "5f5acf9b138e06c969f9e064082b92ed7b819cf2bcd42006b74cb3ea76d7cc60",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 494,
+            "first_line": 120,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 129,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "eb7cf559f327e4a15dcafe265ba73e14350fca52e7da68a9430381a8ff081e60",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          },
+          {
+            "bytes": 423,
+            "first_line": 139,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 143,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "ebac1417079bd4c35334cceabe308f4c41258c1f0289c518bb700d8f69c314d6",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          },
+          {
+            "bytes": 256,
+            "first_line": 146,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 149,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "dd92aa3a75e39d195896dd3961d49583fa7c45a5ec689c0d35adfc07fede788e",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 46,
+            "first_line": 172,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 172,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "e3eea2439e72a3c74b6c951d828e0edaecb49c648fa536402d6ad632694c59dd",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          },
+          {
+            "bytes": 65,
+            "first_line": 175,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 175,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "4d00e8c3487d667b2ea061931d6a75e11c0512619d12d74c041dac06a9124ea4",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 35,
+            "first_line": 173,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 173,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "d657341f83a6d2d0f106df34749305306d88be9ea8b2ecf3d0eacfef8cb6bb2a",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          },
+          {
+            "bytes": 36,
+            "first_line": 161,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 161,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "457986cb9798f4f4e0ece4da59f8725cec14869ceca18f8d56509dfe8bb0edb2",
+            "source_id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+            "source_sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695"
+          }
+        ]
+      },
+      "frequencies": [
+        "5个交易日"
+      ],
+      "identity_namespace": "qkg-harvest2000-v48/csi-index-enhancement/bigquant-2025-csi1000",
+      "lookahead_notes": [
+        "未写成交价格：回测须用信号日之后的次一交易日开盘或VWAP成交；财务因子须按公告日PIT。"
+      ],
+      "markets": [
+        "A股/中证1000"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "missing_items": [
+        "实际使用的6个因子名称与字段（源码在BigQuant私享会付费内容，未查看）",
+        "换手约束1.5的期间单位",
+        "风格偏离0.5的单位与10个Barra风格因子的数据源",
+        "成交价格口径",
+        "优化失败时的权重方式",
+        "作者显示不一致：未登录快照为xiaoshao，登录态显示“大田”"
+      ],
+      "native_source_ids": [
+        "BQ2025:CSI1000-6class-alpha-QP-enhancement"
+      ],
+      "published_date": "2025-12-18（页面更新；登录态显示创建2025-12-17）",
+      "record_id": "BQ2025:CSI1000-6class-alpha-QP-enhancement",
+      "record_sha256": "a5eb41ee72083a20609ecefbaa750f183a2dd8db1c667d7ca2141ec784efde3e",
+      "reported_performance": {
+        "status": "REPORTED_UNVERIFIED",
+        "text": "2023年以来年化超额15.31%、超额最大回撤11.5%、TE 9.7%、IR 1.56（作者自报，未验证，未回测）。"
+      },
+      "reviewed_at": "2026-10-13T12:30:34+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v48 中证500/1000指增专题采集）逐条源文审核；规则不全，按INCOMPLETE不计目标",
+      "rule_completeness": "规则不全",
+      "source_origin": "PUBLISHED_PAGE_OR_REPOST",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "multi_factor_optimizer",
+      "within_batch_distinctness": "本批5条来源与核心构造各不相同；均为规则不全记录，不计目标。"
+    },
+    {
+      "backtest_status": "NOT_BACKTESTED",
+      "candidate_category": "multi_factor_ml",
+      "core_rules_complete": false,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0967",
+            "M1140",
+            "M1077"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0967",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0010-v2/metadata/source-records/M0967.json",
+              "row_sha256": "5b134051a10966aaa0abe0289da11b642dfa17a0949786ab5a1e813436417dd0",
+              "sha256": "2378ccf689935085de86c03e899766c86939384cddb4809a9fd8171c63e54d76"
+            },
+            {
+              "native_id": "M1140",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0012-v2/metadata/source-records/M1140.json",
+              "row_sha256": "9536dbafd98dab1718a982a23ffe0e588bc2d0df4d693dcecfb47106a9c756b5",
+              "sha256": "8f34a47d2a96a01ff2c1e167f2e759c59dca9b04910728e7c73e97addea9abe4"
+            },
+            {
+              "native_id": "M1077",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0011-v2/metadata/source-records/M1077.json",
+              "row_sha256": "13617a48af332ef764eb4203b7ced5fa83980fd500d8886e0c351a3cf5ad522c",
+              "sha256": "e8b73a95186fe81b3c717bbda2a4a7b4f7a026683bed7392c0e039d5588fa694"
+            }
+          ],
+          "scope": "coverage-map-v47.csv（M记录6971、因子变体1570、v1–v46集合461及v35–v47拒收表）按“中证500/中证1000/指数增强/调入/跟踪误差/偏离”关键词与同市场同核心信号检索；逐条比对下列最近记录。",
+          "search_terms": [
+            "中证500",
+            "Ridge",
+            "TopN",
+            "csi500-multifactor",
+            "hk_hold"
+          ]
+        },
+        "compared_record_names": {
+          "M0967": "华泰证券多因子线性优化指数增强",
+          "M1077": "BigQuant社区：滚动ICIR动态加权多因子Top200每5日等权",
+          "M1140": "建投金工动态IC半衰期加权多因子（按H_Factor归类，月选Top100）"
+        },
+        "outcome": "INCOMPLETE",
+        "reason": "M0967华泰8因子线性优化、M1140建投IC半衰期Top100、M1077 BigQuant ICIR Top200；本条为滚动48月Ridge+港股通持股+Top150等权，目录与v35–v47无此仓库。主线因子清单未核，按INCOMPLETE不计目标。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "GH2026-CSI500-PIT-ridge-rolling48-purge2-top150-EW-hkhold-quarterly-T+1open-monthly",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 414,
+            "first_line": 9,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 16,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "653241bbc47e763be568fab4c1ae944b74705e67f6643c9af4db4720c8870422",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 331,
+            "first_line": 203,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 207,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "bd7e1c7bf66058d31b9d621bed4d8f9f2d913b5cdb2e3a8a12f835c23426d0eb",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 121,
+            "first_line": 9,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 9,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "0ac75f0e2ef7fb25f355ad499cd9043e707523240de01711e6d590d0be35a5ca",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          },
+          {
+            "bytes": 86,
+            "first_line": 258,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 258,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "98268311c538169060cb81f8598c6daf8620a5ca118838584883bb370015dafa",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 86,
+            "first_line": 258,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 258,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "98268311c538169060cb81f8598c6daf8620a5ca118838584883bb370015dafa",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 82,
+            "first_line": 21,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 21,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "dd6faa9715dfe00802dfc969bcbd9a1d9f2af5b6c4307a93f1621c2293ba1d1a",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 82,
+            "first_line": 21,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 21,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "dd6faa9715dfe00802dfc969bcbd9a1d9f2af5b6c4307a93f1621c2293ba1d1a",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          },
+          {
+            "bytes": 165,
+            "first_line": 208,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 210,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "3035f853646910fdc5dfd6c3e7e2adf5263f2ac99900ac3b2e74fe64af19eb1a",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 82,
+            "first_line": 21,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 21,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "dd6faa9715dfe00802dfc969bcbd9a1d9f2af5b6c4307a93f1621c2293ba1d1a",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          },
+          {
+            "bytes": 135,
+            "first_line": 328,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 328,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "cc8c54dd155c1f6132f5a777b7ddce8f1e13d07e54ecc94e4d02a3d9cbbd09bc",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 206,
+            "first_line": 104,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 105,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "506d85fe7598e61cf69e8750c4daf04ca9f70e96abf7eb15ea6e6581b9e40799",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          },
+          {
+            "bytes": 84,
+            "first_line": 311,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 311,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "630c0f1034e64a3ae537a180535dbf98dc2f6823547eb4c0107e58b8ec35144c",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 163,
+            "first_line": 17,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 19,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "3d9d7bde580fe8cfac74d990845ab3ca1a46894ec99158c703617b01056a0f74",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 213,
+            "first_line": 99,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 100,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "fb263fef6fddf2802413e3d90d038651d755a1c3fd9efaf3e12a948a738eeafc",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          },
+          {
+            "bytes": 80,
+            "first_line": 15,
+            "hash_scope": "UTF8 snapshot, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 15,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "sha256": "75d66cd9ba0fdfd42354a250cc3eb395a02935e63f13bd92d1f982c07e5c079a",
+            "source_id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+            "source_sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df"
+          }
+        ]
+      },
+      "frequencies": [
+        "月频"
+      ],
+      "identity_namespace": "qkg-harvest2000-v48/csi-index-enhancement/github-yanjunlin828-csi500-multifactor",
+      "lookahead_notes": [
+        "README声明严格PIT（公告日）与T+1开盘成交；README中purge_months=2等出现在示例模板，主线是否相同未核；未逐行审计代码，复现时仍需独立前视检查。"
+      ],
+      "markets": [
+        "A股/中证500"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "missing_items": [
+        "主线实际因子清单与参数（configs/pipelines/rolling48_topn150_ew_hk_quarterly.py 未抓取）",
+        "数据源为TinyShare/Tushare，需改写到RQData",
+        "hk_hold（港股通持股）2024-08后披露频率变化，长样本需替代",
+        "测试集结果未公布",
+        "仓库无许可证：只可参考，不得复制代码"
+      ],
+      "native_source_ids": [
+        "GH2026:yanjunlin828-csi500-multifactor-mainline"
+      ],
+      "published_date": "2026-05-28（仓库创建，北京时间）；README固定于提交0e25a33（最近推送2026-09-17 12:31 北京时间）",
+      "record_id": "GH2026:yanjunlin828-csi500-multifactor-mainline",
+      "record_sha256": "047e52ac90d21a83b942a43bf3492f82498831c873d18b83880141d7fff145c5",
+      "reported_performance": {
+        "status": "REPORTED_UNVERIFIED",
+        "text": "验证期IR 2.150（作者自报，未验证，未回测）。"
+      },
+      "reviewed_at": "2026-10-13T12:30:34+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v48 中证500/1000指增专题采集）逐条源文审核；规则不全，按INCOMPLETE不计目标",
+      "rule_completeness": "规则不全",
+      "source_origin": "PUBLISHED_PAGE_OR_REPOST",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "multi_factor_ml",
+      "within_batch_distinctness": "本批5条来源与核心构造各不相同；均为规则不全记录，不计目标。"
+    }
+  ],
+  "schema_version": "quantgraph-source-collection-reviews/v1"
+}

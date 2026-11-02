@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "套保者净空头压力高的期货随后获得更高超额收益，且跨资产类别成立。",
+    "missing": [
+      "原稿为2017-06-08初步稿（勿引用），结论可能与正式发表版不同。",
+      "COT发布滞后与月末对齐方式未在引用段写明。",
+      "各类别合约清单见附录A，未转写；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v38-aut-hedging-pressure-everywhere-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "COT每周发布（周二持仓、周五公布），月末使用需按发布滞后对齐；原稿为初步稿、作者注明勿引用。"
+    },
+    "calculation": {
+      "evidence": [
+        "v38-aut-hedging-pressure-everywhere-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末在各资产类别内按HP排序，做多最高三分位（N/3）、做空最低三分位；组合内等权、全额抵押，持有一个月后重排。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v38-aut-hedging-pressure-everywhere-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：套保者净空（HP高）时投机者需获补偿，期货风险溢价更高；作者称商品、股指与外汇中显著，利率期货不显著。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v38-aut-hedging-pressure-everywhere-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "HP^H_{i,t}=(1/R)Σ_{j=1}^{R}(Short^H_{i,j}−Long^H_{i,j})/(Short^H_{i,j}+Long^H_{i,j})，R=12；Short^H、Long^H为第j月大型商业交易者（套保者）平均空头与多头未平仓量。"
+    },
+    "inputs": {
+      "evidence": [
+        "v38-aut-hedging-pressure-everywhere-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CFTC Commitment of Traders报告：商品34、货币11、股指17、固定收益与利率9种期货；Datastream期货结算价；四类共同样本1992-09至2016-12。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v38-aut-hedging-pressure-everywhere-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "跨资产期货持仓因子；与动量、价值、carry对照。"
+    }
+  },
+  "identity_namespace": "acfr.aut.ac.nz/assets",
+  "lab": null,
+  "missing_information": [
+    "原稿为2017-06-08初步稿（勿引用），结论可能与正式发表版不同。",
+    "COT发布滞后与月末对齐方式未在引用段写明。",
+    "各类别合约清单见附录A，未转写；未回测。"
+  ],
+  "name": "跨资产类别套保压力（商品/外汇/股指/利率期货）",
+  "native_source_id": "AUT-HP-2017:hedging-pressure-4-classes",
+  "one_line": "每月末按CFTC持仓报告计算各期货过去12个月平均套保压力HP=(商业空头−商业多头)/(商业空头+商业多头)，在各资产类别内做多HP最高三分位、做空最低三分位，等权、全额抵押，持有一个月。",
+  "record_id": "AUT-HP-2017:hedging-pressure-4-classes",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://acfr.aut.ac.nz/__data/assets/pdf_file/0007/188161/AFP-Hedging-pressure-everywhere_Adrian-Fernandez-Perez_2018-DMC.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "John Fan, Adrian Fernandez-Perez, Ana-Maria Fuertes, Joëlle Miffre,《Hedging Pressure and Returns in Futures: Evidence Across Asset Classes》2017-06-08初步工作稿（作者注明勿引用原文；本记录仅自撰转述规则、不引原文）。中文定义自撰。",
+      "id": "v38-aut-hedging-pressure-everywhere-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L206–221（PDF物理页6）；inputs L398–403（PDF物理页10）；inputs L419–420（PDF物理页11）；calculation L264–282（PDF物理页7,8）",
+      "revision": "Fan/Fernandez-Perez/Fuertes/Miffre《Hedging Pressure and Returns in Futures: Evidence Across Asset Classes》初步稿 June 8, 2017（封面标注“Preliminary draft – not for quotation”；AUT ACFR网站托管，文件名含2018）；35页；sha256 2f0b97ea4512f45958f04fa21d1d7c8a46289d8242c0f85c865236f84c59ad68",
+      "sha256": "2f0b97ea4512f45958f04fa21d1d7c8a46289d8242c0f85c865236f84c59ad68",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://acfr.aut.ac.nz/__data/assets/pdf_file/0007/188161/AFP-Hedging-pressure-everywhere_Adrian-Fernandez-Perez_2018-DMC.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

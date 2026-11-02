@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "股票在某一日内时段的超额收益会在随后各交易日的同一时段延续。",
+    "missing": [
+      "成交价收益受买卖价反弹影响；成本后可交易性未在本定义中确认。",
+      "未与JF期刊终版逐字比对。",
+      "未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v35-uh-heston-korajczyk-sadka-2010-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "需TAQ逐笔成交数据，半小时收盘即可得；买卖价反弹会影响成交价收益，作者另以买价/卖价收益检验。"
+    },
+    "calculation": {
+      "evidence": [
+        "v35-uh-heston-korajczyk-sadka-2010-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在每个半小时区间t，按t−k区间的收益把股票等权分十分位（Jegadeesh–Titman法），只持有该半小时；组合为做多上一（或前几）交易日同一时段收益最高10%（赢家）、做空最低10%（输家）的10−1多空。用滞后1–12等非同日时段平均收益排序的“nondaily”组合是对照，不属本条。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v35-uh-heston-korajczyk-sadka-2010-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：机构在同一日内时点重复交易（拆单/订单流周期）造成同时段的收益延续，持续可达40个交易日。研究解释，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v35-uh-heston-korajczyk-sadka-2010-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个交易日9:30–16:00切为13个半小时区间，r_{i,t}为股票i在区间t的收益（不含盘后与隔夜开收盘变动）。检验式：r_{i,t}=α_{k,t}+γ_{k,t} r_{i,t−k}+u_{i,t}（式(1)）。“daily”信号=同一股票在区间t−k的收益，k=13、26、39、52或65，即前1至5个交易日的同一时段。"
+    },
+    "inputs": {
+      "evidence": [
+        "v35-uh-heston-korajczyk-sadka-2010-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "NYSE上市、CRSP股票代码10或11的普通股（剔除凭证、ADR、受益权、单位、境外注册公司、封闭式基金、优先股、REIT），与TAQ匹配后1,715家，2001-01至2005-12；用TAQ成交价计算半小时收益。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v35-uh-heston-korajczyk-sadka-2010-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股日内高频横截面信号；也可作为执行时点择时参考（作者称可节省约一个有效价差的执行成本）。"
+    }
+  },
+  "identity_namespace": "bauer.uh.edu/finance",
+  "lab": null,
+  "missing_information": [
+    "成交价收益受买卖价反弹影响；成本后可交易性未在本定义中确认。",
+    "未与JF期刊终版逐字比对。",
+    "未回测；经济有效性未检验。"
+  ],
+  "name": "日内同时段收益延续：按前1–5日同一半小时区间收益排序",
+  "native_source_id": "HKS-2010:daily-periodicity",
+  "one_line": "把交易日切成13个半小时区间，按股票在前k=13,26,…,65个区间（即前1–5日同一时段）的收益十分位排序，只在当前半小时持有赢家减输家组合。",
+  "record_id": "HKS-2010:daily-periodicity",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.bauer.uh.edu/departments/finance/documents/Heston_Korajczyk_Sadka_paper_UH.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Steven L. Heston, Robert A. Korajczyk, Ronnie Sadka,《Intraday Patterns in the Cross-section of Stock Returns》2010-05-26手稿（期刊JF 2010据外部书目，未取期刊原件）。中文定义自撰。",
+      "id": "v35-uh-heston-korajczyk-sadka-2010-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L202–204（PDF物理页6）；formula L215–220（PDF物理页7）；formula L363–369（PDF物理页11）；inputs L195–201（PDF物理页6）；calculation L275–279（PDF物理页8）；calculation L373–376（PDF物理页11）",
+      "revision": "Heston/Korajczyk/Sadka《Intraday Patterns in the Cross-section of Stock Returns》May 26, 2010手稿；休斯顿大学Bauer金融系托管；59页；sha256 4b443b97b75586499299280098196b3a55bf4b39ac4846284cdad1bf40c9d472",
+      "sha256": "4b443b97b75586499299280098196b3a55bf4b39ac4846284cdad1bf40c9d472",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.bauer.uh.edu/departments/finance/documents/Heston_Korajczyk_Sadka_paper_UH.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

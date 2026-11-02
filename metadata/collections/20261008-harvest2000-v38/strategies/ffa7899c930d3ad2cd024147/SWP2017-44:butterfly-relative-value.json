@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "国债相对同发行人复制组合的定价偏离会均值回复，可交易价差超过阈值时收敛交易有正收益。",
+    "missing": [
+      "回购卖空特殊利率（specials）与实际融资成本未计，以政策利率近似。",
+      "附录中的其他数据过滤条件未转写；±10bp稳健性未转写。",
+      "未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "bankofcanada.ca/wp-content",
+  "lab": null,
+  "missing_information": [
+    "回购卖空特殊利率（specials）与实际融资成本未计，以政策利率近似。",
+    "附录中的其他数据过滤条件未转写；±10bp稳健性未转写。",
+    "未回测。"
+  ],
+  "name": "国债蝶式相对价值收敛交易（久期/凸性/面值匹配复制组合，±5bp触发）",
+  "native_source_id": "SWP2017-44:butterfly-relative-value",
+  "one_line": "每日对剩余1–10年的每只国债，用同发行人三只相邻久期债券（权重0–2/3）匹配久期、凸性与面值构造复制组合；目标债相对复制组合的可交易收益率差（含买卖价）超过5bp即做蝶式（贵则卖目标买复制，便宜反向），收敛至0或满一年平仓。",
+  "record_id": "SWP2017-44:butterfly-relative-value",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.bankofcanada.ca/wp-content/uploads/2017/10/swp2017-44.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jean-Sébastien Fontaine, Guillaume Nolin,《Measuring Limits of Arbitrage in Fixed-Income Markets》加拿大央行Staff Working Paper 2017-44（2017-10）。中文定义自撰。",
+      "id": "v38-boc-swp2017-44-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L296–321（PDF物理页10）；universe L593–596（PDF物理页16）；signal L374–425（PDF物理页12,13）；signal L432–482（PDF物理页13,14）；entry L599–609（PDF物理页16）；exit L599–609（PDF物理页16）；exit L618–620（PDF物理页16）；position L632–634（PDF物理页17）；position L654–656（PDF物理页17）；position L687–689（PDF物理页18）；cost L648–652（PDF物理页17）",
+      "revision": "Bank of Canada Staff Working Paper 2017-44, October 2017；38页；sha256 9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828",
+      "sha256": "9174ffffa49e67d2e1b28e88d74c0a5ff1dda01a58b4f31d4cf50a54f7a24828",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.bankofcanada.ca/wp-content/uploads/2017/10/swp2017-44.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v38-boc-swp2017-44-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美英加法德意日瑞国债日终净价与到期收益率：美国CRSP（1987–2017-03）、加拿大StatPro/FTSE TMX（1994–2017-03）、其余Bloomberg与Markit Evaluated Bonds（2005–2017-03）；剔除通胀挂钩、浮息与含权债。"
+    },
+    "cost": {
+      "evidence": [
+        "v38-boc-swp2017-44-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按日终买卖价盯市并含应计利息；融资按各国政策利率逐日计息（实际/360）。"
+    },
+    "entry": {
+      "evidence": [
+        "v38-boc-swp2017-44-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "相对价值（中间价计）超过±5bp时新开交易：目标偏贵则做空1单位目标债、按权重买入复制组合，偏便宜则反向；目标债已在组合中则不重复开仓；需目标及成分债已有5天以上价格。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v38-boc-swp2017-44-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "按日终价格判定并成交。"
+    },
+    "exit": {
+      "evidence": [
+        "v38-boc-swp2017-44-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "信号回到0bp（收敛）即平仓；最长持有一年；样本末、价格不可得或目标债剩余期限<3个月时亦平仓。"
+    },
+    "position": {
+      "evidence": [
+        "v38-boc-swp2017-44-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每笔交易为零久期零凸性的单笔基金（不持续调权），初始权益E0=10；指数为所有存续基金日收益等权平均（无存续时为0）。"
+    },
+    "risk": {
+      "evidence": [
+        "v38-boc-swp2017-44-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "收敛可能延迟（套利限制加剧时），以一年期限与资本缓冲控制。"
+    },
+    "signal": {
+      "evidence": [
+        "v38-boc-swp2017-44-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "复制组合：按久期排序取目标债前后相邻两只，再在同侧取久期更近的第三只；权重满足Σd_iw_i=d_b、Σc_iw_i=c_b、Σw_i=1且0≤w_i≤2/3，无解时放宽凸性约束为最小化凸性差。相对价值rv⁺=−y_b^{bid}+ÿ^{ask}（目标贵）、rv⁻=y_b^{ask}−ÿ^{bid}（目标便宜），ÿ为复制组合按权重加权的收益率。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v38-boc-swp2017-44-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日度。"
+    },
+    "universe": {
+      "evidence": [
+        "v38-boc-swp2017-44-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每日剩余期限1–10年的国债。"
+    }
+  }
+}

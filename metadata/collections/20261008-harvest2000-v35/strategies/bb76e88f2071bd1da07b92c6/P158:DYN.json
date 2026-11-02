@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "动量在回调/反弹（快慢信号分歧）阶段的最优反应速度不同，按历史条件矩动态选择速度可改进静态时间序列动量。",
+    "missing": [
+      "式(32)(33)在pdftotext中版式错位，本条按原PDF第397–398页式样转写，需对照原页复核。",
+      "交易成本未给出。",
+      "评估窗内用固定训练窗估计（脚注33另述扩展窗口结果相近）。",
+      "未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "people.duke.edu/charvey",
+  "lab": null,
+  "missing_information": [
+    "式(32)(33)在pdftotext中版式错位，本条按原PDF第397–398页式样转写，需对照原页复核。",
+    "交易成本未给出。",
+    "评估窗内用固定训练窗估计（脚注33另述扩展窗口结果相近）。",
+    "未回测；经济有效性未检验。"
+  ],
+  "name": "动量拐点动态速度时间序列动量（DYN）",
+  "native_source_id": "P158:DYN",
+  "one_line": "以12个月与1个月收益符号划分牛/回调/熊/反弹四态，回调与反弹态下按历史矩估计的最优速度混合快慢动量权重，月度调仓美股指数。",
+  "record_id": "P158:DYN",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P158_Momentum_turning_points.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Christian L. Goulding, Campbell R. Harvey, Michele G. Mazzoleni,《Momentum turning points》JFE 149 (2023) 378–406（Harvey主页托管）。中文定义自撰。",
+      "id": "v35-duke-goulding-harvey-mazzoleni-2023-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L617–618（PDF物理页9）；universe L1635–1638（PDF物理页21）；signal L329–336（PDF物理页5）；signal L341–349（PDF物理页5）；signal L156–158（PDF物理页3）；entry L1608–1621（PDF物理页21）；entry L1607–1618（PDF物理页21）；entry L1677–1680（PDF物理页21）；exit L1624–1627（PDF物理页21）；position L1628–1642（PDF物理页21）；position L1647–1674（PDF物理页21）；execution_time L329–333（PDF物理页5）",
+      "revision": "Goulding/Harvey/Mazzoleni《Momentum turning points》Journal of Financial Economics 149 (2023) 378–406；作者主页托管期刊版PDF；29页；sha256 519e261c158cdb0a928ab1b433e08857f796a1c06f25f40ea2de66f4a5238a4d",
+      "sha256": "519e261c158cdb0a928ab1b433e08857f796a1c06f25f40ea2de66f4a5238a4d",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://people.duke.edu/~charvey/Research/Published_Papers/P158_Momentum_turning_points.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v35-duke-goulding-harvey-mazzoleni-2023-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国股票市场（Fama–French Mkt-RF价值加权超额收益）的单资产时间序列头寸。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "所引段落未给交易成本假设。"
+    },
+    "entry": {
+      "evidence": [
+        "v35-duke-goulding-harvey-mazzoleni-2023-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "次月权重w_DYN,t=(1−â_{s(t)})·w_SLOW,t+â_{s(t)}·w_FAST,t；â_Bu=â_Be=1/2（两信号同号时结果不受影响），â_Co、â_Re按式(32)(33)以实施前的历史样本均值/二阶矩与Bull/Bear频率估计（无前视），超出[0,1]时截到最近端点（脚注32）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v35-duke-goulding-harvey-mazzoleni-2023-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月末计算信号，次月持有（不跳过最近一个月）。"
+    },
+    "exit": {
+      "evidence": [
+        "v35-duke-goulding-harvey-mazzoleni-2023-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "无单独止损；每月末按新状态重算权重，持有下一个月。"
+    },
+    "position": {
+      "evidence": [
+        "v35-duke-goulding-harvey-mazzoleni-2023-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "单位名义敞口：Bull为+1、Bear为−1；Correction为1−2â_Co，Rebound为2â_Re−1（均在[−1,1]）。式(32)(33)给出使稳态夏普最大的状态速度：a_Co=½[1−(E[r²|Bu∪Be]P[Bu∪Be]/(E[r|Bu]P[Bu]−E[r|Be]P[Be]))·(E[r|Co]/E[r²|Co])]，a_Re=½[1+(同一比值)·(E[r|Re]/E[r²|Re])]，前提E[r|Bu]P[Bu]>E[r|Be]P[Be]。"
+    },
+    "risk": {
+      "evidence": [
+        "v35-duke-goulding-harvey-mazzoleni-2023-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "未设波动目标、止损或杠杆上限；文中评估DYN相对事后最优状态速度(OPT)的效率。"
+    },
+    "signal": {
+      "evidence": [
+        "v35-duke-goulding-harvey-mazzoleni-2023-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月末t：SLOW=+1若过去12个月平均月超额收益r_{t−12,t}≥0，否则−1（式(1)）；FAST=+1若上月超额收益r_{t−1,t}≥0，否则−1（式(2)）。状态：Bull（两者≥0）、Correction（12月≥0且1月<0）、Bear（两者<0）、Rebound（12月<0且1月≥0）。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v35-duke-goulding-harvey-mazzoleni-2023-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月频。"
+    },
+    "universe": {
+      "evidence": [
+        "v35-duke-goulding-harvey-mazzoleni-2023-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "单一资产：美国股票市场；DYN训练窗口自1926-07起至评估起始月前一月。"
+    }
+  }
+}

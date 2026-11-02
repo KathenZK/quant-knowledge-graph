@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "套保者上周买入最多的商品期货随后超额收益高于卖出最多者。",
+    "missing": [
+      "固定持有期与多空腿的正式组合规则原文未单列（报告1–4、5–10、11–20、5–40日窗口），实施需自定。",
+      "公式(1)(2)在派生文本中为空白版式，定义以正文文字为准。",
+      "2017-01工作论文，未与JF期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v37-carloalberto-krt-two-premiums-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "COT于周五收盘后发布，可实施收益应从第5个交易日起计；原文未固定单一持有期。"
+    },
+    "calculation": {
+      "evidence": [
+        "v37-carloalberto-krt-two-premiums-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每周二收盘（COT计量日）按上一周套保者Q升序排序26种商品，组成5个等权组合（5、5、6、5、5只）；跟踪其后40个交易日超额收益，因报告周五收盘后才发布，分别报告第1–4日（未公开）与第5–40日（已公开）；最高Q组第1–4日均0.20%、最低组−0.01%，第5–10日价差0.30%。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v37-carloalberto-krt-two-premiums-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：短期仓位变化主要由急于交易的投机者驱动，套保者充当流动性提供者，获得短期流动性溢价。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v37-carloalberto-krt-two-premiums-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "套保压力HP=(套保者空头合约数HS−多头合约数HL)/持仓量OI；净交易Q=商品i套保者净多头从第t−1周到第t周的变化，除以周初持仓量；若OI不变，Q等于HP的下降。"
+    },
+    "inputs": {
+      "evidence": [
+        "v37-carloalberto-krt-two-premiums-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CFTC每周COT报告（周二计量、周五收盘后发布）：26种商品（NYMEX、NYBOT、CBOT、CME），1994-01-02至2014-11-01，commercial视为套保者；Pinnacle期货价格，周二至周二周度超额收益，用最近月合约并在到期月第7个日历日（遇非营业日顺延）展期至次近月。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v37-carloalberto-krt-two-premiums-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "商品期货周频横截面流动性因子；与套保压力水平、基差动量、短期反转对照。"
+    }
+  },
+  "identity_namespace": "carloalberto.org/wp-content",
+  "lab": null,
+  "missing_information": [
+    "固定持有期与多空腿的正式组合规则原文未单列（报告1–4、5–10、11–20、5–40日窗口），实施需自定。",
+    "公式(1)(2)在派生文本中为空白版式，定义以正文文字为准。",
+    "2017-01工作论文，未与JF期刊版比对；未回测。"
+  ],
+  "name": "商品期货套保者周净交易（Q）排序",
+  "native_source_id": "TaleTwoPremiums-2017:hedger-Q",
+  "one_line": "每周二按COT报告计算套保者（commercial）净多头周变化/周初持仓量Q，对26种商品升序分五组（5/5/6/5/5）等权；最大Q组（套保者买入最多）随后跑赢最小Q组。",
+  "record_id": "TaleTwoPremiums-2017:hedger-Q",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.carloalberto.org/wp-content/uploads/2018/11/Tale-of-two-premiums-JAN-2017.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Wenjin Kang, K. Geert Rouwenhorst, Ke Tang,《A Tale of Two Premiums: The Role of Hedgers and Speculators in Commodity Futures Markets》2017-01-24工作论文（期刊版据外部书目为JF 2020，未取）。中文定义自撰。",
+      "id": "v37-carloalberto-krt-two-premiums-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L322–361（PDF物理页7,8）；inputs L290–320（PDF物理页7）；inputs L376–382（PDF物理页8）；inputs L391–391（PDF物理页8）；calculation L641–665（PDF物理页14）；calculation L667–686（PDF物理页14,15）",
+      "revision": "Kang/Rouwenhorst/Tang《A Tale of Two Premiums》This version: January 24, 2017（First Draft: August 15, 2013）；Collegio Carlo Alberto网站托管；61页；未与期刊版比对；sha256 03c39cdd23be04a90fea75e547e74dafb987256308b6499c7d39fd5800199fd5",
+      "sha256": "03c39cdd23be04a90fea75e547e74dafb987256308b6499c7d39fd5800199fd5",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.carloalberto.org/wp-content/uploads/2018/11/Tale-of-two-premiums-JAN-2017.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

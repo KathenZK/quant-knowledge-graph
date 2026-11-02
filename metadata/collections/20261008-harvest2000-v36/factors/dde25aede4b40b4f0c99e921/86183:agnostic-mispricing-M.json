@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "市值低于同业会计信息隐含公允价值的股票未来跑赢。",
+    "missing": [
+      "28个科目的完整清单在原文表格中，本记录未逐项转写。",
+      "回归具体形式（是否加权、截距、缺失处理）未在引用段写全。",
+      "接受稿，未与JFE终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v36-warwick-bartram-grinblatt-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "需要Compustat时点（PIT）数据以避免重述前视；28科目清单见原文附表。"
+    },
+    "calculation": {
+      "evidence": [
+        "v36-warwick-bartram-grinblatt-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按M排序分五分位：Q5最低估、Q1最高估；多Q5、空Q1，下月持有。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v36-warwick-bartram-grinblatt-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：市场对同业可比会计信息的定价会向公允价值收敛。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v36-warwick-bartram-grinblatt-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个组合形成日t，以公司实际市值V_{j,t}对当日市场已知的会计变量做横截面回归，拟合值P_{j,t}为同业隐含公允价值；误定价M_{j,t}=(P_{j,t}−V_{j,t})/V_{j,t}；按构造，M的市值加权平均为零。M高=低估。"
+    },
+    "inputs": {
+      "evidence": [
+        "v36-warwick-bartram-grinblatt-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP-Compustat Point-in-Time数据库中最近10Q/10K的28个最常见科目（资产负债表16项、利润表11项、现金流量表1项）；资产负债表取最近一期，利润/现金流取最近四季之和。样本1987-03至2012-12；股票须为CRSP单一普通股（10/11），NYSE/Amex/Nasdaq-NMS，股价≥5美元，总资产为正且信号所需会计数据在形成日已公开，非金融（SIC 60–69除外）。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v36-warwick-bartram-grinblatt-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股价值/误定价因子；与账面市值、无形价值、复合误定价因子对照。"
+    }
+  },
+  "identity_namespace": "wrap.warwick.ac.uk",
+  "lab": null,
+  "missing_information": [
+    "28个科目的完整清单在原文表格中，本记录未逐项转写。",
+    "回归具体形式（是否加权、截距、缺失处理）未在引用段写全。",
+    "接受稿，未与JFE终版比对；未回测。"
+  ],
+  "name": "不可知基本面误定价（同业隐含公允价值M）",
+  "native_source_id": "86183:agnostic-mispricing-M",
+  "one_line": "每月用市值对28个Compustat时点会计科目做横截面回归得公允价值P，M=(P−V)/V；按M五分位，做多最低估Q5、做空最高估Q1。",
+  "record_id": "86183:agnostic-mispricing-M",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://wrap.warwick.ac.uk/86183/7/WRAP-agnostic-fundamental-analysis-works-Bartram-2017.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Söhnke M. Bartram, Mark Grinblatt,《Agnostic fundamental analysis works》接受稿（Warwick WRAP开放仓储；期刊JFE，出版卷期未在此稿核实）。中文定义自撰。",
+      "id": "v36-warwick-bartram-grinblatt-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L616–649（PDF物理页13,14）；inputs L593–613（PDF物理页13）；inputs L663–679（PDF物理页14）；inputs L716–730（PDF物理页15）；calculation L653–661（PDF物理页14）",
+      "revision": "Bartram/Grinblatt《Agnostic fundamental analysis works》作者接受稿（Warwick WRAP 86183，原文引用标注2017, JFE）；57页；sha256 fe32d62ae0e5525b42b6ad50a5bae226baa2907422627aa096e9ff29f9ee9acb",
+      "sha256": "fe32d62ae0e5525b42b6ad50a5bae226baa2907422627aa096e9ff29f9ee9acb",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://wrap.warwick.ac.uk/86183/7/WRAP-agnostic-fundamental-analysis-works-Bartram-2017.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

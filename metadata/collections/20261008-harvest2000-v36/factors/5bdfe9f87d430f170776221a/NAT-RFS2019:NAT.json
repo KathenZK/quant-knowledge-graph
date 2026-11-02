@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "对冲基金异常增持且空头异常减少的股票未来收益更高。",
+    "missing": [
+      "13F披露滞后在引用段未处理。",
+      "图2注释“百分比变化”与正文“差值”定义冲突，采用正文。",
+      "对冲基金公司识别名单不可直接复现；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v36-nd-chen-da-huang-nat-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "13F季末持仓45天内披露、空头数据半月发布；原文季末形成未显式加入披露滞后，实盘需滞后。"
+    },
+    "calculation": {
+      "evidence": [
+        "v36-nd-chen-da-huang-nat-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每季末按NAT分五分位，追踪下一季度各组月度超额收益（组内等权）；每季剔除市值低于NYSE第20百分位的公司；Q5为最高NAT，多空=Q5−Q1。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v36-nd-chen-da-huang-nat-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：同时观察多头套利者（对冲基金）与空头套利者的净变动，更完整地度量套利资本流向与信息。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v36-nd-chen-da-huang-nat-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "HF=季末所有对冲基金公司持股数/总股本（无持有记0）；AHF=当季HF−过去四季HF均值。SI=季末卖空股数/总股本（无覆盖记0）；ASI=当季SI−过去四季SI均值。NAT=AHF−ASI。注：图2注释将AHF/ASI描述为“相对过去四季均值的百分比变化”，与正文差值定义不一致，本记录取正文定义。"
+    },
+    "inputs": {
+      "evidence": [
+        "v36-nd-chen-da-huang-nat-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "13F机构持股：按名单匹配对冲基金公司并核验（SEC注册/ADV条件等），1990–2015共1,494家；空头数据：Compustat Short Interest（NASDAQ 2003年前由交易所数据补充）。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v36-nd-chen-da-huang-nat-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股季度横截面因子；与空头比例、机构持股广度、借券供需因子对照。"
+    }
+  },
+  "identity_namespace": "academicweb.nd.edu/~zda",
+  "lab": null,
+  "missing_information": [
+    "13F披露滞后在引用段未处理。",
+    "图2注释“百分比变化”与正文“差值”定义冲突，采用正文。",
+    "对冲基金公司识别名单不可直接复现；未回测。"
+  ],
+  "name": "净套利交易（NAT=AHF−ASI）",
+  "native_source_id": "NAT-RFS2019:NAT",
+  "one_line": "对冲基金季度持股比例减过去四季均值得AHF，空头比例同理得ASI，NAT=AHF−ASI；季末五分位（剔除NYSE市值20分位以下），等权持有下一季度，做多高NAT、做空低NAT。",
+  "record_id": "NAT-RFS2019:NAT",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://academicweb.nd.edu/~zda/NAT.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Yong Chen, Zhi Da, Dayong Huang,《Arbitrage Trading: The Long and the Short of It》Review of Financial Studies advance article（2018，作者主页托管；正式卷期未核实）。中文定义自撰。",
+      "id": "v36-nd-chen-da-huang-nat-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L560–567（PDF物理页9）；formula L597–601（PDF物理页10）；formula L818–825（PDF物理页14）；inputs L540–558（PDF物理页9）；inputs L583–596（PDF物理页10）；calculation L736–743（PDF物理页12）；calculation L963–970（PDF物理页16）",
+      "revision": "Chen/Da/Huang《Arbitrage Trading: The Long and the Short of It》RFS advance article版（页脚下载戳2018-10-22）；圣母大学作者页托管；39页；sha256 0f13c0677679bfbe8067490b3ba4ac68198a4aa800a1cfdb4970bba3b75c2f4a",
+      "sha256": "0f13c0677679bfbe8067490b3ba4ac68198a4aa800a1cfdb4970bba3b75c2f4a",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://academicweb.nd.edu/~zda/NAT.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

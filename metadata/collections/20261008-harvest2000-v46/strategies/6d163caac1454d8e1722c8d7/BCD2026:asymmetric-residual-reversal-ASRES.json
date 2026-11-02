@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "特质（残差）收益冲击主要反映流动性需求，其反转速度按符号不对称（负冲击初期反转更快），而财报与系统成分倾向延续；按符号与滞后加权预测残差收益能提高反转策略收益。",
+    "missing": [
+      "原文未给扣除交易成本后的收益；RES类组合单边月换手约76%–80%（ASRES自身换手未单列），作者以收盘竞价零价差论证可执行，但1974–1999年价格并非收盘竞价价；十进制报价后收益降至0.60%/月。",
+      "复现需JKP 151个特征的日度WLS截面回归、27维一次样条Fama–MacBeth与扩展窗口系数平均，计算量大；财报公告日来源本条未核；式28中0.40的权重作者称“刻意简单”，未见调参过程说明。",
+      "同文单月残差和RES、系统成分SYS、与IVOL的关系、按错误定价MISP与市值分组属对照或机制检验，未单列；工作论文未与期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "nber.org/papers/w35840",
+  "lab": null,
+  "missing_information": [
+    "原文未给扣除交易成本后的收益；RES类组合单边月换手约76%–80%（ASRES自身换手未单列），作者以收盘竞价零价差论证可执行，但1974–1999年价格并非收盘竞价价；十进制报价后收益降至0.60%/月。",
+    "复现需JKP 151个特征的日度WLS截面回归、27维一次样条Fama–MacBeth与扩展窗口系数平均，计算量大；财报公告日来源本条未核；式28中0.40的权重作者称“刻意简单”，未见调参过程说明。",
+    "同文单月残差和RES、系统成分SYS、与IVOL的关系、按错误定价MISP与市值分组属对照或机制检验，未单列；工作论文未与期刊版比对；未回测。"
+  ],
+  "name": "不对称残差反转ASRES：日度对151个JKP特征与49行业做WLS截面回归取残差（财报窗口置零），按正负号与滞后2–252日的样条Fama–MacBeth扩展窗口系数预测下月残差收益，NYSE断点五分位市值加权多高空低（Baldi-Lanfranchi–Collin-Dufresne–Daniel）",
+  "native_source_id": "BCD2026:asymmetric-residual-reversal-ASRES",
+  "one_line": "每日把美股超额收益对上月末的151个JKP秩标准化特征与FF49行业哑变量做市值（NYSE第80百分位缩尾）加权WLS截面回归，取残差并把财报公告日前后一个交易日内的残差置零（划入系统成分）；用正、负残差分开、滞后τ=2..252日的27维一次样条Fama–MacBeth回归预测未来21日收益，系数取不晚于m−1月末估计值的扩展窗口平均；ASRES=前21个可用滞后的拟合值+0.40×（全部滞后拟合值−前21滞后拟合值）。每月末跳过最后一个交易日，按ASRES的NYSE断点五分位市值加权，做多预测最高组、做空最低组，持有一个月。",
+  "record_id": "BCD2026:asymmetric-residual-reversal-ASRES",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w35840/w35840.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Federico Baldi-Lanfranchi, Pierre Collin-Dufresne, Kent D. Daniel,《Asymmetric Reversals》NBER Working Paper 35840（2026-10）。中文定义自撰。",
+      "id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L246–258（PDF物理页7）；universe L246–258（PDF物理页7）；universe L1616–1637（PDF物理页39）；signal L281–295（PDF物理页8）；signal L368–371（PDF物理页10）；signal L405–412（PDF物理页11）；signal L459–478（PDF物理页12）；signal L613–619（PDF物理页15）；signal L1469–1473（PDF物理页35）；signal L1616–1637（PDF物理页39）；signal L1638–1676（PDF物理页39,40）；entry L2387–2432（PDF物理页58）；entry L1677–1689（PDF物理页40）；entry L613–619（PDF物理页15）；exit L1616–1637（PDF物理页39）；exit L2387–2432（PDF物理页58）；position L2387–2432（PDF物理页58）；risk L1677–1689（PDF物理页40）；risk L2387–2432（PDF物理页58）；risk L1704–1707（PDF物理页41）；risk L1711–1716（PDF物理页41）；cost L712–714（PDF物理页18）；cost L194–205（PDF物理页6）；timeframe L613–619（PDF物理页15）；timeframe L1616–1637（PDF物理页39）；execution_time L368–371（PDF物理页10）；execution_time L1616–1637（PDF物理页39）；execution_time L613–619（PDF物理页15）；execution_time L194–205（PDF物理页6）",
+      "revision": "NBER工作论文No. 35840（封面日期October 2026；NBER官网原发，非镜像；版权页\"All rights reserved\"，仅允许引用不超过两段）；88页（含附录A–E）；期刊版未见；sha256 a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6",
+      "sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w35840/w35840.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "美国普通股（NYSE、Amex、NASDAQ，CRSP CIZ版）。"
+    },
+    "cost": {
+      "evidence": [
+        "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原文未扣交易成本。作者指出RES类五分位组合单边月换手约76%–80%，属高换手策略；并称自2000年起CRSP收盘价来自收盘竞价，投资者可在收盘竞价成交而不付买卖价差、多数券商佣金为零，所需数据至少提前一个交易日可得。"
+    },
+    "entry": {
+      "evidence": [
+        "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末（信号构造跳过形成月最后一个交易日）按ASRES以NYSE断点分五组，做多预测残差收益最高组、做空最低组。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "特征取上月末值并在当月固定；样条系数只用不晚于m−1月末的估计；形成月最后一个交易日不进入信号（跳过1日），因此信号至少提前一个交易日可得，按下月持有期评估。"
+    },
+    "exit": {
+      "evidence": [
+        "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有下一个月（约21个交易日），月末按新ASRES重排。"
+    },
+    "position": {
+      "evidence": [
+        "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "五分位组合，组内市值加权（value-cap-weighted）；多最高组、空最低组的零投资组合。"
+    },
+    "risk": {
+      "evidence": [
+        "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告1974-01至2022-12：ASRES多空1.18%/月（Newey–West t=10.56），年化波动5.6%，年化夏普2.55；CAPM α 1.21%、FF6 α 1.08%、FF6+短期反转REV α 0.98%（t=13.69）；对照：普通短期反转STREV 0.26%（t=1.80），单月残差和RES 0.88–1.07%；在各NYSE市值组均显著；十进制报价改革前1.65%/月，2001-04起0.60%/月（正文t=6.38，表9印6.88），FF6+REV α 0.51%。"
+    },
+    "signal": {
+      "evidence": [
+        "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "第1步：151个JKP特征在每个月末做截面秩变换rc=rank/(n+1)−1/2，缺失填0并除以平均绝对秩；第m月每个交易日t+1把超额收益对第m−1月末特征与FF49行业哑变量做WLS回归（权重为月初市值、在NYSE第80百分位缩尾并归一），残差ε=r−拟合值。第2步：公告日前后一个交易日内的残差置零得ε̃，被移除部分并入系统成分r̃=r−ε̃。第3步：按符号分为ε̃⁺、ε̃⁻，用滞后τ=2..252日（跳过1日）的正负残差与系统成分对未来21日收益做稠密Fama–MacBeth回归（式25），系数约束在27维一次样条基上；第m月只用日期不晚于m−1月末的系数估计并取扩展窗口平均。第4步：µ^{ε,full}=Σ_{τ=2..252}Σ_s λ̄^{ε,s}_{τ,m}·ε̃^s_{i,tm−τ}，µ^{ε,21}为前21个可用滞后（τ=2..22）之和，ASRES=µ^{ε,21}+0.40·(µ^{ε,full}−µ^{ε,21})（式28），交易分数只用残差成分。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度调仓；信号由日度残差构造。"
+    },
+    "universe": {
+      "evidence": [
+        "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP CIZ版中市值有效、正常交易状态的普通股，须有有效FF49行业分类；市值超过全市场总市值0.003%时纳入、低于0.002%时剔除（滞后带减少进出换手）；数据1972-01至2022-12，ASRES组合收益自1974-01起（前两年用于形成扩展窗口系数平均）。"
+    }
+  }
+}

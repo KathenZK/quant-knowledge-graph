@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "对投资者情绪更敏感（情绪β高）的股票在情绪上升期（1、3月）相对跑赢、在情绪下降期（9、10月）相对跑输。",
+    "missing": [
+      "情绪β的“已实现”高/低月按当年等权市场收益排序，须用当年已完成的月份；回归中如何处理当年未完成年份原文以滞后2–5年规避，细节未全写。",
+      "同文的周内（周一/周五）情绪β与复合情绪β属同一核心信号的不同频率版本，未单列。",
+      "NBER 2019修订稿未与JFE终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "nber.org/papers",
+  "lab": null,
+  "missing_information": [
+    "情绪β的“已实现”高/低月按当年等权市场收益排序，须用当年已完成的月份；回归中如何处理当年未完成年份原文以滞后2–5年规避，细节未全写。",
+    "同文的周内（周一/周五）情绪β与复合情绪β属同一核心信号的不同频率版本，未单列。",
+    "NBER 2019修订稿未与JFE终版比对；未回测。"
+  ],
+  "name": "情绪β月份翻转多空：1/3月做多高情绪β、9/10月做空高情绪β（Hirshleifer–Jiang–Meng）",
+  "native_source_id": "w24676:mood-beta-mood-month-decile-flip",
+  "one_line": "用过去2–5年间“情绪月”（1月、3月、9月、10月及每年市场收益最高与最低的各两个月）中个股超额收益对等权市场超额收益的10年滚动回归斜率作为情绪β；每逢1月和3月做多情绪β最高十分位、做空最低十分位，每逢9月和10月反向，其余月份不持仓；十分位等权。",
+  "record_id": "w24676:mood-beta-mood-month-decile-flip",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w24676/w24676.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "David Hirshleifer, Danling Jiang, Yuting Meng,《Mood Betas and Seasonalities in Stock Returns》NBER WP 24676（2018-06，2019-02修订；终版JFE 2020未比对）。中文定义自撰。",
+      "id": "v41-nber-w24676-mood-betas-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L515–518（PDF物理页13）；universe L515–518（PDF物理页13）；universe L844–855（PDF物理页21）；signal L559–564（PDF物理页14）；signal L616–626（PDF物理页15,16）；signal L844–855（PDF物理页21）；signal L878–880（PDF物理页21）；signal L865–868（PDF物理页21）；entry L1100–1104（PDF物理页27）；entry L2170–2175（PDF物理页51）；exit L1107–1110（PDF物理页27）；exit L2170–2175（PDF物理页51）；position L2170–2175（PDF物理页51）；risk L1119–1123（PDF物理页27）；risk L2183–2216（PDF物理页51,52）；timeframe L1107–1110（PDF物理页27）",
+      "revision": "NBER Working Paper 24676，\"June 2018, Revised February 2019\"，NBER官网托管（页脚另印SSRN 2880257电子副本说明）；62页；未与JFE 137(1):272–295（2020）终版比对；sha256 38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb",
+      "sha256": "38c32a1b0eb7f94b60f3d5829c117a186f68a57610dfe52efa7e927e4f8da3fb",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w24676/w24676.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v41-nber-w24676-mood-betas-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "NYSE/AMEX/NASDAQ普通股（CRSP），1963-01至2016-12。"
+    },
+    "cost": {
+      "evidence": [
+        "v41-nber-w24676-mood-betas-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "原文未扣交易成本；十分位等权含大量小盘股，每年仅四个月持仓但每次均为全组建仓。"
+    },
+    "entry": {
+      "evidence": [
+        "v41-nber-w24676-mood-betas-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个预测月按情绪β分十组：1月与3月做多最高十分位、做空最低十分位；9月与10月反转多空（做多最低、做空最高）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v41-nber-w24676-mood-betas-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月初建仓、月末平仓（按月收益计）；具体日内时点未写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v41-nber-w24676-mood-betas-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "只在1、3、9、10四个情绪月持仓，每月末平仓并在下一个情绪月按更新后的情绪β重排；其余月份空仓。"
+    },
+    "position": {
+      "evidence": [
+        "v41-nber-w24676-mood-betas-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "十分位组内等权，多空各一组（零成本）。"
+    },
+    "risk": {
+      "evidence": [
+        "v41-nber-w24676-mood-betas-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告个股层面情绪月β策略：月均收益2.74%（t=5.08），四因子α 2.69%（t=5.04），五因子α 2.85%（t=5.23）；在BW与KLN组合上五因子α分别为1.82%与1.99%。"
+    },
+    "signal": {
+      "evidence": [
+        "v41-nber-w24676-mood-betas-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "高情绪月=1月、3月，低情绪月=9月、10月（1963–2016年等权市场超额收益最高与最低的四个月）；另把每年等权CRSP超额收益最高与最低的两个月作“已实现”高/低情绪月。情绪β=个股在这些月份的超额收益对同期等权CRSP超额收益的回归斜率（10年滚动窗口、至少40个观测；一年8个月，重叠月计两次）；排序使用t−2至t−5年各年估计的平均。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v41-nber-w24676-mood-betas-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度信号，只在每年四个情绪月交易；回看为t−2至t−5年。"
+    },
+    "universe": {
+      "evidence": [
+        "v41-nber-w24676-mood-betas-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "全部个股（另以Baker–Wurgler 94个与KLN 79个特征组合作检验资产）；情绪β回归要求10年窗口内至少40个情绪月观测。"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "自身与共同持有关联股同时下跌（上涨）的大盘股随后反弹（回落）。",
+    "missing": [
+      "实施持有期（单月或重叠持有）未在引用段固定；原文为事件时买入持有。",
+      "回归(4)控制变量清单需另取Table II。",
+      "13F/基金持仓披露滞后未处理；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v36-lse-anton-polk-connected-stocks-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "基金持仓季度更新且有披露滞后；FCAPO*需复现回归(4)的控制变量。"
+    },
+    "calculation": {
+      "evidence": [
+        "v36-lse-anton-polk-connected-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月对大盘股按过去3个月自身收益分五分位，并独立按关联组合过去3个月收益分五分位；买入自身与关联组合都下跌的股票、卖出都上涨的股票：等权“低组”（双低）减等权“高组”（双高）。原文以买入持有累计超额收益（t+1至t+12）评估。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v36-lse-anton-polk-connected-stocks-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：共同基金资金流引起的价格压力在关联股间同步出现并随后反转。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v36-lse-anton-polk-connected-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "FCAP_ij,t=Σ_f(S^f_i,t·P_i,t+S^f_j,t·P_j,t)/(S_i,t·P_i,t+S_j,t·P_j,t)，f为季末同时持有i、j的主动基金；FCAP*为截面秩并标准化；FCAPO*为FCAP*对回归(4)全部控制变量正交化后的残差；FCAP**=rank(FCAPO*)（FCAP>0时），否则0；关联组合收益r^C_i,t=Σ_j FCAP**_ij,t−1·r_j,t/Σ_j FCAP**_ij,t−1。"
+    },
+    "inputs": {
+      "evidence": [
+        "v36-lse-anton-polk-connected-stocks-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP日/月与Compustat；NYSE/Amex/NASDAQ普通股（10/11）且市值高于NYSE中位数（大盘股）；CDA/Spectrum与CRSP共同基金库（MFLinks），剔除指数、税管与国际基金；样本1980–2008。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v36-lse-anton-polk-connected-stocks-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股大盘股交叉反转因子；与短期反转、基金逼售、关联公司动量对照。"
+    }
+  },
+  "identity_namespace": "personal.lse.ac.uk/polk",
+  "lab": null,
+  "missing_information": [
+    "实施持有期（单月或重叠持有）未在引用段固定；原文为事件时买入持有。",
+    "回归(4)控制变量清单需另取Table II。",
+    "13F/基金持仓披露滞后未处理；未回测。"
+  ],
+  "name": "共同基金持有关联股交叉反转",
+  "native_source_id": "ConnectedStocks-JF2014:connected-reversal",
+  "one_line": "以共同主动基金持股（FCAP，正交化后秩加权）为权重构造关联股组合收益；对大盘股按自身与关联组合过去3个月收益独立5×5分组，做多“双低”、做空“双高”，等权。",
+  "record_id": "ConnectedStocks-JF2014:connected-reversal",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://personal.lse.ac.uk/polk/research/ConnectedStocks.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Miguel Antón, Christopher Polk,《Connected Stocks》Journal of Finance 69(3), 2014。中文定义自撰。",
+      "id": "v36-lse-anton-polk-connected-stocks-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L289–302（PDF物理页6）；formula L970–995（PDF物理页19）；inputs L270–287（PDF物理页6）；calculation L942–950（PDF物理页18）；calculation L995–999（PDF物理页19）；calculation L1043–1055（PDF物理页20）",
+      "revision": "Anton/Polk《Connected Stocks》Journal of Finance 69(3), June 2014 期刊排版PDF；LSE作者页托管；29页；sha256 ef1af7ebcc5422ce3a8cb9b63d7daa2fe0fa7f59d94eebf3576afa738aca87fd",
+      "sha256": "ef1af7ebcc5422ce3a8cb9b63d7daa2fe0fa7f59d94eebf3576afa738aca87fd",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://personal.lse.ac.uk/polk/research/ConnectedStocks.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

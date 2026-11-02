@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "多类基本面与价量因子在中证1000内的截面超额，经风险约束优化转为跟踪误差可控的增强组合。",
+    "missing": [
+      "具体6个因子在付费私享会源码中；换手与风格约束单位不明；成交价格未写。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "qkg-harvest2000-v48/csi-index-enhancement/bigquant-2025-csi1000",
+  "lab": null,
+  "missing_information": [
+    "规则不全（rule_completeness=规则不全）：核心规则未完整公开，不计入完整策略目标，不能视为可直接复现。",
+    "具体6个因子在付费私享会源码中；换手与风格约束单位不明；成交价格未写。",
+    "来源自报绩效未验证（REPORTED_UNVERIFIED）；本库未回测（execution_trials=0）。"
+  ],
+  "name": "【规则不全】BigQuant社区中证1000多因子QP指数增强（6类Alpha等权、行业±10%、风格≤0.5、个股0–1%、5日调仓持100只）",
+  "native_source_id": "BQ2025:CSI1000-6class-alpha-QP-enhancement",
+  "one_line": "6类原始Alpha（价值/成长/规模/质量/波动率流动性等示例）经3倍MAD、Z-score、申万一级与市值中性（规模类不中性）后等权合成；以最大化合成Alpha为目标，行业偏离≤±10%、10个Barra风格偏离≤0.5、成分不低于0.3、双边换手<1.5、个股0–1%、满仓；每5个交易日调仓、100只；优化失败取得分前100。具体6个因子在付费私享会源码中。",
+  "record_id": "BQ2025:CSI1000-6class-alpha-QP-enhancement",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；规则不全；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留机构/作者、日期、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://bigquant.com/wiki/doc/GpphcQ6EdE"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "BigQuant社区，《中证1000指数增强策略》，页面更新2025-12-18（未登录快照显示作者xiaoshao；用户登录态浏览器显示作者“大田”、创建2025-12-17，两者待核）。",
+      "id": "v48-bigquant-xiaoshao-csi1000-enhancement-wiki",
+      "license": "版权归原机构/作者所有；本库仅存自撰中文摘要、来源指针与行段哈希，不含原文全文。页面无开源许可声明，代码不可转载。",
+      "locator": "页面“二、策略核心流程”1–4与“5. 回测与绩效评估”；快照行段：assets L174–174；universe L173–173；universe L161–161；signal L120–129；signal L139–143；signal L146–149；entry L153–164；exit L175–175；position L176–177；risk L181–183；cost L179–179；timeframe L172–172；timeframe L175–175",
+      "revision": "BigQuant wiki《中证1000指数增强策略》（BigQuant 2026年度私享会合集；未登录快照页显示由xiaoshao创建并更新于2025-12-18 08:10），HTML快照；源码分享页需登录未查看；sha256 c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695",
+      "sha256": "c036a3b374581d812ffa37f29e7c6519e62abdd3058e18b182a77d27d91ed695",
+      "supports": [
+        "SELECTED_PUBLISHED_DESCRIPTION"
+      ],
+      "url": "https://bigquant.com/wiki/doc/GpphcQ6EdE",
+      "verification": "PINNED_PUBLISHED_PAGE_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v48-bigquant-xiaoshao-csi1000-enhancement-wiki"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "A股；剔除北交所、科创板、ST、上市不足252天、股价低于1.2元。"
+    },
+    "cost": {
+      "evidence": [
+        "v48-bigquant-xiaoshao-csi1000-enhancement-wiki"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "买入万3、卖出万8。"
+    },
+    "entry": {
+      "evidence": [
+        "v48-bigquant-xiaoshao-csi1000-enhancement-wiki"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "最大化合成Alpha加权和；约束：行业偏离≤±10%、风格因子偏离0.5、指数成分≥0.3、双边换手<1.5、个股权重0–0.01、满仓。【缺】换手约束的期间单位、风格偏离单位（标准差？）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v48-bigquant-xiaoshao-csi1000-enhancement-wiki"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "【缺】成交价格（开盘/收盘/VWAP）未写；研究假设：信号日收盘后计算、次一交易日开盘成交。"
+    },
+    "exit": {
+      "evidence": [
+        "v48-bigquant-xiaoshao-csi1000-enhancement-wiki"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每5个交易日重新优化调仓。"
+    },
+    "position": {
+      "evidence": [
+        "v48-bigquant-xiaoshao-csi1000-enhancement-wiki"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "100只股票，权重由优化器给出；优化失败则取score最大的100只（失败时权重方式未写）。"
+    },
+    "risk": {
+      "evidence": [
+        "v48-bigquant-xiaoshao-csi1000-enhancement-wiki"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源自报（未验证）：2023年以来总收益74.08%、年化20.64%、最大回撤28.29%；年化超额15.31%、超额最大回撤11.5%、年化TE 9.7%、IR 1.56。"
+    },
+    "signal": {
+      "evidence": [
+        "v48-bigquant-xiaoshao-csi1000-enhancement-wiki"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "6类原始Alpha（示例：价值EP/BP、成长营收/净利增速、规模流通市值、质量ROE/资产周转率、波动率/流动性换手率/波动率倒数；另类类“文末策略暂未包含”）；中位数±3倍MAD（或0.1%–99.9% Winsorize）、全市场Z-score、市值与申万一级中性（规模类不中性）；等权合成后再去极值标准化。【缺】实际6个因子名称与字段。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v48-bigquant-xiaoshao-csi1000-enhancement-wiki"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "周度（5个交易日）；回测2023-01-01起，初始资金200万。"
+    },
+    "universe": {
+      "evidence": [
+        "v48-bigquant-xiaoshao-csi1000-enhancement-wiki"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "以中证1000为基准，组合中指数成分不低于0.3（原文“指数成分不低于0.3”）。"
+    }
+  }
+}

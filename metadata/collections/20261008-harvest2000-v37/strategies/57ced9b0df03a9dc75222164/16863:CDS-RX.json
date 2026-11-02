@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "主权违约风险高的国家货币获得更高的远期超额收益。",
+    "missing": [
+      "交易成本未在引用段给出。",
+      "版本日期未知（仓储标2013，正文提及2016会议）；期刊版未取。",
+      "期权策略（ST/RR/BF）同文另有，未纳入本记录；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "openaccess.city.ac.uk/eprint",
+  "lab": null,
+  "missing_information": [
+    "交易成本未在引用段给出。",
+    "版本日期未知（仓储标2013，正文提及2016会议）；期刊版未取。",
+    "期权策略（ST/RR/BF）同文另有，未纳入本记录；未回测。"
+  ],
+  "name": "主权CDS利差秩权重货币组合（RX）",
+  "native_source_id": "16863:CDS-RX",
+  "one_line": "每月末按各国5年期美元计价主权CDS利差水平做秩权重w=c(rank−均值)，美元中性1美元多/1美元空，远期买入高CDS（高主权风险）货币、卖出低CDS货币，持有一个月。",
+  "record_id": "16863:CDS-RX",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://openaccess.city.ac.uk/id/eprint/16863/1/Exchange%20Rates%20and%20Sovereign%20Risk.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Pasquale Della Corte, Lucio Sarno, Maik Schmeling, Christian Wagner,《Exchange Rates and Sovereign Risk》工作论文（City开放仓储；版本日期未知，期刊版未取）。中文定义自撰。",
+      "id": "v37-city-dssw-sovereign-risk-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L400–405（PDF物理页12）；assets L508–516（PDF物理页15）；universe L357–386（PDF物理页11,12）；signal L906–915（PDF物理页25,26）；entry L920–941（PDF物理页26）；exit L934–934（PDF物理页26）；position L929–932（PDF物理页26）",
+      "revision": "Della Corte/Sarno/Schmeling/Wagner《Exchange Rates and Sovereign Risk》工作论文（City Research Online 16863，仓储引文标注“(2013) SSRN”；正文致谢提及2016年AEA年会，确切版本日期未知）；83页；sha256 2f72fc8dcec42d9903cab709002c8077c826f877ca8945a88d92a2bb43981e5d",
+      "sha256": "2f72fc8dcec42d9903cab709002c8077c826f877ca8945a88d92a2bb43981e5d",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://openaccess.city.ac.uk/id/eprint/16863/1/Exchange%20Rates%20and%20Sovereign%20Risk.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v37-city-dssw-sovereign-risk-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Markit主权CDS：5年期、complete restructuring（CR）条款、美元计价；Markit主权评级。外汇对数超额收益rx_{i,t+1}=s_{i,t+1}−f_{i,t}（1月远期买入、到期即期卖出）。"
+    },
+    "cost": {
+      "evidence": [
+        "v37-city-dssw-sovereign-risk-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "引用段未给出交易成本与净收益。"
+    },
+    "entry": {
+      "evidence": [
+        "v37-city-dssw-sovereign-risk-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "秩权重w_{i,t}=c_t(rank(K_{i,t})−Σrank/N_t)，权重为正则t时在远期市场买入外币、t+1在即期卖出，为负则相反。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v37-city-dssw-sovereign-risk-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月末t时在远期市场建仓、t+1时在即期市场平仓；日内具体时点未在引用段写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v37-city-dssw-sovereign-risk-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末更新权重（持有一个月后按新秩重建）。"
+    },
+    "position": {
+      "evidence": [
+        "v37-city-dssw-sovereign-risk-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "缩放因子c_t使组合在建仓时1美元多、1美元空（美元中性）。"
+    },
+    "risk": {
+      "evidence": [
+        "v37-city-dssw-sovereign-risk-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "无止损；高CDS货币含新兴市场，尾部风险较高。"
+    },
+    "signal": {
+      "evidence": [
+        "v37-city-dssw-sovereign-risk-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "条件变量K_{i,t}=t时主权CDS利差水平（无需估计，可即时获得；替代变量为主权评级或对全球CDS冲击的滚动β）。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v37-city-dssw-sovereign-risk-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月度再平衡。"
+    },
+    "universe": {
+      "evidence": [
+        "v37-city-dssw-sovereign-risk-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "2003-01至2013-11，20个发达与新兴经济体货币对美元（剔除固定/准固定汇率与资本账户受限国：Chinn-Ito指数≥0且IMF粗分类3或4；需连续12个月数据）。"
+    }
+  }
+}

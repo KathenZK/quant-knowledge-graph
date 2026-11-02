@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "短期利率上升最多的货币随后超额收益高于下降最多的货币。",
+    "missing": [
+      "23个发达货币清单与欧元替代处理见附录，本记录未转写。",
+      "交易成本未在引用段给出。",
+      "工作论文2013-05版；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v36-ckgsb-ang-chen-yield-curve-fx-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月度利率数据；货币清单见原文附录B。"
+    },
+    "calculation": {
+      "evidence": [
+        "v36-ckgsb-ang-chen-yield-curve-fx-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "与基准carry同法：按信号排序，等权买入最高三分之一、卖出最低三分之一货币，每月再平衡；零成本，相当于做多1美元高信号货币、借入1美元低信号货币；面板为全部23个发达货币或仅G10。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v36-ckgsb-ang-chen-yield-curve-fx-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：短期利率变动反映货币政策与宏观状态变化，预测随后汇率超额收益，且与carry相关性低。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v36-ckgsb-ang-chen-yield-curve-fx-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Δ短期利率：Δr_t=r_t−r_{t−1}，r为一个月同业拆借利率（月度数据）；排序时可减去美国同类变量（零成本多空下不影响）。"
+    },
+    "inputs": {
+      "evidence": [
+        "v36-ckgsb-ang-chen-yield-curve-fx-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Global Financial Data月度一个月同业存款利率（短端）与10年国债收益率；样本1975-01起共415个月；月末即期汇率（每单位外币的美元价）；超额收益Π_{t+1}=S_{t+1}/S_t·(1+r^i_t)−(1+r^US_t)。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v36-ckgsb-ang-chen-yield-curve-fx-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "外汇横截面因子；与carry（利率水平）、货币动量、债券斜率carry对照。"
+    }
+  },
+  "identity_namespace": "ckgsb.com/Userfiles",
+  "lab": null,
+  "missing_information": [
+    "23个发达货币清单与欧元替代处理见附录，本记录未转写。",
+    "交易成本未在引用段给出。",
+    "工作论文2013-05版；未回测。"
+  ],
+  "name": "短期利率变动货币组合（ΔShort rate）",
+  "native_source_id": "Chen_Predict_FX-2013:delta-short-rate",
+  "one_line": "以1个月同业拆借利率的月度一阶差分Δr_t=r_t−r_{t−1}（相对美国）排序，月度等权做多最高三分之一、做空最低三分之一货币，23个发达货币或G10。",
+  "record_id": "Chen_Predict_FX-2013:delta-short-rate",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.ckgsb.com/Userfiles/doc/Chen_Predict_FX.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Andrew Ang, Joseph S. Chen,《Yield Curve Predictors of Foreign Exchange Returns》2013-05-20工作论文（CKGSB托管；未见正式期刊版）。中文定义自撰。",
+      "id": "v36-ckgsb-ang-chen-yield-curve-fx-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L1483–1485（PDF物理页37）；formula L645–651（PDF物理页16）；inputs L627–636（PDF物理页16）；inputs L652–658（PDF物理页16）；calculation L767–772（PDF物理页19）；calculation L782–784（PDF物理页20）；calculation L797–801（PDF物理页20）；calculation L807–808（PDF物理页20）",
+      "revision": "Ang/Chen《Yield Curve Predictors of Foreign Exchange Returns》This Version: 20 May 2013；长江商学院网站托管；50页；sha256 c808b76c9b4856f83f3b051ec8f9a3726830763efa751693c6746c30f8313d96",
+      "sha256": "c808b76c9b4856f83f3b051ec8f9a3726830763efa751693c6746c30f8313d96",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.ckgsb.com/Userfiles/doc/Chen_Predict_FX.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

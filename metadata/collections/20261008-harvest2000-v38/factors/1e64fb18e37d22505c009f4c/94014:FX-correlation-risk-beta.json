@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "在FX相关性离散度上升时表现差（高ΔFXC β）的货币平均超额收益更低，低β货币更高。",
+    "missing": [
+      "组内加权方式未在引用段写明（3组每组约3种货币，按等权推定）。",
+      "已实现相关性的具体估计细节见附录A，未转写。",
+      "作者稿版本日期未知，未与JFE终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v38-warwick-msv-correlation-risk-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "仅需公开日即期汇率；G10仅9种货币、每组3种，组合集中度高。"
+    },
+    "calculation": {
+      "evidence": [
+        "v38-warwick-msv-correlation-risk-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月用最近36个月数据滚动估计各货币rx对ΔFXC的β（仅用t时可得信息），把9种G10货币按β分3组：Pf1最低β、Pf3最高β；HMLC=多Pf3空Pf1，平均收益显著为负，做空HMLC（多低β、空高β）年化6.42%（t=3.47，Sharpe 0.82）；月度再平衡。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v38-warwick-msv-correlation-risk-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：FX相关性离散度逆周期，高离散度时期表现差的货币需补偿正风险溢价。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v38-warwick-msv-correlation-risk-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "条件相关性用过去3个月日即期汇率的已实现相关性近似；每期把36个货币对按条件相关性分十分位（顶/底各4对），FXC_t=顶部均值−底部均值；创新ΔFXC_{t+1}=t期顶部十分位各对相关性一阶差分均值−底部十分位对应均值（不因成分变动而直接差分FXC）。"
+    },
+    "inputs": {
+      "evidence": [
+        "v38-warwick-msv-correlation-risk-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "WM/Reuters（Datastream）日即期与1月远期汇率（外币/美元）；对数超额收益rx_{t+1}=f_t−s_{t+1}；基准样本9种G10货币（AUD、CAD、CHF、EUR、GBP、JPY、NOK、NZD、SEK），1996-01至2013-12（稳健性1984–2013），1999年前用德国马克代替欧元。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v38-warwick-msv-correlation-risk-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "G10外汇横截面风险因子；与全球波动率β、carry对照。"
+    }
+  },
+  "identity_namespace": "wrap.warwick.ac.uk/eprint",
+  "lab": null,
+  "missing_information": [
+    "组内加权方式未在引用段写明（3组每组约3种货币，按等权推定）。",
+    "已实现相关性的具体估计细节见附录A，未转写。",
+    "作者稿版本日期未知，未与JFE终版比对；未回测。"
+  ],
+  "name": "外汇相关性离散度风险β组合（ΔFXC）",
+  "native_source_id": "94014:FX-correlation-risk-beta",
+  "one_line": "以36个G10货币对3个月滚动已实现相关性，取最高与最低十分位均值之差为FXC；每月用36个月滚动回归估计各货币对ΔFXC的β，把9种G10货币分3组，做多低β组、做空高β组（HMLC取反）。",
+  "record_id": "94014:FX-correlation-risk-beta",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://wrap.warwick.ac.uk/94014/1/WRAP-international-correlation-risk-Mueller-2017.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Philippe Mueller, Andreas Stathopoulos, Andrea Vedolin,《International Correlation Risk》作者稿（Warwick WRAP开放仓储，CC BY-NC-ND 4.0；期刊版JFE 2017，未比对）。中文定义自撰。",
+      "id": "v38-warwick-msv-correlation-risk-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L237–251（PDF物理页5,6）；formula L319–322（PDF物理页7）；formula L343–345（PDF物理页7）；inputs L200–208（PDF物理页5）；calculation L345–365（PDF物理页7,8）；calculation L367–369（PDF物理页8）",
+      "revision": "Mueller/Stathopoulos/Vedolin《International Correlation Risk》作者稿（Warwick WRAP 94014，仓储引文标注Journal of Financial Economics 2017；稿件日期未知）；50页；sha256 971c3153b090b2d602b1c9fade9a79a9a3704cd1bf9a1962597ae38743d7d306",
+      "sha256": "971c3153b090b2d602b1c9fade9a79a9a3704cd1bf9a1962597ae38743d7d306",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://wrap.warwick.ac.uk/94014/1/WRAP-international-correlation-risk-Mueller-2017.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

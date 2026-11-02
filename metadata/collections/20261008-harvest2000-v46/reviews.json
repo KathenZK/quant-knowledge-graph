@@ -1,0 +1,2149 @@
+{
+  "batch_id": "20261008-harvest2000-v46",
+  "records": [
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M3727",
+            "M4556",
+            "M6463",
+            "M6538",
+            "M6994"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M3727",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0037-v2/metadata/source-records/M3727.json",
+              "row_sha256": "9fe79e08669b233006305aaafee4b731b7a146f80a8b6338a876ac4bbfa84e8b",
+              "sha256": "a71a9f1a5fcdf7089ad997c1257f5adee687f0c1946ab776f07aba183b3e88c8"
+            },
+            {
+              "native_id": "M4556",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0046-v2/metadata/source-records/M4556.json",
+              "row_sha256": "9c226a58467e90c8b47340afb550ab6bdd95e9fe12abc50ca11e2c4026c7679c",
+              "sha256": "568c44fc65b965ae7723abbb2858112b07bc21fd1a63fe929d10933859117a16"
+            },
+            {
+              "native_id": "M6463",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0065-v2/metadata/source-records/M6463.json",
+              "row_sha256": "233a9d30515ca9691473dc1490db3bc2bd777c7235da0f1ab4fc12dd882b50c2",
+              "sha256": "a62d1c18af9f9244ee7077517848f458219bd99a490daf9b9481643341db597c"
+            },
+            {
+              "native_id": "M6538",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0065-v2/metadata/source-records/M6538.json",
+              "row_sha256": "a5fc98ed96f6f15d8bc89aa2c5661904423382f3ffb4f4bb679abf3ce2bc22da",
+              "sha256": "75ef1a58649d6cb7704637bfd0629c5444699a3eabfc22a0fa5118750c136578"
+            },
+            {
+              "native_id": "M6994",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0070-v2/metadata/source-records/M6994.json",
+              "row_sha256": "79349ad106999b8834489e5356225210f2dd2ce8f2d323fc1b16d138fd06fdc6",
+              "sha256": "36ef0e56bb2cbf414e1eda8936054ff5fb0442922694d5c78f7a25ca0a648851"
+            }
+          ],
+          "scope": "coverage-map-v46.csv（M记录6971、因子变体1570、v1–v45集合455、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29、v45拒收17）按关键词与同市场同核心信号检索，并逐一核对v35–v45集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "asymmetric reversal",
+            "不对称反转",
+            "residual reversal",
+            "残差反转",
+            "JKP characteristics residual",
+            "特征回归残差",
+            "short-term reversal",
+            "短期反转"
+          ]
+        },
+        "compared_record_names": {
+          "M3727": "CXO·残差短反转：月频；36月三因子α/波动排序，多最低五分位空最高，区域内中性（CXO ResidualSTR）",
+          "M4556": "Blitz·Huij·Lansdorp·Verbeek·短残差反转：周频；FF3残差近1周收益；等权多残差最负、空最正；持1周（BHLV ResRev·W1）",
+          "M6463": "Ken French·短反转十分位多空：月频；NYSE断点按先验1月收益；市值加权多最低先验空最高先验（French·STRev·DecileL/S）",
+          "M6538": "Blitz·残差动量十分位多空：月末；FF3残差36月滚动；近12月剔近1月残差均值/残差波动；等权多最高空最低持1月（Blitz·ResidualMomentum·DecileL/S）",
+          "M6994": "Jegadeesh·短期反转十分位多空：月末；STreversal=上月收益；等权多最低空最高持1月（Jegadeesh·STreversal·DecileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以JKP特征加行业日度WLS残差（财报窗口置零）按符号与滞后加权预测下月残差收益的美股截面策略。M3727（CXO转述Blitz等残差短反转，36个月FF3残差α/波动排序）与M4556（Blitz等周度FF3残差反转）均为单期残差收益等权反转、不分符号与滞后；M6463、M6994为原始上月收益短期反转；M6538为12−1残差动量；目录与v35–v45集合检索“residual reversal/asymmetric/残差反转”无按正负号与日度滞后加权预测的记录。核心信号（不对称滞后加权的残差预测）与上述记录不同，但同属短期反转族，提请复核。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "BCD2026-US-equity-daily-WLS-residuals-on-151-JKP-rank-chars-plus-FF49-EAD-zeroed-sign-specific-lag2-252-spline-FM-expanding-forecast-ASRES-mu21-plus-0.40-rest-skip-1d-NYSE-quintile-VW-long-high-short-low-monthly",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 1033,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 246,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 258,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "6411dd80ee0ad1d9855a28abf4cdfde66835d04a077d29d5b8ae74be8b8b44bf",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 248,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 712,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 714,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              18
+            ],
+            "sha256": "d5781a5f422c4fe2e2c7e05082a8cfeaeca176800362da2abb48992a8a2b24f8",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 1030,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 194,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 205,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "05fc8d7e2fd229222150f964a55732455f3c5f45b2be082ca7b46bfdb5416790",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 3317,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 2387,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2432,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              58
+            ],
+            "sha256": "be3aa257c0f76e8ef0a3ae142b0be38f75421dc7d1a9e6fafad3c114241f401f",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 1054,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 1677,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1689,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              40
+            ],
+            "sha256": "d27281799da8fa42e3349fc25cc59f9848c5305df4766baf762b8e5ab00204a4",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 597,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 613,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "88cc17c5a83a6af882ced540738712a7e04f3a2450b4a2adbf859c6d42586793",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 352,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 368,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 371,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "69fe00920b109d2f99c16134646ef2bf0cf36fc8ec0a345d28261ba6cba18962",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 1563,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 1616,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1637,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              39
+            ],
+            "sha256": "da0da7ce203643989252cdb3ea40d3bbc5af8298f89be4f10e2c0d919f6ac3a8",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 597,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 613,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "88cc17c5a83a6af882ced540738712a7e04f3a2450b4a2adbf859c6d42586793",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 1030,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 194,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 205,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "05fc8d7e2fd229222150f964a55732455f3c5f45b2be082ca7b46bfdb5416790",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 1563,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 1616,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1637,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              39
+            ],
+            "sha256": "da0da7ce203643989252cdb3ea40d3bbc5af8298f89be4f10e2c0d919f6ac3a8",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 3317,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 2387,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2432,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              58
+            ],
+            "sha256": "be3aa257c0f76e8ef0a3ae142b0be38f75421dc7d1a9e6fafad3c114241f401f",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 3317,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 2387,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2432,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              58
+            ],
+            "sha256": "be3aa257c0f76e8ef0a3ae142b0be38f75421dc7d1a9e6fafad3c114241f401f",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 1054,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 1677,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1689,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              40
+            ],
+            "sha256": "d27281799da8fa42e3349fc25cc59f9848c5305df4766baf762b8e5ab00204a4",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 3317,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 2387,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2432,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              58
+            ],
+            "sha256": "be3aa257c0f76e8ef0a3ae142b0be38f75421dc7d1a9e6fafad3c114241f401f",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 326,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 1704,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1707,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              41
+            ],
+            "sha256": "734b0072df01110b7ee167053191acddb8bb085b52c8f70837acb7cf6049b3f7",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 511,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 1711,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1716,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              41
+            ],
+            "sha256": "d2fcf19556cd49544c150736a31519a54784fa5c7487d57c350a655df8827271",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 1017,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 281,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 295,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "054f13a7cce004b78d74ffc5d7673383fb33ccc53b770bb0e774366faff0425e",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 352,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 368,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 371,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "69fe00920b109d2f99c16134646ef2bf0cf36fc8ec0a345d28261ba6cba18962",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 569,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 405,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 412,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "9d76dc6dac5c6ffa5643a0b49288976e94213179766991d10f8c5828130b544d",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 1536,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 459,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 478,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "8f49998b34b1cb57ac746ddc693e5de50ccb793930eea3bcff3e91af37eb910f",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 597,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 613,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "88cc17c5a83a6af882ced540738712a7e04f3a2450b4a2adbf859c6d42586793",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 423,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 1469,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1473,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              35
+            ],
+            "sha256": "e6cb758a31074cb47c1fe1f59b258087cedd3f14f8a7eab06de86051dae76b42",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 1563,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 1616,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1637,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              39
+            ],
+            "sha256": "da0da7ce203643989252cdb3ea40d3bbc5af8298f89be4f10e2c0d919f6ac3a8",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 2088,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 1638,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1676,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              39,
+              40
+            ],
+            "sha256": "c38e5542708903cb8398e92683eae102d8fce81ec96349794ca513428bcc1952",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 597,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 613,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 619,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "88cc17c5a83a6af882ced540738712a7e04f3a2450b4a2adbf859c6d42586793",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 1563,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 1616,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1637,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              39
+            ],
+            "sha256": "da0da7ce203643989252cdb3ea40d3bbc5af8298f89be4f10e2c0d919f6ac3a8",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 1033,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 246,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 258,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "6411dd80ee0ad1d9855a28abf4cdfde66835d04a077d29d5b8ae74be8b8b44bf",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          },
+          {
+            "bytes": 1563,
+            "derived_text_sha256": "bc8a79351faf4ccfda009e50abd649a3b0ec85a42d3a03806380d9d6f92e9f39",
+            "first_line": 1616,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1637,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              39
+            ],
+            "sha256": "da0da7ce203643989252cdb3ea40d3bbc5af8298f89be4f10e2c0d919f6ac3a8",
+            "source_id": "v46-nber-w35840-baldi-lanfranchi-collin-dufresne-daniel-asymmetric-reversals-pdf",
+            "source_sha256": "a72ead091142069369ba99a1780e723a3f6aa5b690ebb4bf87f709fe04460de6"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "nber.org/papers/w35840",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "BCD2026:asymmetric-residual-reversal-ASRES"
+      ],
+      "record_id": "BCD2026:asymmetric-residual-reversal-ASRES",
+      "record_sha256": "03202969b7fc6d501fa6e8e3d1e5ec5c5ccedec71a359f136c30a27d6cc4c25f",
+      "reviewed_at": "2026-10-08T12:58:15+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v46 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M5604",
+            "M3642",
+            "M4781",
+            "M3611",
+            "M3495"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M5604",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0056-v2/metadata/source-records/M5604.json",
+              "row_sha256": "fde519fa8a23208e458a5294e15c6a46977ccf45d0756056af5df5c5b4021324",
+              "sha256": "e073a1c776d4d6090c10df497c74a9d7e550b494269bde457e4a4f909e2c99b5"
+            },
+            {
+              "native_id": "M3642",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3642.json",
+              "row_sha256": "50aef548134d1c2d1d91f242da8cd049331661ffcf6f6a9324c478fb4fc4729a",
+              "sha256": "b52e9520653c80e74ce4ddd45c95b59bc516fc021759bf7ab0fbdf361869f543"
+            },
+            {
+              "native_id": "M4781",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0048-v2/metadata/source-records/M4781.json",
+              "row_sha256": "9d9ef4fc4e9d3b1b8a3967d7c0f02c084bc6ecf2e65441076f48378935e7e4f1",
+              "sha256": "b3a7feeb554a4183b1626b8c68d3f88a8bf4e25e278e919a3d09be46db6e97aa"
+            },
+            {
+              "native_id": "M3611",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3611.json",
+              "row_sha256": "c0a7251f312214662fd5ac473aebc19759b8c115d74310e9f364a2399828a7e9",
+              "sha256": "c353fea54a2fa1c9cc8cea07e7842ecb29d35d4fc52efe9f129edc3f210ffdbe"
+            },
+            {
+              "native_id": "M3495",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0035-v2/metadata/source-records/M3495.json",
+              "row_sha256": "c6e7a54c2e0e4ac1e6de56c8c87b7457c3fdabf6ca35e79cbb768079f585d438",
+              "sha256": "f59abf82719b1599e0396d061e3f9bfb3b9c316f38713a906e3bdfcf3661ed39"
+            }
+          ],
+          "scope": "coverage-map-v46.csv（M记录6971、因子变体1570、v1–v45集合455、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29、v45拒收17）按关键词与同市场同核心信号检索，并逐一核对v35–v45集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "correlation neglect",
+            "相关性忽视",
+            "newsy month",
+            "新闻月",
+            "repetitive month",
+            "重复月",
+            "market timing",
+            "市场择时"
+          ]
+        },
+        "compared_record_names": {
+          "M3495": "美股ETF：月末；SPY与TLT按上月收益排名，满仓持有上月最强者一个月（QS SPY/TLT Bond Rotation·FAQ）",
+          "M3611": "QP全球股指季节·万圣节：每年11–4月持有全球股票工具，5–10月现金（QP World Equity Seasonality）",
+          "M3642": "CXO·AA–WMT财报季Long Only：日频；AA→WMT财报季持现金，季外满仓SPY（CXO AA–WMT Long Only）",
+          "M4781": "CXO·AA–WMT财报季多空：日频；季外满仓SPY，财报季满仓SH（CXO AA–WMT·Long-Short）",
+          "M5604": "Quantpedia·短期反转月频：月末；若SPY近21日收益<0则次月满仓SPY否则BIL（STRev·21d·SPY）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "按季度内月份交替符号的市场收益自相关择时美股大盘。M5604为SPY上月收益<0则次月满仓（不分月份的短期反转择时），M3642/M4781为AA–WMT财报季持现金或做空（按财报日历、不用前期收益），M3611为万圣节季节性，M3495为SPY/TLT上月收益轮动；集合BEf14-CHSS:EarnRank为个股盈利季节性排名（截面）；目录与v35–v45集合检索“newsy/repetitive/correlation neglect/earnings extrapolation”无记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "GW2026-US-market-monthly-timing-newsy-first-month-repetitive-second-month-signal-plus-or-minus-mkt-nr-minus-expanding-mean-zero-third-month-weight-prop-vol-target-5pct-truncate-3",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 691,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 348,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 359,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "449f1b4bc1372816070cc56e153dc8351b3dcf348e22cd846082df98edb19115",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          },
+          {
+            "bytes": 910,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 1715,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1724,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              48
+            ],
+            "sha256": "8384907c17f3b91979e141f8c72669dade6c4bc4cd2d4b7af70a3113dbb05106",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 910,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 1715,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1724,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              48
+            ],
+            "sha256": "8384907c17f3b91979e141f8c72669dade6c4bc4cd2d4b7af70a3113dbb05106",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          },
+          {
+            "bytes": 555,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 970,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 975,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "335bb7035de2bbe20403f23641a1b34abde963ed0ebe176d778c3d4ed169aacc",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 759,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 455,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 462,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "1510d9fa69761d9b1e4be842c81de1db674ed7ed684ffa5ebc07cd409d3ee6b9",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          },
+          {
+            "bytes": 691,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 348,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 359,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "449f1b4bc1372816070cc56e153dc8351b3dcf348e22cd846082df98edb19115",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          },
+          {
+            "bytes": 842,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 480,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 489,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "3d56afcd453102265860785a24f4e70404fe764d2ad613c3fa95009ef4458c61",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 910,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 1715,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1724,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              48
+            ],
+            "sha256": "8384907c17f3b91979e141f8c72669dade6c4bc4cd2d4b7af70a3113dbb05106",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 910,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 1715,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1724,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              48
+            ],
+            "sha256": "8384907c17f3b91979e141f8c72669dade6c4bc4cd2d4b7af70a3113dbb05106",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          },
+          {
+            "bytes": 629,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 385,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 391,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "a550358509b19ab7d30ff848f2e306af2266b793a14b98bdf39ebbaa4f662dbf",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          },
+          {
+            "bytes": 555,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 970,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 975,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "335bb7035de2bbe20403f23641a1b34abde963ed0ebe176d778c3d4ed169aacc",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 629,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 385,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 391,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "a550358509b19ab7d30ff848f2e306af2266b793a14b98bdf39ebbaa4f662dbf",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          },
+          {
+            "bytes": 657,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 464,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 470,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "e59acf16565e998831c7f3d457d2867479b0c9f682c054f6930882dff9f3e204",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          },
+          {
+            "bytes": 842,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 480,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 489,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              14
+            ],
+            "sha256": "3d56afcd453102265860785a24f4e70404fe764d2ad613c3fa95009ef4458c61",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 820,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 334,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 343,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "2ad12aa0ffe4d785c3e84db2cccb35ce89973c19edcb1e93d1ab47661d01ea81",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          },
+          {
+            "bytes": 691,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 348,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 359,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "449f1b4bc1372816070cc56e153dc8351b3dcf348e22cd846082df98edb19115",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          },
+          {
+            "bytes": 759,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 455,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 462,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "1510d9fa69761d9b1e4be842c81de1db674ed7ed684ffa5ebc07cd409d3ee6b9",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          },
+          {
+            "bytes": 910,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 1715,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1724,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              48
+            ],
+            "sha256": "8384907c17f3b91979e141f8c72669dade6c4bc4cd2d4b7af70a3113dbb05106",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 910,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 1715,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1724,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              48
+            ],
+            "sha256": "8384907c17f3b91979e141f8c72669dade6c4bc4cd2d4b7af70a3113dbb05106",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 759,
+            "derived_text_sha256": "de3fca0f4552393bda7879ae2838d61e0cbbb8adfc2d6b65e77e04b249ff6110",
+            "first_line": 455,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 462,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "1510d9fa69761d9b1e4be842c81de1db674ed7ed684ffa5ebc07cd409d3ee6b9",
+            "source_id": "v46-nber-w35753-guo-wachter-correlation-neglect-pdf",
+            "source_sha256": "817d4e0995a0af257d1a5ffb7f1941f59e9300586d518c27d08bad730fe050f2"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "nber.org/papers/w35753",
+      "markets": [
+        "US_EQUITY_INDEX"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "GW2026:newsy-repetitive-month-market-timing"
+      ],
+      "record_id": "GW2026:newsy-repetitive-month-market-timing",
+      "record_sha256": "4f7342c0f6b11807d0941e0d4bf989d1b58a29d0ad182fd799aa70bfe88e7cc3",
+      "reviewed_at": "2026-10-08T12:58:15+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v46 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4426",
+            "M7010",
+            "M3912",
+            "M4421",
+            "M3588"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4426",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4426.json",
+              "row_sha256": "519e4040bf981d9bd7149f1f3b723033035fef2e41ed6826ca669699af521af9",
+              "sha256": "f1eb7f56ad6fe8800b3635de3bbe664cf86d4f6749af933c507376842151b0a2"
+            },
+            {
+              "native_id": "M7010",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0070-v2/metadata/source-records/M7010.json",
+              "row_sha256": "4dbbbb115bb98636c66a070b9d8d95ccea977a06c8a20102db29aa4996308cb1",
+              "sha256": "0cd60ef9d5c2386ed9b50fd4a8bdc844f9484b6cc07328d5a2331004afe92953"
+            },
+            {
+              "native_id": "M3912",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0039-v2/metadata/source-records/M3912.json",
+              "row_sha256": "f3c5dbfa6a345fa6634b8fbbc1b3dad77899bfaf482049ca2b010810e30a1a9c",
+              "sha256": "adef89d80b8554588cec341c6ea3f765a558439b10f4d51670b7400df3a62394"
+            },
+            {
+              "native_id": "M4421",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4421.json",
+              "row_sha256": "da543b1a0a6b8a50213dab572a320fc54aefdaba8571b73322644cb5bbff36fa",
+              "sha256": "8eb5c8d87eb9dde62f8c038062c7260cba53e940e1c0f0c4e51e174f2b70fc77"
+            },
+            {
+              "native_id": "M3588",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3588.json",
+              "row_sha256": "e022bbb02f72f52353afebda92eeccb6787dcf0ff06cb55cfde9c045d25ec2ca",
+              "sha256": "784d4b1ee6c994acdfc20bea6284b1ebb4292c174e14d264c36ce6aa7a69bd00"
+            }
+          ],
+          "scope": "coverage-map-v46.csv（M记录6971、因子变体1570、v1–v45集合455、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29、v45拒收17）按关键词与同市场同核心信号检索，并逐一核对v35–v45集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "disagreement of disagreement",
+            "分歧的分歧",
+            "composite disagreement",
+            "复合分歧",
+            "short interest",
+            "空头利息",
+            "expected idiosyncratic skewness",
+            "预期特异偏度"
+          ]
+        },
+        "compared_record_names": {
+          "M3588": "QP空头利息多空：美股；月按空头利息/流通股本十分位；最低档多最高档空；等权月再平衡（QP Short Interest·LS）",
+          "M3912": "QC·预期特异偏度底5%市值加权：月频；成交额等筛Top200；FF三因子残差预期偏度最低5%按市值加权做多（QC IdioSkew·B5%·VW）",
+          "M4421": "Ang·Hodrick·Xing·Zhang·特异波动：月频；上月日收益相对FF3残差σ；市值加权五分位；多最低IVOL、空最高IVOL持1月（AHXZ IVOL·Q1/Q5·VW）",
+          "M4426": "Diether·Malloy·Scherbina·分析师预测分歧：月初；Disp=σ(FY1 EPS)/|μ|；价>$5；等权五分位；多最低分歧、空最高持1月（DMS Disp·Q1/Q5·EW）",
+          "M7010": "Diether·分析师预测分歧五分位多空：月末；预测分歧=σ(EPS预测)/|μ|；等权多最低空最高持1月（Diether·ForecastDisp·QuintileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "把特质波动、空头利息、预期特异偏度、分析师分歧、分析师人数与收益波动按模型式(15)非线性合成的美股截面因子。M4426/M7010为单一分析师预测分歧排序，M3912为预期特异偏度最低组做多，M4421为FF3特质波动，M3588为空头利息比排序；本条信号为成分的指数交互复合，排序结果不等同于任一成分；目录与v35–v45集合检索“disagreement of disagreement/composite disagreement/复合分歧”无记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "GHK2026-US-equity-DIS-ln1p-A-IVOL2-times-1plusSIR-times-exp-half-P2overA2-ISKEW-over-ANALYSTADJ-over-AFD2-plus-1-over-RVOL2-gamma2-exclude-neg-ISKEW-decile-VW-long-low-short-high-monthly",
+      "entity_type": "factor",
+      "field_spans": {
+        "availability": [
+          {
+            "bytes": 2099,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 2087,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2134,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "41a8862fab6d2751b40ac8751d57b1c12b55711cb718c75748071e13dc031993",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          },
+          {
+            "bytes": 924,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1627,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1647,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              24
+            ],
+            "sha256": "9f58f9a8de1002e6550bf14f5630ce1d2c81fa5fc38c53a27b609167fb50fbce",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          },
+          {
+            "bytes": 299,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1708,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1714,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              25
+            ],
+            "sha256": "8805199a0a7fae9ddbeaf1b2e4d7592f9b5f420309efa9f1d57164ec35aa16a3",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          }
+        ],
+        "calculation": [
+          {
+            "bytes": 275,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1995,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2000,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29
+            ],
+            "sha256": "8ee92b230e8f2b0fea5d4c0d0cd5c6cad0749224782b5c164b135da6be4c0a72",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          },
+          {
+            "bytes": 181,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 2002,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2005,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              29
+            ],
+            "sha256": "b4672c60ee05e75d066c2fd391ceabcae27b7a7edd772ec96b5d36435c827cff",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          },
+          {
+            "bytes": 2738,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 2014,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2044,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              30
+            ],
+            "sha256": "7ab7cfec6d877f0cc864b37a652ea3bcf5df6eee6f9ecd92a9c3dfeee02138f5",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 1012,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1488,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1509,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22,
+              23
+            ],
+            "sha256": "889b3873467d756af8209dc65051af802b59570c2a3c0d4b017aeb2577db2636",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          },
+          {
+            "bytes": 106,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1718,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1718,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              25
+            ],
+            "sha256": "89761bbc44b9ea3c0be9b6a819d7734030554fe6d41e4fe122e71113f371ad87",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          },
+          {
+            "bytes": 559,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1670,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1681,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              25
+            ],
+            "sha256": "f9c287752df7c53421f04e2af8d3ba4f08b00d834e26a244eda7f8f0c5c935c1",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          },
+          {
+            "bytes": 367,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1751,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1756,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "52955af4ffafe2e3ec9665507a4b9738dbc6aceee9e133418fb82c5af75f4b52",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 657,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1684,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1697,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              25
+            ],
+            "sha256": "6615e967eb5e60e9b42217daeeb67bd7532fd16daee8983c1f10c2b84f6afb70",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          },
+          {
+            "bytes": 299,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1708,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1714,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              25
+            ],
+            "sha256": "8805199a0a7fae9ddbeaf1b2e4d7592f9b5f420309efa9f1d57164ec35aa16a3",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          },
+          {
+            "bytes": 924,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1726,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1748,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "ade9f77c2713c974a1a4d0c3cdabc29ff1818333366e16de8b342269ec8a7f1f",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          },
+          {
+            "bytes": 924,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1627,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1647,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              24
+            ],
+            "sha256": "9f58f9a8de1002e6550bf14f5630ce1d2c81fa5fc38c53a27b609167fb50fbce",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          },
+          {
+            "bytes": 333,
+            "derived_text_sha256": "38d267348c1f2a4d920db6b7b32e2a5586a04e96b66c4050ba28f737ad170c9b",
+            "first_line": 1660,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1667,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              25
+            ],
+            "sha256": "d0108eb30685fda87d14dd4b12a0f491c57063ac48c43a8bb8df96f3cd0229a0",
+            "source_id": "v46-nber-w35049-goulding-harvey-kurtovic-disagreement-of-disagreement-pdf",
+            "source_sha256": "5b0f1030868faf3d32431af7103af1f6cc52f087915f2d7fb3321768838d0a3d"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "nber.org/papers/w35049",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "GHK2026:composite-disagreement-DIS"
+      ],
+      "record_id": "GHK2026:composite-disagreement-DIS",
+      "record_sha256": "5beccb5f3582b7179b21e999fcf571ee02b5c3f94ec5d4b24800c258e5383b1e",
+      "reviewed_at": "2026-10-08T12:58:15+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v46 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M6463",
+            "M6994",
+            "M4448",
+            "M2614",
+            "M3756"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M6463",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0065-v2/metadata/source-records/M6463.json",
+              "row_sha256": "233a9d30515ca9691473dc1490db3bc2bd777c7235da0f1ab4fc12dd882b50c2",
+              "sha256": "a62d1c18af9f9244ee7077517848f458219bd99a490daf9b9481643341db597c"
+            },
+            {
+              "native_id": "M6994",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0070-v2/metadata/source-records/M6994.json",
+              "row_sha256": "79349ad106999b8834489e5356225210f2dd2ce8f2d323fc1b16d138fd06fdc6",
+              "sha256": "36ef0e56bb2cbf414e1eda8936054ff5fb0442922694d5c78f7a25ca0a648851"
+            },
+            {
+              "native_id": "M4448",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4448.json",
+              "row_sha256": "87b6328033baa165f5770079502f7c86e0cf36e556085c46a65c8ec033586900",
+              "sha256": "c2694bcd5ddac0f274971ffae2e3aca102f14782b2b1c37e691539142e0a6589"
+            },
+            {
+              "native_id": "M2614",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0027-v2/metadata/source-records/M2614.json",
+              "row_sha256": "9e46d35d3269cf998cf5966cb9fc5b582b51ded255903ffb67ddb53b06872eae",
+              "sha256": "0b7a8d983ba3595768acc4f5eb421c4ed96390ab078bc4efcd3d604d6a99b577"
+            },
+            {
+              "native_id": "M3756",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0038-v2/metadata/source-records/M3756.json",
+              "row_sha256": "7572e9d60a4a73c9192457de87b9da94ab197fb048b46cd0483b60440b46fad6",
+              "sha256": "7a699a740180a48bde4a4f64e3a6f5a5b91a9e73b2fc614130f88d855d9de2b4"
+            }
+          ],
+          "scope": "coverage-map-v46.csv（M记录6971、因子变体1570、v1–v45集合455、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29、v45拒收17）按关键词与同市场同核心信号检索，并逐一核对v35–v45集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "price-path convexity",
+            "价格路径凸性",
+            "curvature",
+            "曲率",
+            "short-horizon return predictability",
+            "短期收益可预测性"
+          ]
+        },
+        "compared_record_names": {
+          "M2614": "国金金工斜率凸性因子（订单簿斜率⊕凸性；中证1000；周频）",
+          "M3756": "CXO·高MAX周内反转：周频；上上周MAX最高五分位内，按上周收益多低空高（CXO MAX·WR·Rev）",
+          "M4448": "Da·Gurun·Warachka·蛙锅连续信息动量：月末；价>$5；PRET=12−1；ID=sgn(PRET)×(%负日−%正日)；PRET×ID五分位序贯；连续信息内多赢家空输家重叠持6月（DGW FIP·ContMom·6m）",
+          "M6463": "Ken French·短反转十分位多空：月频；NYSE断点按先验1月收益；市值加权多最低先验空最高先验（French·STRev·DecileL/S）",
+          "M6994": "Jegadeesh·短期反转十分位多空：月末；STreversal=上月收益；等权多最低空最高持1月（Jegadeesh·STreversal·DecileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以当月日收盘价路径曲率排序的美股截面因子。M6463、M6994为上月收益短期反转（作者在FF5+SREV下α仍为0.96%/月，并与上月收益双排后仍显著），M4448为蛙锅信息离散度（12−1动量内正负日占比），M3756为高MAX内周反转，M2614为A股订单簿斜率凸性（不同市场与数据）；目录与v35–v45集合检索“convexity/price path/凸性/曲率”无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "GulenWoeppel2026-US-equity-monthly-convexity-midpoint-first-last-close-minus-mean-close-over-midpoint-split-adjusted-not-cash-div-price-ge5-quintile-VW-long-low-short-high-1m",
+      "entity_type": "factor",
+      "field_spans": {
+        "availability": [
+          {
+            "bytes": 735,
+            "derived_text_sha256": "308a245f4ff0816919c3d335fb194e4a7ad2d95ef7ee01ec8c1eb373cbda3ad6",
+            "first_line": 528,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 537,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "ae25fcbefab8e013a252e1895a04a0e06856e71cba55d35a530fc99da3004c16",
+            "source_id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+            "source_sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425"
+          },
+          {
+            "bytes": 459,
+            "derived_text_sha256": "308a245f4ff0816919c3d335fb194e4a7ad2d95ef7ee01ec8c1eb373cbda3ad6",
+            "first_line": 865,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 870,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "71d92aa9352373f91f6fe288e65feda48a2ba19f331d70fe0d9a9f5f2c4c6ba1",
+            "source_id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+            "source_sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425"
+          },
+          {
+            "bytes": 2686,
+            "derived_text_sha256": "308a245f4ff0816919c3d335fb194e4a7ad2d95ef7ee01ec8c1eb373cbda3ad6",
+            "first_line": 704,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 726,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "5b331807a3066f70c282da1164ee56b360c87a80d64e0efefaeb6827430cebc9",
+            "source_id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+            "source_sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425"
+          }
+        ],
+        "calculation": [
+          {
+            "bytes": 727,
+            "derived_text_sha256": "308a245f4ff0816919c3d335fb194e4a7ad2d95ef7ee01ec8c1eb373cbda3ad6",
+            "first_line": 549,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 558,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "e4519c9564ab6dc611a8f19be6c07efadb37c1da44b79d62d995f3f38e0e3809",
+            "source_id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+            "source_sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425"
+          },
+          {
+            "bytes": 1547,
+            "derived_text_sha256": "308a245f4ff0816919c3d335fb194e4a7ad2d95ef7ee01ec8c1eb373cbda3ad6",
+            "first_line": 578,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 595,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "03b19b3082b6ecdec1ced0cbc5bba8be4df990455c3dac08430294f8e51a23b2",
+            "source_id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+            "source_sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425"
+          },
+          {
+            "bytes": 2686,
+            "derived_text_sha256": "308a245f4ff0816919c3d335fb194e4a7ad2d95ef7ee01ec8c1eb373cbda3ad6",
+            "first_line": 704,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 726,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "5b331807a3066f70c282da1164ee56b360c87a80d64e0efefaeb6827430cebc9",
+            "source_id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+            "source_sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425"
+          },
+          {
+            "bytes": 339,
+            "derived_text_sha256": "308a245f4ff0816919c3d335fb194e4a7ad2d95ef7ee01ec8c1eb373cbda3ad6",
+            "first_line": 121,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 124,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              3
+            ],
+            "sha256": "55516c65a6f9a524c97ceb9651c62b0ca4cfd0d4ee42bca519ba6b5555dca30b",
+            "source_id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+            "source_sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425"
+          },
+          {
+            "bytes": 459,
+            "derived_text_sha256": "308a245f4ff0816919c3d335fb194e4a7ad2d95ef7ee01ec8c1eb373cbda3ad6",
+            "first_line": 865,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 870,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              16
+            ],
+            "sha256": "71d92aa9352373f91f6fe288e65feda48a2ba19f331d70fe0d9a9f5f2c4c6ba1",
+            "source_id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+            "source_sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 2334,
+            "derived_text_sha256": "308a245f4ff0816919c3d335fb194e4a7ad2d95ef7ee01ec8c1eb373cbda3ad6",
+            "first_line": 256,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 290,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5,
+              6
+            ],
+            "sha256": "901e25aeae94fd5113f9ee91efc8e8e4b3dc9d1e591cffa7803020a8e4f60466",
+            "source_id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+            "source_sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 735,
+            "derived_text_sha256": "308a245f4ff0816919c3d335fb194e4a7ad2d95ef7ee01ec8c1eb373cbda3ad6",
+            "first_line": 528,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 537,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "ae25fcbefab8e013a252e1895a04a0e06856e71cba55d35a530fc99da3004c16",
+            "source_id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+            "source_sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425"
+          },
+          {
+            "bytes": 2334,
+            "derived_text_sha256": "308a245f4ff0816919c3d335fb194e4a7ad2d95ef7ee01ec8c1eb373cbda3ad6",
+            "first_line": 256,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 290,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5,
+              6
+            ],
+            "sha256": "901e25aeae94fd5113f9ee91efc8e8e4b3dc9d1e591cffa7803020a8e4f60466",
+            "source_id": "v46-jfqa-gulen-woeppel-price-path-convexity-oa-pdf",
+            "source_sha256": "ac22533436b5cb268e96e8f079e87f4ab85c8332d6588ffdcb7f69bd8cf60425"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "cambridge.org/S0022109025101725",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "GWo2026:price-path-convexity"
+      ],
+      "record_id": "GWo2026:price-path-convexity",
+      "record_sha256": "f1ca346d9cb2c26f959aa2a549df0a0bd897c7ec55607610ac0887ba023bc581",
+      "reviewed_at": "2026-10-08T12:58:15+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v46 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "investment_factor",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4538",
+            "M4533",
+            "M4558",
+            "M4430",
+            "M0380"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4538",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4538.json",
+              "row_sha256": "2b2818c21669e5c003f90fb0b8f92cae87e560d30bc50d88e2e01bca862e8bf9",
+              "sha256": "fc7454f091d12c2270f50487c64c4bc80b97b10268e7a24b04a58b6f92f12d5a"
+            },
+            {
+              "native_id": "M4533",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4533.json",
+              "row_sha256": "4d039fa8cf34d221d8156940b4cd9b00856058252e3cd29f3547a14434f450e5",
+              "sha256": "0807dec34175eeee52e92d261a6b4c2d4efeb902918cc80bafcb3c4b9c78094f"
+            },
+            {
+              "native_id": "M4558",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0046-v2/metadata/source-records/M4558.json",
+              "row_sha256": "77ee32e7d0709413684a058dfdedeb692076495b9de965965218b99baeda4a94",
+              "sha256": "e694ce0ac0a5993ca59dbf69cb07b949e3c2e40e96964af046c6ba7c0c5eee9e"
+            },
+            {
+              "native_id": "M4430",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4430.json",
+              "row_sha256": "b5d0455814e789fcbf0c8d385ddde77598031083dba533503ce3b9542e2b458d",
+              "sha256": "a407c0108a803b6088aa5472804bc99abe64b8a54b4dbb05c212891ed632234f"
+            },
+            {
+              "native_id": "M0380",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0380.json",
+              "row_sha256": "d25d851cf01ed45de54820bcba4e15102c7de16d7b2e7bdcbb51301e63168e2a",
+              "sha256": "00322d5879ef432d9d860a484b07de611676ed8deedf2272ee1f16ec0a8bfa97"
+            }
+          ],
+          "scope": "coverage-map-v46.csv（M记录6971、因子变体1570、v1–v45集合455、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29、v45拒收17）按关键词与同市场同核心信号检索，并逐一核对v35–v45集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "institutional liquidity cost",
+            "机构流动性成本",
+            "BJZZ retail order imbalance",
+            "BJZZ零售订单不平衡",
+            "subpenny internalized trades",
+            "子便士内部化成交",
+            "liquidity premium",
+            "流动性溢价"
+          ]
+        },
+        "compared_record_names": {
+          "M0380": "Bid-ask spread（BidAskSpread）",
+          "M4430": "Amihud·非流动性ILLIQ：年6月末；ILLIQ=上年日均|R|/成交额；市值加权十分位；多最高ILLIQ、空最低持12月（Amihud ILLIQ·D10/D1·VW）",
+          "M4533": "Kaniel·Saar·Titman·个体投资者净买入：周频；NIT相对近9周自身分布；等权/市值多最强买入十分位、空最强卖出；持约1–4周（KST NIT·D10/D1）",
+          "M4538": "Boehmer·Jones·Zhang·Zhang·零售订单流不平衡：周频；零售可识别买卖净不平衡；等权多最高五分位、空最低；持约1周（BJZZ MROIB·Q5/Q1·EW）",
+          "M4558": "Hvidkjaer·小单买卖压力：月频；小额成交主动买占比/失衡；等权多最低小单买压、空最高；持1月（Hvid SmallTrade·BImb）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以BJZZ内部化零售成交不平衡绝对值月均衡量机构流动性成本的美股截面因子。M4538为BJZZ有符号零售不平衡（周频，做多净买入），方向与构造不同；M4533 Kaniel–Saar–Titman个人投资者净买入与M4558 Hvidkjaer小单买压为有符号订单流；M4430 Amihud ILLIQ与M0380买卖价差为传统流动性代理，作者表5显示它们在2010–2019年不定价而ILC定价；v35拒收R35-033为BJZZ重复；目录与v35–v45集合检索“institutional liquidity cost/absolute retail imbalance/机构流动性成本”无记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "BBDW2025-US-NMS-equity-ILC-monthly-mean-abs-BJZZ-subpenny-internalized-retail-volume-imbalance-nonzero-days-lag-2m-FM-long-high-ILC-short-low",
+      "entity_type": "factor",
+      "field_spans": {
+        "availability": [
+          {
+            "bytes": 324,
+            "derived_text_sha256": "47a267e64ec0664559175c5d55d5f240251859e7b5aad8827f9c34ca59f9af4f",
+            "first_line": 40,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 43,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              1
+            ],
+            "sha256": "9e4b6e68f3ba256ba3d27ad029ab373a665550146e96cebf00446d66c3d65660",
+            "source_id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+            "source_sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287"
+          },
+          {
+            "bytes": 1997,
+            "derived_text_sha256": "47a267e64ec0664559175c5d55d5f240251859e7b5aad8827f9c34ca59f9af4f",
+            "first_line": 1609,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1634,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "120760eacb7c9c420577e18ed80e080a630da8cdf82736cd29f2b129942ced06",
+            "source_id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+            "source_sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287"
+          }
+        ],
+        "calculation": [
+          {
+            "bytes": 1583,
+            "derived_text_sha256": "47a267e64ec0664559175c5d55d5f240251859e7b5aad8827f9c34ca59f9af4f",
+            "first_line": 1451,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1473,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              24
+            ],
+            "sha256": "09afa0ac9e1cb9d1f6af53e3837d7e5107e655a98de22aa8923a29b52fd03a80",
+            "source_id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+            "source_sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287"
+          },
+          {
+            "bytes": 7763,
+            "derived_text_sha256": "47a267e64ec0664559175c5d55d5f240251859e7b5aad8827f9c34ca59f9af4f",
+            "first_line": 1491,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1527,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              25
+            ],
+            "sha256": "e51c984a651a8bd9dedf5182cd2f9e498adce55ad44f8cc4d6de0f2e50286e2b",
+            "source_id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+            "source_sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287"
+          },
+          {
+            "bytes": 1548,
+            "derived_text_sha256": "47a267e64ec0664559175c5d55d5f240251859e7b5aad8827f9c34ca59f9af4f",
+            "first_line": 1542,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1561,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              26
+            ],
+            "sha256": "90adb54837c596c9acb050201df5ec3200416acdf3fb451727db7c6e9c2c3c54",
+            "source_id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+            "source_sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287"
+          },
+          {
+            "bytes": 1997,
+            "derived_text_sha256": "47a267e64ec0664559175c5d55d5f240251859e7b5aad8827f9c34ca59f9af4f",
+            "first_line": 1609,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1634,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "120760eacb7c9c420577e18ed80e080a630da8cdf82736cd29f2b129942ced06",
+            "source_id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+            "source_sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287"
+          }
+        ],
+        "formula": [
+          {
+            "bytes": 823,
+            "derived_text_sha256": "47a267e64ec0664559175c5d55d5f240251859e7b5aad8827f9c34ca59f9af4f",
+            "first_line": 441,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 450,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "d00eb25da6cd4a4d2f195bad36a41f2e61fe3048617766d0e24caa9fad6a9a4d",
+            "source_id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+            "source_sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287"
+          },
+          {
+            "bytes": 745,
+            "derived_text_sha256": "47a267e64ec0664559175c5d55d5f240251859e7b5aad8827f9c34ca59f9af4f",
+            "first_line": 482,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 492,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "c34e0936401ee621592bb0418316cca22db876283c800dd301bf6044daf66021",
+            "source_id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+            "source_sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287"
+          }
+        ],
+        "inputs": [
+          {
+            "bytes": 823,
+            "derived_text_sha256": "47a267e64ec0664559175c5d55d5f240251859e7b5aad8827f9c34ca59f9af4f",
+            "first_line": 441,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 450,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "d00eb25da6cd4a4d2f195bad36a41f2e61fe3048617766d0e24caa9fad6a9a4d",
+            "source_id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+            "source_sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287"
+          },
+          {
+            "bytes": 797,
+            "derived_text_sha256": "47a267e64ec0664559175c5d55d5f240251859e7b5aad8827f9c34ca59f9af4f",
+            "first_line": 473,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 482,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "1cea987b0de333400aaa36bda5e3457e709cd12fba15926846bd6130d59880c4",
+            "source_id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+            "source_sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287"
+          },
+          {
+            "bytes": 7763,
+            "derived_text_sha256": "47a267e64ec0664559175c5d55d5f240251859e7b5aad8827f9c34ca59f9af4f",
+            "first_line": 1491,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1527,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              25
+            ],
+            "sha256": "e51c984a651a8bd9dedf5182cd2f9e498adce55ad44f8cc4d6de0f2e50286e2b",
+            "source_id": "v46-jfqa-barardehi-bernhardt-da-warachka-institutional-liquidity-costs-oa-pdf",
+            "source_sha256": "c6548287d7b885910ac2581c138384c6a2565a7d7d75d45051b7aa53e563e287"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "cambridge.org/S0022109025000043",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "BBDW2025:institutional-liquidity-cost-ILC"
+      ],
+      "record_id": "BBDW2025:institutional-liquidity-cost-ILC",
+      "record_sha256": "bc79cc240237b81f09262f5aff4f611d1645c9a55d4254842eeeb55d8bd03696",
+      "reviewed_at": "2026-10-08T12:58:15+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v46 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "investment_factor",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4419",
+            "M6892",
+            "M6864",
+            "M0389",
+            "M6569"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4419",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4419.json",
+              "row_sha256": "bc349831c6f2df3204845b751ba9c61b92317108e699dfdd4b45a550ebf8dd7c",
+              "sha256": "d52273877ec2cd5c88f81b1d3bbcb636274774e9d7fa8cce162f025617eb5685"
+            },
+            {
+              "native_id": "M6892",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0069-v2/metadata/source-records/M6892.json",
+              "row_sha256": "cdd672ccd23dd3decdf015e1287f68c6b32cdae262f15c2dc6161b05bd64f6c2",
+              "sha256": "856e8907723489ed50052ba0781f789fd02b1b0b7bedbea00c027038412547a2"
+            },
+            {
+              "native_id": "M6864",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0069-v2/metadata/source-records/M6864.json",
+              "row_sha256": "7ba808a6b4301197f6fe3fe0ef5f41b5d2f495460161341c365661662bee1532",
+              "sha256": "0e73ff6df6e532fafa76d7c87789a77d9513d70b785be5fba81fa0038819ff9c"
+            },
+            {
+              "native_id": "M0389",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0389.json",
+              "row_sha256": "616d7561c5d89d83915e4fd8a7efd419b5cbba0105d2171ff2b30f1012481581",
+              "sha256": "7a0df785f838a4c810020fa48da9e426e0e6cbb591a4ec2ad882f715d41ec6da"
+            },
+            {
+              "native_id": "M6569",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0066-v2/metadata/source-records/M6569.json",
+              "row_sha256": "31caf67f18025e0e2fe55819c2ab29c6af3b1031caf0a6661b2e7ee64eb89941",
+              "sha256": "76f5b5f976d1355f89c0166af420109d1bfb8e2e5b45ff9ea66bce6459cd62bf"
+            }
+          ],
+          "scope": "coverage-map-v46.csv（M记录6971、因子变体1570、v1–v45集合455、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17、v44拒收29、v45拒收17）按关键词与同市场同核心信号检索，并逐一核对v35–v45集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "labor links",
+            "劳动力关联",
+            "labor momentum",
+            "劳动力动量",
+            "job postings",
+            "网上招聘",
+            "cosine similarity",
+            "余弦相似度"
+          ]
+        },
+        "compared_record_names": {
+          "M0389": "Customer momentum（CustomerMomentum）",
+          "M4419": "Cohen·Frazzini·客户动量：月初；供应商按上月客户组合收益五分位；价>$5；市值加权多最高客户收益组、空最低；月再平衡（CF CustMom·Q5/Q1·VW）",
+          "M6569": "Bazdresch·Belo·雇佣增长五分位多空：年6月末；Δemp/平均emp；等权多最低空最高持12月（Bazdresch·hire·QuintileL/S）",
+          "M6864": "Menzly·供应商动量十分位多空：月末；iomom_supp=BEA投入产出表加权供应商行业滞后收益；等权多8–10分位空1分位持1月（Menzly·iomom_supp·DecileL/S）",
+          "M6892": "CohenFrazzini·客户动量五分位多空：月末；CustomerMomentum=匹配上市客户组合收益均值；|价|>5；市值加权多高空低持1月（CohenFrazzini·CustomerMomentum·QuintileL/S）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以招聘职业相似度加权的关联公司上月收益排序的美股截面策略。M4419/M6892/M0389为Cohen–Frazzini客户动量（客户—供应商关系），M6864为BEA投入产出表供应商行业动量，M6569为公司自身雇佣增长；集合w25201:CS_RET为共同分析师覆盖关联动量，technological-links:TECHRET为专利技术关联动量，AEA2020:geographic-lead-lag为同城跨行业领先滞后；v42拒收R42-010（网上招聘对投资者是否有信息量，来源403）与R42-003（LinkedIn员工信息分散，前视）为不同论文；目录与v35–v45集合检索“labor link/job posting/劳动力关联”无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "LW2026-US-equity-BGT-job-posting-tfidf-occupation-cosine-similarity-year-t-weighted-peer-return-LabRet-prior-month-quintile-EW-VW-long-high-short-low-monthly",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 707,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 476,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 484,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "5770b090d236f183395bdd2d1453670c22534e864338641a75129e009eaf4ac9",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 1113,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1193,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1201,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "35d896ba82ffe25da85b03146223dac3910a531227aeeb73095e91fde200bf3a",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          },
+          {
+            "bytes": 1040,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1233,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1245,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "0776f42a6f6f3e1ad7c0ff57795d9a002c702b8509dee2d21790a578c2828657",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 1125,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 633,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 650,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "1632ad7fa29e0505fe8f9b0f9f1d7667ad246b279a75d60cb78bf8e7396c76ff",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          },
+          {
+            "bytes": 1113,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1193,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1201,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "35d896ba82ffe25da85b03146223dac3910a531227aeeb73095e91fde200bf3a",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 1113,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1193,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1201,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "35d896ba82ffe25da85b03146223dac3910a531227aeeb73095e91fde200bf3a",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          },
+          {
+            "bytes": 1040,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1233,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1245,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "0776f42a6f6f3e1ad7c0ff57795d9a002c702b8509dee2d21790a578c2828657",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 1113,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1193,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1201,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "35d896ba82ffe25da85b03146223dac3910a531227aeeb73095e91fde200bf3a",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          },
+          {
+            "bytes": 1968,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1203,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1221,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "8cadb4962f6cf4c37ab0714181200346f8d8af6757e6adfecbbdc0891616d910",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 1040,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1233,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1245,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "0776f42a6f6f3e1ad7c0ff57795d9a002c702b8509dee2d21790a578c2828657",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          },
+          {
+            "bytes": 1968,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1203,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1221,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "8cadb4962f6cf4c37ab0714181200346f8d8af6757e6adfecbbdc0891616d910",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          },
+          {
+            "bytes": 381,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1470,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1474,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "a83f595a53f48e9c5f274ed51769f17f6e91af98b87bed8a626df9abc2b0e9b5",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          },
+          {
+            "bytes": 725,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1504,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1513,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              27
+            ],
+            "sha256": "bcf0a540fbdac33d747caf1df85d9388c4e8fb8a22be6484783c57208c95691e",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 2465,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 337,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 372,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "84201aeddb56658dbec8d7644425786e15ebaa9dbe92b6cd1d29dfe6b603fe57",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          },
+          {
+            "bytes": 1337,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 373,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 394,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7,
+              8
+            ],
+            "sha256": "bd85d431d8f1ed5778e908fd03bc525315c7f385c34a25f573bda1ff48b88c87",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          },
+          {
+            "bytes": 1125,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 633,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 650,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "1632ad7fa29e0505fe8f9b0f9f1d7667ad246b279a75d60cb78bf8e7396c76ff",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 1113,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 1193,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1201,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              22
+            ],
+            "sha256": "35d896ba82ffe25da85b03146223dac3910a531227aeeb73095e91fde200bf3a",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 358,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 240,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 244,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5
+            ],
+            "sha256": "eac660ab95e59abfb4ebae9c7a21cc53ac6ce6744b5db3144c0c66f88b1bafb3",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          },
+          {
+            "bytes": 707,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 476,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 484,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "5770b090d236f183395bdd2d1453670c22534e864338641a75129e009eaf4ac9",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          },
+          {
+            "bytes": 166,
+            "derived_text_sha256": "b50a20c4d53535adb39c8495356ca0cac18f7cdb6a8e4cf83f9f9071431a4c07",
+            "first_line": 653,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 655,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "33d548aa2419d40a234f432d6e79dfb71c08db795eca1bd9281e71431912756b",
+            "source_id": "v46-jfqa-liu-wu-labor-links-oa-pdf",
+            "source_sha256": "0caae8e94612d6c6022e4e8fc20a16f992742ff3a156443c56a0eecfbdc2bad8"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "cambridge.org/S0022109025101610",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "LW2026:labor-momentum-LabRet"
+      ],
+      "record_id": "LW2026:labor-momentum-LabRet",
+      "record_sha256": "67f26df20dd79ce99ce47d6ea71db1db4b9e5ac25ee776f654795648b52013d8",
+      "reviewed_at": "2026-10-08T12:58:15+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v46 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批6条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    }
+  ],
+  "schema_version": "quantgraph-source-collection-reviews/v1"
+}

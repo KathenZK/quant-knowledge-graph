@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "专业MBS投资者整体承担提前还款风险，溢价市场中高溢价票息（提前还款伤害最大）、折价市场中深折价票息（提前还款过慢伤害最大）须提供更高的提前还款风险溢价。",
+    "missing": [
+      "“每月初”的RPB依赖机构MBS池因子数据，实际发布通常在月初数个工作日后，原文未说明所用余额的发布时点；市场类型高度持续（约70%月份为溢价市场），用上月余额判定的影响原文未报告。",
+      "国债对冲超额收益由Bloomberg Barclays用其自有提前还款模型计算关键利率久期，非公开；1%目标波动下月度α仅0.06%–0.08%，实盘需杠杆；原文未扣交易成本。",
+      "作者稿（2020-06-27）未与Journal of Finance终版比对；仓储条款不允许再分发原文；同文未择时的Max−Min、Max−Par被动价差与两因子定价模型属对照，未单列；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "lbsresearch.london.edu/1529",
+  "lab": null,
+  "missing_information": [
+    "“每月初”的RPB依赖机构MBS池因子数据，实际发布通常在月初数个工作日后，原文未说明所用余额的发布时点；市场类型高度持续（约70%月份为溢价市场），用上月余额判定的影响原文未报告。",
+    "国债对冲超额收益由Bloomberg Barclays用其自有提前还款模型计算关键利率久期，非公开；1%目标波动下月度α仅0.06%–0.08%，实盘需杠杆；原文未扣交易成本。",
+    "作者稿（2020-06-27）未与Journal of Finance终版比对；仓储条款不允许再分发原文；同文未择时的Max−Min、Max−Par被动价差与两因子定价模型属对照，未单列；未回测。"
+  ],
+  "name": "MBS提前还款风险溢价组合PRP：月初按溢价/折价券余额占比判市场类型，溢价市场多最高溢价券空最深折价券、折价市场反之，等波动缩放（Diep–Eisfeldt–Richardson）",
+  "native_source_id": "DER2021:MBS-prepayment-risk-premium-portfolio-PRP",
+  "one_line": "用房利美30年固定利率MBS各票息子指数的国债对冲超额收益（Bloomberg Barclays按关键利率久期对冲），每月初若溢价券（价格高于面值）剩余本金余额（RPB）占比超过50%即为溢价市场，做多相对票息最高的溢价券、做空最深折价券，否则反向；两腿与价差资产均按指数加权移动平均预测波动缩放到1%目标波动，逐月调整。",
+  "record_id": "DER2021:MBS-prepayment-risk-premium-portfolio-PRP",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://lbsresearch.london.edu/id/eprint/1529/1/DER_MBS.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Peter Diep, Andrea L. Eisfeldt, Scott Richardson,《The Cross Section of MBS Returns》作者稿（2020-06-27；LBS Research Online托管；JF 2021终版未比对）。中文定义自撰。",
+      "id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+      "license": "LBS Research Online使用条款：仅可下载或打印一份用于研究或私人学习，不得再分发或用于商业目的（仓储封面声明）",
+      "locator": "派生文本(pdftotext -layout)行段：assets L292–304（PDF物理页8）；assets L305–311（PDF物理页8）；universe L320–326（PDF物理页9）；universe L1802–1810（PDF物理页42）；signal L1323–1332（PDF物理页31）；signal L1802–1810（PDF物理页42）；signal L3214–3231（PDF物理页61）；entry L1323–1332（PDF物理页31）；entry L3214–3231（PDF物理页61）；exit L3214–3231（PDF物理页61）；exit L1386–1399（PDF物理页33）；position L1813–1821（PDF物理页42）；position L1323–1332（PDF物理页31）；risk L1344–1350（PDF物理页32）；risk L1362–1364（PDF物理页32）；risk L1376–1379（PDF物理页32）；risk L3214–3231（PDF物理页61）；risk L3238–3247（PDF物理页62）；risk L3252–3264（PDF物理页62）；timeframe L1802–1810（PDF物理页42）；timeframe L1813–1821（PDF物理页42）；execution_time L1802–1810（PDF物理页42）；execution_time L1813–1821（PDF物理页42）；execution_time L305–311（PDF物理页8）",
+      "revision": "作者稿（正文日期June 27, 2020，含网络附录B），伦敦商学院LBS Research Online机构仓储托管（机构仓储；封面将作者名误印为\"Eisfelt\"）；86页；终版Journal of Finance 76(5):2093–2151（2021）未比对；sha256 4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0",
+      "sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://lbsresearch.london.edu/id/eprint/1529/1/DER_MBS.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "房利美30年固定利率MBS各票息档（Bloomberg Barclays MBS指数的票息子指数，可用TBA实现），收益为国债对冲后的超额收益。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "原文未扣交易成本（TBA买卖价差、展期与国债对冲成本均未计）。"
+    },
+    "entry": {
+      "evidence": [
+        "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月初按上述市场类型建立价差头寸：溢价市场“多最高溢价票息/空最低折价票息”，折价市场“多最低折价票息/空最高溢价票息”。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月初用当时的剩余本金余额判定市场类型，波动与相关只用过去已实现值预测；收益为Bloomberg Barclays按关键利率久期配置国债对冲后的票息子指数超额收益。"
+    },
+    "exit": {
+      "evidence": [
+        "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月，月初重判市场类型并重建，市场类型切换时多空两腿互换。"
+    },
+    "position": {
+      "evidence": [
+        "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "两腿各自缩放到1%预测波动（等腿波动），价差资产整体再缩放到1%目标波动；波动用过去已实现月波动的指数加权移动平均预测（质心6个月），相关性用指数加权移动平均（质心12个月）；缺失时用最近票息或票息对的估计代替。"
+    },
+    "risk": {
+      "evidence": [
+        "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告全样本PRP夏普0.76，是RPB加权MBS指数（0.29）的2.62倍，未择时的“多最高溢价空最低折价”为0.44；相对三种被动基准信息比约0.27–0.33；对四种基准的月度α为0.06%–0.08%（t=3.11–3.90），对MBS市场组合β为−0.08、R²仅1%。"
+    },
+    "signal": {
+      "evidence": [
+        "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "市场类型：每月初计算折价券与溢价券的剩余本金余额总和，溢价券RPB占比超过50%为溢价市场，否则为折价市场（样本中约70%月份为溢价市场）；在溢价市场做多最高溢价票息、做空最低折价票息，在折价市场方向相反。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度。"
+    },
+    "universe": {
+      "evidence": [
+        "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "房利美30年固定利率机构MBS，按票息相对当期面值票息（由接近面值的TBA价格推算）分档，样本中相对票息−2%至+3.5%；剩余本金余额来自eMBS；1994-01至2016-06。"
+    }
+  }
+}

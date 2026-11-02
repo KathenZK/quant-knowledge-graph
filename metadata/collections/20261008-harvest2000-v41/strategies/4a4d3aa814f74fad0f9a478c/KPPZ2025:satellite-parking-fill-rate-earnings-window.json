@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "同店停车场车流同比增长领先于零售商的同店销售，而股价在财报前未充分反映，财报公布时兑现。",
+    "missing": [
+      "样本只有44家零售商、650个公司季度，组内权重原文未写明。",
+      "作者的主旨是数据不对称加剧信息不对称；随着更多投资者获得卫星数据，该收益可能衰减（样本止于2017:Q4）。",
+      "期刊开放获取版（CC BY 4.0）；补充材料未取；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "cambridge.org/jfqa",
+  "lab": null,
+  "missing_information": [
+    "样本只有44家零售商、650个公司季度，组内权重原文未写明。",
+    "作者的主旨是数据不对称加剧信息不对称；随着更多投资者获得卫星数据，该收益可能衰减（样本止于2017:Q4）。",
+    "期刊开放获取版（CC BY 4.0）；补充材料未取；未回测。"
+  ],
+  "name": "卫星停车场同店车位占用率同比增长：财报前后3日多空（Katona–Painter–Patatoukas–Zeng）",
+  "native_source_id": "KPPZ2025:satellite-parking-fill-rate-earnings-window",
+  "one_line": "用卫星图像计算零售商当季同店停车场车位占用率（车辆数/车位数），取同比增长ΔFLRT；在过去3个月内结束财季的零售商中按ΔFLRT分四组，在季度财报公布日前后3个交易日（−1至+1）做多最高四分位、做空最低四分位。",
+  "record_id": "KPPZ2025:satellite-parking-fill-rate-earnings-window",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/2F5F99D68D1F8940F61578F198D6C005/S0022109023001448a.pdf/div-class-title-on-the-capital-market-consequences-of-big-data-evidence-from-outer-space-div.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Zsolt Katona, Marcus O. Painter, Panos N. Patatoukas, Jean Zeng,《On the Capital Market Consequences of Big Data: Evidence from Outer Space》JFQA 60(2), 2025（出版社开放获取版，CC BY 4.0）。中文定义自撰。",
+      "id": "v41-cup-jfqa-satellite-parking-2025-pdf",
+      "license": "CC-BY-4.0（期刊页首声明；仅指论文文本，卫星数据由RS Metrics等商业供应）",
+      "locator": "派生文本(pdftotext -layout)行段：assets L258–292（PDF物理页5,6）；assets L296–299（PDF物理页6）；universe L296–299（PDF物理页6）；universe L346–367（PDF物理页7）；universe L258–292（PDF物理页5,6）；signal L346–367（PDF物理页7）；signal L396–402（PDF物理页8）；entry L600–653（PDF物理页11,12）；exit L600–653（PDF物理页11,12）；position L600–653（PDF物理页11,12）；position L664–676（PDF物理页12,13）；risk L654–659（PDF物理页12）；risk L664–676（PDF物理页12,13）；cost L258–292（PDF物理页5,6）；timeframe L600–653（PDF物理页11,12）",
+      "revision": "JFQA 60(2):551–579（2025年3月）期刊开放获取版PDF，出版社Cambridge University Press托管，页首写明CC BY 4.0许可；doi:10.1017/S0022109023001448；29页；sha256 7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d",
+      "sha256": "7e2effeb74d752622e5059deb834e2dfc28cb5b4ca040631e2600b586fa2bc1d",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/2F5F99D68D1F8940F61578F198D6C005/S0022109023001448a.pdf/div-class-title-on-the-capital-market-consequences-of-big-data-evidence-from-outer-space-div.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v41-cup-jfqa-satellite-parking-2025-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "有RS Metrics卫星停车场覆盖的美国大型上市零售商（44家）。"
+    },
+    "cost": {
+      "evidence": [
+        "v41-cup-jfqa-satellite-parking-2025-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "原文只扣借券费，未扣买卖价差与冲击成本；数据成本每年数十万美元且需处理加工。"
+    },
+    "entry": {
+      "evidence": [
+        "v41-cup-jfqa-satellite-parking-2025-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "在财报公布前一交易日买入ΔFLRT处于最高四分位的零售商、做空最低四分位；四分位界限用过去3个月内结束财季的零售商滚动计算。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v41-cup-jfqa-satellite-parking-2025-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "财报日前一交易日建仓、财报日后一交易日平仓（−1至+1）；日内时点原文未写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v41-cup-jfqa-satellite-parking-2025-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有至财报日后一交易日（以财报日为中心的3日窗口）平仓。"
+    },
+    "position": {
+      "evidence": [
+        "v41-cup-jfqa-satellite-parking-2025-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "多空两组；组内权重原文未写明；空头扣除Markit借券费后结果几乎不变（借券费低于1bp/日）。"
+    },
+    "risk": {
+      "evidence": [
+        "v41-cup-jfqa-satellite-parking-2025-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告3日窗口：空头一侧（按做空收益计）原始2.82%、因子调整3.10%（t=3.25），多头一侧原始1.78%、因子调整1.66%（t=2.22），多空差4.60%（原始，t=3.75）与4.76%（因子调整，t=3.93）；扣借券费后为4.57%与4.73%。空头一侧贡献约为多头两倍。"
+    },
+    "signal": {
+      "evidence": [
+        "v41-cup-jfqa-satellite-parking-2025-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每家门店当季平均停车数CARS与车位数SPACES，按公司加总得FLRT_{iq}=ΣCARS/ΣSPACES；ΔFLRT_{iq}=(FLRT_{iq}−FLRT_{i,q−4})/FLRT_{i,q−4}（同比）；ΔFLRT与同店车流增长的相关系数为99%。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v41-cup-jfqa-satellite-parking-2025-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "按季度财报事件触发，每次持有3个交易日。"
+    },
+    "universe": {
+      "evidence": [
+        "v41-cup-jfqa-satellite-parking-2025-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "2011:Q1至2017:Q4，共650个公司季度；只用同时在当季与去年同季都有卫星图像的门店（同店口径）；卫星只覆盖部分门店、仅限美国本土，并只在上午后段至午后过境拍摄一次。"
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "定盘前美元因定盘需求升值、定盘后回落，形成可交易的日内反转。",
+    "missing": [
+      "夏令时切换的窗口精确调整规则需自行设定。",
+      "全额报价价差下净收益为负，可实施性依赖更低成本。",
+      "BoC工作论文版，未与期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "bankofcanada.ca/swp",
+  "lab": null,
+  "missing_information": [
+    "夏令时切换的窗口精确调整规则需自行设定。",
+    "全额报价价差下净收益为负，可实施性依赖更低成本。",
+    "BoC工作论文版，未与期刊版比对；未回测。"
+  ],
+  "name": "外汇定盘前后美元反转（东京/欧洲定盘）",
+  "native_source_id": "swp2021-48:fix-reversal",
+  "one_line": "每日按ET时窗：17:00–20:55做多美元、20:55–02:00做空美元（东京定盘）；02:00–08:15做多美元、11:00–17:00做空美元（ECB至伦敦定盘之间空仓）。",
+  "record_id": "swp2021-48:fix-reversal",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.bankofcanada.ca/wp-content/uploads/2021/10/swp2021-48.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Ingomar Krohn, Philippe Mueller, Paul Whelan,《Foreign Exchange Fixings and Returns Around the Clock》Bank of Canada Staff Working Paper 2021-48（2021-10）。中文定义自撰。",
+      "id": "v36-boc-swp2021-48-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L391–398（PDF物理页13）；universe L487–491（PDF物理页15）；signal L472–481（PDF物理页15）；entry L999–1015（PDF物理页30）；exit L1244–1259（PDF物理页37）；position L1275–1278（PDF物理页37）；cost L1224–1236（PDF物理页36）；cost L1287–1298（PDF物理页38）；execution_time L494–497（PDF物理页15）",
+      "revision": "Bank of Canada Staff Working Paper 2021-48（2021-10）；59页；未与后续期刊版比对；sha256 807fdb20dac0010b3b41f3f08c17b9bf7a233291fea449cd64cd86ad54fa0f46",
+      "sha256": "807fdb20dac0010b3b41f3f08c17b9bf7a233291fea449cd64cd86ad54fa0f46",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.bankofcanada.ca/wp-content/uploads/2021/10/swp2021-48.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v36-boc-swp2021-48-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "G9货币对美元：AUD、CAD、EUR、JPY、NZD、NOK、SEK、CHF、GBP；1999-01至2019-12逐笔高频数据（Refinitiv、CME、Bloomberg、Datastream）。"
+    },
+    "cost": {
+      "evidence": [
+        "v36-boc-swp2021-48-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "以RTH报价买卖价差为成本代理：全额价差下多数时窗平均收益转负；价差按50%计时多数时窗为正，Sharpe约0.12–1.03。"
+    },
+    "entry": {
+      "evidence": [
+        "v36-boc-swp2021-48-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "东京：定盘前做空外币（做多美元），定盘后反向；欧洲：ECB定盘前做空外币，伦敦定盘后反向；收益为Δs^Tokyo=−Δs^pre-T+Δs^post-T，Δs^Europe=−Δs^pre-E+Δs^post-L；忽略ECB与伦敦定盘之间。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v36-boc-swp2021-48-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "日本不实行夏令时：部分年份东京窗口切换点为19:55 ET；欧美夏令时错配的几周内伦敦时差少1小时。"
+    },
+    "exit": {
+      "evidence": [
+        "v36-boc-swp2021-48-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每个腿在时窗结束平仓：定盘前多美元仓在定盘时平仓，定盘后空美元仓在时窗末平仓；成本计算按a1买入、b2卖出、a3回补。"
+    },
+    "position": {
+      "evidence": [
+        "v36-boc-swp2021-48-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "东京：17:00–20:55多美元，20:55–02:00空美元；欧洲：02:00–08:15多美元，11:00–17:00空美元。"
+    },
+    "risk": {
+      "evidence": [
+        "v36-boc-swp2021-48-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "未设止损或仓位上限；每日最多四次进出。"
+    },
+    "signal": {
+      "evidence": [
+        "v36-boc-swp2021-48-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "无条件日历信号：以三大定盘（东京9:55当地、ECB 14:15当地、伦敦16:00当地）划分五个ET时窗：pre-T 17:00–20:55、post-T 20:55–02:00、pre-E 02:00–08:15、E-L 08:15–11:00、post-L 11:00–17:00。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v36-boc-swp2021-48-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日内（5分钟数据），每日两轮反转。"
+    },
+    "universe": {
+      "evidence": [
+        "v36-boc-swp2021-48-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "单个货币对或等权美元组合DOL（等权做多全部外币）；成本分析使用EUR、GBP、JPY。"
+    }
+  }
+}

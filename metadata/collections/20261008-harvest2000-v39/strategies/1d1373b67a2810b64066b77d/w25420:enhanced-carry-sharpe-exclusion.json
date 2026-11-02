@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "剔除历史上拖累套息夏普的货币，可同时改善G10套息的夏普与偏度。",
+    "missing": [
+      "历史夏普的具体计算口径（是否年化、是否扣成本）以原文第II节为准，未细化。",
+      "剔除的货币随时间变化，结果对样本期敏感；作者用随机化检验选择偏差（在线附录），未转写。",
+      "同文“固定好/坏货币子集”套息用到全样本信息（回看偏差），不属于本记录；工作论文未与JFQA终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "nber.org/papers",
+  "lab": null,
+  "missing_information": [
+    "历史夏普的具体计算口径（是否年化、是否扣成本）以原文第II节为准，未细化。",
+    "剔除的货币随时间变化，结果对样本期敏感；作者用随机化检验选择偏差（在线附录），未转写。",
+    "同文“固定好/坏货币子集”套息用到全样本信息（回看偏差），不属于本记录；工作论文未与JFQA终版比对；未回测。"
+  ],
+  "name": "G10增强套息：按递推夏普逐步剔除货币（Bekaert–Panayotov）",
+  "native_source_id": "w25420:enhanced-carry-sharpe-exclusion",
+  "one_line": "自1994-12起每月末，用1984-12以来的全部历史收益计算G10标准套息（多远期贴水最高5种、空最低5种，等权）的夏普；依次试剔除一种货币，若剔除后的最高夏普超过基准则剔除，最多剔除7种，用剩余货币构造等权套息并持有一个月。",
+  "record_id": "w25420:enhanced-carry-sharpe-exclusion",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w25420/w25420.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Geert Bekaert, George Panayotov,《Good Carry, Bad Carry》NBER工作论文25420（2019-01）。中文定义自撰。",
+      "id": "v39-nber-w25420-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L259–267（PDF物理页6）；universe L220–232（PDF物理页6）；universe L240–257（PDF物理页6）；signal L274–304（PDF物理页7）；signal L385–415（PDF物理页9）；entry L385–415（PDF物理页9）；entry L428–448（PDF物理页10）；entry L450–456（PDF物理页10）；exit L385–415（PDF物理页9）；position L274–304（PDF物理页7）；risk L489–515（PDF物理页11）；risk L789–801（PDF物理页17）；cost L220–232（PDF物理页6）；timeframe L385–415（PDF物理页9）；execution_time L220–232（PDF物理页6）",
+      "revision": "NBER Working Paper 25420, January 2019；78页；未与JFQA期刊版比对；sha256 afb9d2a98720f87659c2ba8b6c675e1b616ef0403ef39bfd17b4a662dbd595a5",
+      "sha256": "afb9d2a98720f87659c2ba8b6c675e1b616ef0403ef39bfd17b4a662dbd595a5",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w25420/w25420.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v39-nber-w25420-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "G10货币对美元的一月期远期：NZD、AUD、GBP、NOK、SEK、CAD、EUR（1999年前用DEM）、CHF、JPY。"
+    },
+    "cost": {
+      "evidence": [
+        "v39-nber-w25420-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "收益按买卖价计算，已含价差成本。"
+    },
+    "entry": {
+      "evidence": [
+        "v39-nber-w25420-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月t先逐一剔除10种货币，分别计算9币套息的历史夏普，最高者若超过SC基准夏普则剔除该币；再在剩余9币中试剔除第二种（8币套息），依此类推，最多剔除7种；某一步没有改进则停止剔除。下月用所得货币集合构造等权多空套息。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v39-nber-w25420-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月末（一月远期按月末最后交易日报价）。"
+    },
+    "exit": {
+      "evidence": [
+        "v39-nber-w25420-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月；下月末用扩展窗口重新执行剔除程序并调仓。"
+    },
+    "position": {
+      "evidence": [
+        "v39-nber-w25420-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "多空币种数相等、等权，多空绝对值合计1美元；N为奇数时去掉居中货币。"
+    },
+    "risk": {
+      "evidence": [
+        "v39-nber-w25420-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告：SC夏普0.32、偏度−0.33；剔除7种的增强套息夏普0.61、偏度为正，与基准的差异仅边际显著。作者也指出，在有限样本中按夏普剔除必然抬高样本内夏普。"
+    },
+    "signal": {
+      "evidence": [
+        "v39-nber-w25420-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "远期贴水FD_t=F_t/S_t−1（中间价）排序；标准套息SC多FD最高5种、空最低5种，权重±1/10；N为奇数时去掉FD居中的货币。增强规则在每月t用T0=1984-12至t的扩展窗口，比较各货币子集套息与SC基准的历史夏普。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v39-nber-w25420-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度；扩展窗口从1984-12开始，交易期1994-12至2014-05。"
+    },
+    "universe": {
+      "evidence": [
+        "v39-nber-w25420-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "巴克莱银行（Datastream）月末即期与一月远期买卖价，1984-12至2014-06；多头收益F^bid_t/S^ask_{t+1}−1，空头收益1−F^ask_t/S^bid_{t+1}。"
+    }
+  }
+}

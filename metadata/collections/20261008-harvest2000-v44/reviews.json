@@ -1,0 +1,1712 @@
+{
+  "batch_id": "20261008-harvest2000-v44",
+  "records": [
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M0345",
+            "M4161",
+            "M3573",
+            "M2387",
+            "M4175"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M0345",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0345.json",
+              "row_sha256": "86cc51a0fec3acd5f5c39a5d65bbba465ae0fbcd3f53366e94f9d94a55c24c41",
+              "sha256": "9d5eea5da8b061bb1c84ada3ca815231bb51e3052f69e598932c89aa6ebb2345"
+            },
+            {
+              "native_id": "M4161",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4161.json",
+              "row_sha256": "dd3703f923cbc38ca0e16096f80969df23510d6b6cf26d3c4ffe74ffcc522acd",
+              "sha256": "ab0c11dd0476ada14a5ea201f3aa0d4119bda0e19d10fb7e1f3b2d8975e8ba42"
+            },
+            {
+              "native_id": "M3573",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3573.json",
+              "row_sha256": "5e4e9ed602fd65d902d5859d76d09837e849ced17673668e774eafbd6f974e95",
+              "sha256": "799aa816e87893cbf6a7ccd19a175fae404b48b107fff4518cec52648d171f2f"
+            },
+            {
+              "native_id": "M2387",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0024-v2/metadata/source-records/M2387.json",
+              "row_sha256": "d183e7a1dd3cf132330159fd582fc413ae25217e0b34edaa7f4683d9c13c2a8a",
+              "sha256": "6a031127247363af9fdfc795a562fd8f916459f25b3b25f0513b4d477efc2ed8"
+            },
+            {
+              "native_id": "M4175",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4175.json",
+              "row_sha256": "45eb2510047136cbb6e2c9f0fa2579692cc725a684a874a630e31caf4b915d6d",
+              "sha256": "3c087e219fcbcb0a1d23126da3d6fc69eaf85f2bfc3dd4b54701e8ed50ce0a3c"
+            }
+          ],
+          "scope": "coverage-map-v44.csv（M记录6971、因子变体1570、v1–v43集合447、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17）按关键词与同市场同核心信号检索，并逐一核对v35–v43集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "curvy trade",
+            "曲率交易",
+            "Nelson-Siegel curvature",
+            "收益率曲线曲率",
+            "G10 currencies",
+            "外汇"
+          ]
+        },
+        "compared_record_names": {
+          "M0345": "外汇套息",
+          "M2387": "开源金工债券久期择时（改进Diebold2006：水平=宏观+政策利率跟随；斜率/曲率=AR(1)；季度持有预期收益最高久期）",
+          "M3573": "QP外汇动量：月频；10–20货币对USD；12月动量多最强3空最弱3（QP Currency Momentum）",
+          "M4161": "AQR·Carry·外汇：月末；约20发达货币；carry≈利率差；秩减均值加权多高息空低息至1美元（AQR Carry·FX）",
+          "M4175": "AQR·全球套息因子GCF：月末；各资产类carry组合按样本波动倒数加权合成；等波动贡献（AQR Global Carry Factor）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以各国收益率曲线Nelson–Siegel曲率相对美国的差为信号的G10货币截面策略。M0345/M4161为远期贴水（利率差）套息，M3573为货币动量，M2387为A股开源金工用Diebold曲线因子做债券久期择时（债券市场、非外汇），M4175为AQR跨资产套息合成；集合Chen_Predict_FX-2013:delta-short-rate为短期利率变动排序，v37拒收R37-007为Ang–Chen期限利差排序；目录检索“curvature/曲率/Nelson”无外汇曲率记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "DGK2018-G10-FX-relative-Nelson-Siegel-curvature-vs-US-zero-yields-3m-10y-phi0.0609-monthly-symmetric-k1-4-EW-long-high-short-low-1m-forward-bidask",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 472,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 377,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 382,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "dcd05c2fcf90ab0029164dc1db658e037a73ec2bbef259dccd4d93051f954ae7",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 378,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 331,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 335,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "5a417915e16be992e73947c4681636b4eabda76cf53a5fd34e9b733ba61e2053",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 1223,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 384,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 403,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11,
+              12
+            ],
+            "sha256": "baf7bb9d9ff54c172473e8d59eda89a36b352f614c9c8591f56f3a7f587734a8",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 900,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 1140,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1151,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              30
+            ],
+            "sha256": "7cd945e33a1f64f10ff2f9cb078fddbfb03accedfbe6fbfb3b563c1f8c9b2b78",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 479,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 420,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 425,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "669243cbd9ab6d30c7efa5f72a4213fa47feafc626d83686d66776675e080084",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 472,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 377,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 382,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "dcd05c2fcf90ab0029164dc1db658e037a73ec2bbef259dccd4d93051f954ae7",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 900,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 1140,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1151,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              30
+            ],
+            "sha256": "7cd945e33a1f64f10ff2f9cb078fddbfb03accedfbe6fbfb3b563c1f8c9b2b78",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 378,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 331,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 335,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "5a417915e16be992e73947c4681636b4eabda76cf53a5fd34e9b733ba61e2053",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 949,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 405,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 418,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "38be3acf43716b4b055d6bb2fccf87938feced1d8bfb4685d0c98584125c8a87",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 949,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 405,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 418,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "38be3acf43716b4b055d6bb2fccf87938feced1d8bfb4685d0c98584125c8a87",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 900,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 1140,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1151,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              30
+            ],
+            "sha256": "7cd945e33a1f64f10ff2f9cb078fddbfb03accedfbe6fbfb3b563c1f8c9b2b78",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 472,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 377,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 382,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "dcd05c2fcf90ab0029164dc1db658e037a73ec2bbef259dccd4d93051f954ae7",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 479,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 420,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 425,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "669243cbd9ab6d30c7efa5f72a4213fa47feafc626d83686d66776675e080084",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 561,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 451,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 457,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              13
+            ],
+            "sha256": "bc915be6e790414ee433d82f78fb0ae381100e2c61c7e3bef0b4d50cd9abdfea",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 2025,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 1158,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1185,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "e0ad4cfb5a2293535fcd503dfc302a295f46550d6a7209eef4def7dd63c83dce",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 969,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 521,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 531,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              15
+            ],
+            "sha256": "ce6b3f1995f9bbb2838af1f72f424be0c7aea14a5b99b74ed12d03080554816b",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 1018,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 263,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 276,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "2a2e1a4b06f4e0d592df7f2a947fa39bfba81370e43d0499446c1fb4d88c5201",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 622,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 299,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 308,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "8843e931e719cca7c95e758912dd55a96b2a43216b4ccd01f9199c9b55a65071",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 728,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 337,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 344,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "125686a64928b539dd860f944f94c1542c7593eaa357ec62e49f7c46fc208fff",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 479,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 420,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 425,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12
+            ],
+            "sha256": "669243cbd9ab6d30c7efa5f72a4213fa47feafc626d83686d66776675e080084",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 378,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 331,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 335,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "5a417915e16be992e73947c4681636b4eabda76cf53a5fd34e9b733ba61e2053",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 378,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 331,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 335,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "5a417915e16be992e73947c4681636b4eabda76cf53a5fd34e9b733ba61e2053",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          },
+          {
+            "bytes": 329,
+            "derived_text_sha256": "1c6a038c2308b480af234f3e0dfff44bb20e2bd30a76aa1d3407c3a59365aab2",
+            "first_line": 349,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 352,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "572ede5c09379af53df51749efd7bbce1f456256522fe59a35f4d7519544dfa5",
+            "source_id": "v44-ecb-wp2149-dreher-grab-kostka-curvy-trades-pdf",
+            "source_sha256": "e25c4f7df05a6ac6d2e7d04ce78a4790ed939595000fd865781cdeea05d90cc9"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "ecb.europa.eu/pub/pdf/scpwps/ecb.wp2149",
+      "markets": [
+        "FX_FORWARD"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "DGK2018:G10-curvy-trade-relative-NS-curvature"
+      ],
+      "record_id": "DGK2018:G10-curvy-trade-relative-NS-curvature",
+      "record_sha256": "ad923645f289e9e20171293ea92278f96d8b3f058b3cb26a76ff758ee33f983e",
+      "reviewed_at": "2026-10-08T11:36:42+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v44 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4547",
+            "M4545",
+            "M4468",
+            "M0809",
+            "M2210"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4547",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0046-v2/metadata/source-records/M4547.json",
+              "row_sha256": "62825c0e5e8655387531810a5d750e22f4ab8ea10a267a3e3a814a996a8e9650",
+              "sha256": "738092e113f3db8319e1b5ba15b1e85e936e128de686db048408ff035a2016a5"
+            },
+            {
+              "native_id": "M4545",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4545.json",
+              "row_sha256": "251056a48aa1e5a2784e7074c7026176edde52c6cc0ebb81f61cfb8e9ffb3273",
+              "sha256": "e6592ea9223dbd623eb905fe82d11c05303f6e17f835871a08b4a04e2a8cc1d3"
+            },
+            {
+              "native_id": "M4468",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0045-v2/metadata/source-records/M4468.json",
+              "row_sha256": "f456483215aca7be23bdf6d1feec5133373a5f40debaac571559edbb9105ea58",
+              "sha256": "f9cd76819798f6c7518f8143a6793994d5c785533fbd38050938f16998dcd1f1"
+            },
+            {
+              "native_id": "M0809",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0009-v2/metadata/source-records/M0809.json",
+              "row_sha256": "6f4de87c66a9d356d1f876da89cea2d30ad99d709ab6959bd5d5e81ed7bcf6fc",
+              "sha256": "81c0398641bbb627928c6d60c3f4da4c01f0f4fadf832c2e17a1eb677971b5ba"
+            },
+            {
+              "native_id": "M2210",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0023-v2/metadata/source-records/M2210.json",
+              "row_sha256": "506c6a54df9f489856c81f1f3591843aaef74ccb6f3443e8ecc7f2e18662b375",
+              "sha256": "1fc06f6612a944116ce6b8b36f736381aa58bbd0c45260975799dc040a9f5654"
+            }
+          ],
+          "scope": "coverage-map-v44.csv（M记录6971、因子变体1570、v1–v43集合447、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17）按关键词与同市场同核心信号检索，并逐一核对v35–v43集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "earnings call transcripts",
+            "业绩电话会文本",
+            "post-earnings-announcement drift",
+            "盈余公告后漂移",
+            "text regression",
+            "文本回归"
+          ]
+        },
+        "compared_record_names": {
+          "M0809": "申报语言稳定度：流动性最高100只里按Brain文本相似度取最高25只，优先风险因素相似度，否则用全文，12个月日收益最大夏普只做多，每月第一个交易日美东8:00",
+          "M2210": "东方金工分析师认可度Rec_pct（财报后5日内点评；(认可−不认可)/覆盖机构数）",
+          "M4468": "Tetlock·媒体悲观情绪反转：日频；WSJ Abreast专栏负面词占比高→次日做多大盘/DJIA，低则减仓或反向；持1–2日（Tetlock MediaPess·Reversal）",
+          "M4545": "Hoberg·Phillips·文本同行动量：月末；TNIC产品文本同行等权过去收益；市值/等权多最高同行动量、空最低；持1月（HP TNIC-Mom·L/S）",
+          "M4547": "Livnat·Mendenhall·分析师SUE漂移：季频公告后；SUE=(实际−分析师一致预期)/价格；等权多最高SUE、空最低；持约60交易日（LM AnalystSUE·PEAD）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以业绩电话会全文经滚动样本外文本回归得到的“文本意外”排序的美股事件策略。M4547为Livnat–Mendenhall分析师SUE漂移（数值盈余意外），M4545为TNIC文本同行动量（10-K产品描述、非电话会），M4468为媒体悲观词择时，M0809为申报文本相似度，M2210为A股分析师点评认可度；v36拒收R36-003为Cohen–Lou–Malloy电话会点名（casting），信号不同；目录检索“earnings call/电话会/transcript”无同构记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "MLRS2022-US-equity-SUE-txt-elastic-net-multinomial-logit-earnings-call-unigrams-bigrams-4000-rolling-8q-OOS-quintile-training-cutoffs-EW-long-top-short-bottom-first-close-after-call-hold-63d",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 764,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 215,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 223,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "06eb8064978ef3df65e1732d16583299ea41ffc00d8cf84a36e74bf1580ddbaf",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 220,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 385,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 386,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "08056f7f97cdfe8eab2e5db014ec60d80c1270c966d43dd1322918ab764c02e4",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          },
+          {
+            "bytes": 1192,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 421,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 439,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "55dc5e7eb888812df851a984e4ec922a5198b04483ac21ad0f04ae508a32b5fd",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 1192,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 421,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 439,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "55dc5e7eb888812df851a984e4ec922a5198b04483ac21ad0f04ae508a32b5fd",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          },
+          {
+            "bytes": 1004,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 275,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 286,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "13f75ee6aed8c832f482b5704132df0f57797e679d12619de91a8d8703d1a609",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          },
+          {
+            "bytes": 220,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 385,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 386,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11
+            ],
+            "sha256": "08056f7f97cdfe8eab2e5db014ec60d80c1270c966d43dd1322918ab764c02e4",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 1192,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 421,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 439,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "55dc5e7eb888812df851a984e4ec922a5198b04483ac21ad0f04ae508a32b5fd",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 1192,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 421,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 439,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "55dc5e7eb888812df851a984e4ec922a5198b04483ac21ad0f04ae508a32b5fd",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 1192,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 421,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 439,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "55dc5e7eb888812df851a984e4ec922a5198b04483ac21ad0f04ae508a32b5fd",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          },
+          {
+            "bytes": 2210,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 2043,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 2065,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              54
+            ],
+            "sha256": "e62b0243b1828bdb8c9db57f8bccdd94bc638a6e1b624faf8d766be6ae036898",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          },
+          {
+            "bytes": 903,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 380,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 396,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              11,
+              12
+            ],
+            "sha256": "25a02ab5589a94adbc9cc2516aad9c66074f2d7643c6c5db0b9959b410d350ad",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 264,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 230,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 232,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "77625c1b0ee58eccb0af36b466737489d96cc060130cb282fd31823fccfe97e1",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          },
+          {
+            "bytes": 384,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 255,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 259,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "1e6e2e16ef9546c992e5ddff69a968848e6379580d7ddf5e4c834b492bd7cff2",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          },
+          {
+            "bytes": 1004,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 275,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 286,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "13f75ee6aed8c832f482b5704132df0f57797e679d12619de91a8d8703d1a609",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          },
+          {
+            "bytes": 882,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 291,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 300,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "3857d14c80c476872ed2cf6b1f7c6784f4859592fdcbf6f98eb39855a2722a64",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          },
+          {
+            "bytes": 269,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 325,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 331,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              10
+            ],
+            "sha256": "2771a64dc2af55b8d8c2b0573c6559c51d7d2f380bf7d65a055383db3d7c2bdf",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          },
+          {
+            "bytes": 549,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 1882,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1890,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              49
+            ],
+            "sha256": "0b18a9c7dddc660fbc2d29052c3ae03685482e20217f4b78323ea7f8fe231cdc",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 1192,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 421,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 439,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              12,
+              13
+            ],
+            "sha256": "55dc5e7eb888812df851a984e4ec922a5198b04483ac21ad0f04ae508a32b5fd",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 764,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 215,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 223,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "06eb8064978ef3df65e1732d16583299ea41ffc00d8cf84a36e74bf1580ddbaf",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          },
+          {
+            "bytes": 175,
+            "derived_text_sha256": "fce360a2e9a4bc059345c1a47ea554e3d67d9703cf7de07bc7d799d5c4ba4c15",
+            "first_line": 237,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 238,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "5a144ea3ed5334e147987b5ce604cc5f9a357b87c7a33ee1258c749b863c02b8",
+            "source_id": "v44-philfed-wp21-07-meursault-liang-routledge-scanlon-pead-txt-pdf",
+            "source_sha256": "3e6dbcdb5f5c012fc395bcb04b13db36e09fcc7ad856f41ec91b6af6a5097a1f"
+          }
+        ]
+      },
+      "frequencies": [
+        "DAILY_EVENT_DRIVEN"
+      ],
+      "identity_namespace": "philadelphiafed.org/working-papers/wp21-07",
+      "markets": [
+        "US_EQUITY"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "MLRS2022:PEAD-txt-earnings-call-text-surprise-SUE-txt"
+      ],
+      "record_id": "MLRS2022:PEAD-txt-earnings-call-text-surprise-SUE-txt",
+      "record_sha256": "7d57fb6e0cd5a4e35da35b34cd55e75247c4ce655e60ea4ffbb5f6351edb3cdd",
+      "reviewed_at": "2026-10-08T11:36:42+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v44 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4422",
+            "M0345",
+            "M4161",
+            "M3573",
+            "M0829"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4422",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4422.json",
+              "row_sha256": "3929e6507c621b07062a3fb07f5013926e4af36787609e7650deba8c55d955dc",
+              "sha256": "4886c51eb094ff6247b05f41bce61846d2967fa9975904e5d06ee176aa644023"
+            },
+            {
+              "native_id": "M0345",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0004-v2/metadata/source-records/M0345.json",
+              "row_sha256": "86cc51a0fec3acd5f5c39a5d65bbba465ae0fbcd3f53366e94f9d94a55c24c41",
+              "sha256": "9d5eea5da8b061bb1c84ada3ca815231bb51e3052f69e598932c89aa6ebb2345"
+            },
+            {
+              "native_id": "M4161",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4161.json",
+              "row_sha256": "dd3703f923cbc38ca0e16096f80969df23510d6b6cf26d3c4ffe74ffcc522acd",
+              "sha256": "ab0c11dd0476ada14a5ea201f3aa0d4119bda0e19d10fb7e1f3b2d8975e8ba42"
+            },
+            {
+              "native_id": "M3573",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0036-v2/metadata/source-records/M3573.json",
+              "row_sha256": "5e4e9ed602fd65d902d5859d76d09837e849ced17673668e774eafbd6f974e95",
+              "sha256": "799aa816e87893cbf6a7ccd19a175fae404b48b107fff4518cec52648d171f2f"
+            },
+            {
+              "native_id": "M0829",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0009-v2/metadata/source-records/M0829.json",
+              "row_sha256": "fbd6b10089be1c5ed9aab08e3a2529e0324411ae053793d55b9cd2317839dfc0",
+              "sha256": "67b2f51da4ad79803743ea8e597adccc8d3889dc239abc09b0f07b1dc194be10"
+            }
+          ],
+          "scope": "coverage-map-v44.csv（M记录6971、因子变体1570、v1–v43集合447、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17）按关键词与同市场同核心信号检索，并逐一核对v35–v43集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "basis-momentum",
+            "基差动量",
+            "currency forwards",
+            "货币远期",
+            "forward curve",
+            "远期曲线"
+          ]
+        },
+        "compared_record_names": {
+          "M0345": "外汇套息",
+          "M0829": "外汇偏度尾部风险溢价：EURUSD、AUDUSD、USDCAD、USDJPY，30日偏度低于-0.6做多、高于+0.6做空，每周等权",
+          "M3573": "QP外汇动量：月频；10–20货币对USD；12月动量多最强3空最弱3（QP Currency Momentum）",
+          "M4161": "AQR·Carry·外汇：月末；约20发达货币；carry≈利率差；秩减均值加权多高息空低息至1美元（AQR Carry·FX）",
+          "M4422": "Boons·Prado·商品基差动量：月末；约21种商品；BM=近12月近月期货动量−次近月动量；等权多最高4、空最低4之近月合约（BP BasisMom·H4/L4·EW）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以货币1个月与2个月远期的动量差为信号的外汇截面策略。M4422为Boons–Prado商品期货基差动量（同构造、不同市场：商品近月与次近月期货），v37拒收R37-017与v38/v39两条组合加权叠加也只涉及商品；M0345/M4161为外汇套息（远期贴水），M3573为货币动量，M0829为外汇偏度阈值；目录检索“basis-momentum/基差动量”无外汇记录，按“市场不同即另起一行”收入。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "FHLL2025-48-currencies-basis-momentum-cum-1m-forward-excess-return-minus-cum-2m-forward-roll-return-J3-monthly-quintile-EW-long-high-short-low-1m-forward-net-bidask",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 3913,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 302,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 330,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5
+            ],
+            "sha256": "747643c84eee25f69a9c368a5c865915d173fbaee97d2c305e598912f5922be5",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 3448,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 349,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 374,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5
+            ],
+            "sha256": "e1db374737ce776991ae109022c39c5b3e22fff0c2e7aceeaf0ce20f51fc34e9",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          }
+        ],
+        "cost": [
+          {
+            "bytes": 4896,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 300,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 335,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5
+            ],
+            "sha256": "383b9cdb0accfc94738369dfd04178f36231ab79e664aa62e32b9059e417db13",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 1407,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 269,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 282,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              4
+            ],
+            "sha256": "ad6d1465d91591d31de494834faa43d46004632f2d6f0f9e24577e131ccb49a3",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 3515,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 462,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 484,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "074e8c88be614646068f5c3563aa8bedbc6945b06ccc2aa255f4d63e67c8efea",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 1407,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 269,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 282,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              4
+            ],
+            "sha256": "ad6d1465d91591d31de494834faa43d46004632f2d6f0f9e24577e131ccb49a3",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 3448,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 349,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 374,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5
+            ],
+            "sha256": "e1db374737ce776991ae109022c39c5b3e22fff0c2e7aceeaf0ce20f51fc34e9",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 1407,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 269,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 282,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              4
+            ],
+            "sha256": "ad6d1465d91591d31de494834faa43d46004632f2d6f0f9e24577e131ccb49a3",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 3515,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 462,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 484,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "074e8c88be614646068f5c3563aa8bedbc6945b06ccc2aa255f4d63e67c8efea",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 1407,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 269,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 282,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              4
+            ],
+            "sha256": "ad6d1465d91591d31de494834faa43d46004632f2d6f0f9e24577e131ccb49a3",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 3515,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 462,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 484,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "074e8c88be614646068f5c3563aa8bedbc6945b06ccc2aa255f4d63e67c8efea",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 604,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 78,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 82,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              2
+            ],
+            "sha256": "496afd8becb1414f0b484a2797c44cd4e57b6772869aafab56f3e9e6d9a67e97",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 4104,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 383,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 419,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "a89204cf168d4af75eaa1549838d08097bf8345746c82e84be9b38134eaead61",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 3515,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 462,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 484,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "074e8c88be614646068f5c3563aa8bedbc6945b06ccc2aa255f4d63e67c8efea",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 2124,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 496,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 509,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "e9611b46f6323a06c47c4b1ffea05a040b331a749133057aae9e8a90259b77c8",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 2425,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 502,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 517,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "ebb5c4da68c3a6d9a2484b4e679a3aaf92fd9d90002804030bf502d976a22255",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 3783,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 223,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 260,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              4
+            ],
+            "sha256": "ff0d3aa77ed75bd62bbb7561b4862c7fb779d58c576dfdecea6611a8ef5cad35",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 3448,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 349,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 374,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5
+            ],
+            "sha256": "e1db374737ce776991ae109022c39c5b3e22fff0c2e7aceeaf0ce20f51fc34e9",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 1407,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 269,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 282,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              4
+            ],
+            "sha256": "ad6d1465d91591d31de494834faa43d46004632f2d6f0f9e24577e131ccb49a3",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 3913,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 302,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 330,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              5
+            ],
+            "sha256": "747643c84eee25f69a9c368a5c865915d173fbaee97d2c305e598912f5922be5",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 4104,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 383,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 419,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              6
+            ],
+            "sha256": "a89204cf168d4af75eaa1549838d08097bf8345746c82e84be9b38134eaead61",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          },
+          {
+            "bytes": 3515,
+            "derived_text_sha256": "0c2056a08897eccf10a7e50ec054432cf43cd7974e6b6c9749f88818d4ac94c4",
+            "first_line": 462,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 484,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              7
+            ],
+            "sha256": "074e8c88be614646068f5c3563aa8bedbc6945b06ccc2aa255f4d63e67c8efea",
+            "source_id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+            "source_sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "pure.qub.ac.uk/eufm.12555",
+      "markets": [
+        "FX_FORWARD"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "FHLL2025:currency-basis-momentum-BM"
+      ],
+      "record_id": "FHLL2025:currency-basis-momentum-BM",
+      "record_sha256": "bdeea780aa5ce28cf7e3b6c5295b12d43bde0a31783c48dd471b5634053680d9",
+      "reviewed_at": "2026-10-08T11:36:42+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v44 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    },
+    {
+      "candidate_category": "trading_strategy",
+      "core_rules_complete": true,
+      "dedup": {
+        "baseline_review": {
+          "baseline_commit": "e10206de90eaf02c1a905f9e675b2bca4f8335e9",
+          "compared_native_ids": [
+            "M4355",
+            "M4365",
+            "M2387",
+            "M4175",
+            "M4161"
+          ],
+          "compared_rule_pins": [
+            {
+              "native_id": "M4355",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4355.json",
+              "row_sha256": "0e764c3f761f520f18553fddd6935394560be04121e14f10e7cb5468cd889f93",
+              "sha256": "66a4c4b31f3958bd6e4d8968b3da351da196033f05f018fca3652ed1dcfe54b2"
+            },
+            {
+              "native_id": "M4365",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0044-v2/metadata/source-records/M4365.json",
+              "row_sha256": "61757f14879365e7e53872a048a16ea3df5084ecb51ad10d1d4b6e1927f7716f",
+              "sha256": "4dd1445b9dab2caec6691897124d84af5d88bb08b1adcc6bd24f168b8b132ce3"
+            },
+            {
+              "native_id": "M2387",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0024-v2/metadata/source-records/M2387.json",
+              "row_sha256": "d183e7a1dd3cf132330159fd582fc413ae25217e0b34edaa7f4683d9c13c2a8a",
+              "sha256": "6a031127247363af9fdfc795a562fd8f916459f25b3b25f0513b4d477efc2ed8"
+            },
+            {
+              "native_id": "M4175",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4175.json",
+              "row_sha256": "45eb2510047136cbb6e2c9f0fa2579692cc725a684a874a630e31caf4b915d6d",
+              "sha256": "3c087e219fcbcb0a1d23126da3d6fc69eaf85f2bfc3dd4b54701e8ed50ce0a3c"
+            },
+            {
+              "native_id": "M4161",
+              "path": "metadata/corpus-checkpoints/grokbot-6973-20261003/batches/batch-0042-v2/metadata/source-records/M4161.json",
+              "row_sha256": "dd3703f923cbc38ca0e16096f80969df23510d6b6cf26d3c4ffe74ffcc522acd",
+              "sha256": "ab0c11dd0476ada14a5ea201f3aa0d4119bda0e19d10fb7e1f3b2d8975e8ba42"
+            }
+          ],
+          "scope": "coverage-map-v44.csv（M记录6971、因子变体1570、v1–v43集合447、已审11、v35拒收56、v36拒收34、v37拒收41、v38拒收37、v39拒收24、v40拒收19、v41拒收25、v42拒收15、v43拒收17）按关键词与同市场同核心信号检索，并逐一核对v35–v43集合记录ID清单；逐条比对下列最近记录的规则全文。",
+          "search_terms": [
+            "mortgage-backed securities",
+            "抵押支持证券",
+            "prepayment risk premium",
+            "提前还款风险溢价",
+            "TBA coupon",
+            "票息"
+          ]
+        },
+        "compared_record_names": {
+          "M2387": "开源金工债券久期择时（改进Diebold2006：水平=宏观+政策利率跟随；斜率/曲率=AR(1)；季度持有预期收益最高久期）",
+          "M4161": "AQR·Carry·外汇：月末；约20发达货币；carry≈利率差；秩减均值加权多高息空低息至1美元（AQR Carry·FX）",
+          "M4175": "AQR·全球套息因子GCF：月末；各资产类carry组合按样本波动倒数加权合成；等波动贡献（AQR Global Carry Factor）",
+          "M4355": "iShares·机构抵押MBB：Bloomberg美国MBS；GNMA/FNMA/FHLMC固定利率过手30/20/15年、剩余加权平均期限≥1年；市值加权月频（MBB·AgencyMBS）",
+          "M4365": "iShares·仅GNMA抵押GNMA：Bloomberg美国GNMA债；GNMA固定利率过手30/15年、加权平均期限≥1年、未偿≥10亿；市值加权月频（GNMA·AgencyGinnieOnly）"
+        },
+        "outcome": "REVIEWED_DISTINCT_CONSTRUCTION",
+        "reason": "以机构MBS相对票息与市场类型（溢价/折价券余额占比）决定多空方向的票息价差策略。M4355/M4365为iShares MBS/GNMA指数ETF（被动持有，不分票息择时），M2387为国债久期择时，M4175/M4161为跨资产与外汇套息；v38拒收R38-007为Duarte–Longstaff–Yu的GNMA美元滚动套利（另一信号，且因前视拒收）；目录检索“MBS/TBA/prepayment/提前还款/抵押支持”无票息截面策略记录。",
+        "unresolved_candidates": []
+      },
+      "definition_signature": "DER2021-FNMA30-coupon-indices-treasury-hedged-market-type-by-RPB-premium-share-gt-50pct-long-max-premium-short-min-discount-reverse-in-discount-markets-EWMA-vol-target-1pct-monthly",
+      "entity_type": "strategy",
+      "field_spans": {
+        "assets": [
+          {
+            "bytes": 1114,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 292,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 304,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "84b82d7c498fd5f1bfa254de6e0acd780ae7f0b57d1bd42773b0a012755ef88d",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 617,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 305,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 311,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "08230a82e0e26ad8b5ccd93fc62fb2c408af1828ca963f40b525fb2b6e5a9be6",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          }
+        ],
+        "entry": [
+          {
+            "bytes": 923,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1323,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1332,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "2ec228cc5bedf919ad10e2b3c9a0e66ccce0c61b32bf286945dfadabec136be3",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 1378,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 3214,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 3231,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              61
+            ],
+            "sha256": "37c37522ad359c7062381b72270cc58ed0b5a59909c1496e65dd2191bcd9ffb0",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          }
+        ],
+        "execution_time": [
+          {
+            "bytes": 731,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1802,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1810,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              42
+            ],
+            "sha256": "26fcc80a636489b0e26e02caf298fd6074b4b230a63b44936a0c95be8b549f0d",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 821,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1813,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1821,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              42
+            ],
+            "sha256": "db24bece492854a837dbae840c13e937b8d6bece1f19d0f0bc773fd7a8be462e",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 617,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 305,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 311,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              8
+            ],
+            "sha256": "08230a82e0e26ad8b5ccd93fc62fb2c408af1828ca963f40b525fb2b6e5a9be6",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          }
+        ],
+        "exit": [
+          {
+            "bytes": 1378,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 3214,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 3231,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              61
+            ],
+            "sha256": "37c37522ad359c7062381b72270cc58ed0b5a59909c1496e65dd2191bcd9ffb0",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 1264,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1386,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1399,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              33
+            ],
+            "sha256": "a028ed475b521310a6c426e570e559c79d6c62bcbffa83b5f58b8df503c64c53",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          }
+        ],
+        "position": [
+          {
+            "bytes": 821,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1813,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1821,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              42
+            ],
+            "sha256": "db24bece492854a837dbae840c13e937b8d6bece1f19d0f0bc773fd7a8be462e",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 923,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1323,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1332,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "2ec228cc5bedf919ad10e2b3c9a0e66ccce0c61b32bf286945dfadabec136be3",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          }
+        ],
+        "risk": [
+          {
+            "bytes": 576,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1344,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1350,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              32
+            ],
+            "sha256": "bb0ecc7d7e358bdd497c60da8e4a8a40c7b43a1f7824931caf0f8c177833329d",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 275,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1362,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1364,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              32
+            ],
+            "sha256": "f54321b8da058ad513102865c3cd54bf6ad029000fb4f47c6353f41c1257574c",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 365,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1376,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1379,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              32
+            ],
+            "sha256": "4e3393ac0e0a45cb2c9edc68874e90a243ea05c2daa4ae5c793bb0577bfd68d8",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 1378,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 3214,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 3231,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              61
+            ],
+            "sha256": "37c37522ad359c7062381b72270cc58ed0b5a59909c1496e65dd2191bcd9ffb0",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 698,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 3238,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 3247,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              62
+            ],
+            "sha256": "3f04107433821cd399884494c0ed973b8073af2584fc3a0209dee0a55bafd947",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 932,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 3252,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 3264,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              62
+            ],
+            "sha256": "68bb6f090208f7cb0cb2d6bc1d18d5794ab5d2c0073631ef038958a5b1ec108a",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          }
+        ],
+        "signal": [
+          {
+            "bytes": 923,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1323,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1332,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              31
+            ],
+            "sha256": "2ec228cc5bedf919ad10e2b3c9a0e66ccce0c61b32bf286945dfadabec136be3",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 731,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1802,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1810,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              42
+            ],
+            "sha256": "26fcc80a636489b0e26e02caf298fd6074b4b230a63b44936a0c95be8b549f0d",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 1378,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 3214,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 3231,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              61
+            ],
+            "sha256": "37c37522ad359c7062381b72270cc58ed0b5a59909c1496e65dd2191bcd9ffb0",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          }
+        ],
+        "timeframe": [
+          {
+            "bytes": 731,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1802,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1810,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              42
+            ],
+            "sha256": "26fcc80a636489b0e26e02caf298fd6074b4b230a63b44936a0c95be8b549f0d",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 821,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1813,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1821,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              42
+            ],
+            "sha256": "db24bece492854a837dbae840c13e937b8d6bece1f19d0f0bc773fd7a8be462e",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          }
+        ],
+        "universe": [
+          {
+            "bytes": 626,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 320,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 326,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              9
+            ],
+            "sha256": "cff49d80028239c25b2252d65c0d85d5af3c2ac3f19f2e631d53259f7a1bf39b",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          },
+          {
+            "bytes": 731,
+            "derived_text_sha256": "2facb60c980b390d8b82b959ffff0d6ef7a9e57717493ff272435bf024967337",
+            "first_line": 1802,
+            "hash_scope": "UTF8 derived text, Python str.splitlines, joined by LF, no final LF",
+            "last_line": 1810,
+            "line_basis": "PYTHON_UNICODE_SPLITLINES/v1",
+            "pdf_pages": [
+              42
+            ],
+            "sha256": "26fcc80a636489b0e26e02caf298fd6074b4b230a63b44936a0c95be8b549f0d",
+            "source_id": "v44-lbs-ro-diep-eisfeldt-richardson-mbs-cross-section-am-pdf",
+            "source_sha256": "4aa00e916fc88f39bfb5cb47c1c34f545c996e06b3558d028648307346cc34d0"
+          }
+        ]
+      },
+      "frequencies": [
+        "MONTHLY"
+      ],
+      "identity_namespace": "lbsresearch.london.edu/1529",
+      "markets": [
+        "US_AGENCY_MBS"
+      ],
+      "method": "PER_RECORD_SOURCE_REVIEW",
+      "native_source_ids": [
+        "DER2021:MBS-prepayment-risk-premium-portfolio-PRP"
+      ],
+      "record_id": "DER2021:MBS-prepayment-risk-premium-portfolio-PRP",
+      "record_sha256": "610f87bcabb3dab33dd98b7d6e82d5d51918187856ef6d9487dec31d544b789a",
+      "reviewed_at": "2026-10-08T11:36:42+00:00",
+      "reviewer": "Grok Bot executor（ZENG KANG v44 采集）逐条源文审核；待云端代理提交前复核",
+      "source_origin": "ORIGINAL_PAPER",
+      "states": {
+        "commercial_use": "REVIEW_REQUIRED",
+        "computation_semantics": "NOT_EXECUTED",
+        "economic_validity": "NOT_TESTED"
+      },
+      "subtype": "trading_strategy",
+      "within_batch_distinctness": "本批4条两两市场或核心信号不同（definition_signature唯一）；本条来源在本批内唯一。"
+    }
+  ],
+  "schema_version": "quantgraph-source-collection-reviews/v1"
+}

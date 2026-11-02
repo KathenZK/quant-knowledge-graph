@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "与危害恐惧搜索激增正相关的商品期货随后表现差，负相关者表现好。",
+    "missing": [
+      "Google Trends抽样导致复现偏差；原文下载vintage为2019-02。",
+      "标准化所用历史窗口E在正文中为扩展窗（首段52周），细节以原文为准。",
+      "MPRA工作论文版，期刊版未取；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v38-mpra-100528-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "Google Trends为抽样数据，不同下载日数值不同，复现结果会偏离；搜索量为全球口径。"
+    },
+    "calculation": {
+      "evidence": [
+        "v38-mpra-100528-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每周一收盘按CFEAR排序：做空最高五分位Q5、做多最低五分位Q1；多空腿内等权、全额抵押、持有一周；下周一用扩展窗口重新估计（首个组合需52周数据）。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v38-mpra-100528-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：危害恐惧上升时与之正相关（供给减少/需求增加型）的商品价格被高估，随后回落，空头获得危害恐惧溢价。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v38-mpra-100528-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "ΔSVI_{j,t}=ln(SVI_{j,t}/SVI_{j,t−1})；标准化ΔSVI*_{j,t}=ΔSVI_{j,t}/σ_j（σ为截至t的历史标准差）；对每种商品i、每个关键词j回归r_{i,t−k}=a+b_{i,j}·ΔSVI*_{j,t−k}+e（k覆盖截至t的估计窗）；CFEAR_{i,t}=Σ_{j=1}^{149} b̂_{i,j}（保留全部符号）。"
+    },
+    "inputs": {
+      "evidence": [
+        "v38-mpra-100528-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Google Trends周度GSVI：149个关键词（天气113、农业病害10、地缘14、经济12；原文表1列出），按2019年2月6个日期下载取均值以降低抽样噪声；Datastream 28种商品期货周一结算价（非到期月用近月、否则次近月），2004-01起，组合期2005-01至2018-12。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v38-mpra-100528-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "商品期货另类数据（注意力）因子；与基差动量、偏度、持仓因子对照。"
+    }
+  },
+  "identity_namespace": "mpra.ub.uni-muenchen.de",
+  "lab": null,
+  "missing_information": [
+    "Google Trends抽样导致复现偏差；原文下载vintage为2019-02。",
+    "标准化所用历史窗口E在正文中为扩展窗（首段52周），细节以原文为准。",
+    "MPRA工作论文版，期刊版未取；未回测。"
+  ],
+  "name": "商品危害恐惧因子（CFEAR，149个Google搜索词）",
+  "native_source_id": "100528:CFEAR",
+  "one_line": "每周一以149个天气/病害/地缘/经济危害关键词的Google搜索量周对数变化（按过去波动标准化），对每种商品逐词回归周收益得斜率并加总为CFEAR；做空CFEAR最高五分位、做多最低五分位，等权、持有一周，扩展窗口。",
+  "record_id": "100528:CFEAR",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://mpra.ub.uni-muenchen.de/100528/1/MPRA_paper_100528.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Adrian Fernandez-Perez, Ana-Maria Fuertes, Marcos Gonzalez-Fernandez, Joëlle Miffre,《Fear of Hazards in Commodity Futures Markets》MPRA工作论文（2019-09-27）。中文定义自撰。",
+      "id": "v38-mpra-100528-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L591–601（PDF物理页12）；formula L618–652（PDF物理页13）；inputs L465–477（PDF物理页10）；inputs L533–535（PDF物理页11）；inputs L699–725（PDF物理页14,15）；calculation L670–682（PDF物理页14）",
+      "revision": "MPRA Paper No. 100528（稿件日期2019-09-27；MPRA上线2020-05-21）；63页；未与期刊版比对；sha256 a62ac76913362a38546ee52de5ce44ebced8f5f3bf1e0b7d89a20b21a0e046d7",
+      "sha256": "a62ac76913362a38546ee52de5ce44ebced8f5f3bf1e0b7d89a20b21a0e046d7",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://mpra.ub.uni-muenchen.de/100528/1/MPRA_paper_100528.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

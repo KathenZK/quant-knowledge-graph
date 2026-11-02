@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "CDS市场利差相对结构模型利差过高时，随后向模型值收敛，卖出保护并股票对冲可获利。",
+    "missing": [
+      "CreditGrades定价公式本文未印出，需参照CreditGrades Technical Document (2002)。",
+      "派生文本中“模型利差”上标符号丢失，判别式按正文语义转写；表5三个触发水平α的具体取值未在引用段列明（正文提及0.5、1、2）。",
+      "Markit CDS为商业数据；工作稿未与RFS终版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "bankofcanada.ca/wp-content",
+  "lab": null,
+  "missing_information": [
+    "CreditGrades定价公式本文未印出，需参照CreditGrades Technical Document (2002)。",
+    "派生文本中“模型利差”上标符号丢失，判别式按正文语义转写；表5三个触发水平α的具体取值未在引用段列明（正文提及0.5、1、2）。",
+    "Markit CDS为商业数据；工作稿未与RFS终版比对；未回测。"
+  ],
+  "name": "资本结构套利（CreditGrades模型CDS利差偏离，股票对冲）",
+  "native_source_id": "duarte4:capital-structure-arbitrage",
+  "one_line": "每日用CreditGrades结构模型由股价与资本结构算理论5年CDS利差；若市场利差>(1+α)×模型利差，卖出$100名义CDS保护并按模型Delta做空股票，利差收敛或满180天平仓；所有存续交易日收益等权复合为月收益。",
+  "record_id": "duarte4:capital-structure-arbitrage",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.bankofcanada.ca/wp-content/uploads/2010/08/duarte4.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Jefferson Duarte, Francis A. Longstaff, Fan Yu,《Risk and Return in Fixed Income Arbitrage: Nickels in Front of a Steamroller?》2006-03工作稿（期刊版据外部书目为RFS 20(3), 2007, pp.769–811，未取）。中文定义自撰。",
+      "id": "v38-boc-duarte-longstaff-yu-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L606–625（PDF物理页15,16）；universe L626–628（PDF物理页16）；signal L1342–1351（PDF物理页32）；signal L667–670（PDF物理页17）；entry L667–671（PDF物理页17）；exit L672–673（PDF物理页17）；position L1367–1369（PDF物理页32）；position L675–685（PDF物理页17）；cost L1374–1377（PDF物理页33）",
+      "revision": "Duarte/Longstaff/Yu《Risk and Return in Fixed Income Arbitrage: Nickels in Front of a Steamroller?》Current version: March 2006（加拿大央行网站托管会议稿）；53页；未与RFS 20(3) 2007期刊版比对；sha256 e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1",
+      "sha256": "e636f4df33750cfffc402664b113d33c539416d7470091538ab86363e948a3c1",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.bankofcanada.ca/wp-content/uploads/2010/08/duarte4.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Markit北美工业企业5年期CDS日利差（2001–2004）；Compustat资产负债表与CRSP股价。"
+    },
+    "cost": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CDS买卖价差5%；忽略股票交易成本；最长持有180天、静态对冲。"
+    },
+    "entry": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "若c_t>(1+α)ĉ_t（α为触发水平），卖出$100名义CDS保护并按CG模型做空股票对冲。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "按日收盘利差与股价判定；具体时点未在引用段写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "市场利差与模型利差相等或持有满180天（先到者）平仓。"
+    },
+    "position": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "股票对冲量为CDS头寸价值对股价的数值导数（静态，持有期不调）；每笔交易配初始资本，所有存续交易日收益等权平均后复合为月收益。"
+    },
+    "risk": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者以GM为例：市场利差可继续发散且股票对冲失效（相关性低）。"
+    },
+    "signal": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CreditGrades七项输入：股价S、每股负债D=总负债/普通股数、违约边界均值L（用该债务人前10个日市场利差拟合）、边界标准差λ=0.3、回收率R=0.5、1000日历史股票波动率σ_S、5年CMT利率r；比较市场利差c_t与模型利差ĉ_t。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "日度检查，持有至收敛或180天。"
+    },
+    "universe": {
+      "evidence": [
+        "v38-boc-duarte-longstaff-yu-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "要求至少252个间隔不超过两周的日CDS报价；合并后261个债务人、135,759个日利差。"
+    }
+  }
+}

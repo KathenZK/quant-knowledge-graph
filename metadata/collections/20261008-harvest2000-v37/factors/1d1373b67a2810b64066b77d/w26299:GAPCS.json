@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "产出缺口相对美国更高的国家，其货币随后获得更高超额收益。",
+    "missing": [
+      "HP、Baxter-King、二次趋势等替代滤波的参数见网络附录，本记录未转写。",
+      "27国明细与可得期见网络附录表A1，未转写。",
+      "NBER工作论文版，未与期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v37-nber-w26299-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "须使用当月可得的工业生产vintage递推估计，避免修订数据前视；数据库vintage自1999-12起。"
+    },
+    "calculation": {
+      "evidence": [
+        "v37-nber-w26299-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末t按（本国−美国）产出缺口把货币分五组，P5最高、P1最低；组内等权（1/N_k）；GAPCS=做多P5、做空P1的零成本美元中性组合。按50%报价价差扣成本后，GAPCS的Sharpe由0.72降至0.50。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v37-nber-w26299-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：经济周期相对强的国家货币随后升值，收益主要来自即期汇率而非利差。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v37-nber-w26299-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "产出缺口gap_t=y_t−ȳ_t（实际与潜在产出的对数差）；实时口径用Hamilton(2018)线性投影：y_{i,t}=α_i+Σ_{s=0}^{11}β_{i,s}y_{i,t−24−s}+ε_{i,t}（y为对数工业生产，回归24个月前起的12个滞后；季度数据用8个季度前起4个滞后），周期成分c_t=y_t−ŷ_t；排序信号=本国缺口−美国缺口。"
+    },
+    "inputs": {
+      "evidence": [
+        "v37-nber-w26299-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Barclays/Reuters（Datastream）日度买/中/卖价即期与1月远期汇率，取月末，1983-10至2016-01，27国（德国1999-01起由欧元区替代）；超额收益RX_{t+1}=(Spot_{t+1}−Fwd_t)/Spot_t（美元/外币）。OECD Original Release Data and Revisions Database月度工业生产vintage（实时分析用1999-12至2016-01各vintage）。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v37-nber-w26299-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "外汇横截面宏观因子；与carry、货币价值、全球失衡因子对照。"
+    }
+  },
+  "identity_namespace": "nber.org/papers",
+  "lab": null,
+  "missing_information": [
+    "HP、Baxter-King、二次趋势等替代滤波的参数见网络附录，本记录未转写。",
+    "27国明细与可得期见网络附录表A1，未转写。",
+    "NBER工作论文版，未与期刊版比对；未回测。"
+  ],
+  "name": "产出缺口货币截面组合（GAPCS）",
+  "native_source_id": "w26299:GAPCS",
+  "one_line": "每月末按各国实时工业生产（OECD月度vintage）用Hamilton线性投影得到的产出缺口减美国产出缺口，将货币分五组；等权做多P5（相对缺口最高）、做空P1。",
+  "record_id": "w26299:GAPCS",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.nber.org/system/files/working_papers/w26299/w26299.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Riccardo Colacito, Steven J. Riddiough, Lucio Sarno,《Business Cycles and Currency Returns》NBER WP 26299（2019-09；期刊版据外部书目为JFE 2020，未取、未比对）。中文定义自撰。",
+      "id": "v37-nber-w26299-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L353–355（PDF物理页11）；formula L392–406（PDF物理页12）；inputs L296–318（PDF物理页9,10）；inputs L322–329（PDF物理页10）；inputs L360–363（PDF物理页11）；inputs L377–391（PDF物理页11,12）；calculation L410–417（PDF物理页12）；calculation L654–662（PDF物理页19）",
+      "revision": "NBER Working Paper 26299, September 2019；75页；未与期刊版比对；sha256 b586afe5550cd7c133b56caf2bd9c84825f11e4261965ec189240bf3089cb048",
+      "sha256": "b586afe5550cd7c133b56caf2bd9c84825f11e4261965ec189240bf3089cb048",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.nber.org/system/files/working_papers/w26299/w26299.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

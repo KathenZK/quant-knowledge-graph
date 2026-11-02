@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "员工满意度高的公司长期股价表现被市场低估。",
+    "missing": [
+      "工作论文样本仅1998–2005（期刊版扩展至1984–2009，未取）。",
+      "交易成本未计。",
+      "工作论文版，未与JFE期刊版比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "rodneywhitecenter.wharton.upenn.edu",
+  "lab": null,
+  "missing_information": [
+    "工作论文样本仅1998–2005（期刊版扩展至1984–2009，未取）。",
+    "交易成本未计。",
+    "工作论文版，未与JFE期刊版比对；未回测。"
+  ],
+  "name": "《财富》最佳雇主榜等权年度组合（Portfolio I）",
+  "native_source_id": "RW0716:best-companies-portfolio-I",
+  "one_line": "每年2月1日（榜单1月中下旬发布后）等权买入当年Fortune“100 Best Companies to Work For”中的上市公司，持有至次年1月末再按新榜重组；年中上市者自上市月纳入，被榜外公司收购者剔除。",
+  "record_id": "RW0716:best-companies-portfolio-I",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://rodneywhitecenter.wharton.upenn.edu/wp-content/uploads/2014/04/0716.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Alex Edmans,《Does the Stock Market Fully Value Intangibles? Employee Satisfaction and Equity Prices》2007-05工作论文（Rodney L. White Center 16-07；期刊版JFE 2011样本更长，未取、未比对）。中文定义自撰。",
+      "id": "v37-wharton-rodneywhite-0716-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L286–288（PDF物理页9）；signal L289–294（PDF物理页9）；entry L312–316（PDF物理页9）；exit L314–316（PDF物理页9）；position L317–323（PDF物理页9）",
+      "revision": "Edmans《Does the Stock Market Fully Value Intangibles? Employee Satisfaction and Equity Prices》May 2007；Wharton Rodney L. White Center工作论文16-07；29页；样本1998–2005，非JFE 2011期刊版；sha256 d16d85b20d3f27c72243be70195bc1274718f38e2798f14a4b277fef119ea892",
+      "sha256": "d16d85b20d3f27c72243be70195bc1274718f38e2798f14a4b277fef119ea892",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://rodneywhitecenter.wharton.upenn.edu/wp-content/uploads/2014/04/0716.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v37-wharton-rodneywhite-0716-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Fortune“Best Companies to Work For in America”榜单中在CRSP有收益的上市公司（1998–2005各年家数与增删见原文表1；含仅有美国ADR的6家）。"
+    },
+    "cost": {
+      "evidence": [
+        "v37-wharton-rodneywhite-0716-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "引用段未计交易成本；年换手仅限榜单增删。"
+    },
+    "entry": {
+      "evidence": [
+        "v37-wharton-rodneywhite-0716-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "1998-02-01等权买入当年68家上市“最佳公司”，计算1998-02至1999-01收益；此后每年2月1日按新榜重组，至2005-12。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v37-wharton-rodneywhite-0716-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "每年2月1日建仓/按新榜重组；成交价格时点（开盘或收盘）未在引用段写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v37-wharton-rodneywhite-0716-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有至次年1月末；次年2月1日按新榜重组（落榜者卖出）。"
+    },
+    "position": {
+      "evidence": [
+        "v37-wharton-rodneywhite-0716-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "等权；年中才上市的榜单公司自上市当月纳入（视同IPO买入）；被榜内公司收购则用退市收益并仅保留母公司；被榜外公司收购则剔除。"
+    },
+    "risk": {
+      "evidence": [
+        "v37-wharton-rodneywhite-0716-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "纯多头，无对冲；行业暴露（如科技）显著。"
+    },
+    "signal": {
+      "evidence": [
+        "v37-wharton-rodneywhite-0716-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "榜单发布：Fortune杂志该期通常1月中下旬出版、上架约提前一周，因此以2月1日为组合形成与再平衡日。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v37-wharton-rodneywhite-0716-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "年度再平衡（2月1日）。"
+    },
+    "universe": {
+      "evidence": [
+        "v37-wharton-rodneywhite-0716-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "当年榜单内全部可交易上市公司。"
+    }
+  }
+}

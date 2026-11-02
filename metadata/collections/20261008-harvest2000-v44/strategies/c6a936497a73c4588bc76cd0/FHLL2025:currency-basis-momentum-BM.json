@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "外汇远期曲线近端与次近端动量之差同时含有套息与动量信息并剔除部分崩盘风险，基差动量高的货币随后一个月超额收益更高。",
+    "missing": [
+      "作者分解显示BM=超额收益变动（动量部分）+远期贴水（套息）−即期变动−次近远期贴水，与套息、动量高度相关；作者称其收益不能被二者完全解释，但回归中BM因子对横截面解释力的增量有限。",
+      "48种货币含钉住汇率货币（港币、沙特、科威特等）与欧元区成员国旧货币，样本随时间变化；2个月远期数据可得性逐币种不同，原文附录A列示，本条未核；表1注未逐字说明是否已扣买卖价。",
+      "同文J=1/6/9/12、三分位与四分位排序、各分解成分单独排序属同一核心信号的参数变体或对照，未单列；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "pure.qub.ac.uk/eufm.12555",
+  "lab": null,
+  "missing_information": [
+    "作者分解显示BM=超额收益变动（动量部分）+远期贴水（套息）−即期变动−次近远期贴水，与套息、动量高度相关；作者称其收益不能被二者完全解释，但回归中BM因子对横截面解释力的增量有限。",
+    "48种货币含钉住汇率货币（港币、沙特、科威特等）与欧元区成员国旧货币，样本随时间变化；2个月远期数据可得性逐币种不同，原文附录A列示，本条未核；表1注未逐字说明是否已扣买卖价。",
+    "同文J=1/6/9/12、三分位与四分位排序、各分解成分单独排序属同一核心信号的参数变体或对照，未单列；未回测。"
+  ],
+  "name": "货币基差动量BM：过去J个月1个月远期动量减2个月远期动量，月末五分位等权多高空低（Fan–Han–Li–Liu）",
+  "native_source_id": "FHLL2025:currency-basis-momentum-BM",
+  "one_line": "对48种兑美元货币，每月末计算基差动量BM=过去J个月（J=1,3,6,9,12；主结果J=3）持有1个月远期的累计超额收益减持有2个月远期（下月滚为1个月远期）的累计超额收益，即把Boons–Prado（2019）商品基差动量搬到外汇远期曲线；按BM分五组等权，做多最高组、做空最低组，持有一个月，按买卖价计净收益。",
+  "record_id": "FHLL2025:currency-basis-momentum-BM",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://pureadmin.qub.ac.uk/ws/files/670168282/Understanding_the_performance_of_currency_basis-momentum.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Minyou Fan, Xing Han, Ang Li, Jiadong Liu,《Understanding the Performance of Currency Basis-Momentum》European Financial Management 2025（QUB Pure托管出版社版，CC BY 4.0）。中文定义自撰。",
+      "id": "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf",
+      "license": "CC-BY-4.0（QUB仓储封面与文章版权声明：open access article under CC BY）",
+      "locator": "派生文本(pdftotext -layout)行段：assets L302–330（PDF物理页5）；assets L349–374（PDF物理页5）；universe L302–330（PDF物理页5）；universe L383–419（PDF物理页6）；universe L462–484（PDF物理页7）；signal L223–260（PDF物理页4）；signal L349–374（PDF物理页5）；entry L269–282（PDF物理页4）；entry L462–484（PDF物理页7）；exit L269–282（PDF物理页4）；exit L462–484（PDF物理页7）；position L269–282（PDF物理页4）；position L462–484（PDF物理页7）；risk L78–82（PDF物理页2）；risk L383–419（PDF物理页6）；risk L462–484（PDF物理页7）；risk L496–509（PDF物理页7）；risk L502–517（PDF物理页7）；cost L300–335（PDF物理页5）；timeframe L269–282（PDF物理页4）；execution_time L269–282（PDF物理页4）；execution_time L349–374（PDF物理页5）",
+      "revision": "出版社版本（Version of Record），European Financial Management 31(5):1652–1678（2025），DOI 10.1111/eufm.12555；女王大学贝尔法斯特Pure机构仓储托管（机构仓储）；28页（含仓储封面1页）；sha256 f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed",
+      "sha256": "f4399c99802ef303f20b772c0cb1e8140b9555cf68d175625f1f0bd63065c2ed",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://pureadmin.qub.ac.uk/ws/files/670168282/Understanding_the_performance_of_currency_basis-momentum.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "48种货币兑美元的1个月远期（及计算信号用的2个月远期与即期）。"
+    },
+    "cost": {
+      "evidence": [
+        "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者按Menkhoff等（2012a）用买卖价计算净超额收益：新入组合多头用远期bid、空头用远期ask，离场多头用即期ask、空头用即期bid，留在组合者按中间价；首月全部建仓、末月全部平仓。表1注未逐字写明为净收益。"
+    },
+    "entry": {
+      "evidence": [
+        "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月末按BM把全部可得货币分为五组，等权做多最高组（winner）、做空最低组（loser），在下一期用1个月远期建仓。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月末用截至当月末的即期与远期汇率计算信号，建仓按1个月远期报价；原文未给出滞后执行的结果。"
+    },
+    "exit": {
+      "evidence": [
+        "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "持有一个月，下月末按新排序再平衡。"
+    },
+    "position": {
+      "evidence": [
+        "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "五分位组合，组内等权；多最高组、空最低组的零投资多空组合（WML）。"
+    },
+    "risk": {
+      "evidence": [
+        "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告1986-12至2020-10 BM-3多空月均1.23%（Newey–West t=6.50）、夏普0.52，J=1–12多空月均1.09%–1.23%、夏普0.46–0.52，BM-3夏普0.52高于1个月货币动量（月均1.13%、夏普0.41）与1个月基差即套息（月均1.26%、夏普0.48）；1999–2010子期BM-3月均1.83%；2007–2010危机期最大回撤7.06%，低于套息12.55%与动量10.92%。"
+    },
+    "signal": {
+      "evidence": [
+        "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "BM_t=Σ_{s=t−J+1}^{t}(s_s−f1_{s−1})−Σ_{s=t−J+1}^{t}(f1_s−f2_{s−1})，s、f1、f2为即期、1个月远期、2个月远期的对数汇率（每美元兑外币）；前项为1个月远期动量（货币超额收益累计），后项为持有2个月远期一个月的超额收益累计；基差B_t=s_t−f1_t；J取1、3、6、9、12个月。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度。"
+    },
+    "universe": {
+      "evidence": [
+        "v44-qub-pure-fan-han-li-liu-currency-basis-momentum-vor-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "澳、奥、比、巴西、保加利亚、加、克罗地亚、塞浦路斯、捷克、丹麦、埃及、欧元区、芬、法、德、希腊、港、匈、冰岛、印度、印尼、爱尔兰、以色列、意、日、科威特、马来西亚、墨、荷、新西兰、挪、菲、波兰、葡、俄、沙特、新加坡、斯洛伐克、斯洛文尼亚、南非、韩、西、瑞典、瑞士、台、泰、乌克兰、英共48种；Barclays与WM/Refinitiv经Datastream的月度即期、1个月与2个月远期，1983-11至2020-10，组合收益自1986-12起。"
+    }
+  }
+}

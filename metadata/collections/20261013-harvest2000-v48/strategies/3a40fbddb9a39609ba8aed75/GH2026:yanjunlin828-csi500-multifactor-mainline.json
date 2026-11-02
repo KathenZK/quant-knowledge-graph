@@ -1,0 +1,118 @@
+{
+  "economic_basis": {
+    "hypothesis": "PIT财务+价量+港股通持股因子经滚动Ridge合成，在中证500内取得超额。",
+    "missing": [
+      "主线因子清单未核对；无许可证。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "qkg-harvest2000-v48/csi-index-enhancement/github-yanjunlin828-csi500-multifactor",
+  "lab": null,
+  "missing_information": [
+    "规则不全（rule_completeness=规则不全）：核心规则未完整公开，不计入完整策略目标，不能视为可直接复现。",
+    "主线因子清单未核对；无许可证。",
+    "来源自报绩效未验证（REPORTED_UNVERIFIED）；本库未回测（execution_trials=0）。"
+  ],
+  "name": "【规则不全】GitHub csi500-multifactor 中证500多因子指增主线（Ridge滚动48月+TopN150等权+港股通持股季度化，T+1开盘，月频）",
+  "native_source_id": "GH2026:yanjunlin828-csi500-multifactor-mainline",
+  "one_line": "个人开源仓库：严格PIT财务、历史成分股并过滤新股/ST/停牌；MAD/中性化/标准化；主线信号为滚动48个月Ridge合成，组合为Top150等权（另有QP模式：TE目标6%、换手惩罚），月频、T+1开盘成交，计印花税（2023-08-28前后切换）、双边佣金2.5bp、滑点8bp；基准中证500全收益。仓库无许可证，只记链接与元数据。",
+  "record_id": "GH2026:yanjunlin828-csi500-multifactor-mainline",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；规则不全；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留机构/作者、日期、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://raw.githubusercontent.com/yanjunlin828-dotcom/csi500-multifactor/0e25a33cabdc328c8f60893474087f95e49e9c0f/README.md"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "GitHub yanjunlin828-dotcom（个人），csi500-multifactor 仓库 README（创建2026-05-28T08:03:47Z即北京时间2026-05-28 16:03；固定提交0e25a33）。",
+      "id": "v48-github-yanjunlin828-csi500-multifactor-readme",
+      "license": "仓库未声明许可证（GitHub API license=null）：默认保留所有权利。本库只记元数据、链接与自撰摘要，未复制任何代码；README原文仅本地快照，不入Git。",
+      "locator": "README.md“项目概览”表、目录结构、“关键参数”表、主线复现节；快照行段：assets L9–16；universe L99–100；universe L15–15；signal L104–105；signal L311–311；entry L9–9；entry L258–258；exit L21–21；position L21–21；position L208–210；risk L21–21；risk L328–328；cost L203–207；execution_time L258–258；timeframe L17–19",
+      "revision": "0e25a33cabdc328c8f60893474087f95e49e9c0f",
+      "sha256": "2d0685eefe242e949221c4214299952dfb3b34e0cd2abb28e788535bb75930df",
+      "supports": [
+        "SELECTED_PUBLISHED_DESCRIPTION"
+      ],
+      "url": "https://raw.githubusercontent.com/yanjunlin828-dotcom/csi500-multifactor/0e25a33cabdc328c8f60893474087f95e49e9c0f/README.md",
+      "verification": "PINNED_PUBLISHED_PAGE_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v48-github-yanjunlin828-csi500-multifactor-readme"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "A股；中证500（申万一级SW2021行业）。"
+    },
+    "cost": {
+      "evidence": [
+        "v48-github-yanjunlin828-csi500-multifactor-readme"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "印花税卖出单边：2023-08-28前10bp、后5bp；佣金2.5bp双边；滑点8bp。"
+    },
+    "entry": {
+      "evidence": [
+        "v48-github-yanjunlin828-csi500-multifactor-readme"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月频调仓，T+1开盘成交（README声明为唯一支持模式）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v48-github-yanjunlin828-csi500-multifactor-readme"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "T+1开盘成交。"
+    },
+    "exit": {
+      "evidence": [
+        "v48-github-yanjunlin828-csi500-multifactor-readme"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月重选，未入选者卖出（TopN等权）。"
+    },
+    "position": {
+      "evidence": [
+        "v48-github-yanjunlin828-csi500-multifactor-readme"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "主线TopN=150等权；QP模式另有TE目标6%、换手惩罚0.005、行业/个股偏离（README示例模板 industry_max_dev=0.03、single_max_dev=0.015，是否主线所用未核）。"
+    },
+    "risk": {
+      "evidence": [
+        "v48-github-yanjunlin828-csi500-multifactor-readme"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者自报（未验证）：验证期（2021–2022）主线IR 2.150；冻结基线ICIR+Top50等权IR 0.924；测试集（2023–2025）已用1次，结果未在README公布。"
+    },
+    "signal": {
+      "evidence": [
+        "v48-github-yanjunlin828-csi500-multifactor-readme"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "财务（公告日PIT）+价量+另类（港股通持股hk_hold、资金流）因子；MAD去极值、中性化、标准化；主线为Ridge Rolling-48合成（含hk_hold季度化修复）。【缺】主线实际因子清单与参数在 configs/pipelines/rolling48_topn150_ew_hk_quarterly.py，未抓取核对。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v48-github-yanjunlin828-csi500-multifactor-readme"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月频；训练2012–2020、验证2021–2022、测试2023–2025。"
+    },
+    "universe": {
+      "evidence": [
+        "v48-github-yanjunlin828-csi500-multifactor-readme"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "可投资域=成分股快照+新股/ST/停牌过滤；基准中证500全收益H00905.CSI。"
+    }
+  }
+}

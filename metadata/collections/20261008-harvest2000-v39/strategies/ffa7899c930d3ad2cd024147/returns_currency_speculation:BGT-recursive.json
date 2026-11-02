@@ -1,0 +1,120 @@
+{
+  "economic_basis": {
+    "hypothesis": "远期贴水回归显著偏离无抛补利率平价，用递推估计的回归预测决定买卖英镑远期，可获得正收益。",
+    "missing": [
+      "英镑为基准货币；1999年后欧元区成员货币与日度转月度规则以附录A为准，未转写。",
+      "按买卖价分别回归的变体未单列（作者称差异很小）。",
+      "2006年工作稿（加拿大央行网站托管），期刊版未取、未比对；未回测。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "bankofcanada.ca/wp-content",
+  "lab": null,
+  "missing_information": [
+    "英镑为基准货币；1999年后欧元区成员货币与日度转月度规则以附录A为准，未转写。",
+    "按买卖价分别回归的变体未单列（作者称差异很小）。",
+    "2006年工作稿（加拿大央行网站托管），期刊版未取、未比对；未回测。"
+  ],
+  "name": "BGT远期贴水回归择时（递推估计，英镑基准）",
+  "native_source_id": "returns_currency_speculation:BGT-recursive",
+  "one_line": "对每种货币兑英镑，用递推样本（首个估计用前30个观测）回归(F_t−S_{t+1})/S_{t+1}=a+b(F_t−S_t)/S_t；预测E_t(F_t/S_{t+1})=1+â+b̂(F_t−S_t)/S_t≥1则卖出英镑远期，否则买入；含成本版按买卖价预测，只在预测收益越过1时交易；9种货币策略等权，月度。",
+  "record_id": "returns_currency_speculation:BGT-recursive",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.bankofcanada.ca/wp-content/uploads/2010/09/returns_currency_speculation.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Craig Burnside, Martin Eichenbaum, Isaac Kleshchelski, Sergio Rebelo,《The Returns to Currency Speculation》2006-10工作稿（加拿大央行网站托管）。中文定义自撰。",
+      "id": "v39-boc-bekr-returns-currency-speculation-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：assets L170–179（PDF物理页5）；universe L170–179（PDF物理页5）；signal L342–349（PDF物理页9）；signal L361–372（PDF物理页9）；signal L293–314（PDF物理页8）；entry L361–372（PDF物理页9）；entry L374–411（PDF物理页9,10）；exit L361–372（PDF物理页9）；exit L315–336（PDF物理页8）；position L293–314（PDF物理页8）；position L418–423（PDF物理页10）；risk L425–430（PDF物理页10）；cost L374–411（PDF物理页9,10）；timeframe L170–179（PDF物理页5）",
+      "revision": "Burnside/Eichenbaum/Kleshchelski/Rebelo《The Returns to Currency Speculation》October 2006（加拿大央行网站托管会议稿）；60页；期刊版未取、未比对；sha256 e9501bc0e672dcc6b526f33f444a383c2fbe9bbff58f95f05e43358c46b81aa5",
+      "sha256": "e9501bc0e672dcc6b526f33f444a383c2fbe9bbff58f95f05e43358c46b81aa5",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://www.bankofcanada.ca/wp-content/uploads/2010/09/returns_currency_speculation.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v39-boc-bekr-returns-currency-speculation-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "9种货币（比利时、加拿大、法国、德国、意大利、日本、荷兰、瑞士、美国）兑英镑的1月期远期（另有3月期）。"
+    },
+    "cost": {
+      "evidence": [
+        "v39-boc-bekr-returns-currency-speculation-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "含成本版用买卖价决策与结算，假定t期价差是t+1期价差的最佳预测。"
+    },
+    "entry": {
+      "evidence": [
+        "v39-boc-bekr-returns-currency-speculation-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "无成本版：E_t≥1则x_t=+1（卖出1英镑远期），否则x_t=−1（买入）。含成本版：用式(18)(19)按买卖价预测E_t(F^b_t/S^a_{t+1})与E_t(F^a_t/S^b_{t+1})，前者>1则卖、后者<1则买，否则不交易（式20）。"
+    },
+    "execution_time": {
+      "evidence": [
+        "v39-boc-bekr-returns-currency-speculation-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "月末（不重叠月度观测）；日内时点未写明。"
+    },
+    "exit": {
+      "evidence": [
+        "v39-boc-bekr-returns-currency-speculation-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "远期一个月到期交割，收益z_{t+1}按式(13)（无成本）或式(15)（买卖价）计算；下月重新预测。"
+    },
+    "position": {
+      "evidence": [
+        "v39-boc-bekr-returns-currency-speculation-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每笔下注1英镑；组合为9种货币策略等权。"
+    },
+    "risk": {
+      "evidence": [
+        "v39-boc-bekr-returns-currency-speculation-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "作者报告：等权组合月度（非年化）夏普在无成本时约0.20，计入买卖价差后降至0.10；价差与预期收益同一数量级。"
+    },
+    "signal": {
+      "evidence": [
+        "v39-boc-bekr-returns-currency-speculation-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "递推估计回归式(16)，首个估计用前30个数据点；E_t(F_t/S_{t+1})=1+â_t+b̂_t(F_t−S_t)/S_t，其中F、S为买卖价均值。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v39-boc-bekr-returns-currency-speculation-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "月度（1月期远期，不重叠月度观测）。"
+    },
+    "universe": {
+      "evidence": [
+        "v39-boc-bekr-returns-currency-speculation-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "Datastream日度银行间即期与1/3月远期买卖价（外币/英镑），转为不重叠的月度观测；汇率样本1976-01至2005-12。"
+    }
+  }
+}

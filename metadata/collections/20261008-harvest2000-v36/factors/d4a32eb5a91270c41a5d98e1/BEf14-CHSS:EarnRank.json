@@ -1,0 +1,92 @@
+{
+  "economic_basis": {
+    "hypothesis": "历史上当季盈利相对较高的公司，在该季度盈利公告月有更高收益。",
+    "missing": [
+      "会议稿2014-10版，未与RFS期刊版逐字比对。",
+      "持有期在引用段为当月（月度组合），月内公告日分布未细化。",
+      "未回测；经济有效性未检验。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "factor",
+  "factor_fields": {
+    "availability": {
+      "evidence": [
+        "v36-nber-conf-chss-2014-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "所需EPS均至少滞后11个月，形成期无前视；需要季度EPS历史与公告月份。"
+    },
+    "calculation": {
+      "evidence": [
+        "v36-nber-conf-chss-2014-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "每月以“12个月前有盈余公告”预测本月将公告（不用事后公告日）；在这些股票中按当月EarnRank分布断点分五分位，Q5为即将公告季度历史盈利最大者；仅保留组合至少10家公司的月份，多空组合要求两腿各至少10家；多Q5、空Q1；文中报告等权与市值加权。"
+    },
+    "economic_meaning": {
+      "evidence": [
+        "v36-nber-conf-chss-2014-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "作者解释：投资者对季节性盈利模式定价不足，过度看重近期较低盈利，导致高季节性季度公告月收益偏高。研究假说，未检验。"
+    },
+    "formula": {
+      "evidence": [
+        "v36-nber-conf-chss-2014-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "EarnRank_{i,t}：取季度t−23至t−4共20个季度的每股收益（不含非经常项，拆股调整），按从大到小排名；要求20个季度全部非缺失；EarnRank=季度t−4、t−8、t−12、t−16、t−20（即往年同一财季）排名的平均值。高值表示当季历史盈利高于其他季度。"
+    },
+    "inputs": {
+      "evidence": [
+        "v36-nber-conf-chss-2014-pdf"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "CRSP月度股票文件；NYSE/AMEX/NASDAQ普通股（股票代码10/11）；剔除上月末股价低于5美元的股票；季度EPS（拆股调整，不含非经常项）。"
+    },
+    "use_cases": {
+      "evidence": [
+        "v36-nber-conf-chss-2014-pdf"
+      ],
+      "status": "RESEARCH_ASSUMPTION",
+      "text": "美股公告月横截面因子；与盈余公告溢价、收益季节性、股息季节性对照。"
+    }
+  },
+  "identity_namespace": "conference.nber.org/confer",
+  "lab": null,
+  "missing_information": [
+    "会议稿2014-10版，未与RFS期刊版逐字比对。",
+    "持有期在引用段为当月（月度组合），月内公告日分布未细化。",
+    "未回测；经济有效性未检验。"
+  ],
+  "name": "盈利季节性排名（EarnRank）",
+  "native_source_id": "BEf14-CHSS:EarnRank",
+  "one_line": "用t−23至t−4共20个季度的拆股调整EPS排名，取t−4/t−8/t−12/t−16/t−20同季度平均排名EarnRank；在“12个月前有公告”的股票中按月五分位，做多高季节性、做空低季节性。",
+  "record_id": "BEf14-CHSS:EarnRank",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留作者、版本、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://conference.nber.org/confer/2014/BEf14/Chang_Hartzmark_Solomon_Soltes.pdf"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "Tom Y. Chang, Samuel M. Hartzmark, David H. Solomon, Eugene F. Soltes,《Being Surprised by the Unsurprising: Earnings Seasonality and Stock Returns》2014-10会议稿（期刊版RFS 2017据外部书目，未取）。中文定义自撰。",
+      "id": "v36-nber-conf-chss-2014-pdf",
+      "license": "UNKNOWN_NO_EXPLICIT_REUSE_LICENSE",
+      "locator": "派生文本(pdftotext -layout)行段：formula L514–532（PDF物理页11）；inputs L480–486（PDF物理页10）；calculation L593–618（PDF物理页13）；calculation L627–631（PDF物理页13）",
+      "revision": "Chang/Hartzmark/Solomon/Soltes《Being Surprised by the Unsurprising: Earnings Seasonality and Stock Returns》October 2014；NBER行为金融会议PDF；57页；sha256 f107884a6fd3cc263b97d3968b6d04e466b97fa983a7fa2fe1f58d7d4482f08c",
+      "sha256": "f107884a6fd3cc263b97d3968b6d04e466b97fa983a7fa2fe1f58d7d4482f08c",
+      "supports": [
+        "SELECTED_ORIGINAL_PAPER_DEFINITION"
+      ],
+      "url": "https://conference.nber.org/confer/2014/BEf14/Chang_Hartzmark_Solomon_Soltes.pdf",
+      "verification": "PINNED_ORIGINAL_PAPER_REVIEWED"
+    }
+  ]
+}

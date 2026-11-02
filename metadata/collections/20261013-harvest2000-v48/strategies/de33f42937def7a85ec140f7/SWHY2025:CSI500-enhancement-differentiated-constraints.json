@@ -1,0 +1,114 @@
+{
+  "economic_basis": {
+    "hypothesis": "中证500头部集中与离散度上升后，差异化个股/行业偏离与价量因子敞口限制可降低超额回撤。",
+    "missing": [
+      "底层alpha与分档阈值未公开；可作为叠加任意alpha的约束模板，但不能单独成为完整策略。"
+    ],
+    "paper_support": [],
+    "status": "RESEARCH_HYPOTHESIS_NOT_PROVEN"
+  },
+  "entity_type": "strategy",
+  "identity_namespace": "qkg-harvest2000-v48/csi-index-enhancement/swhy-2025-csi500-framework",
+  "lab": null,
+  "missing_information": [
+    "规则不全（rule_completeness=规则不全）：核心规则未完整公开，不计入完整策略目标，不能视为可直接复现。",
+    "底层alpha与分档阈值未公开；可作为叠加任意alpha的约束模板，但不能单独成为完整策略。",
+    "来源自报绩效未验证（REPORTED_UNVERIFIED）；本库未回测（execution_trials=0）。"
+  ],
+  "name": "【规则不全】申万宏源中证500指增差异化约束模板（个股按超额波动分档±0.3%/±0.5%、行业按权重±0.5%/±2%、价量因子敞口≤0.2σ）",
+  "native_source_id": "SWHY2025:CSI500-enhancement-differentiated-constraints",
+  "one_line": "在申万传统多因子中证500指增框架上改约束：个股偏离按超额波动率分档（低±0.3%、高±0.5%）；行业偏离按行业权重分档（低±0.5%、高±2%）；IC胜率下降的价量因子（低波、反转）敞口限0.2倍标准差；宏观筛选与因子动量筛选权重按过去两年表现动态调整。底层alpha未公开。",
+  "record_id": "SWHY2025:CSI500-enhancement-differentiated-constraints",
+  "relations": [],
+  "rights": {
+    "derived_results": "仅为来源描述审核，不是数值复现、回测或经济验证；规则不全；商用 REVIEW_REQUIRED。",
+    "metadata": "自撰中文定义与来源事实；保留机构/作者、日期、URL与行段指针，不含原文全文。",
+    "raw_data_included": false,
+    "source_fulltext_included": false,
+    "terms_url": "https://www.fxbaogao.com/detail/5625603"
+  },
+  "schema_version": "quantgraph-knowledge-metadata/v1",
+  "sources": [
+    {
+      "attribution": "申万宏源金工，《量化策略演进手记系列之一：中证500指数增强超额难度提升，传统多因子框架如何应对？》（原报告日期据前次采集sdyanbao页为2025-12-29，本次该页抓取失败未复核）；发现报告晨话纪要页。",
+      "id": "v48-swhy-csi500-enhance-framework-fxbaogao",
+      "license": "版权归原机构/作者所有；本库仅存自撰中文摘要、来源指针与行段哈希，不含原文全文。",
+      "locator": "发现报告晨话纪要“二、改进方案与测试结果”1–5条；快照行段：assets L718–718；universe L718–718；signal L723–724；entry L721–722；exit L725–725；position L721–725；risk L728–728；timeframe L725–725",
+      "revision": "发现报告(fxbaogao)《申万宏源金工晨话：中证500指增超额难度提升及多因子框架改进》纪要页（页面日期2026-08-20，datePublished 2026-08-22），HTML快照；sha256 e57400551babbf532af677e7f518fc8a6eaa615c18fa0d2af004aa43c39e7513",
+      "sha256": "e57400551babbf532af677e7f518fc8a6eaa615c18fa0d2af004aa43c39e7513",
+      "supports": [
+        "SELECTED_PUBLISHED_DESCRIPTION"
+      ],
+      "url": "https://www.fxbaogao.com/detail/5625603",
+      "verification": "PINNED_PUBLISHED_PAGE_REVIEWED"
+    }
+  ],
+  "strategy_fields": {
+    "assets": {
+      "evidence": [
+        "v48-swhy-csi500-enhance-framework-fxbaogao"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "A股；中证500指数增强。"
+    },
+    "cost": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "未给。"
+    },
+    "entry": {
+      "evidence": [
+        "v48-swhy-csi500-enhance-framework-fxbaogao"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "组合优化约束：个股偏离按超额波动率分档（超额波动低±0.3%，高±0.5%）；行业偏离按行业权重分档（低权重±0.5%，高权重±2%）。【缺】目标函数、分档阈值。"
+    },
+    "execution_time": {
+      "evidence": [],
+      "status": "MISSING",
+      "text": "未给。"
+    },
+    "exit": {
+      "evidence": [
+        "v48-swhy-csi500-enhance-framework-fxbaogao"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "再平衡时重优化；【缺】调仓频率（纪要提到“月度维度”测试双向使用）。"
+    },
+    "position": {
+      "evidence": [
+        "v48-swhy-csi500-enhance-framework-fxbaogao"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "同entry约束下的优化权重；未采纳因子双向使用。"
+    },
+    "risk": {
+      "evidence": [
+        "v48-swhy-csi500-enhance-framework-fxbaogao"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "来源自报（未验证）：2025年样本外改进后中证500指增全年超额在正2%–3%区间、超额回撤小，进攻弹性不足。"
+    },
+    "signal": {
+      "evidence": [
+        "v48-swhy-csi500-enhance-framework-fxbaogao"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "【缺】底层alpha为申万传统多因子框架（因子表未公开）；因子筛选：宏观筛选与因子动量筛选按过去两年表现动态加权；IC胜率下降的价量因子（低波、反转）敞口限制在0.2倍标准差内。"
+    },
+    "timeframe": {
+      "evidence": [
+        "v48-swhy-csi500-enhance-framework-fxbaogao"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "未明确；纪要称双向使用在月度维度测试。"
+    },
+    "universe": {
+      "evidence": [
+        "v48-swhy-csi500-enhance-framework-fxbaogao"
+      ],
+      "status": "SOURCE_DESCRIPTION_REVIEWED",
+      "text": "中证500指增组合（成分内比例未写）。"
+    }
+  }
+}
